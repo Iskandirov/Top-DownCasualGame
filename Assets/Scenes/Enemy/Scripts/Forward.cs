@@ -1,0 +1,159 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Forward : MonoBehaviour
+{
+    public GameObject player;
+    public Rigidbody2D Body;
+    public float speed;
+    public float speedMax;
+    public bool isStunned;
+    public float stunnTime;
+    public float stunnTimeMax;
+    public bool isFly;
+    public bool isShooted;
+
+    public GameObject LocationPoint;
+    public float movementSpeed = 5f;  // Швидкість руху об'єкту
+    public float circleRadius = 15f;  // Радіус кола
+    public float showDistance;
+    public bool isSummoned;
+    public bool enemyFinded;
+    public float summonTime;
+    public bool isThree;
+    public GameObject bomb;
+    // Start is called before the first frame update
+    void Start()
+    {
+        isStunned = false;
+        player = GameObject.FindWithTag("Player");
+    }
+
+    public void FindEnemy()
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(gameObject.transform.position, 16f);
+
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider.isTrigger != true && collider.CompareTag("Enemy") && collider.transform.parent.gameObject != gameObject)
+            {
+                if (collider.GetComponent<HealthPoint>())
+                {
+                    player = collider.gameObject;
+                    enemyFinded = true;
+                }
+            }
+        }
+        
+    }
+    public void MoveEnd()
+    {
+        isShooted = false;
+        Body.velocity = Vector2.zero;
+    }
+    public void StopMove()
+    {
+        speed = 0;
+    }
+    public void StartMove()
+    {
+        speed = speedMax;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (isShooted)
+        {
+            Invoke("MoveEnd", 0.2f);
+        }
+        if (isSummoned)
+        {
+            summonTime -= Time.deltaTime;
+            if (!enemyFinded || ReferenceEquals(player, null))
+            {
+                FindEnemy();
+            }
+            if (summonTime <= 0)
+            {
+                player = GameObject.FindWithTag("Player");
+                isSummoned = false;
+                enemyFinded = false;
+                if (isThree)
+                {
+                    Instantiate(bomb, transform.position, Quaternion.identity);
+                    Destroy(gameObject);
+                }
+            }
+        }
+        if (ReferenceEquals(player, null) || player.Equals(null))
+        {
+            player = GameObject.FindWithTag("Player");
+            Debug.Log(player);
+        }
+        if (isStunned == true)
+        {
+            Stuned();
+        }
+        if (!isFly && !isShooted)
+        {
+            Body.position = Vector3.MoveTowards(Body.position, player.transform.position, speed * Time.deltaTime);
+        }
+        if (Body.position.x < player.transform.position.x)
+        {
+            Body.transform.rotation = new Quaternion(0, 0, 0, 0);
+        }
+        else
+        {
+            Body.transform.rotation = new Quaternion(0, 180, 0, 0);
+        }
+
+        // Визначаємо відстань від гравця до ворога
+        float distanceToEnemy = Vector3.Distance(player.transform.position, transform.position);
+
+        // Перевіряємо, чи ворог знаходиться близько
+        if (distanceToEnemy < showDistance)
+        {
+            // Зникаємо об'єкт LocationPoint
+            LocationPoint.SetActive(false);
+        }
+        else
+        {
+            // З'являємо об'єкт LocationPoint
+            LocationPoint.SetActive(true);
+
+            // Визначаємо відстань від гравця до позиції курсора
+            Vector3 direction = transform.position - player.transform.position;
+            direction = direction.normalized * circleRadius;
+
+            // Визначаємо кінцеву позицію об'єкту на колі
+            Vector3 targetPosition = player.transform.position + direction;
+
+            // Рухаємо об'єкт до кінцевої позиції
+            LocationPoint.transform.position = targetPosition;
+
+            // Повертаємо коло в напрямку курсора
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            LocationPoint.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        }
+    }
+    public void Stuned()
+    {
+        if (stunnTime <= 0)
+        {
+            speed = speedMax;
+            isStunned = false;
+            stunnTime = stunnTimeMax;
+        }
+        else
+        {
+            speed = 0;
+            stunnTime -= Time.deltaTime;
+        }
+    }
+    public void Relocate(Transform pos)
+    {
+        gameObject.transform.position = new Vector2(pos.position.x, pos.position.y + 10);
+    }
+}

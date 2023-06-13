@@ -1,0 +1,124 @@
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class SnapScroll : MonoBehaviour
+{
+    [Header("Object panel")]
+    public GameObject panObj;
+    public GameObject[] instObjects;
+    public ScrollRect scrollRect;
+
+    private RectTransform contentRect;
+
+    [Header("Object parameters")]
+    public Vector2[] instObjectsPosition;
+    public Vector2[] instObjectsScale;
+    public Vector2 contentVector;
+
+    [Range(0f,10f)]
+    public float snapSpeed;
+    [Range(0f,10f)]
+    public float scaleSpeed;
+    [Range(0f,5f)]
+    public float snapScale;
+    [Header("Space between panels")]
+    [Range(10, 500)]
+    public int spacing;
+    [Header("ID of curent active panel")]
+    public int selectPanelObjID;
+    public bool isScrolling;
+
+
+    public Sprite[] descriptionImage;
+    public int[] sceneValue;
+    public TagText[] descriptionObjText;
+    public Image[] descriptionObjImage;
+
+    public SetLanguage lang;
+    // Start is called before the first frame update
+    void Start()
+    {
+        List<GameObject> list = new List<GameObject>();
+        contentRect = GetComponent<RectTransform>();
+        instObjects = new GameObject[descriptionImage.Length];
+        instObjectsPosition = new Vector2[descriptionImage.Length];
+        instObjectsScale = new Vector2[descriptionImage.Length];
+        descriptionObjText = new TagText[descriptionImage.Length];
+        descriptionObjImage = new Image[descriptionImage.Length];
+        for (int i = 0; i < descriptionImage.Length; i++)
+        {
+            instObjects[i] = Instantiate(panObj, transform, false);
+            descriptionObjText[i] = instObjects[i].GetComponentInChildren<TagText>();
+            descriptionObjImage[i] = instObjects[i].GetComponentInChildren<Slider>().GetComponentInChildren<Image>();
+            instObjects[i].GetComponent<MenuController>().sceneCount = sceneValue[i];
+            if (i + 1 < descriptionImage.Length)
+            {
+                lang.FindMyComponentInChildren(descriptionObjText[i].gameObject, "description_lvl_" + (i + 1));
+            }
+            else
+            {
+                lang.FindMyComponentInChildren(descriptionObjText[i].gameObject, "description_lvl_last");
+            }
+            if (descriptionObjText[i].gameObject.GetComponent<TagText>())
+            {
+                list.Add(descriptionObjText[i].gameObject);
+            }
+            descriptionObjImage[i].sprite = descriptionImage[i];
+            if (i == 0)
+            {
+                continue;
+            }
+            instObjects[i].transform.localPosition = new Vector2(instObjects[i - 1].transform.localPosition.x + panObj.GetComponent<RectTransform>().sizeDelta.x + spacing,
+                instObjects[i].transform.localPosition.y);
+            instObjectsPosition[i] = -instObjects[i].transform.localPosition;
+        }
+        lang.settings.UpdateText(list);
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        if (contentRect.anchoredPosition.x >= instObjectsPosition[0].x && !isScrolling ||
+            contentRect.anchoredPosition.x <= instObjectsPosition[instObjectsPosition.Length - 1].x && !isScrolling)
+        {
+            isScrolling = false;
+            scrollRect.inertia = false;
+        }
+        float nearestPos = float.MaxValue;
+        for (int i = 0; i < descriptionImage.Length; i++)
+        {
+            float distance = Mathf.Abs(contentRect.anchoredPosition.x - instObjectsPosition[i].x);
+            if (distance < nearestPos)
+            {
+                nearestPos = distance;
+                selectPanelObjID = i;
+            }
+            float scale = Mathf.Clamp(10 / (distance / spacing) * snapScale, 0.5f, 10f);
+            instObjectsScale[i].x = Mathf.SmoothStep(instObjects[i].transform.localRotation.x,scale, scaleSpeed * Time.fixedDeltaTime);
+            instObjectsScale[i].y = Mathf.SmoothStep(instObjects[i].transform.localRotation.y,scale, scaleSpeed * Time.fixedDeltaTime);
+            instObjects[i].transform.localScale = instObjectsScale[i];
+        }
+        float scrollVelocity = Mathf.Abs(scrollRect.velocity.x);
+        if (scrollVelocity < 400 && !isScrolling) 
+        {
+            scrollRect.inertia= false;
+        }
+        if (isScrolling || scrollVelocity > 400)
+        {
+            return;
+        }
+        contentVector.x = Mathf.SmoothStep(contentRect.anchoredPosition.x, instObjectsPosition[selectPanelObjID].x, snapSpeed * Time.fixedDeltaTime);
+        contentRect.anchoredPosition = contentVector;
+    }
+    public void Scrolling(bool scroll)
+    {
+        isScrolling = scroll;
+        if (scroll)
+        {
+            scrollRect.inertia = true;
+        }
+    }
+}
