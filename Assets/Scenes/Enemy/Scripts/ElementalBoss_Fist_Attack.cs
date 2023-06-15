@@ -11,9 +11,12 @@ public class ElementalBoss_Fist_Attack : MonoBehaviour
 
     public bool playerInZone;
 
-    //public List<ContactPoint2D> contacts;
-
     public GameObject player;
+    Rigidbody2D playerRB;
+    Health playerHealth;
+    Animator playerAnim;
+    Collider2D playerCollider;
+
     public List<GameObject> VFX_DamageAreas;
     public List<Collider2D> hitZone;
 
@@ -22,24 +25,41 @@ public class ElementalBoss_Fist_Attack : MonoBehaviour
     public float reductionFactor = 1f; // коефіцієнт зменшення сили відкиду
 
     public List<Collider2D> handParts;
+
+    Animator objAnim;
+    Forward objMove;
+    Shield objShield;
+    HealthBossPart childrenHealth;
+    Collider2D objCollider;
+
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindWithTag("Player");
         attackCalldownMax = attackCalldown;
-        // VFX_DamageArea.GetComponent<VisualEffect>().
+        playerRB = player.GetComponent<Rigidbody2D>();
+        playerHealth = player.GetComponent<Health>();
+        playerAnim = player.GetComponent<Animator>();
+        playerCollider = player.GetComponent<Collider2D>();
+
+        objShield = FindObjectOfType<Shield>();
+
+        objAnim = GetComponent<Animator>();
+        objMove = GetComponent<Forward>();
+        objCollider = GetComponent<Collider2D>();
+        childrenHealth = GetComponentInChildren<HealthBossPart>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (attackCalldown > 0 && gameObject.GetComponent<Animator>().GetBool("IsFistAttack") == false)
+        if (attackCalldown > 0 && objAnim.GetBool("IsFistAttack") == false)
         {
             attackCalldown -= Time.deltaTime;
         }
         if (attackCalldown <= 0 && playerInZone)
         {
-            gameObject.GetComponent<Animator>().SetBool("IsFistAttack", true);
+            objAnim.SetBool("IsFistAttack", true);
             attackCalldown = attackCalldownMax;
         }
     }
@@ -48,7 +68,6 @@ public class ElementalBoss_Fist_Attack : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             playerInZone = true;
-            //gameObject.GetComponent<CapsuleCollider2D>().GetContacts(contacts);
         }
     }
     public void OnTriggerStay2D(Collider2D collision)
@@ -67,15 +86,11 @@ public class ElementalBoss_Fist_Attack : MonoBehaviour
     }
     public void KickAnim()
     {
-        foreach (var part in handParts)
-        {
-            part.isTrigger = true;
-        }
         foreach (var zone in VFX_DamageAreas)
         {
             zone.SetActive(true);
         }
-        gameObject.GetComponent<Forward>().isFly = true;
+        objMove.isFly = true;
     }
     public void ToForardFromFist()
     {
@@ -83,27 +98,24 @@ public class ElementalBoss_Fist_Attack : MonoBehaviour
         {
             zone.SetActive(false);
         }
-        foreach (var part in handParts)
-        {
-            part.isTrigger = false;
-        }
-        gameObject.GetComponent<Forward>().isFly = false;
-        gameObject.GetComponent<Animator>().SetBool("IsFistAttack", false);
+       
+        objMove.isFly = false;
+        objAnim.SetBool("IsFistAttack", false);
         // Check collision with objects that have a regular collider and the "Shield" tag
-        if (playerInZone && gameObject.GetComponent<CapsuleCollider2D>().IsTouching(player.GetComponent<Collider2D>()))
+        if (playerInZone && objCollider.IsTouching(playerCollider))
         {
-            Rigidbody2D pushableObjectRigidbody = player.GetComponent<Rigidbody2D>();
+            Rigidbody2D pushableObjectRigidbody = playerRB;
 
             // Check if the collided object has the "Shield" tag
-            Shield collidedObject = FindObjectOfType<Shield>();
+            Shield collidedObject = objShield;
 
             if (collidedObject != null && collidedObject.CompareTag("Shield"))
             {
                 collidedObject.healthShield -= damage;
                 StartCoroutine(ReducePushForce(pushableObjectRigidbody));
-                if (collidedObject.GetComponent<Shield>().isThreeLevel)
+                if (collidedObject.isThreeLevel)
                 {
-                    gameObject.GetComponentInChildren<HealthBossPart>().healthPoint -= damage / 2;
+                    childrenHealth.healthPoint -= damage / 2;
                 }
             }
             else
@@ -111,9 +123,9 @@ public class ElementalBoss_Fist_Attack : MonoBehaviour
                 // Handle collision with other objects
                 if (pushableObjectRigidbody != null)
                 {
-                    player.GetComponent<Health>().playerHealthPoint -= damage;
-                    player.GetComponent<Health>().playerHealthPointImg.fillAmount -= damage / player.GetComponent<Health>().playerHealthPointMax;
-                    player.GetComponent<Animator>().SetBool("IsHit", true);
+                    playerHealth.playerHealthPoint -= damage;
+                    playerHealth.playerHealthPointImg.fillAmount -= damage / playerHealth.playerHealthPointMax;
+                    playerAnim.SetBool("IsHit", true);
                     StartCoroutine(ReducePushForce(pushableObjectRigidbody));
                 }
             }

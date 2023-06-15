@@ -1,11 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class LocalizationManager : MonoBehaviour
 {
@@ -27,7 +23,6 @@ public class LocalizationManager : MonoBehaviour
     public float volume;
     void Awake()
     {
-        //testText = GameObject.Find("Text (TMP)");
         StartLoad();
     }
     public void StartLoad()
@@ -54,11 +49,9 @@ public class LocalizationManager : MonoBehaviour
     public void LoadSettings()
     {
         string filePath = Path.Combine(Application.persistentDataPath, "Settings.txt");
-
         if (File.Exists(filePath))
         {
             string[] lines = File.ReadAllLines(filePath);
-
             foreach (string item in lines)
             {
                 SettingsData data = JsonUtility.FromJson<SettingsData>(item);
@@ -94,7 +87,6 @@ public class LocalizationManager : MonoBehaviour
     {
         localizedText = new List<LocalizationDataItems>();
         string filePath = Path.Combine(Application.persistentDataPath, "Localization.txt");
-
         if (File.Exists(filePath))
         {
             string[] lines = File.ReadAllLines(filePath);
@@ -113,8 +105,6 @@ public class LocalizationManager : MonoBehaviour
                 }
                 localizedText.Add(dataItem);
             }
-
-            //Debug.Log("Data loaded, dictionary contains: " + localizedText.Count + " entries");
         }
     }
     public void SaveLocalization()
@@ -122,7 +112,6 @@ public class LocalizationManager : MonoBehaviour
         string path = Path.Combine(Application.persistentDataPath, "Localization.txt");
         StreamWriter writer = new StreamWriter(path, true);
         LocalizationDataItems data = new LocalizationDataItems();
-
         foreach (LocalizationDataItems item in items)
         {
             data.language = item.language;
@@ -137,26 +126,77 @@ public class LocalizationManager : MonoBehaviour
     public void SaveWithDefaultParams()
     {
         List<SettingsData> list = new List<SettingsData>();
-
         string path = Path.Combine(Application.persistentDataPath, "Settings.txt");
-
         // Додавання елементів до списку
         list.Add(new SettingsData { key = "language", value = "eng" });
         list.Add(new SettingsData { key = "volume", value = "0.5" });
         list.Add(new SettingsData { key = "v-sync", value = "0" });
-
-
         // Відкриття файлу для запису
         StreamWriter writer = new StreamWriter(path, false);
-
         // Запис усіх елементів зі списку до файлу
         foreach (var item in list)
         {
             string jsonData = JsonUtility.ToJson(item);
             writer.WriteLine(jsonData);
         }
-
         // Закриття файлу
+        writer.Close();
+        // Перезавантаження налаштувань та оновлення тексту
+        LoadSettings();
+        List<GameObject> text = new List<GameObject>
+        {
+            testText
+        };
+        UpdateText(text);
+    }
+    public void ChangeSetting(string key,string value)
+    {
+        List<SettingsData> list = new List<SettingsData>();
+        string path = Path.Combine(Application.persistentDataPath, "Settings.txt");
+        if (File.Exists(path))
+        {
+            // Зчитування всіх рядків з файлу
+            string[] lines = File.ReadAllLines(path);
+            foreach (string item in lines)
+            {
+                SettingsData settings = JsonUtility.FromJson<SettingsData>(item);
+                if (settings.key != key)
+                {
+                    list.Add(settings);
+                }
+            }
+        }
+        // Створення нового елемента з ключем language та його значенням
+        SettingsData data = new SettingsData();
+        data.key = key;
+        data.value = value;
+        // Додавання нового елемента до списку
+        list.Add(data);
+        // Перевірка, чи вже існує елемент з ключем language в списку
+        bool hasLanguage = false;
+        foreach (var item in list)
+        {
+            if (item.key == key)
+            {
+                if (hasLanguage)
+                {
+                    // Якщо елемент з ключем language вже є в списку, видалити його
+                    list.Remove(item);
+                }
+                else
+                {
+                    // Якщо елемент з ключем language є в списку, встановити hasLanguage в true
+                    hasLanguage = true;
+                }
+            }
+        }
+        StreamWriter writer = new StreamWriter(path, false);
+        // Запис усіх елементів зі списку до файлу
+        foreach (var item in list)
+        {
+            string jsonData = JsonUtility.ToJson(item);
+            writer.WriteLine(jsonData);
+        }
         writer.Close();
 
         // Перезавантаження налаштувань та оновлення тексту
@@ -167,192 +207,62 @@ public class LocalizationManager : MonoBehaviour
         };
         UpdateText(text);
     }
-    public void ChangeLanguage()
-    {
-        List<SettingsData> list = new List<SettingsData>();
-
-        string path = Path.Combine(Application.persistentDataPath, "Settings.txt");
-
-        if (File.Exists(path))
-        {
-            // Зчитування всіх рядків з файлу
-            string[] lines = File.ReadAllLines(path);
-            foreach (string item in lines)
-            {
-                SettingsData settings = JsonUtility.FromJson<SettingsData>(item);
-                if (settings.key != "language")
-                {
-                    list.Add(settings);
-                }
-            }
-        }
-
-        // Створення нового елемента з ключем language та його значенням
-        SettingsData data = new SettingsData();
-        data.key = "language";
-        data.value = language[drop.value];
-        // Додавання нового елемента до списку
-        list.Add(data);
-
-        // Перевірка, чи вже існує елемент з ключем language в списку
-        bool hasLanguage = false;
-        foreach (var item in list)
-        {
-            if (item.key == "language")
-            {
-                if (hasLanguage)
-                {
-                    // Якщо елемент з ключем language вже є в списку, видалити його
-                    list.Remove(item);
-                }
-                else
-                {
-                    // Якщо елемент з ключем language є в списку, встановити hasLanguage в true
-                    hasLanguage = true;
-                }
-            }
-        }
-
-        // Відкриття файлу для запису
-        StreamWriter writer = new StreamWriter(path, false);
-
-        // Запис усіх елементів зі списку до файлу
-        foreach (var item in list)
-        {
-            string jsonData = JsonUtility.ToJson(item);
-            writer.WriteLine(jsonData);
-        }
-
-        // Закриття файлу
-        writer.Close();
-
-        // Перезавантаження налаштувань та оновлення тексту
-        LoadSettings();
-        List<GameObject> text = new List<GameObject>
-        {
-            testText
-        };
-        UpdateText(text);
-    }
-    public void ChangeVolume(float volume)
-    {
-        List<SettingsData> list = new List<SettingsData>();
-        string path = Path.Combine(Application.persistentDataPath, "Settings.txt");
-
-        if (File.Exists(path))
-        {
-            // Зчитування всіх рядків з файлу
-            string[] lines = File.ReadAllLines(path);
-            foreach (string item in lines)
-            {
-                SettingsData settings = JsonUtility.FromJson<SettingsData>(item);
-                if (settings.key != "volume")
-                {
-                    list.Add(settings);
-                }
-            }
-        }
-        // Створення нового елемента з ключем language та його значенням
-        SettingsData data = new SettingsData();
-        data.key = "volume";
-        data.value = volume.ToString();
-
-        // Додавання нового елемента до списку
-        list.Add(data);
-
-        // Перевірка, чи вже існує елемент з ключем language в списку
-        bool hasLanguage = false;
-        foreach (var item in list)
-        {
-            if (item.key == "volume")
-            {
-                if (hasLanguage)
-                {
-                    // Якщо елемент з ключем language вже є в списку, видалити його
-                    list.Remove(item);
-                }
-                else
-                {
-                    // Якщо елемент з ключем language є в списку, встановити hasLanguage в true
-                    hasLanguage = true;
-                }
-            }
-        }
-        StreamWriter writer = new StreamWriter(path, false);
-        // Запис усіх елементів зі списку до файлу
-        foreach (var item in list)
-        {
-            string jsonData = JsonUtility.ToJson(item);
-            writer.WriteLine(jsonData);
-        }
-        writer.Close();
-    }
-    public void ChangeLanguage(List<GameObject> text)
-    {
-        List<SettingsData> list = new List<SettingsData>();
-
-        string path = Path.Combine(Application.persistentDataPath, "Settings.txt");
-
-        if (File.Exists(path))
-        {
-            // Зчитування всіх рядків з файлу
-            string[] lines = File.ReadAllLines(path);
-            foreach (string item in lines)
-            {
-                SettingsData settings = JsonUtility.FromJson<SettingsData>(item);
-                if (settings.key != "language")
-                {
-                    list.Add(settings);
-                }
-            }
-        }
-
-        // Створення нового елемента з ключем language та його значенням
-        SettingsData data = new SettingsData();
-        data.key = "language";
-        data.value = language[drop.value];
-
-        // Додавання нового елемента до списку
-        list.Add(data);
-
-        // Перевірка, чи вже існує елемент з ключем language в списку
-        bool hasLanguage = false;
-        foreach (var item in list)
-        {
-            if (item.key == "language")
-            {
-                if (hasLanguage)
-                {
-                    // Якщо елемент з ключем language вже є в списку, видалити його
-                    list.Remove(item);
-                }
-                else
-                {
-                    // Якщо елемент з ключем language є в списку, встановити hasLanguage в true
-                    hasLanguage = true;
-                }
-            }
-        }
-
-        // Відкриття файлу для запису
-        StreamWriter writer = new StreamWriter(path, false);
-
-        // Запис усіх елементів зі списку до файлу
-        foreach (var item in list)
-        {
-            string jsonData = JsonUtility.ToJson(item);
-            writer.WriteLine(jsonData);
-        }
-
-        // Закриття файлу
-        writer.Close();
-
-        // Перезавантаження налаштувань та оновлення тексту
-        LoadSettings();
-
-        text.Add(testText);
-        UpdateText(text);
-    }
+    //public void ChangeLanguage(List<GameObject> text)
+    //{
+    //    List<SettingsData> list = new List<SettingsData>();
+    //    string path = Path.Combine(Application.persistentDataPath, "Settings.txt");
+    //    if (File.Exists(path))
+    //    {
+    //        // Зчитування всіх рядків з файлу
+    //        string[] lines = File.ReadAllLines(path);
+    //        foreach (string item in lines)
+    //        {
+    //            SettingsData settings = JsonUtility.FromJson<SettingsData>(item);
+    //            if (settings.key != "language")
+    //            {
+    //                list.Add(settings);
+    //            }
+    //        }
+    //    }
+    //    // Створення нового елемента з ключем language та його значенням
+    //    SettingsData data = new SettingsData();
+    //    data.key = "language";
+    //    data.value = language[drop.value];
+    //    // Додавання нового елемента до списку
+    //    list.Add(data);
+    //    // Перевірка, чи вже існує елемент з ключем language в списку
+    //    bool hasLanguage = false;
+    //    foreach (var item in list)
+    //    {
+    //        if (item.key == "language")
+    //        {
+    //            if (hasLanguage)
+    //            {
+    //                // Якщо елемент з ключем language вже є в списку, видалити його
+    //                list.Remove(item);
+    //            }
+    //            else
+    //            {
+    //                // Якщо елемент з ключем language є в списку, встановити hasLanguage в true
+    //                hasLanguage = true;
+    //            }
+    //        }
+    //    }
+    //    // Відкриття файлу для запису
+    //    StreamWriter writer = new StreamWriter(path, false);
+    //    // Запис усіх елементів зі списку до файлу
+    //    foreach (var item in list)
+    //    {
+    //        string jsonData = JsonUtility.ToJson(item);
+    //        writer.WriteLine(jsonData);
+    //    }
+    //    // Закриття файлу
+    //    writer.Close();
+    //    // Перезавантаження налаштувань та оновлення тексту
+    //    LoadSettings();
+    //    text.Add(testText);
+    //    UpdateText(text);
+    //}
     public void UpdateText(List<GameObject> text)
     {
         string filePath = Path.Combine(Application.persistentDataPath, "Localization.txt");
@@ -383,7 +293,6 @@ public class LocalizationManager : MonoBehaviour
         }
     }
 }
-
 [System.Serializable]
 public class LocalizationDataItems
 {

@@ -1,9 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class EquipItem : MonoBehaviour
@@ -54,7 +53,7 @@ public class EquipItem : MonoBehaviour
                 updatedList.Clear();
                 foreach (string jsonLine in jsonLines)
                 {
-                   
+
                     SavedEquipData data = JsonUtility.FromJson<SavedEquipData>(jsonLine);
                     if (data.Tag != item.GetComponent<SetParametersToitem>().Tag)
                     {
@@ -74,7 +73,7 @@ public class EquipItem : MonoBehaviour
                 // Записуємо оновлений масив рядків в файл після завершення циклу foreach
                 File.WriteAllLines(path, updatedList.ToArray());
             }
-            
+
         }
     }
     private void SaveEquip(SavedEquipData equip)
@@ -91,7 +90,7 @@ public class EquipItem : MonoBehaviour
         string jsonData = JsonUtility.ToJson(data);
         writer.WriteLine(jsonData);
         writer.Close();
-    } 
+    }
     private void SaveEquip()
     {
         string path = Path.Combine(Application.persistentDataPath, "EquipedItems.txt");

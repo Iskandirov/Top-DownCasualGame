@@ -37,7 +37,6 @@ public class SummonerEnemy : MonoBehaviour
                         a.lifeTime = lifeTime;
                         a.isThree = isThree;
                         a.attackSpeed = attackSpeed;
-                        //Debug.Log(collider.name);
                         step = stepMax;
 
                         //призивати об'єкт з скріптом який буде сумонити ворога

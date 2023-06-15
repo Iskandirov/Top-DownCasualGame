@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 
@@ -20,11 +17,5 @@ public class ItemParameters : MonoBehaviour
     void Start()
     {
         GetComponent<SpriteRenderer>().sprite = itemImage;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }

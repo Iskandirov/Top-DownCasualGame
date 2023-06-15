@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,15 +10,17 @@ public class OjectToUpgrade : MonoBehaviour
     public GetScore setMoney;
     public int objID;
     public int price;
+    UpgradeObjInfo objInfo;
     // Start is called before the first frame update
     void Start()
     {
+        objInfo = objList.GetComponent<UpgradeObjInfo>();
         MathPrice();
     }
 
     public void MathPrice()
     {
-        foreach (var img in objList.GetComponent<UpgradeObjInfo>().itemsRead)
+        foreach (var img in objInfo.itemsRead)
         {
             if (img.IDObject == objID)
             {
@@ -39,13 +39,13 @@ public class OjectToUpgrade : MonoBehaviour
                 moneyRes -= priceRes;
                 money.text = moneyRes.ToString();
                 setMoney.SaveScore(moneyRes);
-                foreach (var img in objList.GetComponent<UpgradeObjInfo>().itemsRead)
+                foreach (var img in objInfo.itemsRead)
                 {
                     if (img.IDObject == objID)
                     {
-                        objList.GetComponent<UpgradeObjInfo>().SaveInventory(img.levelUpgrade + 1, objID);
-                        objList.GetComponent<UpgradeObjInfo>().itemsRead.Clear();
-                        objList.GetComponent<UpgradeObjInfo>().LoadInventory(objList.GetComponent<UpgradeObjInfo>().itemsRead);
+                        objInfo.SaveInventory(img.levelUpgrade + 1, objID);
+                        objInfo.itemsRead.Clear();
+                        objInfo.LoadInventory(objInfo.itemsRead);
                         MathPrice();
                         break;
                     }

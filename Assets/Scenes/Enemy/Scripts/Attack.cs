@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Attack : MonoBehaviour
@@ -15,10 +13,15 @@ public class Attack : MonoBehaviour
     public GameObject attackVFXRange;
     public GameObject attackVFXRangePos;
     GameObject objVFX;
-    public GameObject objectToHit;
+    Health objectToHit;
+
+    Forward objMove;
+    Animator objAnim;
     // Start is called before the first frame update
     void Start()
     {
+        objMove = GetComponent<Forward>();
+        objAnim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -37,13 +40,12 @@ public class Attack : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (GetComponent<Forward>().isSummoned == false)
+        if (objMove.isSummoned == false)
         {
             if (collision.CompareTag("Shield") && isAttack == false)
             {
-                gameObject.GetComponent<Animator>().SetBool("IsAttack", true);
-                gameObject.GetComponent<Forward>().speed = 0;
-                objectToHit = collision.gameObject;
+                objAnim.SetBool("IsHit", true);
+                objMove.speed = 0;
                 collision.GetComponent<Shield>().healthShield -= damage;
                 isAttack = true;
                 if (collision.GetComponent<Shield>().isThreeLevel)
@@ -51,7 +53,7 @@ public class Attack : MonoBehaviour
                     gameObject.GetComponentInChildren<HealthPoint>().healthPoint -= damage / 2;
                     if (collision.GetComponent<Shield>().isFiveLevel)
                     {
-                        collision.GetComponent<Shield>().healthShield‹Missed += damage;
+                        collision.GetComponent<Shield>().healthShieldMissed += damage;
                     }
                 }
             }
@@ -61,9 +63,9 @@ public class Attack : MonoBehaviour
                 {
                     if (!isRange)
                     {
-                        gameObject.GetComponent<Forward>().speed = 0;
-                        gameObject.GetComponent<Animator>().SetBool("IsAttack", true);
-                        objectToHit = collision.gameObject;
+                        objMove.speed = 0;
+                        objAnim.SetBool("IsHit", true);
+                        objectToHit = collision.GetComponent<Health>();
                         Instantiate(attackVFX, gameObject.transform.position, Quaternion.identity);
                         isAttack = true;
                     }
@@ -79,17 +81,17 @@ public class Attack : MonoBehaviour
         {
             if (collision.CompareTag("Enemy"))
             {
-                chancToLure = Random.Range(0,10);
-                gameObject.GetComponent<Forward>().speed = 0;
+                chancToLure = Random.Range(0, 10);
+                objMove.speed = 0;
                 if (collision.gameObject.GetComponentInParent<ElementalBoss_Destroy>() || collision.GetComponent<HealthBossPart>())
                 {
-                    gameObject.GetComponent<Animator>().SetBool("IsAttack", true);
+                    objAnim.SetBool("IsHit", true);
                     collision.GetComponent<HealthBossPart>().healthPoint -= damage;
                     collision.GetComponent<HealthBossPart>().ChangeToKick();
                 }
                 else if (!collision.gameObject.GetComponentInParent<ElementalBoss_Destroy>() || !collision.GetComponent<HealthBossPart>())
                 {
-                    gameObject.GetComponent<Animator>().SetBool("IsAttack", true);
+                    objAnim.SetBool("IsHit", true);
                     collision.GetComponent<HealthPoint>().healthPoint -= damage;
                     collision.GetComponent<HealthPoint>().ChangeToKick();
                 }
@@ -102,18 +104,29 @@ public class Attack : MonoBehaviour
             }
         }
     }
+    public void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            objectToHit = null;
+        }
+    }
     public void EndAttack()
     {
-        gameObject.GetComponent<Forward>().speed = gameObject.GetComponent<Forward>().speedMax;
-        gameObject.GetComponent<Animator>().SetBool("IsAttack", false);
+        objMove.speed = GetComponent<Forward>().speedMax;
+        objAnim.SetBool("IsHit", false);
     }
     public void DamageDeal()
     {
-        if (objectToHit.GetComponent<Animator>() && !GetComponent<Forward>().isSummoned)
+        if (objectToHit != null)
         {
-            objectToHit.GetComponent<Animator>().SetBool("IsHit", true);
-            objectToHit.GetComponent<Health>().playerHealthPoint -= damage;
-            objectToHit.GetComponent<Health>().playerHealthPointImg.fillAmount -= damage / objectToHit.GetComponent<Health>().playerHealthPointMax;
+            if (objectToHit.GetComponent<Animator>() && !objMove.isSummoned)
+            {
+                objectToHit.GetComponent<Animator>().SetBool("IsHit", true);
+                objectToHit.playerHealthPoint -= damage;
+                objectToHit.playerHealthPointImg.fillAmount -= damage / objectToHit.playerHealthPointMax;
+                objectToHit.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            }
         }
     }
 }

@@ -1,8 +1,7 @@
-using System;
+п»їusing System;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -47,7 +46,7 @@ public class MoveItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
     {
         startParent = transform.parent.gameObject;
         fliedSlots = FindObjectOfType<FieldSlots>();
-        // Знайти об'єкт за тегом
+        // Г‡Г­Г Г©ГІГЁ Г®ГЎ'ВєГЄГІ Г§Г  ГІГҐГЈГ®Г¬
         GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("Finish");
         targetEquipObjects = GameObject.FindGameObjectWithTag("Respawn");
         equipPanel = GameObject.FindGameObjectWithTag("Wall");
@@ -57,7 +56,7 @@ public class MoveItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
         if (gameObject.GetComponent<SetParametersToitem>().level != "4")
         {
             maxLevel.GetComponent<TagText>().tagText = "level";
-            maxLevel.GetComponent<TextMeshProUGUI>().text = "Рівень ";
+            maxLevel.GetComponent<TextMeshProUGUI>().text = "ГђВіГўГҐГ­Гј ";
             LevelCount.SetActive(true);
             LevelCount.GetComponent<TextMeshProUGUI>().text = gameObject.GetComponent<SetParametersToitem>().level;
 
@@ -68,8 +67,8 @@ public class MoveItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
             targetObjects.Add(obj);
         }
         startPosition = transform.parent.position;
-       
-       
+
+
         if (!created)
         {
             startScale = transform.localScale;
@@ -300,7 +299,7 @@ public class MoveItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
                 }
             }
         }
-        
+
     }
 
     public void SetVisible(bool isActivate)
@@ -355,13 +354,13 @@ public class MoveItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
                                     SavedEquipData data = JsonUtility.FromJson<SavedEquipData>(jsonLine);
                                     if (data.Tag == stats[1].GetComponent<TagText>().tagText)
                                     {
-                                        button.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = "Зняти";
+                                        button.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = "Г‡Г­ГїГІГЁ";
                                         isEquipedNow = true;
                                         break;
                                     }
                                     else
                                     {
-                                        button.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = "Обладнати";
+                                        button.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = "ГЋГЎГ«Г Г¤Г­Г ГІГЁ";
                                         isEquipedNow = false;
                                     }
                                 }
@@ -427,7 +426,7 @@ public class MoveItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
             {
                 transform.localScale = targetScaleBig;
                 //timer = 0f;
-                transform.SetAsLastSibling(); // Додайте цей рядок коду
+                transform.SetAsLastSibling(); // Г„Г®Г¤Г Г©ГІГҐ Г¶ГҐГ© Г°ГїГ¤Г®ГЄ ГЄГ®Г¤Гі
             }
         }
         else
@@ -436,7 +435,7 @@ public class MoveItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
             {
                 transform.localScale = targetScaleBig / 2;
                 //timer = 0f;
-                transform.SetAsFirstSibling(); // Додайте цей рядок коду
+                transform.SetAsFirstSibling(); // Г„Г®Г¤Г Г©ГІГҐ Г¶ГҐГ© Г°ГїГ¤Г®ГЄ ГЄГ®Г¤Гі
             }
         }
     }
@@ -448,7 +447,7 @@ public class MoveItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
             if (toSlot == true)
             {
                 transform.localScale = targetScaleSmall;
-                transform.SetAsFirstSibling(); // Додайте цей рядок коду
+                transform.SetAsFirstSibling(); // Г„Г®Г¤Г Г©ГІГҐ Г¶ГҐГ© Г°ГїГ¤Г®ГЄ ГЄГ®Г¤Гі
             }
         }
         else
@@ -456,7 +455,7 @@ public class MoveItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
             if (toSlot == true)
             {
                 transform.localScale = targetScaleSmall / 2;
-                transform.SetAsFirstSibling(); // Додайте цей рядок коду
+                transform.SetAsFirstSibling(); // Г„Г®Г¤Г Г©ГІГҐ Г¶ГҐГ© Г°ГїГ¤Г®ГЄ ГЄГ®Г¤Гі
             }
         }
     }
@@ -465,12 +464,12 @@ public class MoveItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
     {
         if (eventData.button == PointerEventData.InputButton.Left && !Input.GetMouseButton(1))
         {
-            transform.localScale = transform.localScale / 1.1f; 
-        } 
+            transform.localScale = transform.localScale / 1.1f;
+        }
         //if (eventData.button == PointerEventData.InputButton.Right && !Input.GetMouseButton(0))
         //{
         //    transform.localScale = targetScaleSmall;
         //}
     }
-   
+
 }

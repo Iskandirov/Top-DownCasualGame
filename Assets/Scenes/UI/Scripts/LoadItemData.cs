@@ -1,10 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using TMPro;
-using UnityEditor;
 using UnityEngine;
 
 public class LoadItemData : MonoBehaviour
@@ -45,7 +40,6 @@ public class LoadItemData : MonoBehaviour
                     objectCounts.Add(key, 1);
                 }
             }
-
             objectsList = new List<SavedObjectData>(uniqueObjects.Values);
             objectsList.Sort((x, y) => x.IDRare.CompareTo(y.IDRare));
             // Створення об'єктів з префаба для кожного унікального предмету та його кількості
@@ -55,22 +49,27 @@ public class LoadItemData : MonoBehaviour
                 int itemLevel = item.Level;
                 SavedObjectData itemParams = item;
                 int count = objectCounts[(itemName, itemLevel)];
+
                 GameObject newObject = Instantiate(prefabToInstantiate, transform);
+
                 newObject.transform.SetParent(parentsList[index]); // index - це індекс батька у списку батьків
                 newObject.transform.position = new Vector3(parentsList[index].position.x, parentsList[index].position.y + 1f, parentsList[index].position.z);
                 newObject.transform.localScale = prefabToInstantiate.transform.localScale;
-                newObject.GetComponent<SetParametersToitem>().ItemName = itemName;
-                newObject.GetComponent<SetParametersToitem>().ItemImage.sprite = Resources.Load<Sprite>(itemParams.Name);
-                newObject.GetComponent<SetParametersToitem>().ItemImage.SetNativeSize();
-                newObject.GetComponent<SetParametersToitem>().Rare.sprite = Resources.Load<Sprite>(itemParams.RareName + " " + itemParams.Level.ToString());
-                newObject.GetComponent<SetParametersToitem>().ItemStat.text = itemParams.Stat;
-                newObject.GetComponent<SetParametersToitem>().level = itemParams.Level.ToString();
-                newObject.GetComponent<SetParametersToitem>().RareName = itemParams.RareName;
-                newObject.GetComponent<SetParametersToitem>().Count.text = count.ToString();
-                newObject.GetComponent<SetParametersToitem>().Tag = itemParams.Tag;
-                newObject.GetComponent<SetParametersToitem>().RareTag = itemParams.RareTag;
-                newObject.GetComponent<SetParametersToitem>().IDRare = itemParams.IDRare;
+
+                SetParametersToitem objParam = newObject.GetComponent<SetParametersToitem>();
+                objParam.ItemName = itemName;
+                objParam.ItemImage.sprite = Resources.Load<Sprite>(itemParams.Name);
+                objParam.ItemImage.SetNativeSize();
+                objParam.Rare.sprite = Resources.Load<Sprite>(itemParams.RareName + " " + itemParams.Level.ToString());
+                objParam.ItemStat.text = itemParams.Stat;
+                objParam.level = itemParams.Level.ToString();
+                objParam.RareName = itemParams.RareName;
+                objParam.Count.text = count.ToString();
+                objParam.Tag = itemParams.Tag;
+                objParam.RareTag = itemParams.RareTag;
+                objParam.IDRare = itemParams.IDRare;
                 newObject.GetComponent<MoveItem>().PointActivate();
+
                 objectsListCopy.Add(newObject);
                 lang.FindMyComponentInChildren(newObject, itemParams.Tag);
                 index++; // переходимо до наступного батька у списку батьків

@@ -40,8 +40,8 @@ public class Bullet : MonoBehaviour
             {
                 collision.GetComponent<HealthPoint>().healthPoint -= damage;
                 collision.GetComponent<HealthPoint>().ChangeToKick();
-                collision.transform.root.GetComponent<Forward>().isShooted = true;
-                collision.transform.root.GetComponent<Forward>().Body.AddForce(-(transform.position - collision.transform.position) * forceAmount, ForceMode2D.Impulse);
+                collision.GetComponentInParent<Forward>().isShooted = true;
+                collision.GetComponentInParent<Forward>().Body.AddForce(-(transform.position - collision.transform.position) * forceAmount, ForceMode2D.Impulse);
                 if (!isPiers)
                 {
                     Destroy(gameObject);

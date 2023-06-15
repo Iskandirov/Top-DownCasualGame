@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectToShow : MonoBehaviour
@@ -41,7 +39,6 @@ public class ObjectToShow : MonoBehaviour
         {
             isNeedToShow = false;
             gameObject.GetComponent<OjectToUpgrade>().Upgrade();
-            //tooltipTarget.HideTooltip();
         }
     }
 }

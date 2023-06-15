@@ -8,19 +8,16 @@ public class DeleteVFX : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        StartCoroutine(TimerCoroutine());
     }
 
-    // Update is called once per frame
-    void Update()
+    private IEnumerator TimerCoroutine()
     {
-        if (stepDelete <= 0)
+        //while (isTimerActive)
         {
+            yield return new WaitForSeconds(stepDelete);
             Destroy(gameObject);
         }
-        else
-        {
-            stepDelete -= Time.deltaTime;
-        }
     }
+    
 }

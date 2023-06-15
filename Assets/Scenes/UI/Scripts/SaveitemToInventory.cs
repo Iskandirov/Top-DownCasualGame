@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using UnityEditor;
 using UnityEngine;
 
 public class SaveitemToInventory : MonoBehaviour
@@ -11,15 +9,16 @@ public class SaveitemToInventory : MonoBehaviour
     {
         if (collision.CompareTag("EditorOnly"))
         {
+            ItemParameters objParam = collision.GetComponent<ItemParameters>();
             // Створення об'єкта даних
             SavedObjectData data = new SavedObjectData();
-            data.Name = collision.GetComponent<ItemParameters>().itemName;
-            data.IDRare = collision.GetComponent<ItemParameters>().idRare;
-            data.RareName = collision.GetComponent<ItemParameters>().itemRareName;
-            data.Stat = collision.GetComponent<ItemParameters>().Stat;
-            data.Level = collision.GetComponent<ItemParameters>().Level;
-            data.Tag = collision.GetComponent<ItemParameters>().Tag;
-            data.RareTag = collision.GetComponent<ItemParameters>().RareTag;
+            data.Name = objParam.itemName;
+            data.IDRare = objParam.idRare;
+            data.RareName = objParam.itemRareName;
+            data.Stat = objParam.Stat;
+            data.Level = objParam.Level;
+            data.Tag = objParam.Tag;
+            data.RareTag = objParam.RareTag;
 
             // Збереження даних у файл
             string fileName = Path.Combine(Application.persistentDataPath, "savedData.txt");
@@ -32,8 +31,6 @@ public class SaveitemToInventory : MonoBehaviour
         }
     }
 }
-
-
 
 
 [System.Serializable]

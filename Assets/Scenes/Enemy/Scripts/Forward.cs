@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Forward : MonoBehaviour
@@ -23,39 +21,49 @@ public class Forward : MonoBehaviour
     public float summonTime;
     public bool isThree;
     public GameObject bomb;
+
+    private Collider2D[] colliders;
+
     // Start is called before the first frame update
     void Start()
     {
         isStunned = false;
         player = GameObject.FindWithTag("Player");
+        colliders = new Collider2D[10];
     }
 
     public void FindEnemy()
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(gameObject.transform.position, 16f);
+        int colliderCount = Physics2D.OverlapCircleNonAlloc(gameObject.transform.position, 16f, colliders);
 
-        foreach (Collider2D collider in colliders)
+        for (int i = 0; i < colliderCount; i++)
         {
+            Collider2D collider = colliders[i];
+
             if (collider.isTrigger != true && collider.CompareTag("Enemy") && collider.transform.parent.gameObject != gameObject)
             {
-                if (collider.GetComponent<HealthPoint>())
+                HealthPoint healthPoint = collider.GetComponent<HealthPoint>();
+
+                if (healthPoint != null)
                 {
                     player = collider.gameObject;
                     enemyFinded = true;
                 }
             }
         }
-        
     }
+
     public void MoveEnd()
     {
         isShooted = false;
         Body.velocity = Vector2.zero;
     }
+
     public void StopMove()
     {
         speed = 0;
     }
+
     public void StartMove()
     {
         speed = speedMax;
@@ -68,18 +76,21 @@ public class Forward : MonoBehaviour
         {
             Invoke("MoveEnd", 0.2f);
         }
+
         if (isSummoned)
         {
             summonTime -= Time.deltaTime;
-            if (!enemyFinded || ReferenceEquals(player, null))
+
+            if (!enemyFinded || player == null)
             {
                 FindEnemy();
             }
+
             if (summonTime <= 0)
             {
-                player = GameObject.FindWithTag("Player");
                 isSummoned = false;
                 enemyFinded = false;
+
                 if (isThree)
                 {
                     Instantiate(bomb, transform.position, Quaternion.identity);
@@ -87,26 +98,29 @@ public class Forward : MonoBehaviour
                 }
             }
         }
-        if (ReferenceEquals(player, null) || player.Equals(null))
+
+        if (player == null)
         {
             player = GameObject.FindWithTag("Player");
-            Debug.Log(player);
         }
-        if (isStunned == true)
+
+        if (isStunned)
         {
             Stuned();
         }
+
         if (!isFly && !isShooted)
         {
             Body.position = Vector3.MoveTowards(Body.position, player.transform.position, speed * Time.deltaTime);
         }
+
         if (Body.position.x < player.transform.position.x)
         {
-            Body.transform.rotation = new Quaternion(0, 0, 0, 0);
+            Body.transform.rotation = Quaternion.identity;
         }
         else
         {
-            Body.transform.rotation = new Quaternion(0, 180, 0, 0);
+            Body.transform.rotation = Quaternion.Euler(0, 180, 0);
         }
 
         // ¬изначаЇмо в≥дстань в≥д гравц€ до ворога
@@ -138,6 +152,7 @@ public class Forward : MonoBehaviour
             LocationPoint.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
     }
+
     public void Stuned()
     {
         if (stunnTime <= 0)
@@ -152,6 +167,7 @@ public class Forward : MonoBehaviour
             stunnTime -= Time.deltaTime;
         }
     }
+
     public void Relocate(Transform pos)
     {
         gameObject.transform.position = new Vector2(pos.position.x, pos.position.y + 10);

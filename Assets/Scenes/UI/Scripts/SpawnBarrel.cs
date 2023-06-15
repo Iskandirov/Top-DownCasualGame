@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnBarrel : MonoBehaviour
@@ -9,37 +8,20 @@ public class SpawnBarrel : MonoBehaviour
     public Vector2 spawnAreaMax; // Максимальні координати спавну
     public float spawnInterval = 1f; // Інтервал спавну в секундах
 
-    private bool isSpawning = false;
+    //private bool isSpawning = false;
 
-    public void FixedUpdate()
+    public void Start()
     {
-        StartSpawning();
+        StartCoroutine(SpawnRoutine());
     }
-    public void StartSpawning()
-    {
-        if (!isSpawning)
-        {
-            isSpawning = true;
-            StartCoroutine(SpawnRoutine());
-        }
-    }
-
-    public void StopSpawning()
-    {
-        if (isSpawning)
-        {
-            isSpawning = false;
-            StopCoroutine(SpawnRoutine());
-        }
-    }
-
+  
     private IEnumerator SpawnRoutine()
     {
-        while (isSpawning)
+        while (true)
         {
-            SpawnObject();
-
             yield return new WaitForSeconds(spawnInterval);
+
+            SpawnObject();
         }
     }
 

@@ -11,16 +11,16 @@ public class TowerWave : MonoBehaviour
     void Start()
     {
         transform.position = player.transform.position;
+        StartCoroutine(TimerSpell());
     }
-
+    private IEnumerator TimerSpell()
+    {
+        yield return new WaitForSeconds(lifeTime);
+        Destroy(gameObject);
+    }
     // Update is called once per frame
     void Update()
     {
-        lifeTime -= Time.deltaTime;
-        if (lifeTime <= 0)
-        {
-            Destroy(gameObject);
-        }
         transform.localScale = new Vector3(transform.localScale.x + Time.deltaTime * 20, transform.localScale.y + Time.deltaTime * 20, transform.localScale.z + Time.deltaTime * 20);
     }
     public void OnTriggerEnter2D(Collider2D collision)

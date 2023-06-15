@@ -14,6 +14,9 @@ public class LightOn : MonoBehaviour
     //GameObjects
     public GameObject pill;
     public GameObject spawner;
+    Move objMove;
+    Shoot objShoot;
+    SpawnEnemy objSpawn;
 
     [Header("Check if skill activated")]
     //Check if skill activated
@@ -42,8 +45,20 @@ public class LightOn : MonoBehaviour
     void Start()
     {
         step = gameObject.GetComponent<CDSkillObject>().CD;
+        objMove = transform.root.GetComponent<Move>();
+        objShoot = transform.root.GetComponent<Shoot>();
+        objSpawn = FindObjectOfType<SpawnEnemy>();
     }
-    
+
+    void Update()
+    {
+        step -= Time.deltaTime;
+        if (step <= 0)
+        {
+            SpawnObject();
+            step = stepMax;
+        }
+    }
 
     // Update is called once per frame
     void FixedUpdate()
@@ -53,33 +68,23 @@ public class LightOn : MonoBehaviour
         if (IsPillUp == true)
         {
             stepGhost -= Time.deltaTime;
-            FindObjectOfType<SpawnEnemy>().SpawnEnemies(120, moveSpeedBuff, 1, 1.3f);
+            objSpawn.SpawnEnemies(120, moveSpeedBuff, 1, 1.3f);
             if (!IsPillBuffed)
             {
-                gameObject.transform.root.GetComponent<Move>().speed += moveSpeedBuff;
-                gameObject.transform.root.GetComponent<Shoot>().attackSpeed -= attackSpeedBuff / 100;
+                objMove.speed += moveSpeedBuff;
+                objShoot.attackSpeed -= attackSpeedBuff / 100;
                 IsPillBuffed = true;
-                gameObject.transform.root.GetComponent<Move>().dashTimeMax *= dashTime;
+                objMove.dashTimeMax *= dashTime;
             }
-            
+
             if (stepGhost <= 0)
             {
                 stepGhost = stepGhostMax;
-                gameObject.transform.root.GetComponent<Move>().speed -= moveSpeedBuff;
-                gameObject.transform.root.GetComponent<Shoot>().attackSpeed += attackSpeedBuff / 100;
-                gameObject.transform.root.GetComponent<Move>().dashTimeMax /= dashTime;
+                objMove.speed -= moveSpeedBuff;
+                objShoot.attackSpeed += attackSpeedBuff / 100;
+                objMove.dashTimeMax /= dashTime;
                 IsPillBuffed = false;
                 IsPillUp = false;
-            }
-        }
-        //Spawn pills with time delay if skill is active
-        //if (IsPillOn == true)
-        {
-            step -= Time.deltaTime;
-            if (step <= 0)
-            {
-                SpawnObject();
-                step = stepMax;
             }
         }
     }

@@ -21,11 +21,21 @@ public class HealthPoint : MonoBehaviour
     public float burnDamage;
     public float burnTick;
     public float burnTickMax;
+    SpriteRenderer[] objsSprite;
+    Expirience objExp;
+    DropItems objDrop;
+    Forward objMove;
+    KillCount objKills;
     // Start is called before the first frame update
     void Start()
     {
         healthPointMax = healthPoint;
         player = GameObject.FindWithTag("Player");
+        objsSprite = GetComponentsInChildren<SpriteRenderer>();
+        objExp = player.GetComponent<Expirience>();
+        objDrop = GetComponentInParent<DropItems>();
+        objMove = GetComponentInParent<Forward>();
+        objKills = FindObjectOfType<KillCount>();
     }
 
     // Update is called once per frame
@@ -41,7 +51,6 @@ public class HealthPoint : MonoBehaviour
             burnTick -= Time.deltaTime;
             if (burnTick <= 0)
             {
-                Debug.Log(1);
                 ChangeToKick();
                 healthPoint -= burnDamage;
                 ChangeToNotKick();
@@ -52,25 +61,31 @@ public class HealthPoint : MonoBehaviour
         ChangeToNotKick();
         if (healthPoint <= 0)
         {
+            EXP a = Instantiate(expiriancePoint, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, 1.9f), Quaternion.identity);
+            a.expBuff = healthPointMax / 5;
+
+            objExp.expiriencepoint.fillAmount += healthPointMax / (objExp.level * 10);
+            objExp.ShowLevel();
+            objKills.score += 1;
+
             if (IsBobs)
             {
-                gameObject.GetComponentInParent<DropItems>().OnDestroyBoss();
+                objDrop.OnDestroyBoss();
+                Destroy(gameObject);
+                
             }
-            EXP a = Instantiate(expiriancePoint, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, 1.9f), Quaternion.identity);
-            a.GetComponent<EXP>().expBuff = healthPointMax / 5;
 
-            player.GetComponent<Expirience>().expiriencepoint.fillAmount += healthPointMax / (player.GetComponent<Expirience>().level * 10);
-            player.GetComponent<Expirience>().ShowLevel();
-            FindObjectOfType<KillCount>().score += 1;
-            Destroy(gameObject.transform.root.gameObject);
+            objMove.transform.position = new Vector2(0, 0);
+
+            healthPoint = healthPointMax;
         }
     }
     
     public void ChangeToKick()
     {
-        for (int i = 0; i < gameObject.transform.parent.GetComponentsInChildren<SpriteRenderer>().Length; i++)
+        for (int i = 0; i < objsSprite.Length; i++)
         {
-            gameObject.transform.parent.GetComponentsInChildren<SpriteRenderer>()[i].color = new Color32(255, 0, 0, 255);
+            objsSprite[i].color = new Color32(255, 0, 0, 255);
         }
         isKick = true;
     } 
@@ -81,9 +96,9 @@ public class HealthPoint : MonoBehaviour
             stepKick -= Time.deltaTime;
             if (stepKick <= 0)
             {
-                for (int i = 0; i < gameObject.transform.parent.GetComponentsInChildren<SpriteRenderer>().Length; i++)
+                for (int i = 0; i < objsSprite.Length; i++)
                 {
-                    gameObject.transform.parent.GetComponentsInChildren<SpriteRenderer>()[i].color = new Color32(255, 255, 255, 255);
+                    objsSprite[i].color = new Color32(255, 255, 255, 255);
                 }
                 isKick = false;
                 stepKick = stepKickMax;

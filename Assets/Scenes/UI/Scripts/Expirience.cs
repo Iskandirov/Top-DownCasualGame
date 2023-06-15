@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,16 +7,13 @@ public class Expirience : MonoBehaviour
     public float level;
     public GameObject levelUp;
     public ActivateAbilities activeAbilObj;
+    Health objHealth;
     // Start is called before the first frame update
     void Start()
     {
+        objHealth = GetComponent<Health>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Expirience"))
@@ -28,17 +23,17 @@ public class Expirience : MonoBehaviour
             Destroy(collision.gameObject);
         }
 
-        else if (collision.CompareTag("Health") && GetComponent<Health>().playerHealthPoint < GetComponent<Health>().playerHealthPointMax)
+        else if (collision.CompareTag("Health") && objHealth.playerHealthPoint < objHealth.playerHealthPointMax)
         {
-            if (GetComponent<Health>().playerHealthPoint + (GetComponent<Health>().playerHealthPointMax / 100) * 10 >= GetComponent<Health>().playerHealthPointMax)
+            if (objHealth.playerHealthPoint + (objHealth.playerHealthPointMax / 100) * 10 >= objHealth.playerHealthPointMax)
             {
-                GetComponent<Health>().playerHealthPoint = GetComponent<Health>().playerHealthPointMax;
+                objHealth.playerHealthPoint = objHealth.playerHealthPointMax;
                 Destroy(collision.gameObject);
             }
             else
             {
-                GetComponent<Health>().playerHealthPoint += (GetComponent<Health>().playerHealthPointMax / 100) * 10; //Can be baffed by some thing
-                GetComponent<Health>().playerHealthPointImg.fillAmount = GetComponent<Health>().playerHealthPoint / GetComponent<Health>().playerHealthPointMax;
+                objHealth.playerHealthPoint += (objHealth.playerHealthPointMax / 100) * 10; //Can be baffed by some thing
+                objHealth.playerHealthPointImg.fillAmount = objHealth.playerHealthPoint / objHealth.playerHealthPointMax;
                 Destroy(collision.gameObject);
             }
         }

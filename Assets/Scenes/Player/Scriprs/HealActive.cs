@@ -29,20 +29,24 @@ public class HealActive : MonoBehaviour
                 player.playerHealthPointImg.fillAmount = player.playerHealthPoint / player.playerHealthPointMax;
             }
         }
+        StartCoroutine(TimerSpell());
+
     }
 
+    private IEnumerator TimerSpell()
+    {
+        yield return new WaitForSeconds(lifeTime);
+
+        if (isLevelTwo)
+        {
+            player.GetComponent<Move>().isInvincible = false;
+        }
+        Destroy(gameObject);
+
+    }
     // Update is called once per frame
     void Update()
     {
         transform.position = player.transform.position;
-        lifeTime -= Time.deltaTime;
-        if (lifeTime <=0)
-        {
-            if (isLevelTwo)
-            {
-                player.GetComponent<Move>().isInvincible = false;
-            }
-            Destroy(gameObject);
-        }
     }
 }

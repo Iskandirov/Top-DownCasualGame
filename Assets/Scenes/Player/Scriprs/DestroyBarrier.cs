@@ -12,38 +12,36 @@ public class DestroyBarrier : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        player = FindObjectOfType<Health>();
+
+        StartCoroutine(TimerSpell());
     }
 
-    // Update is called once per frame
-    void Update()
+    private IEnumerator TimerSpell()
     {
-        lifeTime -= Time.deltaTime;
-        if (lifeTime <= 0)
+        yield return new WaitForSeconds(lifeTime);
+
+        if (isFiveLevel)
         {
-            if (isFiveLevel)
+            if (ReferenceEquals(player.gameObject, gameObject))
             {
-                player = FindObjectOfType<Health>();
 
-                if (ReferenceEquals(player.gameObject, gameObject))
+                if (player.playerHealthPoint != player.playerHealthPointMax)
                 {
-
-                    if (player.playerHealthPoint != player.playerHealthPointMax)
+                    if (player.playerHealthPoint + heal <= player.playerHealthPointMax)
                     {
-                        if (player.playerHealthPoint + heal <= player.playerHealthPointMax)
-                        {
-                            player.playerHealthPoint += heal;
-                            player.playerHealthPointImg.fillAmount = player.playerHealthPoint / player.playerHealthPointMax;
-                        }
-                        else
-                        {
-                            player.playerHealthPoint = player.playerHealthPointMax;
-                            player.playerHealthPointImg.fillAmount = player.playerHealthPoint / player.playerHealthPointMax;
-                        }
+                        player.playerHealthPoint += heal;
+                        player.playerHealthPointImg.fillAmount = player.playerHealthPoint / player.playerHealthPointMax;
+                    }
+                    else
+                    {
+                        player.playerHealthPoint = player.playerHealthPointMax;
+                        player.playerHealthPointImg.fillAmount = player.playerHealthPoint / player.playerHealthPointMax;
                     }
                 }
             }
-            Destroy(gameObject);
         }
+        Destroy(gameObject);
+
     }
 }

@@ -16,14 +16,15 @@ public class GetScore : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
-        if (FindObjectOfType<Timer>())
+        Timer objTimer = FindObjectOfType<Timer>();
+        if (objTimer)
         {
-            timeEnd.text = FindObjectOfType<Timer>().time.ToString("00.00");
+            timeEnd.text = objTimer.time.ToString("00.00");
             if (float.TryParse(timeEnd.text, out float result))
             {
                 // Вдале перетворення
                 score = ((FindObjectOfType<KillCount>().score + 1) * Mathf.Pow(2.71828f, (0.05f * result))) * 2;
-                percent = Mathf.RoundToInt((result / FindObjectOfType<Timer>().timeToWin) * 100);
+                percent = Mathf.RoundToInt((result / objTimer.timeToWin) * 100);
                 percentEnd.text = percent.ToString("0.") + "%";
             }
             else

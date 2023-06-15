@@ -1,11 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class SpawnBobs : MonoBehaviour
 {
-    GameObject timer;
+    Timer timer;
     public float timeToSpawnBobs;
     float timeToSpawnBobsStart;
     public List<GameObject> bobs;
@@ -16,7 +14,7 @@ public class SpawnBobs : MonoBehaviour
     void Start()
     {
         timeToSpawnBobsStart = timeToSpawnBobs;
-        timer = GameObject.Find("Player/UI/Timer");
+        timer = FindObjectOfType<Timer>();
     }
 
     public void RandomBoss()
@@ -27,9 +25,21 @@ public class SpawnBobs : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (timer.GetComponent<Timer>().time >= timeToSpawnBobs && isSpawned == false)
+        if (timer.time >= timeToSpawnBobs && isSpawned == false)
         {
             RandomBoss();
+            GameObject[] objectsToDelete = GameObject.FindGameObjectsWithTag("Enemy");
+
+            foreach (var obj in objectsToDelete)
+            {
+                Destroy(obj.GetComponentInParent<Forward>().gameObject);
+            }
+            GameObject[] spawners = GameObject.FindGameObjectsWithTag("Spawner");
+
+            foreach (var obj in spawners)
+            {
+                obj.GetComponent<SpawnEnemy>().stopSpawn = true;
+            }
             Instantiate(bossRandomed, transform.position, Quaternion.identity);
             isSpawned = true;
             timeToSpawnBobs += timeToSpawnBobsStart;

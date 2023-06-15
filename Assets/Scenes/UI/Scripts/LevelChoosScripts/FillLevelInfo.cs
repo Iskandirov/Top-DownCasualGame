@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UnityEngine;
@@ -33,11 +30,6 @@ public class FillLevelInfo : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public int LoadObjectLevel(int objectID)
     {
         string path = Path.Combine(Application.persistentDataPath, "Levels.txt");

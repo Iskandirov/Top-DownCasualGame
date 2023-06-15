@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Lightning : MonoBehaviour
@@ -10,6 +12,9 @@ public class Lightning : MonoBehaviour
     public GameObject lightObj;
     //public GameObject vFXLight;
 
+    HealthPoint objHealth;
+    HealthBossPart objHealthB;
+    Forward objMove;
     public float step;
     public float stepMax;
     public int maxEnemiesToShoot;
@@ -19,9 +24,10 @@ public class Lightning : MonoBehaviour
     void Start()
     {
         step = gameObject.GetComponent<CDSkillObject>().CD;
+
+        //StartCoroutine(TimerSpell());
     }
 
-    // Update is called once per frame
     void Update()
     {
         step -= Time.deltaTime;
@@ -46,53 +52,47 @@ public class Lightning : MonoBehaviour
                         }
                     }
                 }
-
                 for (int i = 0; i < enemiesCount; i++)
                 {
                     if (enemiesToShoot[i] != null)
                     {
                         if (enemiesToShoot[i].GetComponent<HealthPoint>())
                         {
+                            objHealth = enemiesToShoot[i].GetComponent<HealthPoint>();
+                            objMove = enemiesToShoot[i].GetComponentInParent<Forward>();
                             Instantiate(lightObj, new Vector3(enemiesToShoot[i].transform.position.x,
                             enemiesToShoot[i].transform.position.y + 3), Quaternion.identity);
 
-                            enemiesToShoot[i].GetComponent<HealthPoint>().healthPoint -= damage;
-                            enemiesToShoot[i].GetComponent<HealthPoint>();
-                            enemiesToShoot[i].GetComponentInParent<Forward>().isStunned = true;
-                            enemiesToShoot[i].GetComponentInParent<Forward>().stunnTime = stunTime;
+                            objHealth.healthPoint -= damage;
+                            objMove.isStunned = true;
+                            objMove.stunnTime = stunTime;
 
-                            //Instantiate(vFXLight, new Vector3(enemiesToShoot[i].transform.position.x,
-                            //    enemiesToShoot[i].transform.position.y), Quaternion.identity);
-
-                            if (enemiesToShoot[i].GetComponent<HealthPoint>().IsBobs == true)
+                            if (objHealth.IsBobs == true)
                             {
                                 enemiesToShoot[i].GetComponentInChildren<Animator>().SetBool("IsHit", true);
                             }
                             else
                             {
-                                enemiesToShoot[i].GetComponent<HealthPoint>().ChangeToKick();
+                                objHealth.ChangeToKick();
                             }
                         }
                         else if (enemiesToShoot[i].GetComponent<HealthBossPart>())
                         {
+                            objHealthB = enemiesToShoot[i].GetComponent<HealthBossPart>();
+                            objMove = enemiesToShoot[i].transform.root.GetComponent<Forward>();
                             Instantiate(lightObj, new Vector3(enemiesToShoot[i].transform.position.x,
                             enemiesToShoot[i].transform.position.y + 3), Quaternion.identity);
 
-                            enemiesToShoot[i].GetComponent<HealthBossPart>().healthPoint -= damage;
-                            enemiesToShoot[i].GetComponent<HealthBossPart>();
-                            enemiesToShoot[i].transform.root.GetComponent<Forward>().isStunned = true;
-                            enemiesToShoot[i].transform.root.GetComponent<Forward>().stunnTime = stunTime / 2;
+                            objHealthB.healthPoint -= damage;
+                            objMove.isStunned = true;
+                            objMove.stunnTime = stunTime / 2;
 
-                            //Instantiate(vFXLight, new Vector3(enemiesToShoot[i].transform.position.x,
-                            //    enemiesToShoot[i].transform.position.y), Quaternion.identity);
-
-                            enemiesToShoot[i].GetComponent<HealthBossPart>().ChangeToKick();
+                            objHealthB.ChangeToKick();
                         }
-                        step = stepMax;
                     }
                 }
-
             }
+            step = stepMax;
         }
     }
 }

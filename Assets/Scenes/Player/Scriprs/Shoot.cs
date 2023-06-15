@@ -15,7 +15,6 @@ public class Shoot : MonoBehaviour
     //public float movementSpeed = 5f;  // Швидкість руху об'єкту
     public float circleRadius = 5f;  // Радіус кола
 
-    private Vector3 centerPosition;  // Початкова позиція центру кола
     public GameObject shoot;
     public bool isLevelTwo;
     public bool isLevelFive;
@@ -24,7 +23,6 @@ public class Shoot : MonoBehaviour
     void Start()
     {
         bullet.GetComponent<Bullet>().damage = 1;
-        centerPosition = transform.position;
     }
 
     // Update is called once per frame

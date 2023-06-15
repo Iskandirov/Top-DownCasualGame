@@ -1,8 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
-using UnityEditor;
-using System.Linq;
 
 public class PoolItems : MonoBehaviour
 {
@@ -34,8 +32,6 @@ public class PoolItems : MonoBehaviour
         {
             string[] lines = File.ReadAllLines(path);
 
-
-
             // Перебір кожного запису і заміна шляху до зображення на зображення зі списку sprites
             foreach (string jsonLine in lines)
             {
@@ -53,8 +49,6 @@ public class PoolItems : MonoBehaviour
             File.Create(path);
         }
     }
-
-
     private void SaveInventory()
     {
         string path = Path.Combine(Application.persistentDataPath, "ItemInventory.txt");

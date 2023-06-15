@@ -1,6 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+ï»¿using System;
 using System.Reflection;
 using TMPro;
 using UnityEngine;
@@ -19,7 +17,6 @@ public class CDSkillObject : MonoBehaviour
     {
         if (number >= 0 && number <= skills.valuesList.Count)
         {
-
             foreach (MonoBehaviour script in skills.scripts)
             {
                 if (script != this)
@@ -67,7 +64,7 @@ public class CDSkillObject : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        // Ïåğåâ³ğèòè, ÷è number çíàõîäèòüñÿ â ìåæàõ çíà÷åíü skills.valuesList
+        // ÃÃ¥Ã°Ã¥Ã¢Â³Ã°Ã¨Ã²Ã¨, Ã·Ã¨ number Ã§Ã­Ã ÃµÃ®Ã¤Ã¨Ã²Ã¼Ã±Ã¿ Ã¢ Ã¬Ã¥Ã¦Ã Ãµ Ã§Ã­Ã Ã·Ã¥Ã­Ã¼ skills.valuesList
         if (number >= 0 && number <= skills.valuesList.Count)
         {
 

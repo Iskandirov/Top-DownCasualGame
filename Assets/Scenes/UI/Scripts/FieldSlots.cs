@@ -1,17 +1,12 @@
-using Newtonsoft.Json.Linq;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class FieldSlots : MonoBehaviour
 {
     public List<GameObject> objToCraft;
-    public PopupMessage message;
     public string messageObjectDifferent;
     public bool allItemsHaveSameName = true;
     public Button childrenBtn;
@@ -22,6 +17,8 @@ public class FieldSlots : MonoBehaviour
     public int priceStart;
     public TextMeshProUGUI priceTxt;
     public TextMeshProUGUI coinsTxt;
+    SetParametersToitem objParam;
+    GetScore objScore;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,26 +26,23 @@ public class FieldSlots : MonoBehaviour
         priceStart = price;
         childrenBtn = transform.parent.GetComponentInChildren<Button>();
         childrenBtn.interactable = false;
-    }
-
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-
+        objScore = FindObjectOfType<GetScore>();
     }
     public void CheckCraft()
     {
+        objParam = objToCraft[0].GetComponent<SetParametersToitem>();
+
         price = priceStart;
         if (objToCraft.Count == 3)
         {
-            itemName = objToCraft[0].GetComponent<SetParametersToitem>().ItemName;
-            char itemLevel = objToCraft[0].GetComponent<SetParametersToitem>().level[objToCraft[0].GetComponent<SetParametersToitem>().level.Length - 1];
-
+            itemName = objParam.ItemName;
+            char itemLevel = objParam.level[objParam.level.Length - 1];
             for (int i = 0; i < objToCraft.Count; i++)
             {
-                removeLevel = objToCraft[i].GetComponent<SetParametersToitem>().level[objToCraft[i].GetComponent<SetParametersToitem>().level.Length - 1];
-                if (objToCraft[i].GetComponent<SetParametersToitem>().ItemName != itemName || removeLevel != itemLevel
-                    || objToCraft[i].GetComponent<SetParametersToitem>().level == "4")
+                SetParametersToitem objParams = objToCraft[i].GetComponent<SetParametersToitem>();
+                removeLevel = objParams.level[objParams.level.Length - 1];
+                if (objParams.ItemName != itemName || removeLevel != itemLevel
+                    || objParams.level == "4")
                 {
                     allItemsHaveSameName = false;
                     break;
@@ -56,13 +50,12 @@ public class FieldSlots : MonoBehaviour
             }
             if (allItemsHaveSameName)
             {
-                //Debug.Log("All items have the same name: " + itemName);
-                if (int.TryParse(objToCraft[0].GetComponent<SetParametersToitem>().level, out int result))
+                if (int.TryParse(objParam.level, out int result))
                 {
                     // Вдале перетворення
-                    price = result * priceStart * objToCraft[0].GetComponent<SetParametersToitem>().IDRare;
+                    price = result * priceStart * objParam.IDRare;
                     priceTxt.text = price.ToString();
-                    if (price <= FindObjectOfType<GetScore>().score)
+                    if (price <= objScore.score)
                     {
                         childrenBtn.interactable = true;
                     }
@@ -71,9 +64,7 @@ public class FieldSlots : MonoBehaviour
             else
             {
                 childrenBtn.interactable = false;
-                //Debug.Log("Not all items have the same name");
             }
-
         }
         else if (objToCraft.Count < 3)
         {
@@ -83,10 +74,9 @@ public class FieldSlots : MonoBehaviour
     }
     public void Craft()
     {
-        
-        if (!objToCraft[0].GetComponent<SetParametersToitem>().level.Equals("4"))
+        if (!objParam.level.Equals("4"))
         {
-            string remove = objToCraft[0].GetComponent<SetParametersToitem>().ItemName + " " + objToCraft[0].GetComponent<SetParametersToitem>().level;
+            string remove = objParam.ItemName + " " + objParam.level;
             string removeCopy = remove;
             string path = Path.Combine(Application.persistentDataPath, "savedData.txt");
             if (File.Exists(path))
@@ -107,7 +97,7 @@ public class FieldSlots : MonoBehaviour
                         else
                         {
                             index++;
-                            removeLevel = objToCraft[0].GetComponent<SetParametersToitem>().level[objToCraft[0].GetComponent<SetParametersToitem>().level.Length - 1];
+                            removeLevel = objParam.level[objParam.level.Length - 1];
                         }
                     }
                     else
@@ -118,10 +108,7 @@ public class FieldSlots : MonoBehaviour
                 }
                 // Записуємо оновлений масив рядків в файл
                 File.WriteAllLines(path, updatedLines.ToArray());
-
                 //Створення нового обєкту
-
-
                 // Створюємо новий об'єкт SavedObjectData
                 foreach (string line in lines)
                 {
@@ -130,26 +117,16 @@ public class FieldSlots : MonoBehaviour
                     if (data.Name + " " + data.Level == removeCopy && removeLevel.ToString() == data.Level.ToString())
                     {
                         SavedObjectData newItem = new SavedObjectData();
-
                         newItem.Name = data.Name;
-
                         newItem.ImageSprite = data.ImageSprite;
-
                         newItem.RareName = data.RareName;
-
                         newItem.RareSprite = Resources.Load<Sprite>(CheckLevelUpgrade(data));
                         newItem.IDRare = data.IDRare;
-
+                        newItem.Level = data.Level + 1;
+                        newItem.Count = data.Count;
                         int statCount = int.Parse(data.Stat);
                         statCount *= 2;
                         newItem.Stat = statCount.ToString();
-
-                        newItem.Level = data.Level + 1;
-
-                        newItem.Count = data.Count;
-
-
-
                         // Конвертуємо об'єкт в рядок JSON
                         string newLine = JsonUtility.ToJson(newItem);
                         // Додаємо новий рядок до кінця файлу
@@ -160,9 +137,9 @@ public class FieldSlots : MonoBehaviour
 
                 data.CleanList();
                 data.LoadItems();
-                FindObjectOfType<GetScore>().score -= price;
-                FindObjectOfType<GetScore>().SaveScore((int)FindObjectOfType<GetScore>().score);
-                coinsTxt.text = FindObjectOfType<GetScore>().score.ToString();
+                objScore.score -= price;
+                objScore.SaveScore((int)objScore.score);
+                coinsTxt.text = objScore.score.ToString();
             }
         }
     }

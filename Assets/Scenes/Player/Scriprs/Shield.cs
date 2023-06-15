@@ -5,7 +5,7 @@ using UnityEngine;
 public class Shield : MonoBehaviour
 {
     public float healthShield;
-    public float healthShield‹Missed;
+    public float healthShieldMissed;
     public float lifeTime;
     public GameObject player;
     public GameObject slowObj;
@@ -21,15 +21,22 @@ public class Shield : MonoBehaviour
         {
             Instantiate(slowObj, transform.position, Quaternion.identity, transform);
         }
+        StartCoroutine(TimerSpell());
+    }
+
+    private IEnumerator TimerSpell()
+    {
+        yield return new WaitForSeconds(lifeTime);
+        Destroy(gameObject);
     }
 
     // Update is called once per frame
     void Update()
     {
         transform.position = player.transform.position;
-        if (healthShield‹Missed > 20f)
+        if (healthShieldMissed > 20f)
         {
-            float i = Mathf.Floor(healthShield‹Missed / 20f);
+            float i = Mathf.Floor(healthShieldMissed / 20f);
             for (int y = 0; y < i; y++)
             {
                 GameObject newObject = Instantiate(rockObj, new Vector2(transform.position.x + Random.Range(-20, 20), transform.position.y + Random.Range(-20, 20)), Quaternion.identity);
@@ -53,10 +60,9 @@ public class Shield : MonoBehaviour
                     }
                 }
             }
-            healthShield‹Missed = 0;
+            healthShieldMissed = 0;
         }
-        lifeTime -= Time.deltaTime;
-        if (healthShield <= 0 || lifeTime <= 0) 
+        if (healthShield <= 0) 
         {
             Destroy(gameObject);
         }

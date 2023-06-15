@@ -17,7 +17,6 @@ public class MeteorSpawner : MonoBehaviour
         step = gameObject.GetComponent<CDSkillObject>().CD;
     }
 
-    // Update is called once per frame
     void Update()
     {
         step -= Time.deltaTime;
@@ -29,8 +28,8 @@ public class MeteorSpawner : MonoBehaviour
             if (isThree)
             {
                 Meteor b = Instantiate(meteor, new Vector2(transform.position.x + Random.Range(-20, 20), transform.position.y + Random.Range(-20, 20)), Quaternion.identity);
-                b.damage = damage; 
-                b.isFour = isFour; 
+                b.damage = damage;
+                b.isFour = isFour;
                 Meteor c = Instantiate(meteor, new Vector2(transform.position.x + Random.Range(-20, 20), transform.position.y + Random.Range(-20, 20)), Quaternion.identity);
                 c.damage = damage;
                 c.isFour = isFour;

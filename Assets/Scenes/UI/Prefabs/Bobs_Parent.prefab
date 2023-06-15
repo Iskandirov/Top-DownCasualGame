@@ -15,7 +15,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4587071299100046727
 Transform:
@@ -44,6 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 027ae250a3c211642a967ef2cf12feeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToSpawnBobs: 100
-  bobs: {fileID: 7448078597982695750, guid: 8bab4a5065997b04c9db71f0c5e140a6, type: 3}
+  timeToSpawnBobs: 220
+  bobs:
+  - {fileID: 7448078597982695750, guid: 8bab4a5065997b04c9db71f0c5e140a6, type: 3}
+  - {fileID: 7414485064753262499, guid: 6051deff61c93794fb6fd3903bdb1242, type: 3}
+  bosscount: 0
   isSpawned: 0

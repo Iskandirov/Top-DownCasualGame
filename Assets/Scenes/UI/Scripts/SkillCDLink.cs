@@ -1,10 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 public class SkillCDLink : MonoBehaviour
 {
@@ -13,15 +8,11 @@ public class SkillCDLink : MonoBehaviour
 
     private void Start()
     {
-        scripts = FindObjectsOfType<MonoBehaviour>();
+        Check();
     }
 
     public void Check()
     {
         scripts = FindObjectsOfType<MonoBehaviour>();
-    }
-
-    private void FixedUpdate()
-    {
     }
 }

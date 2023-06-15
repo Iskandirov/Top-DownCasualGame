@@ -17,12 +17,12 @@ public class IllusionSpawner : MonoBehaviour
         step = gameObject.GetComponent<CDSkillObject>().CD;
     }
 
-    // Update is called once per frame
     void Update()
     {
         step -= Time.deltaTime;
         if (step <= 0)
         {
+
             Illusion a = Instantiate(illusion, transform.position, Quaternion.identity);
             a.x = -10;
             a.y = 10;

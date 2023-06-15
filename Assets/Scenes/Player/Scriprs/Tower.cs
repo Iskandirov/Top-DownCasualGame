@@ -12,16 +12,49 @@ public class Tower : MonoBehaviour
     public bool isThree;
     public bool isFive;
     Collider2D[] colliders;
+    float agreTime = 3;
+    Forward objEnemyMove;
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
 
+        StartCoroutine(TimerSpell());
+        StartCoroutine(TimerLife());
+        StartCoroutine(TimerAgre(objEnemyMove));
+    }
+    private IEnumerator TimerSpell()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(spawnTick);
+            TowerWave a = Instantiate(damageObj, transform.position, Quaternion.identity);
+            a.player = gameObject;
+            spawnTick = spawnTickMax;
+        }
+    }
+    private IEnumerator TimerLife()
+    {
+        yield return new WaitForSeconds(lifeTime);
+        if (isThree)
+        {
+            Instantiate(bomb, transform.position, Quaternion.identity);
+        }
+        Destroy(gameObject);
+    }
+    private IEnumerator TimerAgre(Forward a)
+    {
+        if (a != null)
+        {
+
+        }
+        yield return new WaitForSeconds(agreTime);
+        a.player = FindObjectOfType<Forward>().gameObject;
+        a.enemyFinded = false;
+    }
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(isFive)
+        if (isFive)
         {
             colliders = Physics2D.OverlapCircleAll(gameObject.transform.position, 16f);
             foreach (Collider2D collider in colliders)
@@ -32,26 +65,10 @@ public class Tower : MonoBehaviour
                     {
                         collider.transform.root.GetComponent<Forward>().player = gameObject;
                         collider.transform.root.GetComponent<Forward>().enemyFinded = true;
+                        objEnemyMove = collider.transform.root.GetComponent<Forward>();
                     }
                 }
             }
         }
-        lifeTime -= Time.deltaTime;
-        if (lifeTime <= 0)
-        {
-            if (isThree)
-            {
-                Instantiate(bomb, transform.position, Quaternion.identity);
-            }
-            Destroy(gameObject);
-        }
-        spawnTick -= Time.deltaTime;
-        if (spawnTick <= 0)
-        {
-            TowerWave a = Instantiate(damageObj, transform.position, Quaternion.identity);
-            a.player = gameObject;
-            spawnTick = spawnTickMax;
-        }
-
     }
 }

@@ -14,26 +14,31 @@ public class Impuls : MonoBehaviour
     void Start()
     {
         player = FindObjectOfType<Move>().gameObject;
+        StartCoroutine(TimerSpell());
+
+    }
+
+    private IEnumerator TimerSpell()
+    {
+        yield return new WaitForSeconds(lifeTime);
+
+        if (isFour)
+        {
+            DestroyBarrier a = Instantiate(barrier, transform.position, Quaternion.identity);
+            if (isFive)
+            {
+                a.isFiveLevel = isFive;
+
+            }
+        }
+        Destroy(gameObject);
     }
 
     // Update is called once per frame
     void Update()
     {
-        lifeTime -= Time.deltaTime;
-        if (lifeTime <= 0)
-        {
-            if (isFour)
-            {
-                DestroyBarrier a = Instantiate(barrier, transform.position, Quaternion.identity);
-                if (isFive)
-                {
-                    a.isFiveLevel = isFive;
-
-                }
-            }
-            Destroy(gameObject);
-        }
         transform.position = player.transform.position;
-        transform.localScale = new Vector3(transform.localScale.x + Time.deltaTime * powerGrow, transform.localScale.y + Time.deltaTime * powerGrow, transform.localScale.z + Time.deltaTime * powerGrow);
+        transform.localScale = new Vector3(transform.localScale.x + Time.deltaTime * powerGrow,
+            transform.localScale.y + Time.deltaTime * powerGrow, transform.localScale.z + Time.deltaTime * powerGrow);
     }
 }

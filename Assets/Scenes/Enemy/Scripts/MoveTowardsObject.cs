@@ -11,15 +11,17 @@ public class MoveTowardsObject : MonoBehaviour
 
     private Vector2 velocity;
 
+    Rigidbody2D rb;
     private void Start()
     {
         // встановлюємо вектор швидкості в початкове значення (нульовий вектор)
         velocity = Vector2.zero;
         gameObject.AddComponent<Rigidbody2D>();
-        gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
-        gameObject.GetComponent<Rigidbody2D>().angularDrag = 0;
-        gameObject.GetComponent<Rigidbody2D>().mass = 100;
-        gameObject.GetComponent<Rigidbody2D>().freezeRotation = true;
+        rb = GetComponent<Rigidbody2D>();
+        rb.gravityScale = 0;
+        rb.angularDrag = 0;
+        rb.mass = 100;
+        rb.freezeRotation = true;
     }
 
     private void Update()
@@ -58,6 +60,6 @@ public class MoveTowardsObject : MonoBehaviour
         velocity = Vector2.Reflect(velocity, normal) * 0.8f;
 
         // додавання сили в залежності від вектору нормалі
-        gameObject.GetComponent<Rigidbody2D>().AddForce(normal * 5f, ForceMode2D.Impulse);
+        rb.AddForce(normal * 5f, ForceMode2D.Impulse);
     }
 }

@@ -6,7 +6,6 @@ using UnityEngine;
 public class SpawnEnemy : MonoBehaviour
 {
     public float timeStep;
-    public float timeMinStep = 5;
     public float timeToNewType;
     public float timeToNewTypeStart;
     public int enemyTypeSpawn;
@@ -14,11 +13,10 @@ public class SpawnEnemy : MonoBehaviour
     [SerializeField]float timeGost;
     public GameObject[] EnemyBody;
     public Timer Timer;
-    public KillCount kill;
+    public bool stopSpawn;
     // Start is called before the first frame update
     void Start()
     {
-        kill = FindObjectOfType<KillCount>();
         enemyTypeSpawn = 0;
         timeToNewType = timeToNewTypeStart;
     }
@@ -27,19 +25,14 @@ public class SpawnEnemy : MonoBehaviour
     void Update()
     {
         SpawnEnemies();
-        if(timeStep >= timeMinStep)
-        {
-            timeStep -= Time.deltaTime / 60;
-        }
     }
     public void SpawnEnemies()
     {
         time += Time.deltaTime;
-        if (time >= timeStep)
+        if (time >= timeStep && !stopSpawn)
         {
             int i = Random.Range(0, enemyTypeSpawn);
-            GameObject enemy = Instantiate(EnemyBody[i], new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, 1.8f), Quaternion.identity);
-            //enemy.GetComponentInChildren<HealthPoint>().healthPoint += kill.score;
+            Instantiate(EnemyBody[i], new Vector3(transform.position.x, transform.position.y, 1.8f), Quaternion.identity, transform);
             time = 0;
         }
         if (Timer.time >= timeToNewType && enemyTypeSpawn < EnemyBody.Length)

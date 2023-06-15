@@ -11,6 +11,7 @@ public class Illusion : MonoBehaviour
 
 
     GameObject player;
+    Shoot playerShoot;
     public Zzap zzap;
     public float x;
     public float y;
@@ -26,6 +27,7 @@ public class Illusion : MonoBehaviour
     void Start()
     {
         player = FindObjectOfType<Move>().gameObject;
+        playerShoot = player.GetComponent<Shoot>();
         stepShoot = player.GetComponent<Shoot>().stepShoot;
         attackSpeed = player.GetComponent<Shoot>().attackSpeed;
         if (isFive)
@@ -36,20 +38,22 @@ public class Illusion : MonoBehaviour
             a.y = yZzap;
             a.lifeTime = lifeTime;
         }
+        StartCoroutine(TimerSpell());
+
+    }
+
+    private IEnumerator TimerSpell()
+    {
+        yield return new WaitForSeconds(lifeTime);
+
+        Destroy(gameObject);
     }
 
     // Update is called once per frame
     void Update()
     {
-        lifeTime -= Time.deltaTime;
-        if (lifeTime <= 0)
-        {
-            Destroy(gameObject);
-        }
         transform.position = new Vector2(player.transform.position.x + x, player.transform.position.y + y);
         ShootBullet(gameObject);
-        
-
     }
     public void ShootBullet(GameObject ShootPointObj)
     {
@@ -61,18 +65,18 @@ public class Illusion : MonoBehaviour
             if (Input.GetMouseButton(0))  // Перевіряємо, чи натиснута ліва кнопка миші
             {
                 stepShoot = 0;
-                player.GetComponent<Shoot>().shoot = ShootPointObj;
+                playerShoot.shoot = ShootPointObj;
                 // Отримуємо позицію курсора у світових координатах
                 //Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 mousePosition.z = 0f;  // Закріплюємо координату Z на площині
 
                 // Створюємо об'єкт з використанням префабу
-                Bullet newObject = Instantiate(player.GetComponent<Shoot>().bullet, ShootPointObj.transform.position, Quaternion.identity);
-                newObject.damage = player.GetComponent<Shoot>().damageToGive;
-                newObject.isPiers = player.GetComponent<Shoot>().isLevelFive;
-                if (player.GetComponent<Shoot>().isLevelTwo)
+                Bullet newObject = Instantiate(playerShoot.bullet, ShootPointObj.transform.position, Quaternion.identity);
+                newObject.damage = playerShoot.damageToGive;
+                newObject.isPiers = playerShoot.isLevelFive;
+                if (playerShoot.isLevelTwo)
                 {
-                    for (int i = 1; i < player.GetComponent<Shoot>().secondBulletCount + 1; i++)
+                    for (int i = 1; i < playerShoot.secondBulletCount + 1; i++)
                     {
                         Invoke("CreateBullet", i * 0.3f);
                     }
@@ -82,7 +86,7 @@ public class Illusion : MonoBehaviour
 
                 // Запускаємо об'єкт в заданому напрямку
                 Rigidbody2D rb = newObject.GetComponent<Rigidbody2D>();
-                rb.AddForce(directionBullet.normalized * player.GetComponent<Shoot>().launchForce, ForceMode2D.Impulse);
+                rb.AddForce(directionBullet.normalized * playerShoot.launchForce, ForceMode2D.Impulse);
                 float angleShot = Mathf.Atan2(directionBullet.y, directionBullet.x) * Mathf.Rad2Deg;
                 newObject.transform.rotation = Quaternion.AngleAxis(angleShot + 90, Vector3.forward);
             }
@@ -91,15 +95,15 @@ public class Illusion : MonoBehaviour
     public void CreateBullet()
     {
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Bullet newObject = Instantiate(player.GetComponent<Shoot>().bullet, transform.position, Quaternion.identity);
-        newObject.damage = player.GetComponent<Shoot>().damageToGive;
-        newObject.isPiers = player.GetComponent<Shoot>().isLevelFive;
+        Bullet newObject = Instantiate(playerShoot.bullet, transform.position, Quaternion.identity);
+        newObject.damage = playerShoot.damageToGive;
+        newObject.isPiers = playerShoot.isLevelFive;
 
         Vector2 directionBullet = mousePosition - transform.position;
 
         // Запускаємо об'єкт в заданому напрямку
         Rigidbody2D rb = newObject.GetComponent<Rigidbody2D>();
-        rb.AddForce(directionBullet.normalized * player.GetComponent<Shoot>().launchForce, ForceMode2D.Impulse);
+        rb.AddForce(directionBullet.normalized * playerShoot.launchForce, ForceMode2D.Impulse);
         float angleShot = Mathf.Atan2(directionBullet.y, directionBullet.x) * Mathf.Rad2Deg;
         newObject.transform.rotation = Quaternion.AngleAxis(angleShot + 90, Vector3.forward);
     }

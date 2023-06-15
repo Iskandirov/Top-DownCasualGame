@@ -11,48 +11,57 @@ public class HealthBossPart : MonoBehaviour
     public float healthPointMax;
     public bool IsBobs;
     public Animator anim;
-    public GameObject bodyAnim;
+    public ElementalBoss_Destroy bodyAnim;
     public bool isBurn;
     public float burnTime;
     public float burnDamage;
     public float burnTick;
     public float burnTickMax;
-    // Start is called before the first frame update
+    CutThePart objPart;
+    SpriteRenderer[] objsSprite;
+
     void Start()
     {
         healthPointMax = healthPoint;
+        objPart = GetComponent<CutThePart>();
+        objsSprite = GetComponentsInChildren<SpriteRenderer>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (isBurn)
         {
             burnTime -= Time.deltaTime;
+
             if (burnTime <= 0)
             {
                 isBurn = false;
             }
+
             burnTick -= Time.deltaTime;
-            if (burnTick <=0)
+
+            if (burnTick <= 0)
             {
                 ChangeToKick();
                 healthPoint -= burnDamage;
                 burnTick = burnTickMax;
             }
-            
         }
-        ChangeToNotKick();
+        else
+        {
+            ChangeToNotKick();
+        }
+
         if (healthPoint <= 0)
         {
             if (bodyAnim != null)
             {
-                foreach (var part in bodyAnim.GetComponent<ElementalBoss_Destroy>().parts)
+                foreach (var part in bodyAnim.parts)
                 {
                     if (part == gameObject.name)
                     {
-                        bodyAnim.GetComponent<ElementalBoss_Destroy>().DestroyStart();
-                        bodyAnim.GetComponent<ElementalBoss_Destroy>().GetParts(gameObject.GetComponent<CutThePart>(), healthPointMax);
+                        bodyAnim.DestroyStart();
+                        bodyAnim.GetParts(objPart, healthPointMax);
                     }
                 }
             }
@@ -60,27 +69,32 @@ public class HealthBossPart : MonoBehaviour
             {
                 Destroy(gameObject);
             }
-            
         }
     }
+
     public void ChangeToKick()
     {
-        for (int i = 0; i < gameObject.transform.GetComponentsInChildren<SpriteRenderer>().Length; i++)
+        if (!isKick)
         {
-            gameObject.transform.GetComponentsInChildren<SpriteRenderer>()[i].color = new Color32(255, 0, 0, 255);
+            for (int i = 0; i < objsSprite.Length; i++)
+            {
+                objsSprite[i].color = new Color32(255, 0, 0, 255);
+            }
+            isKick = true;
         }
-        isKick = true;
     }
+
     public void ChangeToNotKick()
     {
-        if (isKick == true)
+        if (isKick)
         {
             step -= Time.deltaTime;
+
             if (step <= 0)
             {
-                for (int i = 0; i < gameObject.transform.GetComponentsInChildren<SpriteRenderer>().Length; i++)
+                for (int i = 0; i < objsSprite.Length; i++)
                 {
-                    gameObject.transform.GetComponentsInChildren<SpriteRenderer>()[i].color = new Color32(255, 255, 255, 255);
+                    objsSprite[i].color = new Color32(255, 255, 255, 255);
                 }
                 isKick = false;
                 step = stepMax;

@@ -12,16 +12,21 @@ public class FireWave : MonoBehaviour
     void Start()
     {
         player = FindObjectOfType<Move>().gameObject;
+
+        StartCoroutine(TimerSpell());
+
     }
 
+    private IEnumerator TimerSpell()
+    {
+        yield return new WaitForSeconds(lifeTime);
+
+        Destroy(gameObject);
+
+    }
     // Update is called once per frame
     void Update()
     {
-        lifeTime-= Time.deltaTime;
-        if (lifeTime <= 0)
-        {
-            Destroy(gameObject);
-        }
         transform.position = player.transform.position;
         transform.localScale = new Vector3(transform.localScale.x + Time.deltaTime * 20, transform.localScale.y + Time.deltaTime * 20, transform.localScale.z + Time.deltaTime * 20);
     }

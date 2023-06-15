@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,17 +10,5 @@ public class ActivateAbilities : MonoBehaviour
     void Start()
     {
         countActiveAbilities = 1;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //foreach (var abil in abilitiesObj)
-        //{
-        //    if (abil.activeSelf)
-        //    {
-        //        Debug.Log(abil.name);
-        //    }
-        //}
     }
 }

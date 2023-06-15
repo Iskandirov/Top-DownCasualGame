@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,18 +5,12 @@ using UnityEngine;
 
 public class CheckLevel : MonoBehaviour
 {
-
     [SerializeField]
     public List<SavedLocationsData> levels = new List<SavedLocationsData>();
     public List<SavedLocationsData> levelsRead = new List<SavedLocationsData>();
     private void Start()
     {
-        string path = Path.Combine(Application.persistentDataPath, "Levels.txt");
-        //if (!File.Exists(path))
-        {
-            SaveInventory();
-        }
-
+        SaveInventory();
         LoadInventory(levelsRead);
     }
     public void LoadInventory(List<SavedLocationsData> itemsRead)

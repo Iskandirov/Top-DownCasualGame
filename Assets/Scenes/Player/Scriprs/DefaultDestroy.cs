@@ -5,14 +5,16 @@ using UnityEngine;
 public class DefaultDestroy : MonoBehaviour
 {
     public float lifeTime;
-
-    // Update is called once per frame
-    void Update()
+    void Start()
     {
-        lifeTime -= Time.deltaTime;
-        if (lifeTime <= 0)
-        {
-            Destroy(gameObject);
-        }
+        StartCoroutine(TimerSpell());
+    }
+
+    private IEnumerator TimerSpell()
+    {
+        yield return new WaitForSeconds(lifeTime);
+
+        Destroy(gameObject);
+
     }
 }

@@ -17,15 +17,22 @@ public class ReloadSkillSpawner : MonoBehaviour
     void Start()
     {
         step = gameObject.GetComponent<CDSkillObject>().CD;
+        spells = FindObjectOfType<SkillCDLink>().gameObject;
+        spellsObj = spells.GetComponentsInChildren<CDSkillObject>().ToList();
     }
 
     // Update is called once per frame
     void Update()
     {
+        step -= Time.deltaTime;
+        if (step <= 0)
+        {
+            Reload a = Instantiate(reload, transform.position, Quaternion.identity);
+            a.count = count;
+            step = stepMax;
+        }
         if (isLevelFive)
         {
-            spells = FindObjectOfType<SkillCDLink>().gameObject;
-            spellsObj = spells.GetComponentsInChildren<CDSkillObject>().ToList();
             for (int i = 0; i < spellsObj.Count; i++)
             {
                 var spell = spellsObj[i];
@@ -38,13 +45,6 @@ public class ReloadSkillSpawner : MonoBehaviour
                 }
             }
             isLevelFive = false;
-        }
-        step -= Time.deltaTime;
-        if (step <= 0)
-        {
-            Reload a = Instantiate(reload, transform.position, Quaternion.identity);
-            a.count = count;
-            step = stepMax;
         }
     }
 }

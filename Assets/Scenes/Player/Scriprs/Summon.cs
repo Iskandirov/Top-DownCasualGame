@@ -18,11 +18,11 @@ public class Summon : MonoBehaviour
     {
         bomb.lifeTime = 0.1f;
         player = FindObjectOfType<Move>().gameObject;
-        enemy.transform.root.GetComponent<Forward>().isSummoned = true;
-        enemy.transform.root.GetComponent<Forward>().summonTime = lifeTime;
-        enemy.transform.root.GetComponent<Forward>().isThree = isThree;
-        enemy.transform.root.GetComponent<Forward>().bomb = bomb.gameObject;
-        enemy.transform.root.GetComponent<Attack>().isFive = isFive;
+        enemy.GetComponentInParent<Forward>().isSummoned = true;
+        enemy.GetComponentInParent<Forward>().summonTime = lifeTime;
+        enemy.GetComponentInParent<Forward>().isThree = isThree;
+        enemy.GetComponentInParent<Forward>().bomb = bomb.gameObject;
+        enemy.GetComponentInParent<Attack>().isFive = isFive;
     }
     void Update()
     {

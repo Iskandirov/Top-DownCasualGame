@@ -1,12 +1,7 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using TMPro;
-using Unity.Jobs;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,8 +11,7 @@ public class LevelUpgrade : MonoBehaviour
     public Expirience Exp;
     public GameObject starObj;
 
-    GameObject player;
-    public ActivateAbilities abilities;
+    ActivateAbilities abilities;
 
     [Header("Description text buttons")]
     public TextMeshProUGUI firstBuff;
@@ -28,14 +22,8 @@ public class LevelUpgrade : MonoBehaviour
     public Image secondBuffBtn;
 
     [Header("All variations of skill")]
-    //public List<string> description;
-    //public List<float> buff;
-    //public List<Sprite> skillIcons;
     public List<bool> isSkillIcons;
     public int SkillIconsMax;
-    //public List<int> starCount;
-    //public List<int> countAbilyties;
-    //public List<string> tags;
     public List<SavedSkillsData> skillsSaveTree;
     public List<SavedSkillsData> skillsSave;
     public List<SavedSkillsData> skillsLoad;
@@ -52,9 +40,16 @@ public class LevelUpgrade : MonoBehaviour
     public List<int> idList;
     public List<GameObject> CDSkillsObject;
 
+    TagText objTextOne;
+    TagText objTextTwo;
+    Shoot objShoot;
+    SkillCDLink objLinkSpell;
     // Start is called before the first frame update
     private void Start()
     {
+        
+        objShoot = GetComponentInParent<Shoot>();
+        objLinkSpell = FindObjectOfType<SkillCDLink>();
         SkillIconsMax = isSkillIcons.Count;
     }
     void OnEnable()
@@ -69,7 +64,7 @@ public class LevelUpgrade : MonoBehaviour
 
         //Initiation objects
         abilities = FindObjectOfType<ActivateAbilities>();
-        player = GameObject.FindWithTag("Player");
+
         //Random two abilitis ID
         RandomAbil();
 
@@ -77,6 +72,9 @@ public class LevelUpgrade : MonoBehaviour
     //Random two abilitis
     public void RandomAbil()
     {
+        objTextOne = firstBuff.GetComponent<TagText>();
+        objTextTwo = secondBuff.GetComponent<TagText>();
+
         skillsLoad.Clear();
         LoadSkill(skillsLoad);
 
@@ -114,12 +112,12 @@ public class LevelUpgrade : MonoBehaviour
 
             firstBuff.text = skillsLoad.First(skill => skill.ID == choise[0]).Description[skillsLoad.First(skill => skill.ID == choise[0]).level];
             firstBuffBtn.sprite = Resources.Load<Sprite>(skillsLoad.First(skill => skill.ID == choise[0]).Name);
-            firstBuff.GetComponent<TagText>().tagText = skillsLoad.First(skill => skill.ID == choise[0]).tag[skillsLoad.First(skill => skill.ID == choise[0]).level];
+            objTextOne.tagText = skillsLoad.First(skill => skill.ID == choise[0]).tag[skillsLoad.First(skill => skill.ID == choise[0]).level];
             list.Add(firstBuff.gameObject);
 
             secondBuff.text = skillsLoad.First(skill => skill.ID == choise[1]).Description[skillsLoad.First(skill => skill.ID == choise[1]).level];
             secondBuffBtn.sprite = Resources.Load<Sprite>(skillsLoad.First(skill => skill.ID == choise[1]).Name);
-            secondBuff.GetComponent<TagText>().tagText = skillsLoad.First(skill => skill.ID == choise[1]).tag[skillsLoad.First(skill => skill.ID == choise[1]).level];
+            objTextTwo.tagText = skillsLoad.First(skill => skill.ID == choise[1]).tag[skillsLoad.First(skill => skill.ID == choise[1]).level];
             list.Add(secondBuff.gameObject);
         }
         else if (skillsLoad.Count == 1)
@@ -131,14 +129,14 @@ public class LevelUpgrade : MonoBehaviour
 
             firstBuff.text = skillsLoad[0].Description[skillsLoad[0].level];
             firstBuffBtn.sprite = Resources.Load<Sprite>(skillsLoad[0].Name);
-            firstBuff.GetComponent<TagText>().tagText = skillsLoad[0].tag[skillsLoad[0].level];
+            objTextOne.tagText = skillsLoad[0].tag[skillsLoad[0].level];
             list.Add(firstBuff.gameObject);
 
             choise.Add(999);
 
             secondBuff.text = gold.Description[0];
             secondBuffBtn.sprite = Resources.Load<Sprite>(gold.Name);
-            secondBuff.GetComponent<TagText>().tagText = gold.tag[0];
+            objTextTwo.tagText = gold.tag[0];
             list.Add(secondBuff.gameObject);
         }
         else if (skillsLoad.Count == 0)
@@ -147,14 +145,14 @@ public class LevelUpgrade : MonoBehaviour
 
             firstBuff.text = gold.Description[0];
             firstBuffBtn.sprite = Resources.Load<Sprite>(gold.Name);
-            firstBuff.GetComponent<TagText>().tagText = gold.tag[0];
+            objTextOne.tagText = gold.tag[0];
             list.Add(firstBuff.gameObject);
 
             choise.Add(999);
 
             secondBuff.text = gold.Description[0];
             secondBuffBtn.sprite = Resources.Load<Sprite>(gold.Name);
-            secondBuff.GetComponent<TagText>().tagText = gold.tag[0];
+            objTextTwo.tagText = gold.tag[0];
             list.Add(secondBuff.gameObject);
         }
 
@@ -191,20 +189,20 @@ public class LevelUpgrade : MonoBehaviour
                         //Updates for bullet
                         if (skillsLoad[skillPoint].level == 1)
                         {
-                            gameObject.GetComponentInParent<Shoot>().isLevelTwo = true;
-                            gameObject.GetComponentInParent<Shoot>().secondBulletCount = (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            objShoot.isLevelTwo = true;
+                            objShoot.secondBulletCount = (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
                         }
                         else if (skillsSave[skillPoint].level == 2)
                         {
-                            gameObject.GetComponentInParent<Shoot>().attackSpeed -= skillsSave[skillPoint].stat1[skillsSave[skillPoint].level] / 100;
+                            objShoot.attackSpeed -= skillsSave[skillPoint].stat1[skillsSave[skillPoint].level] / 100;
                         }
                         else if (skillsSave[skillPoint].level == 3)
                         {
-                            gameObject.GetComponentInParent<Shoot>().secondBulletCount = (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            objShoot.secondBulletCount = (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
                         }
                         else if (skillsSave[skillPoint].level == 4)
                         {
-                            gameObject.GetComponentInParent<Shoot>().isLevelFive = true;
+                            objShoot.isLevelFive = true;
                         }
                     }
                     else if (skillPoint == 1)
@@ -477,7 +475,7 @@ public class LevelUpgrade : MonoBehaviour
                 skillsSave[skillPoint].level += 1;
                 ModifyJsonField(skillsSave[skillPoint], skillsSave[skillPoint].level);
                 SetActiveAbil(abil, skillPoint);
-                FindObjectOfType<SkillCDLink>().valuesList.Add(0);
+                objLinkSpell.valuesList.Add(0);
                 if (skillsSave[skillPoint].isPassive == false)
                 {
                     isSkillIcons[skillPoint] = true;
@@ -507,8 +505,8 @@ public class LevelUpgrade : MonoBehaviour
             FindObjectOfType<KillCount>().score += 20;
         }
 
-       
-        FindObjectOfType<SkillCDLink>().Check();
+
+        objLinkSpell.Check();
 
         SkillIconsMax = skillsLoad.Count;
         Time.timeScale = 1f;
@@ -532,7 +530,7 @@ public class LevelUpgrade : MonoBehaviour
         {
             if (skillPoint == 0)
             {
-                gameObject.GetComponentInParent<Shoot>().damageToGive += skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                objShoot.damageToGive += skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
             }
         }
         abil.abilitiesObj[abil.countActiveAbilities].SetActive(true);

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FireWaveSpawner : MonoBehaviour
@@ -14,18 +13,19 @@ public class FireWaveSpawner : MonoBehaviour
     void Start()
     {
         step = gameObject.GetComponent<CDSkillObject>().CD;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        step-= Time.deltaTime;
+        step -= Time.deltaTime;
         if (step <= 0)
         {
             CreateWave();
             if (isLevelThree)
             {
-                Invoke("CreateWave", 0.3f);
+                Invoke("CreateWave", 0.5f);
             }
             step = stepMax;
         }

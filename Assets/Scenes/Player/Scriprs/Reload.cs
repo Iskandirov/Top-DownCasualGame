@@ -22,13 +22,12 @@ public class Reload : MonoBehaviour
                 spellsObj[i].valueFieldStep.SetValue(spellsObj[i].monoStep, 0.01f + y / 100);
             }
         }
+        StartCoroutine(TimerSpell());
     }
-    private void Update()
+
+    private IEnumerator TimerSpell()
     {
-        lifeTime -= Time.deltaTime;
-        if (lifeTime <= 0)
-        {
-            Destroy(gameObject);
-        }
+        yield return new WaitForSeconds(lifeTime);
+        Destroy(gameObject);
     }
 }

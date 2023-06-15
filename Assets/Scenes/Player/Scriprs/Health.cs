@@ -11,9 +11,11 @@ public class Health : MonoBehaviour
     public Image playerHealthPointImg;
     public RestartGame loseScene;
     public GameObject loseSceneParent;
+    Animator objAnim;
     // Start is called before the first frame update
     void Awake()
     {
+        objAnim = gameObject.GetComponent<Animator>();
         playerHealthPointMax = playerHealthPoint;
         playerHealthRegeneration = 0;
     }
@@ -30,7 +32,7 @@ public class Health : MonoBehaviour
    
     public void HitEnd()
     {
-        gameObject.GetComponent<Animator>().SetBool("IsHit", false);
+        objAnim.SetBool("IsHit", false);
         if (playerHealthPoint <= 0)
         {
             Instantiate(loseScene, loseSceneParent.transform.position, Quaternion.identity, loseSceneParent.transform);

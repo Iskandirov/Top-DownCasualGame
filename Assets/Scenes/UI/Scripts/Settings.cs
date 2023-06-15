@@ -1,12 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public class Settings : MonoBehaviour
 {
-    //public AudioListener mixer;
     public Scrollbar scroll;
     public Toggle toggle;
     public LocalizationManager volume;
@@ -19,7 +15,7 @@ public class Settings : MonoBehaviour
     // Метод для зміни гучності гри
     public void SetVolume()
     {
-        volume.ChangeVolume(scroll.value);
+        volume.ChangeSetting("volume", scroll.value.ToString());
         AudioListener.volume = scroll.value;
     }
     public void SetVSync()
