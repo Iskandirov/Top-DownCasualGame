@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 public class SkillCDShift : MonoBehaviour
 {
-    public float skillCD;
-    public float skillCDMax;
+    public float skillCDShift;
+    public float skillShiftCDMax;
     public Image spriteCD;
     public TextMeshProUGUI text;
 
@@ -13,15 +13,15 @@ public class SkillCDShift : MonoBehaviour
     public void Start()
     {
         objMove = transform.root.GetComponent<Move>();
-        skillCDMax = objMove.dashTimeMax;
+        skillShiftCDMax = objMove.dashTimeMax;
     }
     // Update is called once per frame
     void Update()
     {
-        text.text = skillCD.ToString("0.");
-        skillCD = objMove.dashTime;
-        spriteCD.fillAmount = skillCD / skillCDMax;
-        if (skillCD <= 0)
+        text.text = skillCDShift.ToString("0.");
+        skillCDShift = objMove.dashTime;
+        spriteCD.fillAmount = skillCDShift / skillShiftCDMax;
+        if (skillCDShift <= 0)
         {
             text.gameObject.SetActive(false);
         }

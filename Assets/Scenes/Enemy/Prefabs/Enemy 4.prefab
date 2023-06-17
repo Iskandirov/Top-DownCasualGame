@@ -450,7 +450,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3143382399371462002}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.32337973, y: 0.5896161, z: -0.041707825}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 4.78, y: 4.78, z: 4.78}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -741,6 +741,7 @@ MonoBehaviour:
   summonTime: 30
   isThree: 0
   bomb: {fileID: 0}
+  anim: {fileID: 2002965151147493249}
 --- !u!50 &6384565066757689954
 Rigidbody2D:
   serializedVersion: 4
@@ -800,7 +801,6 @@ MonoBehaviour:
   attackVFX: {fileID: 3700339383819410429, guid: 3aaf368aef297c948adb82f462f67f26, type: 3}
   attackVFXRange: {fileID: 0}
   attackVFXRangePos: {fileID: 0}
-  objectToHit: {fileID: 0}
 --- !u!95 &2002965151147493249
 Animator:
   serializedVersion: 4

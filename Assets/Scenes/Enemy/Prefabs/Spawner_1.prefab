@@ -44,11 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a199defcd24dc4947aa5c29de07cf2a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeStep: 5
+  timeStep: 2
   timeToNewType: 0
   timeToNewTypeStart: 60
   enemyTypeSpawn: 0
-  time: 18
+  time: 0
   timeGost: 0
   EnemyBody:
   - {fileID: 4915736915067170013, guid: 3d751f437f9d0bd4f95fca499dff5adb, type: 3}
@@ -56,3 +56,5 @@ MonoBehaviour:
   - {fileID: 4915736915067170013, guid: 1bfae951c937a2d44acd2cc6aa1fda4e, type: 3}
   - {fileID: 4915736915067170013, guid: b774d02900feadc468c2abddd3d9a972, type: 3}
   Timer: {fileID: 0}
+  stopSpawn: 0
+  countEnemy: {fileID: 0}

@@ -64,10 +64,8 @@ public class CDSkillObject : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        // Ïåðåâ³ðèòè, ÷è number çíàõîäèòüñÿ â ìåæàõ çíà÷åíü skills.valuesList
         if (number >= 0 && number <= skills.valuesList.Count)
         {
-
             foreach (MonoBehaviour script in skills.scripts)
             {
                 if (script != this)
@@ -77,7 +75,7 @@ public class CDSkillObject : MonoBehaviour
 
                     valueFieldStep = scriptType.GetField("step", BindingFlags.Public | BindingFlags.Instance);
 
-                    if (valueFieldStep != null && script.gameObject.name != "DeleteVFX")
+                    if (valueFieldStep != null)
                     {
                         if (num == number && gameObject.name == script.gameObject.name)
                         {

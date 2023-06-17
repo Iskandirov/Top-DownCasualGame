@@ -496,7 +496,6 @@ public class LevelUpgrade : MonoBehaviour
             }
             if (skillsSave[skillPoint].level == 5)
             {
-                Debug.Log(skillPoint);
                 RemoveLine(skillPoint);
             }
         }

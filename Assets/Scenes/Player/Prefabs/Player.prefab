@@ -1047,7 +1047,7 @@ MonoBehaviour:
   isInvincible: 0
   sprintMultiplier: 2
   dashDistance: 5
-  dashTime: 3
+  dashTime: 0
   dashTimeMax: 3
   dashTimeStart: 0
   isDashing: 0
@@ -1108,6 +1108,8 @@ MonoBehaviour:
   level: 1
   levelUp: {fileID: 5076115435127718385}
   activeAbilObj: {fileID: 6013639321556754593}
+  time: {fileID: 3330279586192522566}
+  expMultiplier: 0
 --- !u!95 &2933150211668163815
 Animator:
   serializedVersion: 4
@@ -2040,6 +2042,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4449812636872756728, guid: 72d3b4de5c5de484ebe33d179b10eeed, type: 3}
   m_PrefabInstance: {fileID: 1646398649863193681}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3330279586192522566 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4102402655294994711, guid: 72d3b4de5c5de484ebe33d179b10eeed, type: 3}
+  m_PrefabInstance: {fileID: 1646398649863193681}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da099b5fdc42acb40862bb8899054b9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5076115435127718385 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5812127047076349344, guid: 72d3b4de5c5de484ebe33d179b10eeed, type: 3}

@@ -10,6 +10,7 @@ public class SpawnBobs : MonoBehaviour
     public int bosscount;
     private GameObject bossRandomed;
     public bool isSpawned = false;
+    public KillCount countEnemy;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +34,7 @@ public class SpawnBobs : MonoBehaviour
             foreach (var obj in objectsToDelete)
             {
                 Destroy(obj.GetComponentInParent<Forward>().gameObject);
+                countEnemy.enemyCount = 0;
             }
             GameObject[] spawners = GameObject.FindGameObjectsWithTag("Spawner");
 

@@ -14,10 +14,15 @@ public class SpawnEnemy : MonoBehaviour
     public GameObject[] EnemyBody;
     public Timer Timer;
     public bool stopSpawn;
+    public KillCount countEnemy;
+    Vector2 spawnAreaMin; // Мінімальні координати спавну
+    Vector2 spawnAreaMax; // Максимальні координати спавну
     // Start is called before the first frame update
     void Start()
     {
-        enemyTypeSpawn = 0;
+        spawnAreaMin = new Vector2(-199, -100);
+        spawnAreaMax = new Vector2(220, 220);
+
         timeToNewType = timeToNewTypeStart;
     }
 
@@ -29,10 +34,11 @@ public class SpawnEnemy : MonoBehaviour
     public void SpawnEnemies()
     {
         time += Time.deltaTime;
-        if (time >= timeStep && !stopSpawn)
+        if (time >= timeStep && !stopSpawn && countEnemy.enemyCount <= 100)
         {
             int i = Random.Range(0, enemyTypeSpawn);
-            Instantiate(EnemyBody[i], new Vector3(transform.position.x, transform.position.y, 1.8f), Quaternion.identity, transform);
+            Instantiate(EnemyBody[i], new Vector3(Random.Range(spawnAreaMin.x, spawnAreaMax.x), Random.Range(spawnAreaMin.y, spawnAreaMax.y), 1.8f), Quaternion.identity, transform);
+            countEnemy.enemyCount += 1;
             time = 0;
         }
         if (Timer.time >= timeToNewType && enemyTypeSpawn < EnemyBody.Length)

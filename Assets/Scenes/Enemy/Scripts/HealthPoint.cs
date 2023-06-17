@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using UnityEngine;
 
@@ -26,9 +27,14 @@ public class HealthPoint : MonoBehaviour
     DropItems objDrop;
     Forward objMove;
     KillCount objKills;
+    Vector2 spawnAreaMin; // Мінімальні координати спавну
+    Vector2 spawnAreaMax; // Максимальні координати спавну
     // Start is called before the first frame update
     void Start()
     {
+        spawnAreaMin = new Vector2(-199, -100);
+        spawnAreaMax = new Vector2(220, 220);
+
         healthPointMax = healthPoint;
         player = GameObject.FindWithTag("Player");
         objsSprite = GetComponentsInChildren<SpriteRenderer>();
@@ -64,7 +70,7 @@ public class HealthPoint : MonoBehaviour
             EXP a = Instantiate(expiriancePoint, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, 1.9f), Quaternion.identity);
             a.expBuff = healthPointMax / 5;
 
-            objExp.expiriencepoint.fillAmount += healthPointMax / (objExp.level * 10);
+            objExp.expiriencepoint.fillAmount += healthPointMax / (objExp.level * 10) * objExp.expMultiplier;
             objExp.ShowLevel();
             objKills.score += 1;
 
@@ -72,15 +78,15 @@ public class HealthPoint : MonoBehaviour
             {
                 objDrop.OnDestroyBoss();
                 Destroy(gameObject);
-                
-            }
 
-            objMove.transform.position = new Vector2(0, 0);
+            }
+            // Генеруємо випадкові координати в межах заданої області спавну
+            objMove.transform.position = new Vector2(Random.Range(spawnAreaMin.x, spawnAreaMax.x), Random.Range(spawnAreaMin.y, spawnAreaMax.y));
 
             healthPoint = healthPointMax;
         }
     }
-    
+
     public void ChangeToKick()
     {
         for (int i = 0; i < objsSprite.Length; i++)
@@ -88,7 +94,7 @@ public class HealthPoint : MonoBehaviour
             objsSprite[i].color = new Color32(255, 0, 0, 255);
         }
         isKick = true;
-    } 
+    }
     public void ChangeToNotKick()
     {
         if (isKick == true)

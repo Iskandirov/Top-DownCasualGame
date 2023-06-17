@@ -1177,7 +1177,6 @@ MonoBehaviour:
   burnDamage: 0
   burnTick: 0.5
   burnTickMax: 0.5
-  parentPos: {x: 0, y: 0}
 --- !u!1 &3261821647298518200
 GameObject:
   m_ObjectHideFlags: 0
@@ -1398,6 +1397,7 @@ MonoBehaviour:
   summonTime: 0
   isThree: 0
   bomb: {fileID: 0}
+  anim: {fileID: 8315049834056483339}
 --- !u!50 &6384565066757689954
 Rigidbody2D:
   serializedVersion: 4
@@ -1441,7 +1441,6 @@ MonoBehaviour:
   attackVFX: {fileID: 3700339383819410429, guid: 3aaf368aef297c948adb82f462f67f26, type: 3}
   attackVFXRange: {fileID: 1862192592940579735, guid: 7405436fb4dd2144cb6f44c50387d14b, type: 3}
   attackVFXRangePos: {fileID: 129595434458725327}
-  objectToHit: {fileID: 0}
 --- !u!95 &8315049834056483339
 Animator:
   serializedVersion: 4

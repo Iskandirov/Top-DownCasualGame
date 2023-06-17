@@ -21,6 +21,7 @@ public class Forward : MonoBehaviour
     public float summonTime;
     public bool isThree;
     public GameObject bomb;
+    public Animator anim;
 
     private Collider2D[] colliders;
 
@@ -52,7 +53,20 @@ public class Forward : MonoBehaviour
             }
         }
     }
+    bool IsObjectOutsideCameraBounds(GameObject obj)
+    {
+        Camera mainCamera = Camera.main;
+        Vector3 objectViewportPosition = mainCamera.WorldToViewportPoint(obj.transform.position);
 
+        // Перевірка, чи об'єкт знаходиться поза межами камери за її горизонтальними і вертикальними координатами
+        if (objectViewportPosition.x < -0.5f || objectViewportPosition.x > 1.45f ||
+         objectViewportPosition.y < -0.5f || objectViewportPosition.y > 1.45f)
+        {
+            return true; // Об'єкт знаходиться поза межами камери
+        }
+
+        return false; // Об'єкт знаходиться в межах камери
+    }
     public void MoveEnd()
     {
         isShooted = false;
@@ -72,6 +86,16 @@ public class Forward : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (IsObjectOutsideCameraBounds(gameObject))
+        {
+            anim.enabled = false;
+            speed = speedMax * 100;
+        }
+        else
+        {
+            anim.enabled = true;
+            speed = speedMax;
+        }
         if (isShooted)
         {
             Invoke("MoveEnd", 0.2f);
