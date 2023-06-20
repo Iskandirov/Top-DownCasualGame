@@ -43,13 +43,12 @@ public class Tower : MonoBehaviour
     }
     private IEnumerator TimerAgre(Forward a)
     {
+        yield return new WaitForSeconds(agreTime);
         if (a != null)
         {
-
+            a.player = FindObjectOfType<Forward>().gameObject;
+            a.enemyFinded = false;
         }
-        yield return new WaitForSeconds(agreTime);
-        a.player = FindObjectOfType<Forward>().gameObject;
-        a.enemyFinded = false;
     }
     // Update is called once per frame
     void FixedUpdate()

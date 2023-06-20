@@ -1,4 +1,4 @@
-using System.Collections;
+п»їusing System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -27,8 +27,11 @@ public class HealthPoint : MonoBehaviour
     DropItems objDrop;
     Forward objMove;
     KillCount objKills;
-    Vector2 spawnAreaMin; // Мінімальні координати спавну
-    Vector2 spawnAreaMax; // Максимальні координати спавну
+    Vector2 spawnAreaMin; // РњС–РЅС–РјР°Р»СЊРЅС– РєРѕРѕСЂРґРёРЅР°С‚Рё СЃРїР°РІРЅСѓ
+    Vector2 spawnAreaMax; // РњР°РєСЃРёРјР°Р»СЊРЅС– РєРѕРѕСЂРґРёРЅР°С‚Рё СЃРїР°РІРЅСѓ
+
+    private Camera mainCamera;
+    public float spawnRadius = 10f;
     // Start is called before the first frame update
     void Start()
     {
@@ -43,10 +46,58 @@ public class HealthPoint : MonoBehaviour
         objMove = GetComponentInParent<Forward>();
         objKills = FindObjectOfType<KillCount>();
     }
+    private Bounds GetCameraBounds()
+    {
+        float cameraHeight = 2f * mainCamera.orthographicSize;
+        float cameraWidth = cameraHeight * mainCamera.aspect;
+        Vector3 cameraPosition = mainCamera.transform.position;
+
+        float minX = cameraPosition.x - cameraWidth / 2f;
+        float maxX = cameraPosition.x + cameraWidth / 2f;
+        float minY = cameraPosition.y - cameraHeight / 2f;
+        float maxY = cameraPosition.y + cameraHeight / 2f;
+
+        return new Bounds(cameraPosition, new Vector3(cameraWidth, cameraHeight, 0f));
+    }
+
+    private bool IsInsideCameraBounds(Vector3 position, Bounds cameraBounds)
+    {
+        Vector3 viewportPosition = mainCamera.WorldToViewportPoint(position);
+        return viewportPosition.x >= 0f && viewportPosition.x <= 1f && viewportPosition.y >= 0f && viewportPosition.y <= 1f &&
+               position.x >= cameraBounds.min.x && position.x <= cameraBounds.max.x &&
+               position.y >= cameraBounds.min.y && position.y <= cameraBounds.max.y;
+    }
+
+    private bool IsInsideWallBounds(Vector3 position)
+    {
+        Collider2D[] colliders = Physics2D.OverlapPointAll(position);
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider.CompareTag("Wall"))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private Vector3 GetRandomSpawnPosition(Bounds cameraBounds)
+    {
+        Vector3 spawnPosition;
+        do
+        {
+            float randomAngle = Random.Range(0f, 2f * Mathf.PI);
+            Vector3 spawnOffset = new Vector3(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle), 0f) * spawnRadius;
+            spawnPosition = new Vector3(mainCamera.transform.position.x + spawnOffset.x, mainCamera.transform.position.y + spawnOffset.y, 1.8f);
+        } while (IsInsideCameraBounds(spawnPosition, cameraBounds) || IsInsideWallBounds(spawnPosition));
+
+        return spawnPosition;
+    }
 
     // Update is called once per frame
     void Update()
     {
+        mainCamera = Camera.main;
         if (isBurn)
         {
             burnTime -= Time.deltaTime;
@@ -80,8 +131,10 @@ public class HealthPoint : MonoBehaviour
                 Destroy(gameObject);
 
             }
-            // Генеруємо випадкові координати в межах заданої області спавну
-            objMove.transform.position = new Vector2(Random.Range(spawnAreaMin.x, spawnAreaMax.x), Random.Range(spawnAreaMin.y, spawnAreaMax.y));
+            Bounds cameraBounds = GetCameraBounds();
+            // Р“РµРЅРµСЂСѓС”РјРѕ РІРёРїР°РґРєРѕРІС– РєРѕРѕСЂРґРёРЅР°С‚Рё РІ РјРµР¶Р°С… Р·Р°РґР°РЅРѕС— РѕР±Р»Р°СЃС‚С– СЃРїР°РІРЅСѓ
+            Vector3 spawnPosition = GetRandomSpawnPosition(cameraBounds);
+            objMove.transform.position = spawnPosition;
 
             healthPoint = healthPointMax;
         }

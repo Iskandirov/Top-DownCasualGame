@@ -9,6 +9,8 @@ public class Zzap : MonoBehaviour
     public float x;
     public float y;
     public float lifeTime;
+    public float damageTick;
+    public float damageTickMax;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,22 +24,28 @@ public class Zzap : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        damageTick -= Time.deltaTime;
         transform.position = new Vector2(copie.transform.position.x + x, copie.transform.position.y + y);// +45
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy"))
+        if (damageTick <= 0)
         {
-            if (collision.gameObject.GetComponentInParent<ElementalBoss_Destroy>() || collision.GetComponent<HealthBossPart>())
+            if (collision.CompareTag("Enemy"))
             {
-                collision.GetComponent<HealthBossPart>().healthPoint -= damage;
-                collision.GetComponent<HealthBossPart>().ChangeToKick();
+                if (collision.gameObject.GetComponentInParent<ElementalBoss_Destroy>() || collision.GetComponent<HealthBossPart>())
+                {
+                    collision.GetComponent<HealthBossPart>().healthPoint -= damage;
+                    collision.GetComponent<HealthBossPart>().ChangeToKick();
+                }
+                else if (!collision.gameObject.GetComponentInParent<ElementalBoss_Destroy>() || !collision.GetComponent<HealthBossPart>())
+                {
+                    collision.GetComponent<HealthPoint>().healthPoint -= damage;
+                    collision.GetComponent<HealthPoint>().ChangeToKick();
+                }
             }
-            else if (!collision.gameObject.GetComponentInParent<ElementalBoss_Destroy>() || !collision.GetComponent<HealthBossPart>())
-            {
-                collision.GetComponent<HealthPoint>().healthPoint -= damage;
-                collision.GetComponent<HealthPoint>().ChangeToKick();
-            }
+            damageTick = damageTickMax;
         }
+       
     }
 }

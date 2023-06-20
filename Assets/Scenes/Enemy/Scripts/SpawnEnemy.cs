@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class SpawnEnemy : MonoBehaviour
@@ -9,44 +6,122 @@ public class SpawnEnemy : MonoBehaviour
     public float timeToNewType;
     public float timeToNewTypeStart;
     public int enemyTypeSpawn;
-    [SerializeField]float time;
-    [SerializeField]float timeGost;
+    [SerializeField] float time;
+    [SerializeField] float timeGost;
     public GameObject[] EnemyBody;
     public Timer Timer;
     public bool stopSpawn;
     public KillCount countEnemy;
-    Vector2 spawnAreaMin; // Мінімальні координати спавну
-    Vector2 spawnAreaMax; // Максимальні координати спавну
-    // Start is called before the first frame update
+
+    private Camera mainCamera;
+    public float spawnRadius = 10f;
+    public float enemyCountMax = 10f;
     void Start()
     {
-        spawnAreaMin = new Vector2(-199, -100);
-        spawnAreaMax = new Vector2(220, 220);
 
         timeToNewType = timeToNewTypeStart;
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
+        mainCamera = Camera.main;
         SpawnEnemies();
     }
-    public void SpawnEnemies()
+
+    private Bounds GetCameraBounds()
+    {
+        float cameraHeight = 2f * mainCamera.orthographicSize;
+        float cameraWidth = cameraHeight * mainCamera.aspect;
+        Vector3 cameraPosition = mainCamera.transform.position;
+
+        float minX = cameraPosition.x - cameraWidth / 2f;
+        float maxX = cameraPosition.x + cameraWidth / 2f;
+        float minY = cameraPosition.y - cameraHeight / 2f;
+        float maxY = cameraPosition.y + cameraHeight / 2f;
+
+        return new Bounds(cameraPosition, new Vector3(cameraWidth, cameraHeight, 0f));
+    }
+
+    private bool IsInsideCameraBounds(Vector3 position, Bounds cameraBounds)
+    {
+        Vector3 viewportPosition = mainCamera.WorldToViewportPoint(position);
+        return viewportPosition.x >= 0f && viewportPosition.x <= 1f && viewportPosition.y >= 0f && viewportPosition.y <= 1f &&
+               position.x >= cameraBounds.min.x && position.x <= cameraBounds.max.x &&
+               position.y >= cameraBounds.min.y && position.y <= cameraBounds.max.y;
+    }
+
+    private bool IsInsideWallBounds(Vector3 position)
+    {
+        Collider2D[] colliders = Physics2D.OverlapPointAll(position);
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider.CompareTag("Wall"))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private Vector3 GetRandomSpawnPosition(Bounds cameraBounds)
+    {
+        Vector3 spawnPosition;
+        do
+        {
+            float randomAngle = Random.Range(0f, 2f * Mathf.PI);
+            Vector3 spawnOffset = new Vector3(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle), 0f) * spawnRadius;
+            spawnPosition = new Vector3(mainCamera.transform.position.x + spawnOffset.x, mainCamera.transform.position.y + spawnOffset.y, 1.8f);
+        } while (IsInsideCameraBounds(spawnPosition, cameraBounds) || IsInsideWallBounds(spawnPosition));
+
+        return spawnPosition;
+    }
+
+
+    private void SpawnEnemies()
     {
         time += Time.deltaTime;
-        if (time >= timeStep && !stopSpawn && countEnemy.enemyCount <= 100)
+        Bounds cameraBounds = GetCameraBounds();
+
+        if (time >= timeStep && !stopSpawn && countEnemy.enemyCount <= enemyCountMax)
         {
+            Vector3 spawnPosition = GetRandomSpawnPosition(cameraBounds);
             int i = Random.Range(0, enemyTypeSpawn);
-            Instantiate(EnemyBody[i], new Vector3(Random.Range(spawnAreaMin.x, spawnAreaMax.x), Random.Range(spawnAreaMin.y, spawnAreaMax.y), 1.8f), Quaternion.identity, transform);
+            Instantiate(EnemyBody[i], spawnPosition, Quaternion.identity, transform);
             countEnemy.enemyCount += 1;
             time = 0;
         }
+
         if (Timer.time >= timeToNewType && enemyTypeSpawn < EnemyBody.Length)
         {
             timeToNewType += timeToNewTypeStart;
             enemyTypeSpawn++;
         }
     }
+    //private Vector3 GetRandomSpawnPosition()
+    //{
+    //    Vector3 randomPosition = new Vector3(
+    //        Random.Range(spawnAreaMin.x, spawnAreaMax.x),
+    //        Random.Range(spawnAreaMin.y, spawnAreaMax.y),
+    //        1.8f);
+
+    //    while (IsPositionWithinCameraBounds(randomPosition))
+    //    {
+    //        randomPosition = new Vector3(
+    //            Random.Range(spawnAreaMin.x, spawnAreaMax.x),
+    //            Random.Range(spawnAreaMin.y, spawnAreaMax.y),
+    //            1.8f);
+    //    }
+
+    //    return randomPosition;
+    //}
+
+    //bool IsPositionWithinCameraBounds(Vector3 position)
+    //{
+    //    Camera mainCamera = Camera.main;
+    //    Vector3 viewportPosition = mainCamera.WorldToViewportPoint(position);
+    //    return viewportPosition.x >= 0 && viewportPosition.x <= 1 && viewportPosition.y >= 0 && viewportPosition.y <= 1;
+    //}
+
     public void SpawnEnemies(byte opacity,float speed,int health,float damage)
     {
         timeGost += Time.deltaTime;

@@ -1,4 +1,4 @@
-using Mono.Cecil.Cil;
+п»їusing Mono.Cecil.Cil;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -20,7 +20,7 @@ public class Move : MonoBehaviour
     public bool isInvincible = false;
 
     public float sprintMultiplier = 2f;
-    public float dashDistance = 5f; // Фіксована відстань ривка
+    public float dashDistance = 5f; // Г”ВіГЄГ±Г®ГўГ Г­Г  ГўВіГ¤Г±ГІГ Г­Гј Г°ГЁГўГЄГ 
     public float dashTime;
     public float dashTimeMax;
     public float dashTimeStart;
@@ -52,7 +52,7 @@ public class Move : MonoBehaviour
                 Destroy(escPanelInstance);
             }
         }
-        // Перевірка на натискання кнопки шифт
+        // ГЏГҐГ°ГҐГўВіГ°ГЄГ  Г­Г  Г­Г ГІГЁГ±ГЄГ Г­Г­Гї ГЄГ­Г®ГЇГЄГЁ ГёГЁГґГІ
         if (Input.GetKeyDown(KeyCode.LeftShift) && !isReloading && !isDashing)
         {
             isReloading = true;
@@ -60,7 +60,7 @@ public class Move : MonoBehaviour
             gameObject.GetComponent<BoxCollider2D>().isTrigger = true;
             Vector2 dashDirection = GetDashDirection();
             rb.velocity = dashDirection * (speed * sprintMultiplier);
-            Invoke(nameof(StopDashing), 0.1f); // Зупиняємо ривок через 0.1 секунду
+            Invoke(nameof(StopDashing), 0.1f); // Г‡ГіГЇГЁГ­ГїВєГ¬Г® Г°ГЁГўГ®ГЄ Г·ГҐГ°ГҐГ§ 0.1 Г±ГҐГЄГіГ­Г¤Гі
             dashTime = dashTimeMax;
 
         }

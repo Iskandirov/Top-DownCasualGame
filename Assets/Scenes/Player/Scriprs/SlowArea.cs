@@ -11,14 +11,14 @@ public class SlowArea : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            collision.transform.root.GetComponent<Forward>().speed = collision.transform.root.GetComponent<Forward>().speedMax * 0.5f;
+            collision.GetComponentInParent<Forward>().speed = collision.GetComponentInParent<Forward>().speedMax * 0.5f;
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy"))
         {
-            collision.transform.root.GetComponent<Forward>().speed = collision.transform.root.GetComponent<Forward>().speedMax;
+            collision.GetComponentInParent<Forward>().speed = collision.GetComponentInParent<Forward>().speedMax;
         }
     }
 }

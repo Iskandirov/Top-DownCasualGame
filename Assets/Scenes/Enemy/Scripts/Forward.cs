@@ -1,4 +1,4 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 public class Forward : MonoBehaviour
 {
@@ -13,8 +13,8 @@ public class Forward : MonoBehaviour
     public bool isShooted;
 
     public GameObject LocationPoint;
-    public float movementSpeed = 5f;  // Швидкість руху об'єкту
-    public float circleRadius = 15f;  // Радіус кола
+    public float movementSpeed = 5f;  
+    public float circleRadius = 15f;  
     public float showDistance;
     public bool isSummoned;
     public bool enemyFinded;
@@ -22,6 +22,7 @@ public class Forward : MonoBehaviour
     public bool isThree;
     public GameObject bomb;
     public Animator anim;
+    public bool IsOutOfCamera;
 
     private Collider2D[] colliders;
 
@@ -56,16 +57,14 @@ public class Forward : MonoBehaviour
     bool IsObjectOutsideCameraBounds(GameObject obj)
     {
         Camera mainCamera = Camera.main;
+
         Vector3 objectViewportPosition = mainCamera.WorldToViewportPoint(obj.transform.position);
 
-        // Перевірка, чи об'єкт знаходиться поза межами камери за її горизонтальними і вертикальними координатами
-        if (objectViewportPosition.x < -0.5f || objectViewportPosition.x > 1.45f ||
-         objectViewportPosition.y < -0.5f || objectViewportPosition.y > 1.45f)
-        {
-            return true; // Об'єкт знаходиться поза межами камери
-        }
+        bool isOutsideBounds = objectViewportPosition.x < -0.5f || objectViewportPosition.x > 1.45f ||
+                               objectViewportPosition.y < -0.5f || objectViewportPosition.y > 1.45f;
 
-        return false; // Об'єкт знаходиться в межах камери
+        IsOutOfCamera = isOutsideBounds;
+        return isOutsideBounds;
     }
     public void MoveEnd()
     {
@@ -89,12 +88,10 @@ public class Forward : MonoBehaviour
         if (IsObjectOutsideCameraBounds(gameObject))
         {
             anim.enabled = false;
-            speed = speedMax * 100;
         }
         else
         {
             anim.enabled = true;
-            speed = speedMax;
         }
         if (isShooted)
         {
@@ -135,7 +132,7 @@ public class Forward : MonoBehaviour
 
         if (!isFly && !isShooted)
         {
-            Body.position = Vector3.MoveTowards(Body.position, player.transform.position, speed * Time.deltaTime);
+            Body.MovePosition(Vector2.MoveTowards(Body.position, player.transform.position, speed * Time.deltaTime));
         }
 
         if (Body.position.x < player.transform.position.x)
@@ -147,31 +144,23 @@ public class Forward : MonoBehaviour
             Body.transform.rotation = Quaternion.Euler(0, 180, 0);
         }
 
-        // Визначаємо відстань від гравця до ворога
         float distanceToEnemy = Vector3.Distance(player.transform.position, transform.position);
 
-        // Перевіряємо, чи ворог знаходиться близько
         if (distanceToEnemy < showDistance)
         {
-            // Зникаємо об'єкт LocationPoint
             LocationPoint.SetActive(false);
         }
         else
         {
-            // З'являємо об'єкт LocationPoint
             LocationPoint.SetActive(true);
 
-            // Визначаємо відстань від гравця до позиції курсора
             Vector3 direction = transform.position - player.transform.position;
             direction = direction.normalized * circleRadius;
 
-            // Визначаємо кінцеву позицію об'єкту на колі
             Vector3 targetPosition = player.transform.position + direction;
 
-            // Рухаємо об'єкт до кінцевої позиції
             LocationPoint.transform.position = targetPosition;
 
-            // Повертаємо коло в напрямку курсора
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             LocationPoint.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }

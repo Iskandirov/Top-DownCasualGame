@@ -5486,6 +5486,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2254235971519498339, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
   m_PrefabInstance: {fileID: 8313530371128728554}
   m_PrefabAsset: {fileID: 0}
+--- !u!61 &1671659872 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5798363855562223564, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
+  m_PrefabInstance: {fileID: 8313530371128728554}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1704949265 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3162221353454294214, guid: 660be92501cfde04f8bd3018f6a3dd20, type: 3}
@@ -48205,6 +48210,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8313530370077628587, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
+      propertyPath: mat
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8313530370077628587, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
+      propertyPath: collider
+      value: 
+      objectReference: {fileID: 1671659872}
     - target: {fileID: 8347580139805081930, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
       propertyPath: m_IsActive
       value: 0

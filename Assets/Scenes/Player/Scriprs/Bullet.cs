@@ -1,17 +1,10 @@
-using Newtonsoft.Json.Linq;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine;
+п»їusing UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
     public float damage;
-    public float speed = 10f;
-    public Rigidbody2D rb;
 
-
-    public float forceAmount = 30f; // Сила відштовхування
+    public float forceAmount = 30f; // РЎРёР»Р° РІС–РґС€С‚РѕРІС…СѓРІР°РЅРЅСЏ
     public bool isPiers;
     private void FixedUpdate()
     {
