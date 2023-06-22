@@ -1,8 +1,4 @@
-﻿using Mono.Cecil.Cil;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Move : MonoBehaviour
 {
@@ -10,6 +6,7 @@ public class Move : MonoBehaviour
     public float speed;
     public GameObject escPanel;
     public GameObject escPanelParent;
+    public Health playerHealth;
     public bool escPanelIsShowed;
     GameObject escPanelInstance;
     Animator playerAnim;
@@ -39,7 +36,7 @@ public class Move : MonoBehaviour
     void Update()
     {
         rb.position = PlayerMove();
-        if (Input.GetKeyUp(KeyCode.Escape))
+        if (Input.GetKeyUp(KeyCode.Escape) && playerHealth.playerHealthPoint > 0)
         {
             if (!escPanelIsShowed)
             {
@@ -52,7 +49,6 @@ public class Move : MonoBehaviour
                 Destroy(escPanelInstance);
             }
         }
-        // Ïåðåâ³ðêà íà íàòèñêàííÿ êíîïêè øèôò
         if (Input.GetKeyDown(KeyCode.LeftShift) && !isReloading && !isDashing)
         {
             isReloading = true;
@@ -60,7 +56,7 @@ public class Move : MonoBehaviour
             gameObject.GetComponent<BoxCollider2D>().isTrigger = true;
             Vector2 dashDirection = GetDashDirection();
             rb.velocity = dashDirection * (speed * sprintMultiplier);
-            Invoke(nameof(StopDashing), 0.1f); // Çóïèíÿºìî ðèâîê ÷åðåç 0.1 ñåêóíäó
+            Invoke(nameof(StopDashing), 0.1f);
             dashTime = dashTimeMax;
 
         }

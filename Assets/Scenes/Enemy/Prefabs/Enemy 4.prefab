@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4865518928536282341}
   - component: {fileID: 3101077333338191819}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Teeth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2807702755953328387}
   - component: {fileID: 4081999215132743013}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Throat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -180,7 +180,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1557866721168284113}
   - component: {fileID: 8318002708776386707}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Blink (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -264,7 +264,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6664817743777747068}
   - component: {fileID: 1944400663939142818}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Tongue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -348,7 +348,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1868155090907425945}
   - component: {fileID: 2901435972750519594}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Blink
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -434,7 +434,7 @@ GameObject:
   - component: {fileID: 5397493030017790455}
   - component: {fileID: 2473979257493350611}
   - component: {fileID: 7694329049011475875}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Body
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -539,6 +539,8 @@ MonoBehaviour:
   burnDamage: 0
   burnTick: 0.5
   burnTickMax: 0.5
+  expGiven: 10
+  dangerLevel: 1
   spawnRadius: 30
 --- !u!70 &7694329049011475875
 CapsuleCollider2D:
@@ -565,7 +567,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 457217320473168973}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -599,7 +601,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6314190189275129436}
   - component: {fileID: 3428816349554914769}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Blink
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -687,7 +689,8 @@ GameObject:
   - component: {fileID: 4676899112522618636}
   - component: {fileID: 7032251446413390054}
   - component: {fileID: 2002965151147493249}
-  m_Layer: 0
+  - component: {fileID: -6889604715851086349}
+  m_Layer: 10
   m_Name: Enemy 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -725,7 +728,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   Body: {fileID: 6384565066757689954}
-  speed: 15
+  speed: 0
   speedMax: 15
   isStunned: 0
   stunnTime: 0.5
@@ -793,6 +796,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 3
+  damageMax: 0
   stepAttack: 1
   stepAttackMax: 1
   isAttack: 0
@@ -822,6 +826,29 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-6889604715851086349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4915736915067170013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dfbdf1ab92fae94cb846b27abde09ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  move: {fileID: -6013413010149434249}
+  health: {fileID: 2473979257493350611}
+  attack: {fileID: 7032251446413390054}
+  isFire: 0
+  isElectricity: 0
+  isWater: 0
+  isDirt: 0
+  isWind: 0
+  isTime: 0
+  isGrass: 0
+  isMechanism: 0
 --- !u!1 &7150620893135406295
 GameObject:
   m_ObjectHideFlags: 0
@@ -831,7 +858,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6788244342283651190}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Mouth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -864,7 +891,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4159338947000392891}
   - component: {fileID: 6361653739990117944}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Right_eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -949,7 +976,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5909229410224234148}
   - component: {fileID: 2973432343705643844}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Left_eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1130,6 +1157,10 @@ PrefabInstance:
     - target: {fileID: 9118157617809031578, guid: aea241cf4ede1164e807ce8efec36619, type: 3}
       propertyPath: m_Name
       value: LocationPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 9118157617809031578, guid: aea241cf4ede1164e807ce8efec36619, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aea241cf4ede1164e807ce8efec36619, type: 3}

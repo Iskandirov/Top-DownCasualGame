@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 
 public class ImpulsSpawner : MonoBehaviour
@@ -11,9 +8,11 @@ public class ImpulsSpawner : MonoBehaviour
     public float powerGrow;
     public bool isFour;
     public bool isFive;
+    ElementsCoeficients WindElement;
     // Start is called before the first frame update
     void Start()
     {
+        WindElement = transform.root.GetComponent<ElementsCoeficients>();
         step = gameObject.GetComponent<CDSkillObject>().CD;
     }
 
@@ -27,6 +26,8 @@ public class ImpulsSpawner : MonoBehaviour
             a.powerGrow = powerGrow;
             a.isFour = isFour;
             a.isFive = isFive;
+            a.wind = WindElement.Wind;
+            a.grass = WindElement.Grass;
             step = stepMax;
         }
     }

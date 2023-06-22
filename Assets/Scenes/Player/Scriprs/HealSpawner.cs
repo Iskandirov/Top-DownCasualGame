@@ -9,9 +9,11 @@ public class HealSpawner : MonoBehaviour
     public float stepMax;
     public float heal;
     public bool isLevelTwo;
+    ElementsCoeficients grassElement;
     // Start is called before the first frame update
     void Start()
     {
+        grassElement = transform.root.GetComponent<ElementsCoeficients>();
         step = gameObject.GetComponent<CDSkillObject>().CD;
 
     }
@@ -25,6 +27,7 @@ public class HealSpawner : MonoBehaviour
             HealActive a = Instantiate(healObj, transform.position, Quaternion.identity);
             a.heal = heal;
             a.isLevelTwo = isLevelTwo;
+            a.Grass = grassElement.Grass;
             step = stepMax;
         }
 

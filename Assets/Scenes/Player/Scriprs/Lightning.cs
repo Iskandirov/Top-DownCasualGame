@@ -17,12 +17,12 @@ public class Lightning : MonoBehaviour
     public float damage;
     public float spawnInterval;
     int countEnemy;
+    ElementsCoeficients ElectricityElement;
     // Start is called before the first frame update
     void Start()
     {
+        ElectricityElement = transform.root.GetComponent<ElementsCoeficients>();
         step = gameObject.GetComponent<CDSkillObject>().CD;
-
-        //StartCoroutine(TimerSpell());
     }
 
     void Update()
@@ -31,7 +31,7 @@ public class Lightning : MonoBehaviour
         if (step <= 0)
         {
             enemiesToShoot = new Collider2D[maxEnemiesToShoot];
-            enemies = Physics2D.OverlapCircleAll(gameObject.transform.position, radius, 3);
+            enemies = Physics2D.OverlapCircleAll(gameObject.transform.position, radius);
 
             if (enemies != null && enemies.Length > 0)
             {
@@ -69,7 +69,7 @@ public class Lightning : MonoBehaviour
                     Instantiate(lightObj, new Vector3(enemiesToShoot[i].transform.position.x,
                         enemiesToShoot[i].transform.position.y + 3), Quaternion.identity);
 
-                    objHealth.healthPoint -= damage;
+                    objHealth.healthPoint -= damage * ElectricityElement.Electricity;
                     objMove.isStunned = true;
                     objMove.stunnTime = stunTime;
 
@@ -89,7 +89,7 @@ public class Lightning : MonoBehaviour
                     Instantiate(lightObj, new Vector3(enemiesToShoot[i].transform.position.x,
                         enemiesToShoot[i].transform.position.y + 3), Quaternion.identity);
 
-                    objHealthB.healthPoint -= damage;
+                    objHealthB.healthPoint -= damage * ElectricityElement.Electricity;
                     objMove.isStunned = true;
                     objMove.stunnTime = stunTime / 2;
 

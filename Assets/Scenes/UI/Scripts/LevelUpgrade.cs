@@ -44,12 +44,14 @@ public class LevelUpgrade : MonoBehaviour
     TagText objTextTwo;
     Shoot objShoot;
     SkillCDLink objLinkSpell;
+    ElementsCoeficients cef;
     // Start is called before the first frame update
     private void Start()
     {
         
         objShoot = GetComponentInParent<Shoot>();
         objLinkSpell = FindObjectOfType<SkillCDLink>();
+        cef = FindObjectOfType<ElementsCoeficients>();
         SkillIconsMax = isSkillIcons.Count;
     }
     void OnEnable()
@@ -94,7 +96,7 @@ public class LevelUpgrade : MonoBehaviour
 
             while (choise.Count < 2)
             {
-                int randomObject = skillsSave[UnityEngine.Random.Range(0, skillsSave.Count)].ID;
+                int randomObject = skillsSave[Random.Range(0, skillsSave.Count)].ID;
                 if (skillsLoad.Any(skill => skill.ID == randomObject) && !choise.Contains(randomObject))
                 {
                     choise.Add(randomObject);
@@ -391,18 +393,22 @@ public class LevelUpgrade : MonoBehaviour
                         if (skillsSave[skillPoint].level == 1)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<TowerSpawner>().lifeTime += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            cef.Water += 0.1f;
                         }
                         else if (skillsSave[skillPoint].level == 2)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<TowerSpawner>().isThree = true;
+                            cef.Water += 0.1f;
                         }
                         else if (skillsSave[skillPoint].level == 3)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<TowerSpawner>().attackSpeed -= skillsSave[skillPoint].stat1[skillsSave[skillPoint].level] / 100;
+                            cef.Water += 0.1f;
                         }
                         else if (skillsSave[skillPoint].level == 4)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<TowerSpawner>().isFive = true;
+                            cef.Water += 0.1f;
                         }
                     }
                     else if (skillPoint == 11)

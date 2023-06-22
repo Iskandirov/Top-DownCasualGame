@@ -27,16 +27,15 @@ public class HealthPoint : MonoBehaviour
     DropItems objDrop;
     Forward objMove;
     KillCount objKills;
-    Vector2 spawnAreaMin; // Мінімальні координати спавну
-    Vector2 spawnAreaMax; // Максимальні координати спавну
+
+    public float expGiven;
+    public float dangerLevel;
 
     private Camera mainCamera;
     public float spawnRadius = 10f;
     // Start is called before the first frame update
     void Start()
     {
-        spawnAreaMin = new Vector2(-199, -100);
-        spawnAreaMax = new Vector2(220, 220);
 
         healthPointMax = healthPoint;
         player = GameObject.FindWithTag("Player");
@@ -52,25 +51,23 @@ public class HealthPoint : MonoBehaviour
         float cameraWidth = cameraHeight * mainCamera.aspect;
         Vector3 cameraPosition = mainCamera.transform.position;
 
-        float minX = cameraPosition.x - cameraWidth / 2f;
-        float maxX = cameraPosition.x + cameraWidth / 2f;
-        float minY = cameraPosition.y - cameraHeight / 2f;
-        float maxY = cameraPosition.y + cameraHeight / 2f;
+        //float minX = cameraPosition.x - cameraWidth / 2f;
+        //float maxX = cameraPosition.x + cameraWidth / 2f;
+        //float minY = cameraPosition.y - cameraHeight / 2f;
+        //float maxY = cameraPosition.y + cameraHeight / 2f;
 
         return new Bounds(cameraPosition, new Vector3(cameraWidth, cameraHeight, 0f));
     }
 
-    private bool IsInsideCameraBounds(Vector3 position, Bounds cameraBounds)
+    private bool IsInsideCameraBounds(Vector3 position)
     {
         Vector3 viewportPosition = mainCamera.WorldToViewportPoint(position);
-        return viewportPosition.x >= 0f && viewportPosition.x <= 1f && viewportPosition.y >= 0f && viewportPosition.y <= 1f &&
-               position.x >= cameraBounds.min.x && position.x <= cameraBounds.max.x &&
-               position.y >= cameraBounds.min.y && position.y <= cameraBounds.max.y;
+        return viewportPosition.x >= -0f && viewportPosition.x <= 1f && viewportPosition.y >= -0f && viewportPosition.y <= 1f;
     }
 
     private bool IsInsideWallBounds(Vector3 position)
     {
-        Collider2D[] colliders = Physics2D.OverlapPointAll(position);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(position, 0.1f); // Використовуємо OverlapCircleAll замість OverlapPointAll
         foreach (Collider2D collider in colliders)
         {
             if (collider.CompareTag("Wall"))
@@ -89,7 +86,7 @@ public class HealthPoint : MonoBehaviour
             float randomAngle = Random.Range(0f, 2f * Mathf.PI);
             Vector3 spawnOffset = new Vector3(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle), 0f) * spawnRadius;
             spawnPosition = new Vector3(mainCamera.transform.position.x + spawnOffset.x, mainCamera.transform.position.y + spawnOffset.y, 1.8f);
-        } while (IsInsideCameraBounds(spawnPosition, cameraBounds) || IsInsideWallBounds(spawnPosition));
+        } while (IsInsideCameraBounds(spawnPosition) || IsInsideWallBounds(spawnPosition));
 
         return spawnPosition;
     }
@@ -119,24 +116,27 @@ public class HealthPoint : MonoBehaviour
         if (healthPoint <= 0)
         {
             EXP a = Instantiate(expiriancePoint, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, 1.9f), Quaternion.identity);
-            a.expBuff = healthPointMax / 5;
+            a.expBuff = expGiven * dangerLevel;
 
-            objExp.expiriencepoint.fillAmount += healthPointMax / (objExp.level * 10) * objExp.expMultiplier;
+            objExp.expiriencepoint.fillAmount += expGiven * dangerLevel / objExp.expNeedToNewLevel;
             objExp.ShowLevel();
             objKills.score += 1;
 
             if (IsBobs)
             {
                 objDrop.OnDestroyBoss();
-                Destroy(gameObject);
-
+                Destroy(gameObject.transform.root.gameObject);
             }
-            Bounds cameraBounds = GetCameraBounds();
-            // Генеруємо випадкові координати в межах заданої області спавну
-            Vector3 spawnPosition = GetRandomSpawnPosition(cameraBounds);
-            objMove.transform.position = spawnPosition;
+            else
+            {
+                Bounds cameraBounds = GetCameraBounds();
+                // Генеруємо випадкові координати в межах заданої області спавну
+                Vector3 spawnPosition = GetRandomSpawnPosition(cameraBounds);
+                objMove.transform.position = spawnPosition;
 
-            healthPoint = healthPointMax;
+                healthPoint = healthPointMax;
+            }
+           
         }
     }
 

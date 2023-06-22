@@ -9,6 +9,7 @@ public class DestroyBarrier : MonoBehaviour
     public Health player;
     public bool isFiveLevel;
     public float heal;
+    public float Grass;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,9 +29,9 @@ public class DestroyBarrier : MonoBehaviour
 
                 if (player.playerHealthPoint != player.playerHealthPointMax)
                 {
-                    if (player.playerHealthPoint + heal <= player.playerHealthPointMax)
+                    if (player.playerHealthPoint + heal * Grass <= player.playerHealthPointMax)
                     {
-                        player.playerHealthPoint += heal;
+                        player.playerHealthPoint += heal * Grass;
                         player.playerHealthPointImg.fillAmount = player.playerHealthPoint / player.playerHealthPointMax;
                     }
                     else

@@ -9,11 +9,12 @@ public class FireWaveSpawner : MonoBehaviour
     public float damage;
     public bool isLevelThree;
     public float burnDamage;
+    ElementsCoeficients waterElement;
     // Start is called before the first frame update
     void Start()
     {
+        waterElement = transform.root.GetComponent<ElementsCoeficients>();
         step = gameObject.GetComponent<CDSkillObject>().CD;
-
     }
 
     // Update is called once per frame
@@ -34,6 +35,7 @@ public class FireWaveSpawner : MonoBehaviour
     {
         FireWave a = Instantiate(wave, transform.position, Quaternion.identity);
         a.damage = damage;
+        a.fireElement = waterElement.Fire;
         a.burnDamage = burnDamage;
     }
 }

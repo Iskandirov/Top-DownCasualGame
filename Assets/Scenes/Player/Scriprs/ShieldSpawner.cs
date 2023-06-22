@@ -11,9 +11,11 @@ public class ShieldSpawner : MonoBehaviour
     public bool isThree;
     public bool isFour;
     public bool isFive;
+    ElementsCoeficients dirtElement;
     // Start is called before the first frame update
     void Start()
     {
+        dirtElement = transform.root.GetComponent<ElementsCoeficients>();
         step = gameObject.GetComponent<CDSkillObject>().CD;
     }
 

@@ -12,11 +12,6 @@ public class SetLanguage : MonoBehaviour
         settings.UpdateText(texts);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public TagText FindMyComponentInChildren(GameObject parentObject,string tag)
     {
         TagText component = parentObject.GetComponent<TagText>();

@@ -8,18 +8,21 @@ public class Shield : MonoBehaviour
     public float healthShieldMissed;
     public float lifeTime;
     public GameObject player;
-    public GameObject slowObj;
+    public SlowArea slowObj;
+    public float rockDamage;
     public GameObject rockObj;
     public bool isThreeLevel;
     public bool isFourLevel;
     public bool isFiveLevel;
+    public float dirtElement;
     // Start is called before the first frame update
     void Start()
     {
         player = FindObjectOfType<Health>().gameObject;
         if (isFourLevel)
         {
-            Instantiate(slowObj, transform.position, Quaternion.identity, transform);
+            SlowArea a = Instantiate(slowObj, transform.position, Quaternion.identity, transform);
+            a.dirtElement = dirtElement;
         }
         StartCoroutine(TimerSpell());
     }
@@ -44,7 +47,6 @@ public class Shield : MonoBehaviour
 
                 // Перевірка зіткнень з навколишніми об'єктами
                 Collider2D[] colliders = Physics2D.OverlapCircleAll(newObject.transform.position, newObject.GetComponent<Collider2D>().bounds.extents.x);
-                List<GameObject> enemyObjects = new List<GameObject>();
 
                 foreach (Collider2D collider in colliders)
                 {
@@ -53,7 +55,7 @@ public class Shield : MonoBehaviour
                         // Перевірка, чи зіткнення відбулось з іншим об'єктом (не самим собою)
                         if (collider.gameObject != newObject)
                         {
-                            enemyObjects.Add(collider.gameObject);
+                            collider.GetComponent<HealthPoint>().healthPoint -= rockDamage * dirtElement;
                             // Здійснюйте необхідні дії при зіткненні об'єкта
                             Debug.Log("Object collided with: " + collider.name);
                         }

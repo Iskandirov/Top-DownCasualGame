@@ -11,6 +11,7 @@ public class Zzap : MonoBehaviour
     public float lifeTime;
     public float damageTick;
     public float damageTickMax;
+    public float electicElement;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,12 +36,12 @@ public class Zzap : MonoBehaviour
             {
                 if (collision.gameObject.GetComponentInParent<ElementalBoss_Destroy>() || collision.GetComponent<HealthBossPart>())
                 {
-                    collision.GetComponent<HealthBossPart>().healthPoint -= damage;
+                    collision.GetComponent<HealthBossPart>().healthPoint -= damage * electicElement;
                     collision.GetComponent<HealthBossPart>().ChangeToKick();
                 }
                 else if (!collision.gameObject.GetComponentInParent<ElementalBoss_Destroy>() || !collision.GetComponent<HealthBossPart>())
                 {
-                    collision.GetComponent<HealthPoint>().healthPoint -= damage;
+                    collision.GetComponent<HealthPoint>().healthPoint -= damage * electicElement;
                     collision.GetComponent<HealthPoint>().ChangeToKick();
                 }
             }

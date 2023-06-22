@@ -15,7 +15,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &6706114333446396296
 Transform:
@@ -100,7 +100,7 @@ GameObject:
   m_TagString: Shield
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &7916109652606774832
 Transform:
@@ -147,11 +147,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthShield: 30
-  "healthShield\u042CMissed": 0
+  healthShieldMissed: 0
   lifeTime: 10
   player: {fileID: 0}
-  slowObj: {fileID: 1466685690614612216, guid: f8fdadc8cffe5994489e37bb25ca8c67, type: 3}
+  slowObj: {fileID: -653662045394503945, guid: f8fdadc8cffe5994489e37bb25ca8c67, type: 3}
   rockObj: {fileID: 1161253984060344018, guid: 67f0ab1ed2037474a83b645d27e01be3, type: 3}
   isThreeLevel: 0
   isFourLevel: 0
   isFiveLevel: 0
+  dirtElement: 0

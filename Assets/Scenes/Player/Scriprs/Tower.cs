@@ -8,12 +8,14 @@ public class Tower : MonoBehaviour
     public float spawnTick;
     public float spawnTickMax;
     public TowerWave damageObj;
-    public GameObject bomb;
+    public BobmExplode bomb;
     public bool isThree;
     public bool isFive;
     Collider2D[] colliders;
     float agreTime = 3;
     Forward objEnemyMove;
+    public float waterElement;
+    public float fireElement;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +31,7 @@ public class Tower : MonoBehaviour
             yield return new WaitForSeconds(spawnTick);
             TowerWave a = Instantiate(damageObj, transform.position, Quaternion.identity);
             a.player = gameObject;
+            a.waterElement = waterElement;
             spawnTick = spawnTickMax;
         }
     }
@@ -37,7 +40,8 @@ public class Tower : MonoBehaviour
         yield return new WaitForSeconds(lifeTime);
         if (isThree)
         {
-            Instantiate(bomb, transform.position, Quaternion.identity);
+            BobmExplode a = Instantiate(bomb, transform.position, Quaternion.identity);
+            a.fire = fireElement;
         }
         Destroy(gameObject);
     }

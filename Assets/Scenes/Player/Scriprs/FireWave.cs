@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FireWave : MonoBehaviour
@@ -7,6 +6,7 @@ public class FireWave : MonoBehaviour
     public float lifeTime;
     public float damage;
     public float burnDamage;
+    public float fireElement;
     GameObject player;
     // Start is called before the first frame update
     void Start()
@@ -42,7 +42,7 @@ public class FireWave : MonoBehaviour
                 {
                     collision.GetComponent<HealthBossPart>().isBurn = true;
                     collision.GetComponent<HealthBossPart>().burnTime = 3;
-                    collision.GetComponent<HealthBossPart>().burnDamage = burnDamage;
+                    collision.GetComponent<HealthBossPart>().burnDamage = burnDamage * fireElement;
                 }
             }
             else if (!collision.gameObject.GetComponentInParent<ElementalBoss_Destroy>() || !collision.GetComponent<HealthBossPart>())

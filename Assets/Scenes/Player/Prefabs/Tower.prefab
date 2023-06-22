@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 3956437290874614641}
   - component: {fileID: 3107889816941364642}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TowerSrite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &3956437290874614641
 Transform:
@@ -95,12 +95,12 @@ GameObject:
   - component: {fileID: 1917743394110280423}
   - component: {fileID: 3831675836443140198}
   - component: {fileID: 3945627402441449378}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1917743394110280423
 Transform:
@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b3195f581a031b43921c3baa9e4881a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeTime: 30
+  lifeTime: 20
   spawnTick: 6
   spawnTickMax: 6
   damageObj: {fileID: 6722287990898937310, guid: 0d178b44c5f5dce4d9a1d065c298e86e, type: 3}

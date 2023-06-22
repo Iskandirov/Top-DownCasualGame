@@ -8,6 +8,7 @@ public class HealActive : MonoBehaviour
     public float lifeTime;
     public float heal;
     public bool isLevelTwo;
+    public float Grass;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,9 +19,9 @@ public class HealActive : MonoBehaviour
         }
         if (player.playerHealthPoint != player.playerHealthPointMax)
         {
-            if (player.playerHealthPoint + heal <= player.playerHealthPointMax)
+            if (player.playerHealthPoint + heal * Grass <= player.playerHealthPointMax)
             {
-                player.playerHealthPoint += heal;
+                player.playerHealthPoint += heal * Grass;
                 player.playerHealthPointImg.fillAmount = player.playerHealthPoint / player.playerHealthPointMax;
             }
             else

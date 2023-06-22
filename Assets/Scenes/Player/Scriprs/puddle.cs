@@ -35,7 +35,7 @@ public class puddle : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(damageTick);
-            enemies = Physics2D.OverlapCircleAll(gameObject.transform.position, radius, 3);
+            enemies = Physics2D.OverlapCircleAll(transform.position, radius);
 
             for (int i = 0; i < enemies.Length; i++)
             {

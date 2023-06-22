@@ -10,6 +10,8 @@ public class Impuls : MonoBehaviour
     public bool isFive;
     GameObject player;
     public DestroyBarrier barrier;
+    public float wind;
+    public float grass;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,10 +27,10 @@ public class Impuls : MonoBehaviour
         if (isFour)
         {
             DestroyBarrier a = Instantiate(barrier, transform.position, Quaternion.identity);
+            a.Grass = grass;
             if (isFive)
             {
                 a.isFiveLevel = isFive;
-
             }
         }
         Destroy(gameObject);
@@ -38,7 +40,7 @@ public class Impuls : MonoBehaviour
     void Update()
     {
         transform.position = player.transform.position;
-        transform.localScale = new Vector3(transform.localScale.x + Time.deltaTime * powerGrow,
-            transform.localScale.y + Time.deltaTime * powerGrow, transform.localScale.z + Time.deltaTime * powerGrow);
+        transform.localScale = new Vector3(transform.localScale.x + Time.deltaTime * powerGrow * wind,
+            transform.localScale.y + Time.deltaTime * powerGrow * wind, transform.localScale.z + Time.deltaTime * powerGrow * wind);
     }
 }

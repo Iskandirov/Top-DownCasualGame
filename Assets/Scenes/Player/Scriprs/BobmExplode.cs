@@ -1,11 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BobmExplode : MonoBehaviour
 {
     public float lifeTime;
     public float damage;
+    public float fire;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,19 +24,19 @@ public class BobmExplode : MonoBehaviour
             {
                 if (collider.gameObject.GetComponentInParent<ElementalBoss_Destroy>() || collider.GetComponent<HealthBossPart>())
                 {
-                    collider.GetComponent<HealthBossPart>().healthPoint -= damage;
+                    collider.GetComponent<HealthBossPart>().healthPoint -= damage * fire;
                     collider.GetComponent<HealthBossPart>().ChangeToKick();
 
                 }
                 else if (!collider.gameObject.GetComponentInParent<ElementalBoss_Destroy>() || !collider.GetComponent<HealthBossPart>())
                 {
-                    collider.GetComponent<HealthPoint>().healthPoint -= damage;
+                    collider.GetComponent<HealthPoint>().healthPoint -= damage * fire;
                     collider.GetComponent<HealthPoint>().ChangeToKick();
                 }
             }
             else if (collider.CompareTag("Barrel"))
             {
-                collider.gameObject.GetComponent<ObjectHealth>().health -= damage;
+                collider.gameObject.GetComponent<ObjectHealth>().health -= damage * fire;
             }
         }
         Destroy(gameObject);

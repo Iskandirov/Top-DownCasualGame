@@ -29,6 +29,12 @@ public class Forward : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+#if UNITY_EDITOR
+        // Код для режиму редактора Unity
+        speed = speedMax;
+#else
+    speed = speedMax * 7;
+#endif
         isStunned = false;
         player = GameObject.FindWithTag("Player");
         colliders = new Collider2D[10];
@@ -79,7 +85,12 @@ public class Forward : MonoBehaviour
 
     public void StartMove()
     {
+#if UNITY_EDITOR
+        // Код для режиму редактора Unity
         speed = speedMax;
+#else
+    speed = speedMax * 7;
+#endif
     }
 
     // Update is called once per frame
@@ -170,7 +181,12 @@ public class Forward : MonoBehaviour
     {
         if (stunnTime <= 0)
         {
+#if UNITY_EDITOR
+            // Код для режиму редактора Unity
             speed = speedMax;
+#else
+    speed = speedMax * 7;
+#endif
             isStunned = false;
             stunnTime = stunnTimeMax;
         }

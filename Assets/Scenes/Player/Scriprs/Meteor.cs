@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Meteor : MonoBehaviour
@@ -9,6 +8,7 @@ public class Meteor : MonoBehaviour
     public float damageTickMax;
     public float damage;
     public bool isFour;
+    public float fireDirt;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,7 +34,7 @@ public class Meteor : MonoBehaviour
             {
                 if (collision.GetComponentInParent<ElementalBoss_Destroy>() || collision.GetComponent<HealthBossPart>())
                 {
-                    collision.GetComponent<HealthBossPart>().healthPoint -= damage;
+                    collision.GetComponent<HealthBossPart>().healthPoint -= damage * fireDirt;
                     collision.GetComponent<HealthBossPart>().ChangeToKick();
                     if (isFour)
                     {
@@ -43,7 +43,7 @@ public class Meteor : MonoBehaviour
                 }
                 else if (!collision.GetComponentInParent<ElementalBoss_Destroy>() || !collision.GetComponent<HealthBossPart>())
                 {
-                    collision.GetComponent<HealthPoint>().healthPoint -= damage;
+                    collision.GetComponent<HealthPoint>().healthPoint -= damage * fireDirt;
                     collision.GetComponent<HealthPoint>().ChangeToKick();
                     if (isFour)
                     {

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6952950765238762620}
   - component: {fileID: 6952950765238762621}
   - component: {fileID: 6952950765238762618}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifeTime: 1
   damage: 1
+  burnDamage: 0
 --- !u!58 &6952950765238762618
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -74,7 +75,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6952950765276406989}
   - component: {fileID: 6952950765276406988}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: WaveSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

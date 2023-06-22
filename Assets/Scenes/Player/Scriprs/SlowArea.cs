@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class SlowArea : MonoBehaviour
 {
+    public float dirtElement;
     // Update is called once per frame
     void Update()
     {
@@ -11,7 +12,7 @@ public class SlowArea : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            collision.GetComponentInParent<Forward>().speed = collision.GetComponentInParent<Forward>().speedMax * 0.5f;
+            collision.GetComponentInParent<Forward>().speed = collision.GetComponentInParent<Forward>().speedMax * 0.5f / dirtElement;
         }
     }
     private void OnTriggerExit2D(Collider2D collision)

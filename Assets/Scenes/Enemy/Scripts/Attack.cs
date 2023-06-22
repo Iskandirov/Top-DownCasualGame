@@ -3,6 +3,7 @@ using UnityEngine;
 public class Attack : MonoBehaviour
 {
     public float damage;
+    public float damageMax;
     public float stepAttack;
     public float stepAttackMax;
     public bool isAttack;
@@ -38,34 +39,34 @@ public class Attack : MonoBehaviour
             }
         }
     }
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
         if (objMove.isSummoned == false)
         {
-            if (collision.CompareTag("Shield") && isAttack == false)
+            if (collision.collider.CompareTag("Shield") && isAttack == false)
             {
                 objAnim.SetBool("IsHit", true);
                 objMove.speed = 0;
-                collision.GetComponent<Shield>().healthShield -= damage;
+                collision.collider.GetComponent<Shield>().healthShield -= damage;
                 isAttack = true;
-                if (collision.GetComponent<Shield>().isThreeLevel)
+                if (collision.collider.GetComponent<Shield>().isThreeLevel)
                 {
                     gameObject.GetComponentInChildren<HealthPoint>().healthPoint -= damage / 2;
-                    if (collision.GetComponent<Shield>().isFiveLevel)
+                    if (collision.collider.GetComponent<Shield>().isFiveLevel)
                     {
-                        collision.GetComponent<Shield>().healthShieldMissed += damage;
+                        collision.collider.GetComponent<Shield>().healthShieldMissed += damage;
                     }
                 }
             }
-            else if (collision.CompareTag("Player") && isAttack == false)
+            else if (collision.collider.CompareTag("Player") && isAttack == false)
             {
-                if (collision.GetComponent<Move>().isInvincible == false)
+                if (collision.collider.GetComponent<Move>().isInvincible == false)
                 {
                     if (!isRange)
                     {
                         objMove.speed = 0;
                         objAnim.SetBool("IsHit", true);
-                        objectToHit = collision.GetComponent<Health>();
+                        objectToHit = collision.collider.GetComponent<Health>();
                         Instantiate(attackVFX, gameObject.transform.position, Quaternion.identity);
                         isAttack = true;
                     }
@@ -79,21 +80,21 @@ public class Attack : MonoBehaviour
         }
         else
         {
-            if (collision.CompareTag("Enemy"))
+            if (collision.collider.CompareTag("Enemy"))
             {
                 chancToLure = Random.Range(0, 10);
                 objMove.speed = 0;
-                if (collision.gameObject.GetComponentInParent<ElementalBoss_Destroy>() || collision.GetComponent<HealthBossPart>())
+                if (collision.gameObject.GetComponentInParent<ElementalBoss_Destroy>() || collision.collider.GetComponent<HealthBossPart>())
                 {
                     objAnim.SetBool("IsHit", true);
-                    collision.GetComponent<HealthBossPart>().healthPoint -= damage;
-                    collision.GetComponent<HealthBossPart>().ChangeToKick();
+                    collision.collider.GetComponent<HealthBossPart>().healthPoint -= damage;
+                    collision.collider.GetComponent<HealthBossPart>().ChangeToKick();
                 }
-                else if (!collision.gameObject.GetComponentInParent<ElementalBoss_Destroy>() || !collision.GetComponent<HealthBossPart>())
+                else if (!collision.gameObject.GetComponentInParent<ElementalBoss_Destroy>() || !collision.collider.GetComponent<HealthBossPart>())
                 {
                     objAnim.SetBool("IsHit", true);
-                    collision.GetComponent<HealthPoint>().healthPoint -= damage;
-                    collision.GetComponent<HealthPoint>().ChangeToKick();
+                    collision.collider.GetComponent<HealthPoint>().healthPoint -= damage;
+                    collision.collider.GetComponent<HealthPoint>().ChangeToKick();
                 }
                 if (isFive && !collision.transform.root.GetComponent<Forward>().isSummoned && chancToLure > 7)
                 {
@@ -104,9 +105,9 @@ public class Attack : MonoBehaviour
             }
         }
     }
-    public void OnTriggerExit2D(Collider2D collision)
+    private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.collider.CompareTag("Player"))
         {
             objectToHit = null;
         }

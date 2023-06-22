@@ -41,9 +41,12 @@ public class LightOn : MonoBehaviour
 
     public Vector2 spawnAreaMin; // Мінімальні координати спавну
     public Vector2 spawnAreaMax; // Максимальні координати спавну
+
+    ElementsCoeficients grassWindElement;
     // Start is called before the first frame update
     void Start()
     {
+        grassWindElement = transform.root.GetComponent<ElementsCoeficients>();
         step = gameObject.GetComponent<CDSkillObject>().CD;
         objMove = transform.root.GetComponent<Move>();
         objShoot = transform.root.GetComponent<Shoot>();
@@ -63,7 +66,6 @@ public class LightOn : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-
         //Spawn ghost enemies while pill is active
         if (IsPillUp == true)
         {
@@ -71,8 +73,8 @@ public class LightOn : MonoBehaviour
             objSpawn.SpawnEnemies(120, moveSpeedBuff, 1, 1.3f);
             if (!IsPillBuffed)
             {
-                objMove.speed += moveSpeedBuff;
-                objShoot.attackSpeed -= attackSpeedBuff / 100;
+                objMove.speed += moveSpeedBuff * grassWindElement.Grass;
+                objShoot.attackSpeed -= attackSpeedBuff * grassWindElement.Wind / 100;
                 IsPillBuffed = true;
                 objMove.dashTimeMax *= dashTime;
             }
@@ -80,8 +82,8 @@ public class LightOn : MonoBehaviour
             if (stepGhost <= 0)
             {
                 stepGhost = stepGhostMax;
-                objMove.speed -= moveSpeedBuff;
-                objShoot.attackSpeed += attackSpeedBuff / 100;
+                objMove.speed -= moveSpeedBuff * grassWindElement.Grass;
+                objShoot.attackSpeed += attackSpeedBuff * grassWindElement.Wind / 100;
                 objMove.dashTimeMax /= dashTime;
                 IsPillBuffed = false;
                 IsPillUp = false;

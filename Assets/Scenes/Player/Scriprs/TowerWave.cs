@@ -1,11 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TowerWave : MonoBehaviour
 {
     public float lifeTime;
     public float damage;
+    public float waterElement;
     public GameObject player;
     // Start is called before the first frame update
     void Start()
@@ -29,13 +29,16 @@ public class TowerWave : MonoBehaviour
         {
             if (collision.gameObject.GetComponentInParent<ElementalBoss_Destroy>() || collision.GetComponent<HealthBossPart>())
             {
-                collision.GetComponent<HealthBossPart>().healthPoint -= damage;
+                collision.GetComponent<HealthBossPart>().healthPoint -= damage * waterElement;
+
                 collision.GetComponent<HealthBossPart>().ChangeToKick();
+                collision.GetComponentInParent<ElementActiveDebuff>().isWater = true;
             }
             else if (!collision.gameObject.GetComponentInParent<ElementalBoss_Destroy>() || !collision.GetComponent<HealthBossPart>())
             {
-                collision.GetComponent<HealthPoint>().healthPoint -= damage;
+                collision.GetComponent<HealthPoint>().healthPoint -= damage * waterElement;
                 collision.GetComponent<HealthPoint>().ChangeToKick();
+                collision.GetComponentInParent<ElementActiveDebuff>().isWater = true;
             }
         }
     }

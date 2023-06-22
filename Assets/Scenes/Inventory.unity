@@ -498,7 +498,6 @@ GameObject:
   - component: {fileID: 122704614}
   - component: {fileID: 122704613}
   - component: {fileID: 122704612}
-  - component: {fileID: 122704616}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -592,20 +591,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &122704616
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 122704611}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5d21e5d476cb98498bd802ec3994499, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftButtonPressed: 0
-  rightButtonPressed: 0
 --- !u!1 &146212377
 GameObject:
   m_ObjectHideFlags: 0
@@ -1035,7 +1020,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objToCraft: []
-  message: {fileID: 427995264}
   messageObjectDifferent: "\u0420\u0456\u0437\u0456\u043D\u0456 \u043E\u0431'\u0454\u043A\u0442\u0438"
   allItemsHaveSameName: 1
   childrenBtn: {fileID: 1234249928}

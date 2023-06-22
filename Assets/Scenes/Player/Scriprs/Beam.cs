@@ -9,6 +9,7 @@ public class Beam : MonoBehaviour
     public float tick;
     public float tickMax;
     public GameObject player;
+    public float blood;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,12 +33,12 @@ public class Beam : MonoBehaviour
         {
             if (collision.GetComponentInParent<ElementalBoss_Destroy>() || collision.GetComponent<HealthBossPart>())
             {
-                collision.GetComponent<HealthBossPart>().healthPoint -= damage;
+                collision.GetComponent<HealthBossPart>().healthPoint -= damage * blood;
                 collision.GetComponent<HealthBossPart>().ChangeToKick();
             }
             else if (!collision.GetComponentInParent<ElementalBoss_Destroy>() || !collision.GetComponent<HealthBossPart>())
             {
-                collision.GetComponent<HealthPoint>().healthPoint -= damage;
+                collision.GetComponent<HealthPoint>().healthPoint -= damage * blood;
                 collision.GetComponent<HealthPoint>().ChangeToKick();
             }
         }
@@ -55,12 +56,12 @@ public class Beam : MonoBehaviour
                 tick = tickMax;
                 if (collision.GetComponentInParent<ElementalBoss_Destroy>() || collision.GetComponent<HealthBossPart>())
                 {
-                    collision.GetComponent<HealthBossPart>().healthPoint -= damage;
+                    collision.GetComponent<HealthBossPart>().healthPoint -= damage * blood;
                     collision.GetComponent<HealthBossPart>().ChangeToKick();
                 }
                 else if (!collision.GetComponentInParent<ElementalBoss_Destroy>() || !collision.GetComponent<HealthBossPart>())
                 {
-                    collision.GetComponent<HealthPoint>().healthPoint -= damage;
+                    collision.GetComponent<HealthPoint>().healthPoint -= damage * blood;
                     collision.GetComponent<HealthPoint>().ChangeToKick();
                 }
             }
