@@ -22,17 +22,8 @@ public class BobmExplode : MonoBehaviour
         {
             if (collider.CompareTag("Enemy"))
             {
-                if (collider.gameObject.GetComponentInParent<ElementalBoss_Destroy>() || collider.GetComponent<HealthBossPart>())
-                {
-                    collider.GetComponent<HealthBossPart>().healthPoint -= damage * fire;
-                    collider.GetComponent<HealthBossPart>().ChangeToKick();
-
-                }
-                else if (!collider.gameObject.GetComponentInParent<ElementalBoss_Destroy>() || !collider.GetComponent<HealthBossPart>())
-                {
                     collider.GetComponent<HealthPoint>().healthPoint -= damage * fire;
                     collider.GetComponent<HealthPoint>().ChangeToKick();
-                }
             }
             else if (collider.CompareTag("Barrel"))
             {

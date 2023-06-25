@@ -1,8 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ElementalBoss_Destroy : MonoBehaviour
+public class Boss_Destroy : MonoBehaviour
 {
 
     public List<string> parts;
@@ -26,11 +25,6 @@ public class ElementalBoss_Destroy : MonoBehaviour
     }
     public void DestroyEnd()
     {
-        EXP a = Instantiate(expiriancePoint, new Vector3(transform.position.x, transform.position.y, 1.9f), Quaternion.identity);
-        a.expBuff = healthMax / 5;
-
-        objDrop.OnDestroyBoss();
-        //Instantiate(VFX_Deadarticle, gameObject.transform.position, Quaternion.identity);
         partOff.CutTheParts();
         objAnim.SetBool("Body", true);
         ChangeChildTags(gameObject.transform, "Enemy",5f);

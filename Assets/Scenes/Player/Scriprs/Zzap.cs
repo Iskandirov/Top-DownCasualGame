@@ -34,16 +34,8 @@ public class Zzap : MonoBehaviour
         {
             if (collision.CompareTag("Enemy"))
             {
-                if (collision.gameObject.GetComponentInParent<ElementalBoss_Destroy>() || collision.GetComponent<HealthBossPart>())
-                {
-                    collision.GetComponent<HealthBossPart>().healthPoint -= damage * electicElement;
-                    collision.GetComponent<HealthBossPart>().ChangeToKick();
-                }
-                else if (!collision.gameObject.GetComponentInParent<ElementalBoss_Destroy>() || !collision.GetComponent<HealthBossPart>())
-                {
                     collision.GetComponent<HealthPoint>().healthPoint -= damage * electicElement;
                     collision.GetComponent<HealthPoint>().ChangeToKick();
-                }
             }
             damageTick = damageTickMax;
         }

@@ -589,7 +589,23 @@ MonoBehaviour:
   burnTickMax: 0.5
   expGiven: 20
   dangerLevel: 4
-  spawnRadius: 30
+  bodyAnimBoss: {fileID: 0}
+  Fire: 1
+  Electricity: 1
+  Water: 1
+  Dirt: 1
+  Wind: 1
+  Grass: 1
+  Steam: 1
+  Cold: 1
+  FireStart: 1
+  ElectricityStart: 1
+  WaterStart: 1
+  DirtStart: 1
+  WindStart: 1
+  GrassStart: 1
+  SteamStart: 1
+  ColdStart: 1
 --- !u!1 &3261821647298518200
 GameObject:
   m_ObjectHideFlags: 0
@@ -696,6 +712,9 @@ MonoBehaviour:
   bomb: {fileID: 0}
   anim: {fileID: 8315049834056483339}
   IsOutOfCamera: 0
+  isChaising: 0
+  acceleration: 0.1
+  angle: 0
 --- !u!50 &6384565066757689954
 Rigidbody2D:
   serializedVersion: 4
@@ -729,8 +748,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60f379a579ae4cc43ae0e0775faf574f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
-  damageMax: 0
+  damage: 0
+  damageMax: 10
   stepAttack: 1
   stepAttackMax: 1
   isAttack: 0
@@ -791,14 +810,6 @@ MonoBehaviour:
   move: {fileID: -6013413010149434249}
   health: {fileID: 2665754550265347718}
   attack: {fileID: 7032251446413390054}
-  isFire: 0
-  isElectricity: 0
-  isWater: 0
-  isDirt: 0
-  isWind: 0
-  isTime: 0
-  isGrass: 0
-  isMechanism: 0
 --- !u!1 &6387825167780618729
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class CutThePart : MonoBehaviour
@@ -20,16 +18,21 @@ public class CutThePart : MonoBehaviour
             obj.GetComponent<Collider2D>().isTrigger = false;
             obj.transform.localScale = new Vector3(2, 2, 2);
 
-            MoveTowardsObject moveTowardsObject = obj.gameObject.AddComponent<MoveTowardsObject>();
-            moveTowardsObject.maxSpeed = 30;
+            Forward moveTowardsObject = obj.gameObject.AddComponent<Forward>();
+            moveTowardsObject.isChaising = true;
+            moveTowardsObject.speedMax = 30;
             moveTowardsObject.acceleration = 1;
-            moveTowardsObject.playerTransform = player.transform;
+            moveTowardsObject.player = player;
 
             Attack attack = obj.gameObject.AddComponent<Attack>();
             attack.damage = 2;
             attack.attackVFX = vfxAttack;
             attack.stepAttack = 0.3f;
             attack.stepAttackMax = 0.3f;
+
+            Animator anim = obj.gameObject.AddComponent<Animator>();
+            anim.transform.root.GetComponent<Animator>();
+            anim.runtimeAnimatorController = transform.root.GetComponent<Animator>().runtimeAnimatorController;
 
             obj.GetComponent<CutThePart>().parts.Clear();
 

@@ -20,16 +20,16 @@ public class Bullet : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            if (collision.gameObject.GetComponentInParent<ElementalBoss_Destroy>() || collision.GetComponent<HealthBossPart>())
-            {
-                collision.GetComponent<HealthBossPart>().healthPoint -= damage;
-                collision.GetComponent<HealthBossPart>().ChangeToKick();
-                if (!isPiers)
-                {
-                    Destroy(gameObject);
-                }
-            }
-            else if (!collision.gameObject.GetComponentInParent<ElementalBoss_Destroy>() || !collision.GetComponent<HealthBossPart>())
+            //if (collision.gameObject.GetComponentInParent<ElementalBoss_Destroy>() || collision.GetComponent<HealthBossPart>())
+            //{
+            //    collision.GetComponent<HealthBossPart>().healthPoint -= damage;
+            //    collision.GetComponent<HealthBossPart>().ChangeToKick();
+            //    if (!isPiers)
+            //    {
+            //        Destroy(gameObject);
+            //    }
+            //}
+            //else if (!collision.gameObject.GetComponentInParent<ElementalBoss_Destroy>() || !collision.GetComponent<HealthBossPart>())
             {
                 collision.GetComponent<HealthPoint>().healthPoint -= damage;
                 collision.GetComponent<HealthPoint>().ChangeToKick();

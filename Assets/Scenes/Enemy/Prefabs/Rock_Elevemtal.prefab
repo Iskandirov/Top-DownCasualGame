@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 7536843303375766442}
   - component: {fileID: 3205158902199703344}
   - component: {fileID: 85949101206107340}
-  - component: {fileID: 5225026615016881393}
+  - component: {fileID: 8130577781339647487}
   - component: {fileID: 9149027451308091516}
   m_Layer: 10
   m_Name: Body
@@ -251,7 +251,7 @@ MonoBehaviour:
   - {fileID: 5696974005868173853}
   - {fileID: 4005234820732258728}
   vfxAttack: {fileID: 3700339383819410429, guid: 3aaf368aef297c948adb82f462f67f26, type: 3}
---- !u!114 &5225026615016881393
+--- !u!114 &8130577781339647487
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -260,22 +260,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 1085272044542820521}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9302a179e2dc15341b9d0e6907f0a944, type: 3}
+  m_Script: {fileID: 11500000, guid: d43b841f0e35afa47a6b5c0b26718545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  step: 0.2
-  stepMax: 0.2
+  player: {fileID: 0}
+  stepKick: 0.2
+  stepKickMax: 0.2
   isKick: 0
   healthPoint: 400
   healthPointMax: 400
-  IsBobs: 0
+  expiriancePoint: {fileID: 1551125564601968996, guid: 011bcb717f1c7644cbb13f13f798cecd, type: 3}
+  IsBobs: 1
   anim: {fileID: 1928815100566431705}
-  bodyAnim: {fileID: 723153833270954924}
+  bodyAnim: {fileID: 7414485064753262499}
+  VFX_Deadarticle: {fileID: 0}
   isBurn: 0
   burnTime: 0
   burnDamage: 0
   burnTick: 0.5
   burnTickMax: 0.5
+  expGiven: 200
+  dangerLevel: 6
+  bodyAnimBoss: {fileID: 723153833270954924}
+  Fire: 1
+  Electricity: 1
+  Water: 1
+  Dirt: 1
+  Wind: 1
+  Grass: 1
+  Steam: 1
+  Cold: 1
+  FireStart: 1
+  ElectricityStart: 1
+  WaterStart: 1
+  DirtStart: 1
+  WindStart: 1
+  GrassStart: 1
+  SteamStart: 1
+  ColdStart: 1
 --- !u!58 &9149027451308091516
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -304,7 +326,7 @@ GameObject:
   - component: {fileID: 3736252392778401145}
   - component: {fileID: 914242503166460775}
   - component: {fileID: 776773639282098926}
-  - component: {fileID: 7252291747268309283}
+  - component: {fileID: 561655825312998305}
   - component: {fileID: 6972513999967339480}
   m_Layer: 10
   m_Name: Left_Fist
@@ -480,7 +502,7 @@ MonoBehaviour:
   - {fileID: 5696974005868173853}
   - {fileID: 4005234820732258728}
   vfxAttack: {fileID: 3700339383819410429, guid: 3aaf368aef297c948adb82f462f67f26, type: 3}
---- !u!114 &7252291747268309283
+--- !u!114 &561655825312998305
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -489,22 +511,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 3683706524604842075}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9302a179e2dc15341b9d0e6907f0a944, type: 3}
+  m_Script: {fileID: 11500000, guid: d43b841f0e35afa47a6b5c0b26718545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  step: 0.2
-  stepMax: 0.2
+  player: {fileID: 0}
+  stepKick: 0.2
+  stepKickMax: 0.2
   isKick: 0
   healthPoint: 400
   healthPointMax: 400
-  IsBobs: 0
+  expiriancePoint: {fileID: 1551125564601968996, guid: 011bcb717f1c7644cbb13f13f798cecd, type: 3}
+  IsBobs: 1
   anim: {fileID: 1928815100566431705}
-  bodyAnim: {fileID: 723153833270954924}
+  bodyAnim: {fileID: 7414485064753262499}
+  VFX_Deadarticle: {fileID: 0}
   isBurn: 0
   burnTime: 0
   burnDamage: 0
   burnTick: 0.5
   burnTickMax: 0.5
+  expGiven: 200
+  dangerLevel: 6
+  bodyAnimBoss: {fileID: 723153833270954924}
+  Fire: 0
+  Electricity: 0
+  Water: 0
+  Dirt: 0
+  Wind: 0
+  Grass: 0
+  Steam: 0
+  Cold: 0
+  FireStart: 0
+  ElectricityStart: 0
+  WaterStart: 0
+  DirtStart: 0
+  WindStart: 0
+  GrassStart: 0
+  SteamStart: 0
+  ColdStart: 0
 --- !u!58 &6972513999967339480
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -533,7 +577,7 @@ GameObject:
   - component: {fileID: 4124016977929934454}
   - component: {fileID: 2991104189499362905}
   - component: {fileID: 5696974005868173853}
-  - component: {fileID: 1665214727927577412}
+  - component: {fileID: 677161597652527620}
   m_Layer: 10
   m_Name: Right_Arm
   m_TagString: Enemy
@@ -697,7 +741,7 @@ MonoBehaviour:
   - {fileID: 5828615493242138871}
   - {fileID: 4005234820732258728}
   vfxAttack: {fileID: 3700339383819410429, guid: 3aaf368aef297c948adb82f462f67f26, type: 3}
---- !u!114 &1665214727927577412
+--- !u!114 &677161597652527620
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -706,22 +750,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 3763118706592925822}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9302a179e2dc15341b9d0e6907f0a944, type: 3}
+  m_Script: {fileID: 11500000, guid: d43b841f0e35afa47a6b5c0b26718545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  step: 0.2
-  stepMax: 0.2
+  player: {fileID: 0}
+  stepKick: 0.2
+  stepKickMax: 0.2
   isKick: 0
   healthPoint: 400
   healthPointMax: 400
-  IsBobs: 0
+  expiriancePoint: {fileID: 1551125564601968996, guid: 011bcb717f1c7644cbb13f13f798cecd, type: 3}
+  IsBobs: 1
   anim: {fileID: 1928815100566431705}
-  bodyAnim: {fileID: 723153833270954924}
+  bodyAnim: {fileID: 7414485064753262499}
+  VFX_Deadarticle: {fileID: 0}
   isBurn: 0
   burnTime: 0
   burnDamage: 0
   burnTick: 0.5
   burnTickMax: 0.5
+  expGiven: 200
+  dangerLevel: 6
+  bodyAnimBoss: {fileID: 723153833270954924}
+  Fire: 0
+  Electricity: 0
+  Water: 0
+  Dirt: 0
+  Wind: 0
+  Grass: 0
+  Steam: 0
+  Cold: 0
+  FireStart: 0
+  ElectricityStart: 0
+  WaterStart: 0
+  DirtStart: 0
+  WindStart: 0
+  GrassStart: 0
+  SteamStart: 0
+  ColdStart: 0
 --- !u!1 &3905381358158845592
 GameObject:
   m_ObjectHideFlags: 0
@@ -734,7 +800,7 @@ GameObject:
   - component: {fileID: 7082564257769505069}
   - component: {fileID: 2067102456439827614}
   - component: {fileID: 6809791161700429231}
-  - component: {fileID: 3559980510513240007}
+  - component: {fileID: 4310677223782336352}
   m_Layer: 10
   m_Name: Left_Shoulder
   m_TagString: Enemy
@@ -899,7 +965,7 @@ MonoBehaviour:
   - {fileID: 5696974005868173853}
   - {fileID: 4005234820732258728}
   vfxAttack: {fileID: 3700339383819410429, guid: 3aaf368aef297c948adb82f462f67f26, type: 3}
---- !u!114 &3559980510513240007
+--- !u!114 &4310677223782336352
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -908,22 +974,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 3905381358158845592}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9302a179e2dc15341b9d0e6907f0a944, type: 3}
+  m_Script: {fileID: 11500000, guid: d43b841f0e35afa47a6b5c0b26718545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  step: 0.2
-  stepMax: 0.2
+  player: {fileID: 0}
+  stepKick: 0.2
+  stepKickMax: 0.2
   isKick: 0
   healthPoint: 400
   healthPointMax: 400
-  IsBobs: 0
+  expiriancePoint: {fileID: 1551125564601968996, guid: 011bcb717f1c7644cbb13f13f798cecd, type: 3}
+  IsBobs: 1
   anim: {fileID: 1928815100566431705}
-  bodyAnim: {fileID: 723153833270954924}
+  bodyAnim: {fileID: 7414485064753262499}
+  VFX_Deadarticle: {fileID: 0}
   isBurn: 0
   burnTime: 0
   burnDamage: 0
   burnTick: 0.5
   burnTickMax: 0.5
+  expGiven: 200
+  dangerLevel: 6
+  bodyAnimBoss: {fileID: 723153833270954924}
+  Fire: 0
+  Electricity: 0
+  Water: 0
+  Dirt: 0
+  Wind: 0
+  Grass: 0
+  Steam: 0
+  Cold: 0
+  FireStart: 0
+  ElectricityStart: 0
+  WaterStart: 0
+  DirtStart: 0
+  WindStart: 0
+  GrassStart: 0
+  SteamStart: 0
+  ColdStart: 0
 --- !u!1 &3981078095678069054
 GameObject:
   m_ObjectHideFlags: 0
@@ -1020,7 +1108,7 @@ GameObject:
   - component: {fileID: 7522003342278590866}
   - component: {fileID: 3402370668275556001}
   - component: {fileID: 5828615493242138871}
-  - component: {fileID: 8474733712157091244}
+  - component: {fileID: 5541586661810743851}
   m_Layer: 10
   m_Name: Right_Shoulder
   m_TagString: Enemy
@@ -1178,7 +1266,7 @@ MonoBehaviour:
   - {fileID: 5696974005868173853}
   - {fileID: 4005234820732258728}
   vfxAttack: {fileID: 3700339383819410429, guid: 3aaf368aef297c948adb82f462f67f26, type: 3}
---- !u!114 &8474733712157091244
+--- !u!114 &5541586661810743851
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1187,22 +1275,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 5039252358595288926}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9302a179e2dc15341b9d0e6907f0a944, type: 3}
+  m_Script: {fileID: 11500000, guid: d43b841f0e35afa47a6b5c0b26718545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  step: 0.2
-  stepMax: 0.2
+  player: {fileID: 0}
+  stepKick: 0.2
+  stepKickMax: 0.2
   isKick: 0
   healthPoint: 400
   healthPointMax: 400
-  IsBobs: 0
+  expiriancePoint: {fileID: 1551125564601968996, guid: 011bcb717f1c7644cbb13f13f798cecd, type: 3}
+  IsBobs: 1
   anim: {fileID: 1928815100566431705}
-  bodyAnim: {fileID: 723153833270954924}
+  bodyAnim: {fileID: 7414485064753262499}
+  VFX_Deadarticle: {fileID: 0}
   isBurn: 0
   burnTime: 0
   burnDamage: 0
   burnTick: 0.5
   burnTickMax: 0.5
+  expGiven: 200
+  dangerLevel: 6
+  bodyAnimBoss: {fileID: 723153833270954924}
+  Fire: 0
+  Electricity: 0
+  Water: 0
+  Dirt: 0
+  Wind: 0
+  Grass: 0
+  Steam: 0
+  Cold: 0
+  FireStart: 0
+  ElectricityStart: 0
+  WaterStart: 0
+  DirtStart: 0
+  WindStart: 0
+  GrassStart: 0
+  SteamStart: 0
+  ColdStart: 0
 --- !u!1 &6800228334879707776
 GameObject:
   m_ObjectHideFlags: 0
@@ -1215,7 +1325,7 @@ GameObject:
   - component: {fileID: 8264049261237917891}
   - component: {fileID: 2467432942752652875}
   - component: {fileID: 4005234820732258728}
-  - component: {fileID: 1801583293475695384}
+  - component: {fileID: 5933149193705765714}
   - component: {fileID: 4828930043736310593}
   m_Layer: 10
   m_Name: Right_Fist
@@ -1390,7 +1500,7 @@ MonoBehaviour:
   - {fileID: 5828615493242138871}
   - {fileID: 5696974005868173853}
   vfxAttack: {fileID: 3700339383819410429, guid: 3aaf368aef297c948adb82f462f67f26, type: 3}
---- !u!114 &1801583293475695384
+--- !u!114 &5933149193705765714
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1399,22 +1509,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 6800228334879707776}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9302a179e2dc15341b9d0e6907f0a944, type: 3}
+  m_Script: {fileID: 11500000, guid: d43b841f0e35afa47a6b5c0b26718545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  step: 0.2
-  stepMax: 0.2
+  player: {fileID: 0}
+  stepKick: 0.2
+  stepKickMax: 0.2
   isKick: 0
   healthPoint: 400
   healthPointMax: 400
-  IsBobs: 0
+  expiriancePoint: {fileID: 1551125564601968996, guid: 011bcb717f1c7644cbb13f13f798cecd, type: 3}
+  IsBobs: 1
   anim: {fileID: 1928815100566431705}
-  bodyAnim: {fileID: 723153833270954924}
+  bodyAnim: {fileID: 7414485064753262499}
+  VFX_Deadarticle: {fileID: 0}
   isBurn: 0
   burnTime: 0
   burnDamage: 0
   burnTick: 0.5
   burnTickMax: 0.5
+  expGiven: 200
+  dangerLevel: 6
+  bodyAnimBoss: {fileID: 723153833270954924}
+  Fire: 0
+  Electricity: 0
+  Water: 0
+  Dirt: 0
+  Wind: 0
+  Grass: 0
+  Steam: 0
+  Cold: 0
+  FireStart: 0
+  ElectricityStart: 0
+  WaterStart: 0
+  DirtStart: 0
+  WindStart: 0
+  GrassStart: 0
+  SteamStart: 0
+  ColdStart: 0
 --- !u!58 &4828930043736310593
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1535,6 +1667,7 @@ GameObject:
   - component: {fileID: 1006861745610266145}
   - component: {fileID: 723153833270954924}
   - component: {fileID: 1682550809252745917}
+  - component: {fileID: 5255366272783900354}
   m_Layer: 10
   m_Name: Rock_Elevemtal
   m_TagString: Untagged
@@ -1601,8 +1734,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   Body: {fileID: 6322778322515170410}
-  speed: 2
-  speedMax: 2
+  speed: 4
+  speedMax: 4
   isStunned: 0
   stunnTime: 0.2
   stunnTimeMax: 0.2
@@ -1619,6 +1752,9 @@ MonoBehaviour:
   bomb: {fileID: 0}
   anim: {fileID: 1928815100566431705}
   IsOutOfCamera: 0
+  isChaising: 0
+  acceleration: 0.1
+  angle: 0
 --- !u!114 &-6377110643570468304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1810,14 +1946,29 @@ MonoBehaviour:
   move: {fileID: -6013413010149434249, guid: 3d751f437f9d0bd4f95fca499dff5adb, type: 3}
   health: {fileID: 2473979257493350611, guid: 3d751f437f9d0bd4f95fca499dff5adb, type: 3}
   attack: {fileID: 7032251446413390054, guid: 3d751f437f9d0bd4f95fca499dff5adb, type: 3}
-  isFire: 0
-  isElectricity: 0
-  isWater: 0
-  isDirt: 0
-  isWind: 0
-  isTime: 0
-  isGrass: 0
-  isMechanism: 0
+--- !u!114 &5255366272783900354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7414485064753262499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60f379a579ae4cc43ae0e0775faf574f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 0
+  damageMax: 15
+  stepAttack: 0.4
+  stepAttackMax: 0.4
+  isAttack: 0
+  isRange: 0
+  isFive: 0
+  chancToLure: 0
+  attackVFX: {fileID: 3700339383819410429, guid: 3aaf368aef297c948adb82f462f67f26, type: 3}
+  attackVFXRange: {fileID: 0}
+  attackVFXRangePos: {fileID: 0}
 --- !u!1 &8481209448847719364
 GameObject:
   m_ObjectHideFlags: 0
@@ -1830,7 +1981,7 @@ GameObject:
   - component: {fileID: 5087521415397903817}
   - component: {fileID: 787488373254121958}
   - component: {fileID: 4794590443918856518}
-  - component: {fileID: 8793986181120759208}
+  - component: {fileID: 6872484659764052672}
   m_Layer: 10
   m_Name: Head
   m_TagString: Enemy
@@ -1985,7 +2136,7 @@ MonoBehaviour:
   - {fileID: 5696974005868173853}
   - {fileID: 4005234820732258728}
   vfxAttack: {fileID: 3700339383819410429, guid: 3aaf368aef297c948adb82f462f67f26, type: 3}
---- !u!114 &8793986181120759208
+--- !u!114 &6872484659764052672
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1994,22 +2145,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 8481209448847719364}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9302a179e2dc15341b9d0e6907f0a944, type: 3}
+  m_Script: {fileID: 11500000, guid: d43b841f0e35afa47a6b5c0b26718545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  step: 0.2
-  stepMax: 0.2
+  player: {fileID: 0}
+  stepKick: 0.2
+  stepKickMax: 0.2
   isKick: 0
   healthPoint: 400
   healthPointMax: 400
-  IsBobs: 0
+  expiriancePoint: {fileID: 1551125564601968996, guid: 011bcb717f1c7644cbb13f13f798cecd, type: 3}
+  IsBobs: 1
   anim: {fileID: 1928815100566431705}
-  bodyAnim: {fileID: 723153833270954924}
+  bodyAnim: {fileID: 7414485064753262499}
+  VFX_Deadarticle: {fileID: 0}
   isBurn: 0
   burnTime: 0
   burnDamage: 0
   burnTick: 0.5
   burnTickMax: 0.5
+  expGiven: 200
+  dangerLevel: 6
+  bodyAnimBoss: {fileID: 723153833270954924}
+  Fire: 0
+  Electricity: 0
+  Water: 0
+  Dirt: 0
+  Wind: 0
+  Grass: 0
+  Steam: 0
+  Cold: 0
+  FireStart: 0
+  ElectricityStart: 0
+  WaterStart: 0
+  DirtStart: 0
+  WindStart: 0
+  GrassStart: 0
+  SteamStart: 0
+  ColdStart: 0
 --- !u!1 &8982050001653864226
 GameObject:
   m_ObjectHideFlags: 0
@@ -2106,7 +2279,7 @@ GameObject:
   - component: {fileID: 520876331892229592}
   - component: {fileID: 153695781056295396}
   - component: {fileID: 8254450587008454175}
-  - component: {fileID: 4385612431197805611}
+  - component: {fileID: 4903056437257059249}
   m_Layer: 10
   m_Name: Left_Arm
   m_TagString: Enemy
@@ -2271,7 +2444,7 @@ MonoBehaviour:
   - {fileID: 5696974005868173853}
   - {fileID: 4005234820732258728}
   vfxAttack: {fileID: 3700339383819410429, guid: 3aaf368aef297c948adb82f462f67f26, type: 3}
---- !u!114 &4385612431197805611
+--- !u!114 &4903056437257059249
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2280,22 +2453,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 9170737136695580740}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9302a179e2dc15341b9d0e6907f0a944, type: 3}
+  m_Script: {fileID: 11500000, guid: d43b841f0e35afa47a6b5c0b26718545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  step: 0.2
-  stepMax: 0.2
+  player: {fileID: 0}
+  stepKick: 0.2
+  stepKickMax: 0.2
   isKick: 0
   healthPoint: 400
   healthPointMax: 400
-  IsBobs: 0
+  expiriancePoint: {fileID: 1551125564601968996, guid: 011bcb717f1c7644cbb13f13f798cecd, type: 3}
+  IsBobs: 1
   anim: {fileID: 1928815100566431705}
-  bodyAnim: {fileID: 723153833270954924}
+  bodyAnim: {fileID: 7414485064753262499}
+  VFX_Deadarticle: {fileID: 0}
   isBurn: 0
   burnTime: 0
   burnDamage: 0
   burnTick: 0.5
   burnTickMax: 0.5
+  expGiven: 200
+  dangerLevel: 6
+  bodyAnimBoss: {fileID: 723153833270954924}
+  Fire: 0
+  Electricity: 0
+  Water: 0
+  Dirt: 0
+  Wind: 0
+  Grass: 0
+  Steam: 0
+  Cold: 0
+  FireStart: 0
+  ElectricityStart: 0
+  WaterStart: 0
+  DirtStart: 0
+  WindStart: 0
+  GrassStart: 0
+  SteamStart: 0
+  ColdStart: 0
 --- !u!1 &9216603974040273081
 GameObject:
   m_ObjectHideFlags: 0

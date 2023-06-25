@@ -55,7 +55,7 @@ public class Shield : MonoBehaviour
                         // Перевірка, чи зіткнення відбулось з іншим об'єктом (не самим собою)
                         if (collider.gameObject != newObject)
                         {
-                            collider.GetComponent<HealthPoint>().healthPoint -= rockDamage * dirtElement;
+                            collider.GetComponent<HealthPoint>().healthPoint -= (rockDamage * dirtElement * collider.GetComponent<HealthPoint>().Dirt) / collider.GetComponent<HealthPoint>().Grass;
                             // Здійснюйте необхідні дії при зіткненні об'єкта
                             Debug.Log("Object collided with: " + collider.name);
                         }

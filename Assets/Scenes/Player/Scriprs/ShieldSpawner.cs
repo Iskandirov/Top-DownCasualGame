@@ -30,6 +30,7 @@ public class ShieldSpawner : MonoBehaviour
             a.isThreeLevel = isThree;
             a.isFourLevel = isFour;
             a.isFiveLevel = isFive;
+            a.dirtElement = dirtElement.Dirt;
             step = stepMax;
         }
     }

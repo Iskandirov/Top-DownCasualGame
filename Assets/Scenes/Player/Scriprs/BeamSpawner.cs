@@ -8,11 +8,11 @@ public class BeamSpawner : MonoBehaviour
     public bool isTwo;
     public float damage;
     public float lifeTime;
-    ElementsCoeficients BloodElement;
+    ElementsCoeficients SteamElement;
     // Start is called before the first frame update
     void Start()
     {
-        BloodElement = transform.root.GetComponent<ElementsCoeficients>();
+        SteamElement = transform.root.GetComponent<ElementsCoeficients>();
         step = gameObject.GetComponent<CDSkillObject>().CD;
     }
 
@@ -25,17 +25,17 @@ public class BeamSpawner : MonoBehaviour
             Beam a = Instantiate(beam, new Vector2(transform.position.x + 5, transform.position.y), Quaternion.identity);
             a.damage = damage;
             a.lifeTime = lifeTime;
-            a.blood = BloodElement.Blood;
+            a.Steam = SteamElement.Steam;
             if (isTwo)
             {
                 Beam b = Instantiate(beam, new Vector2(transform.position.x, transform.position.y - 5), Quaternion.Euler(0, 0, 90));
                 b.damage = damage;
                 b.lifeTime = lifeTime;
-                b.blood = BloodElement.Blood;
+                b.Steam = SteamElement.Steam;
                 Beam c = Instantiate(beam, new Vector2(transform.position.x, transform.position.y + 5), Quaternion.Euler(0, 0, -90));
                 c.damage = damage;
                 c.lifeTime = lifeTime;
-                c.blood = BloodElement.Blood;
+                c.Steam = SteamElement.Steam;
             }
             step = stepMax;
         }

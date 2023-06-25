@@ -18,6 +18,10 @@ public class Expirience : MonoBehaviour
         expNeedToNewLevel = 100;
         objHealth = GetComponent<Health>();
     }
+    public void FixedUpdate()
+    {
+        ShowLevel();
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Health") && objHealth.playerHealthPoint < objHealth.playerHealthPointMax)
@@ -34,7 +38,6 @@ public class Expirience : MonoBehaviour
                 Destroy(collision.gameObject);
             }
         }
-        ShowLevel();
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -44,7 +47,7 @@ public class Expirience : MonoBehaviour
             collision.GetComponent<EXP>().itWasInPlayerZone = true;
         }
     }
-    public void ShowLevel()
+    void ShowLevel()
     {
         if (expiriencepoint.fillAmount >= 1)
         {

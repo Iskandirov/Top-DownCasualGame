@@ -34,27 +34,18 @@ public class FireWave : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            if (collision.gameObject.GetComponentInParent<ElementalBoss_Destroy>() || collision.GetComponent<HealthBossPart>())
+            collision.GetComponent<HealthPoint>().healthPoint -= (damage * fireElement * collision.GetComponent<HealthPoint>().Water) / collision.GetComponent<HealthPoint>().Fire;
+            collision.GetComponent<HealthPoint>().ChangeToKick();
+            collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isFire", true);
+            collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isWater", false);
+            collision.GetComponentInParent<ElementActiveDebuff>().isFire = true;
+            collision.GetComponentInParent<ElementActiveDebuff>().isWater = false;
+
+            if (burnDamage != 0)
             {
-                collision.GetComponent<HealthBossPart>().healthPoint -= damage;
-                collision.GetComponent<HealthBossPart>().ChangeToKick();
-                if (burnDamage != 0)
-                {
-                    collision.GetComponent<HealthBossPart>().isBurn = true;
-                    collision.GetComponent<HealthBossPart>().burnTime = 3;
-                    collision.GetComponent<HealthBossPart>().burnDamage = burnDamage * fireElement;
-                }
-            }
-            else if (!collision.gameObject.GetComponentInParent<ElementalBoss_Destroy>() || !collision.GetComponent<HealthBossPart>())
-            {
-                collision.GetComponent<HealthPoint>().healthPoint -= damage;
-                collision.GetComponent<HealthPoint>().ChangeToKick();
-                if (burnDamage != 0)
-                {
-                    collision.GetComponent<HealthPoint>().isBurn = true;
-                    collision.GetComponent<HealthPoint>().burnTime = 3;
-                    collision.GetComponent<HealthPoint>().burnDamage = burnDamage;
-                }
+                collision.GetComponent<HealthPoint>().isBurn = true;
+                collision.GetComponent<HealthPoint>().burnTime = 3;
+                collision.GetComponent<HealthPoint>().burnDamage = burnDamage;
             }
         }
     }

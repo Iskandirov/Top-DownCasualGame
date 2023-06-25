@@ -29,7 +29,7 @@ public class ElementalBoss_Fist_Attack : MonoBehaviour
     Animator objAnim;
     Forward objMove;
     Shield objShield;
-    HealthBossPart childrenHealth;
+    HealthPoint childrenHealth;
     Collider2D objCollider;
 
     // Start is called before the first frame update
@@ -47,7 +47,7 @@ public class ElementalBoss_Fist_Attack : MonoBehaviour
         objAnim = GetComponent<Animator>();
         objMove = GetComponent<Forward>();
         objCollider = GetComponent<Collider2D>();
-        childrenHealth = GetComponentInChildren<HealthBossPart>();
+        childrenHealth = GetComponentInChildren<HealthPoint>();
     }
 
     // Update is called once per frame

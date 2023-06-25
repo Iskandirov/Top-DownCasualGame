@@ -8,7 +8,8 @@ public class ElementsCoeficients : MonoBehaviour
     public float Dirt;
     public float Wind;
     public float Grass;
-    public float Blood;
+    public float Steam;
+    public float Cold;
     // Start is called before the first frame update
     void Start()
     {

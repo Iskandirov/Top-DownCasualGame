@@ -8,7 +8,6 @@ public class Lightning : MonoBehaviour
     public GameObject lightObj;
     public float radius;
     HealthPoint objHealth;
-    HealthBossPart objHealthB;
     Forward objMove;
     public float step;
     public float stepMax;
@@ -62,38 +61,24 @@ public class Lightning : MonoBehaviour
         {
             if (enemiesToShoot[i] != null)
             {
-                if (enemiesToShoot[i].GetComponent<HealthPoint>())
+                objHealth = enemiesToShoot[i].GetComponent<HealthPoint>();
+                objMove = enemiesToShoot[i].GetComponentInParent<Forward>();
+                Instantiate(lightObj, new Vector3(enemiesToShoot[i].transform.position.x,
+                    enemiesToShoot[i].transform.position.y + 3), Quaternion.identity);
+
+                objHealth.healthPoint -= damage * ElectricityElement.Electricity / objHealth.Electricity;
+                objHealth.GetComponentInParent<ElementActiveDebuff>().SetBool("isElectricity", true);
+                objHealth.GetComponentInParent<ElementActiveDebuff>().isElectricity = true;
+                objMove.isStunned = true;
+                objMove.stunnTime = stunTime;
+
+                if (objHealth.IsBobs == true)
                 {
-                    objHealth = enemiesToShoot[i].GetComponent<HealthPoint>();
-                    objMove = enemiesToShoot[i].GetComponentInParent<Forward>();
-                    Instantiate(lightObj, new Vector3(enemiesToShoot[i].transform.position.x,
-                        enemiesToShoot[i].transform.position.y + 3), Quaternion.identity);
-
-                    objHealth.healthPoint -= damage * ElectricityElement.Electricity;
-                    objMove.isStunned = true;
-                    objMove.stunnTime = stunTime;
-
-                    if (objHealth.IsBobs == true)
-                    {
-                        enemiesToShoot[i].GetComponentInChildren<Animator>().SetBool("IsHit", true);
-                    }
-                    else
-                    {
-                        objHealth.ChangeToKick();
-                    }
+                    enemiesToShoot[i].GetComponentInChildren<Animator>().SetBool("IsHit", true);
                 }
-                else if (enemiesToShoot[i].GetComponent<HealthBossPart>())
+                else
                 {
-                    objHealthB = enemiesToShoot[i].GetComponent<HealthBossPart>();
-                    objMove = enemiesToShoot[i].transform.root.GetComponent<Forward>();
-                    Instantiate(lightObj, new Vector3(enemiesToShoot[i].transform.position.x,
-                        enemiesToShoot[i].transform.position.y + 3), Quaternion.identity);
-
-                    objHealthB.healthPoint -= damage * ElectricityElement.Electricity;
-                    objMove.isStunned = true;
-                    objMove.stunnTime = stunTime / 2;
-
-                    objHealthB.ChangeToKick();
+                    objHealth.ChangeToKick();
                 }
                 yield return new WaitForSeconds(spawnInterval);
             }

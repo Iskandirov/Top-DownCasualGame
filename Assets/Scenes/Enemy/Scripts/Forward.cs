@@ -25,19 +25,40 @@ public class Forward : MonoBehaviour
     public bool IsOutOfCamera;
 
     private Collider2D[] colliders;
+    public bool isChaising;
+
+    public float acceleration = 0.1f; // збільшення швидкості
+    public float angle;
+
+    private Vector2 velocity;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        if (isChaising)
+        {
+            // встановлюємо вектор швидкості в початкове значення (нульовий вектор)
+            velocity = Vector2.zero;
+            gameObject.AddComponent<Rigidbody2D>();
+            Body = GetComponent<Rigidbody2D>();
+            Body.gravityScale = 0;
+            Body.angularDrag = 0;
+            Body.mass = 5000;
+            Body.freezeRotation = true;
+        }
+        else
+        {
 #if UNITY_EDITOR
-        // Код для режиму редактора Unity
-        speed = speedMax;
+            // Код для режиму редактора Unity
+            speed = speedMax;
 #else
     speed = speedMax * 7;
 #endif
-        isStunned = false;
-        player = GameObject.FindWithTag("Player");
-        colliders = new Collider2D[10];
+            isStunned = false;
+            player = GameObject.FindWithTag("Player");
+            colliders = new Collider2D[10];
+        }
     }
 
     public void FindEnemy()
@@ -96,84 +117,116 @@ public class Forward : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (IsObjectOutsideCameraBounds(gameObject))
+        if (!isChaising)
         {
-            anim.enabled = false;
-        }
-        else
-        {
-            anim.enabled = true;
-        }
-        if (isShooted)
-        {
-            Invoke("MoveEnd", 0.2f);
-        }
 
-        if (isSummoned)
-        {
-            summonTime -= Time.deltaTime;
 
-            if (!enemyFinded || player == null)
+            if (IsObjectOutsideCameraBounds(gameObject))
             {
-                FindEnemy();
+                anim.enabled = false;
+            }
+            else
+            {
+                anim.enabled = true;
+            }
+            if (isShooted)
+            {
+                Invoke("MoveEnd", 0.2f);
             }
 
-            if (summonTime <= 0)
+            if (isSummoned)
             {
-                isSummoned = false;
-                enemyFinded = false;
+                summonTime -= Time.deltaTime;
 
-                if (isThree)
+                if (!enemyFinded || player == null)
                 {
-                    Instantiate(bomb, transform.position, Quaternion.identity);
-                    Destroy(gameObject);
+                    FindEnemy();
+                }
+
+                if (summonTime <= 0)
+                {
+                    isSummoned = false;
+                    enemyFinded = false;
+
+                    if (isThree)
+                    {
+                        Instantiate(bomb, transform.position, Quaternion.identity);
+                        Destroy(gameObject);
+                    }
                 }
             }
-        }
 
-        if (player == null)
-        {
-            player = GameObject.FindWithTag("Player");
-        }
+            if (player == null)
+            {
+                player = GameObject.FindWithTag("Player");
+            }
 
-        if (isStunned)
-        {
-            Stuned();
-        }
+            if (isStunned)
+            {
+                Stuned();
+            }
 
-        if (!isFly && !isShooted)
-        {
-            Body.MovePosition(Vector2.MoveTowards(Body.position, player.transform.position, speed * Time.deltaTime));
-        }
+            if (!isFly && !isShooted)
+            {
+                Body.MovePosition(Vector2.MoveTowards(Body.position, player.transform.position, speed * Time.deltaTime));
+            }
 
-        if (Body.position.x < player.transform.position.x)
-        {
-            Body.transform.rotation = Quaternion.identity;
+            if (Body.position.x < player.transform.position.x)
+            {
+                Body.transform.rotation = Quaternion.identity;
+            }
+            else
+            {
+                Body.transform.rotation = Quaternion.Euler(0, 180, 0);
+            }
+
+            float distanceToEnemy = Vector3.Distance(player.transform.position, transform.position);
+
+            if (distanceToEnemy < showDistance)
+            {
+                LocationPoint.SetActive(false);
+            }
+            else
+            {
+                LocationPoint.SetActive(true);
+
+                Vector3 direction = transform.position - player.transform.position;
+                direction = direction.normalized * circleRadius;
+
+                Vector3 targetPosition = player.transform.position + direction;
+
+                LocationPoint.transform.position = targetPosition;
+
+                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                LocationPoint.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            }
         }
         else
         {
-            Body.transform.rotation = Quaternion.Euler(0, 180, 0);
-        }
+            // визначаємо напрямок до гравця
+            Vector2 direction = player.transform.position - transform.position;
+            direction.Normalize();
 
-        float distanceToEnemy = Vector3.Distance(player.transform.position, transform.position);
+            // визначаємо кут між напрямком до гравця і поточним напрямком руху об'єкту
+            angle = Vector2.Angle(velocity, direction);
 
-        if (distanceToEnemy < showDistance)
-        {
-            LocationPoint.SetActive(false);
-        }
-        else
-        {
-            LocationPoint.SetActive(true);
+            // якщо кут між векторами більший за 100 градусів - зменшуємо швидкість
+            if (angle > 20f)
+            {
+                // зменшуємо швидкість з поступовим нарощуванням
+                velocity = Vector2.Lerp(velocity, direction * speedMax, Time.deltaTime * acceleration);
+            }
+            else // якщо кут менший - збільшуємо швидкість
+            {
+                // збільшуємо швидкість з поступовим нарощуванням
+                velocity = Vector2.Lerp(velocity, direction * speedMax, Time.deltaTime * acceleration);
+            }
 
-            Vector3 direction = transform.position - player.transform.position;
-            direction = direction.normalized * circleRadius;
+            // обмежуємо максимальну швидкість
+            velocity = Vector2.ClampMagnitude(velocity, speedMax);
 
-            Vector3 targetPosition = player.transform.position + direction;
-
-            LocationPoint.transform.position = targetPosition;
-
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            LocationPoint.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            // зміщуємо об'єкт на відстань, що дорівнює швидкості, помноженій на час оновлення
+            transform.Translate(velocity * Time.deltaTime);
         }
     }
 

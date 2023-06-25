@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class HealthPoint : MonoBehaviour
 {
@@ -17,26 +13,57 @@ public class HealthPoint : MonoBehaviour
     public Animator anim;
     public GameObject bodyAnim;
     public GameObject VFX_Deadarticle;
+
+    [Header("Burn info")]
     public bool isBurn;
     public float burnTime;
     public float burnDamage;
     public float burnTick;
     public float burnTickMax;
+
+
     SpriteRenderer[] objsSprite;
     Expirience objExp;
     DropItems objDrop;
     Forward objMove;
     KillCount objKills;
 
+    [Header("Exp info")]
     public float expGiven;
     public float dangerLevel;
 
     private Camera mainCamera;
-    public float spawnRadius = 10f;
+    float spawnRadius = 30f;
+
+    [Header("Boss Anim")]
+    public Boss_Destroy bodyAnimBoss;
+    CutThePart objPart;
+
+    [Header("Effects resistace")]
+    public float Fire;
+    public float Electricity;
+    public float Water;
+    public float Dirt;
+    public float Wind;
+    public float Grass;
+    public float Steam;
+    public float Cold;
+
+    public float FireStart;
+    public float ElectricityStart;
+    public float WaterStart;
+    public float DirtStart;
+    public float WindStart;
+    public float GrassStart;
+    public float SteamStart;
+    public float ColdStart;
     // Start is called before the first frame update
     void Start()
     {
-
+        if (bodyAnimBoss != null)
+        {
+            objPart = GetComponent<CutThePart>();
+        }
         healthPointMax = healthPoint;
         player = GameObject.FindWithTag("Player");
         objsSprite = GetComponentsInChildren<SpriteRenderer>();
@@ -45,19 +72,7 @@ public class HealthPoint : MonoBehaviour
         objMove = GetComponentInParent<Forward>();
         objKills = FindObjectOfType<KillCount>();
     }
-    private Bounds GetCameraBounds()
-    {
-        float cameraHeight = 2f * mainCamera.orthographicSize;
-        float cameraWidth = cameraHeight * mainCamera.aspect;
-        Vector3 cameraPosition = mainCamera.transform.position;
-
-        //float minX = cameraPosition.x - cameraWidth / 2f;
-        //float maxX = cameraPosition.x + cameraWidth / 2f;
-        //float minY = cameraPosition.y - cameraHeight / 2f;
-        //float maxY = cameraPosition.y + cameraHeight / 2f;
-
-        return new Bounds(cameraPosition, new Vector3(cameraWidth, cameraHeight, 0f));
-    }
+   
 
     private bool IsInsideCameraBounds(Vector3 position)
     {
@@ -78,7 +93,7 @@ public class HealthPoint : MonoBehaviour
         return false;
     }
 
-    private Vector3 GetRandomSpawnPosition(Bounds cameraBounds)
+    private Vector3 GetRandomSpawnPosition()
     {
         Vector3 spawnPosition;
         do
@@ -94,7 +109,6 @@ public class HealthPoint : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        mainCamera = Camera.main;
         if (isBurn)
         {
             burnTime -= Time.deltaTime;
@@ -110,33 +124,55 @@ public class HealthPoint : MonoBehaviour
                 ChangeToNotKick();
                 burnTick = burnTickMax;
             }
-
         }
-        ChangeToNotKick();
+        else
+        {
+            ChangeToNotKick();
+        }
         if (healthPoint <= 0)
         {
-            EXP a = Instantiate(expiriancePoint, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, 1.9f), Quaternion.identity);
-            a.expBuff = expGiven * dangerLevel;
-
-            objExp.expiriencepoint.fillAmount += expGiven * dangerLevel / objExp.expNeedToNewLevel;
-            objExp.ShowLevel();
-            objKills.score += 1;
-
             if (IsBobs)
             {
                 objDrop.OnDestroyBoss();
-                Destroy(gameObject.transform.root.gameObject);
+                EXP a = Instantiate(expiriancePoint, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, 1.9f), Quaternion.identity);
+                a.expBuff = expGiven * dangerLevel;
+                objExp.expiriencepoint.fillAmount += expGiven * dangerLevel / objExp.expNeedToNewLevel;
+                objKills.score += 1;
+
+                if (bodyAnimBoss != null)
+                {
+                    foreach (var part in bodyAnimBoss.parts)
+                    {
+                        if (part == gameObject.name)
+                        {
+                            bodyAnimBoss.DestroyStart();
+                            bodyAnimBoss.GetParts(objPart, healthPointMax);
+                        }
+                    }
+                    bodyAnimBoss = null;
+                }
+                else
+                {
+                    Destroy(gameObject.transform.root.gameObject);
+
+                }
             }
             else
             {
-                Bounds cameraBounds = GetCameraBounds();
+                EXP a = Instantiate(expiriancePoint, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, 1.9f), Quaternion.identity);
+                a.expBuff = expGiven * dangerLevel;
+
+                objExp.expiriencepoint.fillAmount += expGiven * dangerLevel / objExp.expNeedToNewLevel;
+                objKills.score += 1;
+                mainCamera = Camera.main;
+
                 // Генеруємо випадкові координати в межах заданої області спавну
-                Vector3 spawnPosition = GetRandomSpawnPosition(cameraBounds);
+                Vector3 spawnPosition = GetRandomSpawnPosition();
                 objMove.transform.position = spawnPosition;
 
                 healthPoint = healthPointMax;
+
             }
-           
         }
     }
 

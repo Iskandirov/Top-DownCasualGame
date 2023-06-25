@@ -213,18 +213,22 @@ public class LevelUpgrade : MonoBehaviour
                         if (skillsSave[skillPoint].level == 1)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<Lightning>().maxEnemiesToShoot += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            cef.Electricity += 0.1f;
                         }
                         else if (skillsSave[skillPoint].level == 2)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<Lightning>().damage *= (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            cef.Electricity += 0.1f;
                         }
                         else if (skillsSave[skillPoint].level == 3)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<Lightning>().stunTime += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            cef.Electricity += 0.1f;
                         }
                         else if (skillsSave[skillPoint].level == 4)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<Lightning>().stepMax -= (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            cef.Electricity += 0.1f;
                         }
                     }
                     else if (skillPoint == 2)
@@ -233,18 +237,26 @@ public class LevelUpgrade : MonoBehaviour
                         if (skillsSave[skillPoint].level == 1)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<SpawnBlood>().radius += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            cef.Water += 0.1f;
+                            cef.Dirt += 0.1f;
                         }
                         else if (skillsSave[skillPoint].level == 2)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<SpawnBlood>().damage += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            cef.Water += 0.1f;
+                            cef.Dirt += 0.1f;
                         }
                         else if (skillsSave[skillPoint].level == 3)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<SpawnBlood>().numOfChair += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            cef.Water += 0.1f;
+                            cef.Dirt += 0.1f;
                         }
                         else if (skillsSave[skillPoint].level == 4)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<SpawnBlood>().damageTickMax -= skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            cef.Water += 0.1f;
+                            cef.Dirt += 0.1f;
                         }
                     }
                     else if (skillPoint == 3)
@@ -253,18 +265,26 @@ public class LevelUpgrade : MonoBehaviour
                         if (skillsSave[skillPoint].level == 1)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<LightOn>().stepGhostMax += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            cef.Grass += 0.1f;
+                            cef.Wind += 0.1f;
                         }
                         else if (skillsSave[skillPoint].level == 2)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<LightOn>().attackSpeedBuff += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            cef.Grass += 0.1f;
+                            cef.Wind += 0.1f;
                         }
                         else if (skillsSave[skillPoint].level == 3)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<LightOn>().moveSpeedBuff += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            cef.Grass += 0.1f;
+                            cef.Wind += 0.1f;
                         }
                         else if (skillsSave[skillPoint].level == 4)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<LightOn>().dashTime = skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            cef.Grass += 0.1f;
+                            cef.Wind += 0.1f;
                         }
                     }
                     else if (skillPoint == 4)
@@ -273,18 +293,22 @@ public class LevelUpgrade : MonoBehaviour
                         if (skillsSave[skillPoint].level == 1)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<FireWaveSpawner>().damage += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            cef.Fire += 0.1f;
                         }
                         else if (skillsSave[skillPoint].level == 2)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<FireWaveSpawner>().isLevelThree = true;
+                            cef.Fire += 0.1f;
                         }
                         else if (skillsSave[skillPoint].level == 3)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<FireWaveSpawner>().stepMax -= (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            cef.Fire += 0.1f;
                         }
                         else if (skillsSave[skillPoint].level == 4)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<FireWaveSpawner>().burnDamage = (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            cef.Fire += 0.1f;
                         }
                     }
                     else if (skillPoint == 5)
@@ -293,18 +317,22 @@ public class LevelUpgrade : MonoBehaviour
                         if (skillsSave[skillPoint].level == 1)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<HealSpawner>().heal += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            cef.Grass += 0.1f;
                         }
                         else if (skillsSave[skillPoint].level == 2)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<HealSpawner>().isLevelTwo = true;
+                            cef.Grass += 0.1f;
                         }
                         else if (skillsSave[skillPoint].level == 3)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<HealSpawner>().stepMax -= (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            cef.Grass += 0.1f;
                         }
                         else if (skillsSave[skillPoint].level == 4)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<HealSpawner>().heal += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            cef.Grass += 0.1f;
                         }
                     }
                     else if (skillPoint == 6)
@@ -333,18 +361,26 @@ public class LevelUpgrade : MonoBehaviour
                         if (skillsSave[skillPoint].level == 1)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<ImpulsSpawner>().powerGrow += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            cef.Wind += 0.1f;
+                            cef.Grass += 0.1f;
                         }
                         else if (skillsSave[skillPoint].level == 2)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<ImpulsSpawner>().stepMax -= (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            cef.Wind += 0.1f;
+                            cef.Grass += 0.1f;
                         }
                         else if (skillsSave[skillPoint].level == 3)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<ImpulsSpawner>().isFour = true;
+                            cef.Wind += 0.1f;
+                            cef.Grass += 0.1f;
                         }
                         else if (skillsSave[skillPoint].level == 4)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<ImpulsSpawner>().isFive = true;
+                            cef.Wind += 0.1f;
+                            cef.Grass += 0.1f;
                         }
                     }
                     else if (skillPoint == 8)
@@ -353,18 +389,22 @@ public class LevelUpgrade : MonoBehaviour
                         if (skillsSave[skillPoint].level == 1)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<ShieldSpawner>().ShieldHP += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            cef.Dirt += 0.1f;
                         }
                         else if (skillsSave[skillPoint].level == 2)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<ShieldSpawner>().isThree = true;
+                            cef.Dirt += 0.1f;
                         }
                         else if (skillsSave[skillPoint].level == 3)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<ShieldSpawner>().isFour = true;
+                            cef.Dirt += 0.1f;
                         }
                         else if (skillsSave[skillPoint].level == 4)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<ShieldSpawner>().isFive = true;
+                            cef.Dirt += 0.1f;
                         }
                     }
                     else if (skillPoint == 9)
@@ -373,18 +413,22 @@ public class LevelUpgrade : MonoBehaviour
                         if (skillsSave[skillPoint].level == 1)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<BeamSpawner>().isTwo = true;
+                            cef.Steam += 0.1f;
                         }
                         else if (skillsSave[skillPoint].level == 2)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<BeamSpawner>().damage += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            cef.Steam += 0.1f;
                         }
                         else if (skillsSave[skillPoint].level == 3)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<BeamSpawner>().lifeTime += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            cef.Steam += 0.1f;
                         }
                         else if (skillsSave[skillPoint].level == 4)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<BeamSpawner>().stepMax -= (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            cef.Steam += 0.1f;
                         }
                     }
                     else if (skillPoint == 10)
@@ -437,18 +481,26 @@ public class LevelUpgrade : MonoBehaviour
                         if (skillsSave[skillPoint].level == 1)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<MeteorSpawner>().damage += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            cef.Fire += 0.1f;
+                            cef.Dirt += 0.1f;
                         }
                         else if (skillsSave[skillPoint].level == 2)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<MeteorSpawner>().isThree = true;
+                            cef.Fire += 0.1f;
+                            cef.Dirt += 0.1f;
                         }
                         else if (skillsSave[skillPoint].level == 3)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<MeteorSpawner>().isFour = true;
+                            cef.Fire += 0.1f;
+                            cef.Dirt += 0.1f;
                         }
                         else if (skillsSave[skillPoint].level == 4)
                         {
                             skillsSave[skillPoint].skillObj.GetComponent<MeteorSpawner>().isFive = true;
+                            cef.Fire += 0.1f;
+                            cef.Dirt += 0.1f;
                         }
                     }
                     else if (skillPoint == 13)

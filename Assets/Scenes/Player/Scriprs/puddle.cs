@@ -16,7 +16,7 @@ public class puddle : MonoBehaviour
     public float radius;
 
     HealthPoint objHealth;
-    HealthBossPart objHealthB;
+    ElementActiveDebuff objElement;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,20 +39,17 @@ public class puddle : MonoBehaviour
 
             for (int i = 0; i < enemies.Length; i++)
             {
-                if (enemies[i] != null)
+                if (enemies[i] != null && enemies[i].CompareTag("Enemy"))
                 {
-                    if (enemies[i].GetComponent<HealthPoint>())
-                    {
-                        objHealth = enemies[i].GetComponent<HealthPoint>();
-                        objHealth.ChangeToKick();
-                        objHealth.healthPoint -= damage;
-                    }
-                    else if (enemies[i].GetComponent<HealthBossPart>())
-                    {
-                        objHealthB = enemies[i].GetComponent<HealthBossPart>();
-                        objHealthB.ChangeToKick();
-                        objHealthB.healthPoint -= damage;
-                    }
+                    objHealth = enemies[i].GetComponent<HealthPoint>();
+                    Debug.Log(objHealth);
+                    objElement = enemies[i].GetComponentInParent<ElementActiveDebuff>();
+                    objHealth.ChangeToKick();
+                    objHealth.healthPoint -= (damage * objHealth.Electricity) / objHealth.Water * objHealth.Dirt;
+                    objElement.SetBool("isWater", true);
+                    objElement.SetBool("isDirt", true);
+                    objElement.isWater = true;
+                    objElement.isDirt = true;
                 }
             }
             damageTick = damageTickMax;

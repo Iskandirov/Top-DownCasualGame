@@ -32,23 +32,16 @@ public class Meteor : MonoBehaviour
         {
             if (collision.CompareTag("Enemy"))
             {
-                if (collision.GetComponentInParent<ElementalBoss_Destroy>() || collision.GetComponent<HealthBossPart>())
+                collision.GetComponent<HealthPoint>().healthPoint -= (damage * fireDirt * collision.GetComponent<HealthPoint>().Water) / collision.GetComponent<HealthPoint>().Fire;
+                collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isFire", true);
+                collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isWater", false);
+                collision.GetComponentInParent<ElementActiveDebuff>().isWater = false;
+                collision.GetComponentInParent<ElementActiveDebuff>().isFire = true;
+
+                collision.GetComponent<HealthPoint>().ChangeToKick();
+                if (isFour)
                 {
-                    collision.GetComponent<HealthBossPart>().healthPoint -= damage * fireDirt;
-                    collision.GetComponent<HealthBossPart>().ChangeToKick();
-                    if (isFour)
-                    {
-                        collision.transform.root.GetComponent<Forward>().speed = collision.transform.root.GetComponent<Forward>().speed / 1.5f;
-                    }
-                }
-                else if (!collision.GetComponentInParent<ElementalBoss_Destroy>() || !collision.GetComponent<HealthBossPart>())
-                {
-                    collision.GetComponent<HealthPoint>().healthPoint -= damage * fireDirt;
-                    collision.GetComponent<HealthPoint>().ChangeToKick();
-                    if (isFour)
-                    {
-                        collision.GetComponentInParent<Forward>().speed = collision.GetComponentInParent<Forward>().speedMax / 1.5f;
-                    }
+                    collision.GetComponentInParent<Forward>().speed = collision.GetComponentInParent<Forward>().speedMax * fireDirt / 1.5f;
                 }
                 damageTick = damageTickMax;
             }
@@ -64,19 +57,9 @@ public class Meteor : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            if (collision.GetComponentInParent<ElementalBoss_Destroy>() || collision.GetComponent<HealthBossPart>())
+            if (isFour)
             {
-                if (isFour)
-                {
-                    collision.transform.root.GetComponent<Forward>().speed = collision.transform.root.GetComponent<Forward>().speed;
-                }
-            }
-            else if (!collision.GetComponentInParent<ElementalBoss_Destroy>() || !collision.GetComponent<HealthBossPart>())
-            {
-                if (isFour)
-                {
-                    collision.GetComponentInParent<Forward>().speed = collision.GetComponentInParent<Forward>().speedMax;
-                }
+                collision.GetComponentInParent<Forward>().speed = collision.GetComponentInParent<Forward>().speedMax;
             }
         }
     }

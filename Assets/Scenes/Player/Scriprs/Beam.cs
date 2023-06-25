@@ -9,7 +9,7 @@ public class Beam : MonoBehaviour
     public float tick;
     public float tickMax;
     public GameObject player;
-    public float blood;
+    public float Steam;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,16 +31,11 @@ public class Beam : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            if (collision.GetComponentInParent<ElementalBoss_Destroy>() || collision.GetComponent<HealthBossPart>())
-            {
-                collision.GetComponent<HealthBossPart>().healthPoint -= damage * blood;
-                collision.GetComponent<HealthBossPart>().ChangeToKick();
-            }
-            else if (!collision.GetComponentInParent<ElementalBoss_Destroy>() || !collision.GetComponent<HealthBossPart>())
-            {
-                collision.GetComponent<HealthPoint>().healthPoint -= damage * blood;
-                collision.GetComponent<HealthPoint>().ChangeToKick();
-            }
+            HealthPoint objHealt = collision.GetComponent<HealthPoint>();
+            objHealt.healthPoint -= (damage * Steam * objHealt.Steam) / objHealt.Cold;
+            objHealt.ChangeToKick();
+            collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isSteam", true);
+            collision.GetComponentInParent<ElementActiveDebuff>().isSteam = true;
         }
         else if (collision.CompareTag("Barrel"))
         {
@@ -54,16 +49,11 @@ public class Beam : MonoBehaviour
             if (tick <= 0)
             {
                 tick = tickMax;
-                if (collision.GetComponentInParent<ElementalBoss_Destroy>() || collision.GetComponent<HealthBossPart>())
-                {
-                    collision.GetComponent<HealthBossPart>().healthPoint -= damage * blood;
-                    collision.GetComponent<HealthBossPart>().ChangeToKick();
-                }
-                else if (!collision.GetComponentInParent<ElementalBoss_Destroy>() || !collision.GetComponent<HealthBossPart>())
-                {
-                    collision.GetComponent<HealthPoint>().healthPoint -= damage * blood;
-                    collision.GetComponent<HealthPoint>().ChangeToKick();
-                }
+                HealthPoint objHealt = collision.GetComponent<HealthPoint>();
+                objHealt.healthPoint -= (damage * Steam * objHealt.Steam) / objHealt.Cold;
+                objHealt.ChangeToKick();
+                collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isSteam", true);
+                collision.GetComponentInParent<ElementActiveDebuff>().isSteam = true;
             }
         }
         else if (collision.CompareTag("Barrel"))

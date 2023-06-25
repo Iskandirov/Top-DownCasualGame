@@ -23,6 +23,7 @@ public class Attack : MonoBehaviour
     {
         objMove = GetComponent<Forward>();
         objAnim = GetComponent<Animator>();
+
     }
 
     // Update is called once per frame
@@ -80,22 +81,13 @@ public class Attack : MonoBehaviour
         }
         else
         {
-            if (collision.collider.CompareTag("Enemy"))
+            if (collision.collider.CompareTag("Enemy") && isAttack == false)
             {
                 chancToLure = Random.Range(0, 10);
                 objMove.speed = 0;
-                if (collision.gameObject.GetComponentInParent<ElementalBoss_Destroy>() || collision.collider.GetComponent<HealthBossPart>())
-                {
-                    objAnim.SetBool("IsHit", true);
-                    collision.collider.GetComponent<HealthBossPart>().healthPoint -= damage;
-                    collision.collider.GetComponent<HealthBossPart>().ChangeToKick();
-                }
-                else if (!collision.gameObject.GetComponentInParent<ElementalBoss_Destroy>() || !collision.collider.GetComponent<HealthBossPart>())
-                {
-                    objAnim.SetBool("IsHit", true);
-                    collision.collider.GetComponent<HealthPoint>().healthPoint -= damage;
-                    collision.collider.GetComponent<HealthPoint>().ChangeToKick();
-                }
+                objAnim.SetBool("IsHit", true);
+                collision.collider.GetComponent<HealthPoint>().healthPoint -= damage;
+                collision.collider.GetComponent<HealthPoint>().ChangeToKick();
                 if (isFive && !collision.transform.root.GetComponent<Forward>().isSummoned && chancToLure > 7)
                 {
                     collision.transform.root.GetComponent<Forward>().isSummoned = true;
@@ -126,7 +118,6 @@ public class Attack : MonoBehaviour
                 objectToHit.GetComponent<Animator>().SetBool("IsHit", true);
                 objectToHit.playerHealthPoint -= damage;
                 objectToHit.playerHealthPointImg.fillAmount -= damage / objectToHit.playerHealthPointMax;
-                objectToHit.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             }
         }
     }

@@ -13,6 +13,8 @@ public class SlowArea : MonoBehaviour
         if (collision.CompareTag("Enemy"))
         {
             collision.GetComponentInParent<Forward>().speed = collision.GetComponentInParent<Forward>().speedMax * 0.5f / dirtElement;
+            collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isDirt", true);
+            collision.GetComponentInParent<ElementActiveDebuff>().isDirt = true;
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
