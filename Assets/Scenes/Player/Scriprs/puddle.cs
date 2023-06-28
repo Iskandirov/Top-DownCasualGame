@@ -42,14 +42,13 @@ public class puddle : MonoBehaviour
                 if (enemies[i] != null && enemies[i].CompareTag("Enemy"))
                 {
                     objHealth = enemies[i].GetComponent<HealthPoint>();
-                    Debug.Log(objHealth);
                     objElement = enemies[i].GetComponentInParent<ElementActiveDebuff>();
                     objHealth.ChangeToKick();
                     objHealth.healthPoint -= (damage * objHealth.Electricity) / objHealth.Water * objHealth.Dirt;
-                    objElement.SetBool("isWater", true);
-                    objElement.SetBool("isDirt", true);
-                    objElement.isWater = true;
-                    objElement.isDirt = true;
+                    objElement.SetBool("isWater", true,true);
+                    objElement.SetBool("isDirt", true, true);
+                    objElement.SetBool("isDirt", true, false);
+                    objElement.SetBool("isWater", true, false);
                 }
             }
             damageTick = damageTickMax;

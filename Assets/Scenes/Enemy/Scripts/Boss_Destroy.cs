@@ -12,7 +12,6 @@ public class Boss_Destroy : MonoBehaviour
     public float healthMax;
 
     Animator objAnim;
-    DropItems objDrop;
     Forward objMove;
 
     public void Start()
@@ -21,7 +20,6 @@ public class Boss_Destroy : MonoBehaviour
 
         objAnim = GetComponent<Animator>();
         objMove = GetComponent<Forward>();
-        objDrop = GetComponentInParent<DropItems>();
     }
     public void DestroyEnd()
     {

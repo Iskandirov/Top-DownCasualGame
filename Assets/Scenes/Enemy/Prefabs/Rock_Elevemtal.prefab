@@ -251,6 +251,7 @@ MonoBehaviour:
   - {fileID: 5696974005868173853}
   - {fileID: 4005234820732258728}
   vfxAttack: {fileID: 3700339383819410429, guid: 3aaf368aef297c948adb82f462f67f26, type: 3}
+  countParts: 0
 --- !u!114 &8130577781339647487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,6 +283,8 @@ MonoBehaviour:
   expGiven: 200
   dangerLevel: 6
   bodyAnimBoss: {fileID: 723153833270954924}
+  AnimBossStart: 0
+  isBossPart: 0
   Fire: 1
   Electricity: 1
   Water: 1
@@ -298,6 +301,7 @@ MonoBehaviour:
   GrassStart: 1
   SteamStart: 1
   ColdStart: 1
+  debuffsParent: {fileID: 4030735953378498180}
 --- !u!58 &9149027451308091516
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -502,6 +506,7 @@ MonoBehaviour:
   - {fileID: 5696974005868173853}
   - {fileID: 4005234820732258728}
   vfxAttack: {fileID: 3700339383819410429, guid: 3aaf368aef297c948adb82f462f67f26, type: 3}
+  countParts: 0
 --- !u!114 &561655825312998305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -533,22 +538,25 @@ MonoBehaviour:
   expGiven: 200
   dangerLevel: 6
   bodyAnimBoss: {fileID: 723153833270954924}
-  Fire: 0
-  Electricity: 0
-  Water: 0
-  Dirt: 0
-  Wind: 0
-  Grass: 0
-  Steam: 0
-  Cold: 0
-  FireStart: 0
-  ElectricityStart: 0
-  WaterStart: 0
-  DirtStart: 0
-  WindStart: 0
-  GrassStart: 0
-  SteamStart: 0
-  ColdStart: 0
+  AnimBossStart: 0
+  isBossPart: 0
+  Fire: 1
+  Electricity: 1
+  Water: 1
+  Dirt: 1
+  Wind: 1
+  Grass: 1
+  Steam: 1
+  Cold: 1
+  FireStart: 1
+  ElectricityStart: 1
+  WaterStart: 1
+  DirtStart: 1
+  WindStart: 1
+  GrassStart: 1
+  SteamStart: 1
+  ColdStart: 1
+  debuffsParent: {fileID: 4030735953378498180}
 --- !u!58 &6972513999967339480
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -741,6 +749,7 @@ MonoBehaviour:
   - {fileID: 5828615493242138871}
   - {fileID: 4005234820732258728}
   vfxAttack: {fileID: 3700339383819410429, guid: 3aaf368aef297c948adb82f462f67f26, type: 3}
+  countParts: 0
 --- !u!114 &677161597652527620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -772,22 +781,25 @@ MonoBehaviour:
   expGiven: 200
   dangerLevel: 6
   bodyAnimBoss: {fileID: 723153833270954924}
-  Fire: 0
-  Electricity: 0
-  Water: 0
-  Dirt: 0
-  Wind: 0
-  Grass: 0
-  Steam: 0
-  Cold: 0
-  FireStart: 0
-  ElectricityStart: 0
-  WaterStart: 0
-  DirtStart: 0
-  WindStart: 0
-  GrassStart: 0
-  SteamStart: 0
-  ColdStart: 0
+  AnimBossStart: 0
+  isBossPart: 0
+  Fire: 1
+  Electricity: 1
+  Water: 1
+  Dirt: 1
+  Wind: 1
+  Grass: 1
+  Steam: 1
+  Cold: 1
+  FireStart: 1
+  ElectricityStart: 1
+  WaterStart: 1
+  DirtStart: 1
+  WindStart: 1
+  GrassStart: 1
+  SteamStart: 1
+  ColdStart: 1
+  debuffsParent: {fileID: 4030735953378498180}
 --- !u!1 &3905381358158845592
 GameObject:
   m_ObjectHideFlags: 0
@@ -965,6 +977,7 @@ MonoBehaviour:
   - {fileID: 5696974005868173853}
   - {fileID: 4005234820732258728}
   vfxAttack: {fileID: 3700339383819410429, guid: 3aaf368aef297c948adb82f462f67f26, type: 3}
+  countParts: 0
 --- !u!114 &4310677223782336352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -996,22 +1009,25 @@ MonoBehaviour:
   expGiven: 200
   dangerLevel: 6
   bodyAnimBoss: {fileID: 723153833270954924}
-  Fire: 0
-  Electricity: 0
-  Water: 0
-  Dirt: 0
-  Wind: 0
-  Grass: 0
-  Steam: 0
-  Cold: 0
-  FireStart: 0
-  ElectricityStart: 0
-  WaterStart: 0
-  DirtStart: 0
-  WindStart: 0
-  GrassStart: 0
-  SteamStart: 0
-  ColdStart: 0
+  AnimBossStart: 0
+  isBossPart: 0
+  Fire: 1
+  Electricity: 1
+  Water: 1
+  Dirt: 1
+  Wind: 1
+  Grass: 1
+  Steam: 1
+  Cold: 1
+  FireStart: 1
+  ElectricityStart: 1
+  WaterStart: 1
+  DirtStart: 1
+  WindStart: 1
+  GrassStart: 1
+  SteamStart: 1
+  ColdStart: 1
+  debuffsParent: {fileID: 4030735953378498180}
 --- !u!1 &3981078095678069054
 GameObject:
   m_ObjectHideFlags: 0
@@ -1038,8 +1054,8 @@ Transform:
   m_GameObject: {fileID: 3981078095678069054}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 2.86, y: -7.28, z: -0.1705557}
-  m_LocalScale: {x: -1.22, y: 0.5, z: 0.5}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 5.52, y: -2.2622943, z: -2.2622943}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 3151732145393461625}
   m_RootOrder: 5
@@ -1085,8 +1101,8 @@ SpriteRenderer:
   m_SortingLayerID: -669076885
   m_SortingLayer: 2
   m_SortingOrder: -2
-  m_Sprite: {fileID: 21300000, guid: 36b8d5cc6c896204a9c851a9c2ffae25, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: e8c9e5ec26460ca4193c6810c61ad387, type: 3}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.3137255}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1266,6 +1282,7 @@ MonoBehaviour:
   - {fileID: 5696974005868173853}
   - {fileID: 4005234820732258728}
   vfxAttack: {fileID: 3700339383819410429, guid: 3aaf368aef297c948adb82f462f67f26, type: 3}
+  countParts: 0
 --- !u!114 &5541586661810743851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1297,22 +1314,25 @@ MonoBehaviour:
   expGiven: 200
   dangerLevel: 6
   bodyAnimBoss: {fileID: 723153833270954924}
-  Fire: 0
-  Electricity: 0
-  Water: 0
-  Dirt: 0
-  Wind: 0
-  Grass: 0
-  Steam: 0
-  Cold: 0
-  FireStart: 0
-  ElectricityStart: 0
-  WaterStart: 0
-  DirtStart: 0
-  WindStart: 0
-  GrassStart: 0
-  SteamStart: 0
-  ColdStart: 0
+  AnimBossStart: 0
+  isBossPart: 0
+  Fire: 1
+  Electricity: 1
+  Water: 1
+  Dirt: 1
+  Wind: 1
+  Grass: 1
+  Steam: 1
+  Cold: 1
+  FireStart: 1
+  ElectricityStart: 1
+  WaterStart: 1
+  DirtStart: 1
+  WindStart: 1
+  GrassStart: 1
+  SteamStart: 1
+  ColdStart: 1
+  debuffsParent: {fileID: 4030735953378498180}
 --- !u!1 &6800228334879707776
 GameObject:
   m_ObjectHideFlags: 0
@@ -1500,6 +1520,7 @@ MonoBehaviour:
   - {fileID: 5828615493242138871}
   - {fileID: 5696974005868173853}
   vfxAttack: {fileID: 3700339383819410429, guid: 3aaf368aef297c948adb82f462f67f26, type: 3}
+  countParts: 0
 --- !u!114 &5933149193705765714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1531,22 +1552,25 @@ MonoBehaviour:
   expGiven: 200
   dangerLevel: 6
   bodyAnimBoss: {fileID: 723153833270954924}
-  Fire: 0
-  Electricity: 0
-  Water: 0
-  Dirt: 0
-  Wind: 0
-  Grass: 0
-  Steam: 0
-  Cold: 0
-  FireStart: 0
-  ElectricityStart: 0
-  WaterStart: 0
-  DirtStart: 0
-  WindStart: 0
-  GrassStart: 0
-  SteamStart: 0
-  ColdStart: 0
+  AnimBossStart: 0
+  isBossPart: 0
+  Fire: 1
+  Electricity: 1
+  Water: 1
+  Dirt: 1
+  Wind: 1
+  Grass: 1
+  Steam: 1
+  Cold: 1
+  FireStart: 1
+  ElectricityStart: 1
+  WaterStart: 1
+  DirtStart: 1
+  WindStart: 1
+  GrassStart: 1
+  SteamStart: 1
+  ColdStart: 1
+  debuffsParent: {fileID: 4030735953378498180}
 --- !u!58 &4828930043736310593
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1579,7 +1603,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &729955652311028108
 Transform:
   m_ObjectHideFlags: 0
@@ -1589,8 +1613,8 @@ Transform:
   m_GameObject: {fileID: 6849556832529758889}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -2.97, y: -7.17, z: -0.17055565}
-  m_LocalScale: {x: -1.22, y: 0.5, z: 0.5}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 5.52, y: -2.2622943, z: -2.2622943}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 3151732145393461625}
   m_RootOrder: 4
@@ -1636,8 +1660,8 @@ SpriteRenderer:
   m_SortingLayerID: -669076885
   m_SortingLayer: 2
   m_SortingOrder: -2
-  m_Sprite: {fileID: 21300000, guid: 36b8d5cc6c896204a9c851a9c2ffae25, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: e8c9e5ec26460ca4193c6810c61ad387, type: 3}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.3137255}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1696,6 +1720,7 @@ Transform:
   - {fileID: 2354126427140150032}
   - {fileID: 6385757521429250788}
   - {fileID: 277520416064462253}
+  - {fileID: 2405455048085794715}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1946,6 +1971,16 @@ MonoBehaviour:
   move: {fileID: -6013413010149434249, guid: 3d751f437f9d0bd4f95fca499dff5adb, type: 3}
   health: {fileID: 2473979257493350611, guid: 3d751f437f9d0bd4f95fca499dff5adb, type: 3}
   attack: {fileID: 7032251446413390054, guid: 3d751f437f9d0bd4f95fca499dff5adb, type: 3}
+  elementDebuffParent: {fileID: 2405455048085794715}
+  elementDebuffObject: {fileID: 2065097725651597945, guid: 18f8e8e849830084eace680fad057225, type: 3}
+  fire: {fileID: 21300000, guid: 1e8f0e88889423a448ecd1333099dccc, type: 3}
+  water: {fileID: 974740731, guid: 94903a2a2ede7554a9d23d7fdf46838b, type: 3}
+  wind: {fileID: 21300000, guid: 8738ed5c952c8b340a096cc505074778, type: 3}
+  cold: {fileID: 21300000, guid: e531f9386a8f9d9408289213bab53c7e, type: 3}
+  steam: {fileID: 21300000, guid: 202dc9964a959ed4da44ddd08272134c, type: 3}
+  dirt: {fileID: 21300000, guid: 58685d5e3cafa6e42af04898cb33f765, type: 3}
+  grass: {fileID: -518117258, guid: 94903a2a2ede7554a9d23d7fdf46838b, type: 3}
+  electricity: {fileID: 21300000, guid: 45dd21d4ef0c8c34f8aafb3cf9070b0f, type: 3}
 --- !u!114 &5255366272783900354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2136,6 +2171,7 @@ MonoBehaviour:
   - {fileID: 5696974005868173853}
   - {fileID: 4005234820732258728}
   vfxAttack: {fileID: 3700339383819410429, guid: 3aaf368aef297c948adb82f462f67f26, type: 3}
+  countParts: 0
 --- !u!114 &6872484659764052672
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2167,22 +2203,25 @@ MonoBehaviour:
   expGiven: 200
   dangerLevel: 6
   bodyAnimBoss: {fileID: 723153833270954924}
-  Fire: 0
-  Electricity: 0
-  Water: 0
-  Dirt: 0
-  Wind: 0
-  Grass: 0
-  Steam: 0
-  Cold: 0
-  FireStart: 0
-  ElectricityStart: 0
-  WaterStart: 0
-  DirtStart: 0
-  WindStart: 0
-  GrassStart: 0
-  SteamStart: 0
-  ColdStart: 0
+  AnimBossStart: 0
+  isBossPart: 0
+  Fire: 1
+  Electricity: 1
+  Water: 1
+  Dirt: 1
+  Wind: 1
+  Grass: 1
+  Steam: 1
+  Cold: 1
+  FireStart: 1
+  ElectricityStart: 1
+  WaterStart: 1
+  DirtStart: 1
+  WindStart: 1
+  GrassStart: 1
+  SteamStart: 1
+  ColdStart: 1
+  debuffsParent: {fileID: 4030735953378498180}
 --- !u!1 &8982050001653864226
 GameObject:
   m_ObjectHideFlags: 0
@@ -2209,8 +2248,8 @@ Transform:
   m_GameObject: {fileID: 8982050001653864226}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.09, y: -7.17, z: -0.17055565}
-  m_LocalScale: {x: -2.15, y: 0.5, z: 0.5}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 8.55, y: -1.9883718, z: -1.9883718}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 3151732145393461625}
   m_RootOrder: 3
@@ -2256,8 +2295,8 @@ SpriteRenderer:
   m_SortingLayerID: -669076885
   m_SortingLayer: 2
   m_SortingOrder: -2
-  m_Sprite: {fileID: 21300000, guid: 36b8d5cc6c896204a9c851a9c2ffae25, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: e8c9e5ec26460ca4193c6810c61ad387, type: 3}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.3137255}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2444,6 +2483,7 @@ MonoBehaviour:
   - {fileID: 5696974005868173853}
   - {fileID: 4005234820732258728}
   vfxAttack: {fileID: 3700339383819410429, guid: 3aaf368aef297c948adb82f462f67f26, type: 3}
+  countParts: 0
 --- !u!114 &4903056437257059249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2475,22 +2515,25 @@ MonoBehaviour:
   expGiven: 200
   dangerLevel: 6
   bodyAnimBoss: {fileID: 723153833270954924}
-  Fire: 0
-  Electricity: 0
-  Water: 0
-  Dirt: 0
-  Wind: 0
-  Grass: 0
-  Steam: 0
-  Cold: 0
-  FireStart: 0
-  ElectricityStart: 0
-  WaterStart: 0
-  DirtStart: 0
-  WindStart: 0
-  GrassStart: 0
-  SteamStart: 0
-  ColdStart: 0
+  AnimBossStart: 0
+  isBossPart: 0
+  Fire: 1
+  Electricity: 1
+  Water: 1
+  Dirt: 1
+  Wind: 1
+  Grass: 1
+  Steam: 1
+  Cold: 1
+  FireStart: 1
+  ElectricityStart: 1
+  WaterStart: 1
+  DirtStart: 1
+  WindStart: 1
+  GrassStart: 1
+  SteamStart: 1
+  ColdStart: 1
+  debuffsParent: {fileID: 4030735953378498180}
 --- !u!1 &9216603974040273081
 GameObject:
   m_ObjectHideFlags: 0
@@ -2805,6 +2848,113 @@ RectTransform:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9118157617809031578, guid: aea241cf4ede1164e807ce8efec36619, type: 3}
   m_PrefabInstance: {fileID: 4006188668153251810}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4048473290303144416
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 3151732145393461625}
+    m_Modifications:
+    - target: {fileID: 1143665813906544484, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+      propertyPath: m_Name
+      value: ElementDebuffPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 6.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+--- !u!224 &2405455048085794715 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+  m_PrefabInstance: {fileID: 4048473290303144416}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4030735953378498180 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1143665813906544484, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+  m_PrefabInstance: {fileID: 4048473290303144416}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8366623747404129773
 PrefabInstance:

@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using Unity.VisualScripting;
+using UnityEngine;
 
 public class Move : MonoBehaviour
 {
     public Rigidbody2D rb;
     public float speed;
+    public float speedMax;
     public GameObject escPanel;
     public GameObject escPanelParent;
     public Health playerHealth;
@@ -25,9 +28,16 @@ public class Move : MonoBehaviour
     private bool isReloading = false;
     public bool isDashing = false;
 
+
+    public bool isSlowingDown = false;
+    public float slowdownEndTime;
+    public float axisX;
+    public float axisY;
+
     // Start is called before the first frame update
     void Start()
     {
+        speedMax = speed;
         dashTimeStart = dashTimeMax;
         Time.timeScale = 1f;
         playerAnim = GetComponent<Animator>();
@@ -35,7 +45,11 @@ public class Move : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rb.position = PlayerMove();
+        if (!isDashing)
+        {
+            rb.position = PlayerMove();
+
+        }
         if (Input.GetKeyUp(KeyCode.Escape) && playerHealth.playerHealthPoint > 0)
         {
             if (!escPanelIsShowed)
@@ -53,13 +67,12 @@ public class Move : MonoBehaviour
         {
             isReloading = true;
             isDashing = true;
-            gameObject.GetComponent<BoxCollider2D>().isTrigger = true;
             Vector2 dashDirection = GetDashDirection();
-            rb.velocity = dashDirection * (speed * sprintMultiplier);
-            Invoke(nameof(StopDashing), 0.1f);
+            rb.velocity = dashDirection.normalized * (speed * sprintMultiplier);
+            Invoke(nameof(StopDashing), 0.2f);
             dashTime = dashTimeMax;
-
         }
+
         if (isReloading)
         {
             dashTime -= Time.deltaTime;
@@ -69,70 +82,52 @@ public class Move : MonoBehaviour
             }
         }
     }
-    
+    private void StopDashing()
+    {
+        isDashing = false;
+        rb.velocity = Vector2.zero;
+    }
     private Vector2 GetDashDirection()
     {
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 playerToMouse = mousePosition - transform.position;
-        return playerToMouse.normalized * dashDistance;
+        return playerToMouse;
     }
-
-    private void StopDashing()
-    {
-        isDashing = false;
-        gameObject.GetComponent<BoxCollider2D>().isTrigger = false;
-        rb.velocity = Vector2.zero;
-    }
-
     //-----------
     public Vector2 PlayerMove()
     {
-        if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S))
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
+        float verticalInput = Input.GetAxisRaw("Vertical");
+
+        if (horizontalInput != 0)
         {
             playerAnim.SetBool("IsMove", true);
-            rb.position = new Vector2(rb.position.x + speed * Time.deltaTime, rb.position.y - (speed / 2) * Time.deltaTime);
+            if (axisX != horizontalInput)
+            {
+                StartCoroutine(SpeedSlow(0.2f));
+                axisX = horizontalInput;
+            }
         }
-        else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A))
+        else if (verticalInput != 0)
         {
-            playerAnim.SetBool("IsMove", true);
-            rb.position = new Vector2(rb.position.x - (speed / 2) * Time.deltaTime, rb.position.y - speed * Time.deltaTime);
-        }
-        else if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W))
-        {
-            playerAnim.SetBool("IsMove", true);
-            rb.position = new Vector2(rb.position.x - speed * Time.deltaTime, rb.position.y + (speed / 2) * Time.deltaTime);
-        }
-        else if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D))
-        {
-            playerAnim.SetBool("IsMove", true);
-            rb.position = new Vector2(rb.position.x + (speed / 2) * Time.deltaTime, rb.position.y + speed * Time.deltaTime);
-        }
-        //================
-        else if (Input.GetKey(KeyCode.D))
-        {
-            playerAnim.SetBool("IsMove", true);
-            rb.position = new Vector2(rb.position.x + speed * Time.deltaTime, rb.position.y);
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            playerAnim.SetBool("IsMove", true);
-            rb.position = new Vector2(rb.position.x, rb.position.y - speed * Time.deltaTime);
-        }
-        else if (Input.GetKey(KeyCode.A))
-        {
-            playerAnim.SetBool("IsMove", true);
-            rb.position = new Vector2(rb.position.x - speed * Time.deltaTime, rb.position.y);
-        }
-        else if (Input.GetKey(KeyCode.W))
-        {
-            playerAnim.SetBool("IsMove", true);
-            rb.position = new Vector2(rb.position.x, rb.position.y + speed * Time.deltaTime);
+            if (axisY != verticalInput)
+            {
+                StartCoroutine(SpeedSlow(0.2f));
+                axisY = verticalInput;
+            }
         }
         else
         {
             playerAnim.SetBool("IsMove", false);
         }
+
+        rb.velocity = new Vector2(horizontalInput * speed, verticalInput * speed);
         return new Vector2(rb.position.x, rb.position.y);
     }
-  
+    public IEnumerator SpeedSlow(float time)
+    {
+        speed = speedMax * 0.7f;
+        yield return new WaitForSeconds(time);
+        speed = speedMax;
+    }
 }

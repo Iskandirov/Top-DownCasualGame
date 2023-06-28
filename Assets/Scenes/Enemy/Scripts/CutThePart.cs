@@ -5,9 +5,10 @@ public class CutThePart : MonoBehaviour
 {
     public List<CutThePart> parts;
     public GameObject vfxAttack;
-
+    public int countParts;
     public void CutTheParts()
     {
+        countParts = parts.Count;
         GameObject player = GameObject.FindWithTag("Player");
 
         for (int i = parts.Count - 1; i >= 0; i--)
@@ -34,9 +35,30 @@ public class CutThePart : MonoBehaviour
             anim.transform.root.GetComponent<Animator>();
             anim.runtimeAnimatorController = transform.root.GetComponent<Animator>().runtimeAnimatorController;
 
+            HealthPoint health = obj.gameObject.GetComponent<HealthPoint>();
+            health.anim = anim;
+            health.bodyAnim = anim.gameObject;
+            health.isBossPart = true;  
+            
+            DropItems drop = obj.gameObject.AddComponent<DropItems>();
+            drop.itemPrefab = transform.root.GetComponent<DropItems>().itemPrefab;
+            drop.items = transform.root.GetComponent<DropItems>().items;
+            drop.itemsLoaded = transform.root.GetComponent<DropItems>().itemsLoaded;
+
+            drop.CommonItems = transform.root.GetComponent<DropItems>().CommonItems;
+            drop.RareItems = transform.root.GetComponent<DropItems>().RareItems;
+            drop.MiphicalItems = transform.root.GetComponent<DropItems>().MiphicalItems;
+            drop.LegendaryItems = transform.root.GetComponent<DropItems>().LegendaryItems;
+
+            drop.spawnRare = transform.root.GetComponent<DropItems>().spawnRare;
+            drop.spawnMiphical = transform.root.GetComponent<DropItems>().spawnMiphical;
+            drop.spawnLegendary = transform.root.GetComponent<DropItems>().spawnLegendary;
+            drop.rarityType = transform.root.GetComponent<DropItems>().rarityType;
+
             obj.GetComponent<CutThePart>().parts.Clear();
 
             Destroy(part.gameObject);
+            obj.countParts = countParts;
             parts.RemoveAt(i);
         }
 

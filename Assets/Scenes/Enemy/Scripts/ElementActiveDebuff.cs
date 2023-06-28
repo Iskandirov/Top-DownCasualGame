@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using UnityEngine;
 
 public class ElementActiveDebuff : MonoBehaviour
@@ -9,14 +7,8 @@ public class ElementActiveDebuff : MonoBehaviour
     public Forward move;
     public HealthPoint health;
     public Attack attack;
-    public bool isFire;
-    public bool isElectricity;
-    public bool isWater;
-    public bool isDirt;
-    public bool isWind;
-    public bool isGrass;
-    public bool isSteam;
-    public bool isCold;
+    public Transform elementDebuffParent;
+    public DeactivateDebuff elementDebuffObject;
     public Dictionary<string, float> activeTimers = new Dictionary<string, float>()
 {
     { "isFire", 5 },
@@ -39,109 +31,186 @@ public class ElementActiveDebuff : MonoBehaviour
     { "isSteam", false },
     { "isCold", false },
 };
+    public Dictionary<string, bool> boolFlagsCheck = new Dictionary<string, bool>()
+        {
+    { "isFire", false },
+    { "isElectricity", false },
+    { "isWater", false},
+    { "isDirt", false },
+    { "isWind", false },
+    { "isGrass", false },
+    { "isSteam", false },
+    { "isCold", false },
+};
+
+    private Dictionary<string, GameObject> elementObjects;
+
+    public Sprite fire;
+    public Sprite water;
+    public Sprite wind;
+    public Sprite cold;
+    public Sprite steam;
+    public Sprite dirt;
+    public Sprite grass;
+    public Sprite electricity;
     public void Start()
     {
+        elementObjects = new Dictionary<string, GameObject>();
     }
+
+   
+
     // Update is called once per frame
     void FixedUpdate()
     {
         UpdateActiveTimers();
-        if (IsActive("isFire") && isFire)
+        if (IsActive("isFire", true) && IsActive("isFire", false))
         {
-            health.Water /= 2;
+            Debug.Log(1);
+            DeactivateDebuff a = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
+            a.GetComponent<SpriteRenderer>().sprite = fire;
+            health.Water = health.WaterStart / 2;
             attack.damage = attack.damageMax / 2;
-            isFire = false;
+            SetBool("isFire", false, false);
         }
-        else if(!IsActive("isFire"))
+        else if(!IsActive("isFire", true))
         {
             health.Water = health.WaterStart;
             attack.damage = attack.damageMax;
         }
 
-        if (IsActive("isFire") && IsActive("isWind") && isWater && isWind)
+        if (IsActive("isWater", true) && IsActive("isWind", true) && IsActive("isWater", false) && IsActive("isWind", false))
         {
+            DeactivateDebuff a = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
+            a.GetComponent<SpriteRenderer>().sprite = water;
+            DeactivateDebuff b = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
+            b.GetComponent<SpriteRenderer>().sprite = wind;
             attack.damage = attack.damageMax / 6;
-            isWater = false;
-            isWind = false;
+            SetBool("isWind", false, false);
+            SetBool("isWater", false, false);
         }
-        else
+        else if(!IsActive("isWater", true) && !IsActive("isWind", true))
         {
             attack.damage = attack.damageMax;
         }
 
-        if (IsActive("isFire") && IsActive("isWater") && isFire && isWater)
+        if (IsActive("isFire", true) && IsActive("isWater", true) && IsActive("isFire", false) && IsActive("isWater", false))
         {
-            SetBool("isSteam", true);
-            isSteam = true;
-            isFire = false;
-            isWater = false;
+            SetBool("isSteam", true, true);
+            SetBool("isSteam", true, false);
+            SetBool("isFire", false, false);
+            SetBool("isWater", false, false);
         }
-        else
+        else if(!IsActive("isFire", true) && !IsActive("isWater", true))
         {
             health.Water = health.WaterStart;
             health.Fire = health.FireStart;
         }
 
-        if (IsActive("isCold") && isCold)
+        if (IsActive("isCold", true) && IsActive("isCold", false))
         {
+            DeactivateDebuff a = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
+            a.GetComponent<SpriteRenderer>().sprite = cold;
             move.speed = move.speedMax / 2;
-            health.Steam /= 2;
-            isCold = false;
+            health.Steam = health.SteamStart / 2;
+            SetBool("isCold", false, false);
         }
-        else
+        else if(!IsActive("isCold", true))
         {
-            move.speed = move.speedMax;
-            health.Steam = health.SteamStart;
+            //SpeedNormalized();
         }
 
-        if (IsActive("isSteam") && isSteam)
+        if (IsActive("isSteam", true) && IsActive("isSteam", false))
         {
-            health.Fire /= 2;
-            health.Water /= 2;
-            isSteam = false;
+            DeactivateDebuff a = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
+            a.GetComponent<SpriteRenderer>().sprite = steam;
+            health.Fire = health.FireStart / 2;
+            health.Water = health.WaterStart / 2;
+            SetBool("isSteam", false, false);
         }
-        else
+        else if(!IsActive("isSteam", true))
         {
             health.Fire = health.FireStart;
             health.Water = health.WaterStart;
         }
 
-        if (IsActive("isWater") && IsActive("isElectricity") && isWater && isElectricity)
+        if (IsActive("isWater",true) && IsActive("isElectricity", true) && IsActive("isWater", false) && IsActive("isElectricity", false))
         {
+            DeactivateDebuff a = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
+            a.GetComponent<SpriteRenderer>().sprite = water;
+
+            DeactivateDebuff b = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
+            b.GetComponent<SpriteRenderer>().sprite = electricity;
+
             move.isStunned = true;
-            move.stunnTimeMax = 2;
-            SetBool("isWater", false);
-            SetBool("isElectricity", false);
-            isWater = false;
-            isElectricity = false;
+            move.stunnTime = 2;
+            SetBool("isWater", false, true);
+            SetBool("isElectricity", false, true);
+            SetBool("isWater", false, false);
+            SetBool("isElectricity", false, false);
+
         }
-        if (IsActive("isWater") && isWater)
+        if (IsActive("isWater", true) && IsActive("isWater", false))
         {
-            isWater = false;
+            DeactivateDebuff a = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
+            a.GetComponent<SpriteRenderer>().sprite = water;
+            SetBool("isWater", false, false);
         } 
-        if (IsActive("isDirt") && isDirt)
+        if (IsActive("isDirt", true) && IsActive("isDirt", false))
         {
-            isDirt = false;
+            DeactivateDebuff a = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
+            a.GetComponent<SpriteRenderer>().sprite = dirt;
+            SetBool("isDirt", false, false);
         }
     }
 
-    public void SetBool(string boolName, bool value)
+    void SpeedNormalized()
     {
-        if (boolFlags.ContainsKey(boolName))
-        {
-            boolFlags[boolName] = value;
-        }
+        move.speed = move.speedMax;
+        health.Steam = health.SteamStart;
     }
-
-    private bool IsActive(string boolName)
+    public void SetBool(string boolName, bool value, bool isFirst)
     {
-        foreach (var pair in boolFlags)
+        if (isFirst)
         {
-            if (pair.Key == boolName && pair.Value == false)
+            if (boolFlags.ContainsKey(boolName))
             {
-                return false;
+                boolFlags[boolName] = value;
+
             }
         }
+        else
+        {
+            if (boolFlagsCheck.ContainsKey(boolName))
+            {
+                boolFlagsCheck[boolName] = value;
+            }
+        }
+    }
+
+    private bool IsActive(string boolName,bool isFirst)
+    {
+        if (isFirst)
+        {
+            foreach (var pair in boolFlags)
+            {
+                if (pair.Key == boolName && pair.Value == false)
+                {
+                    return false;
+                }
+            }
+        }
+        else
+        {
+            foreach (var pair in boolFlagsCheck)
+            {
+                if (pair.Key == boolName && pair.Value == false)
+                {
+                    return false;
+                }
+            }
+        }
+      
         return true;
     }
 
@@ -157,7 +226,7 @@ public class ElementActiveDebuff : MonoBehaviour
 
                 if (activeTimers[key] <= 0f)
                 {
-                    SetBool(key, false);
+                    SetBool(key, false,true);
                     activeTimers[key] = 5f;  // Перевстановлюємо значення на початкове
                 }
             }

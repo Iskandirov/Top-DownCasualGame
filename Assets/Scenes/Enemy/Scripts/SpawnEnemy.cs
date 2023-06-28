@@ -27,6 +27,7 @@ public class SpawnEnemy : MonoBehaviour
 
     private void FixedUpdate()
     {
+        
         mainCamera = Camera.main;
         SpawnEnemies();
     }
@@ -81,7 +82,10 @@ public class SpawnEnemy : MonoBehaviour
     {
         time += Time.deltaTime;
         Bounds cameraBounds = GetCameraBounds();
-
+        if (stopSpawn)
+        {
+            ResetMobCount();
+        }
         if (time >= timeStep && !stopSpawn)
         {
             int i = Random.Range(0, enemyTypeSpawn);
@@ -98,6 +102,13 @@ public class SpawnEnemy : MonoBehaviour
         {
             timeToNewType += timeToNewTypeStart;
             enemyTypeSpawn++;
+        }
+    }
+    public void ResetMobCount()
+    {
+        for (int i = 0; i < enemyCountType.Length; i++)
+        {
+            enemyCountType[i] = 0;
         }
     }
     public void SpawnEnemies(byte opacity,float speed,int health,float damage)

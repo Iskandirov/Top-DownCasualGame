@@ -30,8 +30,8 @@ public class TowerWave : MonoBehaviour
             HealthPoint objHealt = collision.GetComponent<HealthPoint>();
             objHealt.healthPoint -= (damage * waterElement * objHealt.Water) / objHealt.Dirt;
             objHealt.ChangeToKick();
-            collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isWater", true);
-            collision.GetComponentInParent<ElementActiveDebuff>().isWater = true;
+            collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isWater", true,true);
+            collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isWater", true, false);
         }
     }
 }

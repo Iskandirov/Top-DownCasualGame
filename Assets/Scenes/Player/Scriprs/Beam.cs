@@ -34,8 +34,8 @@ public class Beam : MonoBehaviour
             HealthPoint objHealt = collision.GetComponent<HealthPoint>();
             objHealt.healthPoint -= (damage * Steam * objHealt.Steam) / objHealt.Cold;
             objHealt.ChangeToKick();
-            collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isSteam", true);
-            collision.GetComponentInParent<ElementActiveDebuff>().isSteam = true;
+            collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isSteam", true,true);
+            collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isSteam", true,false);
         }
         else if (collision.CompareTag("Barrel"))
         {
@@ -52,8 +52,8 @@ public class Beam : MonoBehaviour
                 HealthPoint objHealt = collision.GetComponent<HealthPoint>();
                 objHealt.healthPoint -= (damage * Steam * objHealt.Steam) / objHealt.Cold;
                 objHealt.ChangeToKick();
-                collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isSteam", true);
-                collision.GetComponentInParent<ElementActiveDebuff>().isSteam = true;
+                collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isSteam", true, true);
+                collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isSteam", true, false);
             }
         }
         else if (collision.CompareTag("Barrel"))

@@ -879,6 +879,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 8313530370077628590}
   speed: 20
+  speedMax: 0
   escPanel: {fileID: 3513686589291930197, guid: b3ec079cfeeb83b428d034c90d3b95c6, type: 3}
   escPanelParent: {fileID: 3105733171025480105}
   playerHealth: {fileID: 4470285249311221157}
@@ -886,12 +887,14 @@ MonoBehaviour:
   shiftCD: 0
   shiftCDMax: 3
   isInvincible: 0
-  sprintMultiplier: 2
+  sprintMultiplier: 5
   dashDistance: 5
   dashTime: 0
   dashTimeMax: 3
   dashTimeStart: 0
   isDashing: 0
+  isSlowingDown: 0
+  slowdownEndTime: 0
 --- !u!114 &8522285135052803135
 MonoBehaviour:
   m_ObjectHideFlags: 0

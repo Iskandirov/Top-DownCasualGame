@@ -37,6 +37,8 @@ public class HealthPoint : MonoBehaviour
 
     [Header("Boss Anim")]
     public Boss_Destroy bodyAnimBoss;
+    public bool AnimBossStart;
+    public bool isBossPart;
     CutThePart objPart;
 
     [Header("Effects resistace")]
@@ -57,6 +59,8 @@ public class HealthPoint : MonoBehaviour
     public float GrassStart;
     public float SteamStart;
     public float ColdStart;
+
+    public GameObject debuffsParent;
     // Start is called before the first frame update
     void Start()
     {
@@ -131,30 +135,44 @@ public class HealthPoint : MonoBehaviour
         }
         if (healthPoint <= 0)
         {
+            foreach (Transform child in debuffsParent.transform)
+            {
+                child.GetComponent<DeactivateDebuff>().Destroy();
+            }
             if (IsBobs)
             {
-                objDrop.OnDestroyBoss();
-                EXP a = Instantiate(expiriancePoint, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, 1.9f), Quaternion.identity);
-                a.expBuff = expGiven * dangerLevel;
-                objExp.expiriencepoint.fillAmount += expGiven * dangerLevel / objExp.expNeedToNewLevel;
-                objKills.score += 1;
-
-                if (bodyAnimBoss != null)
+                if (isBossPart)
                 {
+                    SetOtherPartsCount();
+                    EXP a = Instantiate(expiriancePoint, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, 1.9f), Quaternion.identity);
+                    a.expBuff = expGiven * dangerLevel;
+                    objExp.expiriencepoint.fillAmount += expGiven * dangerLevel / objExp.expNeedToNewLevel;
+                    objKills.score += 1;
+                    Destroy(gameObject);
+                }
+                else if (bodyAnimBoss != null && !AnimBossStart)
+                {
+                    objExp.expiriencepoint.fillAmount += expGiven * dangerLevel / objExp.expNeedToNewLevel;
+                    objKills.score += 1;
                     foreach (var part in bodyAnimBoss.parts)
                     {
                         if (part == gameObject.name)
                         {
-                            bodyAnimBoss.DestroyStart();
                             bodyAnimBoss.GetParts(objPart, healthPointMax);
+                            bodyAnimBoss.DestroyStart();
                         }
                     }
+                    AnimBossStart = true;
                     bodyAnimBoss = null;
                 }
-                else
+                else if(!AnimBossStart)
                 {
+                    objDrop.OnDestroyBoss();
+                    EXP a = Instantiate(expiriancePoint, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, 1.9f), Quaternion.identity);
+                    a.expBuff = expGiven * dangerLevel;
+                    objExp.expiriencepoint.fillAmount += expGiven * dangerLevel / objExp.expNeedToNewLevel;
+                    objKills.score += 1;
                     Destroy(gameObject.transform.root.gameObject);
-
                 }
             }
             else
@@ -175,7 +193,25 @@ public class HealthPoint : MonoBehaviour
             }
         }
     }
+    public void SetOtherPartsCount()
+    {
+        // Знаходимо всі об'єкти в сцені з компонентом MyComponent
+        HealthPoint[] objects = FindObjectsOfType<HealthPoint>();
 
+        // Проходимося по знайдених об'єктах
+        foreach (HealthPoint obj in objects)
+        {
+            // Перевіряємо значення булевої змінної у кожному об'єкті
+            if (obj.isBossPart)
+            {
+                if (obj.GetComponent<CutThePart>().countParts == 1)
+                {
+                    objDrop.OnDestroyBoss();
+                }
+                obj.GetComponent<CutThePart>().countParts--;
+            }
+        }
+    }
     public void ChangeToKick()
     {
         for (int i = 0; i < objsSprite.Length; i++)

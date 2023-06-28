@@ -67,8 +67,8 @@ public class Lightning : MonoBehaviour
                     enemiesToShoot[i].transform.position.y + 3), Quaternion.identity);
 
                 objHealth.healthPoint -= damage * ElectricityElement.Electricity / objHealth.Electricity;
-                objHealth.GetComponentInParent<ElementActiveDebuff>().SetBool("isElectricity", true);
-                objHealth.GetComponentInParent<ElementActiveDebuff>().isElectricity = true;
+                objHealth.GetComponentInParent<ElementActiveDebuff>().SetBool("isElectricity", true, true);
+                objHealth.GetComponentInParent<ElementActiveDebuff>().SetBool("isElectricity", true, false);
                 objMove.isStunned = true;
                 objMove.stunnTime = stunTime;
 
