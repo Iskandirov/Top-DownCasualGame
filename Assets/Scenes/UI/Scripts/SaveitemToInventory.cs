@@ -83,7 +83,10 @@ public class SavedHouseholditemsData
 public class SavedLocationsData
 {
     public int IDLevel;
+    public int countOfCount;
+    public int countOfCountMax;
     public int percent;
+    public bool isFullDone;
 }
 [System.Serializable]
 public class SavedSkillsData

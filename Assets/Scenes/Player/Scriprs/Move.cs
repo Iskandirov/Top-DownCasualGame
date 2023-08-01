@@ -37,6 +37,12 @@ public class Move : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //float o = 100;
+        //for (int i = 0; i < 25; i++)
+        //{
+        //    o += o * 0.2f;
+        //    Debug.Log(o);
+        //}
         speedMax = speed;
         dashTimeStart = dashTimeMax;
         Time.timeScale = 1f;

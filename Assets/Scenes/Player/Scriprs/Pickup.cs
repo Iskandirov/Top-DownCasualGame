@@ -4,22 +4,41 @@ public class Pickup : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && !collision.isTrigger)
         {
-            if (collision.gameObject.GetComponentInChildren<LightOn>().IsPillBuffed == true)
+            Transform child = FindChildWithScriptOfType(collision.transform, typeof(LightOn));
+            if (child.GetComponent<LightOn>().IsPillBuffed == true)
             {
-                collision.gameObject.GetComponentInChildren<LightOn>().step += collision.gameObject.GetComponentInChildren<LightOn>().stepMax;
-                collision.gameObject.GetComponentInChildren<LightOn>().IsPillUp = true;
-                collision.gameObject.GetComponentInChildren<LightOn>().IsPillBuffed = true;
+                Debug.Log(1);
+
+                child.GetComponent<LightOn>().step += child.GetComponent<LightOn>().stepMax;
+                child.GetComponent<LightOn>().IsPillUp = true;
+                child.GetComponent<LightOn>().IsPillBuffed = true;
             }
             else 
             {
-                collision.gameObject.GetComponentInChildren<LightOn>().IsPillUp = true;
-                collision.gameObject.GetComponentInChildren<LightOn>().IsPillBuffed = false;
+                Debug.Log(2);
+                child.GetComponent<LightOn>().IsPillUp = true;
+                child.GetComponent<LightOn>().IsPillBuffed = false;
             }
-            
             
             Destroy(gameObject);
         }
+    }
+    // Рекурсивна функція для пошуку дочірнього елемента з певним скриптом
+    Transform FindChildWithScriptOfType(Transform parent, System.Type scriptType)
+    {
+        var component = parent.GetComponent(scriptType);
+        if (component != null)
+            return parent;
+
+        foreach (Transform child in parent)
+        {
+            var result = FindChildWithScriptOfType(child, scriptType);
+            if (result != null)
+                return result;
+        }
+
+        return null;
     }
 }

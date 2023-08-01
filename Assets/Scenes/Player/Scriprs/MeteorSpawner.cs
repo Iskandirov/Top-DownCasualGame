@@ -12,17 +12,26 @@ public class MeteorSpawner : MonoBehaviour
     public bool isFour;
     public bool isFive;
     ElementsCoeficients fireDirtElement;
+    int buttonActivateSkill;
+    KeyCode keyCode;
     // Start is called before the first frame update
     void Start()
     {
         fireDirtElement = transform.root.GetComponent<ElementsCoeficients>();
         step = gameObject.GetComponent<CDSkillObject>().CD;
+        StartCoroutine(SetBumberToSkill());
+    }
+    private IEnumerator SetBumberToSkill()
+    {
+        yield return new WaitForSeconds(0.1f);
+        buttonActivateSkill = gameObject.GetComponent<CDSkillObject>().num + 1;
+        keyCode = (KeyCode)((int)KeyCode.Alpha0 + buttonActivateSkill);
     }
 
     void Update()
     {
         step -= Time.deltaTime;
-        if (step <= 0)
+        if (step <= 0 && Input.GetKeyDown(keyCode))
         {
             Meteor a = Instantiate(meteor, new Vector2(transform.position.x + Random.Range(-20, 20), transform.position.y + Random.Range(-20, 20)), Quaternion.identity);
             a.damage = damage;

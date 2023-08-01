@@ -12,7 +12,7 @@ public class FireHat : MonoBehaviour
         StartCoroutine(AnimateFire());
     }
 
-    IEnumerator AnimateFire()
+    public IEnumerator AnimateFire()
     {
         int i = 0;
         while (true)

@@ -5,6 +5,7 @@ public class ActivateAbilities : MonoBehaviour
 {
     public Image[] abilities;
     public GameObject[] abilitiesObj;
+    public int abilityId;
     public int countActiveAbilities;
     // Start is called before the first frame update
     void Start()

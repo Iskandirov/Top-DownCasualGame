@@ -1,7 +1,9 @@
+п»їusing System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,9 +26,9 @@ public class LevelUpgrade : MonoBehaviour
     [Header("All variations of skill")]
     public List<bool> isSkillIcons;
     public int SkillIconsMax;
-    public List<SavedSkillsData> skillsSaveTree;
+    //public List<SavedSkillsData> skillsSaveTree;
     public List<SavedSkillsData> skillsSave;
-    public List<SavedSkillsData> skillsLoad;
+    //public List<SavedSkillsData> skillsLoad;
     public SavedSkillsData gold;
     public List<string> skillsUpdatedList;
 
@@ -37,7 +39,6 @@ public class LevelUpgrade : MonoBehaviour
     public bool isOpenToUpgrade;
     public bool isFirstToUpgrade;
     public SetLanguage lang;
-    public List<int> idList;
     public List<GameObject> CDSkillsObject;
 
     TagText objTextOne;
@@ -45,10 +46,11 @@ public class LevelUpgrade : MonoBehaviour
     Shoot objShoot;
     SkillCDLink objLinkSpell;
     ElementsCoeficients cef;
+    SavedSkillsData resultId;
     // Start is called before the first frame update
     private void Start()
     {
-        
+        resultId = new SavedSkillsData();
         objShoot = GetComponentInParent<Shoot>();
         objLinkSpell = FindObjectOfType<SkillCDLink>();
         cef = FindObjectOfType<ElementsCoeficients>();
@@ -62,7 +64,7 @@ public class LevelUpgrade : MonoBehaviour
             SaveSkill();
         }
 
-        LoadSkill(skillsLoad);
+        LoadSkill(skillsSave);
 
         //Initiation objects
         abilities = FindObjectOfType<ActivateAbilities>();
@@ -77,61 +79,41 @@ public class LevelUpgrade : MonoBehaviour
         objTextOne = firstBuff.GetComponent<TagText>();
         objTextTwo = secondBuff.GetComponent<TagText>();
 
-        skillsLoad.Clear();
-        LoadSkill(skillsLoad);
+        skillsSave.Clear();
+        LoadSkill(skillsSave);
 
 
         List<GameObject> list = new List<GameObject>();
 
-        if (skillsLoad.Count > 1)
+        if (skillsSave.Count > 1)
         {
-            // Оновити idList після видалення елементів
-            idList.Clear();
-
-            // Заповнити список ID з об'єктів
-            foreach (SavedSkillsData obj in skillsLoad)
-            {
-                idList.Add(obj.ID);
-            }
-
             while (choise.Count < 2)
             {
-                int randomObject = skillsSave[Random.Range(0, skillsSave.Count)].ID;
-                if (skillsLoad.Any(skill => skill.ID == randomObject) && !choise.Contains(randomObject))
+                int randomObject = skillsSave[UnityEngine.Random.Range(0, skillsSave.Count)].ID;
+                if (skillsSave.Any(skill => skill.ID == randomObject) && !choise.Contains(randomObject))
                 {
                     choise.Add(randomObject);
                 }
             }
 
-            // Оновити idList після видалення елементів
-            idList.Clear();
-
-            // Заповнити список ID з об'єктів
-            foreach (SavedSkillsData obj in skillsLoad)
-            {
-                idList.Add(obj.ID);
-            }
-
-            firstBuff.text = skillsLoad.First(skill => skill.ID == choise[0]).Description[skillsLoad.First(skill => skill.ID == choise[0]).level];
-            firstBuffBtn.sprite = Resources.Load<Sprite>(skillsLoad.First(skill => skill.ID == choise[0]).Name);
-            objTextOne.tagText = skillsLoad.First(skill => skill.ID == choise[0]).tag[skillsLoad.First(skill => skill.ID == choise[0]).level];
+            firstBuff.text = skillsSave.First(skill => skill.ID == choise[0]).Description[skillsSave.First(skill => skill.ID == choise[0]).level];
+            firstBuffBtn.sprite = Resources.Load<Sprite>(skillsSave.First(skill => skill.ID == choise[0]).Name);
+            objTextOne.tagText = skillsSave.First(skill => skill.ID == choise[0]).tag[skillsSave.First(skill => skill.ID == choise[0]).level];
             list.Add(firstBuff.gameObject);
 
-            secondBuff.text = skillsLoad.First(skill => skill.ID == choise[1]).Description[skillsLoad.First(skill => skill.ID == choise[1]).level];
-            secondBuffBtn.sprite = Resources.Load<Sprite>(skillsLoad.First(skill => skill.ID == choise[1]).Name);
-            objTextTwo.tagText = skillsLoad.First(skill => skill.ID == choise[1]).tag[skillsLoad.First(skill => skill.ID == choise[1]).level];
+            secondBuff.text = skillsSave.First(skill => skill.ID == choise[1]).Description[skillsSave.First(skill => skill.ID == choise[1]).level];
+            secondBuffBtn.sprite = Resources.Load<Sprite>(skillsSave.First(skill => skill.ID == choise[1]).Name);
+            objTextTwo.tagText = skillsSave.First(skill => skill.ID == choise[1]).tag[skillsSave.First(skill => skill.ID == choise[1]).level];
             list.Add(secondBuff.gameObject);
         }
-        else if (skillsLoad.Count == 1)
+        else if (skillsSave.Count == 1)
         {
-            // Оновити idList після видалення елементів
-            idList.Clear();
 
-            choise.Add(skillsLoad[0].ID);
+            choise.Add(skillsSave[0].ID);
 
-            firstBuff.text = skillsLoad[0].Description[skillsLoad[0].level];
-            firstBuffBtn.sprite = Resources.Load<Sprite>(skillsLoad[0].Name);
-            objTextOne.tagText = skillsLoad[0].tag[skillsLoad[0].level];
+            firstBuff.text = skillsSave[0].Description[skillsSave[0].level];
+            firstBuffBtn.sprite = Resources.Load<Sprite>(skillsSave[0].Name);
+            objTextOne.tagText = skillsSave[0].tag[skillsSave[0].level];
             list.Add(firstBuff.gameObject);
 
             choise.Add(999);
@@ -141,7 +123,7 @@ public class LevelUpgrade : MonoBehaviour
             objTextTwo.tagText = gold.tag[0];
             list.Add(secondBuff.gameObject);
         }
-        else if (skillsLoad.Count == 0)
+        else if (skillsSave.Count == 0)
         {
             choise.Add(999);
 
@@ -157,7 +139,6 @@ public class LevelUpgrade : MonoBehaviour
             objTextTwo.tagText = gold.tag[0];
             list.Add(secondBuff.gameObject);
         }
-
         lang.settings.UpdateText(list);
     }
 
@@ -177,32 +158,39 @@ public class LevelUpgrade : MonoBehaviour
     }
     public void Udgrade(int skillPoint)
     {
+        for (int i = 0;i < skillsSave.Count;i++)
+        {
+            if (skillsSave[i].ID == skillPoint)
+            {
+                resultId = skillsSave[i];
+            }
+        }
         ActivateAbilities abil = abilities;
         if (skillPoint != 999)
         {
             for (int i = 0; i < abil.countActiveAbilities; i++)
             {
-                if (abil.abilities[i].sprite == Resources.Load<Sprite>(skillsSave[skillPoint].Name))
+                if (abil.transform.GetChild(i).GetComponent<CDSkills>().abilityId == skillPoint)
                 {
                     Instantiate(starObj, abil.abilitiesObj[i].GetComponentInChildren<HorizontalLayoutGroup>().transform);
 
                     if (skillPoint == 0)
                     {
                         //Updates for bullet
-                        if (skillsLoad[skillPoint].level == 1)
+                        if (resultId.level == 1)
                         {
                             objShoot.isLevelTwo = true;
-                            objShoot.secondBulletCount = (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            objShoot.secondBulletCount = (int)resultId.stat1[resultId.level];
                         }
-                        else if (skillsSave[skillPoint].level == 2)
+                        else if (resultId.level == 2)
                         {
-                            objShoot.attackSpeed -= skillsSave[skillPoint].stat1[skillsSave[skillPoint].level] / 100;
+                            objShoot.attackSpeed -= resultId.stat1[resultId.level] / 100;
                         }
-                        else if (skillsSave[skillPoint].level == 3)
+                        else if (resultId.level == 3)
                         {
-                            objShoot.secondBulletCount = (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            objShoot.secondBulletCount = (int)resultId.stat1[resultId.level];
                         }
-                        else if (skillsSave[skillPoint].level == 4)
+                        else if (resultId.level == 4)
                         {
                             objShoot.isLevelFive = true;
                         }
@@ -210,51 +198,51 @@ public class LevelUpgrade : MonoBehaviour
                     else if (skillPoint == 1)
                     {
                         //Updates for lightning
-                        if (skillsSave[skillPoint].level == 1)
+                        if (resultId.level == 1)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<Lightning>().maxEnemiesToShoot += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            resultId.skillObj.GetComponent<Lightning>().maxEnemiesToShoot += (int)resultId.stat1[resultId.level];
                             cef.Electricity += 0.1f;
                         }
-                        else if (skillsSave[skillPoint].level == 2)
+                        else if (resultId.level == 2)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<Lightning>().damage *= (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            resultId.skillObj.GetComponent<Lightning>().damage *= (int)resultId.stat1[resultId.level];
                             cef.Electricity += 0.1f;
                         }
-                        else if (skillsSave[skillPoint].level == 3)
+                        else if (resultId.level == 3)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<Lightning>().stunTime += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            resultId.skillObj.GetComponent<Lightning>().stunTime += (int)resultId.stat1[resultId.level];
                             cef.Electricity += 0.1f;
                         }
-                        else if (skillsSave[skillPoint].level == 4)
+                        else if (resultId.level == 4)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<Lightning>().stepMax -= (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            resultId.skillObj.GetComponent<Lightning>().stepMax -= (int)resultId.stat1[resultId.level];
                             cef.Electricity += 0.1f;
                         }
                     }
                     else if (skillPoint == 2)
                     {
                         //Updates for chair
-                        if (skillsSave[skillPoint].level == 1)
+                        if (resultId.level == 1)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<SpawnBlood>().radius += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            resultId.skillObj.GetComponent<SpawnBlood>().radius += (int)resultId.stat1[resultId.level];
                             cef.Water += 0.1f;
                             cef.Dirt += 0.1f;
                         }
-                        else if (skillsSave[skillPoint].level == 2)
+                        else if (resultId.level == 2)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<SpawnBlood>().damage += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            resultId.skillObj.GetComponent<SpawnBlood>().damage += (int)resultId.stat1[resultId.level];
                             cef.Water += 0.1f;
                             cef.Dirt += 0.1f;
                         }
-                        else if (skillsSave[skillPoint].level == 3)
+                        else if (resultId.level == 3)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<SpawnBlood>().numOfChair += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            resultId.skillObj.GetComponent<SpawnBlood>().numOfChair += (int)resultId.stat1[resultId.level];
                             cef.Water += 0.1f;
                             cef.Dirt += 0.1f;
                         }
-                        else if (skillsSave[skillPoint].level == 4)
+                        else if (resultId.level == 4)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<SpawnBlood>().damageTickMax -= skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            resultId.skillObj.GetComponent<SpawnBlood>().damageTickMax -= resultId.stat1[resultId.level];
                             cef.Water += 0.1f;
                             cef.Dirt += 0.1f;
                         }
@@ -262,27 +250,27 @@ public class LevelUpgrade : MonoBehaviour
                     else if (skillPoint == 3)
                     {
                         //Updates for pill
-                        if (skillsSave[skillPoint].level == 1)
+                        if (resultId.level == 1)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<LightOn>().stepGhostMax += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            resultId.skillObj.GetComponent<LightOn>().stepGhostMax += (int)resultId.stat1[resultId.level];
                             cef.Grass += 0.1f;
                             cef.Wind += 0.1f;
                         }
-                        else if (skillsSave[skillPoint].level == 2)
+                        else if (resultId.level == 2)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<LightOn>().attackSpeedBuff += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            resultId.skillObj.GetComponent<LightOn>().attackSpeedBuff += (int)resultId.stat1[resultId.level];
                             cef.Grass += 0.1f;
                             cef.Wind += 0.1f;
                         }
-                        else if (skillsSave[skillPoint].level == 3)
+                        else if (resultId.level == 3)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<LightOn>().moveSpeedBuff += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            resultId.skillObj.GetComponent<LightOn>().moveSpeedBuff += (int)resultId.stat1[resultId.level];
                             cef.Grass += 0.1f;
                             cef.Wind += 0.1f;
                         }
-                        else if (skillsSave[skillPoint].level == 4)
+                        else if (resultId.level == 4)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<LightOn>().dashTime = skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            resultId.skillObj.GetComponent<LightOn>().dashTime = resultId.stat1[resultId.level];
                             cef.Grass += 0.1f;
                             cef.Wind += 0.1f;
                         }
@@ -290,95 +278,95 @@ public class LevelUpgrade : MonoBehaviour
                     else if (skillPoint == 4)
                     {
                         //Updates for fire wave
-                        if (skillsSave[skillPoint].level == 1)
+                        if (resultId.level == 1)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<FireWaveSpawner>().damage += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            resultId.skillObj.GetComponent<FireWaveSpawner>().damage += (int)resultId.stat1[resultId.level];
                             cef.Fire += 0.1f;
                         }
-                        else if (skillsSave[skillPoint].level == 2)
+                        else if (resultId.level == 2)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<FireWaveSpawner>().isLevelThree = true;
+                            resultId.skillObj.GetComponent<FireWaveSpawner>().isLevelThree = true;
                             cef.Fire += 0.1f;
                         }
-                        else if (skillsSave[skillPoint].level == 3)
+                        else if (resultId.level == 3)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<FireWaveSpawner>().stepMax -= (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            resultId.skillObj.GetComponent<FireWaveSpawner>().stepMax -= (int)resultId.stat1[resultId.level];
                             cef.Fire += 0.1f;
                         }
-                        else if (skillsSave[skillPoint].level == 4)
+                        else if (resultId.level == 4)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<FireWaveSpawner>().burnDamage = (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            resultId.skillObj.GetComponent<FireWaveSpawner>().burnDamage = (int)resultId.stat1[resultId.level];
                             cef.Fire += 0.1f;
                         }
                     }
                     else if (skillPoint == 5)
                     {
                         //Updates for heal
-                        if (skillsSave[skillPoint].level == 1)
+                        if (resultId.level == 1)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<HealSpawner>().heal += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            resultId.skillObj.GetComponent<HealSpawner>().heal += (int)resultId.stat1[resultId.level];
                             cef.Grass += 0.1f;
                         }
-                        else if (skillsSave[skillPoint].level == 2)
+                        else if (resultId.level == 2)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<HealSpawner>().isLevelTwo = true;
+                            resultId.skillObj.GetComponent<HealSpawner>().isLevelTwo = true;
                             cef.Grass += 0.1f;
                         }
-                        else if (skillsSave[skillPoint].level == 3)
+                        else if (resultId.level == 3)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<HealSpawner>().stepMax -= (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            resultId.skillObj.GetComponent<HealSpawner>().stepMax -= (int)resultId.stat1[resultId.level];
                             cef.Grass += 0.1f;
                         }
-                        else if (skillsSave[skillPoint].level == 4)
+                        else if (resultId.level == 4)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<HealSpawner>().heal += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            resultId.skillObj.GetComponent<HealSpawner>().heal += (int)resultId.stat1[resultId.level];
                             cef.Grass += 0.1f;
                         }
                     }
                     else if (skillPoint == 6)
                     {
                         //Updates for reload
-                        if (skillsSave[skillPoint].level == 1)
+                        if (resultId.level == 1)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<ReloadSkillSpawner>().count += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            resultId.skillObj.GetComponent<ReloadSkillSpawner>().count += (int)resultId.stat1[resultId.level];
                         }
-                        else if (skillsSave[skillPoint].level == 2)
+                        else if (resultId.level == 2)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<ReloadSkillSpawner>().stepMax -= (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            resultId.skillObj.GetComponent<ReloadSkillSpawner>().stepMax -= (int)resultId.stat1[resultId.level];
                         }
-                        else if (skillsSave[skillPoint].level == 3)
+                        else if (resultId.level == 3)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<ReloadSkillSpawner>().count += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            resultId.skillObj.GetComponent<ReloadSkillSpawner>().count += (int)resultId.stat1[resultId.level];
                         }
-                        else if (skillsSave[skillPoint].level == 4)
+                        else if (resultId.level == 4)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<ReloadSkillSpawner>().isLevelFive = true;
+                            resultId.skillObj.GetComponent<ReloadSkillSpawner>().isLevelFive = true;
                         }
                     }
                     else if (skillPoint == 7)
                     {
                         //Updates for impuls
-                        if (skillsSave[skillPoint].level == 1)
+                        if (resultId.level == 1)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<ImpulsSpawner>().powerGrow += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            resultId.skillObj.GetComponent<ImpulsSpawner>().powerGrow += (int)resultId.stat1[resultId.level];
                             cef.Wind += 0.1f;
                             cef.Grass += 0.1f;
                         }
-                        else if (skillsSave[skillPoint].level == 2)
+                        else if (resultId.level == 2)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<ImpulsSpawner>().stepMax -= (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            resultId.skillObj.GetComponent<ImpulsSpawner>().stepMax -= (int)resultId.stat1[resultId.level];
                             cef.Wind += 0.1f;
                             cef.Grass += 0.1f;
                         }
-                        else if (skillsSave[skillPoint].level == 3)
+                        else if (resultId.level == 3)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<ImpulsSpawner>().isFour = true;
+                            resultId.skillObj.GetComponent<ImpulsSpawner>().isFour = true;
                             cef.Wind += 0.1f;
                             cef.Grass += 0.1f;
                         }
-                        else if (skillsSave[skillPoint].level == 4)
+                        else if (resultId.level == 4)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<ImpulsSpawner>().isFive = true;
+                            resultId.skillObj.GetComponent<ImpulsSpawner>().isFive = true;
                             cef.Wind += 0.1f;
                             cef.Grass += 0.1f;
                         }
@@ -386,119 +374,119 @@ public class LevelUpgrade : MonoBehaviour
                     else if (skillPoint == 8)
                     {
                         //Updates for shield
-                        if (skillsSave[skillPoint].level == 1)
+                        if (resultId.level == 1)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<ShieldSpawner>().ShieldHP += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            resultId.skillObj.GetComponent<ShieldSpawner>().ShieldHP += (int)resultId.stat1[resultId.level];
                             cef.Dirt += 0.1f;
                         }
-                        else if (skillsSave[skillPoint].level == 2)
+                        else if (resultId.level == 2)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<ShieldSpawner>().isThree = true;
+                            resultId.skillObj.GetComponent<ShieldSpawner>().isThree = true;
                             cef.Dirt += 0.1f;
                         }
-                        else if (skillsSave[skillPoint].level == 3)
+                        else if (resultId.level == 3)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<ShieldSpawner>().isFour = true;
+                            resultId.skillObj.GetComponent<ShieldSpawner>().isFour = true;
                             cef.Dirt += 0.1f;
                         }
-                        else if (skillsSave[skillPoint].level == 4)
+                        else if (resultId.level == 4)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<ShieldSpawner>().isFive = true;
+                            resultId.skillObj.GetComponent<ShieldSpawner>().isFive = true;
                             cef.Dirt += 0.1f;
                         }
                     }
                     else if (skillPoint == 9)
                     {
                         //Updates for beam
-                        if (skillsSave[skillPoint].level == 1)
+                        if (resultId.level == 1)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<BeamSpawner>().isTwo = true;
+                            resultId.skillObj.GetComponent<BeamSpawner>().isTwo = true;
                             cef.Steam += 0.1f;
                         }
-                        else if (skillsSave[skillPoint].level == 2)
+                        else if (resultId.level == 2)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<BeamSpawner>().damage += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            resultId.skillObj.GetComponent<BeamSpawner>().damage += (int)resultId.stat1[resultId.level];
                             cef.Steam += 0.1f;
                         }
-                        else if (skillsSave[skillPoint].level == 3)
+                        else if (resultId.level == 3)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<BeamSpawner>().lifeTime += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            resultId.skillObj.GetComponent<BeamSpawner>().lifeTime += (int)resultId.stat1[resultId.level];
                             cef.Steam += 0.1f;
                         }
-                        else if (skillsSave[skillPoint].level == 4)
+                        else if (resultId.level == 4)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<BeamSpawner>().stepMax -= (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            resultId.skillObj.GetComponent<BeamSpawner>().stepMax -= (int)resultId.stat1[resultId.level];
                             cef.Steam += 0.1f;
                         }
                     }
                     else if (skillPoint == 10)
                     {
                         //Updates for tower
-                        if (skillsSave[skillPoint].level == 1)
+                        if (resultId.level == 1)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<TowerSpawner>().lifeTime += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            resultId.skillObj.GetComponent<TowerSpawner>().lifeTime += (int)resultId.stat1[resultId.level];
                             cef.Water += 0.1f;
                         }
-                        else if (skillsSave[skillPoint].level == 2)
+                        else if (resultId.level == 2)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<TowerSpawner>().isThree = true;
+                            resultId.skillObj.GetComponent<TowerSpawner>().isThree = true;
                             cef.Water += 0.1f;
                         }
-                        else if (skillsSave[skillPoint].level == 3)
+                        else if (resultId.level == 3)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<TowerSpawner>().attackSpeed -= skillsSave[skillPoint].stat1[skillsSave[skillPoint].level] / 100;
+                            resultId.skillObj.GetComponent<TowerSpawner>().attackSpeed -= resultId.stat1[resultId.level] / 100;
                             cef.Water += 0.1f;
                         }
-                        else if (skillsSave[skillPoint].level == 4)
+                        else if (resultId.level == 4)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<TowerSpawner>().isFive = true;
+                            resultId.skillObj.GetComponent<TowerSpawner>().isFive = true;
                             cef.Water += 0.1f;
                         }
                     }
                     else if (skillPoint == 11)
                     {
                         //Updates for summon
-                        if (skillsSave[skillPoint].level == 1)
+                        if (resultId.level == 1)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<SummonerEnemy>().lifeTime += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            resultId.skillObj.GetComponent<SummonerEnemy>().lifeTime += (int)resultId.stat1[resultId.level];
                         }
-                        else if (skillsSave[skillPoint].level == 2)
+                        else if (resultId.level == 2)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<SummonerEnemy>().isThree = true;
+                            resultId.skillObj.GetComponent<SummonerEnemy>().isThree = true;
                         }
-                        else if (skillsSave[skillPoint].level == 3)
+                        else if (resultId.level == 3)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<SummonerEnemy>().attackSpeed -= skillsSave[skillPoint].stat1[skillsSave[skillPoint].level] / 100;
+                            resultId.skillObj.GetComponent<SummonerEnemy>().attackSpeed -= resultId.stat1[resultId.level] / 100;
                         }
-                        else if (skillsSave[skillPoint].level == 4)
+                        else if (resultId.level == 4)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<SummonerEnemy>().isFive = true;
+                            resultId.skillObj.GetComponent<SummonerEnemy>().isFive = true;
                         }
                     }
                     else if (skillPoint == 12)
                     {
                         //Updates for meteor
-                        if (skillsSave[skillPoint].level == 1)
+                        if (resultId.level == 1)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<MeteorSpawner>().damage += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            resultId.skillObj.GetComponent<MeteorSpawner>().damage += (int)resultId.stat1[resultId.level];
                             cef.Fire += 0.1f;
                             cef.Dirt += 0.1f;
                         }
-                        else if (skillsSave[skillPoint].level == 2)
+                        else if (resultId.level == 2)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<MeteorSpawner>().isThree = true;
+                            resultId.skillObj.GetComponent<MeteorSpawner>().isThree = true;
                             cef.Fire += 0.1f;
                             cef.Dirt += 0.1f;
                         }
-                        else if (skillsSave[skillPoint].level == 3)
+                        else if (resultId.level == 3)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<MeteorSpawner>().isFour = true;
+                            resultId.skillObj.GetComponent<MeteorSpawner>().isFour = true;
                             cef.Fire += 0.1f;
                             cef.Dirt += 0.1f;
                         }
-                        else if (skillsSave[skillPoint].level == 4)
+                        else if (resultId.level == 4)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<MeteorSpawner>().isFive = true;
+                            resultId.skillObj.GetComponent<MeteorSpawner>().isFive = true;
                             cef.Fire += 0.1f;
                             cef.Dirt += 0.1f;
                         }
@@ -506,55 +494,54 @@ public class LevelUpgrade : MonoBehaviour
                     else if (skillPoint == 13)
                     {
                         //Updates for illusion
-                        if (skillsSave[skillPoint].level == 1)
+                        if (resultId.level == 1)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<IllusionSpawner>().isTwo = true;
+                            resultId.skillObj.GetComponent<IllusionSpawner>().isTwo = true;
                         }
-                        else if (skillsSave[skillPoint].level == 2)
+                        else if (resultId.level == 2)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<IllusionSpawner>().lifeTime += (int)skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                            resultId.skillObj.GetComponent<IllusionSpawner>().lifeTime += (int)resultId.stat1[resultId.level];
                         }
-                        else if (skillsSave[skillPoint].level == 3)
+                        else if (resultId.level == 3)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<IllusionSpawner>().isFour = true;
+                            resultId.skillObj.GetComponent<IllusionSpawner>().isFour = true;
                         }
-                        else if (skillsSave[skillPoint].level == 4)
+                        else if (resultId.level == 4)
                         {
-                            skillsSave[skillPoint].skillObj.GetComponent<IllusionSpawner>().isFive = true;
+                            resultId.skillObj.GetComponent<IllusionSpawner>().isFive = true;
                         }
                     }
 
-                    skillsSave[skillPoint].level += 1;
-                    ModifyJsonField(skillsSave[skillPoint], skillsSave[skillPoint].level);
+                    resultId.level += 1;
+                    ModifyJsonField(resultId, resultId.level);
                 }
             }
-            if (skillsSave[skillPoint].level == 0)
+            if (resultId.level == 0)
             {
-                skillsSave[skillPoint].level += 1;
-                ModifyJsonField(skillsSave[skillPoint], skillsSave[skillPoint].level);
+                resultId.level += 1;
+                ModifyJsonField(resultId, resultId.level);
                 SetActiveAbil(abil, skillPoint);
                 objLinkSpell.valuesList.Add(0);
-                if (skillsSave[skillPoint].isPassive == false)
+                if (resultId.isPassive == false)
                 {
                     isSkillIcons[skillPoint] = true;
-                    skillsSave[skillPoint].skillObj.GetComponent<CDSkillObject>().CD = skillsSave[skillPoint].CD;
-                    skillsSave[skillPoint].skillObj.GetComponentInParent<CDSkillObject>().number = abil.countActiveAbilities - 1;
+                    resultId.skillObj.GetComponent<CDSkillObject>().CD = resultId.CD;
+                    resultId.skillObj.GetComponentInParent<CDSkillObject>().number = abil.countActiveAbilities - 1;
                     abilities.abilitiesObj[abil.countActiveAbilities - 1].GetComponent<CDSkills>().number = abil.countActiveAbilities - 1;
                 }
-                else if (skillsSave[skillPoint].isPassive && skillPoint != 999)
+                else if (resultId.isPassive && skillPoint != 999)
                 {
                     isSkillIcons[skillPoint] = true;
                     abilities.abilitiesObj[abil.countActiveAbilities - 1].GetComponent<CDSkills>().number = abil.countActiveAbilities - 1;
                     abilities.abilitiesObj[abil.countActiveAbilities - 1].GetComponentInChildren<TextMeshProUGUI>().gameObject.SetActive(false);
                 }
-                if (abilities.countActiveAbilities == abilities.abilitiesObj.Length && isSkillIcons.Count == SkillIconsMax)
-                {
-                    RemoveAllOtherLines();
-                }
+               
             }
-            if (skillsSave[skillPoint].level == 5)
+            RemoveLine(skillPoint);
+
+            if (abilities.countActiveAbilities == abilities.abilitiesObj.Length)
             {
-                RemoveLine(skillPoint);
+                RemoveAllOtherLines();
             }
         }
         else if (skillPoint == 999)
@@ -565,50 +552,82 @@ public class LevelUpgrade : MonoBehaviour
 
         objLinkSpell.Check();
 
-        SkillIconsMax = skillsLoad.Count;
+        SkillIconsMax = skillsSave.Count;
         Time.timeScale = 1f;
         gameObject.SetActive(false);
     }
     //Remove ability ID
-    public void RemoveLine(int SkillPoint)
+    public void RemoveLine(int skillPoint)
     {
-        RemoveKeyFromJSONFile(SkillPoint, 1);
-        skillsLoad.Clear();
-        LoadSkill(skillsLoad);
+        if (resultId.level == 5)
+        {
+            List<int> indexesToRemove = new List<int>();
+
+            for (int i = 0; i < skillsSave.Count; i++)
+            {
+                if (skillsSave[i].ID == skillPoint)
+                {
+                    indexesToRemove.Add(i);
+                }
+            }
+
+            // Р’РёРґР°Р»СЏС”РјРѕ РµР»РµРјРµРЅС‚Рё Р·Р° Р·Р±РµСЂРµР¶РµРЅРёРјРё С–РЅРґРµРєСЃР°РјРё РІ Р·РІРѕСЂРѕС‚РЅСЊРѕРјСѓ РїРѕСЂСЏРґРєСѓ
+            for (int i = indexesToRemove.Count - 1; i >= 0; i--)
+            {
+                int indexToRemove = indexesToRemove[i];
+                RemoveKeyFromJSONFile(indexToRemove);
+                isSkillIcons.RemoveAt(indexToRemove);
+            }
+
+        }
+        skillsSave.Clear();
+        LoadSkill(skillsSave);
     }
     //Activate skill if it`s not active
     public void SetActiveAbil(ActivateAbilities abil, int skillPoint)
     {
-        if (skillsSave[skillPoint].isPassive == false)
+        if (resultId.isPassive == false)
         {
-            SetActiviti(skillsSave[skillPoint].skillObj, true);
+            SetActiviti(resultId.skillObj, true);
         }
         else
         {
             if (skillPoint == 0)
             {
-                objShoot.damageToGive += skillsSave[skillPoint].stat1[skillsSave[skillPoint].level];
+                objShoot.damageToGive += resultId.stat1[resultId.level];
             }
         }
         abil.abilitiesObj[abil.countActiveAbilities].SetActive(true);
-        abil.abilities[abil.countActiveAbilities].sprite = Resources.Load<Sprite>(skillsSave[skillPoint].Name);
+        abil.abilities[abil.countActiveAbilities].sprite = Resources.Load<Sprite>(resultId.Name);
         abil.countActiveAbilities += 1;
+        abil.transform.GetChild(abil.countActiveAbilities-1).GetComponent<CDSkills>().abilityId = skillPoint;
 
 
     }
-    //Remove lines from massive if skill have max value of stars
     public void RemoveAllOtherLines()
     {
-        for (int i = 0; i < skillsLoad.Count; i++)
+        for (int i = 0; i < skillsSave.Count; i++)
         {
             if (isSkillIcons[i] == false)
             {
-                RemoveKeyFromJSONFile(i,0);
+                RemoveKeyFromJSONFile(i);
             }
         }
-        skillsLoad.Clear();
-        LoadSkill(skillsLoad);
-        
+        int y = 0;
+
+        while (y < isSkillIcons.Count)
+        {
+            if (isSkillIcons[y] == false)
+            {
+                isSkillIcons.RemoveAt(y);
+            }
+            else
+            {
+                y++;
+            }
+        }
+        skillsSave.Clear();
+        LoadSkill(skillsSave);
     }
 
     public void LoadSkill(List<SavedSkillsData> itemsRead)
@@ -618,7 +637,6 @@ public class LevelUpgrade : MonoBehaviour
         {
             string[] lines = File.ReadAllLines(path);
 
-            // Перебір кожного запису і заміна шляху до зображення на зображення зі списку sprites
             foreach (string jsonLine in lines)
             {
                 SavedSkillsData data = JsonUtility.FromJson<SavedSkillsData>(jsonLine);
@@ -638,14 +656,15 @@ public class LevelUpgrade : MonoBehaviour
     {
         skill.SetActive(activate);
     }
+
     private void SaveSkill()
     {
         string path = Path.Combine(Application.persistentDataPath, "SkillData.txt");
         StreamWriter writer = new StreamWriter(path, true);
 
-        SavedSkillsData data = new SavedSkillsData();
         foreach (SavedSkillsData item in skillsSave)
         {
+            SavedSkillsData data = new SavedSkillsData();
             data.Name = item.Name;
             data.ID = item.ID;
             data.level = item.level;
@@ -661,25 +680,23 @@ public class LevelUpgrade : MonoBehaviour
             writer.WriteLine(jsonData);
         }
         writer.Close();
-
     }
-    private void RemoveKeyFromJSONFile(int IDObj, int minus)
+
+    private void RemoveKeyFromJSONFile(int IDObj)
     {
         skillsUpdatedList.Clear();
         string path = Path.Combine(Application.persistentDataPath, "SkillData.txt");
         if (File.Exists(path))
         {
             string[] jsonLines = File.ReadAllLines(path);
-            foreach (var jsonLine in jsonLines)
+            for (int i = 0; i < jsonLines.Length; i++)
             {
-
-                SavedSkillsData data = JsonUtility.FromJson<SavedSkillsData>(jsonLine);
-                if (data.tag[data.level - minus] != skillsSave[IDObj].tag[skillsSave[IDObj].level - minus])
+                SavedSkillsData data = JsonUtility.FromJson<SavedSkillsData>(jsonLines[i]);
+                if (data.ID != skillsSave[IDObj].ID)
                 {
-                    skillsUpdatedList.Add(jsonLine);
+                    skillsUpdatedList.Add(jsonLines[i]);
                 }
             }
-            // Записуємо оновлений масив рядків в файл після завершення циклу foreach
             File.WriteAllLines(path, skillsUpdatedList.ToArray());
         }
     }
@@ -705,9 +722,9 @@ public class LevelUpgrade : MonoBehaviour
                 }
             }
             File.WriteAllText(path, string.Empty);
-            // Записуємо оновлений масив рядків в файл після завершення циклу foreach
             File.WriteAllLines(path, skillsUpdatedList.ToArray());
         }
     }
+
 }
 

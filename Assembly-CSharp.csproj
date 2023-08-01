@@ -66,7 +66,9 @@
     <Compile Include="Assets\Scenes\Player\Scriprs\Shield.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\Boss_Destroy.cs" />
     <Compile Include="Assets\Samples\Universal RP\12.1.8\URP Package Samples\SharedAssets\Scripts\AutoLoadPipelineAsset.cs" />
+    <Compile Include="Assets\Scenes\UI\Scripts\ShowEquipment.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_ParticleSystem_MinMaxCurve.cs" />
+    <Compile Include="Assets\Scenes\UI\Scripts\LoadEquipment.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\ItemParameters.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_UI_MaskableGraphic_CullStateChangedEvent.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_UI_Navigation.cs" />
@@ -139,6 +141,7 @@
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_Quaternion.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\FieldSlots.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_ParticleSystem_MinMaxGradient.cs" />
+    <Compile Include="Assets\Scenes\UI\Scripts\DeactivateDebuff.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\Settings.cs" />
     <Compile Include="Assets\Scenes\Player\Scriprs\DefaultDestroy.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_UI_Toggle_ToggleEvent.cs" />
@@ -150,6 +153,7 @@
     <Compile Include="Assets\Scenes\Enemy\Scripts\DeleteVFX.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_TextCore_Text_FontWeightPair.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_UI_Button_ButtonClickedEvent.cs" />
+    <Compile Include="Assets\Scenes\UI\Scripts\ClosePanel.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\Attack.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_Unity_Mathematics_bool2.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\EnemyBullet.cs" />
@@ -196,6 +200,7 @@
     <Compile Include="Assets\Scenes\UI\Scripts\SkillCDShift.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\SkillCDLink.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\EXP.cs" />
+    <Compile Include="Assets\Scenes\UI\Scripts\PickEquip.cs" />
     <Compile Include="Assets\Scenes\Player\Scriprs\LightOn.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_TMPro_TMP_Character.cs" />
     <Compile Include="Assets\Scenes\Player\Scriprs\TowerWave.cs" />
@@ -204,7 +209,6 @@
     <Compile Include="Assets\Scenes\UI\Scripts\LoadEquipedItems.cs" />
     <Compile Include="Assets\Scenes\Player\Scriprs\Pickup.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\EquipItem.cs" />
-    <Compile Include="Assets\Scenes\UI\Scripts\DeactivateDebuff.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -497,6 +501,9 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@3.0.2\Runtime\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Pathfinding.Ionic.Zip.Reduced">
+      <HintPath>Assets\AstarPathfindingProject\Plugins\DotNetZip\Pathfinding.Ionic.Zip.Reduced.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.15f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\mscorlib.dll</HintPath>
@@ -1049,6 +1056,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="NavMeshPlusEditor.csproj">
+      <Project>{43D69CCA-DD06-340B-973A-B9402B52046F}</Project>
+      <Name>NavMeshPlusEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="NavMeshPlus.csproj">
+      <Project>{5E1C26AD-E2A0-B599-61A4-D45EBA739879}</Project>
+      <Name>NavMeshPlus</Name>
+    </ProjectReference>
+    <ProjectReference Include="AstarPathfindingProjectEditor.csproj">
+      <Project>{8A217B19-83DE-9E82-DAE9-561A38385CAB}</Project>
+      <Name>AstarPathfindingProjectEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="AstarPathfindingProject.csproj">
+      <Project>{146015A5-4C31-0094-109A-E7F1C94AFBD8}</Project>
+      <Name>AstarPathfindingProject</Name>
+    </ProjectReference>
+    <ProjectReference Include="PackageToolsEditor.csproj">
+      <Project>{F160234D-D93E-A68C-DD98-55F807A3F31C}</Project>
+      <Name>PackageToolsEditor</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

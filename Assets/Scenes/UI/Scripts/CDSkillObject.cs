@@ -10,7 +10,7 @@ public class CDSkillObject : MonoBehaviour
     public float CD;
     MonoBehaviour mono;
     public MonoBehaviour monoStep;
-    int num;
+    public int num;
     public FieldInfo valueFieldStep;
     // Start is called before the first frame update
     void Start()

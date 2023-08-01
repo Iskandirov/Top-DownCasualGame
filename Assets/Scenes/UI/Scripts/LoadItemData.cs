@@ -84,7 +84,6 @@ public class LoadItemData : MonoBehaviour
             GameObject obj = objectsListCopy[i].gameObject; // взяти GameObject елементу
             objectsList.RemoveAt(i);
             objectsListCopy.RemoveAt(i);
-            craftObj.RemoveAllCreated();
             Destroy(obj); // видалити елемент зі сцени
             index = 0;
         }

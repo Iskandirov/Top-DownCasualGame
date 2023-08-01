@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class SpawnBlood : MonoBehaviour
@@ -10,18 +11,26 @@ public class SpawnBlood : MonoBehaviour
     public float numOfChair;
     public float damageTickMax;
     ElementsCoeficients waterDirtElement;
+    int buttonActivateSkill;
+    KeyCode keyCode;
     // Start is called before the first frame update
     void Start()
     {
         waterDirtElement = transform.root.GetComponent<ElementsCoeficients>();
         step = gameObject.GetComponent<CDSkillObject>().CD;
+        StartCoroutine(SetBumberToSkill());
     }
-
+    private IEnumerator SetBumberToSkill()
+    {
+        yield return new WaitForSeconds(0.1f);
+        buttonActivateSkill = gameObject.GetComponent<CDSkillObject>().num + 1;
+        keyCode = (KeyCode)((int)KeyCode.Alpha0 + buttonActivateSkill);
+    }
     // Update is called once per frame
     void Update()
     {
         step -= Time.deltaTime;
-        if (step <= 0)
+        if (step <= 0 && Input.GetKeyDown(keyCode))
         {
             for (int i = 0; i < numOfChair; i++)
             {

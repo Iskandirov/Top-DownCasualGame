@@ -13,6 +13,7 @@ public class GetScore : MonoBehaviour
     public float score;
     public int percent;
     public bool scene;
+    public bool isWinPanel;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -43,7 +44,7 @@ public class GetScore : MonoBehaviour
     }
     void Start()
     {
-        SaveScore((int)score);
+        SaveScore((int)score,true);
         if (scene)
         {
             gameObject.GetComponent<CheckLevel>().CheckPercent(SceneManager.GetActiveScene().buildIndex, percent);
@@ -72,7 +73,7 @@ public class GetScore : MonoBehaviour
             return money;
         }
     }
-    public void SaveScore(int money)
+    public void SaveScore(int money, bool isInGame)
     {
         string path = Path.Combine(Application.persistentDataPath, "Economy.txt");
 
@@ -80,8 +81,49 @@ public class GetScore : MonoBehaviour
         data.money = money;
 
         string jsonData = JsonUtility.ToJson(data);
-        File.WriteAllText(path, jsonData);
+
+        try
+        {
+            // Перезаписуємо весь файл з новим рядком даних
+            File.WriteAllText(path, jsonData);
+        }
+        catch (IOException e)
+        {
+            Debug.LogError("Error writing to file: " + e.Message);
+        }
+
+        if (isInGame && isWinPanel)
+        {
+            string pathLocations = Path.Combine(Application.persistentDataPath, "Levels.txt");
+
+            try
+            {
+                // Зчитуємо вміст файлу
+                string[] lines = File.ReadAllLines(pathLocations);
+
+                // Оновлюємо значення для певного id (наприклад, id = 1)
+                int targetId = SceneManager.GetActiveScene().buildIndex;
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    SavedLocationsData dataLocations = JsonUtility.FromJson<SavedLocationsData>(lines[i]);
+                    if (dataLocations.IDLevel == targetId && dataLocations.countOfCount < 5)
+                    {
+                        dataLocations.countOfCount += 1;
+                        lines[i] = JsonUtility.ToJson(dataLocations);
+                        break; // Якщо знайдено відповідне id, виходимо з циклу
+                    }
+                }
+
+                // Записуємо оновлений вміст назад у файл
+                File.WriteAllLines(pathLocations, lines);
+            }
+            catch (IOException e)
+            {
+                Debug.LogError("Error writing to file: " + e.Message);
+            }
+        }
     }
+
     public void SaveScore()
     {
         string path = Path.Combine(Application.persistentDataPath, "Economy.txt");

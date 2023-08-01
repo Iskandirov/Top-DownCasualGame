@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 public class IllusionSpawner : MonoBehaviour
 {
@@ -11,16 +12,25 @@ public class IllusionSpawner : MonoBehaviour
     public bool isTwo;
     public bool isFour;
     public bool isFive;
+    int buttonActivateSkill;
+    KeyCode keyCode;
     // Start is called before the first frame update
     void Start()
     {
         step = gameObject.GetComponent<CDSkillObject>().CD;
+        StartCoroutine(SetBumberToSkill());
+    }
+    private IEnumerator SetBumberToSkill()
+    {
+        yield return new WaitForSeconds(0.1f);
+        buttonActivateSkill = gameObject.GetComponent<CDSkillObject>().num + 1;
+        keyCode = (KeyCode)((int)KeyCode.Alpha0 + buttonActivateSkill);
     }
 
     void Update()
     {
         step -= Time.deltaTime;
-        if (step <= 0)
+        if (step <= 0 && Input.GetKeyDown(keyCode))
         {
 
             Illusion a = Instantiate(illusion, transform.position, Quaternion.identity);

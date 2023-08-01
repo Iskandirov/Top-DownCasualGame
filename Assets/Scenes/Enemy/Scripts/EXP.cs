@@ -22,9 +22,9 @@ public class EXP : MonoBehaviour
             transform.position = Vector2.MoveTowards(transform.position, playerExp.transform.position, speed * Time.deltaTime);
         }
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (collision.collider.CompareTag("Player"))
+        if (other.CompareTag("Player") && !other.isTrigger)
         {
             playerExp.expiriencepoint.fillAmount += expBuff / playerExp.expNeedToNewLevel;
             Destroy(gameObject);

@@ -6,77 +6,48 @@ using UnityEngine.UI;
 
 public class FieldSlots : MonoBehaviour
 {
-    public List<GameObject> objToCraft;
-    public string messageObjectDifferent;
-    public bool allItemsHaveSameName = true;
+    public SetParametersToitem objToCraft;
     public Button childrenBtn;
-    string itemName;
     public LoadItemData data;
     char removeLevel;
     public int price;
     public int priceStart;
     public TextMeshProUGUI priceTxt;
     public TextMeshProUGUI coinsTxt;
-    SetParametersToitem objParam;
     GetScore objScore;
     // Start is called before the first frame update
     void Start()
     {
         data = FindObjectOfType<LoadItemData>();
         priceStart = price;
-        childrenBtn = transform.parent.GetComponentInChildren<Button>();
         childrenBtn.interactable = false;
         objScore = FindObjectOfType<GetScore>();
     }
     public void CheckCraft()
     {
-        objParam = objToCraft[0].GetComponent<SetParametersToitem>();
+        int count = int.Parse(objToCraft.GetComponent<SetParametersToitem>().Count.text);
 
-        price = priceStart;
-        if (objToCraft.Count == 3)
+        int level = int.Parse(objToCraft.GetComponent<SetParametersToitem>().level);
+
+        price = priceStart * level;
+        priceTxt.text = price.ToString();
+
+        int coinT = int.Parse(coinsTxt.text);
+
+        if (count > 3 && price <= coinT)
         {
-            itemName = objParam.ItemName;
-            char itemLevel = objParam.level[objParam.level.Length - 1];
-            for (int i = 0; i < objToCraft.Count; i++)
-            {
-                SetParametersToitem objParams = objToCraft[i].GetComponent<SetParametersToitem>();
-                removeLevel = objParams.level[objParams.level.Length - 1];
-                if (objParams.ItemName != itemName || removeLevel != itemLevel
-                    || objParams.level == "4")
-                {
-                    allItemsHaveSameName = false;
-                    break;
-                }
-            }
-            if (allItemsHaveSameName)
-            {
-                if (int.TryParse(objParam.level, out int result))
-                {
-                    // Вдале перетворення
-                    price = result * priceStart * objParam.IDRare;
-                    priceTxt.text = price.ToString();
-                    if (price <= objScore.score)
-                    {
-                        childrenBtn.interactable = true;
-                    }
-                }
-            }
-            else
-            {
-                childrenBtn.interactable = false;
-            }
+            childrenBtn.interactable = true;
         }
-        else if (objToCraft.Count < 3)
+        else 
         {
-            allItemsHaveSameName = true;
             childrenBtn.interactable = false;
         }
     }
     public void Craft()
     {
-        if (!objParam.level.Equals("4"))
+        if (!objToCraft.level.Equals("4"))
         {
-            string remove = objParam.ItemName + " " + objParam.level;
+            string remove = objToCraft.ItemName + " " + objToCraft.level;
             string removeCopy = remove;
             string path = Path.Combine(Application.persistentDataPath, "savedData.txt");
             if (File.Exists(path))
@@ -97,7 +68,7 @@ public class FieldSlots : MonoBehaviour
                         else
                         {
                             index++;
-                            removeLevel = objParam.level[objParam.level.Length - 1];
+                            removeLevel = objToCraft.level[objToCraft.level.Length - 1];
                         }
                     }
                     else
@@ -138,22 +109,11 @@ public class FieldSlots : MonoBehaviour
                 data.CleanList();
                 data.LoadItems();
                 objScore.score -= price;
-                objScore.SaveScore((int)objScore.score);
+                objScore.SaveScore((int)objScore.score, false);
                 coinsTxt.text = objScore.score.ToString();
             }
         }
     }
-    public void RemoveAllCreated()
-    {
-        for (int i = objToCraft.Count - 1; i >= 0; i--)
-        {
-            GameObject obj = objToCraft[i].gameObject; // взяти GameObject елементу
-            objToCraft.RemoveAt(i);
-            Destroy(obj); // видалити елемент зі сцени
-        }
-        childrenBtn.interactable = false;
-    }
-
     public string CheckLevelUpgrade(SavedObjectData item)
     {
         string path = Path.Combine(Application.persistentDataPath, "UpgradeImage.txt");

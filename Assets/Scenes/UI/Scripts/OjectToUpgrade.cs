@@ -38,7 +38,7 @@ public class OjectToUpgrade : MonoBehaviour
             {
                 moneyRes -= priceRes;
                 money.text = moneyRes.ToString();
-                setMoney.SaveScore(moneyRes);
+                setMoney.SaveScore(moneyRes,false);
                 foreach (var img in objInfo.itemsRead)
                 {
                     if (img.IDObject == objID)
@@ -54,4 +54,5 @@ public class OjectToUpgrade : MonoBehaviour
             }
         }
     }
+   
 }

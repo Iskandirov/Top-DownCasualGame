@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -17,17 +18,25 @@ public class Lightning : MonoBehaviour
     public float spawnInterval;
     int countEnemy;
     ElementsCoeficients ElectricityElement;
+    int buttonActivateSkill;
+    KeyCode keyCode;
     // Start is called before the first frame update
     void Start()
     {
         ElectricityElement = transform.root.GetComponent<ElementsCoeficients>();
         step = gameObject.GetComponent<CDSkillObject>().CD;
+        StartCoroutine(SetBumberToSkill());
     }
-
+    private IEnumerator SetBumberToSkill()
+    {
+        yield return new WaitForSeconds(0.1f);
+        buttonActivateSkill = gameObject.GetComponent<CDSkillObject>().num + 1;
+        keyCode = (KeyCode)((int)KeyCode.Alpha0 + buttonActivateSkill);
+    }
     void Update()
     {
         step -= Time.deltaTime;
-        if (step <= 0)
+        if (step <= 0 && Input.GetKeyDown(keyCode))
         {
             enemiesToShoot = new Collider2D[maxEnemiesToShoot];
             enemies = Physics2D.OverlapCircleAll(gameObject.transform.position, radius);
@@ -51,7 +60,6 @@ public class Lightning : MonoBehaviour
                 countEnemy = enemiesCount;
                 StartCoroutine(SpawnEnemiesCoroutine());
                 step = stepMax;
-
             }
         }
     }
@@ -67,8 +75,11 @@ public class Lightning : MonoBehaviour
                     enemiesToShoot[i].transform.position.y + 3), Quaternion.identity);
 
                 objHealth.healthPoint -= damage * ElectricityElement.Electricity / objHealth.Electricity;
-                objHealth.GetComponentInParent<ElementActiveDebuff>().SetBool("isElectricity", true, true);
-                objHealth.GetComponentInParent<ElementActiveDebuff>().SetBool("isElectricity", true, false);
+                if (!objHealth.GetComponentInParent<ElementActiveDebuff>().IsActive("isElectricity", true))
+                {
+                    objHealth.GetComponentInParent<ElementActiveDebuff>().SetBool("isElectricity", true, true);
+                    objHealth.GetComponentInParent<ElementActiveDebuff>().SetBool("isElectricity", true, false);
+                }
                 objMove.isStunned = true;
                 objMove.stunnTime = stunTime;
 

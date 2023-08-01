@@ -10,7 +10,11 @@ public class CheckLevel : MonoBehaviour
     public List<SavedLocationsData> levelsRead = new List<SavedLocationsData>();
     private void Start()
     {
-        SaveInventory();
+        string path = Path.Combine(Application.persistentDataPath, "Levels.txt");
+        if (!File.Exists(path))
+        {
+            SaveInventory();
+        }
         LoadInventory(levelsRead);
     }
     public void LoadInventory(List<SavedLocationsData> itemsRead)
@@ -44,6 +48,9 @@ public class CheckLevel : MonoBehaviour
         {
             data.IDLevel = item.IDLevel;
             data.percent = item.percent;
+            data.countOfCount = item.countOfCount;
+            data.countOfCountMax = item.countOfCountMax;
+            data.isFullDone = item.isFullDone;
 
 
             string jsonData = JsonUtility.ToJson(data);
@@ -93,6 +100,10 @@ public class CheckLevel : MonoBehaviour
             if (data.IDLevel == level && data.percent < percentNew)
             {
                 data.percent = percentNew;
+                if (percentNew >= 100)
+                {
+                    data.percent = 0;
+                }
                 lines[i] = JsonUtility.ToJson(data);
                 break;
             }

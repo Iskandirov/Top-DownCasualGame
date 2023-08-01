@@ -11,14 +11,14 @@ public class ElementActiveDebuff : MonoBehaviour
     public DeactivateDebuff elementDebuffObject;
     public Dictionary<string, float> activeTimers = new Dictionary<string, float>()
 {
-    { "isFire", 5 },
-    { "isElectricity", 5 },
-    { "isWater", 5 },
-    { "isDirt", 5 },
-    { "isWind", 5 },
-    { "isGrass", 5 },
-    { "isSteam", 5 },
-    { "isCold", 5 },
+    { "isFire", 3 },
+    { "isElectricity", 3 },
+    { "isWater", 3 },
+    { "isDirt", 3 },
+    { "isWind", 3 },
+    { "isGrass", 3 },
+    { "isSteam", 3 },
+    { "isCold", 3 },
 };
     public Dictionary<string, bool> boolFlags = new Dictionary<string, bool>()
         {
@@ -66,7 +66,6 @@ public class ElementActiveDebuff : MonoBehaviour
         UpdateActiveTimers();
         if (IsActive("isFire", true) && IsActive("isFire", false))
         {
-            Debug.Log(1);
             DeactivateDebuff a = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
             a.GetComponent<SpriteRenderer>().sprite = fire;
             health.Water = health.WaterStart / 2;
@@ -94,11 +93,10 @@ public class ElementActiveDebuff : MonoBehaviour
             attack.damage = attack.damageMax;
         }
 
-        if (IsActive("isFire", true) && IsActive("isWater", true) && IsActive("isFire", false) && IsActive("isWater", false))
+        if (IsActive("isFire", true) && IsActive("isWater", true) && IsActive("isWater", false))
         {
             SetBool("isSteam", true, true);
             SetBool("isSteam", true, false);
-            SetBool("isFire", false, false);
             SetBool("isWater", false, false);
         }
         else if(!IsActive("isFire", true) && !IsActive("isWater", true))
@@ -188,7 +186,7 @@ public class ElementActiveDebuff : MonoBehaviour
         }
     }
 
-    private bool IsActive(string boolName,bool isFirst)
+    public bool IsActive(string boolName,bool isFirst)
     {
         if (isFirst)
         {
@@ -227,9 +225,18 @@ public class ElementActiveDebuff : MonoBehaviour
                 if (activeTimers[key] <= 0f)
                 {
                     SetBool(key, false,true);
-                    activeTimers[key] = 5f;  // Перевстановлюємо значення на початкове
+                    activeTimers[key] = 3f;  // Перевстановлюємо значення на початкове
                 }
             }
+        }
+    }
+    public void DeactiveDebuff()
+    {
+        string[] keysToUpdate = boolFlags.Keys.ToArray();
+
+        foreach (var key in keysToUpdate)
+        {
+            activeTimers[key] = 0f;
         }
     }
 }

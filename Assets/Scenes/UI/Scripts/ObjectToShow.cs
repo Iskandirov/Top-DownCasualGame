@@ -4,6 +4,7 @@ public class ObjectToShow : MonoBehaviour
 {
     public TooltipTarget tooltipTarget;
     bool isNeedToShow;
+    public bool isUpgrade;
     private void Start()
     {
         tooltipTarget.HideTooltip();
@@ -38,7 +39,10 @@ public class ObjectToShow : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             isNeedToShow = false;
-            gameObject.GetComponent<OjectToUpgrade>().Upgrade();
+            if (isUpgrade)
+            {
+                gameObject.GetComponent<OjectToUpgrade>().Upgrade();
+            }
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.IO;
 using TMPro;
 using UnityEngine;
 
@@ -28,5 +29,26 @@ public class KillCount : MonoBehaviour
             fpsText.text = "FPS: " + fps.ToString("0.");
             lastUpdateTime = Time.unscaledTime;
         }
+    }
+    public int LoadObjectLevelCount(int objectID)
+    {
+        string path = Path.Combine(Application.persistentDataPath, "Levels.txt");
+
+        if (File.Exists(path))
+        {
+            string[] lines = File.ReadAllLines(path);
+
+            for (int i = 0; i < lines.Length; i++)
+            {
+                SavedLocationsData data = JsonUtility.FromJson<SavedLocationsData>(lines[i]);
+
+                if (data.IDLevel == objectID)
+                {
+                    return data.countOfCount;
+                }
+            }
+        }
+
+        return 0;
     }
 }

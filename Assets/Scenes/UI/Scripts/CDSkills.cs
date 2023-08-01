@@ -8,6 +8,7 @@ public class CDSkills : MonoBehaviour
     public Image spriteCD;
     public int number;
     public GameObject text;
+    public int abilityId;
 
     // Update is called once per frame
     void Update()

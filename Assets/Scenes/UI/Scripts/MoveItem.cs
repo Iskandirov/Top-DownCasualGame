@@ -6,10 +6,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class MoveItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler//, IPointerUpHandler
+public class MoveItem : MonoBehaviour ,IPointerClickHandler
 {
-    private Vector3 startPosition;
-    private Vector3 startScale;
+    public Vector3 startPosition;
+
+    public Vector3 startScale;
     public List<GameObject> targetObjects;
     FieldSlots fliedSlots;
     public TextMeshProUGUI count;
@@ -31,17 +32,13 @@ public class MoveItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
     public GameObject maxLevel;
     public GameObject LevelCount;
 
-    //float duration = 2f;
-    //float timer = 0f;
     [Range(0, 50)]
     public float XY = 2f;
     Vector3 targetScaleBig;
     Vector3 targetScaleSmall;
 
-    public GameObject Sibling;
     public GameObject lang;
     List<GameObject> list = new List<GameObject>();
-
     void Start()
     {
         startParent = transform.parent.gameObject;
@@ -56,7 +53,7 @@ public class MoveItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
         if (gameObject.GetComponent<SetParametersToitem>().level != "4")
         {
             maxLevel.GetComponent<TagText>().tagText = "level";
-            maxLevel.GetComponent<TextMeshProUGUI>().text = "Ð³âåíü ";
+            maxLevel.GetComponent<TextMeshProUGUI>().text = "Max level";
             LevelCount.SetActive(true);
             LevelCount.GetComponent<TextMeshProUGUI>().text = gameObject.GetComponent<SetParametersToitem>().level;
 
@@ -68,7 +65,6 @@ public class MoveItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
         }
         startPosition = transform.parent.position;
 
-
         if (!created)
         {
             startScale = transform.localScale;
@@ -76,12 +72,6 @@ public class MoveItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
             targetScaleSmall = startScale / 1.1f;
             toSlot = true;
             toEquipSlot = true;
-        }
-        else
-        {
-            startScale = Sibling.GetComponent<MoveItem>().transform.localScale;
-            targetScaleBig = Sibling.GetComponent<MoveItem>().startScale * 1.1f;
-            targetScaleSmall = Sibling.GetComponent<MoveItem>().startScale / 1.1f;
         }
         string path = Path.Combine(Application.persistentDataPath, "EquipedItems.txt");
         if (File.Exists(path))
@@ -124,150 +114,9 @@ public class MoveItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
             equipedChecker.SetActive(false);
         }
     }
-    public void MoveIt()
-    {
-        if (toEquipSlot == transform)
-        {
-            //Set item card to craft slots
-            if (toSlot == true && toEquipSlot)
-            {
-                targetObjects.Sort((x, y) => x.name.CompareTo(y.name));
-                foreach (var obj in targetObjects)
-                {
-                    Collider2D[] colliders = Physics2D.OverlapPointAll(obj.transform.position);
-                    bool hasGameController = false;
-                    foreach (Collider2D collider in colliders)
-                    {
-                        if (collider.gameObject.CompareTag("GameController"))
-                        {
-                            hasGameController = true;
-                            break;
-                        }
-                    }
-                    if (!hasGameController)
-                    {
-                        int i = int.Parse(count.text);
-                        if (i > 1) // if there is more than one card
-                        {
-
-                            GameObject card = Instantiate(gameObject, transform.parent);
-
-                            card.GetComponent<MoveItem>().created = true;
-                            card.GetComponent<MoveItem>().count.text = "1";
-                            card.GetComponent<MoveItem>().toSlot = false;
-                            card.GetComponent<MoveItem>().second = true;
-                            card.GetComponent<MoveItem>().Sibling = gameObject;
-                            fliedSlots.objToCraft.Add(card);
-
-                            card.transform.SetParent(obj.transform);
-                            card.transform.position = obj.transform.position;
-                            //card.transform.localScale = startScale;
-                            if (int.TryParse(gameObject.transform.parent.transform.GetComponentInChildren<MoveItem>().count.text, out int parentCount)
-                                && int.TryParse(card.GetComponent<MoveItem>().count.text, out int itemCount))
-                            {
-                                int y = parentCount - itemCount;
-                                transform.parent.transform.GetComponentInChildren<MoveItem>().count.text = y.ToString();
-                            }
-                            else
-                            {
-                                Debug.LogError("Count text is not a valid number!");
-                            }
-                            fliedSlots.CheckCraft();
-                            break;
-                        }
-                        else // if it`s only one card
-                        {
-                            transform.SetParent(obj.transform);
-                            //transform.localScale = targetScaleSmall;
-                            transform.position = obj.transform.position;
-                            toSlot = false;
-                            fliedSlots.objToCraft.Add(gameObject);
-                            fliedSlots.CheckCraft();
-                            break;
-                        }
-                    }
-                }
-            }
-            else if (toEquipSlot)
-            {
-
-                if (created)
-                {
-                    if (Sibling.GetComponent<MoveItem>().toSlot == true)
-                    {
-                        if (int.TryParse(Sibling.GetComponent<MoveItem>().count.text, out int parentCount)
-                            && int.TryParse(count.text, out int itemCount))
-                        {
-                            int i = parentCount + itemCount;
-                            Sibling.GetComponent<MoveItem>().count.text = i.ToString();
-                            fliedSlots.objToCraft.Remove(gameObject);
-                            fliedSlots.allItemsHaveSameName = true;
-                            Destroy(gameObject);
-                        }
-                        else
-                        {
-                            Debug.LogError("Count text is not a valid number!");
-                        }
-                    }
-                    else if (Sibling.GetComponent<MoveItem>().toSlot == false)
-                    {
-                        transform.SetParent(Sibling.GetComponent<MoveItem>().startParent.transform);
-                        transform.localScale = Sibling.GetComponent<MoveItem>().startScale;
-                        transform.position = new Vector3(Sibling.GetComponent<MoveItem>().startParent.transform.position.x, Sibling.GetComponent<MoveItem>().startParent.transform.position.y + 1f, Sibling.GetComponent<MoveItem>().startParent.transform.position.z);
-                        toSlot = true;
-                        second = true;
-                        fliedSlots.objToCraft.Remove(gameObject);
-                        fliedSlots.allItemsHaveSameName = true;
-                    }
-                }
-                else
-                {
-                    MoveItem[] children = startParent.GetComponentsInChildren<MoveItem>();
-                    if (children.Length > 0)
-                    {
-                        foreach (MoveItem child in children)
-                        {
-                            if (child.second == true && child.toSlot == true)
-                            {
-                                if (int.TryParse(child.count.text, out int parentCount)
-                                    && int.TryParse(count.text, out int itemCount))
-                                {
-
-                                    int i = parentCount + itemCount;
-                                    transform.SetParent(startParent.transform);
-                                    count.text = i.ToString();
-                                    transform.localScale = targetScaleBig;
-                                    transform.position = new Vector3(startParent.transform.position.x, startParent.transform.position.y + 1f, startParent.transform.position.z);
-                                    toSlot = true;
-                                    fliedSlots.objToCraft.Remove(gameObject);
-                                    fliedSlots.allItemsHaveSameName = true;
-                                    Destroy(child.gameObject);
-                                }
-                                else
-                                {
-                                    Debug.LogError("Count text is not a valid number!");
-                                }
-                                break;
-                            }
-
-                        }
-                    }
-                    else if (children.Length == 0)
-                    {
-                        transform.SetParent(startParent.transform);
-                        transform.localScale = targetScaleBig;
-                        transform.position = new Vector3(startParent.transform.position.x, startParent.transform.position.y + 1f, startParent.transform.position.z);
-                        toSlot = true;
-                        fliedSlots.objToCraft.Remove(gameObject);
-                        fliedSlots.allItemsHaveSameName = true;
-                    }
-                }
-            }
-        }
-    }
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Right && !Input.GetMouseButtonUp(0) && Input.GetMouseButtonUp(1))
+        if (eventData.button == PointerEventData.InputButton.Right || eventData.button == PointerEventData.InputButton.Left)
         {
             if (!created && toSlot == true)
             {
@@ -298,6 +147,8 @@ public class MoveItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
                     SetVisible(false);
                 }
             }
+            fliedSlots.objToCraft = GetComponent<SetParametersToitem>();
+            fliedSlots.CheckCraft();
         }
 
     }
@@ -324,45 +175,59 @@ public class MoveItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
         }
         for (int i = 0; i < equipPanel.transform.childCount; i++)
         {
-            if (equipPanel.transform.GetChild(i).GetComponent<Button>())
+            Transform child = equipPanel.transform.GetChild(i);
+
+            if (child.GetComponent<Button>())
             {
-                equipPanel.transform.GetChild(i).GetComponent<Image>().enabled = isActivate;
-                equipPanel.transform.GetChild(i).GetComponent<Button>().enabled = isActivate;
-                button = equipPanel.transform.GetChild(i).GetComponent<Button>();
-                equipPanel.transform.GetChild(i).GetComponent<Button>().transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().enabled = isActivate;
+                child.GetComponent<Image>().enabled = isActivate;
+                child.GetComponent<Button>().enabled = isActivate;
+
+                if (child.name == "EquipBtn")
+                {
+                    button = child.GetComponent<Button>();
+                }
+
+                child.GetComponentInChildren<TextMeshProUGUI>().enabled = isActivate;
             }
-            else if (equipPanel.transform.GetChild(i).GetComponent<Image>())
+            else if (child.GetComponent<Image>())
             {
-                equipPanel.transform.GetChild(i).GetComponent<Image>().enabled = isActivate;
+                child.GetComponent<Image>().enabled = isActivate;
             }
-            else if (equipPanel.transform.GetChild(i).GetComponent<TextMeshProUGUI>())
+            else if (child.GetComponent<TextMeshProUGUI>())
             {
-                equipPanel.transform.GetChild(i).GetComponent<TextMeshProUGUI>().enabled = isActivate;
-                if (isActivate == true)
+                child.GetComponent<TextMeshProUGUI>().enabled = isActivate;
+
+                if (isActivate)
                 {
                     foreach (var obj in itemData.GetComponent<LoadItemData>().objectsList)
                     {
-                        if (equipPanel.transform.GetChild(i).GetComponent<TextMeshProUGUI>().name == "Stat")
+                        if (child.name == "Stat")
                         {
                             SetItem(obj);
                             string path = Path.Combine(Application.persistentDataPath, "EquipedItems.txt");
+
                             if (File.Exists(path))
                             {
                                 string[] jsonLines = File.ReadAllLines(path);
+                                bool foundMatch = false;
+
                                 foreach (string jsonLine in jsonLines)
                                 {
                                     SavedEquipData data = JsonUtility.FromJson<SavedEquipData>(jsonLine);
+
                                     if (data.Tag == stats[1].GetComponent<TagText>().tagText)
                                     {
-                                        button.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = "Çíÿòè";
+                                        button.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = "Зняти";
                                         isEquipedNow = true;
+                                        foundMatch = true;
                                         break;
                                     }
-                                    else
-                                    {
-                                        button.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = "Îáëàäíàòè";
-                                        isEquipedNow = false;
-                                    }
+                                }
+
+                                if (!foundMatch)
+                                {
+                                    button.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = "Обладнати";
+                                    isEquipedNow = false;
                                 }
                             }
                         }
@@ -471,5 +336,4 @@ public class MoveItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
         //    transform.localScale = targetScaleSmall;
         //}
     }
-
 }

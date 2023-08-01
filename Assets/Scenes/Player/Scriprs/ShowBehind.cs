@@ -1,8 +1,9 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ShowBehind : MonoBehaviour
 {
-    public SpriteRenderer tree; // компонент дл€ зм≥ни прозорост≥
+    public List<SpriteRenderer> tree; // компонент дл€ зм≥ни прозорост≥
     public int isSomeoneHere;
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -12,9 +13,13 @@ public class ShowBehind : MonoBehaviour
             // якщо немаЇ жодного об'Їкту всередин≥, зм≥нюЇмо прозор≥сть на нап≥впрозору
             if (isSomeoneHere == 1)
             {
-                Color c = tree.color;
-                c.a = 0.5f;
-                tree.color = c;
+                foreach (var item in tree)
+                {
+                    Color c = item.color;
+                    c.a = 0.5f;
+                    item.color = c;
+                }
+               
             }
         }
     }
@@ -27,9 +32,12 @@ public class ShowBehind : MonoBehaviour
             // якщо б≥льше немаЇ об'Їкт≥в всередин≥, зм≥нюЇмо прозор≥сть назад на повну
             if (isSomeoneHere == 0)
             {
-                Color c = tree.color;
-                c.a = 1f;
-                tree.color = c;
+                foreach (var item in tree)
+                {
+                    Color c = item.color;
+                    c.a = 1f;
+                    item.color = c;
+                }
             }
         }
     }

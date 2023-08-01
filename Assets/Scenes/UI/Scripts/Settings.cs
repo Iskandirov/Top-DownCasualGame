@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +12,7 @@ public class Settings : MonoBehaviour
     public void Start()
     {
         scroll.value = volume.volume;
+        toggle.isOn = Convert.ToBoolean(volume.vSync);
         AudioListener.volume = scroll.value;
     }
     // Метод для зміни гучності гри
@@ -18,7 +20,7 @@ public class Settings : MonoBehaviour
     {
         List<string> value = new List<string>()
         {
-            "volume", 
+            "volume",
             scroll.value.ToString(),
             // Додаткові значення списку
         };
@@ -33,7 +35,6 @@ public class Settings : MonoBehaviour
             value = "1";
             QualitySettings.vSyncCount = 1;
             Application.targetFrameRate = 60;
-            
         }
         else
         {
@@ -48,5 +49,6 @@ public class Settings : MonoBehaviour
             // Додаткові значення списку
         };
         volume.ChangeSetting(sync);
+
     }
 }

@@ -21,6 +21,7 @@ public class LocalizationManager : MonoBehaviour
     
     public bool IsSettingsPage;
     public float volume;
+    public float vSync;
     void Awake()
     {
         StartLoad();
@@ -74,6 +75,13 @@ public class LocalizationManager : MonoBehaviour
                     if (float.TryParse(settings.value,out float res))
                     {
                         volume = res;
+                    }
+                }
+                if (settings.key == "v-sync" && IsSettingsPage == true)
+                {
+                    if (float.TryParse(settings.value,out float res))
+                    {
+                        vSync = res;
                     }
                 }
             }

@@ -24,7 +24,7 @@ public class Illusion : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        electicWindElement = transform.root.GetComponent<ElementsCoeficients>();
+        electicWindElement = FindObjectOfType<ElementsCoeficients>();
         player = FindObjectOfType<Move>().gameObject;
         playerShoot = player.GetComponent<Shoot>();
         stepShoot = player.GetComponent<Shoot>().stepShoot;
@@ -78,7 +78,6 @@ public class Illusion : MonoBehaviour
                 {
                     for (int i = 1; i < playerShoot.secondBulletCount + 1; i++)
                     {
-                        Debug.Log(1);
                         Invoke("CreateBullet", i * 0.3f);
                     }
                 }
@@ -96,14 +95,19 @@ public class Illusion : MonoBehaviour
 
     public void CreateBullet()
     {
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
         Bullet newObject = Instantiate(playerShoot.bullet, transform.position, Quaternion.identity);
         newObject.damage = playerShoot.damageToGive;
         newObject.isPiers = playerShoot.isLevelFive;
+
+        // Визначаємо напрямок до курсора
+        directionBullet = mousePosition - transform.position;
 
         // Запускаємо об'єкт в заданому напрямку
         Rigidbody2D rb = newObject.GetComponent<Rigidbody2D>();
         rb.AddForce(directionBullet.normalized * playerShoot.launchForce, ForceMode2D.Impulse);
         float angleShot = Mathf.Atan2(directionBullet.y, directionBullet.x) * Mathf.Rad2Deg;
-        newObject.transform.rotation = Quaternion.AngleAxis(angleShot + 0, Vector3.forward);
+        newObject.transform.rotation = Quaternion.AngleAxis(angleShot + 90, Vector3.forward);
     }
 }

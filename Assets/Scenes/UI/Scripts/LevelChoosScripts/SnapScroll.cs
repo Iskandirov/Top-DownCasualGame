@@ -7,8 +7,10 @@ using UnityEngine.UI;
 public class SnapScroll : MonoBehaviour
 {
     [Header("Object panel")]
-    public GameObject panObj;
-    public GameObject[] instObjects;
+    public FillLevelInfo panObj;
+    public FillLevelInfo[] instObjects;
+    public GameObject[] instObjectsLock;
+    public GameObject instObjectsLockObj;
     public ScrollRect scrollRect;
 
     private RectTransform contentRect;
@@ -43,14 +45,21 @@ public class SnapScroll : MonoBehaviour
     {
         List<GameObject> list = new List<GameObject>();
         contentRect = GetComponent<RectTransform>();
-        instObjects = new GameObject[descriptionImage.Length];
+        instObjects = new FillLevelInfo[descriptionImage.Length];
+        instObjectsLock = new GameObject[descriptionImage.Length];
         instObjectsPosition = new Vector2[descriptionImage.Length];
         instObjectsScale = new Vector2[descriptionImage.Length];
         descriptionObjText = new TagText[descriptionImage.Length];
         descriptionObjImage = new Image[descriptionImage.Length];
         for (int i = 0; i < descriptionImage.Length; i++)
         {
+            
             instObjects[i] = Instantiate(panObj, transform, false);
+            instObjectsLock[i] = Instantiate(instObjectsLockObj, transform.position, Quaternion.identity, transform);
+            if (instObjects[i].LoadObjectLevelCountIsFull(i + 6) == true || instObjects[i].LoadObjectLevelCount(i + 5) >= 5 && instObjects[i].LoadObjectLevelCount(i + 5) != 0)
+            {
+                Destroy(instObjectsLock[i]);
+            }
             descriptionObjText[i] = instObjects[i].GetComponentInChildren<TagText>();
             descriptionObjImage[i] = instObjects[i].GetComponentInChildren<Slider>().GetComponentInChildren<Image>();
             instObjects[i].GetComponent<MenuController>().sceneCount = sceneValue[i];
@@ -73,6 +82,12 @@ public class SnapScroll : MonoBehaviour
             }
             instObjects[i].transform.localPosition = new Vector2(instObjects[i - 1].transform.localPosition.x + panObj.GetComponent<RectTransform>().sizeDelta.x + spacing,
                 instObjects[i].transform.localPosition.y);
+            if (instObjectsLock[i] != null)
+            {
+                instObjectsLock[i].transform.localPosition = new Vector2(instObjectsLock[i - 1].transform.localPosition.x + panObj.GetComponent<RectTransform>().sizeDelta.x + spacing,
+               instObjectsLock[i].transform.localPosition.y);
+            }
+           
             instObjectsPosition[i] = -instObjects[i].transform.localPosition;
         }
         lang.settings.UpdateText(list);
@@ -97,11 +112,15 @@ public class SnapScroll : MonoBehaviour
                 selectPanelObjID = i;
             }
             float scale = Mathf.Clamp(10 / (distance / spacing) * snapScale, 0.5f, 10f);
-            instObjectsScale[i].x = Mathf.SmoothStep(instObjects[i].transform.localRotation.x,scale, scaleSpeed * Time.fixedDeltaTime);
-            instObjectsScale[i].y = Mathf.SmoothStep(instObjects[i].transform.localRotation.y,scale, scaleSpeed * Time.fixedDeltaTime);
+            instObjectsScale[i].x = Mathf.SmoothStep(instObjects[i].transform.localRotation.x, scale, scaleSpeed * Time.fixedDeltaTime);
+            instObjectsScale[i].y = Mathf.SmoothStep(instObjects[i].transform.localRotation.y, scale, scaleSpeed * Time.fixedDeltaTime);
             instObjects[i].transform.localScale = instObjectsScale[i];
+            if (instObjectsLock[i] != null)
+            {
+                instObjectsLock[i].transform.localScale = instObjectsScale[i];
+            }
         }
-        float scrollVelocity = Mathf.Abs(scrollRect.velocity.x);
+            float scrollVelocity = Mathf.Abs(scrollRect.velocity.x);
         if (scrollVelocity < 400 && !isScrolling) 
         {
             scrollRect.inertia= false;

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
+using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 public class LightOn : MonoBehaviour
 {
@@ -43,6 +43,8 @@ public class LightOn : MonoBehaviour
     public Vector2 spawnAreaMax; // Максимальні координати спавну
 
     ElementsCoeficients grassWindElement;
+    int buttonActivateSkill;
+    KeyCode keyCode;
     // Start is called before the first frame update
     void Start()
     {
@@ -51,12 +53,18 @@ public class LightOn : MonoBehaviour
         objMove = transform.root.GetComponent<Move>();
         objShoot = transform.root.GetComponent<Shoot>();
         objSpawn = FindObjectOfType<SpawnEnemy>();
+        StartCoroutine(SetBumberToSkill());
     }
-
+    private IEnumerator SetBumberToSkill()
+    {
+        yield return new WaitForSeconds(0.1f);
+        buttonActivateSkill = gameObject.GetComponent<CDSkillObject>().num + 1;
+        keyCode = (KeyCode)((int)KeyCode.Alpha0 + buttonActivateSkill);
+    }
     void Update()
     {
         step -= Time.deltaTime;
-        if (step <= 0)
+        if (step <= 0 && Input.GetKeyDown(keyCode))
         {
             SpawnObject();
             step = stepMax;

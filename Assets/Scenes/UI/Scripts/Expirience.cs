@@ -11,7 +11,7 @@ public class Expirience : MonoBehaviour
     public ActivateAbilities activeAbilObj;
     Health objHealth;
     public Timer time;
-    
+    public int isEnemyInZone;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,8 +38,18 @@ public class Expirience : MonoBehaviour
                 Destroy(collision.gameObject);
             }
         }
+        if (collision.CompareTag("Enemy") && !collision.isTrigger)
+        {
+            isEnemyInZone++;
+        }
     }
-
+    public void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy") && !collision.isTrigger)
+        {
+            isEnemyInZone--;
+        }
+    }
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Expirience"))
@@ -57,7 +67,7 @@ public class Expirience : MonoBehaviour
 
             level += 1;
             expiriencepoint.fillAmount = 0;
-            expNeedToNewLevel += expNeedToNewLevel * 0.6f;
+            expNeedToNewLevel += expNeedToNewLevel * 0.3f;
         }
     }
 }

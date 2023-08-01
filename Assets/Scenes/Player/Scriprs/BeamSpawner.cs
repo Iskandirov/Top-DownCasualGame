@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class BeamSpawner : MonoBehaviour
@@ -9,18 +10,26 @@ public class BeamSpawner : MonoBehaviour
     public float damage;
     public float lifeTime;
     ElementsCoeficients SteamElement;
+    int buttonActivateSkill;
+    KeyCode keyCode;
     // Start is called before the first frame update
     void Start()
     {
         SteamElement = transform.root.GetComponent<ElementsCoeficients>();
         step = gameObject.GetComponent<CDSkillObject>().CD;
+        StartCoroutine(SetBumberToSkill());
     }
-
+    private IEnumerator SetBumberToSkill()
+    {
+        yield return new WaitForSeconds(0.1f);
+        buttonActivateSkill = gameObject.GetComponent<CDSkillObject>().num + 1;
+        keyCode = (KeyCode)((int)KeyCode.Alpha0 + buttonActivateSkill);
+    }
     // Update is called once per frame
     void Update()
     {
         step -= Time.deltaTime;
-        if (step <= 0)
+        if (step <= 0 && Input.GetKeyDown(keyCode))
         {
             Beam a = Instantiate(beam, new Vector2(transform.position.x + 5, transform.position.y), Quaternion.identity);
             a.damage = damage;

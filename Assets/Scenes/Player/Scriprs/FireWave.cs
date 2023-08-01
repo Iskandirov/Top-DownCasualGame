@@ -28,7 +28,7 @@ public class FireWave : MonoBehaviour
     void Update()
     {
         transform.position = player.transform.position;
-        transform.localScale = new Vector3(transform.localScale.x + Time.deltaTime * 20, transform.localScale.y + Time.deltaTime * 20, transform.localScale.z + Time.deltaTime * 20);
+        //transform.localScale = new Vector3(transform.localScale.x + Time.deltaTime * 20, transform.localScale.y + Time.deltaTime * 20, transform.localScale.z + Time.deltaTime * 20);
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {
@@ -36,10 +36,11 @@ public class FireWave : MonoBehaviour
         {
             collision.GetComponent<HealthPoint>().healthPoint -= (damage * fireElement * collision.GetComponent<HealthPoint>().Water) / collision.GetComponent<HealthPoint>().Fire;
             collision.GetComponent<HealthPoint>().ChangeToKick();
-            collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isFire", true, true);
-            collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isWater", false, true);
-            collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isFire", true, false);
-            collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isWater", false, false);
+            if (!collision.GetComponentInParent<ElementActiveDebuff>().IsActive("isFire", true))
+            {
+                collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isFire", true, true);
+                collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isFire", true, false);
+            }
 
             if (burnDamage != 0)
             {

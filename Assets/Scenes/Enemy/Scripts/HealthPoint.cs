@@ -68,7 +68,6 @@ public class HealthPoint : MonoBehaviour
         {
             objPart = GetComponent<CutThePart>();
         }
-        healthPointMax = healthPoint;
         player = GameObject.FindWithTag("Player");
         objsSprite = GetComponentsInChildren<SpriteRenderer>();
         objExp = player.GetComponent<Expirience>();
@@ -135,10 +134,6 @@ public class HealthPoint : MonoBehaviour
         }
         if (healthPoint <= 0)
         {
-            foreach (Transform child in debuffsParent.transform)
-            {
-                child.GetComponent<DeactivateDebuff>().Destroy();
-            }
             if (IsBobs)
             {
                 if (isBossPart)
@@ -165,7 +160,7 @@ public class HealthPoint : MonoBehaviour
                     AnimBossStart = true;
                     bodyAnimBoss = null;
                 }
-                else if(!AnimBossStart)
+                else if (!AnimBossStart)
                 {
                     objDrop.OnDestroyBoss();
                     EXP a = Instantiate(expiriancePoint, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, 1.9f), Quaternion.identity);
@@ -189,7 +184,11 @@ public class HealthPoint : MonoBehaviour
                 objMove.transform.position = spawnPosition;
 
                 healthPoint = healthPointMax;
-
+            }
+            GetComponentInParent<ElementActiveDebuff>().DeactiveDebuff();
+            foreach (Transform item in debuffsParent.transform)
+            {
+                item.GetComponentInChildren<DeactivateDebuff>().Destroy();
             }
         }
     }

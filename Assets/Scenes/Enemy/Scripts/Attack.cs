@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Attack : MonoBehaviour
 {
@@ -21,6 +22,10 @@ public class Attack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (FindObjectOfType<KillCount>().LoadObjectLevelCount(SceneManager.GetActiveScene().buildIndex) > 0)
+        {
+            damageMax *= FindObjectOfType<KillCount>().LoadObjectLevelCount(SceneManager.GetActiveScene().buildIndex) * 0.5f;
+        }
         objMove = GetComponent<Forward>();
         objAnim = GetComponent<Animator>();
 

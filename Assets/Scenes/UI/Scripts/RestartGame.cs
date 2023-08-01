@@ -13,8 +13,8 @@ public class RestartGame : MonoBehaviour
     {
         Time.timeScale = 1f;
     }
-    public void Restart(string nameOfScene)
+    public void Restart()
     {
-        SceneManager.LoadScene(nameOfScene);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

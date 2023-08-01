@@ -161,6 +161,7 @@ MonoBehaviour:
   dataSett: []
   IsSettingsPage: 0
   volume: 0
+  vSync: 0
 --- !u!114 &6416895844494761421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,7 +190,7 @@ MonoBehaviour:
     ImageSprite: {fileID: 21300000, guid: c932988704fb79c40bb45341e7656797, type: 3}
     RareName: "\u0420\u0456\u0434\u043A\u0456\u0441\u043D\u0435"
     RareSprite: {fileID: 21300000, guid: 3d8f059b7b17c7045bce65146d7f3cab, type: 3}
-    IDRare: 1
+    IDRare: 2
     Stat: 0,1
     Level: 1
     Count: 0
@@ -199,7 +200,7 @@ MonoBehaviour:
     ImageSprite: {fileID: 21300000, guid: 74cae841a0080064ab2cdda92fccd742, type: 3}
     RareName: "\u041C\u0456\u0444\u0456\u0447\u043D\u0435"
     RareSprite: {fileID: 21300000, guid: a1ec008b10212aa4bb88132a5c0d83bf, type: 3}
-    IDRare: 1
+    IDRare: 3
     Stat: 1
     Level: 1
     Count: 0
@@ -209,7 +210,7 @@ MonoBehaviour:
     ImageSprite: {fileID: 21300000, guid: 7aaf404aa7d21f040a453906a261ca87, type: 3}
     RareName: "\u041B\u0435\u0433\u0435\u043D\u0434\u0430\u0440\u043D\u0435"
     RareSprite: {fileID: 21300000, guid: 7cb48bbbefb626c4c8ae208b0fad33e1, type: 3}
-    IDRare: 1
+    IDRare: 4
     Stat: 10
     Level: 1
     Count: 0
@@ -311,6 +312,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   score: 0
+  enemyCount: 0
+  fpsText: {fileID: 0}
 --- !u!114 &1861729291711384211
 MonoBehaviour:
   m_ObjectHideFlags: 0

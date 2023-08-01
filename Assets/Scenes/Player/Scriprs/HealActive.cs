@@ -50,4 +50,8 @@ public class HealActive : MonoBehaviour
     {
         transform.position = player.transform.position;
     }
+    public void isShowed()
+    {
+        GetComponent<Animator>().SetBool("IsShowed",true);
+    }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 public class Destroy : MonoBehaviour
 {
     public float lifeTime;
-    public Sprite[] lights;
+    //public Sprite[] lights;
     public AudioSource audioFlash;
     public AudioClip audioClip;
     public GameObject player;
@@ -34,6 +34,6 @@ public class Destroy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        objSprite.sprite = lights[Random.Range(0, lights.Length)];
+        //objSprite.sprite = lights[Random.Range(0, lights.Length)];
     }
 }

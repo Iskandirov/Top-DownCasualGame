@@ -33,11 +33,11 @@ public class Meteor : MonoBehaviour
             if (collision.CompareTag("Enemy"))
             {
                 collision.GetComponent<HealthPoint>().healthPoint -= (damage * fireDirt * collision.GetComponent<HealthPoint>().Water) / collision.GetComponent<HealthPoint>().Fire;
-                collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isFire", true, true);
-                collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isWater", false, true);
-                collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isWater", false, false);
-                collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isFire", true, false);
-
+                if (!collision.GetComponentInParent<ElementActiveDebuff>().IsActive("isFire", true))
+                {
+                    collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isFire", true, true);
+                    collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isFire", true, false);
+                }
                 collision.GetComponent<HealthPoint>().ChangeToKick();
                 if (isFour)
                 {

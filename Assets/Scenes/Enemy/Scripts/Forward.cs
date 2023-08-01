@@ -1,8 +1,13 @@
-﻿using UnityEngine;
+﻿using Pathfinding;
+using System.IO;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Forward : MonoBehaviour
 {
     public GameObject player;
+    public GameObject enemy;
     public Rigidbody2D Body;
     public float speed;
     public float speedMax;
@@ -12,26 +17,28 @@ public class Forward : MonoBehaviour
     public bool isFly;
     public bool isShooted;
 
-    public GameObject LocationPoint;
-    public float movementSpeed = 5f;  
-    public float circleRadius = 15f;  
-    public float showDistance;
     public bool isSummoned;
     public bool enemyFinded;
+    public bool protectPlayer;
     public float summonTime;
     public bool isThree;
     public GameObject bomb;
     public Animator anim;
     public bool IsOutOfCamera;
 
-    private Collider2D[] colliders;
     public bool isChaising;
 
     public float acceleration = 0.1f; // збільшення швидкості
     public float angle;
 
     private Vector2 velocity;
-
+    AIPath path;
+    AIDestinationSetter destination;
+    private void Awake()
+    {
+        if (FindObjectOfType<KillCount>().LoadObjectLevelCount(SceneManager.GetActiveScene().buildIndex) > 0)
+            speedMax *= FindObjectOfType<KillCount>().LoadObjectLevelCount(SceneManager.GetActiveScene().buildIndex) * 0.2f;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -49,36 +56,45 @@ public class Forward : MonoBehaviour
         }
         else
         {
-#if UNITY_EDITOR
             // Код для режиму редактора Unity
-            speed = speedMax;
-#else
-    speed = speedMax * 7;
-#endif
             isStunned = false;
             player = GameObject.FindWithTag("Player");
-            colliders = new Collider2D[10];
         }
+        path = GetComponent<AIPath>();
+        destination = GetComponent<AIDestinationSetter>();
+        destination.target = player.transform;
+        path.maxSpeed = speedMax;
     }
 
     public void FindEnemy()
     {
-        int colliderCount = Physics2D.OverlapCircleNonAlloc(gameObject.transform.position, 16f, colliders);
+        // Отримуємо всі колайдери, які перетинають колайдер об'єкта
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(gameObject.transform.position, 16f);
 
-        for (int i = 0; i < colliderCount; i++)
+        // По замовчуванню ми не знаходимо ворога
+        enemyFinded = false;
+
+        foreach (Collider2D collider in colliders)
         {
-            Collider2D collider = colliders[i];
-
-            if (collider.isTrigger != true && collider.CompareTag("Enemy") && collider.transform.parent.gameObject != gameObject)
+            // Перевіряємо, чи колайдер належить ворогові, а не цьому ж об'єкту або гравцеві
+            if (collider.CompareTag("Enemy") && collider.gameObject != gameObject && collider.gameObject != player)
             {
                 HealthPoint healthPoint = collider.GetComponent<HealthPoint>();
-
                 if (healthPoint != null)
                 {
-                    player = collider.gameObject;
+                    enemy = collider.gameObject;
                     enemyFinded = true;
+                    protectPlayer = false;
+                    // Виходимо з циклу, оскільки знайшли ворога
+                    break;
                 }
             }
+        }
+
+        // Якщо не знайдено ворога, встановлюємо protectPlayer в true
+        if (!enemyFinded)
+        {
+            protectPlayer = true;
         }
     }
     bool IsObjectOutsideCameraBounds(GameObject obj)
@@ -95,23 +111,18 @@ public class Forward : MonoBehaviour
     }
     public void MoveEnd()
     {
+        path.maxSpeed = speedMax;
         isShooted = false;
-        Body.velocity = Vector2.zero;
     }
 
     public void StopMove()
     {
-        speed = 0;
+        path.maxSpeed = 0;
     }
 
     public void StartMove()
     {
-#if UNITY_EDITOR
-        // Код для режиму редактора Unity
-        speed = speedMax;
-#else
-    speed = speedMax * 7;
-#endif
+        path.maxSpeed = speedMax;
     }
 
     // Update is called once per frame
@@ -119,8 +130,6 @@ public class Forward : MonoBehaviour
     {
         if (!isChaising)
         {
-
-
             if (IsObjectOutsideCameraBounds(gameObject))
             {
                 anim.enabled = false;
@@ -131,18 +140,18 @@ public class Forward : MonoBehaviour
             }
             if (isShooted)
             {
-                Invoke("MoveEnd", 0.2f);
+                Invoke("MoveEnd", 0.1f);
             }
 
             if (isSummoned)
             {
                 summonTime -= Time.deltaTime;
 
-                if (!enemyFinded || player == null)
+                if (!enemyFinded || enemy == null)
                 {
                     FindEnemy();
                 }
-
+                
                 if (summonTime <= 0)
                 {
                     isSummoned = false;
@@ -156,19 +165,20 @@ public class Forward : MonoBehaviour
                 }
             }
 
-            if (player == null)
-            {
-                player = GameObject.FindWithTag("Player");
-            }
+           
 
             if (isStunned)
             {
                 Stuned();
             }
 
-            if (!isFly && !isShooted)
+            if (!isFly && !isShooted && !isSummoned)
             {
-                Body.MovePosition(Vector2.MoveTowards(Body.position, player.transform.position, speed * Time.deltaTime));
+                destination.target = player.transform;
+            }
+            else
+            {
+                destination.target = enemy.transform;
             }
 
             if (Body.position.x < player.transform.position.x)
@@ -180,26 +190,7 @@ public class Forward : MonoBehaviour
                 Body.transform.rotation = Quaternion.Euler(0, 180, 0);
             }
 
-            float distanceToEnemy = Vector3.Distance(player.transform.position, transform.position);
-
-            if (distanceToEnemy < showDistance)
-            {
-                LocationPoint.SetActive(false);
-            }
-            else
-            {
-                LocationPoint.SetActive(true);
-
-                Vector3 direction = transform.position - player.transform.position;
-                direction = direction.normalized * circleRadius;
-
-                Vector3 targetPosition = player.transform.position + direction;
-
-                LocationPoint.transform.position = targetPosition;
-
-                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                LocationPoint.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-            }
+           
         }
         else
         {
@@ -234,18 +225,14 @@ public class Forward : MonoBehaviour
     {
         if (stunnTime <= 0)
         {
-#if UNITY_EDITOR
             // Код для режиму редактора Unity
-            speed = speedMax;
-#else
-    speed = speedMax * 7;
-#endif
+            path.maxSpeed = speedMax;
             isStunned = false;
             stunnTime = stunnTimeMax;
         }
         else
         {
-            speed = 0;
+            path.maxSpeed = 0;
             stunnTime -= Time.deltaTime;
         }
     }
@@ -253,5 +240,24 @@ public class Forward : MonoBehaviour
     public void Relocate(Transform pos)
     {
         gameObject.transform.position = new Vector2(pos.position.x, pos.position.y + 10);
+    }
+    public void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player") && collision.isTrigger && protectPlayer && isSummoned && collision.GetComponent<Expirience>().isEnemyInZone > 0)
+        {
+            Debug.Log(1);
+            Vector3 position = player.transform.position + new Vector3(Mathf.Cos(Time.time * 2) * 10, Mathf.Sin(Time.time * 2) * 10, 0f);
+        }
+        else if (collision.CompareTag("Player") && collision.isTrigger && protectPlayer && isSummoned && collision.GetComponent<Expirience>().isEnemyInZone <= 0)
+        {
+            Debug.Log(2);
+        }
+    }
+    public void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player") && collision.isTrigger && protectPlayer && isSummoned)
+        {
+            Debug.Log(3);
+        }
     }
 }
