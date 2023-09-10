@@ -265,6 +265,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levels: []
   levelsRead: []
+  hashing: {fileID: 0}
 --- !u!1 &3899431837453868825
 GameObject:
   m_ObjectHideFlags: 0
@@ -736,7 +737,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4687970876103459451}
         m_TargetAssemblyTypeName: RestartGame, Assembly-CSharp
-        m_MethodName: Restart
+        m_MethodName: OpenOtherScene
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -813,7 +814,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 77aea71285acb0c438793abb28da8154, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d087692d26fa54c4091b71be133ebba3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -867,13 +868,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 4687970876103459451}
+        m_TargetAssemblyTypeName: RestartGame, Assembly-CSharp
+        m_MethodName: Restart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

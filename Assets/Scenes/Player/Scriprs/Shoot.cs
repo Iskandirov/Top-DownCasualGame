@@ -47,7 +47,7 @@ public class Shoot : MonoBehaviour
                 mousePosition.z = 0f;  // Закріплюємо координату Z на площині
 
                 // Створюємо об'єкт з використанням префабу
-                Bullet newObject = Instantiate(bullet, ShootPointObj.transform.position, Quaternion.identity);
+                Bullet newObject = Instantiate(bullet, transform.position, Quaternion.identity);
                 newObject.damage = damageToGive;
                 newObject.isPiers = isLevelFive;
                 if (isLevelTwo)
@@ -86,7 +86,7 @@ public class Shoot : MonoBehaviour
     public void CreateBullet()
     {
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Bullet newObject = Instantiate(bullet, shoot.transform.position, Quaternion.identity);
+        Bullet newObject = Instantiate(bullet, transform.position, Quaternion.identity);
         newObject.damage = damageToGive;
         newObject.isPiers = isLevelFive;
 

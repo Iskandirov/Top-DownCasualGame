@@ -32,12 +32,12 @@ public class DestroyBarrier : MonoBehaviour
                     if (player.playerHealthPoint + heal * Grass <= player.playerHealthPointMax)
                     {
                         player.playerHealthPoint += heal * Grass;
-                        player.playerHealthPointImg.fillAmount = player.playerHealthPoint / player.playerHealthPointMax;
+                        player.playerHealthPointImg.PlusProgressBar(player.playerHealthPoint);
                     }
                     else
                     {
                         player.playerHealthPoint = player.playerHealthPointMax;
-                        player.playerHealthPointImg.fillAmount = player.playerHealthPoint / player.playerHealthPointMax;
+                        player.playerHealthPointImg.PlusProgressBar(player.playerHealthPoint);
                     }
                 }
             }

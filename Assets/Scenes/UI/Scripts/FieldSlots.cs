@@ -15,9 +15,11 @@ public class FieldSlots : MonoBehaviour
     public TextMeshProUGUI priceTxt;
     public TextMeshProUGUI coinsTxt;
     GetScore objScore;
+    DataHashing hashing;
     // Start is called before the first frame update
     void Start()
     {
+        hashing = FindObjectOfType<DataHashing>();
         data = FindObjectOfType<LoadItemData>();
         priceStart = price;
         childrenBtn.interactable = false;
@@ -58,7 +60,8 @@ public class FieldSlots : MonoBehaviour
                 int index = 0;
                 foreach (string line in lines)
                 {
-                    SavedObjectData data = JsonUtility.FromJson<SavedObjectData>(line);
+                    string decrypt = hashing.Decrypt(line);
+                    SavedObjectData data = JsonUtility.FromJson<SavedObjectData>(decrypt);
                     if (index < 3)
                     {
                         if (data.Name + " " + data.Level != remove)
@@ -78,7 +81,9 @@ public class FieldSlots : MonoBehaviour
                     }
                 }
                 // Записуємо оновлений масив рядків в файл
-                File.WriteAllLines(path, updatedLines.ToArray());
+                string jsonContent = string.Join("\n", updatedLines.ToArray());
+                string decryptedJson = hashing.Encrypt(jsonContent);
+                File.WriteAllText(path, decryptedJson);
                 //Створення нового обєкту
                 // Створюємо новий об'єкт SavedObjectData
                 foreach (string line in lines)
@@ -101,7 +106,8 @@ public class FieldSlots : MonoBehaviour
                         // Конвертуємо об'єкт в рядок JSON
                         string newLine = JsonUtility.ToJson(newItem);
                         // Додаємо новий рядок до кінця файлу
-                        File.AppendAllText(path, newLine + "\n");
+                        string encryptedJson = hashing.Encrypt(newLine);
+                        File.AppendAllText(path, encryptedJson + "\n");
                         break;
                     }
                 }
@@ -122,7 +128,8 @@ public class FieldSlots : MonoBehaviour
             string[] lines = File.ReadAllLines(path);
             foreach (string line in lines)
             {
-                SavedUpgradeImage data = JsonUtility.FromJson<SavedUpgradeImage>(line);
+                string decrypt = hashing.Decrypt(line);
+                SavedUpgradeImage data = JsonUtility.FromJson<SavedUpgradeImage>(decrypt);
                 if (data.IDRare == item.IDRare && data.ID == item.Level + 1)
                 {
                     return data.ImageSprite + " " + data.ID.ToString();

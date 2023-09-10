@@ -39,10 +39,12 @@ public class BeamSpawner : MonoBehaviour
             {
                 Beam b = Instantiate(beam, new Vector2(transform.position.x, transform.position.y - 5), Quaternion.Euler(0, 0, 90));
                 b.damage = damage;
+                b.img.transform.rotation = Quaternion.AngleAxis(-90f, Vector3.forward);
                 b.lifeTime = lifeTime;
                 b.Steam = SteamElement.Steam;
                 Beam c = Instantiate(beam, new Vector2(transform.position.x, transform.position.y + 5), Quaternion.Euler(0, 0, -90));
                 c.damage = damage;
+                c.img.transform.rotation = Quaternion.AngleAxis(90f, Vector3.forward);
                 c.lifeTime = lifeTime;
                 c.Steam = SteamElement.Steam;
             }

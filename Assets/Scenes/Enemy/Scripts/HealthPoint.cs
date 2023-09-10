@@ -33,7 +33,7 @@ public class HealthPoint : MonoBehaviour
     public float dangerLevel;
 
     private Camera mainCamera;
-    float spawnRadius = 30f;
+    float spawnRadius = 80f;
 
     [Header("Boss Anim")]
     public Boss_Destroy bodyAnimBoss;
@@ -61,9 +61,11 @@ public class HealthPoint : MonoBehaviour
     public float ColdStart;
 
     public GameObject debuffsParent;
+    Timer defeatBoss;
     // Start is called before the first frame update
     void Start()
     {
+        healthPoint = healthPointMax;
         if (bodyAnimBoss != null)
         {
             objPart = GetComponent<CutThePart>();
@@ -74,6 +76,7 @@ public class HealthPoint : MonoBehaviour
         objDrop = GetComponentInParent<DropItems>();
         objMove = GetComponentInParent<Forward>();
         objKills = FindObjectOfType<KillCount>();
+        defeatBoss = FindObjectOfType<Timer>();
     }
    
 
@@ -167,7 +170,8 @@ public class HealthPoint : MonoBehaviour
                     a.expBuff = expGiven * dangerLevel;
                     objExp.expiriencepoint.fillAmount += expGiven * dangerLevel / objExp.expNeedToNewLevel;
                     objKills.score += 1;
-                    Destroy(gameObject.transform.root.gameObject);
+                    defeatBoss.isBossDefeated = true;
+                    Destroy(transform.root.gameObject);
                 }
             }
             else
@@ -178,17 +182,27 @@ public class HealthPoint : MonoBehaviour
                 objExp.expiriencepoint.fillAmount += expGiven * dangerLevel / objExp.expNeedToNewLevel;
                 objKills.score += 1;
                 mainCamera = Camera.main;
+                if (objMove != null)
+                {
+                    // Генеруємо випадкові координати в межах заданої області спавну
+                    Vector3 spawnPosition = GetRandomSpawnPosition();
+                    objMove.transform.position = spawnPosition;
+                    healthPoint = healthPointMax;
 
-                // Генеруємо випадкові координати в межах заданої області спавну
-                Vector3 spawnPosition = GetRandomSpawnPosition();
-                objMove.transform.position = spawnPosition;
-
-                healthPoint = healthPointMax;
+                }
+                else
+                {
+                    
+                    Destroy(transform.parent.gameObject);
+                }
             }
-            GetComponentInParent<ElementActiveDebuff>().DeactiveDebuff();
-            foreach (Transform item in debuffsParent.transform)
+            if (GetComponentInParent<ElementActiveDebuff>() != null)
             {
-                item.GetComponentInChildren<DeactivateDebuff>().Destroy();
+                GetComponentInParent<ElementActiveDebuff>().DeactiveDebuff();
+                foreach (Transform item in debuffsParent.transform)
+                {
+                    item.GetComponentInChildren<DeactivateDebuff>().Destroy();
+                }
             }
         }
     }
@@ -205,6 +219,7 @@ public class HealthPoint : MonoBehaviour
             {
                 if (obj.GetComponent<CutThePart>().countParts == 1)
                 {
+                    defeatBoss.isBossDefeated = true;
                     objDrop.OnDestroyBoss();
                 }
                 obj.GetComponent<CutThePart>().countParts--;

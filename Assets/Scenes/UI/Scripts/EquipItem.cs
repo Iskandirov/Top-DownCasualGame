@@ -2,17 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Policy;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements.Experimental;
 
 public class EquipItem : MonoBehaviour
 {
     SavedEquipData equipedItenms;
     public List<string> updatedList;
-
+    DataHashing hashing;
     // Start is called before the first frame update
     void Start()
     {
+        hashing = FindObjectOfType<DataHashing>();
         equipedItenms = new SavedEquipData();
         string path = Path.Combine(Application.persistentDataPath, "EquipedItems.txt");
         if (!File.Exists(path) && equipedItenms.Name == null)
@@ -53,8 +56,8 @@ public class EquipItem : MonoBehaviour
                 updatedList.Clear();
                 foreach (string jsonLine in jsonLines)
                 {
-
-                    SavedEquipData data = JsonUtility.FromJson<SavedEquipData>(jsonLine);
+                    string decrypt = hashing.Decrypt(jsonLine);
+                    SavedEquipData data = JsonUtility.FromJson<SavedEquipData>(decrypt);
                     if (data.Tag != item.GetComponent<SetParametersToitem>().Tag)
                     {
                         updatedList.Add(jsonLine);
@@ -71,7 +74,9 @@ public class EquipItem : MonoBehaviour
                 }
 
                 // Записуємо оновлений масив рядків в файл після завершення циклу foreach
-                File.WriteAllLines(path, updatedList.ToArray());
+                string jsonContent = string.Join("\n", updatedList.ToArray());
+                string encryptedJson = hashing.Encrypt(jsonContent);
+                File.WriteAllText(path, encryptedJson);
             }
 
         }
@@ -88,12 +93,14 @@ public class EquipItem : MonoBehaviour
         data.Tag = equip.Tag;
 
         string jsonData = JsonUtility.ToJson(data);
-        writer.WriteLine(jsonData);
+        string decryptedJson = hashing.Encrypt(jsonData);
+        writer.WriteLine(decryptedJson);
         writer.Close();
     }
     private void SaveEquip()
     {
         string path = Path.Combine(Application.persistentDataPath, "EquipedItems.txt");
-        File.WriteAllText(path, String.Empty);
+        string decryptedJson = hashing.Encrypt(String.Empty);
+        File.WriteAllText(path, decryptedJson);
     }
 }

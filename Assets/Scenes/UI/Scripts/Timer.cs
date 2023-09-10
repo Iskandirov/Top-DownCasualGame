@@ -10,17 +10,25 @@ public class Timer : MonoBehaviour
     public GameObject WinPanelParent;
     public bool isShowed;
     TextMeshProUGUI text;
+    Move PanelChecker;
+    public bool isBossDefeated;
     // Start is called before the first frame update
     void Start()
     {
+        PanelChecker = FindObjectOfType<Move>();
         text = GetComponent<TextMeshProUGUI>();
         StartCoroutine(EndGame());
     }
     private IEnumerator EndGame()
     {
+        if (time > timeToWin && isBossDefeated)
+        {
+            Instantiate(WinPanel, WinPanelParent.transform.position, Quaternion.identity, WinPanelParent.transform);
+            PanelChecker.otherPanelOpened = true;
+        }
         yield return new WaitForSeconds(timeToWin);
         Instantiate(WinPanel, WinPanelParent.transform.position, Quaternion.identity, WinPanelParent.transform);
-
+        PanelChecker.otherPanelOpened = true;
     }
     // Update is called once per frame
     void Update()

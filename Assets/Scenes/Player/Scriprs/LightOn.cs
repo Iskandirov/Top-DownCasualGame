@@ -9,11 +9,11 @@ public class LightOn : MonoBehaviour
     //Check if pill eated
     public bool IsPillUp;
     public bool IsPillBuffed;
-
     [Header("GameObjects")]
     //GameObjects
     public GameObject pill;
     public GameObject spawner;
+
     Move objMove;
     Shoot objShoot;
     SpawnEnemy objSpawn;
@@ -23,7 +23,6 @@ public class LightOn : MonoBehaviour
     public bool IsPillOn;
     public bool IsLightOn;
     public bool IsPuddletOn;
-
     [Header("Timer for pills")]
     //Timer for pills
     public float step;
@@ -34,11 +33,9 @@ public class LightOn : MonoBehaviour
     public float stepGhost;
     public float stepGhostMax;
 
-
     public float attackSpeedBuff;
     public float moveSpeedBuff;
     public float dashTime;
-
     public Vector2 spawnAreaMin; // Мінімальні координати спавну
     public Vector2 spawnAreaMax; // Максимальні координати спавну
 
@@ -49,7 +46,7 @@ public class LightOn : MonoBehaviour
     void Start()
     {
         grassWindElement = transform.root.GetComponent<ElementsCoeficients>();
-        step = gameObject.GetComponent<CDSkillObject>().CD;
+        step = gameObject.GetComponent<CDSkillObject>().CD; 
         objMove = transform.root.GetComponent<Move>();
         objShoot = transform.root.GetComponent<Shoot>();
         objSpawn = FindObjectOfType<SpawnEnemy>();

@@ -7,7 +7,7 @@ public class ShowBehind : MonoBehaviour
     public int isSomeoneHere;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") || collision.CompareTag("Enemy"))
+        if ((collision.CompareTag("Player") || collision.CompareTag("Enemy")) && !collision.isTrigger)
         {
             isSomeoneHere++;
             // якщо немаЇ жодного об'Їкту всередин≥, зм≥нюЇмо прозор≥сть на нап≥впрозору
@@ -26,7 +26,7 @@ public class ShowBehind : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") || collision.CompareTag("Enemy"))
+        if ((collision.CompareTag("Player") || collision.CompareTag("Enemy")) && !collision.isTrigger)
         {
             isSomeoneHere--;
             // якщо б≥льше немаЇ об'Їкт≥в всередин≥, зм≥нюЇмо прозор≥сть назад на повну

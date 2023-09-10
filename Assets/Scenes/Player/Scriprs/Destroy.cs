@@ -16,7 +16,7 @@ public class Destroy : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         audioFlash = player.GetComponent<AudioSource>();
-        audioFlash.PlayOneShot(audioClip);
+        //audioFlash.PlayOneShot(audioClip);
 
         objSprite = GetComponent<SpriteRenderer>();
 

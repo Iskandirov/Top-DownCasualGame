@@ -265,6 +265,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levels: []
   levelsRead: []
+  hashing: {fileID: 0}
 --- !u!1 &3899431837453868825
 GameObject:
   m_ObjectHideFlags: 0
@@ -736,7 +737,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4687970876103459451}
         m_TargetAssemblyTypeName: RestartGame, Assembly-CSharp
-        m_MethodName: Restart
+        m_MethodName: OpenOtherScene
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

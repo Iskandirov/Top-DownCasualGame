@@ -11,7 +11,7 @@ public class KillCount : MonoBehaviour
     float updateInterval = 1.0f; // Інтервал оновлення в секундах
     float lastUpdateTime = 0.0f;
 
-
+    public DataHashing hash;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,7 +40,8 @@ public class KillCount : MonoBehaviour
 
             for (int i = 0; i < lines.Length; i++)
             {
-                SavedLocationsData data = JsonUtility.FromJson<SavedLocationsData>(lines[i]);
+                string decrypt = hash.Decrypt(lines[i]);
+                SavedLocationsData data = JsonUtility.FromJson<SavedLocationsData>(decrypt);
 
                 if (data.IDLevel == objectID)
                 {

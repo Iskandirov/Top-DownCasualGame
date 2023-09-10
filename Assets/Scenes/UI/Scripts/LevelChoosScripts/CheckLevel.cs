@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using UnityEngine;
 
 public class CheckLevel : MonoBehaviour
@@ -8,8 +7,10 @@ public class CheckLevel : MonoBehaviour
     [SerializeField]
     public List<SavedLocationsData> levels = new List<SavedLocationsData>();
     public List<SavedLocationsData> levelsRead = new List<SavedLocationsData>();
+    public DataHashing hashing;
     private void Start()
     {
+        hashing = FindObjectOfType<DataHashing>();
         string path = Path.Combine(Application.persistentDataPath, "Levels.txt");
         if (!File.Exists(path))
         {
@@ -27,13 +28,11 @@ public class CheckLevel : MonoBehaviour
             // Перебір кожного запису і заміна шляху до зображення на зображення зі списку sprites
             foreach (string jsonLine in lines)
             {
-                SavedLocationsData data = JsonUtility.FromJson<SavedLocationsData>(jsonLine);
+                // Розшифрувати JSON рядок
+                string decryptedJson = hashing.Decrypt(jsonLine);
+                SavedLocationsData data = JsonUtility.FromJson<SavedLocationsData>(decryptedJson);
                 itemsRead.Add(data);
             }
-        }
-        else
-        {
-            File.Create(path);
         }
     }
 
@@ -41,73 +40,114 @@ public class CheckLevel : MonoBehaviour
     private void SaveInventory()
     {
         string path = Path.Combine(Application.persistentDataPath, "Levels.txt");
-        StreamWriter writer = new StreamWriter(path, true);
-
-        SavedLocationsData data = new SavedLocationsData();
-        foreach (SavedLocationsData item in levels)
+        using (StreamWriter writer = new StreamWriter(path, true))
         {
-            data.IDLevel = item.IDLevel;
-            data.percent = item.percent;
-            data.countOfCount = item.countOfCount;
-            data.countOfCountMax = item.countOfCountMax;
-            data.isFullDone = item.isFullDone;
+
+            SavedLocationsData data = new SavedLocationsData();
+            foreach (SavedLocationsData item in levels)
+            {
+                data.IDLevel = item.IDLevel;
+                data.percent = item.percent;
+                data.countOfCount = item.countOfCount;
+                data.countOfCountMax = item.countOfCountMax;
+                data.isFullDone = item.isFullDone;
 
 
-            string jsonData = JsonUtility.ToJson(data);
-            writer.WriteLine(jsonData);
+                string jsonData = JsonUtility.ToJson(data);
+                string decryptedJson = hashing.Encrypt(jsonData);
+                writer.WriteLine(decryptedJson);
+            }
+            writer.Close();
         }
-        writer.Close();
-
     }
     public void SaveInventory(int level, int percent)
     {
         string path = Path.Combine(Application.persistentDataPath, "Levels.txt");
-        string[] lines = File.ReadAllLines(path);
-        bool objectFound = false;
 
-        for (int i = 0; i < lines.Length; i++)
+        List<SavedLocationsData> updatedData = new List<SavedLocationsData>();
+
+        if (File.Exists(path))
         {
-            SavedLocationsData data = JsonUtility.FromJson<SavedLocationsData>(lines[i]);
+            string[] lines = File.ReadAllLines(path);
+
+            foreach (string line in lines)
+            {
+                string decryptedJson = hashing.Decrypt(line);
+                SavedLocationsData data = JsonUtility.FromJson<SavedLocationsData>(decryptedJson);
+
+                if (data.IDLevel == level)
+                {
+                    data.percent = percent;
+                }
+
+                updatedData.Add(data);
+            }
+        }
+
+        // Add or update the data if not found
+        bool found = false;
+        foreach (SavedLocationsData data in updatedData)
+        {
             if (data.IDLevel == level)
             {
                 data.percent = percent;
-                lines[i] = JsonUtility.ToJson(data);
-                objectFound = true;
-
+                found = true;
                 break;
             }
         }
 
-        if (!objectFound)
+        if (!found)
         {
             SavedLocationsData newData = new SavedLocationsData();
             newData.IDLevel = level;
-            newData.percent = 0;
-            List<string> updatedLines = lines.ToList();
-            updatedLines.Add(JsonUtility.ToJson(newData));
-            lines = updatedLines.ToArray();
+            newData.percent = percent;
+            updatedData.Add(newData);
         }
 
-        File.WriteAllLines(path, lines);
+        // Write the updated data back to the file
+        using (StreamWriter writer = new StreamWriter(path, false))
+        {
+            foreach (SavedLocationsData data in updatedData)
+            {
+                string jsonData = JsonUtility.ToJson(data);
+                string encryptedJson = hashing.Encrypt(jsonData);
+                writer.WriteLine(encryptedJson);
+            }
+        }
     }
     public void CheckPercent(int level, int percentNew)
     {
+        hashing = FindObjectOfType<DataHashing>();
         string path = Path.Combine(Application.persistentDataPath, "Levels.txt");
-        string[] lines = File.ReadAllLines(path);
-        for (int i = 0; i < lines.Length; i++)
+
+        if (File.Exists(path))
         {
-            SavedLocationsData data = JsonUtility.FromJson<SavedLocationsData>(lines[i]);
-            if (data.IDLevel == level && data.percent < percentNew)
+            string[] lines = File.ReadAllLines(path);
+            List<string> updatedLines = new List<string>();
+
+            foreach (string line in lines)
             {
-                data.percent = percentNew;
-                if (percentNew >= 100)
+                string decrypt = hashing.Decrypt(line);
+                SavedLocationsData data = JsonUtility.FromJson<SavedLocationsData>(decrypt);
+
+                if (data.IDLevel == level && data.percent < percentNew)
                 {
-                    data.percent = 0;
+                    data.percent = percentNew;
+                    if (percentNew >= 100)
+                    {
+                        data.percent = 0;
+                    }
+                    string encryptedJson = hashing.Encrypt(JsonUtility.ToJson(data));
+                    updatedLines.Add(encryptedJson);
                 }
-                lines[i] = JsonUtility.ToJson(data);
-                break;
+                else
+                {
+                    updatedLines.Add(line); // Додаємо незмінений рядок до списку
+                }
             }
+
+            // Замінюємо вміст файлу новим списком рядків
+            File.WriteAllLines(path, updatedLines);
         }
-        File.WriteAllLines(path, lines);
     }
 }

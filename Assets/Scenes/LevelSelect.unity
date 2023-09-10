@@ -138,6 +138,7 @@ GameObject:
   - component: {fileID: 202413664}
   - component: {fileID: 202413663}
   - component: {fileID: 202413666}
+  - component: {fileID: 202413667}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -231,6 +232,8 @@ MonoBehaviour:
   dataSett: []
   IsSettingsPage: 0
   volume: 0
+  vSync: 0
+  hashing: {fileID: 202413667}
 --- !u!114 &202413664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,6 +315,20 @@ MonoBehaviour:
     percent: 0
     isFullDone: 0
   levelsRead: []
+--- !u!114 &202413667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 202413658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe021d77799e4064caa033c6efcf6dc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: b151434d44cef4d15394294095127f67e23a32ef9914b48e1a030257a4c17c6d
+  iv: 6e7d148ed54ac05985b2bbd900107367
 --- !u!1 &335669562
 GameObject:
   m_ObjectHideFlags: 0
@@ -823,10 +840,10 @@ MonoBehaviour:
   selectPanelObjID: 0
   isScrolling: 0
   descriptionImage:
-  - {fileID: 21300000, guid: a19213237be24164e9065adaff45280e, type: 3}
-  - {fileID: 21300000, guid: a19213237be24164e9065adaff45280e, type: 3}
-  - {fileID: 21300000, guid: a19213237be24164e9065adaff45280e, type: 3}
-  - {fileID: 21300000, guid: a19213237be24164e9065adaff45280e, type: 3}
+  - {fileID: 21300000, guid: 13c2a6d0204f31045b243290972bc167, type: 3}
+  - {fileID: 21300000, guid: 13c2a6d0204f31045b243290972bc167, type: 3}
+  - {fileID: 21300000, guid: 13c2a6d0204f31045b243290972bc167, type: 3}
+  - {fileID: 21300000, guid: 13c2a6d0204f31045b243290972bc167, type: 3}
   sceneValue: 060000000700000008000000e7030000
   descriptionObjText: []
   descriptionObjImage: []
@@ -1191,15 +1208,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.33333334, g: 0.20784315, b: 0.3019608, a: 1}
+  m_Color: {r: 0.764151, g: 0.764151, b: 0.764151, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 51b45bad03ea7384da4766f1043b1f47, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4

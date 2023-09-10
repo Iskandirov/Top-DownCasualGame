@@ -102,8 +102,21 @@ public class SavedSkillsData
     public string tagRare;
     public List<string> Description;
     public List<float> stat1;
-    
 }
+[System.Serializable]
+public class SaveEnemyInfo
+{
+    public string Name;
+    public Sprite Image;
+    public float Health;
+    public float Damage;
+    public float MoveSpeed;
+    public string Attack;
+    public int ID;
+    public bool Showed;
+}
+
+
 
 
 

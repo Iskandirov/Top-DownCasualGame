@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Policy;
 using UnityEngine;
 
 public class UpgradeObjInfo : MonoBehaviour
@@ -7,8 +8,10 @@ public class UpgradeObjInfo : MonoBehaviour
     [SerializeField]
     private List<SavedHouseholditemsData> items = new List<SavedHouseholditemsData>();
     public List<SavedHouseholditemsData> itemsRead = new List<SavedHouseholditemsData>();
+    DataHashing hash;
     private void Awake()
     {
+        hash = FindObjectOfType<DataHashing>();
         string path = Path.Combine(Application.persistentDataPath, "HouseHold.txt");
         if (!File.Exists(path))
         {
@@ -22,12 +25,14 @@ public class UpgradeObjInfo : MonoBehaviour
         string path = Path.Combine(Application.persistentDataPath, "HouseHold.txt");
         if (File.Exists(path))
         {
+
             string[] lines = File.ReadAllLines(path);
 
             // Перебір кожного запису і заміна шляху до зображення на зображення зі списку sprites
             foreach (string jsonLine in lines)
             {
-                SavedHouseholditemsData data = JsonUtility.FromJson<SavedHouseholditemsData>(jsonLine);
+                string decrypt = hash.Decrypt(jsonLine);
+                SavedHouseholditemsData data = JsonUtility.FromJson<SavedHouseholditemsData>(decrypt);
 
                 data.UpgradeLevelImage.Add(Resources.Load<Sprite>(data.name + "_" + data.levelUpgrade));
                 itemsRead.Add(data);
@@ -55,7 +60,8 @@ public class UpgradeObjInfo : MonoBehaviour
             
 
             string jsonData = JsonUtility.ToJson(data);
-            writer.WriteLine(jsonData);
+            string decrypt = hash.Encrypt(jsonData);
+            writer.WriteLine(decrypt);
         }
         writer.Close();
 
@@ -64,19 +70,20 @@ public class UpgradeObjInfo : MonoBehaviour
     {
         string path = Path.Combine(Application.persistentDataPath, "HouseHold.txt");
         string[] lines = File.ReadAllLines(path);
-
+        string[] encryptedJson = new string[lines.Length];
         for (int i = 0; i < lines.Length; i++)
         {
-            SavedHouseholditemsData data = JsonUtility.FromJson<SavedHouseholditemsData>(lines[i]);
+            string decrypt = hash.Decrypt(lines[i]);
+            SavedHouseholditemsData data = JsonUtility.FromJson<SavedHouseholditemsData>(decrypt);
 
             if (data.IDObject == ID)
             {
                 data.levelUpgrade = level;
                 lines[i] = JsonUtility.ToJson(data);
+                encryptedJson[i] = hash.Encrypt(lines[i]); // Заповнюємо масив шифрованими даними
                 break;
             }
         }
-
-        File.WriteAllLines(path, lines);
+        File.WriteAllLines(path, encryptedJson);
     }
 }

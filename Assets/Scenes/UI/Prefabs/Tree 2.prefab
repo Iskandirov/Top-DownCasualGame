@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 629791994876533593}
   - component: {fileID: 8949316829719176726}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bush (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,7 +135,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -1.4, y: -1.5}
+  m_Offset: {x: -1.4, y: -0.78}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -146,8 +146,8 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 21.18, y: 17.62}
-  m_EdgeRadius: 0
+  m_Size: {x: 13.4, y: 12.21}
+  m_EdgeRadius: 1.4
 --- !u!58 &3162221353454294232
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -180,6 +180,7 @@ MonoBehaviour:
   - {fileID: 8949316829719176726}
   - {fileID: 2039158587736836054}
   - {fileID: 5216329598279902995}
+  - {fileID: 2628989792740533351}
   isSomeoneHere: 0
 --- !u!1 &4958481139756893944
 GameObject:
@@ -191,7 +192,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7919678450023201636}
   - component: {fileID: 5216329598279902995}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bush (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -251,8 +252,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -615793817
-  m_SortingLayer: 1
+  m_SortingLayerID: 1713113091
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 7443deade99b69e439383a8dbb71eb08, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -275,7 +276,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8412568425198377583}
   - component: {fileID: 2628989792740533351}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bush (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -335,8 +336,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -615793817
-  m_SortingLayer: 1
+  m_SortingLayerID: 1713113091
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 02d86df65a8ec1a4b839a412c5cbaf49, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -359,7 +360,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7768808110874298741}
   - component: {fileID: 2039158587736836054}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bush (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -419,8 +420,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -615793817
-  m_SortingLayer: 1
+  m_SortingLayerID: 1713113091
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: e3df8d3f040ce644a96a92ed2a9adba1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

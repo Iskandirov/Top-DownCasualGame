@@ -31,9 +31,11 @@ public class Move : MonoBehaviour
 
     public bool isSlowingDown = false;
     public float slowdownEndTime;
+    public float slowPercent;
     public float axisX;
     public float axisY;
 
+    public bool otherPanelOpened;
     // Start is called before the first frame update
     void Start()
     {
@@ -51,24 +53,29 @@ public class Move : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //move
         if (!isDashing)
         {
             rb.position = PlayerMove();
 
         }
-        if (Input.GetKeyUp(KeyCode.Escape) && playerHealth.playerHealthPoint > 0)
+        //can`t press pause after lose
+        if (Input.GetKeyUp(KeyCode.Escape) && playerHealth.playerHealthPoint > 0 && !otherPanelOpened)
         {
             if (!escPanelIsShowed)
             {
                 escPanelInstance = Instantiate(escPanel, escPanelParent.transform);
                 escPanelIsShowed = true;
+                otherPanelOpened = true;
             }
             else
             {
+                otherPanelOpened = false;
                 escPanelIsShowed = false;
                 Destroy(escPanelInstance);
             }
         }
+        //Dash
         if (Input.GetKeyDown(KeyCode.LeftShift) && !isReloading && !isDashing)
         {
             isReloading = true;
@@ -78,13 +85,24 @@ public class Move : MonoBehaviour
             Invoke(nameof(StopDashing), 0.2f);
             dashTime = dashTimeMax;
         }
-
+        //Dash reload
         if (isReloading)
         {
             dashTime -= Time.deltaTime;
             if (dashTime <= 0)
             {
                 isReloading = false;
+            }
+        }
+        //player slow
+        if (isSlowingDown)
+        {
+            slowdownEndTime -= Time.deltaTime;
+            speed = speedMax * slowPercent;
+            if (slowdownEndTime <= 0)
+            {
+                speed = speedMax;
+                isSlowingDown = false;
             }
         }
     }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
+using UnityEngine.UIElements.Experimental;
 
 public class PoolItems : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class PoolItems : MonoBehaviour
     private List<SavedUpgradeImage> upgrades = new List<SavedUpgradeImage>();
     public List<SavedObjectData> itemsRead = new List<SavedObjectData>();
 
+    public DataHashing hashing;
     private void Awake()
     {
         string path = Path.Combine(Application.persistentDataPath, "ItemInventory.txt");
@@ -35,12 +37,14 @@ public class PoolItems : MonoBehaviour
             // Перебір кожного запису і заміна шляху до зображення на зображення зі списку sprites
             foreach (string jsonLine in lines)
             {
-                SavedObjectData data = JsonUtility.FromJson<SavedObjectData>(jsonLine);
+                // Розшифрувати JSON рядок
+                string decryptedJson = hashing.Decrypt(jsonLine);
+
+                SavedObjectData data = JsonUtility.FromJson<SavedObjectData>(decryptedJson);
 
                 data.ImageSprite = Resources.Load<Sprite>(data.Name);
 
                 data.RareSprite = Resources.Load<Sprite>(data.RareName + " " + data.Level);
-
                 itemsRead.Add(data);
             }
         }
@@ -67,7 +71,8 @@ public class PoolItems : MonoBehaviour
             data.RareTag = item.RareTag;
 
             string jsonData = JsonUtility.ToJson(data);
-            writer.WriteLine(jsonData);
+            string decryptedJson = hashing.Encrypt(jsonData);
+            writer.WriteLine(decryptedJson);
         }
         writer.Close();
 
@@ -84,7 +89,8 @@ public class PoolItems : MonoBehaviour
             data.IDRare = item.IDRare;
 
             string jsonData = JsonUtility.ToJson(data);
-            writer.WriteLine(jsonData);
+            string decryptedJson = hashing.Encrypt(jsonData);
+            writer.WriteLine(decryptedJson);
         }
         writer.Close();
     }

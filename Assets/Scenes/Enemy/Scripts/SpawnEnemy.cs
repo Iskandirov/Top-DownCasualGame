@@ -1,15 +1,19 @@
-using System.Linq;
+﻿using System.Linq;
 using UnityEngine;
 
 public class SpawnEnemy : MonoBehaviour
 {
     public float timeStep;
+    public float timeStepWeed;
     public float timeToNewType;
     public float timeToNewTypeStart;
     public int enemyTypeSpawn;
     [SerializeField] float time;
     [SerializeField] float timeGost;
     public GameObject[] EnemyBody;
+    public MoveToPlayerStartPos tumbleweed;
+    public SnipetreeAttack sniperTree;
+    public Collider2D spawnMapBound;
     public Timer Timer;
     public bool stopSpawn;
     //public KillCount countEnemy;
@@ -19,17 +23,27 @@ public class SpawnEnemy : MonoBehaviour
     public float enemyCountMax;
     public float[] enemyCountType;
 
+    Transform player;
+
+    public float radius = 5.0f;
+    public EnemyInfoLoader enemyInfo;
+
     private void Start()
     {
         enemyCountType = new float[EnemyBody.Length];
         timeToNewType = timeToNewTypeStart;
+        player = FindObjectOfType<Move>().transform;
     }
 
     private void FixedUpdate()
     {
-        
         mainCamera = Camera.main;
-        SpawnEnemies();
+        time += Time.deltaTime;
+        timeStepWeed += Time.deltaTime;
+        if (time >= timeStep && !stopSpawn)
+        {
+            ActivateSpawners();
+        }
     }
 
     private Bounds GetCameraBounds()
@@ -54,7 +68,7 @@ public class SpawnEnemy : MonoBehaviour
 
     private bool IsInsideWallBounds(Vector3 position)
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(position, 0.1f); // ������������� OverlapCircleAll ������ OverlapPointAll
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(position, 0.1f); // Використовуємо OverlapCircleAll замість OverlapPointAll
         foreach (Collider2D collider in colliders)
         {
             if (collider.CompareTag("Wall"))
@@ -78,30 +92,100 @@ public class SpawnEnemy : MonoBehaviour
         return spawnPosition;
     }
 
-    private void SpawnEnemies()
+    private void SpawnTumbleweed()
     {
-        time += Time.deltaTime;
-        Bounds cameraBounds = GetCameraBounds();
+        if (timeStepWeed > 10)
+        {
+            if (enemyInfo.CheckInfo(enemyTypeSpawn))
+            {
+                enemyInfo.FillInfo(enemyTypeSpawn);
+                enemyInfo.enemyInfoLoad.Clear();
+                enemyInfo.LoadEnemyInfo();
+            }
+            Bounds cameraBounds = GetCameraBounds();
+            Vector3 spawnPosition = GetRandomSpawnPosition(cameraBounds);
+            for (int i = 0; i < 10; i++)
+            {
+                float angle = i * Mathf.PI * 2 / 10; // Розраховуємо кут між об'єктами
+                spawnPosition += new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * radius; // Обчислюємо позицію для спавну
+
+                MoveToPlayerStartPos a = Instantiate(tumbleweed, spawnPosition, Quaternion.identity, transform);
+                a.target = player;
+            }
+            timeStepWeed = 0;
+            enemyCountType[1] += 1;
+        }
+    }
+    private void SpawnInWorldBound(GameObject obj, int id)
+    {
+        if (enemyCountType[id] <= 5)
+        {
+            // Отримуємо центр колайдера
+            Vector2 colliderCenter = spawnMapBound.bounds.center;
+
+            // Отримуємо випадкову точку всередині колайдера за допомогою Random.insideUnitCircle
+            Vector2 randomPointInsideCollider = colliderCenter + Random.insideUnitCircle * (spawnMapBound.bounds.extents.magnitude);
+
+            // Спавнуємо об'єкт на отриманій позиції
+            Instantiate(obj, randomPointInsideCollider, Quaternion.identity);
+            enemyCountType[id] += 1;
+        }
+    }
+    public void ActivateSpawners()
+    {
         if (stopSpawn)
         {
             ResetMobCount();
         }
-        if (time >= timeStep && !stopSpawn)
+        int i = Random.Range(0, enemyTypeSpawn);
+        switch (i)
         {
-            int i = Random.Range(0, enemyTypeSpawn);
+            case 0:
+                SpawnEnemies(0, 20);
+                break;
+            case 1:
+                SpawnTumbleweed();
+                break;
+            case 2:
+                SpawnEnemies(2, 15);
+                break;
+            case 3:
+                SpawnEnemies(3, 10);
+                break;
+            case 4:
+                SpawnInWorldBound(EnemyBody[5], 4);
+                break;
+            case 5:
+                SpawnInWorldBound(sniperTree.gameObject, 5);
+                break;
+            default:
+                break;
+        }
+        if (Timer.time >= timeToNewType && enemyTypeSpawn < EnemyBody.Length)
+        {
+            timeToNewType += timeToNewTypeStart;
+            enemyTypeSpawn++;
+        }
+        time = 0;
+    }
+    private void SpawnEnemies(int i, int maxCount)
+    {
+        if (enemyCountType[i] <= maxCount)
+        {
+
+            Bounds cameraBounds = GetCameraBounds();
             if (enemyCountType[i] < enemyCountMax)
             {
                 Vector3 spawnPosition = GetRandomSpawnPosition(cameraBounds);
                 Instantiate(EnemyBody[i], spawnPosition, Quaternion.identity, transform);
                 enemyCountType[i] += 1;
-                time = 0;
+                if (enemyInfo.CheckInfo(enemyTypeSpawn))
+                {
+                    enemyInfo.FillInfo(enemyTypeSpawn);
+                    enemyInfo.enemyInfoLoad.Clear();
+                    enemyInfo.LoadEnemyInfo();
+                }
             }
-        }
-
-        if (Timer.time >= timeToNewType && enemyTypeSpawn < EnemyBody.Length)
-        {
-            timeToNewType += timeToNewTypeStart;
-            enemyTypeSpawn++;
         }
     }
     public void ResetMobCount()
@@ -111,18 +195,25 @@ public class SpawnEnemy : MonoBehaviour
             enemyCountType[i] = 0;
         }
     }
-    public void SpawnEnemies(byte opacity,float speed,int health,float damage)
+    public void SpawnEnemies(byte opacity, float speed, int health, float damage)
     {
+        Bounds cameraBounds = GetCameraBounds();
+        Vector3 spawnPosition = GetRandomSpawnPosition(cameraBounds);
         timeGost += Time.deltaTime;
         if (timeGost >= timeStep)
         {
             int i = Random.Range(0, EnemyBody.Length);
-            GameObject enemy = Instantiate(EnemyBody[i], new Vector3(gameObject.transform.position.x + Random.Range(-30, 30), gameObject.transform.position.y + Random.Range(-30, 30), 1.8f), Quaternion.identity);
+            GameObject enemy = Instantiate(EnemyBody[i], spawnPosition, Quaternion.identity);
             enemy.GetComponentInChildren<SpriteRenderer>().color = new Color32(255, 255, 255, opacity);
-            enemy.GetComponent<Forward>().speed *= speed;
+            if (enemy.GetComponent<Forward>() != null)
+            {
+                enemy.GetComponent<Forward>().speed *= speed;
+            }
+            if (enemy.GetComponent<Attack>() != null)
+            {
+                enemy.GetComponent<Attack>().damage *= damage;
+            }
             enemy.GetComponentInChildren<HealthPoint>().healthPoint = health;
-            enemy.GetComponent<Attack>().damage *= damage;
-           
             timeGost = 0;
         }
     }

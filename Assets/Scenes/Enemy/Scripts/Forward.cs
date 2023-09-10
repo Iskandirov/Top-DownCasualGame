@@ -176,9 +176,9 @@ public class Forward : MonoBehaviour
             {
                 destination.target = player.transform;
             }
-            else
+            else if(isSummoned && !enemyFinded)
             {
-                destination.target = enemy.transform;
+                destination.target = null;
             }
 
             if (Body.position.x < player.transform.position.x)
@@ -243,21 +243,31 @@ public class Forward : MonoBehaviour
     }
     public void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && collision.isTrigger && protectPlayer && isSummoned && collision.GetComponent<Expirience>().isEnemyInZone > 0)
+        if (collision.CompareTag("Player") && collision.isTrigger && !protectPlayer && isSummoned && collision.GetComponent<Expirience>().isEnemyInZone > 0)
         {
-            Debug.Log(1);
-            Vector3 position = player.transform.position + new Vector3(Mathf.Cos(Time.time * 2) * 10, Mathf.Sin(Time.time * 2) * 10, 0f);
+            //Debug.Log("Attact enemy");
+            destination.target = enemy.transform;
         }
-        else if (collision.CompareTag("Player") && collision.isTrigger && protectPlayer && isSummoned && collision.GetComponent<Expirience>().isEnemyInZone <= 0)
+        else if (collision.CompareTag("Player") && collision.isTrigger && !protectPlayer && isSummoned && collision.GetComponent<Expirience>().isEnemyInZone <= 0)
         {
-            Debug.Log(2);
+            destination.target = player.transform;
+            //destination.target = null;
+
+            //float distance = 10f; // Відстань від початкової позиції
+            //Vector3 offset = new Vector3(Mathf.Cos(Time.time * 2) * distance, Mathf.Sin(Time.time * 2) * distance, 0f);
+            //// Визначте нову позицію, додавши зміщення до початкової позиції
+            //Vector3 newPosition = initialPosition + offset;
+            //transform.position = newPosition;
+
+            //Debug.Log("Protect player");
         }
     }
     public void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") && collision.isTrigger && protectPlayer && isSummoned)
         {
-            Debug.Log(3);
+            //Debug.Log("Go to player");
+            destination.target = player.transform;
         }
     }
 }

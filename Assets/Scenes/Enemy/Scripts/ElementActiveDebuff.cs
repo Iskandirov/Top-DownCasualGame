@@ -69,13 +69,20 @@ public class ElementActiveDebuff : MonoBehaviour
             DeactivateDebuff a = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
             a.GetComponent<SpriteRenderer>().sprite = fire;
             health.Water = health.WaterStart / 2;
-            attack.damage = attack.damageMax / 2;
+            if (attack != null)
+            {
+                attack.damage = attack.damageMax / 2;
+            }
             SetBool("isFire", false, false);
         }
         else if(!IsActive("isFire", true))
         {
             health.Water = health.WaterStart;
-            attack.damage = attack.damageMax;
+            if (attack != null)
+            {
+                attack.damage = attack.damageMax;
+
+            }
         }
 
         if (IsActive("isWater", true) && IsActive("isWind", true) && IsActive("isWater", false) && IsActive("isWind", false))
@@ -84,13 +91,19 @@ public class ElementActiveDebuff : MonoBehaviour
             a.GetComponent<SpriteRenderer>().sprite = water;
             DeactivateDebuff b = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
             b.GetComponent<SpriteRenderer>().sprite = wind;
-            attack.damage = attack.damageMax / 6;
-            SetBool("isWind", false, false);
+            if (attack != null)
+            {
+                attack.damage = attack.damageMax / 6;
+            }
+                SetBool("isWind", false, false);
             SetBool("isWater", false, false);
         }
         else if(!IsActive("isWater", true) && !IsActive("isWind", true))
         {
-            attack.damage = attack.damageMax;
+            if (attack != null)
+            {
+                attack.damage = attack.damageMax;
+            }
         }
 
         if (IsActive("isFire", true) && IsActive("isWater", true) && IsActive("isWater", false))
@@ -98,6 +111,7 @@ public class ElementActiveDebuff : MonoBehaviour
             SetBool("isSteam", true, true);
             SetBool("isSteam", true, false);
             SetBool("isWater", false, false);
+            SetBool("isFire", false, false);
         }
         else if(!IsActive("isFire", true) && !IsActive("isWater", true))
         {
@@ -109,13 +123,20 @@ public class ElementActiveDebuff : MonoBehaviour
         {
             DeactivateDebuff a = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
             a.GetComponent<SpriteRenderer>().sprite = cold;
-            move.speed = move.speedMax / 2;
+            if (move != null)
+            {
+                move.speed = move.speedMax / 2;
+            }
             health.Steam = health.SteamStart / 2;
             SetBool("isCold", false, false);
         }
-        else if(!IsActive("isCold", true))
+        else if (!IsActive("isCold", true))
         {
-            //SpeedNormalized();
+            if (move != null)
+            {
+                //SpeedNormalized();
+            }
+
         }
 
         if (IsActive("isSteam", true) && IsActive("isSteam", false))
@@ -132,16 +153,18 @@ public class ElementActiveDebuff : MonoBehaviour
             health.Water = health.WaterStart;
         }
 
-        if (IsActive("isWater",true) && IsActive("isElectricity", true) && IsActive("isWater", false) && IsActive("isElectricity", false))
+        if (IsActive("isWater", true) && IsActive("isElectricity", true) && IsActive("isWater", false) && IsActive("isElectricity", false))
         {
             DeactivateDebuff a = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
             a.GetComponent<SpriteRenderer>().sprite = water;
 
             DeactivateDebuff b = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
             b.GetComponent<SpriteRenderer>().sprite = electricity;
-
-            move.isStunned = true;
-            move.stunnTime = 2;
+            if (move != null)
+            {
+                move.isStunned = true;
+                move.stunnTime = 2;
+            }
             SetBool("isWater", false, true);
             SetBool("isElectricity", false, true);
             SetBool("isWater", false, false);

@@ -59,7 +59,7 @@ public class BossBullet : MonoBehaviour
             if (collision.gameObject.name == targetPrefabName && !collision.isTrigger)
             {
                 collision.GetComponent<Health>().playerHealthPoint -= damage;
-                collision.GetComponent<Health>().playerHealthPointImg.fillAmount -= damage / collision.GetComponent<Health>().playerHealthPointMax;
+                collision.GetComponent<Health>().playerHealthPointImg.MinusProgressBar(damage);
                 collision.GetComponent<Animator>().SetBool("IsHit", true);
                 Destroy(gameObject);
             }

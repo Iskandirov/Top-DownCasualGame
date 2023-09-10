@@ -18,7 +18,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy"))
+        if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
             //if (collision.gameObject.GetComponentInParent<ElementalBoss_Destroy>() || collision.GetComponent<HealthBossPart>())
             //{
@@ -33,8 +33,11 @@ public class Bullet : MonoBehaviour
             {
                 collision.GetComponent<HealthPoint>().healthPoint -= damage;
                 collision.GetComponent<HealthPoint>().ChangeToKick();
-                collision.GetComponentInParent<Forward>().isShooted = true;
-                collision.GetComponentInParent<Forward>().Body.AddForce(-(transform.position - collision.transform.position) * forceAmount, ForceMode2D.Impulse);
+                if (collision.GetComponentInParent<Forward>() != null)
+                {
+                    collision.GetComponentInParent<Forward>().isShooted = true;
+                    collision.GetComponentInParent<Forward>().Body.AddForce(-(transform.position - collision.transform.position) * forceAmount, ForceMode2D.Impulse);
+                }
                 if (!isPiers)
                 {
                     Destroy(gameObject);

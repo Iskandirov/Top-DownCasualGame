@@ -1,9 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
+using Newtonsoft.Json;
 using System.IO;
+using System.Security.Policy;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements.Experimental;
 
 public class GetScore : MonoBehaviour
 {
@@ -14,9 +15,11 @@ public class GetScore : MonoBehaviour
     public int percent;
     public bool scene;
     public bool isWinPanel;
+    DataHashing hash;
     // Start is called before the first frame update
     private void Awake()
     {
+        hash = FindObjectOfType<DataHashing>();
         Timer objTimer = FindObjectOfType<Timer>();
         if (objTimer)
         {
@@ -37,14 +40,14 @@ public class GetScore : MonoBehaviour
             score += LoadScore();
         }
         else
-        { 
+        {
             score += LoadScore();
             scoreEnd.text = score.ToString("0.");
         }
     }
     void Start()
     {
-        SaveScore((int)score,true);
+        SaveScore((int)score, true);
         if (scene)
         {
             gameObject.GetComponent<CheckLevel>().CheckPercent(SceneManager.GetActiveScene().buildIndex, percent);
@@ -61,7 +64,9 @@ public class GetScore : MonoBehaviour
             // Перебір кожного запису і заміна шляху до зображення на зображення зі списку sprites
             foreach (string jsonLine in lines)
             {
-                SavedEconomyData data = JsonUtility.FromJson<SavedEconomyData>(jsonLine);
+                string decrypt = hash.Decrypt(jsonLine);
+
+                SavedEconomyData data = JsonUtility.FromJson<SavedEconomyData>(decrypt);
 
                 money = data.money;
             }
@@ -77,21 +82,31 @@ public class GetScore : MonoBehaviour
     {
         string path = Path.Combine(Application.persistentDataPath, "Economy.txt");
 
-        SavedEconomyData data = new SavedEconomyData();
-        data.money = money;
-
-        string jsonData = JsonUtility.ToJson(data);
-
-        try
+        if (File.Exists(path))
         {
-            // Перезаписуємо весь файл з новим рядком даних
-            File.WriteAllText(path, jsonData);
+            using (StreamWriter writer = new StreamWriter(path))
+            {
+                SavedEconomyData data = new SavedEconomyData();
+                data.money = money;
+                string jsonData = JsonUtility.ToJson(data);
+
+                // Шифруємо дані перед записом у файл
+                string encryptedJson = hash.Encrypt(jsonData);
+
+                // Заміняємо WriteLine на Write
+                writer.Write(encryptedJson);
+            }
         }
-        catch (IOException e)
+        else
         {
-            Debug.LogError("Error writing to file: " + e.Message);
+            // Якщо файл не існує, створимо його
+            File.Create(path);
+
+            // І запишемо в нього дані
+            SaveScore(money, true);
         }
 
+        // Якщо гра закінчилася успішно, оновлюємо дані про пройдені рівні
         if (isInGame && isWinPanel)
         {
             string pathLocations = Path.Combine(Application.persistentDataPath, "Levels.txt");
@@ -105,7 +120,8 @@ public class GetScore : MonoBehaviour
                 int targetId = SceneManager.GetActiveScene().buildIndex;
                 for (int i = 0; i < lines.Length; i++)
                 {
-                    SavedLocationsData dataLocations = JsonUtility.FromJson<SavedLocationsData>(lines[i]);
+                    string decrypt = hash.Decrypt(lines[i]);
+                    SavedLocationsData dataLocations = JsonUtility.FromJson<SavedLocationsData>(decrypt);
                     if (dataLocations.IDLevel == targetId && dataLocations.countOfCount < 5)
                     {
                         dataLocations.countOfCount += 1;
@@ -114,8 +130,10 @@ public class GetScore : MonoBehaviour
                     }
                 }
 
-                // Записуємо оновлений вміст назад у файл
-                File.WriteAllLines(pathLocations, lines);
+                // Тепер шифруємо та зберігаємо змінені дані
+                string jsonContent = string.Join("\n", lines);
+                string encryptedJson = hash.Encrypt(jsonContent);
+                File.WriteAllText(pathLocations, encryptedJson);
             }
             catch (IOException e)
             {
@@ -123,7 +141,6 @@ public class GetScore : MonoBehaviour
             }
         }
     }
-
     public void SaveScore()
     {
         string path = Path.Combine(Application.persistentDataPath, "Economy.txt");
@@ -131,7 +148,8 @@ public class GetScore : MonoBehaviour
         SavedEconomyData data = new SavedEconomyData();
 
         string jsonData = JsonUtility.ToJson(data);
-        File.WriteAllText(path, jsonData);
+        string decryptedJson = hash.Encrypt(jsonData);
+        File.WriteAllText(path, decryptedJson);
     }
-    
+
 }

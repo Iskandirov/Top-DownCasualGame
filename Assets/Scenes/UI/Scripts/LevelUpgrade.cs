@@ -47,9 +47,12 @@ public class LevelUpgrade : MonoBehaviour
     SkillCDLink objLinkSpell;
     ElementsCoeficients cef;
     SavedSkillsData resultId;
+
+    Move PanelChecker;
     // Start is called before the first frame update
     private void Start()
     {
+        PanelChecker = FindObjectOfType<Move>();
         resultId = new SavedSkillsData();
         objShoot = GetComponentInParent<Shoot>();
         objLinkSpell = FindObjectOfType<SkillCDLink>();
@@ -555,6 +558,7 @@ public class LevelUpgrade : MonoBehaviour
         SkillIconsMax = skillsSave.Count;
         Time.timeScale = 1f;
         gameObject.SetActive(false);
+        PanelChecker.otherPanelOpened = false;
     }
     //Remove ability ID
     public void RemoveLine(int skillPoint)

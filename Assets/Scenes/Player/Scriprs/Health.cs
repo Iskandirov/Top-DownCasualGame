@@ -8,7 +8,7 @@ public class Health : MonoBehaviour
     public float playerHealthPoint;
     public float playerHealthPointMax;
     public float playerHealthRegeneration;
-    public Image playerHealthPointImg;
+    public HealthBar playerHealthPointImg;
     public RestartGame loseScene;
     public GameObject loseSceneParent;
     Animator objAnim;
@@ -23,10 +23,11 @@ public class Health : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerHealthRegeneration > 0 && playerHealthPointImg.fillAmount < 1)
+        if (playerHealthRegeneration > 0 && playerHealthPointImg.isNeedToMove)
         {
-            playerHealthPoint += playerHealthRegeneration / 100;
-            playerHealthPointImg.fillAmount = playerHealthPoint / playerHealthPointMax;
+            playerHealthPoint += playerHealthRegeneration / playerHealthPointMax;
+            playerHealthPointImg.PlusProgressBar(playerHealthRegeneration);
+            //playerHealthPointImg.fillAmount = playerHealthPoint / playerHealthPointMax;
         }
     }
    
@@ -36,6 +37,7 @@ public class Health : MonoBehaviour
         if (playerHealthPoint <= 0)
         {
             Instantiate(loseScene, loseSceneParent.transform.position, Quaternion.identity, loseSceneParent.transform);
+            GetComponent<Move>().otherPanelOpened = true;
         }
     }
 }

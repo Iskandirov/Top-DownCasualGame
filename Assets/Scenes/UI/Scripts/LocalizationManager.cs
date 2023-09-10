@@ -1,5 +1,8 @@
+using Pathfinding;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Policy;
 using TMPro;
 using UnityEngine;
 
@@ -22,14 +25,15 @@ public class LocalizationManager : MonoBehaviour
     public bool IsSettingsPage;
     public float volume;
     public float vSync;
+    public DataHashing hashing;
     void Awake()
     {
         StartLoad();
     }
     public void StartLoad()
     {
-        string filePath = Path.Combine(Application.persistentDataPath, "Localization.txt");
-        string filePathSett = Path.Combine(Application.persistentDataPath, "Settings.txt");
+        string filePath = System.IO.Path.Combine(Application.persistentDataPath, "Localization.txt");
+        string filePathSett = System.IO.Path.Combine(Application.persistentDataPath, "Settings.txt");
         if (File.Exists(filePath))
         {
             LoadLocalizedText();
@@ -49,13 +53,16 @@ public class LocalizationManager : MonoBehaviour
     }
     public void LoadSettings()
     {
-        string filePath = Path.Combine(Application.persistentDataPath, "Settings.txt");
+        string filePath = System.IO.Path.Combine(Application.persistentDataPath, "Settings.txt");
         if (File.Exists(filePath))
         {
-            string[] lines = File.ReadAllLines(filePath);
-            foreach (string item in lines)
+            string[] encryptedText = File.ReadAllLines(filePath);
+
+            foreach (string item in encryptedText)
             {
-                SettingsData data = JsonUtility.FromJson<SettingsData>(item);
+                // Розшифрувати JSON рядок
+                string decrypt = hashing.Decrypt(item);
+                SettingsData data = JsonUtility.FromJson<SettingsData>(decrypt);
                 SettingsData settings = new SettingsData();
                 settings.key = data.key;
                 settings.value = data.value;
@@ -72,14 +79,14 @@ public class LocalizationManager : MonoBehaviour
                 }
                 if (settings.key == "volume" && IsSettingsPage == true)
                 {
-                    if (float.TryParse(settings.value,out float res))
+                    if (float.TryParse(settings.value, out float res))
                     {
                         volume = res;
                     }
                 }
                 if (settings.key == "v-sync" && IsSettingsPage == true)
                 {
-                    if (float.TryParse(settings.value,out float res))
+                    if (float.TryParse(settings.value, out float res))
                     {
                         vSync = res;
                     }
@@ -94,14 +101,15 @@ public class LocalizationManager : MonoBehaviour
     public void LoadLocalizedText()
     {
         localizedText = new List<LocalizationDataItems>();
-        string filePath = Path.Combine(Application.persistentDataPath, "Localization.txt");
+        string filePath = System.IO.Path.Combine(Application.persistentDataPath, "Localization.txt");
         if (File.Exists(filePath))
         {
-            string[] lines = File.ReadAllLines(filePath);
-
-            foreach (string item in lines)
+            string[] encryptedText = File.ReadAllLines(filePath);
+            // Розділяємо розшифрований текст на окремі рядки
+            foreach (string item in encryptedText)
             {
-                LocalizationDataItems data = JsonUtility.FromJson<LocalizationDataItems>(item);
+                string decrypt = hashing.Decrypt(item);
+                LocalizationDataItems data = JsonUtility.FromJson<LocalizationDataItems>(decrypt);
                 LocalizationDataItems dataItem = new LocalizationDataItems();
                 dataItem.language = data.language;
                 dataItem.key = data.key;
@@ -117,24 +125,28 @@ public class LocalizationManager : MonoBehaviour
     }
     public void SaveLocalization()
     {
-        string path = Path.Combine(Application.persistentDataPath, "Localization.txt");
+        string path = System.IO.Path.Combine(Application.persistentDataPath, "Localization.txt");
         StreamWriter writer = new StreamWriter(path, true);
-        LocalizationDataItems data = new LocalizationDataItems();
+
         foreach (LocalizationDataItems item in items)
         {
+            LocalizationDataItems data = new LocalizationDataItems();
             data.language = item.language;
             data.key = item.key;
             data.value = item.value;
 
             string jsonData = JsonUtility.ToJson(data);
-            writer.WriteLine(jsonData);
+            string encryptedJson = hashing.Encrypt(jsonData);
+
+            writer.WriteLine(encryptedJson); // Додайте роздільник ";"
         }
+
         writer.Close();
     }
     public void SaveWithDefaultParams()
     {
         List<SettingsData> list = new List<SettingsData>();
-        string path = Path.Combine(Application.persistentDataPath, "Settings.txt");
+        string path = System.IO.Path.Combine(Application.persistentDataPath, "Settings.txt");
         // Додавання елементів до списку
         list.Add(new SettingsData { key = "language", value = "eng" });
         list.Add(new SettingsData { key = "volume", value = "0.5" });
@@ -145,7 +157,8 @@ public class LocalizationManager : MonoBehaviour
         foreach (var item in list)
         {
             string jsonData = JsonUtility.ToJson(item);
-            writer.WriteLine(jsonData);
+            string encryptedJson = hashing.Encrypt(jsonData);
+            writer.WriteLine(encryptedJson);
         }
         // Закриття файлу
         writer.Close();
@@ -160,14 +173,15 @@ public class LocalizationManager : MonoBehaviour
     public void ChangeSetting(List<string> value)
     {
         List<SettingsData> list = new List<SettingsData>();
-        string path = Path.Combine(Application.persistentDataPath, "Settings.txt");
+        string path = System.IO.Path.Combine(Application.persistentDataPath, "Settings.txt");
         if (File.Exists(path))
         {
             // Зчитування всіх рядків з файлу
             string[] lines = File.ReadAllLines(path);
             foreach (string item in lines)
             {
-                SettingsData settings = JsonUtility.FromJson<SettingsData>(item);
+                string decryptedJson = hashing.Decrypt(item);
+                SettingsData settings = JsonUtility.FromJson<SettingsData>(decryptedJson);
                 if (settings.key != value[0])
                 {
                     list.Add(settings);
@@ -203,7 +217,8 @@ public class LocalizationManager : MonoBehaviour
         foreach (var item in list)
         {
             string jsonData = JsonUtility.ToJson(item);
-            writer.WriteLine(jsonData);
+            string decryptedJson = hashing.Encrypt(jsonData);
+            writer.WriteLine(decryptedJson);
         }
         writer.Close();
 
@@ -218,14 +233,15 @@ public class LocalizationManager : MonoBehaviour
     public void ChangeLanguage()
     {
         List<SettingsData> list = new List<SettingsData>();
-        string path = Path.Combine(Application.persistentDataPath, "Settings.txt");
+        string path = System.IO.Path.Combine(Application.persistentDataPath, "Settings.txt");
         if (File.Exists(path))
         {
             // Зчитування всіх рядків з файлу
             string[] lines = File.ReadAllLines(path);
             foreach (string item in lines)
             {
-                SettingsData settings = JsonUtility.FromJson<SettingsData>(item);
+                string decryptedJson = hashing.Decrypt(item);
+                SettingsData settings = JsonUtility.FromJson<SettingsData>(decryptedJson);
                 if (settings.key != "language")
                 {
                     list.Add(settings);
@@ -261,7 +277,8 @@ public class LocalizationManager : MonoBehaviour
         foreach (var item in list)
         {
             string jsonData = JsonUtility.ToJson(item);
-            writer.WriteLine(jsonData);
+            string decryptedJson = hashing.Encrypt(jsonData);
+            writer.WriteLine(decryptedJson);
         }
         writer.Close();
 
@@ -331,7 +348,7 @@ public class LocalizationManager : MonoBehaviour
     //}
     public void UpdateText(List<GameObject> text)
     {
-        string filePath = Path.Combine(Application.persistentDataPath, "Localization.txt");
+        string filePath = System.IO.Path.Combine(Application.persistentDataPath, "Localization.txt");
 
         if (File.Exists(filePath))
         {

@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,7 +33,7 @@ public class Expirience : MonoBehaviour
             else
             {
                 objHealth.playerHealthPoint += (objHealth.playerHealthPointMax / 100) * 10; //Can be baffed by some thing
-                objHealth.playerHealthPointImg.fillAmount = objHealth.playerHealthPoint / objHealth.playerHealthPointMax;
+                objHealth.playerHealthPointImg.PlusProgressBar(objHealth.playerHealthPoint);
                 Destroy(collision.gameObject);
             }
         }
@@ -64,6 +63,8 @@ public class Expirience : MonoBehaviour
             levelUp.SetActive(true);
             levelUp.GetComponent<LevelUpgrade>().RandomAbil();
             Time.timeScale = 0f;
+
+            GetComponent<Move>().otherPanelOpened = true;
 
             level += 1;
             expiriencepoint.fillAmount = 0;

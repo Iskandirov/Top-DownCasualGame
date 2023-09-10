@@ -9,7 +9,6 @@ public class Pickup : MonoBehaviour
             Transform child = FindChildWithScriptOfType(collision.transform, typeof(LightOn));
             if (child.GetComponent<LightOn>().IsPillBuffed == true)
             {
-                Debug.Log(1);
 
                 child.GetComponent<LightOn>().step += child.GetComponent<LightOn>().stepMax;
                 child.GetComponent<LightOn>().IsPillUp = true;
@@ -17,7 +16,6 @@ public class Pickup : MonoBehaviour
             }
             else 
             {
-                Debug.Log(2);
                 child.GetComponent<LightOn>().IsPillUp = true;
                 child.GetComponent<LightOn>().IsPillBuffed = false;
             }

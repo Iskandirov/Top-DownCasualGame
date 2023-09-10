@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3824504510473988347}
   - component: {fileID: 3824504510473988344}
-  - component: {fileID: 5792689878674709069}
   m_Layer: 7
   m_Name: BeamSprite
   m_TagString: Untagged
@@ -25,17 +24,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3824504510473988346}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3824504510679716381}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 2.28}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0.64, y: 0.64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &3824504510473988344
@@ -76,50 +75,20 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1713113091
-  m_SortingLayer: 3
-  m_SortingOrder: -1
-  m_Sprite: {fileID: 21300000, guid: 7f8a21542298e6542894b79bdd68a4d5, type: 3}
+  m_SortingLayerID: -615793817
+  m_SortingLayer: 1
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 21300000, guid: 19763962cf519ed4fa42df9b05b4e61f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.64, y: 0.64}
+  m_Size: {x: 4.15, y: 4.9}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!60 &5792689878674709069
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3824504510473988346}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5.12, y: 5.12}
-    newSize: {x: 0.64, y: 0.64}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.067700386, y: 1.2688594}
-      - {x: -1.8343047, y: 0.8648503}
-      - {x: -0.5550994, y: -2.0700219}
-      - {x: 0.7065767, y: -2.1211207}
-      - {x: 2.0070994, y: 0.7322763}
 --- !u!1 &3824504510679716383
 GameObject:
   m_ObjectHideFlags: 0
@@ -130,7 +99,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3824504510679716381}
   - component: {fileID: 3824504510679716380}
-  - component: {fileID: 3916682589224298290}
+  - component: {fileID: 5197193656796702054}
   m_Layer: 7
   m_Name: Beam
   m_TagString: Untagged
@@ -156,7 +125,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -77.88}
+  m_AnchoredPosition: {x: 73.2, y: 73.2}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3824504510679716380
@@ -177,14 +146,16 @@ MonoBehaviour:
   tickMax: 0.2
   player: {fileID: 0}
   Steam: 0
---- !u!60 &3916682589224298290
+  radius: 6
+  img: {fileID: 3824504510473988344}
+--- !u!60 &5197193656796702054
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3824504510679716383}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -193,17 +164,17 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 4.15, y: 4.9}
+    newSize: {x: 4.15, y: 4.9}
+    adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.067700386, y: 1.2688594}
-      - {x: -1.8343047, y: 0.8648503}
-      - {x: -0.5550994, y: -2.0700219}
-      - {x: 0.7065767, y: -2.1211207}
-      - {x: 2.0070994, y: 0.7322763}
+    - - {x: 0.8, y: 2.06}
+      - {x: -2.45, y: 0.01}
+      - {x: 0.29, y: -2.0700219}
+      - {x: 2.1, y: -1.21}
+      - {x: 2.18, y: 1.1}

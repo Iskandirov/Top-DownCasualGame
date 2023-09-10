@@ -18,6 +18,8 @@ GameObject:
   - component: {fileID: 5089436250016397342}
   - component: {fileID: 109623794519289709}
   - component: {fileID: 1861729291711384211}
+  - component: {fileID: 6943899697868481301}
+  - component: {fileID: 3628101895064370510}
   m_Layer: 3
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -162,6 +164,7 @@ MonoBehaviour:
   IsSettingsPage: 0
   volume: 0
   vSync: 0
+  hashing: {fileID: 6943899697868481301}
 --- !u!114 &6416895844494761421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,6 +269,7 @@ MonoBehaviour:
     ImageSprite: {fileID: 21300000, guid: a91acd8006e29cf4883c8041e5a91b4f, type: 3}
     IDRare: 4
   itemsRead: []
+  hashing: {fileID: 6943899697868481301}
 --- !u!114 &5089436250016397342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -314,6 +318,7 @@ MonoBehaviour:
   score: 0
   enemyCount: 0
   fpsText: {fileID: 0}
+  hash: {fileID: 6943899697868481301}
 --- !u!114 &1861729291711384211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,3 +331,88 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da202c114b5bca4438987a9c25fdc54f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6943899697868481301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6416895844494761269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe021d77799e4064caa033c6efcf6dc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: b151434d44cef4d15394294095127f67e23a32ef9914b48e1a030257a4c17c6d
+  iv: 6e7d148ed54ac05985b2bbd900107367
+--- !u!114 &3628101895064370510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6416895844494761269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a653c14fc4a8d9044b316ac00fa6606a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyInfo:
+  - Name: Beany
+    Image: {fileID: 21300000, guid: fefdfeb7ae6525f4f8eca0618c477669, type: 3}
+    Health: 2
+    Damage: 3
+    MoveSpeed: 15
+    Attack: Bite
+    ID: 1
+  - Name: Spiketumble
+    Image: {fileID: 21300000, guid: 4a4c815fa2d3a3c43aa6def5256227e7, type: 3}
+    Health: 2
+    Damage: 10
+    MoveSpeed: 25
+    Attack: Rush
+    ID: 2
+  - Name: Beatty
+    Image: {fileID: 21300000, guid: c8c9cf2e830a0ea4bbe16387bd0003dc, type: 3}
+    Health: 100
+    Damage: 10
+    MoveSpeed: 7.5
+    Attack: Magic sphear
+    ID: 3
+  - Name: Mishroom
+    Image: {fileID: 21300000, guid: 8fd07c5366e786848a732d492f24bee7, type: 3}
+    Health: 1
+    Damage: 10
+    MoveSpeed: 0
+    Attack: Invisible mooshrom mines
+    ID: 4
+  - Name: Kiwi
+    Image: {fileID: 21300000, guid: a2abe356955bfc444bf03d1ea78c1ac4, type: 3}
+    Health: 130
+    Damage: 0.1
+    MoveSpeed: 0
+    Attack: Fast attacking roots
+    ID: 5
+  - Name: Rocky
+    Image: {fileID: 21300000, guid: 6a23cc171a62e414bad42043a55fb677, type: 3}
+    Health: 400
+    Damage: 30
+    MoveSpeed: 4
+    Attack: Each other part will be chasing you after boos death
+    ID: 6
+  - Name: Bobs
+    Image: {fileID: 21300000, guid: 69c9a0139bbfb2e44be6adc186ea453c, type: 3}
+    Health: 200
+    Damage: 20
+    MoveSpeed: 12
+    Attack: Bobsy bombs
+    ID: 7
+  - Name: Tornador
+    Image: {fileID: 0}
+    Health: 350
+    Damage: 20
+    MoveSpeed: 12
+    Attack: 
+    ID: 8
+  enemyInfoLoad: []
+  hashing: {fileID: 6943899697868481301}

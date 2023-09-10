@@ -39,7 +39,7 @@ public class puddle : MonoBehaviour
 
             for (int i = 0; i < enemies.Length; i++)
             {
-                if (enemies[i] != null && enemies[i].CompareTag("Enemy"))
+                if (enemies[i] != null && enemies[i].CompareTag("Enemy") && enemies[i].GetComponentInParent<ElementActiveDebuff>() != null)
                 {
                     objHealth = enemies[i].GetComponent<HealthPoint>();
                     objElement = enemies[i].GetComponentInParent<ElementActiveDebuff>();
