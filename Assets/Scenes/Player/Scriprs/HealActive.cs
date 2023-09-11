@@ -22,12 +22,12 @@ public class HealActive : MonoBehaviour
             if (player.playerHealthPoint + heal * Grass <= player.playerHealthPointMax)
             {
                 player.playerHealthPoint += heal * Grass;
-                player.playerHealthPointImg.PlusProgressBar(heal * Grass);
+                player.playerHealthPointImg.fullFillImage.fillAmount += (heal * Grass) / player.playerHealthPointMax;
             }
             else
             {
                 player.playerHealthPoint = player.playerHealthPointMax;
-                player.playerHealthPointImg.MaxProgressBar();
+                player.playerHealthPointImg.fullFillImage.fillAmount = 1f;
             }
         }
         StartCoroutine(TimerSpell());

@@ -51,7 +51,7 @@ public class MiShroomMine : MonoBehaviour
         if (inZone)
         {
             player.playerHealthPoint -= damage;
-            player.playerHealthPointImg.MinusProgressBar(damage);
+            player.playerHealthPointImg.fullFillImage.fillAmount -= damage / player.playerHealthPointMax;
             player.GetComponent<Animator>().SetBool("IsHit", true);
         }
         parent.mineCount--;

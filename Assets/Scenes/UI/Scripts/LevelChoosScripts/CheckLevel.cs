@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Policy;
 using UnityEngine;
 
 public class CheckLevel : MonoBehaviour
@@ -119,35 +120,31 @@ public class CheckLevel : MonoBehaviour
     {
         hashing = FindObjectOfType<DataHashing>();
         string path = Path.Combine(Application.persistentDataPath, "Levels.txt");
-
-        if (File.Exists(path))
+        using (StreamWriter writer = new StreamWriter(path, true))
         {
-            string[] lines = File.ReadAllLines(path);
-            List<string> updatedLines = new List<string>();
 
-            foreach (string line in lines)
+            if (File.Exists(path))
             {
-                string decrypt = hashing.Decrypt(line);
-                SavedLocationsData data = JsonUtility.FromJson<SavedLocationsData>(decrypt);
+                string[] lines = File.ReadAllLines(path);
 
-                if (data.IDLevel == level && data.percent < percentNew)
+                foreach (string line in lines)
                 {
-                    data.percent = percentNew;
-                    if (percentNew >= 100)
+                    string decrypt = hashing.Decrypt(line);
+                    SavedLocationsData data = JsonUtility.FromJson<SavedLocationsData>(decrypt);
+
+                    if (data.IDLevel == level && data.percent < percentNew)
                     {
-                        data.percent = 0;
+                        data.percent = percentNew;
+                        if (percentNew >= 100)
+                        {
+                            data.percent = 0;
+                        }
                     }
-                    string encryptedJson = hashing.Encrypt(JsonUtility.ToJson(data));
-                    updatedLines.Add(encryptedJson);
-                }
-                else
-                {
-                    updatedLines.Add(line); // Додаємо незмінений рядок до списку
+                    string jsonData = JsonUtility.ToJson(line);
+                    string decryptedJson = hashing.Encrypt(jsonData);
+                    writer.WriteLine(decryptedJson);
                 }
             }
-
-            // Замінюємо вміст файлу новим списком рядків
-            File.WriteAllLines(path, updatedLines);
         }
     }
 }

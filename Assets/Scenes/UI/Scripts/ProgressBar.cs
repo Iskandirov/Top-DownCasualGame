@@ -1,15 +1,14 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ProgressBar : MonoBehaviour
 {
-    public Transform fullFillImage;
+    public Image fullFillImage;
     public SpriteRenderer buffArea;
     public float timeNeeded;
     public bool isNeedToMove;
-    public Vector2 startPos;
     public void Start()
     {
-        startPos = fullFillImage.localPosition;
     }
     public void Update()
     {
@@ -22,9 +21,9 @@ public class ProgressBar : MonoBehaviour
     {
         if (isNeedToMove)
         {
-            fullFillImage.localPosition = new Vector2(fullFillImage.transform.localPosition.x + timeNeeded * Time.deltaTime, fullFillImage.transform.localPosition.y);
+            fullFillImage.fillAmount += 1 / timeNeeded * Time.deltaTime;
         }
-        if (fullFillImage.localPosition.x >= startPos.x+80)
+        if (fullFillImage.fillAmount == 1)
         {
             buffArea.color = new Color32(255, 240, 117, 87);
             isNeedToMove = false;
@@ -34,9 +33,9 @@ public class ProgressBar : MonoBehaviour
     {
         if (!isNeedToMove)
         {
-            fullFillImage.localPosition = new Vector2(fullFillImage.transform.localPosition.x - timeNeeded * Time.deltaTime, fullFillImage.transform.localPosition.y);
+            fullFillImage.fillAmount -= 1 / timeNeeded * Time.deltaTime;
         }
-        if (fullFillImage.localPosition.x <= startPos.x)
+        if (fullFillImage.fillAmount == 0)
         {
             buffArea.color = new Color32(255, 255, 255, 87);
             isNeedToMove = true;

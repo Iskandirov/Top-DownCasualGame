@@ -29,6 +29,10 @@ public class GetScore : MonoBehaviour
                 // Вдале перетворення
                 score = ((FindObjectOfType<KillCount>().score + 1) * Mathf.Pow(2.71828f, (0.05f * result))) * 2;
                 percent = Mathf.RoundToInt((result / objTimer.timeToWin) * 100);
+                if (percent > 100)
+                {
+                    percent = 100;
+                }
                 percentEnd.text = percent.ToString("0.") + "%";
             }
             else

@@ -16,7 +16,7 @@ public class SniperTreeBullet : MonoBehaviour
             if (collision.gameObject.name == targetPrefabName && !collision.isTrigger)
             {
                 collision.GetComponent<Health>().playerHealthPoint -= damage;
-                collision.GetComponent<Health>().playerHealthPointImg.MinusProgressBar(damage);
+                collision.GetComponent<Health>().playerHealthPointImg.fullFillImage.fillAmount -= damage / collision.GetComponent<Health>().playerHealthPointMax;
                 collision.GetComponent<Animator>().SetBool("IsHit", true);
                 Destroy(gameObject);
             }

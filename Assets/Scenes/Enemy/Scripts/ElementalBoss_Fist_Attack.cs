@@ -124,7 +124,7 @@ public class ElementalBoss_Fist_Attack : MonoBehaviour
                 if (pushableObjectRigidbody != null)
                 {
                     playerHealth.playerHealthPoint -= damage;
-                    playerHealth.playerHealthPointImg.MinusProgressBar(damage);
+                    playerHealth.playerHealthPointImg.fullFillImage.fillAmount -= damage / playerHealth.playerHealthPointMax;
                     playerAnim.SetBool("IsHit", true);
                     StartCoroutine(ReducePushForce(pushableObjectRigidbody));
                 }

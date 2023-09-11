@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class SaveitemToInventory : MonoBehaviour
 {
-
+    [SerializeField]
+    DataHashing hash;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("EditorOnly"))
@@ -22,10 +23,12 @@ public class SaveitemToInventory : MonoBehaviour
 
             // Збереження даних у файл
             string fileName = Path.Combine(Application.persistentDataPath, "savedData.txt");
-            StreamWriter writer = new StreamWriter(fileName, true);
-            string jsonData = JsonUtility.ToJson(data);
-            writer.WriteLine(jsonData);
-            writer.Close();
+            using (StreamWriter writer = new StreamWriter(fileName, true))
+            {
+                string jsonData = JsonUtility.ToJson(data);
+                string decryptedJson = hash.Encrypt(jsonData);
+                writer.WriteLine(decryptedJson);
+            }
 
             Destroy(collision.gameObject);
         }

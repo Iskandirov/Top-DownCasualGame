@@ -38,14 +38,18 @@ public class KillCount : MonoBehaviour
         {
             string[] lines = File.ReadAllLines(path);
 
-            for (int i = 0; i < lines.Length; i++)
+            foreach (string jsonLine in lines)
             {
-                string decrypt = hash.Decrypt(lines[i]);
-                SavedLocationsData data = JsonUtility.FromJson<SavedLocationsData>(decrypt);
-
-                if (data.IDLevel == objectID)
+                if (jsonLine.StartsWith("{"))
                 {
-                    return data.countOfCount;
+                    Debug.Log(1);
+                    string decrypt = hash.Decrypt(jsonLine);
+                    SavedLocationsData data = JsonUtility.FromJson<SavedLocationsData>(decrypt);
+
+                    if (data.IDLevel == objectID)
+                    {
+                        return data.countOfCount;
+                    }
                 }
             }
         }

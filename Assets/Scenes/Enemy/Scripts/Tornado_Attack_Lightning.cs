@@ -34,7 +34,7 @@ public class Tornado_Attack_Lightning : MonoBehaviour
                 {
 
                     player.playerHealthPoint -= damage;
-                    player.playerHealthPointImg.MinusProgressBar(damage);
+                    player.playerHealthPointImg.fullFillImage.fillAmount -= damage / player.playerHealthPointMax;
                     player.GetComponent<Animator>().SetBool("IsHit", true);
                     Debug.Log("Player is in the zone!");
                 }

@@ -31,7 +31,7 @@ public class MoveToPlayerStartPos : MonoBehaviour
         {
             collision.collider.GetComponent<Health>().GetComponent<Animator>().SetBool("IsHit", true);
             collision.collider.GetComponent<Health>().playerHealthPoint -= damage;
-            collision.collider.GetComponent<Health>().playerHealthPointImg.MinusProgressBar(damage);
+            collision.collider.GetComponent<Health>().playerHealthPointImg.fullFillImage.fillAmount -= damage / collision.collider.GetComponent<Health>().playerHealthPointMax;
             Destroy(gameObject);
         }
         if (collision.collider.CompareTag("Wall") && !collision.collider.isTrigger)

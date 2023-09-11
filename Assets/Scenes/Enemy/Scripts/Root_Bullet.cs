@@ -35,7 +35,7 @@ public class Root_Bullet : MonoBehaviour
         if (collision.collider.CompareTag("Player") && !collision.collider.isTrigger)
         {
             collision.collider.GetComponent<Health>().playerHealthPoint -= damage;
-            collision.collider.GetComponent<Health>().playerHealthPointImg.MinusProgressBar(damage);
+            collision.collider.GetComponent<Health>().playerHealthPointImg.fullFillImage.fillAmount -= damage / collision.collider.GetComponent<Health>().playerHealthPointMax;
             collision.collider.GetComponent<Health>().GetComponent<Animator>().SetBool("IsHit", true);
             collision.collider.GetComponent<Move>().isSlowingDown = true;
             collision.collider.GetComponent<Move>().slowdownEndTime = 4f;

@@ -55,7 +55,7 @@ public class EnemyBullet : MonoBehaviour
                     if (!collider.isTrigger)
                     {
                         collider.GetComponent<Health>().playerHealthPoint -= damage;
-                        collider.GetComponent<Health>().playerHealthPointImg.MinusProgressBar(damage);
+                        collider.GetComponent<Health>().playerHealthPointImg.fullFillImage.fillAmount -= damage / collision.GetComponent<Health>().playerHealthPointMax;
                         collider.GetComponent<Animator>().SetBool("IsHit", true);
                         Destroy(gameObject);
                     }

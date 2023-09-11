@@ -21,12 +21,14 @@ public class Timer : MonoBehaviour
     }
     private IEnumerator EndGame()
     {
-        if (time > timeToWin && isBossDefeated)
-        {
-            Instantiate(WinPanel, WinPanelParent.transform.position, Quaternion.identity, WinPanelParent.transform);
-            PanelChecker.otherPanelOpened = true;
-        }
         yield return new WaitForSeconds(timeToWin);
+
+        // Корутина чекає на виконання умови
+        while (!isBossDefeated)
+        {
+            yield return null;
+        }
+
         Instantiate(WinPanel, WinPanelParent.transform.position, Quaternion.identity, WinPanelParent.transform);
         PanelChecker.otherPanelOpened = true;
     }

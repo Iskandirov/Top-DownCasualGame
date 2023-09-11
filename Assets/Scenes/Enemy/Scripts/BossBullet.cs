@@ -26,15 +26,12 @@ public class BossBullet : MonoBehaviour
         if (isAround)
         {
             // Визначаємо колову траєкторію навколо цілі
-            Vector3 position = enemyBody.position + new Vector3(Mathf.Cos(Time.time * speed) * distance, Mathf.Sin(Time.time * speed) * distance, 0f);
+            Vector3 position = new Vector3(Mathf.Cos(Time.time * speed) * distance, Mathf.Sin(Time.time * speed) * distance, 0f);
             distance += 0.3f;
             
             // Задаємо позицію об'єкту
             transform.position = position;
 
-            // Повертаємо об'єкт обличчям до цілі (необов'язково)
-            Vector3 direction = enemyBody.position - transform.position;
-            transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
             Invoke("DestroyBullet", 3f);
         }
         else if (isRandome)
@@ -59,7 +56,7 @@ public class BossBullet : MonoBehaviour
             if (collision.gameObject.name == targetPrefabName && !collision.isTrigger)
             {
                 collision.GetComponent<Health>().playerHealthPoint -= damage;
-                collision.GetComponent<Health>().playerHealthPointImg.MinusProgressBar(damage);
+                collision.GetComponent<Health>().playerHealthPointImg.fullFillImage.fillAmount -= damage / collision.GetComponent<Health>().playerHealthPointMax;
                 collision.GetComponent<Animator>().SetBool("IsHit", true);
                 Destroy(gameObject);
             }

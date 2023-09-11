@@ -56,26 +56,25 @@ public class PoolItems : MonoBehaviour
     private void SaveInventory()
     {
         string path = Path.Combine(Application.persistentDataPath, "ItemInventory.txt");
-        StreamWriter writer = new StreamWriter(path, true);
-
-        SavedObjectData data = new SavedObjectData();
-        foreach (SavedObjectData item in items)
+        using (StreamWriter writer = new StreamWriter(path, true))
         {
-            data.Name = item.Name;
-            data.IDRare = item.IDRare;
-            data.RareName = item.RareName;
-            data.Stat = item.Stat;
-            data.Level = item.Level;
-            data.Count = item.Count;
-            data.Tag = item.Tag;
-            data.RareTag = item.RareTag;
+            SavedObjectData data = new SavedObjectData();
+            foreach (SavedObjectData item in items)
+            {
+                data.Name = item.Name;
+                data.IDRare = item.IDRare;
+                data.RareName = item.RareName;
+                data.Stat = item.Stat;
+                data.Level = item.Level;
+                data.Count = item.Count;
+                data.Tag = item.Tag;
+                data.RareTag = item.RareTag;
 
-            string jsonData = JsonUtility.ToJson(data);
-            string decryptedJson = hashing.Encrypt(jsonData);
-            writer.WriteLine(decryptedJson);
+                string jsonData = JsonUtility.ToJson(data);
+                string decryptedJson = hashing.Encrypt(jsonData);
+                writer.WriteLine(decryptedJson);
+            }
         }
-        writer.Close();
-
     }
     private void SaveUpgrade()
     {

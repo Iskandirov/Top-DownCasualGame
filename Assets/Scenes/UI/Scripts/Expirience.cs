@@ -33,7 +33,7 @@ public class Expirience : MonoBehaviour
             else
             {
                 objHealth.playerHealthPoint += (objHealth.playerHealthPointMax / 100) * 10; //Can be baffed by some thing
-                objHealth.playerHealthPointImg.PlusProgressBar(objHealth.playerHealthPoint);
+                objHealth.playerHealthPointImg.fullFillImage.fillAmount += objHealth.playerHealthPoint / objHealth.playerHealthPointMax;
                 Destroy(collision.gameObject);
             }
         }

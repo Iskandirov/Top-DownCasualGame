@@ -8,12 +8,17 @@ public class RootSlower : MonoBehaviour
     public float slowdownEndTime;
     public float damageDelay;
     float damageDelayMax;
+    public float lifeTime;
     // Start is called before the first frame update
     void Start()
     {
         damageDelayMax = damageDelay;
+        Invoke("DestroObj", lifeTime);
     }
-
+    public void DestroObj()
+    {
+        Destroy(gameObject);
+    }
     // Update is called once per frame
     void Update()
     {
@@ -26,7 +31,7 @@ public class RootSlower : MonoBehaviour
             if (damageDelay <= 0)
             {
                 collision.GetComponent<Health>().playerHealthPoint -= damage;
-                collision.GetComponent<Health>().playerHealthPointImg.MinusProgressBar(damage);
+                collision.GetComponent<Health>().playerHealthPointImg.fullFillImage.fillAmount -= damage / collision.GetComponent<Health>().playerHealthPointMax;
                 collision.GetComponent<Health>().GetComponent<Animator>().SetBool("IsHit", true);
                 damageDelay = damageDelayMax;
             }

@@ -26,7 +26,7 @@ public class Health : MonoBehaviour
         if (playerHealthRegeneration > 0 && playerHealthPointImg.isNeedToMove)
         {
             playerHealthPoint += playerHealthRegeneration / playerHealthPointMax;
-            playerHealthPointImg.PlusProgressBar(playerHealthRegeneration);
+            playerHealthPointImg.fullFillImage.fillAmount += playerHealthRegeneration / playerHealthPointMax;
             //playerHealthPointImg.fillAmount = playerHealthPoint / playerHealthPointMax;
         }
     }

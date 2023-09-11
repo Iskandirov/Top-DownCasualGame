@@ -122,7 +122,7 @@ public class Attack : MonoBehaviour
             {
                 objectToHit.GetComponent<Animator>().SetBool("IsHit", true);
                 objectToHit.playerHealthPoint -= damage;
-                objectToHit.playerHealthPointImg.MinusProgressBar(damage);
+                objectToHit.playerHealthPointImg.fullFillImage.fillAmount -= damage / objectToHit.playerHealthPointMax;
             }
         }
     }
