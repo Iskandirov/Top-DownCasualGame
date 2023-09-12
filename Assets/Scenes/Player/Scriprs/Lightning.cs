@@ -58,7 +58,10 @@ public class Lightning : MonoBehaviour
                     }
                 }
                 countEnemy = enemiesCount;
-                StartCoroutine(SpawnEnemiesCoroutine());
+                if (enemies != null)
+                {
+                    StartCoroutine(SpawnEnemiesCoroutine());
+                }
                 step = stepMax;
             }
         }
@@ -74,8 +77,8 @@ public class Lightning : MonoBehaviour
                 Instantiate(lightObj, new Vector3(enemiesToShoot[i].transform.position.x,
                     enemiesToShoot[i].transform.position.y + 3), Quaternion.identity);
 
-                objHealth.healthPoint -= damage * ElectricityElement.Electricity / objHealth.Electricity;
-                if (!objHealth.GetComponentInParent<ElementActiveDebuff>().IsActive("isElectricity", true))
+                
+                if (objHealth.GetComponentInParent<ElementActiveDebuff>() != null && !objHealth.GetComponentInParent<ElementActiveDebuff>().IsActive("isElectricity", true))
                 {
                     objHealth.GetComponentInParent<ElementActiveDebuff>().SetBool("isElectricity", true, true);
                     objHealth.GetComponentInParent<ElementActiveDebuff>().SetBool("isElectricity", true, false);
@@ -91,6 +94,7 @@ public class Lightning : MonoBehaviour
                 {
                     objHealth.ChangeToKick();
                 }
+                objHealth.healthPoint -= damage * ElectricityElement.Electricity / objHealth.Electricity;
                 yield return new WaitForSeconds(spawnInterval);
             }
         }

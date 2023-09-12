@@ -32,8 +32,7 @@ public class Meteor : MonoBehaviour
         {
             if (collision.CompareTag("Enemy"))
             {
-                collision.GetComponent<HealthPoint>().healthPoint -= (damage * fireDirt * collision.GetComponent<HealthPoint>().Water) / collision.GetComponent<HealthPoint>().Fire;
-                if (!collision.GetComponentInParent<ElementActiveDebuff>().IsActive("isFire", true))
+                if (collision.GetComponentInParent<ElementActiveDebuff>() != null && !collision.GetComponentInParent<ElementActiveDebuff>().IsActive("isFire", true))
                 {
                     collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isFire", true, true);
                     collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isFire", true, false);
@@ -43,9 +42,10 @@ public class Meteor : MonoBehaviour
                 {
                     collision.GetComponentInParent<Forward>().speed = collision.GetComponentInParent<Forward>().speedMax * fireDirt / 1.5f;
                 }
+                collision.GetComponent<HealthPoint>().healthPoint -= (damage * fireDirt * collision.GetComponent<HealthPoint>().Water) / collision.GetComponent<HealthPoint>().Fire;
                 damageTick = damageTickMax;
             }
-            else if (collision.CompareTag("Barrel"))
+            else if (collision.CompareTag("Barrel") && collision != null)
             {
                 collision.GetComponent<ObjectHealth>().health -= 1;
                 damageTick = damageTickMax;

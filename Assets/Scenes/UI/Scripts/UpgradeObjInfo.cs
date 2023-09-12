@@ -48,22 +48,25 @@ public class UpgradeObjInfo : MonoBehaviour
     private void SaveInventory()
     {
         string path = Path.Combine(Application.persistentDataPath, "HouseHold.txt");
-        StreamWriter writer = new StreamWriter(path, true);
-
-        SavedHouseholditemsData data = new SavedHouseholditemsData();
-        foreach (SavedHouseholditemsData item in items)
+        using (StreamWriter writer = new StreamWriter(path, true))
         {
-            data.name = item.name;
-            data.IDObject = item.IDObject;
-            data.price = item.price;
-            data.levelUpgrade = item.levelUpgrade;
-            
+            SavedHouseholditemsData data = new SavedHouseholditemsData();
+            foreach (SavedHouseholditemsData item in items)
+            {
+                data.name = item.name;
+                data.IDObject = item.IDObject;
+                data.price = item.price;
+                data.levelUpgrade = item.levelUpgrade;
 
-            string jsonData = JsonUtility.ToJson(data);
-            string decrypt = hash.Encrypt(jsonData);
-            writer.WriteLine(decrypt);
+
+                string jsonData = JsonUtility.ToJson(data);
+                string decrypt = hash.Encrypt(jsonData);
+                writer.WriteLine(decrypt);
+            }
+            writer.Close();
         }
-        writer.Close();
+
+            
 
     }
     public void SaveInventory(int level, int ID)

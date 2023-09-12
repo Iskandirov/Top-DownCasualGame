@@ -74,24 +74,28 @@ public class PoolItems : MonoBehaviour
                 string decryptedJson = hashing.Encrypt(jsonData);
                 writer.WriteLine(decryptedJson);
             }
+            writer.Close();
         }
     }
     private void SaveUpgrade()
     {
         string path = Path.Combine(Application.persistentDataPath, "UpgradeImage.txt");
-        StreamWriter writer = new StreamWriter(path, true);
-
-        SavedUpgradeImage data = new SavedUpgradeImage();
-        foreach (SavedUpgradeImage item in upgrades)
+        using (StreamWriter writer = new StreamWriter(path, true))
         {
-            data.ID = item.ID;
-            data.IDRare = item.IDRare;
+            SavedUpgradeImage data = new SavedUpgradeImage();
+            foreach (SavedUpgradeImage item in upgrades)
+            {
+                data.ID = item.ID;
+                data.IDRare = item.IDRare;
 
-            string jsonData = JsonUtility.ToJson(data);
-            string decryptedJson = hashing.Encrypt(jsonData);
-            writer.WriteLine(decryptedJson);
+                string jsonData = JsonUtility.ToJson(data);
+                string decryptedJson = hashing.Encrypt(jsonData);
+                writer.WriteLine(decryptedJson);
+            }
+            writer.Close();
         }
-        writer.Close();
+
+            
     }
 }
 

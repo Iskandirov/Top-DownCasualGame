@@ -84,18 +84,19 @@ public class EquipItem : MonoBehaviour
     private void SaveEquip(SavedEquipData equip)
     {
         string path = Path.Combine(Application.persistentDataPath, "EquipedItems.txt");
-        StreamWriter writer = new StreamWriter(path, true);
+        using (StreamWriter writer = new StreamWriter(path, true))
+        {
+            SavedEquipData data = new SavedEquipData();
+            data.Stat = equip.Stat;
+            data.Level = equip.Level;
+            data.Name = equip.Name;
+            data.Tag = equip.Tag;
 
-        SavedEquipData data = new SavedEquipData();
-        data.Stat = equip.Stat;
-        data.Level = equip.Level;
-        data.Name = equip.Name;
-        data.Tag = equip.Tag;
-
-        string jsonData = JsonUtility.ToJson(data);
-        string decryptedJson = hashing.Encrypt(jsonData);
-        writer.WriteLine(decryptedJson);
-        writer.Close();
+            string jsonData = JsonUtility.ToJson(data);
+            string decryptedJson = hashing.Encrypt(jsonData);
+            writer.WriteLine(decryptedJson);
+            writer.Close();
+        }
     }
     private void SaveEquip()
     {

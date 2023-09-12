@@ -28,6 +28,7 @@ public class SaveitemToInventory : MonoBehaviour
                 string jsonData = JsonUtility.ToJson(data);
                 string decryptedJson = hash.Encrypt(jsonData);
                 writer.WriteLine(decryptedJson);
+                writer.Close();
             }
 
             Destroy(collision.gameObject);

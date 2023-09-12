@@ -25,7 +25,7 @@ public class BobmExplode : MonoBehaviour
                     collider.GetComponent<HealthPoint>().healthPoint -= damage * fire;
                     collider.GetComponent<HealthPoint>().ChangeToKick();
             }
-            else if (collider.CompareTag("Barrel"))
+            else if (collider.CompareTag("Barrel") && collider != null)
             {
                 collider.gameObject.GetComponent<ObjectHealth>().health -= damage * fire;
             }

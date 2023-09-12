@@ -93,30 +93,34 @@ public class EnemyInfoLoader : MonoBehaviour
                 string decryptedJson = hashing.Encrypt(jsonData);
                 writer.WriteLine(decryptedJson);
             }
+            writer.Close();
         }
     }
     public void SaveEnemyInfo()
     {
         string path = Path.Combine(Application.persistentDataPath, "EnemyInfo.txt");
-        StreamWriter writer = new StreamWriter(path, true);
-
-        foreach (SaveEnemyInfo item in enemyInfo)
+        using (StreamWriter writer = new StreamWriter(path, true))
         {
-            SaveEnemyInfo data = new SaveEnemyInfo();
-            data.Name = item.Name;
-            data.ID = item.ID;
-            data.Attack = item.Attack;
-            data.Health = item.Health;
-            data.Damage = item.Damage;
-            data.MoveSpeed = item.MoveSpeed;
+            foreach (SaveEnemyInfo item in enemyInfo)
+            {
+                SaveEnemyInfo data = new SaveEnemyInfo();
+                data.Name = item.Name;
+                data.ID = item.ID;
+                data.Attack = item.Attack;
+                data.Health = item.Health;
+                data.Damage = item.Damage;
+                data.MoveSpeed = item.MoveSpeed;
 
-            string jsonData = JsonUtility.ToJson(data);
-            string encryptedJson = hashing.Encrypt(jsonData);
+                string jsonData = JsonUtility.ToJson(data);
+                string encryptedJson = hashing.Encrypt(jsonData);
 
-            writer.WriteLine(encryptedJson);
+                writer.WriteLine(encryptedJson);
+            }
+
+            writer.Close();
         }
 
-        writer.Close();
+            
     }
     public void LoadEnemyInfo()
     {

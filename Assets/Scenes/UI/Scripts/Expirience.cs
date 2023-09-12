@@ -28,6 +28,7 @@ public class Expirience : MonoBehaviour
             if (objHealth.playerHealthPoint + (objHealth.playerHealthPointMax / 100) * 10 >= objHealth.playerHealthPointMax)
             {
                 objHealth.playerHealthPoint = objHealth.playerHealthPointMax;
+                objHealth.playerHealthPointImg.fullFillImage.fillAmount = 1;
                 Destroy(collision.gameObject);
             }
             else

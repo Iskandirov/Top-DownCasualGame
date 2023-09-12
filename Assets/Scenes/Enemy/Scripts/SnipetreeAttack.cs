@@ -10,6 +10,10 @@ public class SnipetreeAttack : MonoBehaviour
     public float attackSpeed;
     public float launchForce = 10f;  // Сила запуску об'єкта
     public Transform playerPos;
+    public void Start()
+    {
+        playerPos = FindObjectOfType<Move>().transform;
+    }
     // Update is called once per frame
     void FixedUpdate()
     {

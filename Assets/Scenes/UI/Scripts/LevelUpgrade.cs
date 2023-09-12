@@ -664,26 +664,29 @@ public class LevelUpgrade : MonoBehaviour
     private void SaveSkill()
     {
         string path = Path.Combine(Application.persistentDataPath, "SkillData.txt");
-        StreamWriter writer = new StreamWriter(path, true);
-
-        foreach (SavedSkillsData item in skillsSave)
+        using (StreamWriter writer = new StreamWriter(path, true))
         {
-            SavedSkillsData data = new SavedSkillsData();
-            data.Name = item.Name;
-            data.ID = item.ID;
-            data.level = item.level;
-            data.Description = item.Description;
-            data.stat1 = item.stat1;
-            data.tag = item.tag;
-            data.tagRare = item.tagRare;
-            data.skillObj = item.skillObj;
-            data.isPassive = item.isPassive;
-            data.CD = item.CD;
+            foreach (SavedSkillsData item in skillsSave)
+            {
+                SavedSkillsData data = new SavedSkillsData();
+                data.Name = item.Name;
+                data.ID = item.ID;
+                data.level = item.level;
+                data.Description = item.Description;
+                data.stat1 = item.stat1;
+                data.tag = item.tag;
+                data.tagRare = item.tagRare;
+                data.skillObj = item.skillObj;
+                data.isPassive = item.isPassive;
+                data.CD = item.CD;
 
-            string jsonData = JsonUtility.ToJson(data);
-            writer.WriteLine(jsonData);
+                string jsonData = JsonUtility.ToJson(data);
+                writer.WriteLine(jsonData);
+            }
+            writer.Close();
         }
-        writer.Close();
+
+            
     }
 
     private void RemoveKeyFromJSONFile(int IDObj)

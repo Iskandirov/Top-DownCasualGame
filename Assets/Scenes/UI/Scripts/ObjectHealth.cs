@@ -12,7 +12,11 @@ public class ObjectHealth : MonoBehaviour
         if (health <= 0)
         {
             Instantiate(SpawnableObjects[Random.Range(0, SpawnableObjects.Count)], transform.position, Quaternion.identity);
-            Destroy(gameObject);
+            Invoke("Destroy", 1f);
         }
+    }
+    public void Destroy()
+    {
+        Destroy(gameObject);
     }
 }

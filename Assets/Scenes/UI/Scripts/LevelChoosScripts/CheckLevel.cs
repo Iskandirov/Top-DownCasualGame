@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Security.Policy;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class CheckLevel : MonoBehaviour
@@ -24,7 +24,13 @@ public class CheckLevel : MonoBehaviour
         string path = Path.Combine(Application.persistentDataPath, "Levels.txt");
         if (File.Exists(path))
         {
-            string[] lines = File.ReadAllLines(path);
+            Task<string[]> task = File.ReadAllLinesAsync(path);
+
+            // Wait for the task to complete
+            task.Wait();
+
+            // Get the result of the task
+            string[] lines = task.Result;
 
             // Перебір кожного запису і заміна шляху до зображення на зображення зі списку sprites
             foreach (string jsonLine in lines)
@@ -69,7 +75,13 @@ public class CheckLevel : MonoBehaviour
 
         if (File.Exists(path))
         {
-            string[] lines = File.ReadAllLines(path);
+            Task<string[]> task = File.ReadAllLinesAsync(path);
+
+            // Wait for the task to complete
+            task.Wait();
+
+            // Get the result of the task
+            string[] lines = task.Result;
 
             foreach (string line in lines)
             {
@@ -114,36 +126,51 @@ public class CheckLevel : MonoBehaviour
                 string encryptedJson = hashing.Encrypt(jsonData);
                 writer.WriteLine(encryptedJson);
             }
+            writer.Close();
         }
     }
     public void CheckPercent(int level, int percentNew)
     {
         hashing = FindObjectOfType<DataHashing>();
         string path = Path.Combine(Application.persistentDataPath, "Levels.txt");
-        using (StreamWriter writer = new StreamWriter(path, true))
+
+        if (File.Exists(path))
         {
+            Task<string[]> task = File.ReadAllLinesAsync(path);
 
-            if (File.Exists(path))
+            // Wait for the task to complete
+            task.Wait();
+
+            // Get the result of the task
+            string[] lines = task.Result;
+
+            List<string> updatedLies = new List<string>();
+
+            foreach (string line in lines)
             {
-                string[] lines = File.ReadAllLines(path);
+                string decrypt = hashing.Decrypt(line);
+                SavedLocationsData data = JsonUtility.FromJson<SavedLocationsData>(decrypt);
 
-                foreach (string line in lines)
+                if (data.IDLevel == level && data.percent < percentNew)
                 {
-                    string decrypt = hashing.Decrypt(line);
-                    SavedLocationsData data = JsonUtility.FromJson<SavedLocationsData>(decrypt);
-
-                    if (data.IDLevel == level && data.percent < percentNew)
+                    data.percent = percentNew;
+                    if (percentNew >= 100)
                     {
-                        data.percent = percentNew;
-                        if (percentNew >= 100)
-                        {
-                            data.percent = 0;
-                        }
+                        data.percent = 0;
                     }
+                }
+                updatedLies.Add(line);
+            }
+            using (StreamWriter writer = new StreamWriter(path, true))
+            {
+                foreach (string line in updatedLies)
+                {
                     string jsonData = JsonUtility.ToJson(line);
                     string decryptedJson = hashing.Encrypt(jsonData);
                     writer.WriteLine(decryptedJson);
                 }
+                writer.Close();
+
             }
         }
     }

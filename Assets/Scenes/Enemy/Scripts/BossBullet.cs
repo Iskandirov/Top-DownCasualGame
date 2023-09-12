@@ -14,10 +14,11 @@ public class BossBullet : MonoBehaviour
     public float distance = 20f;
     public float speed = 5;
     public float angle = 5;
+    private Vector3 startPosition;
 
-    // Start is called before the first frame update
     void Start()
     {
+        startPosition = transform.position;
     }
 
     // Update is called once per frame
@@ -26,9 +27,9 @@ public class BossBullet : MonoBehaviour
         if (isAround)
         {
             // Визначаємо колову траєкторію навколо цілі
-            Vector3 position = new Vector3(Mathf.Cos(Time.time * speed) * distance, Mathf.Sin(Time.time * speed) * distance, 0f);
+            Vector3 position = startPosition + new Vector3(Mathf.Cos(Time.time * speed) * distance, Mathf.Sin(Time.time * speed) * distance, 0f);
             distance += 0.3f;
-            
+
             // Задаємо позицію об'єкту
             transform.position = position;
 

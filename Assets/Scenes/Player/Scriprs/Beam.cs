@@ -50,16 +50,16 @@ public class Beam : MonoBehaviour
         if (collision.CompareTag("Enemy"))
         {
             HealthPoint objHealt = collision.GetComponent<HealthPoint>();
-            objHealt.healthPoint -= (damage * Steam * objHealt.Steam) / objHealt.Cold;
-            objHealt.ChangeToKick();
-            if (!collision.GetComponentInParent<ElementActiveDebuff>().IsActive("isSteam", true))
+            
+            if (collision.GetComponentInParent<ElementActiveDebuff>() != null && !collision.GetComponentInParent<ElementActiveDebuff>().IsActive("isSteam", true))
             {
                 collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isSteam", true, true);
                 collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isSteam", true, false);
             }
-            
+            objHealt.healthPoint -= (damage * Steam * objHealt.Steam) / objHealt.Cold;
+            objHealt.ChangeToKick();
         }
-        else if (collision.CompareTag("Barrel"))
+        else if (collision.CompareTag("Barrel") && collision != null)
         {
             collision.GetComponent<ObjectHealth>().health -= 1;
         }
@@ -72,13 +72,13 @@ public class Beam : MonoBehaviour
             {
                 tick = tickMax;
                 HealthPoint objHealt = collision.GetComponent<HealthPoint>();
-                objHealt.healthPoint -= (damage * Steam * objHealt.Steam) / objHealt.Cold;
-                objHealt.ChangeToKick();
                 collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isSteam", true, true);
                 collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isSteam", true, false);
+                objHealt.healthPoint -= (damage * Steam * objHealt.Steam) / objHealt.Cold;
+                objHealt.ChangeToKick();
             }
         }
-        else if (collision.CompareTag("Barrel"))
+        else if (collision.CompareTag("Barrel") && collision != null)
         {
             collision.GetComponent<ObjectHealth>().health -= 1;
         }

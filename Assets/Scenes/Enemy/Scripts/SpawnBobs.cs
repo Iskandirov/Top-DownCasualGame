@@ -6,9 +6,8 @@ public class SpawnBobs : MonoBehaviour
     Timer timer;
     public float timeToSpawnBobs;
     float timeToSpawnBobsStart;
-    public List<GameObject> bobs;
+    public GameObject bobs;
     public int bosscount;
-    private GameObject bossRandomed;
     public bool isSpawned = false;
     public KillCount countEnemy;
     // Start is called before the first frame update
@@ -18,31 +17,22 @@ public class SpawnBobs : MonoBehaviour
         timer = FindObjectOfType<Timer>();
     }
 
-    public void RandomBoss()
-    {
-        bosscount = Random.Range(0, bobs.Count);
-        bossRandomed = bobs[bosscount];
-    }
     // Update is called once per frame
     void Update()
     {
         if (timer.time >= timeToSpawnBobs && isSpawned == false)
         {
-            RandomBoss();
             GameObject[] objectsToDelete = GameObject.FindGameObjectsWithTag("Enemy");
 
             foreach (var obj in objectsToDelete)
             {
-                Destroy(obj.GetComponentInParent<Forward>().gameObject);
+                Destroy(obj.GetComponentInParent<HealthPoint>().transform.parent.gameObject);
                 countEnemy.enemyCount = 0;
             }
-            GameObject[] spawners = GameObject.FindGameObjectsWithTag("Spawner");
+            GameObject spawners = GameObject.FindGameObjectWithTag("Spawner");
+            spawners.GetComponent<SpawnEnemy>().stopSpawn = true;
 
-            foreach (var obj in spawners)
-            {
-                obj.GetComponent<SpawnEnemy>().stopSpawn = true;
-            }
-            Instantiate(bossRandomed, transform.position, Quaternion.identity);
+            Instantiate(bobs, transform.position, Quaternion.identity);
             isSpawned = true;
             timeToSpawnBobs += timeToSpawnBobsStart;
         }

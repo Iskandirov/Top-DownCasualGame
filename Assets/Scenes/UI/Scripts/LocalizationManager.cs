@@ -126,22 +126,25 @@ public class LocalizationManager : MonoBehaviour
     public void SaveLocalization()
     {
         string path = System.IO.Path.Combine(Application.persistentDataPath, "Localization.txt");
-        StreamWriter writer = new StreamWriter(path, true);
-
-        foreach (LocalizationDataItems item in items)
+        using (StreamWriter writer = new StreamWriter(path, true))
         {
-            LocalizationDataItems data = new LocalizationDataItems();
-            data.language = item.language;
-            data.key = item.key;
-            data.value = item.value;
+            foreach (LocalizationDataItems item in items)
+            {
+                LocalizationDataItems data = new LocalizationDataItems();
+                data.language = item.language;
+                data.key = item.key;
+                data.value = item.value;
 
-            string jsonData = JsonUtility.ToJson(data);
-            string encryptedJson = hashing.Encrypt(jsonData);
+                string jsonData = JsonUtility.ToJson(data);
+                string encryptedJson = hashing.Encrypt(jsonData);
 
-            writer.WriteLine(encryptedJson); // Додайте роздільник ";"
+                writer.WriteLine(encryptedJson); // Додайте роздільник ";"
+            }
+
+            writer.Close();
         }
 
-        writer.Close();
+           
     }
     public void SaveWithDefaultParams()
     {
@@ -152,16 +155,19 @@ public class LocalizationManager : MonoBehaviour
         list.Add(new SettingsData { key = "volume", value = "0.5" });
         list.Add(new SettingsData { key = "v-sync", value = "0" });
         // Відкриття файлу для запису
-        StreamWriter writer = new StreamWriter(path, false);
-        // Запис усіх елементів зі списку до файлу
-        foreach (var item in list)
+        using (StreamWriter writer = new StreamWriter(path, true))
         {
-            string jsonData = JsonUtility.ToJson(item);
-            string encryptedJson = hashing.Encrypt(jsonData);
-            writer.WriteLine(encryptedJson);
+            // Запис усіх елементів зі списку до файлу
+            foreach (var item in list)
+            {
+                string jsonData = JsonUtility.ToJson(item);
+                string encryptedJson = hashing.Encrypt(jsonData);
+                writer.WriteLine(encryptedJson);
+            }
+            // Закриття файлу
+            writer.Close();
         }
-        // Закриття файлу
-        writer.Close();
+            
         // Перезавантаження налаштувань та оновлення тексту
         LoadSettings();
         List<GameObject> text = new List<GameObject>
@@ -212,15 +218,18 @@ public class LocalizationManager : MonoBehaviour
                 }
             }
         }
-        StreamWriter writer = new StreamWriter(path, false);
-        // Запис усіх елементів зі списку до файлу
-        foreach (var item in list)
+        using (StreamWriter writer = new StreamWriter(path, true))
         {
-            string jsonData = JsonUtility.ToJson(item);
-            string decryptedJson = hashing.Encrypt(jsonData);
-            writer.WriteLine(decryptedJson);
+            // Запис усіх елементів зі списку до файлу
+            foreach (var item in list)
+            {
+                string jsonData = JsonUtility.ToJson(item);
+                string decryptedJson = hashing.Encrypt(jsonData);
+                writer.WriteLine(decryptedJson);
+            }
+            writer.Close();
         }
-        writer.Close();
+            
 
         // Перезавантаження налаштувань та оновлення тексту
         LoadSettings();
@@ -272,15 +281,18 @@ public class LocalizationManager : MonoBehaviour
                 }
             }
         }
-        StreamWriter writer = new StreamWriter(path, false);
-        // Запис усіх елементів зі списку до файлу
-        foreach (var item in list)
+        using (StreamWriter writer = new StreamWriter(path, true))
         {
-            string jsonData = JsonUtility.ToJson(item);
-            string decryptedJson = hashing.Encrypt(jsonData);
-            writer.WriteLine(decryptedJson);
+            // Запис усіх елементів зі списку до файлу
+            foreach (var item in list)
+            {
+                string jsonData = JsonUtility.ToJson(item);
+                string decryptedJson = hashing.Encrypt(jsonData);
+                writer.WriteLine(decryptedJson);
+            }
+            writer.Close();
         }
-        writer.Close();
+            
 
         // Перезавантаження налаштувань та оновлення тексту
         LoadSettings();

@@ -1,10 +1,8 @@
 using Newtonsoft.Json;
 using System.IO;
-using System.Security.Policy;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements.Experimental;
 
 public class GetScore : MonoBehaviour
 {
@@ -54,7 +52,7 @@ public class GetScore : MonoBehaviour
         SaveScore((int)score, true);
         if (scene)
         {
-            gameObject.GetComponent<CheckLevel>().CheckPercent(SceneManager.GetActiveScene().buildIndex, percent);
+            GetComponent<CheckLevel>().CheckPercent(SceneManager.GetActiveScene().buildIndex, percent);
         }
     }
     public int LoadScore()
@@ -99,15 +97,8 @@ public class GetScore : MonoBehaviour
 
                 // «ам≥н€Їмо WriteLine на Write
                 writer.Write(encryptedJson);
+                writer.Close();
             }
-        }
-        else
-        {
-            // якщо файл не ≥снуЇ, створимо його
-            File.Create(path);
-
-            // ≤ запишемо в нього дан≥
-            SaveScore(money, true);
         }
 
         // якщо гра зак≥нчилас€ усп≥шно, оновлюЇмо дан≥ про пройден≥ р≥вн≥

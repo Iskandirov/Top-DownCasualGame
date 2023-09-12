@@ -126,9 +126,23 @@ public class SpawnEnemy : MonoBehaviour
             // Отримуємо випадкову точку всередині колайдера за допомогою Random.insideUnitCircle
             Vector2 randomPointInsideCollider = colliderCenter + Random.insideUnitCircle * (spawnMapBound.bounds.extents.magnitude);
 
-            // Спавнуємо об'єкт на отриманій позиції
-            Instantiate(obj, randomPointInsideCollider, Quaternion.identity);
-            enemyCountType[id] += 1;
+            while (true)
+            {
+                // Перевіряємо, чи точка знаходиться всередині меж
+                if (randomPointInsideCollider.x >= spawnMapBound.bounds.min.x &&
+                    randomPointInsideCollider.x <= spawnMapBound.bounds.max.x &&
+                    randomPointInsideCollider.y >= spawnMapBound.bounds.min.y &&
+                    randomPointInsideCollider.y <= spawnMapBound.bounds.max.y)
+                {
+                    // Спавнуємо об'єкт на отриманій позиції
+                    Instantiate(obj, randomPointInsideCollider, Quaternion.identity);
+                    enemyCountType[id] += 1;
+                    break;
+                }
+
+                // Генеруємо нову точку
+                randomPointInsideCollider = colliderCenter + Random.insideUnitCircle * (spawnMapBound.bounds.extents.magnitude);
+            }
         }
     }
     public void ActivateSpawners()
