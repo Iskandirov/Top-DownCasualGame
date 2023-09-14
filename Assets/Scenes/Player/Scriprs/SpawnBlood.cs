@@ -37,7 +37,7 @@ public class SpawnBlood : MonoBehaviour
                 puddle a = Instantiate(puddle, new Vector3(transform.position.x + Random.Range(-20, 20), transform.position.y + Random.Range(-20, 20), 1.9f), Quaternion.identity);
                 a.damage = damage * waterDirtElement.Water;
                 a.radius += radius * waterDirtElement.Dirt;
-                a.gameObject.transform.localScale = new Vector2(a.gameObject.transform.localScale.x + radius * 2, a.gameObject.transform.localScale.y + radius * 2);
+                a.gameObject.transform.localScale = new Vector2(a.gameObject.transform.localScale.x + radius, a.gameObject.transform.localScale.y + radius);
                 a.damageTickMax = damageTickMax;
             }
             step = stepMax;

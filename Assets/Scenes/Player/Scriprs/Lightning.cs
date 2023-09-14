@@ -83,8 +83,12 @@ public class Lightning : MonoBehaviour
                     objHealth.GetComponentInParent<ElementActiveDebuff>().SetBool("isElectricity", true, true);
                     objHealth.GetComponentInParent<ElementActiveDebuff>().SetBool("isElectricity", true, false);
                 }
-                objMove.isStunned = true;
-                objMove.stunnTime = stunTime;
+                if (objMove != null)
+                {
+                    objMove.isStunned = true;
+                    objMove.stunnTime = stunTime;
+                }
+                
 
                 if (objHealth.IsBobs == true)
                 {

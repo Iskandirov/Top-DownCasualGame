@@ -10,6 +10,7 @@ public class SpawnBobs : MonoBehaviour
     public int bosscount;
     public bool isSpawned = false;
     public KillCount countEnemy;
+    public EnemyInfoLoader enemyInfo;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +23,19 @@ public class SpawnBobs : MonoBehaviour
     {
         if (timer.time >= timeToSpawnBobs && isSpawned == false)
         {
+            foreach (SaveEnemyInfo obj in enemyInfo.enemyInfo)
+            {
+                if (obj.Name.Contains(bobs.name))
+                {
+                    if (enemyInfo.CheckInfo(obj.ID))
+                    {
+                        enemyInfo.FillInfo(obj.ID);
+                        enemyInfo.enemyInfoLoad.Clear();
+                        enemyInfo.LoadEnemyInfo();
+                    }
+                }
+            }
+            
             GameObject[] objectsToDelete = GameObject.FindGameObjectsWithTag("Enemy");
 
             foreach (var obj in objectsToDelete)

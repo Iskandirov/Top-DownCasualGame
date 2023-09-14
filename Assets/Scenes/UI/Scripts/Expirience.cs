@@ -11,6 +11,7 @@ public class Expirience : MonoBehaviour
     Health objHealth;
     public Timer time;
     public int isEnemyInZone;
+    public int multiply;
     // Start is called before the first frame update
     void Start()
     {

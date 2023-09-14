@@ -10,6 +10,7 @@ public class Shoot : MonoBehaviour
     public float stepShoot;
     public float damageToGive;
     public float attackSpeed;
+    public float attackSpeedMax;
     public float launchForce = 10f;  // —ила запуску об'Їкта
 
     //public float movementSpeed = 5f;  // Ўвидк≥сть руху об'Їкту
@@ -22,6 +23,7 @@ public class Shoot : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        attackSpeedMax = attackSpeed;
         bullet.GetComponent<Bullet>().damage = 1;
     }
 

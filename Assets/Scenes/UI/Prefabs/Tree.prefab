@@ -52,7 +52,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e3b6c8e9065ce6e46bf9f96a5ee31e21, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -71,7 +71,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -615793817
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 9e4921dde5105274ab181606956b906a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 3162221353454294233}
   - component: {fileID: 3162221353454294232}
   - component: {fileID: 3162221353454294215}
+  - component: {fileID: 5061225214607855556}
   m_Layer: 6
   m_Name: Tree
   m_TagString: Untagged
@@ -178,6 +179,42 @@ MonoBehaviour:
   - {fileID: 990668811631794099}
   - {fileID: 8949316829719176726}
   isSomeoneHere: 0
+--- !u!114 &5061225214607855556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3162221353454294213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 0
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 67bb4bdb000000006bb21ed8dbdc180403081c6621fa54d5
+  m_ShapePath:
+  - {x: -1.7597818, y: -5.2712326, z: 0}
+  - {x: -2.2256708, y: -0.2809906, z: 0}
+  - {x: -1.822916, y: 4.1205444, z: 0}
+  - {x: -0.75289536, y: 5.8466034, z: 0}
+  - {x: 0.2062993, y: 5.760292, z: 0}
+  - {x: 2.2922912, y: -3.1631851, z: 0}
+  - {x: 1.7133918, y: -5.0590134, z: 0}
+  - {x: 0.25711393, y: -5.802429, z: 0}
+  - {x: 0.20571375, y: -6.573433, z: 0}
+  - {x: 1.1052165, y: -8.141136, z: 0}
+  - {x: 0.20571375, y: -8.218239, z: 0}
+  - {x: -1.1306906, y: -8.603737, z: 0}
+  - {x: -0.43678808, y: -6.0594254, z: 0}
+  m_ShapePathHash: -523307123
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -102004
 --- !u!1 &4885013460450056078
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,7 +267,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e3b6c8e9065ce6e46bf9f96a5ee31e21, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

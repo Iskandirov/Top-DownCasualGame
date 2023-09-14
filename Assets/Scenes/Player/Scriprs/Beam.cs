@@ -11,6 +11,7 @@ public class Beam : MonoBehaviour
     public GameObject player;
     public float Steam;
     public float radius;
+    public float addToAndle;
     public SpriteRenderer img;
     // Start is called before the first frame update
     void Start()
@@ -27,18 +28,12 @@ public class Beam : MonoBehaviour
         Vector3 direction = mousePosition - player.transform.position;
         direction = direction.normalized * radius;
 
-        // Визначаємо кінцеву позицію об'єкту на колі
-        Vector3 targetPosition = player.transform.position + direction;
-
-        // Рухаємо об'єкт до кінцевої позиції
-        transform.position = targetPosition;
-
         // Повертаємо коло в напрямку курсора
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        transform.rotation = Quaternion.AngleAxis(angle + addToAndle, Vector3.forward);
 
         tick -= Time.deltaTime;
-        transform.position = new Vector2(player.transform.position.x + 2.3f, player.transform.position.y);
+        transform.position = new Vector2(player.transform.position.x, player.transform.position.y);
         lifeTime -= Time.deltaTime;
         if (lifeTime <= 0)
         {

@@ -1418,7 +1418,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4117816831084279211}
+  - component: {fileID: 6688414581614114875}
   - component: {fileID: 7579186738060476083}
   m_Layer: 0
   m_Name: EnemyImg
@@ -1427,21 +1427,26 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4117816831084279211
-Transform:
+--- !u!224 &6688414581614114875
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3777674424311443592}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -849, y: 285.1084, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 47.16, y: 47.16, z: 47.16}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 330097705886980947}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 130, y: 285.1084}
+  m_SizeDelta: {x: 4, y: 4}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &7579186738060476083
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1532,7 +1537,7 @@ RectTransform:
   - {fileID: 2701593286547783087}
   - {fileID: 884042891295417775}
   - {fileID: 6511440182090798319}
-  - {fileID: 4117816831084279211}
+  - {fileID: 6688414581614114875}
   - {fileID: 5697716731238803473}
   - {fileID: 4268278786743222641}
   - {fileID: 7869891034986251871}
@@ -1588,7 +1593,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &5295891385508707943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3433,10 +3438,6 @@ PrefabInstance:
     - target: {fileID: 420830172562334722, guid: 1b6bf50f988a7fb45bb3ea37fc1779af, type: 3}
       propertyPath: lang
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 420830172562334722, guid: 1b6bf50f988a7fb45bb3ea37fc1779af, type: 3}
-      propertyPath: skillsSave.Array.data[2].stat1.Array.data[1]
-      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2365495856371750042, guid: 1b6bf50f988a7fb45bb3ea37fc1779af, type: 3}
       propertyPath: m_AnchorMax.y

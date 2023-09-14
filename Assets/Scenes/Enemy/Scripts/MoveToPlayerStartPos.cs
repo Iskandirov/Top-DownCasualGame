@@ -1,3 +1,4 @@
+using Pathfinding;
 using System.Collections;
 using UnityEngine;
 
@@ -9,11 +10,19 @@ public class MoveToPlayerStartPos : MonoBehaviour
 
     private Rigidbody2D rb;
     private Vector2 moveDirection;
+    AIPath path;
+    AIDestinationSetter destination;
     private void Start()
     {
         target = FindObjectOfType<Move>().transform;
         rb = GetComponent<Rigidbody2D>();
         moveDirection = (transform.position - target.position).normalized;
+
+        path = GetComponent<AIPath>();
+        path.maxSpeed = moveSpeed;
+        destination = GetComponent<AIDestinationSetter>();
+        destination.target = target.transform;
+
         StartCoroutine(SelfDestroy());
     }
     public IEnumerator SelfDestroy()

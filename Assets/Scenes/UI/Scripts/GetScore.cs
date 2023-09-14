@@ -25,7 +25,7 @@ public class GetScore : MonoBehaviour
             if (float.TryParse(timeEnd.text, out float result))
             {
                 // Вдале перетворення
-                score = ((FindObjectOfType<KillCount>().score + 1) * Mathf.Pow(2.71828f, (0.05f * result))) * 2;
+                score = (FindObjectOfType<KillCount>().score + 1) * Mathf.Pow(1 + (0.05f * result), 1.1f);
                 percent = Mathf.RoundToInt((result / objTimer.timeToWin) * 100);
                 if (percent > 100)
                 {

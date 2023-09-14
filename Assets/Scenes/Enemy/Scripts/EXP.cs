@@ -26,7 +26,7 @@ public class EXP : MonoBehaviour
     {
         if (other.CompareTag("Player") && !other.isTrigger)
         {
-            playerExp.expiriencepoint.fillAmount += expBuff / playerExp.expNeedToNewLevel;
+            playerExp.expiriencepoint.fillAmount += expBuff * playerExp.multiply / playerExp.expNeedToNewLevel;
             Destroy(gameObject);
         }
     }

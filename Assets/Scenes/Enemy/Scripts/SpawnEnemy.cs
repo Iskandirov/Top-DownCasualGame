@@ -96,12 +96,7 @@ public class SpawnEnemy : MonoBehaviour
     {
         if (timeStepWeed > 10)
         {
-            if (enemyInfo.CheckInfo(enemyTypeSpawn))
-            {
-                enemyInfo.FillInfo(enemyTypeSpawn);
-                enemyInfo.enemyInfoLoad.Clear();
-                enemyInfo.LoadEnemyInfo();
-            }
+            IDChecker(tumbleweed.name);
             Bounds cameraBounds = GetCameraBounds();
             Vector3 spawnPosition = GetRandomSpawnPosition(cameraBounds);
             for (int i = 0; i < 10; i++)
@@ -137,6 +132,7 @@ public class SpawnEnemy : MonoBehaviour
                     // Спавнуємо об'єкт на отриманій позиції
                     Instantiate(obj, randomPointInsideCollider, Quaternion.identity);
                     enemyCountType[id] += 1;
+                    IDChecker(obj.name);
                     break;
                 }
 
@@ -193,12 +189,7 @@ public class SpawnEnemy : MonoBehaviour
                 Vector3 spawnPosition = GetRandomSpawnPosition(cameraBounds);
                 Instantiate(EnemyBody[i], spawnPosition, Quaternion.identity, transform);
                 enemyCountType[i] += 1;
-                if (enemyInfo.CheckInfo(enemyTypeSpawn))
-                {
-                    enemyInfo.FillInfo(enemyTypeSpawn);
-                    enemyInfo.enemyInfoLoad.Clear();
-                    enemyInfo.LoadEnemyInfo();
-                }
+                IDChecker(EnemyBody[i].name);
             }
         }
     }
@@ -229,6 +220,21 @@ public class SpawnEnemy : MonoBehaviour
             }
             enemy.GetComponentInChildren<HealthPoint>().healthPoint = health;
             timeGost = 0;
+        }
+    }
+    public void IDChecker(string enemyName)
+    {
+        foreach (SaveEnemyInfo obj in enemyInfo.enemyInfo)
+        {
+            if (obj.Name.Contains(enemyName))
+            {
+                if (enemyInfo.CheckInfo(obj.ID))
+                {
+                    enemyInfo.FillInfo(obj.ID);
+                    enemyInfo.enemyInfoLoad.Clear();
+                    enemyInfo.LoadEnemyInfo();
+                }
+            }
         }
     }
 }

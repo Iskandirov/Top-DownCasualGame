@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6222923354122472728}
   - component: {fileID: 6222923354122472729}
   - component: {fileID: 5923841879142197419}
+  - component: {fileID: 4031929794569902559}
   m_Layer: 8
   m_Name: Tornadic
   m_TagString: Enemy
@@ -56,7 +57,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e3b6c8e9065ce6e46bf9f96a5ee31e21, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -75,7 +76,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -669076885
-  m_SortingLayer: 2
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 7f0c7ee5715a7b446912f98d316eb723, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -163,3 +164,32 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4.23, y: 4.69}
   m_EdgeRadius: 0
+--- !u!114 &4031929794569902559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6222923354122472733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 67bb4bdb000000006bb21ed8dbdc180403081c6621fa54d5
+  m_ShapePath:
+  - {x: -1.9122405, y: 0.5544633, z: 0}
+  - {x: -2.0947244, y: 1.63534, z: 0}
+  - {x: -0.40662885, y: 2.2495368, z: 0}
+  - {x: 2.1150002, y: 2.3450012, z: 0}
+  - {x: 0.02657493, y: -2.3044488, z: 0}
+  - {x: -0.85270023, y: 0.0800116, z: 0}
+  m_ShapePathHash: 2077189213
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -68880

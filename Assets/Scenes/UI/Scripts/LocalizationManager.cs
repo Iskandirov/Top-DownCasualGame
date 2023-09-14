@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Security.Policy;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
@@ -104,10 +105,17 @@ public class LocalizationManager : MonoBehaviour
         string filePath = System.IO.Path.Combine(Application.persistentDataPath, "Localization.txt");
         if (File.Exists(filePath))
         {
-            string[] encryptedText = File.ReadAllLines(filePath);
+            Task<string[]> task = File.ReadAllLinesAsync(filePath);
+
+            // Wait for the task to complete
+            task.Wait();
+
+            // Get the result of the task
+            string[] lines = task.Result;
             // Розділяємо розшифрований текст на окремі рядки
-            foreach (string item in encryptedText)
+            foreach (string item in lines)
             {
+                
                 string decrypt = hashing.Decrypt(item);
                 LocalizationDataItems data = JsonUtility.FromJson<LocalizationDataItems>(decrypt);
                 LocalizationDataItems dataItem = new LocalizationDataItems();
@@ -281,18 +289,18 @@ public class LocalizationManager : MonoBehaviour
                 }
             }
         }
-        using (StreamWriter writer = new StreamWriter(path, true))
+        using (StreamWriter writer = new StreamWriter(path, false))
         {
             // Запис усіх елементів зі списку до файлу
             foreach (var item in list)
             {
                 string jsonData = JsonUtility.ToJson(item);
-                string decryptedJson = hashing.Encrypt(jsonData);
-                writer.WriteLine(decryptedJson);
+                string encryptedJson = hashing.Encrypt(jsonData);
+                writer.WriteLine(encryptedJson);
             }
-            writer.Close();
+            writer.Flush();
         }
-            
+
 
         // Перезавантаження налаштувань та оновлення тексту
         LoadSettings();
@@ -302,62 +310,6 @@ public class LocalizationManager : MonoBehaviour
         };
         UpdateText(text);
     }
-    //public void ChangeLanguage(List<GameObject> text)
-    //{
-    //    List<SettingsData> list = new List<SettingsData>();
-    //    string path = Path.Combine(Application.persistentDataPath, "Settings.txt");
-    //    if (File.Exists(path))
-    //    {
-    //        // Зчитування всіх рядків з файлу
-    //        string[] lines = File.ReadAllLines(path);
-    //        foreach (string item in lines)
-    //        {
-    //            SettingsData settings = JsonUtility.FromJson<SettingsData>(item);
-    //            if (settings.key != "language")
-    //            {
-    //                list.Add(settings);
-    //            }
-    //        }
-    //    }
-    //    // Створення нового елемента з ключем language та його значенням
-    //    SettingsData data = new SettingsData();
-    //    data.key = "language";
-    //    data.value = language[drop.value];
-    //    // Додавання нового елемента до списку
-    //    list.Add(data);
-    //    // Перевірка, чи вже існує елемент з ключем language в списку
-    //    bool hasLanguage = false;
-    //    foreach (var item in list)
-    //    {
-    //        if (item.key == "language")
-    //        {
-    //            if (hasLanguage)
-    //            {
-    //                // Якщо елемент з ключем language вже є в списку, видалити його
-    //                list.Remove(item);
-    //            }
-    //            else
-    //            {
-    //                // Якщо елемент з ключем language є в списку, встановити hasLanguage в true
-    //                hasLanguage = true;
-    //            }
-    //        }
-    //    }
-    //    // Відкриття файлу для запису
-    //    StreamWriter writer = new StreamWriter(path, false);
-    //    // Запис усіх елементів зі списку до файлу
-    //    foreach (var item in list)
-    //    {
-    //        string jsonData = JsonUtility.ToJson(item);
-    //        writer.WriteLine(jsonData);
-    //    }
-    //    // Закриття файлу
-    //    writer.Close();
-    //    // Перезавантаження налаштувань та оновлення тексту
-    //    LoadSettings();
-    //    text.Add(testText);
-    //    UpdateText(text);
-    //}
     public void UpdateText(List<GameObject> text)
     {
         string filePath = System.IO.Path.Combine(Application.persistentDataPath, "Localization.txt");
