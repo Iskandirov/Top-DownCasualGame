@@ -20,7 +20,6 @@ public class SpawnEnemy : MonoBehaviour
 
     private Camera mainCamera;
     public float spawnRadius = 10f;
-    public float enemyCountMax;
     public float[] enemyCountType;
 
     Transform player;
@@ -92,28 +91,35 @@ public class SpawnEnemy : MonoBehaviour
         return spawnPosition;
     }
 
-    private void SpawnTumbleweed()
+    public void ActivateSpawners()
     {
-        if (timeStepWeed > 10)
+        if (stopSpawn)
         {
-            IDChecker(tumbleweed.name);
+            ResetMobCount();
+        }
+        int i = Random.Range(0, enemyTypeSpawn);
+
+        SpawnEnemies(EnemyBody[i], i);
+
+        if (Timer.time >= timeToNewType && enemyTypeSpawn < EnemyBody.Length)
+        {
+            timeToNewType += timeToNewTypeStart;
+            enemyTypeSpawn++;
+        }
+        time = 0;
+    }
+    private void SpawnEnemies(GameObject enemyType, int i)
+    {
+        if (enemyCountType[i] <= 15 && enemyType.GetComponent<Forward>() != null)
+        {
             Bounds cameraBounds = GetCameraBounds();
             Vector3 spawnPosition = GetRandomSpawnPosition(cameraBounds);
-            for (int i = 0; i < 10; i++)
-            {
-                float angle = i * Mathf.PI * 2 / 10; // Розраховуємо кут між об'єктами
-                spawnPosition += new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * radius; // Обчислюємо позицію для спавну
-
-                MoveToPlayerStartPos a = Instantiate(tumbleweed, spawnPosition, Quaternion.identity, transform);
-                a.target = player;
-            }
-            timeStepWeed = 0;
-            enemyCountType[1] += 1;
+            Instantiate(enemyType, spawnPosition, Quaternion.identity, transform);
+            enemyCountType[i] += 1;
+            IDChecker(enemyType.name);
         }
-    }
-    private void SpawnInWorldBound(GameObject obj, int id)
-    {
-        if (enemyCountType[id] <= 5)
+
+        if (enemyCountType[i] <= 5 && enemyType.GetComponent<Forward>() == null && enemyType.GetComponent<MoveToPlayerStartPos>() == null)
         {
             // Отримуємо центр колайдера
             Vector2 colliderCenter = spawnMapBound.bounds.center;
@@ -130,9 +136,9 @@ public class SpawnEnemy : MonoBehaviour
                     randomPointInsideCollider.y <= spawnMapBound.bounds.max.y)
                 {
                     // Спавнуємо об'єкт на отриманій позиції
-                    Instantiate(obj, randomPointInsideCollider, Quaternion.identity);
-                    enemyCountType[id] += 1;
-                    IDChecker(obj.name);
+                    Instantiate(enemyType, randomPointInsideCollider, Quaternion.identity);
+                    enemyCountType[i] += 1;
+                    IDChecker(enemyType.name);
                     break;
                 }
 
@@ -140,56 +146,23 @@ public class SpawnEnemy : MonoBehaviour
                 randomPointInsideCollider = colliderCenter + Random.insideUnitCircle * (spawnMapBound.bounds.extents.magnitude);
             }
         }
-    }
-    public void ActivateSpawners()
-    {
-        if (stopSpawn)
+        if (enemyCountType[i] <= 10 && enemyType.GetComponent<MoveToPlayerStartPos>() != null)
         {
-            ResetMobCount();
-        }
-        int i = Random.Range(0, enemyTypeSpawn);
-        switch (i)
-        {
-            case 0:
-                SpawnEnemies(0, 20);
-                break;
-            case 1:
-                SpawnTumbleweed();
-                break;
-            case 2:
-                SpawnEnemies(2, 15);
-                break;
-            case 3:
-                SpawnEnemies(3, 10);
-                break;
-            case 4:
-                SpawnInWorldBound(EnemyBody[5], 4);
-                break;
-            case 5:
-                SpawnInWorldBound(sniperTree.gameObject, 5);
-                break;
-            default:
-                break;
-        }
-        if (Timer.time >= timeToNewType && enemyTypeSpawn < EnemyBody.Length)
-        {
-            timeToNewType += timeToNewTypeStart;
-            enemyTypeSpawn++;
-        }
-        time = 0;
-    }
-    private void SpawnEnemies(int i, int maxCount)
-    {
-        if (enemyCountType[i] <= maxCount)
-        {
-
             Bounds cameraBounds = GetCameraBounds();
-            if (enemyCountType[i] < enemyCountMax)
+            if (timeStepWeed > 10)
             {
+                IDChecker(enemyType.name);
                 Vector3 spawnPosition = GetRandomSpawnPosition(cameraBounds);
-                Instantiate(EnemyBody[i], spawnPosition, Quaternion.identity, transform);
+                for (int y = 0; y < 10; y++)
+                {
+                    float angle = y * Mathf.PI * 2 / 10; // Розраховуємо кут між об'єктами
+                    spawnPosition += new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * radius; // Обчислюємо позицію для спавну
+
+                    GameObject a = Instantiate(enemyType, spawnPosition, Quaternion.identity, transform);
+                    a.GetComponent<MoveToPlayerStartPos>().target = player;
+                }
+                timeStepWeed = 0;
                 enemyCountType[i] += 1;
-                IDChecker(EnemyBody[i].name);
             }
         }
     }

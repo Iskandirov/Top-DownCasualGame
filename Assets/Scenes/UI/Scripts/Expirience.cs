@@ -8,7 +8,7 @@ public class Expirience : MonoBehaviour
     public float expNeedToNewLevel;
     public GameObject levelUp;
     public ActivateAbilities activeAbilObj;
-    Health objHealth;
+    public Health objHealth;
     public Timer time;
     public int isEnemyInZone;
     public int multiply;
@@ -22,29 +22,18 @@ public class Expirience : MonoBehaviour
     {
         ShowLevel();
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.CompareTag("Health") && objHealth.playerHealthPoint < objHealth.playerHealthPointMax)
-        {
-            if (objHealth.playerHealthPoint + (objHealth.playerHealthPointMax / 100) * 10 >= objHealth.playerHealthPointMax)
-            {
-                objHealth.playerHealthPoint = objHealth.playerHealthPointMax;
-                objHealth.playerHealthPointImg.fullFillImage.fillAmount = 1;
-                Destroy(collision.gameObject);
-            }
-            else
-            {
-                objHealth.playerHealthPoint += (objHealth.playerHealthPointMax / 100) * 10; //Can be baffed by some thing
-                objHealth.playerHealthPointImg.fullFillImage.fillAmount += objHealth.playerHealthPoint / objHealth.playerHealthPointMax;
-                Destroy(collision.gameObject);
-            }
-        }
+        
+    }
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
         if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
             isEnemyInZone++;
         }
     }
-    public void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {

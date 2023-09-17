@@ -24,7 +24,7 @@ public class Attack : MonoBehaviour
     {
         if (FindObjectOfType<KillCount>().LoadObjectLevelCount(SceneManager.GetActiveScene().buildIndex) > 0)
         {
-            damageMax *= FindObjectOfType<KillCount>().LoadObjectLevelCount(SceneManager.GetActiveScene().buildIndex) * 0.5f;
+            damageMax += FindObjectOfType<KillCount>().LoadObjectLevelCount(SceneManager.GetActiveScene().buildIndex) + damageMax * 0.3f;
         }
         objMove = GetComponent<Forward>();
         objAnim = GetComponent<Animator>();
@@ -72,7 +72,7 @@ public class Attack : MonoBehaviour
                     {
                         objMove.speed = 0;
                         objAnim.SetBool("IsHit", true);
-                        objectToHit = collision.collider.GetComponent<Health>();
+                        //objectToHit = collision.collider.GetComponent<Health>();
                         Instantiate(attackVFX, gameObject.transform.position, Quaternion.identity);
                         isAttack = true;
                     }
@@ -104,7 +104,30 @@ public class Attack : MonoBehaviour
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.collider.CompareTag("Player"))
+        //if (collision.collider.CompareTag("Player"))
+        //{
+        //    objectToHit = null;
+        //}
+    }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (objMove.isSummoned == false)
+        {
+            if (collision.CompareTag("Player") && isAttack == false)
+            {
+                if (collision.GetComponent<Move>().isInvincible == false)
+                {
+                    if (!isRange)
+                    {
+                        objectToHit = collision.GetComponent<Health>();
+                    }
+                }
+            }
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
         {
             objectToHit = null;
         }

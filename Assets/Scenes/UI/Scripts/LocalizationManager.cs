@@ -226,7 +226,7 @@ public class LocalizationManager : MonoBehaviour
                 }
             }
         }
-        using (StreamWriter writer = new StreamWriter(path, true))
+        using (StreamWriter writer = new StreamWriter(path, false))
         {
             // Запис усіх елементів зі списку до файлу
             foreach (var item in list)

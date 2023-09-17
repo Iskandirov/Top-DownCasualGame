@@ -7,32 +7,34 @@ public class MoveToPlayerStartPos : MonoBehaviour
     public Transform target; // Початковий цільовий об'єкт
     public float moveSpeed = 5.0f; // Швидкість руху
     public float damage = 10.0f; // Відстань руху
-
-    private Rigidbody2D rb;
+    public Rigidbody2D objToFollow;
+    //private Rigidbody2D rb;
     private Vector2 moveDirection;
     AIPath path;
     AIDestinationSetter destination;
     private void Start()
     {
         target = FindObjectOfType<Move>().transform;
-        rb = GetComponent<Rigidbody2D>();
+        //rb = GetComponent<Rigidbody2D>();
+        objToFollow.transform.position = target.transform.position;
         moveDirection = (transform.position - target.position).normalized;
 
         path = GetComponent<AIPath>();
         path.maxSpeed = moveSpeed;
         destination = GetComponent<AIDestinationSetter>();
-        destination.target = target.transform;
+        destination.target = objToFollow.transform;
 
         StartCoroutine(SelfDestroy());
     }
     public IEnumerator SelfDestroy()
     {
         yield return new WaitForSeconds(5);
+        Destroy(objToFollow);
         Destroy(gameObject);
     }
     private void Update()
     {
-        rb.velocity = -moveDirection * moveSpeed;
+        objToFollow.velocity = -moveDirection * moveSpeed;
     }
     public void OnCollisionEnter2D(Collision2D collision)
     {
