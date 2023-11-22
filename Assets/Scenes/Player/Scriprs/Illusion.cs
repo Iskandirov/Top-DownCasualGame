@@ -58,7 +58,7 @@ public class Illusion : MonoBehaviour
     public void ShootBullet(GameObject ShootPointObj)
     {
         stepShoot += Time.deltaTime;
-
+        FindObjectOfType<StatsCollector>().FindStatName("illusionLifeTime", Time.deltaTime);
         if (stepShoot >= attackSpeed)
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);

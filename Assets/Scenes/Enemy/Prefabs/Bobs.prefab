@@ -481,6 +481,7 @@ MonoBehaviour:
   SteamStart: 1
   ColdStart: 1
   debuffsParent: {fileID: 5967280687732449362}
+  nameMob: Bobs
 --- !u!60 &5112801515918849699
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -668,7 +669,7 @@ MonoBehaviour:
   - {x: -0.018272042, y: -0.4225589, z: 0.000000029802322}
   m_ShapePathHash: -684510710
   m_Mesh: {fileID: 0}
-  m_InstanceId: 91218
+  m_InstanceId: 66430
 --- !u!1 &6418969233144837898
 GameObject:
   m_ObjectHideFlags: 0
@@ -962,7 +963,7 @@ MonoBehaviour:
   - {x: -0.018272042, y: -0.4225589, z: 0.000000029802322}
   m_ShapePathHash: -684510710
   m_Mesh: {fileID: 0}
-  m_InstanceId: 91300
+  m_InstanceId: 66512
 --- !u!1 &7154109843395404649
 GameObject:
   m_ObjectHideFlags: 0
@@ -1167,6 +1168,7 @@ MonoBehaviour:
   isChaising: 0
   acceleration: 0.1
   angle: 0
+  isTutorial: 0
 --- !u!114 &256618190220434730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1182,13 +1184,14 @@ MonoBehaviour:
   itemPrefab: {fileID: 148148908384492936, guid: c761618b29cdf954f8ffec7c1e37fcd1, type: 3}
   items: {fileID: 6416895844494761421, guid: b08c4cf5e053b1145b3cc846731f0368, type: 3}
   itemsLoaded: []
-  spawnRare: 0.5
+  spawnRare: 0.4
   spawnMiphical: 0.27
   spawnLegendary: 0.05
   CommonItems: []
   RareItems: []
   MiphicalItems: []
   LegendaryItems: []
+  isTutor: 0
   rarityType:
   - "\u0417\u0432\u0438\u0447\u0430\u0439\u043D\u0435"
   - "\u0420\u0456\u0434\u043A\u0456\u0441\u043D\u0435"
@@ -1437,7 +1440,7 @@ MonoBehaviour:
   - {x: -0.7389914, y: -0.66529715, z: 0.000000029802322}
   m_ShapePathHash: -1742471489
   m_Mesh: {fileID: 0}
-  m_InstanceId: 91216
+  m_InstanceId: 66428
 --- !u!1 &7545567821778826804
 GameObject:
   m_ObjectHideFlags: 0

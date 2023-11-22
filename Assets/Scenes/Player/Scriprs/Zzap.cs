@@ -40,6 +40,7 @@ public class Zzap : MonoBehaviour
                     collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isElectricity", true, false);
                 }
                 collision.GetComponent<HealthPoint>().healthPoint -= damage * electicElement;
+                FindObjectOfType<StatsCollector>().FindStatName("zzapDamage", damage * electicElement);
                 collision.GetComponent<HealthPoint>().ChangeToKick();
             }
             damageTick = damageTickMax;

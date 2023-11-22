@@ -13,6 +13,7 @@ public class Move : MonoBehaviour
     public bool escPanelIsShowed;
     GameObject escPanelInstance;
     Animator playerAnim;
+    SkillCDShift skillCD;
 
     public float shiftCD;
     public float shiftCDMax;
@@ -27,6 +28,8 @@ public class Move : MonoBehaviour
 
     private bool isReloading = false;
     public bool isDashing = false;
+    public bool isUntouchible = false;
+    public bool isRicoshet = false;
 
 
     public bool isSlowingDown = false;
@@ -36,15 +39,16 @@ public class Move : MonoBehaviour
     public float axisY;
 
     public bool otherPanelOpened;
+    public bool isTutor;
+    public int heroID;
     // Start is called before the first frame update
     void Start()
     {
-        //float o = 100;
-        //for (int i = 0; i < 25; i++)
-        //{
-        //    o += o * 0.2f;
-        //    Debug.Log(o);
-        //}
+        skillCD = FindObjectOfType<SkillCDShift>();
+        if (skillCD != null)
+        {
+            skillCD.skillShiftCDMax = dashTimeMax;
+        }
         speedMax = speed;
         dashTimeStart = dashTimeMax;
         Time.timeScale = 1f;
@@ -57,7 +61,6 @@ public class Move : MonoBehaviour
         if (!isDashing)
         {
             rb.position = PlayerMove();
-
         }
         //can`t press pause after lose
         if (Input.GetKeyUp(KeyCode.Escape) && playerHealth.playerHealthPoint > 0 && !otherPanelOpened)
@@ -66,7 +69,6 @@ public class Move : MonoBehaviour
             {
                 escPanelInstance = Instantiate(escPanel, escPanelParent.transform);
                 escPanelIsShowed = true;
-                otherPanelOpened = true;
             }
             else
             {
@@ -75,17 +77,25 @@ public class Move : MonoBehaviour
                 Destroy(escPanelInstance);
             }
         }
-        //Dash
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !isReloading && !isDashing)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !isReloading && !isTutor)
         {
             isReloading = true;
-            isDashing = true;
-            Vector2 dashDirection = GetDashDirection();
-            rb.velocity = dashDirection.normalized * (speed * sprintMultiplier);
-            Invoke(nameof(StopDashing), 0.2f);
+            //Player special spell
+            switch (heroID)
+            {
+                case 1:
+                    Dash();
+                    break;
+                case 2:
+                    Untouchible();
+                    break;
+                case 3:
+                    Ricoshet();
+                    break;
+            }
             dashTime = dashTimeMax;
         }
-        //Dash reload
+        //reload
         if (isReloading)
         {
             dashTime -= Time.deltaTime;
@@ -106,18 +116,64 @@ public class Move : MonoBehaviour
             }
         }
     }
+    //=================RICOSHET===================
+    void Ricoshet()
+    {
+        if (!isRicoshet)
+        {
+            isRicoshet = true;
+            FindObjectOfType<Shoot>().isRicoshet= true;
+            Invoke(nameof(StopRicoshet), 10f);
+        }
+    }
+    //=================RICOSHET END================
+    //=================UNTOUCHIBLE=================
+    void Untouchible()
+    {
+        if (!isUntouchible)
+        {
+            isUntouchible = true;
+            Invoke(nameof(StopUntouchible), 4f);
+        }
+    }
+    //=================UNTOUCHIBLE END=============
+    //====================DASH=====================
+    void Dash()
+    {
+        //Dash
+        if (!isDashing)
+        {
+            isDashing = true;
+            Vector2 dashDirection = GetDashDirection();
+            rb.velocity = dashDirection.normalized * (speed * sprintMultiplier);
+            Invoke(nameof(StopDashing), 0.2f);
+        }
+    }
+    //===============STOP SPECIAL SPELL============
     private void StopDashing()
     {
         isDashing = false;
         rb.velocity = Vector2.zero;
     }
+    private void StopUntouchible()
+    {
+        isUntouchible = false;
+        
+    }
+    private void StopRicoshet()
+    {
+        isRicoshet = false;
+        FindObjectOfType<Shoot>().isRicoshet = false;
+    }
+    //===============STOP SPECIAL SPELL END========
     private Vector2 GetDashDirection()
     {
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 playerToMouse = mousePosition - transform.position;
         return playerToMouse;
     }
-    //-----------
+    //====================DASH END=================
+    //=====================MOVE====================
     public Vector2 PlayerMove()
     {
         float horizontalInput = Input.GetAxisRaw("Horizontal");
@@ -148,6 +204,7 @@ public class Move : MonoBehaviour
         rb.velocity = new Vector2(horizontalInput * speed, verticalInput * speed);
         return new Vector2(rb.position.x, rb.position.y);
     }
+    //===================MOVE END==================
     public IEnumerator SpeedSlow(float time)
     {
         speed = speedMax * 0.7f;

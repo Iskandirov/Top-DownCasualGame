@@ -154,7 +154,7 @@ RectTransform:
   m_Children:
   - {fileID: 1020900392}
   m_Father: {fileID: 1627269966}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -174,6 +174,220 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneCount: 3
+--- !u!1 &110738715
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 110738716}
+  - component: {fileID: 110738720}
+  - component: {fileID: 110738719}
+  - component: {fileID: 110738718}
+  - component: {fileID: 110738717}
+  m_Layer: 5
+  m_Name: ShopBtn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &110738716
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110738715}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2044534376}
+  m_Father: {fileID: 727696030}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0.29501024, y: 0.004486084}
+  m_SizeDelta: {x: 512.91, y: 127.6944}
+  m_Pivot: {x: 0.5, y: 1}
+--- !u!95 &110738717
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110738715}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0b0f90e72f9514c4095e4e1cd752fccb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &110738718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110738715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 3
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 110738719}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 727696031}
+        m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
+        m_MethodName: OnPlay
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &110738719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110738715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: e25ff3f63b78ea441b9f91543c20edb1, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &110738720
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110738715}
+  m_CullTransparentMesh: 1
+--- !u!1 &139192933
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 139192935}
+  - component: {fileID: 139192934}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &139192934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 139192933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9332ed5e5bdf8a14591daeb62404318b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Theme
+    clip: {fileID: 8300000, guid: 6f65fe061e7e1584893ac1d32bd9f22d, type: 3}
+    volume: 0.353
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: GameTheme
+    clip: {fileID: 8300000, guid: da3ec4657159b9e489cb759111c5fff6, type: 3}
+    volume: 0.353
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  volume: 0
+  nameClip: Theme
+--- !u!4 &139192935
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 139192933}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &198708669
 GameObject:
   m_ObjectHideFlags: 0
@@ -205,11 +419,11 @@ RectTransform:
   m_Children:
   - {fileID: 730836006}
   m_Father: {fileID: 1627269966}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -19.000008, y: -238}
+  m_AnchoredPosition: {x: -19.000008, y: -105.83002}
   m_SizeDelta: {x: 512.32, y: 112.99}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &198708671
@@ -224,7 +438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfd7e9de8ad2c004cb9cf2c323765a28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneCount: 5
+  sceneCount: 6
 --- !u!1 &356106033
 GameObject:
   m_ObjectHideFlags: 0
@@ -284,7 +498,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u041A\u0440\u0430\u043C\u043D\u0438\u0446\u044F"
+  m_text: "\u0421\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043A\u0430"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3a4bbe00465913a46ba69b539ba12d61, type: 2}
   m_sharedMaterial: {fileID: -628972225427471680, guid: 3a4bbe00465913a46ba69b539ba12d61, type: 2}
@@ -373,7 +587,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f34feffa53b631449dda31c5045de5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tagText: shop
+  tagText: statistic
 --- !u!1 &485679653
 GameObject:
   m_ObjectHideFlags: 0
@@ -667,6 +881,57 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &727696029
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 727696030}
+  - component: {fileID: 727696031}
+  m_Layer: 5
+  m_Name: Button (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &727696030
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 727696029}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 110738716}
+  m_Father: {fileID: 1627269966}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -19.000008, y: -238}
+  m_SizeDelta: {x: 512.32, y: 112.99}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &727696031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 727696029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfd7e9de8ad2c004cb9cf2c323765a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneCount: 5
 --- !u!1 &730836005
 GameObject:
   m_ObjectHideFlags: 0
@@ -681,7 +946,7 @@ GameObject:
   - component: {fileID: 730836007}
   - component: {fileID: 730836010}
   m_Layer: 5
-  m_Name: ShopBtn
+  m_Name: StatsBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1718,7 +1983,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -18.408485, y: 30.83}
+  m_AnchoredPosition: {x: -18.408485, y: 163}
   m_SizeDelta: {x: 512.32, y: 112.99}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1021362372
@@ -1769,7 +2034,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -8.000061, y: -23}
+  m_AnchoredPosition: {x: -8, y: -23}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1103840731
@@ -2155,7 +2420,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -18.70501, y: 160.98}
+  m_AnchoredPosition: {x: -18.70501, y: 293.14996}
   m_SizeDelta: {x: 511.73, y: 112.99}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1269511156
@@ -2202,11 +2467,11 @@ RectTransform:
   m_Children:
   - {fileID: 1899507006}
   m_Father: {fileID: 1627269966}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -19.000008, y: -103.5}
+  m_AnchoredPosition: {x: -19.000008, y: 28.669983}
   m_SizeDelta: {x: 512.32, y: 112.99}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1307949563
@@ -2238,6 +2503,8 @@ GameObject:
   - component: {fileID: 1371086804}
   - component: {fileID: 1371086805}
   - component: {fileID: 1371086806}
+  - component: {fileID: 1371086807}
+  - component: {fileID: 1371086808}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2974,14 +3241,1219 @@ MonoBehaviour:
   - key: bullet_5
     value: "\u6575\u3092\u8CAB\u901A\u3059\u308B"
     language: jup
-  - key: sd
+  - key: lightning_1
+    value: "\u0421\u0442\u0432\u043E\u0440\u044E\u0454 \u0431\u043B\u0438\u0441\u043A\u0430\u0432\u043A\u0443,
+      \u044F\u043A\u0430 \u0432\u0440\u0430\u0436\u0430\u0454 \u0432\u043E\u0440\u043E\u0433\u0456\u0432
+      \u043D\u0430\u0432\u043A\u043E\u043B\u043E \u0432\u0430\u0441"
+    language: ua
+  - key: lightning_1
+    value: Spawn a lightning that hit enemies around you
+    language: eng
+  - key: lightning_1
+    value: "Cr\xE9e un \xE9clair qui frappe les ennemis autour de vous"
+    language: fr
+  - key: lightning_1
+    value: "Erzeugt einen Blitz, der Feinde in deiner N\xE4he trifft"
+    language: ger
+  - key: lightning_1
+    value: Genera un rayo que golpea a los enemigos a tu alrededor
+    language: spa
+  - key: lightning_1
+    value: "\u6575\u306E\u5468\u56F2\u306B\u96F7\u3092\u751F\u6210\u3059\u308B"
+    language: jup
+  - key: lightning_2
+    value: "+2 \u0431\u043B\u0438\u0441\u043A\u0430\u0432\u043A\u0438"
+    language: ua
+  - key: lightning_2
+    value: + 2 lightnings
+    language: eng
+  - key: lightning_2
+    value: "+ 2 \xE9clairs"
+    language: fr
+  - key: lightning_2
+    value: + 2 Blitze
+    language: ger
+  - key: lightning_2
+    value: + 2 rayos
+    language: spa
+  - key: lightning_2
+    value: "\u96F7\u3092 2 \u3064\u8FFD\u52A0\u3059\u308B"
+    language: jup
+  - key: lightning_3
+    value: "x3 \u0448\u043A\u043E\u0434\u0438"
+    language: ua
+  - key: lightning_3
+    value: x3 damage
+    language: eng
+  - key: lightning_3
+    value: "x3 d\xE9g\xE2ts"
+    language: fr
+  - key: lightning_3
+    value: x3 Schaden
+    language: ger
+  - key: lightning_3
+    value: "x3 da\xF1o"
+    language: spa
+  - key: lightning_3
+    value: "\u30C0\u30E1\u30FC\u30B8\u3092 3 \u500D\u306B\u3059\u308B"
+    language: jup
+  - key: lightning_4
+    value: "\u0411\u043B\u0438\u0441\u043A\u0430\u0432\u043A\u0430 \u043F\u0440\u0438\u0433\u043E\u043B\u043E\u043C\u0448\u0443\u0454
+      \u0432\u043E\u0440\u043E\u0433\u0456\u0432"
+    language: ua
+  - key: lightning_4
+    value: Lightning stun enemies
+    language: eng
+  - key: lightning_4
+    value: "L'\xE9clair \xE9tourdit les ennemis"
+    language: fr
+  - key: lightning_4
+    value: "Der Blitz bet\xE4ubt Feinde"
+    language: ger
+  - key: lightning_4
+    value: El rayo aturde a los enemigos
+    language: spa
+  - key: lightning_4
+    value: "\u96F7\u3067\u6575\u3092\u30B9\u30BF\u30F3\u3055\u305B\u308B"
+    language: jup
+  - key: lightning_5
+    value: "\u041C\u0435\u043D\u0448\u0438\u0439 \u0447\u0430\u0441 \u043F\u0435\u0440\u0435\u0437\u0430\u0440\u044F\u0434\u043A\u0438"
+    language: ua
+  - key: lightning_5
+    value: Less recharge time
+    language: eng
+  - key: lightning_5
+    value: "Temps de recharge r\xE9duit"
+    language: fr
+  - key: lightning_5
+    value: "Verk\xFCrzte Ladezeit"
+    language: ger
+  - key: lightning_5
+    value: Tiempo de recarga reducido
+    language: spa
+  - key: lightning_5
+    value: "\u30EA\u30C1\u30E3\u30FC\u30B8\u6642\u9593\u3092\u77ED\u7E2E\u3059\u308B"
+    language: jup
+  - key: swamp_puddle_1
+    value: "\u0413\u0435\u043D\u0435\u0440\u0443\u0454 \u0431\u043E\u043B\u043E\u0442\u044F\u043D\u0443
+      \u043A\u0430\u043B\u044E\u0436\u0443, \u044F\u043A\u0430 \u0437\u0430\u0432\u0434\u0430\u0454
+      \u0448\u043A\u043E\u0434\u0438 \u0432\u043E\u0440\u043E\u0433\u0430\u043C"
+    language: ua
+  - key: swamp_puddle_1
+    value: Generates a swamp puddle that damages enemies
+    language: eng
+  - key: swamp_puddle_1
+    value: "G\xE9n\xE8re une flaque de marais qui inflige des d\xE9g\xE2ts aux ennemis"
+    language: fr
+  - key: swamp_puddle_1
+    value: "Erzeugt einen Sumpfpf\xFCtzen, die Feinde sch\xE4digt"
+    language: ger
+  - key: swamp_puddle_1
+    value: "Genera un charco de pantano que da\xF1a a los enemigos"
+    language: spa
+  - key: swamp_puddle_1
+    value: "\u6575\u306B\u30C0\u30E1\u30FC\u30B8\u3092\u4E0E\u3048\u308B\u6CBC\u306E\u6C34\u305F\u307E\u308A\u3092\u751F\u6210\u3059\u308B"
+    language: jup
+  - key: swamp_puddle_2
+    value: "\u0411\u0456\u043B\u044C\u0448\u0438\u0439 \u0440\u0430\u0434\u0456\u0443\u0441"
+    language: ua
+  - key: swamp_puddle_2
+    value: More radius
+    language: eng
+  - key: swamp_puddle_2
+    value: Rayon plus grand
+    language: fr
+  - key: swamp_puddle_2
+    value: "Gr\xF6\xDFerer Radius"
+    language: ger
+  - key: swamp_puddle_2
+    value: "Radio m\xE1s grande"
+    language: spa
+  - key: swamp_puddle_2
+    value: "\u534A\u5F84\u3092\u5927\u304D\u304F\u3059\u308B"
+    language: jup
+  - key: swamp_puddle_3
+    value: "x2 \u0448\u043A\u043E\u0434\u0438"
+    language: ua
+  - key: swamp_puddle_3
+    value: x2 damage
+    language: eng
+  - key: swamp_puddle_3
+    value: "x2 d\xE9g\xE2ts"
+    language: fr
+  - key: swamp_puddle_3
+    value: x2 Schaden
+    language: ger
+  - key: swamp_puddle_3
+    value: "x2 da\xF1o"
+    language: spa
+  - key: swamp_puddle_3
+    value: "\u30C0\u30E1\u30FC\u30B8\u3092 2 \u500D\u306B\u3059\u308B"
+    language: jup
+  - key: swamp_puddle_4
+    value: "+2 \u0432\u0438\u043F\u0443\u0449\u0435\u043D\u0456 \u043A\u0430\u043B\u044E\u0436\u0456"
+    language: ua
+  - key: swamp_puddle_4
+    value: + 2 spawned puddles
+    language: eng
+  - key: swamp_puddle_4
+    value: "+ 2 flaques g\xE9n\xE9r\xE9es"
+    language: fr
+  - key: swamp_puddle_4
+    value: "+ 2 erzeugte Pf\xFCtzen"
+    language: ger
+  - key: swamp_puddle_4
+    value: + 2 charcos generados
+    language: spa
+  - key: swamp_puddle_4
+    value: "\u751F\u6210\u3055\u308C\u305F\u6C34\u305F\u307E\u308A\u3092 2 \u3064\u8FFD\u52A0\u3059\u308B"
+    language: jup
+  - key: swamp_puddle_5
+    value: "\u0428\u0432\u0438\u0434\u0448\u0435 \u0437\u0430\u0432\u0434\u0430\u0454
+      \u0448\u043A\u043E\u0434\u0438"
+    language: ua
+  - key: swamp_puddle_5
+    value: Faster damage
+    language: eng
+  - key: swamp_puddle_5
+    value: "D\xE9g\xE2ts plus rapides"
+    language: fr
+  - key: swamp_puddle_5
+    value: Schnellerer Schaden
+    language: ger
+  - key: swamp_puddle_5
+    value: "Da\xF1o m\xE1s r\xE1pido"
+    language: spa
+  - key: swamp_puddle_5
+    value: "\u30C0\u30E1\u30FC\u30B8\u3092\u4E0E\u3048\u308B\u901F\u5EA6\u3092\u4E0A\u3052\u308B"
+    language: jup
+  - key: pill_1
+    value: "\u0421\u0442\u0432\u043E\u0440\u0438\u0454 \u043F\u0456\u043B\u044E\u043B\u044E,
+      \u044F\u043A\u0430 \u0434\u0430\u0454 \u0448\u0432\u0438\u0434\u043A\u0456\u0441\u0442\u044C
+      \u0440\u0443\u0445\u0443 \u0442\u0430 \u0448\u0432\u0438\u0434\u043A\u0456\u0441\u0442\u044C
+      \u0430\u0442\u0430\u043A\u0438, \u0430\u043B\u0435 \u043F\u0440\u0438\u0432\u0438\u0434\u0438
+      \u0431\u0443\u0434\u0443\u0442\u044C \u043F\u0435\u0440\u0435\u0441\u043B\u0456\u0434\u0443\u0432\u0430\u0442\u0438
+      \u0432\u0430\u0441"
+    language: ua
+  - key: pill_1
+    value: Spawn a pill that gives you move speed and attack speed but the ghosts
+      will follow you
+    language: eng
+  - key: pill_1
+    value: "G\xE9n\xE9rer une pilule qui vous donne une vitesse de d\xE9placement
+      et une vitesse d'attaque, mais les fant\xF4mes vous suivront"
+    language: fr
+  - key: pill_1
+    value: Erzeuge eine Pille, die dir Bewegungs- und Angriffsgeschwindigkeit verleiht,
+      aber die Geister dir folgen werden
+    language: ger
+  - key: pill_1
+    value: "Genera una p\xEDldora que te da velocidad de movimiento y velocidad de
+      ataque, pero los fantasmas te seguir\xE1n"
+    language: spa
+  - key: pill_1
+    value: "\u79FB\u52D5\u901F\u5EA6\u3068\u653B\u6483\u901F\u5EA6\u3092\u4E0A\u3052\u308B\u30D4\u30EB\u3092\u751F\u6210\u3059\u308B\u304C\u3001\u5E7D\u970A\u304C\u8FFD\u3063\u3066\u304F\u308B"
+    language: jup
+  - key: pill_2
+    value: "\u0411\u0456\u043B\u044C\u0448\u0438\u0439 \u0447\u0430\u0441 \u0435\u0444\u0435\u043A\u0442\u0443"
+    language: ua
+  - key: pill_2
+    value: More time effect
+    language: eng
+  - key: pill_2
+    value: Effet de temps plus long
+    language: fr
+  - key: pill_2
+    value: "L\xE4ngere Wirkungsdauer"
+    language: ger
+  - key: pill_2
+    value: "Efecto de tiempo m\xE1s largo"
+    language: spa
+  - key: pill_2
+    value: "\u52B9\u679C\u6642\u9593\u3092\u5EF6\u9577\u3059\u308B"
+    language: jup
+  - key: pill_3
+    value: "\u0411\u0456\u043B\u044C\u0448\u0430 \u0448\u0432\u0438\u0434\u043A\u0456\u0441\u0442\u044C
+      \u0430\u0442\u0430\u043A\u0438"
+    language: ua
+  - key: pill_3
+    value: More attack speed
+    language: eng
+  - key: pill_3
+    value: Vitesse d'attaque accrue
+    language: fr
+  - key: pill_3
+    value: "Erh\xF6hte Angriffsgeschwindigkeit"
+    language: ger
+  - key: pill_3
+    value: Mayor velocidad de ataque
+    language: spa
+  - key: pill_3
+    value: "\u653B\u6483\u901F\u5EA6\u3092\u4E0A\u3052\u308B"
+    language: jup
+  - key: pill_4
+    value: "\u0411\u0456\u043B\u044C\u0448\u0430 \u0448\u0432\u0438\u0434\u043A\u0456\u0441\u0442\u044C
+      \u0440\u0443\u0445\u0443, \u0430\u043B\u0435 \u0448\u0432\u0438\u0434\u043A\u0456\u0441\u0442\u044C
+      \u043F\u0440\u0438\u0432\u0438\u0434\u0456\u0432 x2"
+    language: ua
+  - key: pill_4
+    value: More move speed but speed of ghosts x2
+    language: eng
+  - key: pill_4
+    value: "Vitesse de d\xE9placement accrue, mais vitesse des fant\xF4mes x2"
+    language: fr
+  - key: pill_4
+    value: "Erh\xF6hte Bewegungsgeschwindigkeit, aber Geschwindigkeit der Geister
+      x2"
+    language: ger
+  - key: pill_4
+    value: Mayor velocidad de movimiento, pero velocidad de los fantasmas x2
+    language: spa
+  - key: pill_4
+    value: "\u79FB\u52D5\u901F\u5EA6\u3092\u4E0A\u3052\u308B\u304C\u3001\u5E7D\u970A\u306E\u901F\u5EA6\u304C
+      2 \u500D\u306B\u306A\u308B"
+    language: jup
+  - key: pill_5
+    value: "\u041F\u0435\u0440\u0435\u0437\u0430\u0440\u044F\u0434\u043A\u0430 \u0437\u0441\u0443\u0432\u0443
+      \u043C\u0435\u043D\u0448\u0430, \u043F\u043E\u043A\u0438 \u0434\u0456\u0454"
+    language: ua
+  - key: pill_5
+    value: Shift recharge less while effects
+    language: eng
+  - key: pill_5
+    value: "Recharge du d\xE9calage r\xE9duite pendant les effets"
+    language: fr
+  - key: pill_5
+    value: "Verringerte Sprint-Aufladezeit w\xE4hrend Effekten"
+    language: ger
+  - key: pill_5
+    value: Recarga de cambio reducida durante los efectos
+    language: spa
+  - key: pill_5
+    value: "\u52B9\u679C\u4E2D\u306F\u30C0\u30C3\u30B7\u30E5\u306E\u518D\u30C1\u30E3\u30FC\u30B8\u6642\u9593\u3092\u77ED\u7E2E\u3059\u308B"
+    language: jup
+  - key: fire_wave_1
+    value: "\u0421\u0442\u0432\u043E\u0440\u044E\u0454 \u0432\u043E\u0433\u043D\u0435\u043D\u043D\u0443
+      \u0445\u0432\u0438\u043B\u044E, \u044F\u043A\u0430 \u0432\u0440\u0430\u0436\u0430\u0454
+      \u0432\u043E\u0440\u043E\u0433\u0456\u0432 \u043D\u0430\u0432\u043A\u043E\u043B\u043E
+      \u0432\u0430\u0441"
+    language: ua
+  - key: fire_wave_1
+    value: Spawn a fire wave that hits enemies around you
+    language: eng
+  - key: fire_wave_1
+    value: "Cr\xE9e une vague de feu qui frappe les ennemis autour de toi"
+    language: fr
+  - key: fire_wave_1
+    value: "Erzeugt eine Feuerwelle, die Feinde in deiner N\xE4he trifft"
+    language: ger
+  - key: fire_wave_1
+    value: Genera una ola de fuego que golpea a los enemigos a tu alrededor
+    language: spa
+  - key: fire_wave_1
+    value: "\u6575\u306E\u5468\u56F2\u306B\u706B\u306E\u6CE2\u3092\u751F\u6210\u3059\u308B"
+    language: jup
+  - key: fire_wave_2
+    value: "\u0411\u0456\u043B\u044C\u0448\u0435 \u0448\u043A\u043E\u0434\u0438"
+    language: ua
+  - key: fire_wave_2
+    value: More damage
+    language: eng
+  - key: fire_wave_2
+    value: "Plus de d\xE9g\xE2ts"
+    language: fr
+  - key: fire_wave_2
+    value: Mehr Schaden
+    language: ger
+  - key: fire_wave_2
+    value: "M\xE1s da\xF1o"
+    language: spa
+  - key: fire_wave_2
+    value: "\u30C0\u30E1\u30FC\u30B8\u3092\u4E0A\u3052\u308B"
+    language: jup
+  - key: fire_wave_3
+    value: "+1 \u0445\u0432\u0438\u043B\u044F"
+    language: ua
+  - key: fire_wave_3
+    value: +1 wave
+    language: eng
+  - key: fire_wave_3
+    value: +1 vague
+    language: fr
+  - key: fire_wave_3
+    value: +1 Welle
+    language: ger
+  - key: fire_wave_3
+    value: +1 ola
+    language: spa
+  - key: fire_wave_3
+    value: "\u6CE2\u3092 1 \u3064\u8FFD\u52A0\u3059\u308B"
+    language: jup
+  - key: fire_wave_4
+    value: "\u041C\u0435\u043D\u0448\u0438\u0439 \u0447\u0430\u0441 \u043F\u0435\u0440\u0435\u0437\u0430\u0440\u044F\u0434\u043A\u0438"
+    language: ua
+  - key: fire_wave_4
+    value: Less recharge
+    language: eng
+  - key: fire_wave_4
+    value: "Temps de recharge r\xE9duit"
+    language: fr
+  - key: fire_wave_4
+    value: "Verk\xFCrzte Ladezeit"
+    language: ger
+  - key: fire_wave_4
+    value: Tiempo de recarga reducido
+    language: spa
+  - key: fire_wave_4
+    value: "\u30EA\u30C1\u30E3\u30FC\u30B8\u6642\u9593\u3092\u77ED\u7E2E\u3059\u308B"
+    language: jup
+  - key: fire_wave_5
+    value: "\u0425\u0432\u0438\u043B\u044F \u0437\u0430\u043B\u0438\u0448\u0430\u0454
+      \u0435\u0444\u0435\u043A\u0442 \u0433\u043E\u0440\u0456\u043D\u043D\u044F"
+    language: ua
+  - key: fire_wave_5
+    value: Wave leaves burning effect
+    language: eng
+  - key: fire_wave_5
+    value: "La vague laisse un effet de br\xFBlure"
+    language: fr
+  - key: fire_wave_5
+    value: "Die Welle hinterl\xE4sst einen Brenneffekt"
+    language: ger
+  - key: fire_wave_5
+    value: La ola deja un efecto de quemadura
+    language: spa
+  - key: fire_wave_5
+    value: "\u6CE2\u306F\u71C3\u713C\u52B9\u679C\u3092\u6B8B\u3059"
+    language: jup
+  - key: heal_1
+    value: "\u0412\u0438\u043A\u043B\u0438\u043A\u0430\u0454 \u043A\u043E\u043B\u043E
+      \u0437\u0446\u0456\u043B\u0435\u043D\u043D\u044F"
+    language: ua
+  - key: heal_1
+    value: Summon the healing circle
+    language: eng
+  - key: heal_1
+    value: "Invoquer le cercle de gu\xE9rison"
+    language: fr
+  - key: heal_1
+    value: "Beschw\xF6re den Heilungskreis"
+    language: ger
+  - key: heal_1
+    value: "Invocar el c\xEDrculo de curaci\xF3n"
+    language: spa
+  - key: heal_1
+    value: "\u56DE\u5FA9\u306E\u5186\u3092\u53EC\u559A\u3059\u308B"
+    language: jup
+  - key: heal_2
+    value: "\u0411\u0456\u043B\u044C\u0448\u0435 \u0437\u0446\u0456\u043B\u0435\u043D\u043D\u044F"
+    language: ua
+  - key: heal_2
+    value: More heal
+    language: eng
+  - key: heal_2
+    value: Plus de soin
+    language: fr
+  - key: heal_2
+    value: Mehr Heilung
+    language: ger
+  - key: heal_2
+    value: "M\xE1s cura"
+    language: spa
+  - key: heal_2
+    value: "\u56DE\u5FA9\u91CF\u3092\u4E0A\u3052\u308B"
+    language: jup
+  - key: heal_3
+    value: "\u0417\u0446\u0456\u043B\u0435\u043D\u043D\u044F \u043D\u0430\u0434\u0430\u0454
+      2 \u0441\u0435\u043A\u0443\u043D\u0434\u0438 \u043D\u0435\u0432\u0440\u0430\u0437\u043B\u0438\u0432\u043E\u0441\u0442\u0456"
+    language: ua
+  - key: heal_3
+    value: Heal give 2 seconds invulnerability
+    language: eng
+  - key: heal_3
+    value: "Le soin donne 2 secondes d'invuln\xE9rabilit\xE9"
+    language: fr
+  - key: heal_3
+    value: Heilung verleiht 2 Sekunden Unverwundbarkeit
+    language: ger
+  - key: heal_3
+    value: La cura otorga 2 segundos de invulnerabilidad
+    language: spa
+  - key: heal_3
+    value: "\u56DE\u5FA9\u306F 2 \u79D2\u306E\u7121\u6575\u3092\u4E0E\u3048\u308B"
+    language: jup
+  - key: heal_4
+    value: "\u041C\u0435\u043D\u0448\u0438\u0439 \u0447\u0430\u0441 \u043F\u0435\u0440\u0435\u0437\u0430\u0440\u044F\u0434\u043A\u0438"
+    language: ua
+  - key: heal_4
+    value: Less reacharge time
+    language: eng
+  - key: heal_4
+    value: "Temps de recharge r\xE9duit"
+    language: fr
+  - key: heal_4
+    value: "Verk\xFCrzte Ladezeit"
+    language: ger
+  - key: heal_4
+    value: Tiempo de recarga reducido
+    language: spa
+  - key: heal_4
+    value: "\u30EA\u30C1\u30E3\u30FC\u30B8\u6642\u9593\u3092\u77ED\u7E2E\u3059\u308B"
+    language: jup
+  - key: heal_5
+    value: "\u0411\u0456\u043B\u044C\u0448\u0435 \u0437\u0446\u0456\u043B\u0435\u043D\u043D\u044F"
+    language: ua
+  - key: heal_5
+    value: More heal
+    language: eng
+  - key: heal_5
+    value: Plus de soin
+    language: fr
+  - key: heal_5
+    value: Mehr Heilung
+    language: ger
+  - key: heal_5
+    value: "M\xE1s cura"
+    language: spa
+  - key: heal_5
+    value: "\u56DE\u5FA9\u91CF\u3092\u4E0A\u3052\u308B"
+    language: jup
+  - key: reload_1
+    value: "\u041F\u0435\u0440\u0435\u0437\u0430\u0440\u044F\u0434\u043A\u0430 \u043E\u0434\u043D\u0456\u0454\u0457
+      \u043D\u0430\u0432\u0438\u0447\u043A\u0438"
+    language: ua
+  - key: reload_1
+    value: Reload one skill
+    language: eng
+  - key: reload_1
+    value: "Recharger une comp\xE9tence"
+    language: fr
+  - key: reload_1
+    value: "Eine F\xE4higkeit nachladen"
+    language: ger
+  - key: reload_1
+    value: Recargar una habilidad
+    language: spa
+  - key: reload_1
+    value: "\u30B9\u30AD\u30EB\u3092 1 \u3064\u30EA\u30ED\u30FC\u30C9\u3059\u308B"
+    language: jup
+  - key: reload_2
+    value: "+1 \u043F\u0435\u0440\u0435\u0437\u0430\u0440\u044F\u0434\u043A\u0430
+      \u043D\u0430\u0432\u0438\u0447\u043A\u0438"
+    language: ua
+  - key: reload_2
+    value: +1 reload skill
+    language: eng
+  - key: reload_2
+    value: "+1 recharge de comp\xE9tence"
+    language: fr
+  - key: reload_2
+    value: "+1 F\xE4higkeit nachladen"
+    language: ger
+  - key: reload_2
+    value: +1 recarga de habilidad
+    language: spa
+  - key: reload_2
+    value: "\u30B9\u30AD\u30EB\u306E\u518D\u5145\u586B\u3092 +1 \u3059\u308B"
+    language: jup
+  - key: reload_3
+    value: "\u041C\u0435\u043D\u0448\u0438\u0439 \u0447\u0430\u0441 \u043F\u0435\u0440\u0435\u0437\u0430\u0440\u044F\u0434\u043A\u0438"
+    language: ua
+  - key: reload_3
+    value: Less reacharge time
+    language: eng
+  - key: reload_3
+    value: "Temps de recharge r\xE9duit"
+    language: fr
+  - key: reload_3
+    value: "Verk\xFCrzte Ladezeit"
+    language: ger
+  - key: reload_3
+    value: Tiempo de recarga reducido
+    language: spa
+  - key: reload_3
+    value: "\u30EA\u30C1\u30E3\u30FC\u30B8\u6642\u9593\u3092\u77ED\u7E2E\u3059\u308B"
+    language: jup
+  - key: reload_4
+    value: "+1 \u043F\u0435\u0440\u0435\u0437\u0430\u0440\u044F\u0434\u043A\u0430
+      \u043D\u0430\u0432\u0438\u0447\u043A\u0438"
+    language: ua
+  - key: reload_4
+    value: +1 reload skill
+    language: eng
+  - key: reload_4
+    value: "+1 recharge de comp\xE9tence"
+    language: fr
+  - key: reload_4
+    value: "+1 F\xE4higkeit nachladen"
+    language: ger
+  - key: reload_4
+    value: +1 recarga de habilidad
+    language: spa
+  - key: reload_4
+    value: "\u30B9\u30AD\u30EB\u306E\u518D\u5145\u586B\u3092 +1 \u3059\u308B"
+    language: jup
+  - key: reload_5
+    value: "\u0427\u0430\u0441 \u043F\u0435\u0440\u0435\u0437\u0430\u0440\u044F\u0434\u043A\u0438
+      \u0432\u0441\u0456\u0445 \u043D\u0430\u0432\u0438\u0447\u043E\u043A - 50%"
+    language: ua
+  - key: reload_5
+    value: All skills reacharge time - 50%
+    language: rng
+  - key: reload_5
+    value: "Temps de recharge de toutes les comp\xE9tences - 50%"
+    language: fr
+  - key: reload_5
+    value: "Ladezeit aller F\xE4higkeiten - 50%"
+    language: ger
+  - key: reload_5
+    value: Tiempo de recarga de todas las habilidades - 50%
+    language: spa
+  - key: reload_5
+    value: "\u3059\u3079\u3066\u306E\u30B9\u30AD\u30EB\u306E\u518D\u5145\u586B\u6642\u9593\u3092
+      50% \u6E1B\u3089\u3059"
+    language: jup
+  - key: impuls_1
+    value: "\u0421\u0442\u0432\u043E\u0440\u044E\u0454 \u0456\u043C\u043F\u0443\u043B\u044C\u0441,
+      \u044F\u043A\u0438\u0439 \u0432\u0456\u0434\u0448\u0442\u043E\u0432\u0445\u0443\u0454
+      \u0432\u043E\u0440\u043E\u0433\u0456\u0432 \u0432\u0456\u0434 \u0432\u0430\u0441"
+    language: ua
+  - key: impuls_1
+    value: Create an impulse that pushes enemies away from you
+    language: eng
+  - key: impuls_1
+    value: "Cr\xE9er une impulsion qui repousse les ennemis loin de vous"
+    language: fr
+  - key: impuls_1
+    value: "Erstelle einen Impuls, der Feinde von dir wegst\xF6\xDFt"
+    language: ger
+  - key: impuls_1
+    value: Crea un impulso que empuja a los enemigos lejos de ti
+    language: spa
+  - key: impuls_1
+    value: "\u6575\u3092\u3042\u306A\u305F\u304B\u3089\u9060\u3056\u3051\u308B\u30A4\u30F3\u30D1\u30EB\u30B9\u3092\u4F5C\u6210\u3059\u308B"
+    language: jup
+  - key: impuls_2
+    value: "\u0411\u0456\u043B\u044C\u0448\u0438\u0439 \u0440\u0430\u0434\u0456\u0443\u0441"
+    language: ua
+  - key: impuls_2
+    value: More radius
+    language: eng
+  - key: impuls_2
+    value: Plus de rayon
+    language: fr
+  - key: impuls_2
+    value: "Gr\xF6\xDFerer Radius"
+    language: ger
+  - key: impuls_2
+    value: "Radio m\xE1s grande"
+    language: spa
+  - key: impuls_2
+    value: "\u534A\u5F84\u3092\u5927\u304D\u304F\u3059\u308B"
+    language: jup
+  - key: impuls_3
+    value: "\u041C\u0435\u043D\u0448\u0438\u0439 \u0447\u0430\u0441 \u043F\u0435\u0440\u0435\u0437\u0430\u0440\u044F\u0434\u043A\u0438"
+    language: ua
+  - key: impuls_3
+    value: Less reacharge time
+    language: eng
+  - key: impuls_3
+    value: "Temps de recharge r\xE9duit"
+    language: fr
+  - key: impuls_3
+    value: "Verk\xFCrzte Ladezeit"
+    language: ger
+  - key: impuls_3
+    value: Tiempo de recarga reducido
+    language: spa
+  - key: impuls_3
+    value: "\u30EA\u30C1\u30E3\u30FC\u30B8\u6642\u9593\u3092\u77ED\u7E2E\u3059\u308B"
+    language: jup
+  - key: impuls_4
+    value: "\u0421\u0442\u0432\u043E\u0440\u044E\u0454 \u0431\u0430\u0440'\u0454\u0440"
+    language: ua
+  - key: impuls_4
+    value: Create a barrier
+    language: eng
+  - key: impuls_4
+    value: "Cr\xE9er une barri\xE8re"
+    language: fr
+  - key: impuls_4
+    value: Erzeuge eine Barriere
+    language: ger
+  - key: impuls_4
+    value: Crea una barrera
+    language: spa
+  - key: impuls_4
+    value: "\u30D0\u30EA\u30A2\u3092\u4F5C\u6210\u3059\u308B"
+    language: jup
+  - key: impuls_5
+    value: "\u042F\u043A\u0449\u043E \u0432\u0438 \u0431\u0443\u0434\u0435\u0442\u0435
+      \u0432 \u0437\u043E\u043D\u0456 \u0434\u0456\u0457 \u0431\u0430\u0440'\u0454\u0440\u0443
+      \u043D\u0430\u043F\u0440\u0438\u043A\u0456\u043D\u0446\u0456 \u0434\u0456\u0457
+      \u0437\u0430\u043A\u043B\u0438\u043D\u0430\u043D\u043D\u044F, \u0432\u0438
+      \u0431\u0443\u0434\u0435\u0442\u0435 \u0437\u0446\u0456\u043B\u0435\u043D\u0456"
+    language: ua
+  - key: impuls_5
+    value: If you will be in barrier area at the end of spell you will be healed
+    language: eng
+  - key: impuls_5
+    value: "Si vous \xEAtes dans la zone de la barri\xE8re \xE0 la fin du sort, vous
+      serez soign\xE9"
+    language: fr
+  - key: impuls_5
+    value: Wenn du dich am Ende des Zaubers im Bereich der Barriere befindest, wirst
+      du geheilt
+    language: ger
+  - key: impuls_5
+    value: "Si est\xE1s en el \xE1rea de la barrera al final del hechizo, ser\xE1s
+      sanado"
+    language: spa
+  - key: impuls_5
+    value: "\u546A\u6587\u306E\u7D42\u308F\u308A\u306B\u30D0\u30EA\u30A2\u306E\u30A8\u30EA\u30A2\u5185\u306B\u3044\u308B\u5834\u5408\u306F\u3001\u7652\u3055\u308C\u307E\u3059"
+    language: jup
+  - key: shield_1
+    value: "\u0421\u0442\u0432\u043E\u0440\u044E\u0454 \u0449\u0438\u0442, \u044F\u043A\u0438\u0439
+      \u0431\u043B\u043E\u043A\u0443\u0454 \u0448\u043A\u043E\u0434\u0443 \u0432\u0456\u0434
+      \u0432\u043E\u0440\u043E\u0433\u0456\u0432"
+    language: ua
+  - key: shield_1
+    value: Create a shield that blocks damage from enemies
+    language: eng
+  - key: shield_1
+    value: "Cr\xE9er un bouclier qui bloque les d\xE9g\xE2ts des ennemis"
+    language: fr
+  - key: shield_1
+    value: Erzeuge einen Schild, der Schaden von Feinden blockiert
+    language: ger
+  - key: shield_1
+    value: "Crea un escudo que bloquea el da\xF1o de los enemigos"
+    language: spa
+  - key: shield_1
+    value: "\u6575\u304B\u3089\u306E\u30C0\u30E1\u30FC\u30B8\u3092\u30D6\u30ED\u30C3\u30AF\u3059\u308B\u30B7\u30FC\u30EB\u30C9\u3092\u4F5C\u6210\u3059\u308B"
+    language: jup
+  - key: shield_2
+    value: "\u0411\u0456\u043B\u044C\u0448\u0435 HP \u0434\u043B\u044F \u0449\u0438\u0442\u0430"
+    language: ua
+  - key: shield_2
+    value: More HP for shield
+    language: eng
+  - key: shield_2
+    value: Plus de HP pour le bouclier
+    language: fr
+  - key: shield_2
+    value: "Mehr HP f\xFCr Schild"
+    language: ger
+  - key: shield_2
+    value: "M\xE1s HP para el escudo"
+    language: spa
+  - key: shield_2
+    value: "\u30B7\u30FC\u30EB\u30C9\u306E HP \u3092\u5897\u3084\u3059"
+    language: jup
+  - key: shield_3
+    value: "\u0429\u0438\u0442 \u043F\u043E\u0432\u0435\u0440\u0442\u0430\u0454 50%
+      \u0448\u043A\u043E\u0434\u0438 \u0432\u043E\u0440\u043E\u0433\u0430\u043C"
+    language: ua
+  - key: shield_3
+    value: Shield returns 50% damage to enemies
+    language: eng
+  - key: shield_3
+    value: "Le bouclier renvoie 50% des d\xE9g\xE2ts aux ennemis"
+    language: fr
+  - key: shield_3
+    value: "Schild reflektiert 50% des Schadens an Feinde zur\xFCck"
+    language: ger
+  - key: shield_3
+    value: "El escudo devuelve 50% del da\xF1o a los enemigos"
+    language: spa
+  - key: shield_3
+    value: "\u30B7\u30FC\u30EB\u30C9\u306F\u6575\u306B\u30C0\u30E1\u30FC\u30B8\u306E
+      50% \u3092\u8FD4\u3059"
+    language: jup
+  - key: shield_4
+    value: "\u0421\u0442\u0432\u043E\u0440\u044E\u0454 \u0437\u043E\u043D\u0443,
+      \u044F\u043A\u0430 \u0441\u043F\u043E\u0432\u0456\u043B\u044C\u043D\u044E\u0454
+      \u0432\u043E\u0440\u043E\u0433\u0456\u0432"
+    language: ua
+  - key: shield_4
+    value: Create a zone that slows enemies
+    language: eng
+  - key: shield_4
+    value: "Cr\xE9er une zone qui ralentit les ennemis"
+    language: fr
+  - key: shield_4
+    value: Erzeuge eine Zone, die Feinde verlangsamt
+    language: ger
+  - key: shield_4
+    value: Crea una zona que ralentiza a los enemigos
+    language: spa
+  - key: shield_4
+    value: "\u6575\u3092\u9045\u304F\u3059\u308B\u30BE\u30FC\u30F3\u3092\u4F5C\u6210\u3059\u308B"
+    language: jup
+  - key: shield_5
+    value: "\u041A\u043E\u0436\u043D\u0456 20 \u0432\u0442\u0440\u0430\u0447\u0435\u043D\u0438\u0445
+      HP \u043A\u0438\u0434\u0430\u0454 \u043A\u0430\u043C\u0456\u043D\u044C, \u044F\u043A\u0438\u0439
+      \u0437\u0430\u0432\u0434\u0430\u0454 \u0448\u043A\u043E\u0434\u0438 \u0432\u043E\u0440\u043E\u0433\u0430\u043C
+      \u0456 \u043F\u0440\u0438\u0433\u043E\u043B\u043E\u043C\u0448\u0443\u0454 \u0457\u0445"
+    language: ua
+  - key: shield_5
+    value: Every 20 lost HP throw a rock that damages enemies and stuns them
+    language: eng
+  - key: shield_5
+    value: "Toutes les 20 HP perdues, lancez une pierre qui inflige des d\xE9g\xE2ts
+      aux ennemis et les \xE9tourdit"
+    language: fr
+  - key: shield_5
+    value: "Alle 20 verlorenen HP wirf einen Stein, der Feinden Schaden zuf\xFCgt
+      und sie bet\xE4ubt"
+    language: ger
+  - key: shield_5
+    value: "Cada 20 HP perdidos, lanza una piedra que da\xF1a a los enemigos y los
+      aturde"
+    language: spa
+  - key: shield_5
+    value: "20 HP \u3092\u5931\u3046\u3054\u3068\u306B\u3001\u6575\u306B\u30C0\u30E1\u30FC\u30B8\u3092\u4E0E\u3048\u3066\u30B9\u30BF\u30F3\u3055\u305B\u308B\u77F3\u3092\u6295\u3052\u308B"
+    language: jup
+  - key: beam_1
+    value: "\u0421\u0442\u0432\u043E\u0440\u044E\u0454 \u043F\u0440\u043E\u043C\u0456\u043D\u044C
+      \u043F\u0430\u0440\u0443, \u044F\u043A\u0438\u0439 \u0432\u0440\u0430\u0436\u0430\u0454
+      \u0432\u043E\u0440\u043E\u0433\u0456\u0432"
+    language: ua
+  - key: beam_1
+    value: Create a ray of steam that hits enemies
+    language: eng
+  - key: beam_1
+    value: "Cr\xE9er un rayon de vapeur qui frappe les ennemis"
+    language: fr
+  - key: beam_1
+    value: Erstelle einen Dampfstrahl, der Feinde trifft
+    language: ger
+  - key: beam_1
+    value: Crea un rayo de vapor que golpea a los enemigos
+    language: spa
+  - key: beam_1
+    value: "\u6575\u3092\u653B\u6483\u3059\u308B\u84B8\u6C17\u306E\u5149\u7DDA\u3092\u4F5C\u6210\u3059\u308B"
+    language: jup
+  - key: beam_2
+    value: "+2 \u043F\u0440\u043E\u043C\u0435\u043D\u0456"
+    language: ua
+  - key: beam_2
+    value: +2 rays
+    language: eng
+  - key: beam_2
+    value: +2 rayons
+    language: fr
+  - key: beam_2
+    value: +2 Strahlen
+    language: ger
+  - key: beam_2
+    value: +2 rayos
+    language: spa
+  - key: beam_2
+    value: "+2 \u672C\u306E\u5149\u7DDA"
+    language: jup
+  - key: beam_3
+    value: "\u0411\u0456\u043B\u044C\u0448\u0435 \u0448\u043A\u043E\u0434\u0438"
+    language: ua
+  - key: beam_3
+    value: More damage
+    language: eng
+  - key: beam_3
+    value: "Plus de d\xE9g\xE2ts"
+    language: fr
+  - key: beam_3
+    value: Mehr Schaden
+    language: ger
+  - key: beam_3
+    value: "M\xE1s da\xF1o"
+    language: spa
+  - key: beam_3
+    value: "\u30C0\u30E1\u30FC\u30B8\u3092\u4E0A\u3052\u308B"
+    language: jup
+  - key: beam_4
+    value: "\u0411\u0456\u043B\u044C\u0448\u0435 \u0447\u0430\u0441\u0443 \u0456\u0441\u043D\u0443\u0432\u0430\u043D\u043D\u044F"
+    language: ua
+  - key: beam_4
+    value: More life time
+    language: eng
+  - key: beam_4
+    value: "Plus de dur\xE9e de vie"
+    language: fr
+  - key: beam_4
+    value: "L\xE4ngere Lebensdauer"
+    language: ger
+  - key: beam_4
+    value: "M\xE1s tiempo de vida"
+    language: spa
+  - key: beam_4
+    value: "\u6301\u7D9A\u6642\u9593\u3092\u5EF6\u9577\u3059\u308B"
+    language: jup
+  - key: beam_5
+    value: "\u041C\u0435\u043D\u0448\u0438\u0439 \u0447\u0430\u0441 \u043F\u0435\u0440\u0435\u0437\u0430\u0440\u044F\u0434\u043A\u0438"
+    language: ua
+  - key: beam_5
+    value: Less reacharge time
+    language: eng
+  - key: beam_5
+    value: "Temps de recharge r\xE9duit"
+    language: fr
+  - key: beam_5
+    value: "Verk\xFCrzte Ladezeit"
+    language: ger
+  - key: beam_5
+    value: Tiempo de recarga reducido
+    language: spa
+  - key: beam_5
+    value: "\u30EA\u30C1\u30E3\u30FC\u30B8\u6642\u9593\u3092\u77ED\u7E2E\u3059\u308B"
+    language: jup
+  - key: tower_1
+    value: "\u0421\u0442\u0432\u043E\u0440\u044E\u0454 \u0432\u0435\u0436\u0443,
+      \u044F\u043A\u0430 \u0432\u0440\u0430\u0436\u0430\u0454 \u0432\u043E\u0440\u043E\u0433\u0456\u0432
+      \u043F\u043E\u0431\u043B\u0438\u0437\u0443"
+    language: ua
+  - key: tower_1
+    value: Create a tower that hits nearby enemies
+    language: eng
+  - key: tower_1
+    value: "Cr\xE9er une tour qui frappe les ennemis proches"
+    language: fr
+  - key: tower_1
+    value: "Erstelle einen Turm, der Feinde in der N\xE4he trifft"
+    language: ger
+  - key: tower_1
+    value: Crea una torre que golpea a los enemigos cercanos
+    language: spa
+  - key: tower_1
+    value: "\u8FD1\u304F\u306E\u6575\u3092\u653B\u6483\u3059\u308B\u30BF\u30EF\u30FC\u3092\u4F5C\u6210\u3059\u308B"
+    language: jup
+  - key: tower_2
+    value: "\u0411\u0456\u043B\u044C\u0448\u0435 \u0447\u0430\u0441\u0443 \u0456\u0441\u043D\u0443\u0432\u0430\u043D\u043D\u044F"
+    language: ua
+  - key: tower_2
+    value: More life time
+    language: eng
+  - key: tower_2
+    value: "Plus de dur\xE9e de vie"
+    language: fr
+  - key: tower_2
+    value: "L\xE4ngere Lebensdauer"
+    language: ger
+  - key: tower_2
+    value: "M\xE1s tiempo de vida"
+    language: spa
+  - key: tower_2
+    value: "\u6301\u7D9A\u6642\u9593\u3092\u5EF6\u9577\u3059\u308B"
+    language: jup
+  - key: tower_3
+    value: "\u0421\u0442\u0432\u043E\u0440\u044E\u0454 \u0431\u043E\u043C\u0431\u0443
+      \u043F\u0456\u0441\u043B\u044F \u0440\u0443\u0439\u043D\u0443\u0432\u0430\u043D\u043D\u044F
+      \u0432\u0435\u0436\u0456"
+    language: ua
+  - key: tower_3
+    value: Create a bomb after towers crash
+    language: eng
+  - key: tower_3
+    value: "Cr\xE9er une bombe apr\xE8s l'effondrement des tours"
+    language: fr
+  - key: tower_3
+    value: "Erstelle eine Bombe, nachdem die T\xFCrme zerst\xF6rt wurden"
+    language: ger
+  - key: tower_3
+    value: "Crea una bomba despu\xE9s de que las torres se derrumben"
+    language: spa
+  - key: tower_3
+    value: "\u30BF\u30EF\u30FC\u304C\u7834\u58CA\u3055\u308C\u305F\u5F8C\u306B\u7206\u5F3E\u3092\u4F5C\u6210\u3059\u308B"
+    language: jup
+  - key: tower_4
+    value: "\u0411\u0456\u043B\u044C\u0448\u0435 \u0448\u0432\u0438\u0434\u043A\u043E\u0441\u0442\u0456
+      \u0430\u0442\u0430\u043A\u0438"
+    language: ua
+  - key: tower_4
+    value: More attack speed
+    language: eng
+  - key: tower_4
+    value: Plus de vitesse d'attaque
+    language: fr
+  - key: tower_4
+    value: "H\xF6here Angriffsgeschwindigkeit"
+    language: ger
+  - key: tower_4
+    value: "M\xE1s velocidad de ataque"
+    language: spa
+  - key: tower_4
+    value: "\u653B\u6483\u901F\u5EA6\u3092\u4E0A\u3052\u308B"
+    language: jup
+  - key: tower_5
+    value: "\u041F\u0440\u043E\u0432\u043E\u043A\u0443\u0454 \u0432\u043E\u0440\u043E\u0433\u0456\u0432
+      \u043F\u043E\u0431\u043B\u0438\u0437\u0443"
+    language: ua
+  - key: tower_5
+    value: Provokes nearby enemies
+    language: eng
+  - key: tower_5
+    value: Provoque les ennemis proches
+    language: fr
+  - key: tower_5
+    value: "Provoziert Feinde in der N\xE4he"
+    language: ger
+  - key: tower_5
+    value: Provoca a los enemigos cercanos
+    language: spa
+  - key: tower_5
+    value: "\u8FD1\u304F\u306E\u6575\u3092\u6311\u767A\u3059\u308B"
+    language: jup
+  - key: meteor_1
+    value: "\u0421\u0442\u0432\u043E\u0440\u044E\u0454 \u043C\u0435\u0442\u0435\u043E\u0440\u0438\u0442,
+      \u044F\u043A\u0438\u0439 \u0432\u0440\u0430\u0436\u0430\u0454 \u0432\u043E\u0440\u043E\u0433\u0456\u0432
+      \u0432 \u043E\u0431\u043B\u0430\u0441\u0442\u0456"
+    language: ua
+  - key: meteor_1
+    value: Create a meteor that hits enemies in area
+    language: eng
+  - key: meteor_1
+    value: "Cr\xE9er un m\xE9t\xE9ore qui frappe les ennemis dans la zone"
+    language: fr
+  - key: meteor_1
+    value: Erstelle einen Meteor, der Feinde in der Umgebung trifft
+    language: ger
+  - key: meteor_1
+    value: "Crea un meteoro que golpea a los enemigos en el \xE1rea"
+    language: spa
+  - key: meteor_1
+    value: "\u7BC4\u56F2\u5185\u306E\u6575\u3092\u653B\u6483\u3059\u308B\u9695\u77F3\u3092\u4F5C\u6210\u3059\u308B"
+    language: jup
+  - key: meteor_2
+    value: "\u0411\u0456\u043B\u044C\u0448\u0435 \u0448\u043A\u043E\u0434\u0438"
+    language: ua
+  - key: meteor_2
+    value: More damage
+    language: eng
+  - key: meteor_2
+    value: "Plus de d\xE9g\xE2ts"
+    language: fr
+  - key: meteor_2
+    value: Mehr Schaden
+    language: ger
+  - key: meteor_2
+    value: "M\xE1s da\xF1o"
+    language: spa
+  - key: meteor_2
+    value: "\u30C0\u30E1\u30FC\u30B8\u3092\u4E0A\u3052\u308B"
+    language: jup
+  - key: meteor_3
+    value: "+2 \u043C\u0435\u0442\u0435\u043E\u0440\u0438\u0442\u0456\u0432"
+    language: ua
+  - key: meteor_3
+    value: +2 meteors
+    language: eng
+  - key: meteor_3
+    value: "+2 m\xE9t\xE9ores"
+    language: fr
+  - key: meteor_3
+    value: +2 Meteore
+    language: ger
+  - key: meteor_3
+    value: +2 meteoros
+    language: spa
+  - key: meteor_3
+    value: "\u9695\u77F3 +2"
+    language: jup
+  - key: meteor_4
+    value: "\u041E\u0431\u043B\u0430\u0441\u0442\u044C \u043F\u0456\u0441\u043B\u044F
+      \u043C\u0435\u0442\u0435\u043E\u0440\u0438\u0442\u0430 \u0441\u043F\u043E\u0432\u0456\u043B\u044C\u043D\u044E\u0454
+      \u0448\u0432\u0438\u0434\u043A\u0456\u0441\u0442\u044C \u0440\u0443\u0445\u0443
+      \u0432\u043E\u0440\u043E\u0433\u0456\u0432"
+    language: ua
+  - key: meteor_4
+    value: Area after meteor slows enemies move speed
+    language: eng
+  - key: meteor_4
+    value: "La zone apr\xE8s le m\xE9t\xE9ore ralentit la vitesse de d\xE9placement
+      des ennemis"
+    language: fr
+  - key: meteor_4
+    value: "La zone apr\xE8s le m\xE9t\xE9ore ralentit la vitesse de d\xE9placement
+      des ennemis"
+    language: ger
+  - key: meteor_4
+    value: "El \xE1rea despu\xE9s del meteoro ralentiza la velocidad de movimiento
+      de los enemigos"
+    language: spa
+  - key: meteor_4
+    value: "\u9695\u77F3\u306E\u5F8C\u306E\u9818\u57DF\u306F\u6575\u306E\u79FB\u52D5\u901F\u5EA6\u3092\u9045\u304F\u3059\u308B"
+    language: jup
+  - key: meteor_5
+    value: "+5 \u043C\u0435\u0442\u0435\u043E\u0440\u0438\u0442\u0456\u0432"
+    language: ua
+  - key: meteor_5
+    value: +5 meteors
+    language: eng
+  - key: meteor_5
+    value: "+5 m\xE9t\xE9ores"
+    language: fr
+  - key: meteor_5
+    value: +5 Meteore
+    language: ger
+  - key: meteor_5
+    value: +5 meteoros
+    language: spa
+  - key: meteor_5
+    value: "\u9695\u77F3 +5"
+    language: jup
+  - key: illusion_1
+    value: "\u0412\u0438\u043A\u043B\u0438\u043A\u0430\u0454 \u043A\u043E\u043F\u0456\u044E
+      \u0433\u0435\u0440\u043E\u044F, \u044F\u043A\u0430 \u0430\u0442\u0430\u043A\u0443\u0454
+      \u0437 \u0432\u0430\u043C\u0438"
+    language: ua
+  - key: illusion_1
+    value: Summon a copy of the hero that attacks with you
+    language: eng
+  - key: illusion_1
+    value: "Invoquer une copie du h\xE9ros qui attaque avec vous"
+    language: fr
+  - key: illusion_1
+    value: "Beschw\xF6re eine Kopie des Helden, die mit dir angreift"
+    language: ger
+  - key: illusion_1
+    value: "Invocar una copia del h\xE9roe que ataca contigo"
+    language: spa
+  - key: illusion_1
+    value: "\u3042\u306A\u305F\u3068\u4E00\u7DD2\u306B\u653B\u6483\u3059\u308B\u82F1\u96C4\u306E\u8907\u88FD\u3092\u53EC\u559A\u3059\u308B"
+    language: jup
+  - key: illusion_2
+    value: "+1 \u043A\u043E\u043F\u0456\u044F"
+    language: ua
+  - key: illusion_2
+    value: +1 copy
+    language: eng
+  - key: illusion_2
+    value: +1 copie
+    language: fr
+  - key: illusion_2
+    value: +1 Kopie
+    language: ger
+  - key: illusion_2
+    value: +1 copia
+    language: spa
+  - key: illusion_2
+    value: "+1 \u30B3\u30D4\u30FC"
+    language: jup
+  - key: illusion_3
+    value: "\u0411\u0456\u043B\u044C\u0448\u0435 \u0447\u0430\u0441\u0443 \u0436\u0438\u0442\u0442\u044F"
+    language: ua
+  - key: illusion_3
+    value: More life time
+    language: eng
+  - key: illusion_3
+    value: "Plus de dur\xE9e de vie"
+    language: fr
+  - key: illusion_3
+    value: "L\xE4ngere Lebensdauer"
+    language: ger
+  - key: illusion_3
+    value: "M\xE1s tiempo de vida"
+    language: spa
+  - key: illusion_3
     value: "\u88C5\u5099\u3059\u308B"
+    language: jup
+  - key: illusion_4
+    value: "+1 \u043A\u043E\u043F\u0456\u044F"
+    language: ua
+  - key: illusion_4
+    value: +1 copy
+    language: eng
+  - key: illusion_4
+    value: +1 copie
+    language: fr
+  - key: illusion_4
+    value: +1 Kopie
+    language: ger
+  - key: illusion_4
+    value: +1 copia
+    language: spa
+  - key: illusion_4
+    value: "+1 \u30B3\u30D4\u30FC"
+    language: jup
+  - key: illusion_5
+    value: "\u0421\u0442\u0432\u043E\u0440\u044E\u0454 \u043B\u0456\u043D\u0456\u044E
+      \u0443\u0434\u0430\u0440\u0443 \u043C\u0456\u0436 \u043A\u043E\u043F\u0456\u044F\u043C\u0438"
+    language: ua
+  - key: illusion_5
+    value: Create a shock line between copies
+    language: eng
+  - key: illusion_5
+    value: "Cr\xE9er une ligne de choc entre les copies"
+    language: fr
+  - key: illusion_5
+    value: Erstelle eine Schocklinie zwischen den Kopien
+    language: ger
+  - key: illusion_5
+    value: "Crea una l\xEDnea de choque entre copias"
+    language: spa
+  - key: illusion_5
+    value: "\u30B3\u30D4\u30FC\u9593\u306B\u885D\u6483\u6CE2\u3092\u4F5C\u6210\u3059\u308B"
+    language: jup
+  - key: health
+    value: "\u0417\u0434\u043E\u0440\u043E\u0432'\u044F"
+    language: ua
+  - key: health
+    value: Health
+    language: eng
+  - key: health
+    value: "Sant\xE9"
+    language: fr
+  - key: health
+    value: Gesundheit
+    language: ger
+  - key: health
+    value: Salud
+    language: spa
+  - key: health
+    value: Salud
+    language: jup
+  - key: damage
+    value: "\u0428\u043A\u043E\u0434\u0430"
+    language: ua
+  - key: damage
+    value: Damage
+    language: eng
+  - key: damage
+    value: "D\xE9g\xE2ts"
+    language: fr
+  - key: damage
+    value: Schaden
+    language: ger
+  - key: damage
+    value: "Da\xF1o"
+    language: spa
+  - key: damage
+    value: "\u30C0\u30E1\u30FC\u30B8"
+    language: jup
+  - key: move_speed
+    value: "\u0428\u0432\u0438\u0434\u043A\u0456\u0441\u0442\u044C \u0440\u0443\u0445\u0443"
+    language: ua
+  - key: move_speed
+    value: Movement speed
+    language: eng
+  - key: move_speed
+    value: "Vitesse de d\xE9placement"
+    language: fr
+  - key: move_speed
+    value: Bewegungsgeschwindigkeit
+    language: ger
+  - key: move_speed
+    value: Velocidad de movimiento
+    language: spa
+  - key: move_speed
+    value: "\u79FB\u52D5\u901F\u5EA6"
     language: jup
   dataSett: []
   IsSettingsPage: 0
   volume: 0
   vSync: 0
+  music: {fileID: 139192934}
   hashing: {fileID: 1371086805}
+  nameClip: Theme
 --- !u!114 &1371086804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3048,6 +4520,161 @@ MonoBehaviour:
   percent: 0
   scene: 0
   isWinPanel: 0
+--- !u!114 &1371086807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1371086797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea797a2f9e7d6014e81b22ab50b3a5b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characters:
+  - Name: Wizzy
+    ID: 1
+    isBuy: 1
+    isEquiped: 1
+    status: choosen
+    health: 
+    damage: 
+    move: 
+    attackSpeed: 
+    spell: 
+    spellCD: 
+    interactable: 0
+  - Name: Dizzy
+    ID: 2
+    isBuy: 0
+    isEquiped: 0
+    status: buy
+    health: 
+    damage: 
+    move: 
+    attackSpeed: 
+    spell: 
+    spellCD: 
+    interactable: 1
+  - Name: Shmizzy
+    ID: 3
+    isBuy: 0
+    isEquiped: 0
+    status: buy
+    health: 
+    damage: 
+    move: 
+    attackSpeed: 
+    spell: 
+    spellCD: 
+    interactable: 1
+  charactersRead: []
+  info:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  isShopingScene: 0
+  hashing: {fileID: 1371086805}
+--- !u!114 &1371086808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1371086797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffda2bb28f02a54419d04e62d1959ba4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stat:
+  - ID: 1
+    Name: Beany
+    stat: 0
+  - ID: 2
+    Name: Kiwi
+    stat: 0
+  - ID: 3
+    Name: TreeSnipe
+    stat: 0
+  - ID: 4
+    Name: Beatty
+    stat: 0
+  - ID: 5
+    Name: Mishroom
+    stat: 0
+  - ID: 6
+    Name: Spiketumble
+    stat: 0
+  - ID: 7
+    Name: Bobs
+    stat: 0
+  - ID: 8
+    Name: Tornado
+    stat: 0
+  - ID: 9
+    Name: Rocky
+    stat: 0
+  - ID: 10
+    Name: bulletDamage
+    stat: 0
+  - ID: 11
+    Name: beamDamage
+    stat: 0
+  - ID: 12
+    Name: bombDamage
+    stat: 0
+  - ID: 13
+    Name: lightDamage
+    stat: 0
+  - ID: 14
+    Name: healthHealed
+    stat: 0
+  - ID: 15
+    Name: illusionLifeTime
+    stat: 0
+  - ID: 16
+    Name: barierSpawned
+    stat: 0
+  - ID: 17
+    Name: meteorDamage
+    stat: 0
+  - ID: 18
+    Name: pillPickedUp
+    stat: 0
+  - ID: 19
+    Name: puddleDamage
+    stat: 0
+  - ID: 20
+    Name: skillsReloaded
+    stat: 0
+  - ID: 21
+    Name: slowedTime
+    stat: 0
+  - ID: 22
+    Name: towerWaveDamage
+    stat: 0
+  - ID: 23
+    Name: fireWaveDamage
+    stat: 0
+  - ID: 24
+    Name: zzapDamage
+    stat: 0
+  - ID: 25
+    Name: StunTime
+    stat: 0
+  - ID: 26
+    Name: DamageTaken
+    stat: 0
+  - ID: 27
+    Name: ShieldAbsorbedDamage
+    stat: 0
+  statRead: []
+  nameStat: []
+  statText: []
+  isInStatScene: 0
+  isInGame: 0
 --- !u!1 &1382195771
 GameObject:
   m_ObjectHideFlags: 0
@@ -3079,7 +4706,7 @@ RectTransform:
   m_Children:
   - {fileID: 876697915}
   m_Father: {fileID: 1627269966}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3130,9 +4757,10 @@ RectTransform:
   m_Children:
   - {fileID: 1269511155}
   - {fileID: 1021362371}
-  - {fileID: 198708670}
-  - {fileID: 23904083}
   - {fileID: 1307949562}
+  - {fileID: 198708670}
+  - {fileID: 727696030}
+  - {fileID: 23904083}
   - {fileID: 1382195772}
   m_Father: {fileID: 926306255}
   m_RootOrder: 1
@@ -3164,7 +4792,7 @@ GameObject:
   - component: {fileID: 1899507008}
   - component: {fileID: 1899507007}
   m_Layer: 5
-  m_Name: SettingsBtn
+  m_Name: HomeBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3380,6 +5008,155 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1953357201}
+  m_CullTransparentMesh: 1
+--- !u!1 &2044534375
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2044534376}
+  - component: {fileID: 2044534379}
+  - component: {fileID: 2044534378}
+  - component: {fileID: 2044534377}
+  m_Layer: 5
+  m_Name: Text (TMP)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2044534376
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044534375}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 110738716}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2044534377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044534375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f34feffa53b631449dda31c5045de5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tagText: shop
+--- !u!114 &2044534378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044534375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: "\u041A\u0440\u0430\u043C\u043D\u0438\u0446\u044F"
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 3a4bbe00465913a46ba69b539ba12d61, type: 2}
+  m_sharedMaterial: {fileID: -628972225427471680, guid: 3a4bbe00465913a46ba69b539ba12d61, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4292927712
+  m_fontColor: {r: 0.8773585, g: 0.8773585, b: 0.8773585, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 65
+  m_fontSizeBase: 24
+  m_fontWeight: 400
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 18
+  m_fontSizeMax: 65
+  m_fontStyle: 1
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 4096
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 31.285492, y: 21.274132, z: 26.279816, w: 14.391331}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &2044534379
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044534375}
   m_CullTransparentMesh: 1
 --- !u!1 &2090098455
 GameObject:

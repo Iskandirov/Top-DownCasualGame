@@ -12,6 +12,7 @@ public class SlowArea : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
+            FindObjectOfType<StatsCollector>().FindStatName("slowedTime", Time.deltaTime);
             collision.GetComponentInParent<Forward>().speed = collision.GetComponentInParent<Forward>().speedMax * 0.5f / dirtElement;
             if (!collision.GetComponentInParent<ElementActiveDebuff>().IsActive("isDirt", true))
             {

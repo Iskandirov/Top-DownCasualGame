@@ -12,9 +12,9 @@ public class RestartGame : MonoBehaviour
     }
     public void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Escape) && player.GetComponent<Health>().playerHealthPoint > 0)
+        if (Input.GetKeyUp(KeyCode.Escape) && player.GetComponent<Health>().playerHealthPoint > 0 && !player.otherPanelOpened)
         {
-            player.otherPanelOpened = false;
+            player.otherPanelOpened = true;
             player.escPanelIsShowed = false;
             Destroy(gameObject);
 

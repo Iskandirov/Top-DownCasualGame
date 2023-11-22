@@ -4,36 +4,7 @@ using UnityEngine;
 
 public class SaveitemToInventory : MonoBehaviour
 {
-    [SerializeField]
-    DataHashing hash;
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("EditorOnly"))
-        {
-            ItemParameters objParam = collision.GetComponent<ItemParameters>();
-            // Створення об'єкта даних
-            SavedObjectData data = new SavedObjectData();
-            data.Name = objParam.itemName;
-            data.IDRare = objParam.idRare;
-            data.RareName = objParam.itemRareName;
-            data.Stat = objParam.Stat;
-            data.Level = objParam.Level;
-            data.Tag = objParam.Tag;
-            data.RareTag = objParam.RareTag;
-
-            // Збереження даних у файл
-            string fileName = Path.Combine(Application.persistentDataPath, "savedData.txt");
-            using (StreamWriter writer = new StreamWriter(fileName, true))
-            {
-                string jsonData = JsonUtility.ToJson(data);
-                string decryptedJson = hash.Encrypt(jsonData);
-                writer.WriteLine(decryptedJson);
-                writer.Close();
-            }
-
-            Destroy(collision.gameObject);
-        }
-    }
+   
 }
 
 
@@ -50,6 +21,22 @@ public class SavedObjectData
     public int Count;
     public string Tag;
     public string RareTag;
+}
+[System.Serializable]
+public class SavedCharacterData
+{
+    public string Name;
+    public int ID;
+    public bool isBuy;
+    public bool isEquiped;
+    public string status;
+    public string health;
+    public string damage;
+    public string move;
+    public string attackSpeed;
+    public string spell;
+    public string spellCD;
+    public bool interactable;
 }
 
 [System.Serializable]
@@ -90,7 +77,7 @@ public class SavedLocationsData
     public int countOfCount;
     public int countOfCountMax;
     public int percent;
-    public bool isFullDone;
+    public bool isUnlocke;
 }
 [System.Serializable]
 public class SavedSkillsData

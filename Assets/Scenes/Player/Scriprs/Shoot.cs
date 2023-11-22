@@ -20,6 +20,7 @@ public class Shoot : MonoBehaviour
     public bool isLevelTwo;
     public bool isLevelFive;
     public int secondBulletCount;
+    public bool isRicoshet;
     // Start is called before the first frame update
     void Start()
     {
@@ -52,6 +53,7 @@ public class Shoot : MonoBehaviour
                 Bullet newObject = Instantiate(bullet, transform.position, Quaternion.identity);
                 newObject.damage = damageToGive;
                 newObject.isPiers = isLevelFive;
+                newObject.isRickoshet = isRicoshet;
                 if (isLevelTwo)
                 {
                     for (int i = 1; i < secondBulletCount + 1; i++)
@@ -91,6 +93,7 @@ public class Shoot : MonoBehaviour
         Bullet newObject = Instantiate(bullet, transform.position, Quaternion.identity);
         newObject.damage = damageToGive;
         newObject.isPiers = isLevelFive;
+        newObject.isRickoshet = isRicoshet;
 
         Vector2 directionBullet = mousePosition - transform.position;
 

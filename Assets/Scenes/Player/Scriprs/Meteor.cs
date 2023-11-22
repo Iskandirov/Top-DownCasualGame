@@ -43,6 +43,7 @@ public class Meteor : MonoBehaviour
                     collision.GetComponentInParent<Forward>().speed = collision.GetComponentInParent<Forward>().speedMax * fireDirt / 1.5f;
                 }
                 collision.GetComponent<HealthPoint>().healthPoint -= (damage * fireDirt * collision.GetComponent<HealthPoint>().Water) / collision.GetComponent<HealthPoint>().Fire;
+                FindObjectOfType<StatsCollector>().FindStatName("meteorDamage", (damage * fireDirt * collision.GetComponent<HealthPoint>().Water) / collision.GetComponent<HealthPoint>().Fire);
                 damageTick = damageTickMax;
             }
             else if (collision.CompareTag("Barrel") && collision != null)

@@ -14,32 +14,21 @@ public class DropItems : MonoBehaviour
     public List<SavedObjectData> RareItems;
     public List<SavedObjectData> MiphicalItems;
     public List<SavedObjectData> LegendaryItems;
-
+    public bool isTutor;
     public string[] rarityType = { "Звичайне", "Рідкісне", "Міфічне", "Легендарне" };
-
-    SpawnBobs bobs;
-    public void Start()
-    {
-        bobs = FindObjectOfType<SpawnBobs>();
-    }
 
     public void OnDestroyBoss()
     {
-        GameObject[] spawners = GameObject.FindGameObjectsWithTag("Spawner");
-
-        foreach (var obj in spawners)
-        {
-            obj.GetComponent<SpawnEnemy>().stopSpawn = false;
-        }
-        bobs.isSpawned = false;
         ItemRarity();
         float randomValue = Random.value;
         List<SavedObjectData> rarityItems = GetRarityItems(randomValue);
-        if (rarityItems != null)
-            SetStats(rarityItems);
+        if (rarityItems != null && !isTutor)
+            SetStats(rarityItems, isTutor);
+        else if(rarityItems != null && isTutor)
+            SetStats(rarityItems, isTutor);
     }
 
-    void SetStats(List<SavedObjectData> Rarity)
+    void SetStats(List<SavedObjectData> Rarity,bool isTutor)
     {
         int rand = Random.Range(0, Rarity.Count);
         ItemParameters newItem = Instantiate(itemPrefab, transform.position, transform.rotation);
@@ -53,6 +42,8 @@ public class DropItems : MonoBehaviour
         newItem.Count = Rarity[rand].Count;
         newItem.Tag = Rarity[rand].Tag;
         newItem.RareTag = Rarity[rand].RareTag;
+
+        newItem.isTutor = isTutor;
     }
 
     List<SavedObjectData> GetRarityItems(float randomValue)

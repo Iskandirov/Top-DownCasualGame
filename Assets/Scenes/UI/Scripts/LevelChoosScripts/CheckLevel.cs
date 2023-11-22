@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class CheckLevel : MonoBehaviour
@@ -19,26 +18,22 @@ public class CheckLevel : MonoBehaviour
         }
         LoadInventory(levelsRead);
     }
-    public void LoadInventory(List<SavedLocationsData> itemsRead)
+    public void LoadInventory(List<SavedLocationsData> levelList)
     {
         string path = Path.Combine(Application.persistentDataPath, "Levels.txt");
         if (File.Exists(path))
         {
-            Task<string[]> task = File.ReadAllLinesAsync(path);
-
-            // Wait for the task to complete
-            task.Wait();
-
-            // Get the result of the task
-            string[] lines = task.Result;
-
+            string[] lines = File.ReadAllLines(path);
             // Перебір кожного запису і заміна шляху до зображення на зображення зі списку sprites
             foreach (string jsonLine in lines)
             {
                 // Розшифрувати JSON рядок
                 string decryptedJson = hashing.Decrypt(jsonLine);
+
                 SavedLocationsData data = JsonUtility.FromJson<SavedLocationsData>(decryptedJson);
-                itemsRead.Add(data);
+
+                levelList.Add(data);
+
             }
         }
     }
@@ -49,18 +44,9 @@ public class CheckLevel : MonoBehaviour
         string path = Path.Combine(Application.persistentDataPath, "Levels.txt");
         using (StreamWriter writer = new StreamWriter(path, true))
         {
-
-            SavedLocationsData data = new SavedLocationsData();
             foreach (SavedLocationsData item in levels)
             {
-                data.IDLevel = item.IDLevel;
-                data.percent = item.percent;
-                data.countOfCount = item.countOfCount;
-                data.countOfCountMax = item.countOfCountMax;
-                data.isFullDone = item.isFullDone;
-
-
-                string jsonData = JsonUtility.ToJson(data);
+                string jsonData = JsonUtility.ToJson(item);
                 string decryptedJson = hashing.Encrypt(jsonData);
                 writer.WriteLine(decryptedJson);
             }
@@ -75,13 +61,7 @@ public class CheckLevel : MonoBehaviour
 
         if (File.Exists(path))
         {
-            Task<string[]> task = File.ReadAllLinesAsync(path);
-
-            // Wait for the task to complete
-            task.Wait();
-
-            // Get the result of the task
-            string[] lines = task.Result;
+            string[] lines = File.ReadAllLines(path);
 
             foreach (string line in lines)
             {
@@ -136,34 +116,35 @@ public class CheckLevel : MonoBehaviour
 
         if (File.Exists(path))
         {
-            Task<string[]> task = File.ReadAllLinesAsync(path);
+            string[] lines = File.ReadAllLines(path);
 
-            // Wait for the task to complete
-            task.Wait();
-
-            // Get the result of the task
-            string[] lines = task.Result;
-
-            List<string> updatedLies = new List<string>();
-
+            List<SavedLocationsData> updatedLines = new List<SavedLocationsData>();
             foreach (string line in lines)
             {
                 string decrypt = hashing.Decrypt(line);
                 SavedLocationsData data = JsonUtility.FromJson<SavedLocationsData>(decrypt);
-
                 if (data.IDLevel == level && data.percent < percentNew)
                 {
                     data.percent = percentNew;
                     if (percentNew >= 100)
                     {
                         data.percent = 0;
+                        if (data.countOfCount < data.countOfCountMax)
+                        {
+                            data.countOfCount++;
+                            if (data.countOfCount == data.countOfCountMax)
+                            {
+                                data.percent = 100;
+
+                            }
+                        }
                     }
                 }
-                updatedLies.Add(line);
+                updatedLines.Add(data);
             }
-            using (StreamWriter writer = new StreamWriter(path, true))
+            using (StreamWriter writer = new StreamWriter(path, false))
             {
-                foreach (string line in updatedLies)
+                foreach (SavedLocationsData line in updatedLines)
                 {
                     string jsonData = JsonUtility.ToJson(line);
                     string decryptedJson = hashing.Encrypt(jsonData);

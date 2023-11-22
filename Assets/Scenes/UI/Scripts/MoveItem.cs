@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.UIElements.Experimental;
 
 public class MoveItem : MonoBehaviour ,IPointerClickHandler
 {
@@ -39,8 +40,10 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
 
     public GameObject lang;
     List<GameObject> list = new List<GameObject>();
+    public DataHashing hashing;
     void Start()
     {
+        hashing = FindObjectOfType<DataHashing>();
         startParent = transform.parent.gameObject;
         fliedSlots = FindObjectOfType<FieldSlots>();
         // Çíàéòè îá'ºêò çà òåãîì
@@ -56,7 +59,6 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
             maxLevel.GetComponent<TextMeshProUGUI>().text = "Max level";
             LevelCount.SetActive(true);
             LevelCount.GetComponent<TextMeshProUGUI>().text = gameObject.GetComponent<SetParametersToitem>().level;
-
         }
         list.Add(maxLevel);
         foreach (GameObject obj in objectsWithTag)
@@ -74,15 +76,20 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
             toEquipSlot = true;
         }
         string path = Path.Combine(Application.persistentDataPath, "EquipedItems.txt");
-        if (File.Exists(path))
+        lock (new object())
         {
-            string[] jsonLines = File.ReadAllLines(path);
-            foreach (string jsonLine in jsonLines)
+            if (File.Exists(path))
             {
-                SavedEquipData data = JsonUtility.FromJson<SavedEquipData>(jsonLine);
-                if (data.Tag == gameObject.GetComponent<SetParametersToitem>().Tag)
+                string[] jsonLines = File.ReadAllLines(path);
+
+                foreach (string jsonLine in jsonLines)
                 {
-                    isEquipedNow = true;
+                    string decrypt = hashing.Decrypt(jsonLine);
+                    SavedEquipData data = JsonUtility.FromJson<SavedEquipData>(decrypt);
+                    if (data.Tag == GetComponent<SetParametersToitem>().Tag)
+                    {
+                        isEquipedNow = true;
+                    }
                 }
             }
         }
@@ -152,7 +159,18 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
         }
 
     }
+    void CheckChildren(Transform parent, bool enable)
+    {
+        foreach (Transform child in parent.transform)
+        {
+            if (child.GetComponent<TextMeshProUGUI>())
+            {
+                child.GetComponent<TextMeshProUGUI>().enabled = enable;
+            }
 
+            CheckChildren(child, enable);
+        }
+    }
     public void SetVisible(bool isActivate)
     {
         equipPanel.GetComponent<Image>().enabled = isActivate;
@@ -162,7 +180,6 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
             {
                 if (equipPanel.transform.GetChild(i).GetComponent<TextMeshProUGUI>())
                 {
-                    equipPanel.transform.GetChild(i).GetComponent<TextMeshProUGUI>().enabled = isActivate;
                     if (isActivate == true)
                     {
                         if (equipPanel.transform.GetChild(i).CompareTag("Stat"))
@@ -187,7 +204,6 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
                     button = child.GetComponent<Button>();
                 }
 
-                child.GetComponentInChildren<TextMeshProUGUI>().enabled = isActivate;
             }
             else if (child.GetComponent<Image>())
             {
@@ -195,7 +211,6 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
             }
             else if (child.GetComponent<TextMeshProUGUI>())
             {
-                child.GetComponent<TextMeshProUGUI>().enabled = isActivate;
 
                 if (isActivate)
                 {
@@ -213,7 +228,8 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
 
                                 foreach (string jsonLine in jsonLines)
                                 {
-                                    SavedEquipData data = JsonUtility.FromJson<SavedEquipData>(jsonLine);
+                                    string decrypt = hashing.Decrypt(jsonLine);
+                                    SavedEquipData data = JsonUtility.FromJson<SavedEquipData>(decrypt);
 
                                     if (data.Tag == stats[1].GetComponent<TagText>().tagText)
                                     {
@@ -235,6 +251,7 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
                 }
             }
         }
+        CheckChildren(equipPanel.transform, isActivate);
     }
     public void SetItem(SavedObjectData obj)
     {

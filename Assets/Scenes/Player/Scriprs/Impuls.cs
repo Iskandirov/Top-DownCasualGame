@@ -26,6 +26,7 @@ public class Impuls : MonoBehaviour
 
         if (isFour)
         {
+            FindObjectOfType<StatsCollector>().FindStatName("barierSpawned", 1);
             DestroyBarrier a = Instantiate(barrier, transform.position, Quaternion.identity);
             a.Grass = grass;
             if (isFive)

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SpawnBobs : MonoBehaviour
 {
@@ -11,6 +12,11 @@ public class SpawnBobs : MonoBehaviour
     public bool isSpawned = false;
     public KillCount countEnemy;
     public EnemyInfoLoader enemyInfo;
+    private void Awake()
+    {
+        if (FindObjectOfType<KillCount>().LoadObjectLevelCount(SceneManager.GetActiveScene().buildIndex) > 0)
+            timeToSpawnBobs += 15;
+    }
     // Start is called before the first frame update
     void Start()
     {

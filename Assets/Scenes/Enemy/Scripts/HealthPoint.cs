@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting.Antlr3.Runtime.Misc;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HealthPoint : MonoBehaviour
 {
@@ -61,10 +63,17 @@ public class HealthPoint : MonoBehaviour
     public float ColdStart;
 
     public GameObject debuffsParent;
-    Timer defeatBoss;
+    StatsCollector stats;
+    public string nameMob;
+    private void Awake()
+    {
+        if (FindObjectOfType<KillCount>().LoadObjectLevelCount(SceneManager.GetActiveScene().buildIndex) > 0)
+            healthPointMax += FindObjectOfType<KillCount>().LoadObjectLevelCount(SceneManager.GetActiveScene().buildIndex) * 1.3f;
+    }
     // Start is called before the first frame update
     void Start()
     {
+        stats = FindObjectOfType<StatsCollector>();
         healthPoint = healthPointMax;
         if (bodyAnimBoss != null)
         {
@@ -76,7 +85,6 @@ public class HealthPoint : MonoBehaviour
         objDrop = GetComponentInParent<DropItems>();
         objMove = GetComponentInParent<Forward>();
         objKills = FindObjectOfType<KillCount>();
-        defeatBoss = FindObjectOfType<Timer>();
     }
    
 
@@ -170,7 +178,6 @@ public class HealthPoint : MonoBehaviour
                     a.expBuff = expGiven * dangerLevel;
                     objExp.expiriencepoint.fillAmount += expGiven * dangerLevel / objExp.expNeedToNewLevel;
                     objKills.score += 1;
-                    defeatBoss.isBossDefeated = true;
                     Destroy(transform.root.gameObject);
                 }
             }
@@ -192,7 +199,7 @@ public class HealthPoint : MonoBehaviour
                 }
                 else
                 {
-                    
+
                     Destroy(transform.parent.gameObject);
                 }
             }
@@ -204,6 +211,7 @@ public class HealthPoint : MonoBehaviour
                     item.GetComponentInChildren<DeactivateDebuff>().Destroy();
                 }
             }
+            stats.FindStatName(nameMob, 1);
         }
     }
     public void SetOtherPartsCount()
@@ -219,7 +227,6 @@ public class HealthPoint : MonoBehaviour
             {
                 if (obj.GetComponent<CutThePart>().countParts == 1)
                 {
-                    defeatBoss.isBossDefeated = true;
                     objDrop.OnDestroyBoss();
                 }
                 obj.GetComponent<CutThePart>().countParts--;

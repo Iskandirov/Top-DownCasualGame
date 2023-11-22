@@ -52,6 +52,7 @@ public class Beam : MonoBehaviour
                 collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isSteam", true, false);
             }
             objHealt.healthPoint -= (damage * Steam * objHealt.Steam) / objHealt.Cold;
+            FindObjectOfType<StatsCollector>().FindStatName("beamDamage", (damage * Steam * objHealt.Steam) / objHealt.Cold);
             objHealt.ChangeToKick();
         }
         else if (collision.CompareTag("Barrel") && collision != null)

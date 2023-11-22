@@ -13,7 +13,6 @@ public class SkillCDShift : MonoBehaviour
     public void Start()
     {
         objMove = transform.root.GetComponent<Move>();
-        skillShiftCDMax = objMove.dashTimeMax;
     }
     // Update is called once per frame
     void Update()

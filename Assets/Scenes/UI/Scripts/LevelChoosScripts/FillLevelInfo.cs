@@ -25,9 +25,9 @@ public class FillLevelInfo : MonoBehaviour
 
         dataLevel.percent = LoadObjectLevel(GetComponent<MenuController>().sceneCount);
         dataLevel.countOfCount = LoadObjectLevelCount(GetComponent<MenuController>().sceneCount);
-
+        dataLevel.countOfCountMax = LoadObjectLevelCountOfCountMax(GetComponent<MenuController>().sceneCount);
         percentImg.fillAmount = (float)dataLevel.percent / 100;
-        countImg.fillAmount = (float)dataLevel.countOfCount / 5;
+        countImg.fillAmount = (float)dataLevel.countOfCount / dataLevel.countOfCountMax;
 
         if (dataLevel.percent == 100)
         {
@@ -93,6 +93,28 @@ public class FillLevelInfo : MonoBehaviour
 
         return 0;
     }
+    public int LoadObjectLevelCountOfCountMax(int objectID)
+    {
+        string path = Path.Combine(Application.persistentDataPath, "Levels.txt");
+
+        if (File.Exists(path))
+        {
+            string[] lines = File.ReadAllLines(path);
+
+            foreach (string line in lines)
+            {
+                string decode = hash.Decrypt(line);
+                SavedLocationsData data = JsonUtility.FromJson<SavedLocationsData>(decode);
+
+                if (data.IDLevel == objectID)
+                {
+                    return data.countOfCountMax;
+                }
+            }
+        }
+
+        return 0;
+    }
     public string LoadObjectLevelCountText(int objectID)
     {
         string path = Path.Combine(Application.persistentDataPath, "Levels.txt");
@@ -131,7 +153,7 @@ public class FillLevelInfo : MonoBehaviour
 
                 if (data.IDLevel == objectID)
                 {
-                    return data.isFullDone;
+                    return data.isUnlocke;
                 }
             }
         }

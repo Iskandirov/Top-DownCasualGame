@@ -3096,6 +3096,7 @@ GameObject:
   - component: {fileID: 670996235}
   - component: {fileID: 670996236}
   - component: {fileID: 670996237}
+  - component: {fileID: 670996238}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3162,7 +3163,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 670996230}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 111.98328, y: -0.10000918, z: -10}
+  m_LocalPosition: {x: 116.60487, y: -0.10000918, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -3269,6 +3270,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: b151434d44cef4d15394294095127f67e23a32ef9914b48e1a030257a4c17c6d
   iv: 6e7d148ed54ac05985b2bbd900107367
+--- !u!114 &670996238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 670996230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea797a2f9e7d6014e81b22ab50b3a5b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characters: []
+  charactersRead: []
+  info: []
+  isShopingScene: 0
+  hashing: {fileID: 670996237}
 --- !u!1 &684213824
 GameObject:
   m_ObjectHideFlags: 0
@@ -8064,9 +8082,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 8313530371128728556, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
-    - {fileID: 8522285135052803135, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
-    - {fileID: 4470285249311221157, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
+    - {fileID: 0}
     - {fileID: 4622581140822243996, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
 --- !u!224 &2000119736 stripped

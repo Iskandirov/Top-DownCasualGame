@@ -34,10 +34,14 @@ public class Forward : MonoBehaviour
     private Vector2 velocity;
     AIPath path;
     AIDestinationSetter destination;
+    public bool isTutorial;
     private void Awake()
     {
-        if (FindObjectOfType<KillCount>().LoadObjectLevelCount(SceneManager.GetActiveScene().buildIndex) > 0)
-            speedMax *= FindObjectOfType<KillCount>().LoadObjectLevelCount(SceneManager.GetActiveScene().buildIndex) * 0.2f;
+        if (!isTutorial)
+        {
+            if (FindObjectOfType<KillCount>().LoadObjectLevelCount(SceneManager.GetActiveScene().buildIndex) > 0)
+                speedMax += FindObjectOfType<KillCount>().LoadObjectLevelCount(SceneManager.GetActiveScene().buildIndex) * 1.1f;
+        }
     }
 
     // Start is called before the first frame update

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UIElements.Experimental;
 
 public class LoadItemData : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class LoadItemData : MonoBehaviour
     public FieldSlots craftObj;
     int index;
     public SetLanguage lang;
-
+    public DataHashing hashing;
     void Start()
     {
         LoadItems();
@@ -28,7 +29,8 @@ public class LoadItemData : MonoBehaviour
 
             foreach (string jsonLine in jsonLines)
             {
-                SavedObjectData data = JsonUtility.FromJson<SavedObjectData>(jsonLine);
+                string decrypt = hashing.Decrypt(jsonLine);
+                SavedObjectData data = JsonUtility.FromJson<SavedObjectData>(decrypt);
                 (string, int) key = (data.Name, data.Level);
                 if (uniqueObjects.ContainsKey(key))
                 {

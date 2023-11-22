@@ -62,10 +62,13 @@
     <Compile Include="Assets\Scenes\Player\Scriprs\Tower.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\Tornado_Attack_Lightning.cs" />
     <Compile Include="Assets\Scenes\Player\Scriprs\ElementsCoeficients.cs" />
+    <Compile Include="Assets\Scenes\UI\Scripts\Tutorial\CutsceneManager.cs" />
     <Compile Include="Assets\Samples\Universal RP\12.1.8\URP Package Samples\SharedAssets\Scripts\FirstPersonController.cs" />
+    <Compile Include="Assets\Scenes\UI\Scripts\CloseItem.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\Tornado_Attack_Spawn_Tornadics.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_TMPro_VerticalAlignmentOptions.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\MoveToPlayerStartPos.cs" />
+    <Compile Include="Assets\Scenes\UI\Scripts\SaveStatistic.cs" />
     <Compile Include="Assets\Scenes\Player\Scriprs\Shield.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\Boss_Destroy.cs" />
     <Compile Include="Assets\Samples\Universal RP\12.1.8\URP Package Samples\SharedAssets\Scripts\AutoLoadPipelineAsset.cs" />
@@ -78,7 +81,9 @@
     <Compile Include="Assets\Scenes\UI\Scripts\SaveitemToInventory.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_UI_FontData.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_UI_ColorBlock.cs" />
+    <Compile Include="Assets\Scenes\Player\Scriprs\SetCharacter.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\MenuController.cs" />
+    <Compile Include="Assets\Scenes\UI\Scripts\Tutorial\Tutor.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\ObjectToShow.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_UI_ScrollRect_ScrollRectEvent.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\MineSpawn.cs" />
@@ -116,6 +121,7 @@
     <Compile Include="Assets\Scenes\UI\Scripts\ActivateAbilities.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\Kiwi_Attack.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_TMPro_TMP_InputField_TextSelectionEvent.cs" />
+    <Compile Include="Assets\Scenes\UI\Scripts\Tutorial\TextAppear.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\HealthPickUp.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_TextCore_Text_SpriteGlyph.cs" />
     <Compile Include="Assets\Scenes\Player\Scriprs\Illusion.cs" />
@@ -126,6 +132,7 @@
     <Compile Include="Assets\Scenes\UI\Scripts\TooltipTarget.cs" />
     <Compile Include="Assets\Scenes\Player\Scriprs\Meteor.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\MiShroomMine.cs" />
+    <Compile Include="Assets\Scenes\UI\Scripts\Tutorial\MethodDestroy.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_TextCore_Text_TextStyle.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\Root_Bullet.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\Timer.cs" />
@@ -156,6 +163,7 @@
     <Compile Include="Assets\Scenes\UI\Scripts\FieldSlots.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_ParticleSystem_MinMaxGradient.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\DeactivateDebuff.cs" />
+    <Compile Include="Assets\Scenes\UI\Scripts\AudioManager.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\Settings.cs" />
     <Compile Include="Assets\Scenes\Player\Scriprs\DefaultDestroy.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_UI_Toggle_ToggleEvent.cs" />
@@ -193,14 +201,19 @@
     <Compile Include="Assets\Scenes\UI\Scripts\ResetSkillsData.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\DataHashing.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_Events_UnityEvent.cs" />
+    <Compile Include="Assets\Scenes\UI\Scripts\Tutorial\ResumeDialogFromAnim.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_TextCore_GlyphMetrics.cs" />
     <Compile Include="Assets\Scenes\Player\Scriprs\SlowArea.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_TMPro_TMP_InputField_TouchScreenKeyboardEvent.cs" />
+    <Compile Include="Assets\Scenes\UI\Scripts\Sounds.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_TMPro_TMP_GlyphPairAdjustmentRecord.cs" />
     <Compile Include="Assets\Scenes\Player\Scriprs\FireWaveSpawner.cs" />
     <Compile Include="Assets\Scenes\Player\Scriprs\ShowBehind.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\BossBullet.cs" />
+    <Compile Include="Assets\Scenes\UI\Scripts\Tutorial\EnemyHealthTutorial.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_Unity_Mathematics_quaternion.cs" />
+    <Compile Include="Assets\Scenes\UI\Scripts\BuyCharacter.cs" />
+    <Compile Include="Assets\Scenes\UI\Scripts\CharacterInfo.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\HealthPoint.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\ProgressBar.cs" />
     <Compile Include="Assets\Scenes\Player\Scriprs\BeamSpawner.cs" />
@@ -225,6 +238,7 @@
     <Compile Include="Assets\Scenes\Player\Scriprs\TowerWave.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\Tornado_PosChange.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\DestroyVFX.cs" />
+    <Compile Include="Assets\Scenes\UI\Scripts\StatsCollector.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\CDSkillObject.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\LoadEquipedItems.cs" />
     <Compile Include="Assets\Scenes\Player\Scriprs\Pickup.cs" />

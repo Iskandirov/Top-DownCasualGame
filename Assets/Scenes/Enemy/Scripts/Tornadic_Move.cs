@@ -51,11 +51,18 @@ public class Tornadic_Move : MonoBehaviour
     }
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.CompareTag("Player") && !collision.collider.isTrigger)
+        if (collision.collider.CompareTag("Player") && !collision.collider.isTrigger && !collision.collider.GetComponent<Move>().isUntouchible)
         {
             collision.collider.GetComponent<Health>().playerHealthPoint -= damage;
+            FindObjectOfType<StatsCollector>().FindStatName("DamageTaken", damage);
             collision.collider.GetComponent<Health>().playerHealthPointImg.fullFillImage.fillAmount -= damage / collision.collider.GetComponent<Health>().playerHealthPointMax;
             collision.collider.GetComponent<Animator>().SetBool("IsHit", true);
+            Destroy(gameObject);
+        }
+        else if (collision.collider.CompareTag("Shield"))
+        {
+            collision.collider.GetComponent<Shield>().healthShield -= damage;
+            FindObjectOfType<StatsCollector>().FindStatName("ShieldAbsorbedDamage", damage);
             Destroy(gameObject);
         }
     }

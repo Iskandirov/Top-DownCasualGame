@@ -26,10 +26,24 @@ public class LocalizationManager : MonoBehaviour
     public bool IsSettingsPage;
     public float volume;
     public float vSync;
+    public AudioManager music;
     public DataHashing hashing;
+    public string nameClip;
     void Awake()
     {
+        music = FindObjectOfType<AudioManager>();
+        if (music.nameClip != nameClip && nameClip != null)
+        {
+            music.Stop(music.nameClip);
+            music.Play(nameClip);
+            music.nameClip = nameClip;
+
+        }
         StartLoad();
+        if (music != null)
+        {
+            music.volume = volume;
+        }
     }
     public void StartLoad()
     {
@@ -78,14 +92,14 @@ public class LocalizationManager : MonoBehaviour
                     };
                     UpdateText(text);
                 }
-                if (settings.key == "volume" && IsSettingsPage == true)
+                if (settings.key == "volume")
                 {
                     if (float.TryParse(settings.value, out float res))
                     {
                         volume = res;
                     }
                 }
-                if (settings.key == "v-sync" && IsSettingsPage == true)
+                if (settings.key == "v-sync")
                 {
                     if (float.TryParse(settings.value, out float res))
                     {
@@ -142,7 +156,6 @@ public class LocalizationManager : MonoBehaviour
                 data.language = item.language;
                 data.key = item.key;
                 data.value = item.value;
-
                 string jsonData = JsonUtility.ToJson(data);
                 string encryptedJson = hashing.Encrypt(jsonData);
 

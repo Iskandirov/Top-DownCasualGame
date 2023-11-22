@@ -33,9 +33,12 @@ public class Lightning : MonoBehaviour
         buttonActivateSkill = gameObject.GetComponent<CDSkillObject>().num + 1;
         keyCode = (KeyCode)((int)KeyCode.Alpha0 + buttonActivateSkill);
     }
-    void Update()
+    private void Update()
     {
         step -= Time.deltaTime;
+    }
+    void FixedUpdate()
+    {
         if (step <= 0 && Input.GetKeyDown(keyCode))
         {
             enemiesToShoot = new Collider2D[maxEnemiesToShoot];
@@ -92,13 +95,14 @@ public class Lightning : MonoBehaviour
 
                 if (objHealth.IsBobs == true)
                 {
-                    enemiesToShoot[i].GetComponentInChildren<Animator>().SetBool("IsHit", true);
+                    enemiesToShoot[i].GetComponent<Animator>().SetBool("IsHit", true);
                 }
                 else
                 {
                     objHealth.ChangeToKick();
                 }
                 objHealth.healthPoint -= damage * ElectricityElement.Electricity / objHealth.Electricity;
+                FindObjectOfType<StatsCollector>().FindStatName("lightDamage", damage * ElectricityElement.Electricity / objHealth.Electricity);
                 yield return new WaitForSeconds(spawnInterval);
             }
         }

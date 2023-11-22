@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Security.Policy;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements.Experimental;
 
 public class EquipItem : MonoBehaviour
 {
@@ -71,13 +68,27 @@ public class EquipItem : MonoBehaviour
                             obj.isEquipedNow = false;
                         }
                     }
-                }
 
+                }
+                SaveUpdateEquip(path, updatedList);
                 // Записуємо оновлений масив рядків в файл після завершення циклу foreach
-                string jsonContent = string.Join("\n", updatedList.ToArray());
-                string encryptedJson = hashing.Encrypt(jsonContent);
-                File.WriteAllText(path, encryptedJson);
+                //string jsonContent = string.Join("\n", updatedList.ToArray());
+                //string encryptedJson = hashing.Encrypt(jsonContent);
+                //File.WriteAllText(path, encryptedJson);
             }
+        }
+    }
+    public void SaveUpdateEquip(string path, List<string> list)
+    {
+        using (StreamWriter writer = new StreamWriter(path, false))
+        {
+            foreach (string line in list)
+            {
+                string jsonData = JsonUtility.ToJson(line);
+                string decryptedJson = hashing.Encrypt(jsonData);
+                writer.WriteLine(decryptedJson);
+            }
+            writer.Close();
 
         }
     }
@@ -101,7 +112,6 @@ public class EquipItem : MonoBehaviour
     private void SaveEquip()
     {
         string path = Path.Combine(Application.persistentDataPath, "EquipedItems.txt");
-        string decryptedJson = hashing.Encrypt(String.Empty);
-        File.WriteAllText(path, decryptedJson);
+        File.Create(path);
     }
 }

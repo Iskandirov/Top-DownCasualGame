@@ -26,11 +26,12 @@ public class RootSlower : MonoBehaviour
     }
     public void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && !collision.isTrigger)
+        if (collision.CompareTag("Player") && !collision.isTrigger && !collision.GetComponent<Move>().isUntouchible)
         {
-            if (damageDelay <= 0)
+            if (damageDelay <= 0 && !collision.CompareTag("Shield"))
             {
                 collision.GetComponent<Health>().playerHealthPoint -= damage;
+                FindObjectOfType<StatsCollector>().FindStatName("DamageTaken", damage);
                 collision.GetComponent<Health>().playerHealthPointImg.fullFillImage.fillAmount -= damage / collision.GetComponent<Health>().playerHealthPointMax;
                 collision.GetComponent<Health>().GetComponent<Animator>().SetBool("IsHit", true);
                 damageDelay = damageDelayMax;
@@ -41,7 +42,16 @@ public class RootSlower : MonoBehaviour
                 collision.GetComponent<Move>().slowdownEndTime = slowdownEndTime;
                 collision.GetComponent<Move>().slowPercent = 0.5f;
             }
-           
+
+        }
+        else if (collision.CompareTag("Shield"))
+        {
+            if (damageDelay <= 0)
+            {
+                collision.GetComponent<Shield>().healthShield -= damage;
+                FindObjectOfType<StatsCollector>().FindStatName("ShieldAbsorbedDamage", damage);
+                damageDelay = damageDelayMax;
+            }
         }
     }
 }

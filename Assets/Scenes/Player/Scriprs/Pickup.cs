@@ -19,7 +19,7 @@ public class Pickup : MonoBehaviour
                 child.GetComponent<LightOn>().IsPillUp = true;
                 child.GetComponent<LightOn>().IsPillBuffed = false;
             }
-            
+            FindObjectOfType<StatsCollector>().FindStatName("pillPickedUp", 1);
             Destroy(gameObject);
         }
     }

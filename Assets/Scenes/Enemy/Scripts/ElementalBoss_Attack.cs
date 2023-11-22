@@ -121,13 +121,15 @@ public class ElementalBoss_Attack : MonoBehaviour
             if (collidedObject != null && collidedObject.CompareTag("Shield"))
             {
                 collidedObject.healthShield -= damage;
+                FindObjectOfType<StatsCollector>().FindStatName("ShieldAbsorbedDamage", damage);
                 StartCoroutine(ReducePushForce(pushableObjectRigidbody));
             }
             else
             {
-                if (pushableObjectRigidbody != null)
+                if (pushableObjectRigidbody != null && !playerHealth.GetComponent<Move>().isUntouchible)
                 {
                     playerHealth.playerHealthPoint -= damage;
+                    FindObjectOfType<StatsCollector>().FindStatName("DamageTaken", damage);
                     playerHealth.playerHealthPointImg.fullFillImage.fillAmount -= damage / playerHealth.playerHealthPointMax;
                     playerAnim.SetBool("IsHit", true);
                     StartCoroutine(ReducePushForce(pushableObjectRigidbody));

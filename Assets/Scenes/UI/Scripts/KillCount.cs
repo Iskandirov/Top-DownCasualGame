@@ -40,16 +40,12 @@ public class KillCount : MonoBehaviour
 
             foreach (string jsonLine in lines)
             {
-                if (jsonLine.StartsWith("{"))
-                {
-                    Debug.Log(1);
-                    string decrypt = hash.Decrypt(jsonLine);
-                    SavedLocationsData data = JsonUtility.FromJson<SavedLocationsData>(decrypt);
+                string decrypt = hash.Decrypt(jsonLine);
+                SavedLocationsData data = JsonUtility.FromJson<SavedLocationsData>(decrypt);
 
-                    if (data.IDLevel == objectID)
-                    {
-                        return data.countOfCount;
-                    }
+                if (data.IDLevel == objectID)
+                {
+                    return data.countOfCount;
                 }
             }
         }

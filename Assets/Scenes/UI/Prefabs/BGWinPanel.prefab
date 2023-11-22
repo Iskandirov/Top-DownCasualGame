@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 2907159034006440499}
   - component: {fileID: 4687970876103459451}
   - component: {fileID: 838501250488227422}
+  - component: {fileID: 5965405341170688824}
   - component: {fileID: 7988197592026318049}
   m_Layer: 3
   m_Name: BGWinPanel
@@ -251,6 +252,24 @@ MonoBehaviour:
   percent: 0
   scene: 1
   isWinPanel: 1
+--- !u!114 &5965405341170688824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3513686589291930197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffda2bb28f02a54419d04e62d1959ba4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stat: []
+  statRead: []
+  name: []
+  statText: []
+  isInStatScene: 0
+  isInGame: 1
 --- !u!114 &7988197592026318049
 MonoBehaviour:
   m_ObjectHideFlags: 0

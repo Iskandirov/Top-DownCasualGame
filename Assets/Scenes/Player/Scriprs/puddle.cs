@@ -57,6 +57,7 @@ public class puddle : MonoBehaviour
                     }
                     objHealth.ChangeToKick();
                     objHealth.healthPoint -= (damage * objHealth.Electricity) / objHealth.Water * objHealth.Dirt;
+                    FindObjectOfType<StatsCollector>().FindStatName("puddleDamage", (damage * objHealth.Electricity) / objHealth.Water * objHealth.Dirt);
                 }
             }
             damageTick = damageTickMax;

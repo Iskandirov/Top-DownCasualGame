@@ -56,16 +56,16 @@ public class SnapScroll : MonoBehaviour
             
             instObjects[i] = Instantiate(panObj, transform, false);
             instObjectsLock[i] = Instantiate(instObjectsLockObj, transform.position, Quaternion.identity, transform);
-            if (instObjects[i].LoadObjectLevelCountIsFull(i + 6) == true || instObjects[i].LoadObjectLevelCount(i + 5) >= 5 && instObjects[i].LoadObjectLevelCount(i + 5) != 0)
+            if (instObjects[i].LoadObjectLevelCountIsFull(i + sceneValue[0]) == true || instObjects[i].LoadObjectLevelCount(i + sceneValue[0] - 1) == instObjects[i].LoadObjectLevelCountOfCountMax(i + sceneValue[0] - 1))
             {
                 Destroy(instObjectsLock[i]);
             }
             descriptionObjText[i] = instObjects[i].GetComponentInChildren<TagText>();
             descriptionObjImage[i] = instObjects[i].GetComponentInChildren<Slider>().GetComponentInChildren<Image>();
             instObjects[i].GetComponent<MenuController>().sceneCount = sceneValue[i];
-            if (i + 1 < descriptionImage.Length)
+            if (i < descriptionImage.Length)
             {
-                lang.FindMyComponentInChildren(descriptionObjText[i].gameObject, "description_lvl_" + (i + 1));
+                lang.FindMyComponentInChildren(descriptionObjText[i].gameObject, "description_lvl_" + i);
             }
             else
             {

@@ -40,6 +40,7 @@ public class FireWave : MonoBehaviour
                 collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isFire", true, false);
             }
             collision.GetComponent<HealthPoint>().healthPoint -= (damage * fireElement * collision.GetComponent<HealthPoint>().Water) / collision.GetComponent<HealthPoint>().Fire;
+            FindObjectOfType<StatsCollector>().FindStatName("fireWaveDamage", (damage * fireElement * collision.GetComponent<HealthPoint>().Water) / collision.GetComponent<HealthPoint>().Fire);
             collision.GetComponent<HealthPoint>().ChangeToKick();
             if (burnDamage != 0 && collision != null)
             {

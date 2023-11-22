@@ -23,9 +23,11 @@ public class HealActive : MonoBehaviour
             {
                 player.playerHealthPoint += heal * Grass;
                 player.playerHealthPointImg.fullFillImage.fillAmount += (heal * Grass) / player.playerHealthPointMax;
+                FindObjectOfType<StatsCollector>().FindStatName("healthHealed", heal * Grass);
             }
             else
             {
+                FindObjectOfType<StatsCollector>().FindStatName("healthHealed", player.playerHealthPointMax - player.playerHealthPoint);
                 player.playerHealthPoint = player.playerHealthPointMax;
                 player.playerHealthPointImg.fullFillImage.fillAmount = 1f;
             }

@@ -17,7 +17,7 @@ public class Health : MonoBehaviour
     {
         objAnim = gameObject.GetComponent<Animator>();
         playerHealthPointMax = playerHealthPoint;
-        playerHealthRegeneration = 0;
+        //playerHealthRegeneration = 0;
     }
 
     // Update is called once per frame

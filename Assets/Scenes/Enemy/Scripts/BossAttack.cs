@@ -20,6 +20,10 @@ public class BossAttack : MonoBehaviour
     public int Index = -1;
     public void Start()
     {
+        if (GetComponent<Forward>().isTutorial)
+        {
+            bulletPrefab.damage = 0;
+        }
         StartCoroutine(ToggleBoolsCoroutine());
         StartCoroutine(TimerCoroutineTypesAttack());
     }

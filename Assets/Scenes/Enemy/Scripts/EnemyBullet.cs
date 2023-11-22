@@ -45,6 +45,8 @@ public class EnemyBullet : MonoBehaviour
         if (collision.CompareTag("Shield"))
         {
             collision.GetComponent<Shield>().healthShield -= damage;
+            FindObjectOfType<StatsCollector>().FindStatName("ShieldAbsorbedDamage",damage);
+            Destroy(gameObject);
         }
         else if (collision.CompareTag("Player"))
         {
@@ -55,6 +57,7 @@ public class EnemyBullet : MonoBehaviour
                     if (!collider.isTrigger)
                     {
                         collider.GetComponent<Health>().playerHealthPoint -= damage;
+                        FindObjectOfType<StatsCollector>().FindStatName("DamageTaken", damage);
                         collider.GetComponent<Health>().playerHealthPointImg.fullFillImage.fillAmount -= damage / collision.GetComponent<Health>().playerHealthPointMax;
                         collider.GetComponent<Animator>().SetBool("IsHit", true);
                         Destroy(gameObject);

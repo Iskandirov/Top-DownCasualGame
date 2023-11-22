@@ -38,7 +38,6 @@ public class SnipetreeAttack : MonoBehaviour
 
             // Створюємо об'єкт з використанням префабу
             Instantiate(bullet, transform.position, Quaternion.identity).GetComponent<Rigidbody2D>().velocity = launchForce * new Vector2(direction.x, direction.y);
-            Debug.Log(1);
             // Запускаємо об'єкт в заданому напрямку
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
             rb.AddForce(direction.normalized * launchForce, ForceMode2D.Impulse);

@@ -112,18 +112,22 @@ public class ElementalBoss_Fist_Attack : MonoBehaviour
             if (collidedObject != null && collidedObject.CompareTag("Shield"))
             {
                 collidedObject.healthShield -= damage;
+                FindObjectOfType<StatsCollector>().FindStatName("ShieldAbsorbedDamage", damage);
                 StartCoroutine(ReducePushForce(pushableObjectRigidbody));
                 if (collidedObject.isThreeLevel)
                 {
                     childrenHealth.healthPoint -= damage / 2;
+                    FindObjectOfType<StatsCollector>().FindStatName("ShieldAbsorbedDamage", damage / 2);
                 }
+                
             }
             else
             {
                 // Handle collision with other objects
-                if (pushableObjectRigidbody != null)
+                if (pushableObjectRigidbody != null && !playerHealth.GetComponent<Move>().isUntouchible)
                 {
                     playerHealth.playerHealthPoint -= damage;
+                    FindObjectOfType<StatsCollector>().FindStatName("DamageTaken", damage);
                     playerHealth.playerHealthPointImg.fullFillImage.fillAmount -= damage / playerHealth.playerHealthPointMax;
                     playerAnim.SetBool("IsHit", true);
                     StartCoroutine(ReducePushForce(pushableObjectRigidbody));

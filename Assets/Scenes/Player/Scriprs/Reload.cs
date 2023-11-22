@@ -22,6 +22,7 @@ public class Reload : MonoBehaviour
                 spellsObj[i].valueFieldStep.SetValue(spellsObj[i].monoStep, 0.01f + y / 100);
             }
         }
+        FindObjectOfType<StatsCollector>().FindStatName("skillsReloaded", 1);
         StartCoroutine(TimerSpell());
     }
 

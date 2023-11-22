@@ -23,6 +23,7 @@ public class BobmExplode : MonoBehaviour
             if (collider.CompareTag("Enemy"))
             {
                     collider.GetComponent<HealthPoint>().healthPoint -= damage * fire;
+                FindObjectOfType<StatsCollector>().FindStatName("bombDamage", damage * fire);
                     collider.GetComponent<HealthPoint>().ChangeToKick();
             }
             else if (collider.CompareTag("Barrel") && collider != null)

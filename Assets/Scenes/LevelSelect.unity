@@ -294,27 +294,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levels:
-  - IDLevel: 6
-    countOfCount: 0
-    countOfCountMax: 5
-    percent: 0
-    isFullDone: 1
   - IDLevel: 7
     countOfCount: 0
-    countOfCountMax: 5
+    countOfCountMax: 1
     percent: 0
-    isFullDone: 0
+    isUnlocke: 1
   - IDLevel: 8
     countOfCount: 0
     countOfCountMax: 5
     percent: 0
-    isFullDone: 0
+    isUnlocke: 0
+  - IDLevel: 9
+    countOfCount: 0
+    countOfCountMax: 5
+    percent: 0
+    isUnlocke: 0
+  - IDLevel: 10
+    countOfCount: 0
+    countOfCountMax: 5
+    percent: 0
+    isUnlocke: 0
   - IDLevel: 999
     countOfCount: 0
     countOfCountMax: 0
     percent: 0
-    isFullDone: 0
+    isUnlocke: 0
   levelsRead: []
+  hashing: {fileID: 0}
 --- !u!114 &202413667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -844,7 +850,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 13c2a6d0204f31045b243290972bc167, type: 3}
   - {fileID: 21300000, guid: 13c2a6d0204f31045b243290972bc167, type: 3}
   - {fileID: 21300000, guid: 13c2a6d0204f31045b243290972bc167, type: 3}
-  sceneValue: 060000000700000008000000e7030000
+  - {fileID: 21300000, guid: 13c2a6d0204f31045b243290972bc167, type: 3}
+  sceneValue: 0700000008000000090000000a000000e7030000
   descriptionObjText: []
   descriptionObjImage: []
   lang: {fileID: 202413664}

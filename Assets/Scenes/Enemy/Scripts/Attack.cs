@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,20 +16,23 @@ public class Attack : MonoBehaviour
     public GameObject attackVFXRange;
     public GameObject attackVFXRangePos;
     GameObject objVFX;
-    Health objectToHit;
+    GameObject objectToHit;
 
     Forward objMove;
     Animator objAnim;
     // Start is called before the first frame update
     void Start()
     {
-        if (FindObjectOfType<KillCount>().LoadObjectLevelCount(SceneManager.GetActiveScene().buildIndex) > 0)
-        {
-            damageMax += FindObjectOfType<KillCount>().LoadObjectLevelCount(SceneManager.GetActiveScene().buildIndex) + damageMax * 0.3f;
-        }
+
         objMove = GetComponent<Forward>();
         objAnim = GetComponent<Animator>();
-
+        if (!objMove.isTutorial)
+        {
+            if (FindObjectOfType<KillCount>().LoadObjectLevelCount(SceneManager.GetActiveScene().buildIndex) > 0)
+            {
+                damageMax += FindObjectOfType<KillCount>().LoadObjectLevelCount(SceneManager.GetActiveScene().buildIndex) * 1.3f;
+            }
+        }
     }
 
     // Update is called once per frame
@@ -52,8 +56,10 @@ public class Attack : MonoBehaviour
             if (collision.collider.CompareTag("Shield") && isAttack == false)
             {
                 objAnim.SetBool("IsHit", true);
+                objectToHit = collision.gameObject;
                 objMove.speed = 0;
                 collision.collider.GetComponent<Shield>().healthShield -= damage;
+                FindObjectOfType<StatsCollector>().FindStatName("ShieldAbsorbedDamage", damage);
                 isAttack = true;
                 if (collision.collider.GetComponent<Shield>().isThreeLevel)
                 {
@@ -72,7 +78,7 @@ public class Attack : MonoBehaviour
                     {
                         objMove.speed = 0;
                         objAnim.SetBool("IsHit", true);
-                        //objectToHit = collision.collider.GetComponent<Health>();
+                        objectToHit = collision.gameObject;
                         Instantiate(attackVFX, gameObject.transform.position, Quaternion.identity);
                         isAttack = true;
                     }
@@ -104,10 +110,10 @@ public class Attack : MonoBehaviour
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
-        //if (collision.collider.CompareTag("Player"))
-        //{
-        //    objectToHit = null;
-        //}
+        if (collision.collider.CompareTag("Player"))
+        {
+            objectToHit = null;
+        }
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -119,7 +125,7 @@ public class Attack : MonoBehaviour
                 {
                     if (!isRange)
                     {
-                        objectToHit = collision.GetComponent<Health>();
+                        objectToHit = collision.gameObject;
                     }
                 }
             }
@@ -143,9 +149,27 @@ public class Attack : MonoBehaviour
         {
             if (objectToHit.GetComponent<Animator>() && !objMove.isSummoned)
             {
-                objectToHit.GetComponent<Animator>().SetBool("IsHit", true);
-                objectToHit.playerHealthPoint -= damage;
-                objectToHit.playerHealthPointImg.fullFillImage.fillAmount -= damage / objectToHit.playerHealthPointMax;
+                if (objectToHit.GetComponent<Health>() != null && objectToHit.GetComponent<Move>().isInvincible == false)
+                {
+                    if (!objectToHit.GetComponent<Move>().isUntouchible)
+                    {
+                        objectToHit.GetComponent<Animator>().SetBool("IsHit", true);
+                        objectToHit.GetComponent<Health>().playerHealthPoint -= damage;
+                        FindObjectOfType<StatsCollector>().FindStatName("DamageTaken", damage);
+                        objectToHit.GetComponent<Health>().playerHealthPointImg.fullFillImage.fillAmount -= damage / objectToHit.GetComponent<Health>().playerHealthPointMax;
+                    }
+                }
+                else if (objectToHit.GetComponent<Shield>() != null)
+                {
+                    objectToHit.GetComponent<Shield>().healthShield -= damage;
+                    FindObjectOfType<StatsCollector>().FindStatName("ShieldAbsorbedDamage", damage);
+                }
+                else if (objectToHit.GetComponent<HealthPoint>() != null)
+                {
+                    objectToHit.GetComponent<HealthPoint>().healthPoint -= damage;
+                    FindObjectOfType<StatsCollector>().FindStatName("bulletDamage", damage);
+                }
+               
             }
         }
     }

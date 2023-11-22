@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Policy;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,7 +10,6 @@ public class FieldSlots : MonoBehaviour
     public SetParametersToitem objToCraft;
     public Button childrenBtn;
     public LoadItemData data;
-    char removeLevel;
     public int price;
     public int priceStart;
     public TextMeshProUGUI priceTxt;
@@ -36,7 +36,7 @@ public class FieldSlots : MonoBehaviour
 
         int coinT = int.Parse(coinsTxt.text);
 
-        if (count > 3 && price <= coinT)
+        if (count >= 3 && price <= coinT)
         {
             childrenBtn.interactable = true;
         }
@@ -54,43 +54,15 @@ public class FieldSlots : MonoBehaviour
             string path = Path.Combine(Application.persistentDataPath, "savedData.txt");
             if (File.Exists(path))
             {
-                //Видалення обєктів з яких крафтять
                 string[] lines = File.ReadAllLines(path);
-                List<string> updatedLines = new List<string>();
-                int index = 0;
+                List<SavedObjectData> updatedLines = new List<SavedObjectData>();
+                // Створюємо новий об'єкт SavedObjectData
                 foreach (string line in lines)
                 {
                     string decrypt = hashing.Decrypt(line);
                     SavedObjectData data = JsonUtility.FromJson<SavedObjectData>(decrypt);
-                    if (index < 3)
-                    {
-                        if (data.Name + " " + data.Level != remove)
-                        {
-                            updatedLines.Add(line);
-                        }
-                        else
-                        {
-                            index++;
-                            removeLevel = objToCraft.level[objToCraft.level.Length - 1];
-                        }
-                    }
-                    else
-                    {
-                        updatedLines.Add(line);
-                        remove = "";
-                    }
-                }
-                // Записуємо оновлений масив рядків в файл
-                string jsonContent = string.Join("\n", updatedLines.ToArray());
-                string decryptedJson = hashing.Encrypt(jsonContent);
-                File.WriteAllText(path, decryptedJson);
-                //Створення нового обєкту
-                // Створюємо новий об'єкт SavedObjectData
-                foreach (string line in lines)
-                {
-                    SavedObjectData data = JsonUtility.FromJson<SavedObjectData>(line);
 
-                    if (data.Name + " " + data.Level == removeCopy && removeLevel.ToString() == data.Level.ToString())
+                    if (data.Name + " " + data.Level == removeCopy && objToCraft.level[objToCraft.level.Length - 1].ToString() == data.Level.ToString())
                     {
                         SavedObjectData newItem = new SavedObjectData();
                         newItem.Name = data.Name;
@@ -103,20 +75,88 @@ public class FieldSlots : MonoBehaviour
                         int statCount = int.Parse(data.Stat);
                         statCount *= 2;
                         newItem.Stat = statCount.ToString();
-                        // Конвертуємо об'єкт в рядок JSON
-                        string newLine = JsonUtility.ToJson(newItem);
-                        // Додаємо новий рядок до кінця файлу
-                        string encryptedJson = hashing.Encrypt(newLine);
-                        File.AppendAllText(path, encryptedJson + "\n");
+
+                        updatedLines.Add(newItem);
+                        //using (StreamWriter writer = new StreamWriter(path, true))
+                        //{
+                        //    string jsonData = JsonUtility.ToJson(newItem);
+                        //    // Шифруємо дані перед записом у файл
+                        //    string encryptedJson = hashing.Encrypt(jsonData);
+                        //    writer.Write(encryptedJson);
+                        //    writer.Close();
+                        //}
                         break;
                     }
                 }
+                //Видалення обєктів з яких крафтять
+                int index = 0;
+                foreach (string line in lines)
+                {
+                    string decrypt = hashing.Decrypt(line);
+                    SavedObjectData data = JsonUtility.FromJson<SavedObjectData>(decrypt);
+                    if (index < 3)
+                    {
+                        if (data.Name + " " + data.Level != remove)
+                        {
+                            updatedLines.Add(data);
+                        }
+                        else
+                        {
+                            index++;
+                        }
+                    }
+                    else
+                    {
+                        updatedLines.Add(data);
+                    }
+                }
+                using (StreamWriter writer = new StreamWriter(path, false))
+                {
+                    foreach (SavedObjectData line in updatedLines)
+                    {
+                        string jsonData = JsonUtility.ToJson(line);
+                        string decryptedJson = hashing.Encrypt(jsonData);
+                        writer.WriteLine(decryptedJson);
+                    }
+                    writer.Close();
 
+                }
+
+                EquipedStillHere();
                 data.CleanList();
                 data.LoadItems();
                 objScore.score -= price;
                 objScore.SaveScore((int)objScore.score, false);
                 coinsTxt.text = objScore.score.ToString();
+            }
+        }
+    }
+    public void EquipedStillHere()
+    {
+        string path = Path.Combine(Application.persistentDataPath, "EquipedItems.txt");
+        string fileName = Path.Combine(Application.persistentDataPath, "savedData.txt");
+        if (File.Exists(path))
+        {
+            if (File.Exists(fileName))
+            {
+                List<string> count = new List<string>();
+                string[] jsonLines = File.ReadAllLines(fileName);
+                string[] jsonData = File.ReadAllLines(path);
+                foreach (var dataLine in jsonLines)
+                {
+                    string decryptData = hashing.Decrypt(dataLine);
+                    SavedObjectData dataObj = JsonUtility.FromJson<SavedObjectData>(decryptData);
+                    foreach (string jsonLine in jsonData)
+                    {
+                        string decrypt = hashing.Decrypt(jsonLine);
+                        SavedEquipData data = JsonUtility.FromJson<SavedEquipData>(decrypt);
+                        if (data.Name == dataObj.Name && data.Level == dataObj.Level)
+                        {
+                            count.Add(jsonLine);
+                        }
+                    }
+                }
+                FindObjectOfType<EquipItem>().SaveUpdateEquip(path, count);
             }
         }
     }

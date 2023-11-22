@@ -8,10 +8,9 @@ public class Timer : MonoBehaviour
     public float timeToWin;
     public GameObject WinPanel;
     public GameObject WinPanelParent;
-    public bool isShowed;
     TextMeshProUGUI text;
     Move PanelChecker;
-    public bool isBossDefeated;
+    public bool isDropLooted;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +23,7 @@ public class Timer : MonoBehaviour
         yield return new WaitForSeconds(timeToWin);
 
         // Корутина чекає на виконання умови
-        while (!isBossDefeated)
+        while (!isDropLooted)
         {
             yield return null;
         }

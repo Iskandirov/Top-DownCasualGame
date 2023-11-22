@@ -6,20 +6,22 @@ using UnityEngine;
 public class SniperTreeBullet : MonoBehaviour
 {
     public float damage;
-    public string[] targetPrefabNames;
-   
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        foreach (string targetPrefabName in targetPrefabNames)
+        if (collision.CompareTag("Player") && !collision.isTrigger && !collision.GetComponent<Move>().isUntouchible)
         {
-            Debug.Log(2);
-            if (collision.gameObject.name == targetPrefabName && !collision.isTrigger)
-            {
-                collision.GetComponent<Health>().playerHealthPoint -= damage;
-                collision.GetComponent<Health>().playerHealthPointImg.fullFillImage.fillAmount -= damage / collision.GetComponent<Health>().playerHealthPointMax;
-                collision.GetComponent<Animator>().SetBool("IsHit", true);
-                Destroy(gameObject);
-            }
+            collision.GetComponent<Health>().playerHealthPoint -= damage;
+            FindObjectOfType<StatsCollector>().FindStatName("DamageTaken", damage);
+            collision.GetComponent<Health>().playerHealthPointImg.fullFillImage.fillAmount -= damage / collision.GetComponent<Health>().playerHealthPointMax;
+            collision.GetComponent<Animator>().SetBool("IsHit", true);
+            Destroy(gameObject);
+        }
+        else if (collision.CompareTag("Shield"))
+        {
+            collision.GetComponent<Shield>().healthShield -= damage;
+            FindObjectOfType<StatsCollector>().FindStatName("ShieldAbsorbedDamage", damage);
+            Destroy(gameObject);
         }
     }
 }

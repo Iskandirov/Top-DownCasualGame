@@ -30,12 +30,22 @@ public class Tornado_Attack_Lightning : MonoBehaviour
             foreach (var obj in spawnedObjects)
             {
                 bool playerInZone = Physics2D.OverlapCircle(obj.transform.position, 1, LayerMask.GetMask("Player"));
+                Collider2D ShieldIsActive = Physics2D.OverlapCircle(obj.transform.position, 1, LayerMask.GetMask("PlayerIgnore"));
                 if (playerInZone)
                 {
-
-                    player.playerHealthPoint -= damage;
-                    player.playerHealthPointImg.fullFillImage.fillAmount -= damage / player.playerHealthPointMax;
-                    player.GetComponent<Animator>().SetBool("IsHit", true);
+                    if (ShieldIsActive.CompareTag("Shield"))
+                    {
+                        ShieldIsActive.GetComponent<Shield>().healthShield -= damage;
+                        FindObjectOfType<StatsCollector>().FindStatName("ShieldAbsorbedDamage", damage);
+                    }
+                    else if(!player.GetComponent<Move>().isUntouchible)
+                    {
+                        player.playerHealthPoint -= damage;
+                        FindObjectOfType<StatsCollector>().FindStatName("DamageTaken", damage);
+                        player.playerHealthPointImg.fullFillImage.fillAmount -= damage / player.playerHealthPointMax;
+                        player.GetComponent<Animator>().SetBool("IsHit", true);
+                    }
+                   
                 }
 
                 Vector3 spawnPosition = obj.transform.position;

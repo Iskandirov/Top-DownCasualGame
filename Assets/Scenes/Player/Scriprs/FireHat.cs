@@ -6,6 +6,7 @@ public class FireHat : MonoBehaviour
 {
     public List<Sprite> fireSprites;
     public SpriteRenderer currentSprite;
+    public float delay = 0.1f;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +25,7 @@ public class FireHat : MonoBehaviour
                 i = 0;
             }
 
-            yield return new WaitForSeconds(0.1f); // Затримка між кадрами
+            yield return new WaitForSeconds(delay); // Затримка між кадрами
         }
     }
 }

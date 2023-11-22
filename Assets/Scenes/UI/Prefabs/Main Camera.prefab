@@ -20,7 +20,9 @@ GameObject:
   - component: {fileID: 1861729291711384211}
   - component: {fileID: 6943899697868481301}
   - component: {fileID: 3628101895064370510}
-  m_Layer: 3
+  - component: {fileID: 3430823387385377409}
+  - component: {fileID: 2901395585524746314}
+  m_Layer: 11
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -66,7 +68,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.001
-  far clip plane: 28.82
+  far clip plane: 116.9
   field of view: 60
   orthographic: 1
   orthographic size: 37
@@ -164,7 +166,9 @@ MonoBehaviour:
   IsSettingsPage: 0
   volume: 0
   vSync: 0
+  music: {fileID: 0}
   hashing: {fileID: 6943899697868481301}
+  nameClip: GameTheme
 --- !u!114 &6416895844494761421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -441,3 +445,33 @@ MonoBehaviour:
   InfoStatHealtPanel: {fileID: 0}
   InfoStatDamagePanel: {fileID: 0}
   InfoStatMoveSpeedPanel: {fileID: 0}
+--- !u!114 &3430823387385377409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6416895844494761269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea797a2f9e7d6014e81b22ab50b3a5b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characters: []
+  charactersRead: []
+  info: []
+  isShopingScene: 0
+  hashing: {fileID: 6943899697868481301}
+--- !u!114 &2901395585524746314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6416895844494761269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9967870a5b847954097c91e163bc7885, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statRead: []

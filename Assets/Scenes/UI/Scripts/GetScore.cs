@@ -25,11 +25,15 @@ public class GetScore : MonoBehaviour
             if (float.TryParse(timeEnd.text, out float result))
             {
                 // ¬дале перетворенн€
-                score = (FindObjectOfType<KillCount>().score + 1) * Mathf.Pow(1 + (0.05f * result), 1.1f);
+                score = (FindObjectOfType<KillCount>().score + 1) * Mathf.Pow(1 + (0.05f * result), 1.1f) + 1;
                 percent = Mathf.RoundToInt((result / objTimer.timeToWin) * 100);
-                if (percent > 100)
+                if (percent > 100 && isWinPanel)
                 {
                     percent = 100;
+                }
+                else
+                {
+                    percent = 99;
                 }
                 percentEnd.text = percent.ToString("0.") + "%";
             }
@@ -45,6 +49,13 @@ public class GetScore : MonoBehaviour
         {
             score += LoadScore();
             scoreEnd.text = score.ToString("0.");
+        }
+        if (FindObjectOfType<Tutor>() != null)
+        {
+            percent = 100;
+            score = 1500;
+            scoreEnd.text = score.ToString("0.");
+            score += LoadScore();
         }
     }
     void Start()
@@ -86,7 +97,7 @@ public class GetScore : MonoBehaviour
 
         if (File.Exists(path))
         {
-            using (StreamWriter writer = new StreamWriter(path))
+            using (StreamWriter writer = new StreamWriter(path,false))
             {
                 SavedEconomyData data = new SavedEconomyData();
                 data.money = money;
@@ -94,57 +105,64 @@ public class GetScore : MonoBehaviour
 
                 // ЎифруЇмо дан≥ перед записом у файл
                 string encryptedJson = hash.Encrypt(jsonData);
-
                 // «ам≥н€Їмо WriteLine на Write
                 writer.Write(encryptedJson);
                 writer.Close();
             }
         }
 
-        // якщо гра зак≥нчилас€ усп≥шно, оновлюЇмо дан≥ про пройден≥ р≥вн≥
-        if (isInGame && isWinPanel)
-        {
-            string pathLocations = Path.Combine(Application.persistentDataPath, "Levels.txt");
+        //// якщо гра зак≥нчилас€ усп≥шно, оновлюЇмо дан≥ про пройден≥ р≥вн≥
+        //if (isInGame && isWinPanel)
+        //{
+        //    string pathLocations = Path.Combine(Application.persistentDataPath, "Levels.txt");
 
-            try
-            {
-                // «читуЇмо вм≥ст файлу
-                string[] lines = File.ReadAllLines(pathLocations);
+        //    try
+        //    {
+        //        // «читуЇмо вм≥ст файлу
+        //        string[] lines = File.ReadAllLines(pathLocations);
 
-                // ќновлюЇмо значенн€ дл€ певного id (наприклад, id = 1)
-                int targetId = SceneManager.GetActiveScene().buildIndex;
-                for (int i = 0; i < lines.Length; i++)
-                {
-                    string decrypt = hash.Decrypt(lines[i]);
-                    SavedLocationsData dataLocations = JsonUtility.FromJson<SavedLocationsData>(decrypt);
-                    if (dataLocations.IDLevel == targetId && dataLocations.countOfCount < 5)
-                    {
-                        dataLocations.countOfCount += 1;
-                        lines[i] = JsonUtility.ToJson(dataLocations);
-                        break; // якщо знайдено в≥дпов≥дне id, виходимо з циклу
-                    }
-                }
-
-                // “епер шифруЇмо та збер≥гаЇмо зм≥нен≥ дан≥
-                string jsonContent = string.Join("\n", lines);
-                string encryptedJson = hash.Encrypt(jsonContent);
-                File.WriteAllText(pathLocations, encryptedJson);
-            }
-            catch (IOException e)
-            {
-                Debug.LogError("Error writing to file: " + e.Message);
-            }
-        }
+        //        // ќновлюЇмо значенн€ дл€ певного id (наприклад, id = 1)
+        //        int targetId = SceneManager.GetActiveScene().buildIndex;
+        //        for (int i = 0; i < lines.Length; i++)
+        //        {
+        //            string decrypt = hash.Decrypt(lines[i]);
+        //            SavedLocationsData dataLocations = JsonUtility.FromJson<SavedLocationsData>(decrypt);
+        //            if (dataLocations.IDLevel == targetId && dataLocations.countOfCount < dataLocations.countOfCountMax)
+        //            {
+        //                dataLocations.countOfCount += 1;
+        //                lines[i] = JsonUtility.ToJson(dataLocations);
+        //                break; // якщо знайдено в≥дпов≥дне id, виходимо з циклу
+        //            }
+        //        }
+        //        using (StreamWriter writer = new StreamWriter(pathLocations, false))
+        //        {
+        //            foreach (string item in lines)
+        //            {
+        //                string jsonData = JsonUtility.ToJson(item);
+        //                string decryptedJson = hash.Encrypt(jsonData);
+        //                writer.WriteLine(decryptedJson);
+        //            }
+        //            writer.Close();
+        //        }
+        //    }
+        //    catch (IOException e)
+        //    {
+        //        Debug.LogError("Error writing to file: " + e.Message);
+        //    }
+        //}
     }
     public void SaveScore()
     {
         string path = Path.Combine(Application.persistentDataPath, "Economy.txt");
-
         SavedEconomyData data = new SavedEconomyData();
 
-        string jsonData = JsonUtility.ToJson(data);
-        string decryptedJson = hash.Encrypt(jsonData);
-        File.WriteAllText(path, decryptedJson);
+        using (StreamWriter writer = new StreamWriter(path, false))
+        {
+            string jsonData = JsonUtility.ToJson(data);
+            string decryptedJson = hash.Encrypt(jsonData);
+            writer.WriteLine(decryptedJson);
+            writer.Close();
+        }
     }
 
 }
