@@ -741,9 +741,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  stepKick: 0.2
-  stepKickMax: 0.2
-  isKick: 0
   healthPoint: 0
   healthPointMax: 75
   expiriancePoint: {fileID: 1551125564601968996, guid: 011bcb717f1c7644cbb13f13f798cecd, type: 3}
@@ -1040,13 +1037,11 @@ MonoBehaviour:
   player: {fileID: 0}
   enemy: {fileID: 0}
   Body: {fileID: 6384565066757689954}
-  speed: 0
   speedMax: 7.5
   isStunned: 0
   stunnTime: 0.5
   stunnTimeMax: 0.5
   isFly: 0
-  isShooted: 0
   isSummoned: 0
   enemyFinded: 0
   protectPlayer: 0
@@ -1058,7 +1053,9 @@ MonoBehaviour:
   isChaising: 0
   acceleration: 0.1
   angle: 0
+  path: {fileID: 0}
   isTutorial: 0
+  moveSlowTime: 0
 --- !u!50 &6384565066757689954
 Rigidbody2D:
   serializedVersion: 4
@@ -1103,6 +1100,7 @@ MonoBehaviour:
   attackVFX: {fileID: 3700339383819410429, guid: 3aaf368aef297c948adb82f462f67f26, type: 3}
   attackVFXRange: {fileID: 1862192592940579735, guid: 7405436fb4dd2144cb6f44c50387d14b, type: 3}
   attackVFXRangePos: {fileID: 3143382399371462002}
+  objectToHit: {fileID: 0}
 --- !u!95 &8315049834056483339
 Animator:
   serializedVersion: 4

@@ -1,6 +1,22 @@
-using UnityEngine.Audio;
 using UnityEngine;
 using System;
+[Serializable]
+public class Sounds
+{
+    public string name;
+
+    public AudioClip clip;
+
+    [Range(0f, 1f)]
+    public float volume;
+    [Range(0.1f, 3f)]
+    public float pitch;
+
+    public bool loop;
+
+    [HideInInspector]
+    public AudioSource source;
+}
 
 public class AudioManager : MonoBehaviour
 {
@@ -11,8 +27,7 @@ public class AudioManager : MonoBehaviour
     public string nameClip;
 
     public static AudioManager instance;
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         if (instance == null)
             instance = this;
@@ -22,6 +37,11 @@ public class AudioManager : MonoBehaviour
             return;
         }
         DontDestroyOnLoad(this);
+    }
+    // Start is called before the first frame update
+    void Start()
+    {
+        
         foreach (Sounds s in sounds)
         {
             s.volume = volume;
@@ -34,8 +54,20 @@ public class AudioManager : MonoBehaviour
         }
         Play(nameClip);
     }
+    public void ChangeVolume(float volume)
+    {
+        foreach (Sounds s in sounds)
+        {
+            s.volume = volume;
+            s.source.volume = volume;
+        }
+    }
     public void Play(string name)
     {
+        foreach (var sound in sounds)
+        {
+            sound.source.Stop();
+        }
         Sounds s = Array.Find(sounds, sound => sound.name == name);
         if (s == null)
         {
@@ -43,15 +75,5 @@ public class AudioManager : MonoBehaviour
             return;
         }
         s.source.Play();
-    } 
-    public void Stop(string name)
-    {
-        Sounds s = Array.Find(sounds, sound => sound.name == name);
-        if (s == null)
-        {
-            Debug.LogWarning("Sound: " + name + " does not exist");
-            return;
-        }
-        s.source.Stop();
     }
 }

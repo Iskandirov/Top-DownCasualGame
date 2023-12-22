@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Security.Cryptography;
 using UnityEngine;
-
+[DefaultExecutionOrder(1)]
 public class DataHashing : MonoBehaviour
 {
     public const string salt = "EYM0fe6oFNNWKP0Px0AR9wtCYKZ0O1Z/";
@@ -11,8 +11,11 @@ public class DataHashing : MonoBehaviour
     private byte[] key = new byte[] { 177, 81, 67, 77, 68, 206, 244, 209, 83, 148, 41, 64, 149, 18, 127, 103, 226, 58, 50, 239, 153, 20, 180, 142, 26, 3, 2, 87, 164, 193, 124, 109 };
     [SerializeField]
     private byte[] iv = new byte[] { 110, 125, 20, 142, 213, 74, 192, 89, 133, 178, 187, 217, 0, 16, 115, 103, 226, 58, 50, 239, 153, 20, 180, 142, 26, 3, 2, 87, 164, 193, 124, 109 };
-
-
+    public static DataHashing inst;
+    private void Awake()
+    {
+        inst ??= this;
+    }
     public string GenerateRandomKey(int keyLength)
     {
         using (RNGCryptoServiceProvider rngCryptoServiceProvider = new RNGCryptoServiceProvider())

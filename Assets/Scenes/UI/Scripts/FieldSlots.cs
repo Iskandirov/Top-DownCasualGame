@@ -126,7 +126,7 @@ public class FieldSlots : MonoBehaviour
                 data.CleanList();
                 data.LoadItems();
                 objScore.score -= price;
-                objScore.SaveScore((int)objScore.score, false);
+                objScore.SaveScore((int)objScore.score);
                 coinsTxt.text = objScore.score.ToString();
             }
         }
@@ -139,7 +139,7 @@ public class FieldSlots : MonoBehaviour
         {
             if (File.Exists(fileName))
             {
-                List<string> count = new List<string>();
+                List<SavedEquipData> count = new List<SavedEquipData>();
                 string[] jsonLines = File.ReadAllLines(fileName);
                 string[] jsonData = File.ReadAllLines(path);
                 foreach (var dataLine in jsonLines)
@@ -152,7 +152,7 @@ public class FieldSlots : MonoBehaviour
                         SavedEquipData data = JsonUtility.FromJson<SavedEquipData>(decrypt);
                         if (data.Name == dataObj.Name && data.Level == dataObj.Level)
                         {
-                            count.Add(jsonLine);
+                            count.Add(data);
                         }
                     }
                 }

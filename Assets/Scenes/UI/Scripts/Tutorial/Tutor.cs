@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
-
+[DefaultExecutionOrder(10)]
 public class Tutor : MonoBehaviour
 {
     public int phase = 0;
@@ -19,15 +19,14 @@ public class Tutor : MonoBehaviour
     public Animator parentPhase3;
     public TextAppear text;
     public bool[] isPressed = new bool[4];
-    public Move playerMove;
     public Light2D playerLight;
-
+    public PlayerManager player;
     // Start is called before the first frame update
     void Start()
     {
+        player = PlayerManager.instance;
         text = FindObjectOfType<TextAppear>();
-        playerMove = FindObjectOfType<Move>();
-        playerMove.enabled = false;
+        BlockMoveAndShoot();
     }
     public IEnumerator TurnOn()
     {
@@ -49,7 +48,7 @@ public class Tutor : MonoBehaviour
         if (phase == 0 && text.anim.GetBool("FadeOut") == true)
         {
             StartCoroutine(TurnOn());
-            playerMove.enabled = true;
+            MoveOn();
             if (Input.GetKeyDown(KeyCode.W))
             {
                 if (!isPressed[0])
@@ -90,18 +89,18 @@ public class Tutor : MonoBehaviour
             {
                 parentPhase1.SetBool("IsFadeOut", true);
                 PhasePlus();
-                playerMove.rb.velocity = Vector3.zero;
+                BlockMoveAndShoot();
             }
         }
         if (phase == 1)
         {
-            playerMove.enabled = false;
-            playerMove.rb.velocity = Vector3.zero;
+            player.enabled = false;
         }
         if (phase == 3)
         {
             if (parentPhase2 != null)
             {
+                BlockMoveAndShoot();
                 parentPhase2.SetBool("IsFadeOut", true);
             }
             if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -109,26 +108,15 @@ public class Tutor : MonoBehaviour
                 ShiftLight.color = FinalColor;
                 parentPhase3.SetBool("IsFadeOut", true);
                 PhasePlus();
-                Invoke("StopDash", 0.3f);
-                text.isShooting = false;
-                playerMove.GetComponent<Shoot>().enabled = false;
+                Invoke("BlockMoveAndShoo", 0.3f);
             }
         }
     }
-    public void StopDash()
+    public void BlockMoveAndShoot()
     {
-        playerMove.rb.velocity = Vector3.zero;
-        playerMove.enabled = false;
-
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player") && !collision.isTrigger)
-        {
-            playerMove.enabled = false;
-            playerMove.rb.velocity = Vector3.zero;
-            CutsceneManager.Instance.StartCutscene("EnemyShow");
-        }
+        player.enabled = false;
+        text.isShooting = false;
+        player.rb.velocity = Vector3.zero;
     }
     public void PhasePlus()
     {
@@ -140,7 +128,9 @@ public class Tutor : MonoBehaviour
     }
     public void MoveOn()
     {
-        playerMove.enabled = true;
+        player.enabled = true;
+        text.isShooting = true;
+        player.rb.velocity = Vector3.zero;
     }
     public void Destroy()
     {

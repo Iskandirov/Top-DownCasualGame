@@ -39,10 +39,11 @@ public class SnapScroll : MonoBehaviour
     public TagText[] descriptionObjText;
     public Image[] descriptionObjImage;
 
-    public SetLanguage lang;
+    public GameManager gameManager;
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = GameManager.Instance;
         List<GameObject> list = new List<GameObject>();
         contentRect = GetComponent<RectTransform>();
         instObjects = new FillLevelInfo[descriptionImage.Length];
@@ -56,7 +57,10 @@ public class SnapScroll : MonoBehaviour
             
             instObjects[i] = Instantiate(panObj, transform, false);
             instObjectsLock[i] = Instantiate(instObjectsLockObj, transform.position, Quaternion.identity, transform);
-            if (instObjects[i].LoadObjectLevelCountIsFull(i + sceneValue[0]) == true || instObjects[i].LoadObjectLevelCount(i + sceneValue[0] - 1) == instObjects[i].LoadObjectLevelCountOfCountMax(i + sceneValue[0] - 1))
+            if (instObjects[i].LoadObjectLevelCountIsFull(i + sceneValue[0]) == true 
+                && instObjects[i].LoadObjectLevelCount(i + sceneValue[0]) != instObjects[i].LoadObjectLevelCountOfCountMax(i + sceneValue[0]) 
+                || instObjects[i].LoadObjectLevelCount(i + sceneValue[0] - 1) == instObjects[i].LoadObjectLevelCountOfCountMax(i + sceneValue[0] - 1)
+                && instObjects[i].LoadObjectLevelCount(i + sceneValue[0]) != instObjects[i].LoadObjectLevelCountOfCountMax(i + sceneValue[0]))
             {
                 Destroy(instObjectsLock[i]);
             }
@@ -65,11 +69,11 @@ public class SnapScroll : MonoBehaviour
             instObjects[i].GetComponent<MenuController>().sceneCount = sceneValue[i];
             if (i < descriptionImage.Length)
             {
-                lang.FindMyComponentInChildren(descriptionObjText[i].gameObject, "description_lvl_" + i);
+                gameManager.FindMyComponentInChildren(descriptionObjText[i].gameObject, "description_lvl_" + i);
             }
             else
             {
-                lang.FindMyComponentInChildren(descriptionObjText[i].gameObject, "description_lvl_last");
+                gameManager.FindMyComponentInChildren(descriptionObjText[i].gameObject, "description_lvl_last");
             }
             if (descriptionObjText[i].gameObject.GetComponent<TagText>())
             {
@@ -90,9 +94,8 @@ public class SnapScroll : MonoBehaviour
            
             instObjectsPosition[i] = -instObjects[i].transform.localPosition;
         }
-        lang.settings.UpdateText(list);
+        gameManager.UpdateText(list);
     }
-
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -120,7 +123,7 @@ public class SnapScroll : MonoBehaviour
                 instObjectsLock[i].transform.localScale = instObjectsScale[i];
             }
         }
-            float scrollVelocity = Mathf.Abs(scrollRect.velocity.x);
+        float scrollVelocity = Mathf.Abs(scrollRect.velocity.x);
         if (scrollVelocity < 400 && !isScrolling) 
         {
             scrollRect.inertia= false;

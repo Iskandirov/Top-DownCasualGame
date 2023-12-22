@@ -7,7 +7,7 @@ using UnityEngine;
 public class EquipItem : MonoBehaviour
 {
     SavedEquipData equipedItenms;
-    public List<string> updatedList;
+    public List<SavedEquipData> updatedList;
     DataHashing hashing;
     // Start is called before the first frame update
     void Start()
@@ -20,7 +20,7 @@ public class EquipItem : MonoBehaviour
             SaveEquip();
         }
 
-        updatedList = new List<string>(); // Ініціалізуємо список updatedList
+        updatedList = new List<SavedEquipData>(); // Ініціалізуємо список updatedList
     }
 
     public void onEquip()
@@ -57,7 +57,7 @@ public class EquipItem : MonoBehaviour
                     SavedEquipData data = JsonUtility.FromJson<SavedEquipData>(decrypt);
                     if (data.Tag != item.GetComponent<SetParametersToitem>().Tag)
                     {
-                        updatedList.Add(jsonLine);
+                        updatedList.Add(data);
                     }
                     MoveItem[] equips = FindObjectsOfType<MoveItem>();
                     foreach (var obj in equips)
@@ -78,11 +78,11 @@ public class EquipItem : MonoBehaviour
             }
         }
     }
-    public void SaveUpdateEquip(string path, List<string> list)
+    public void SaveUpdateEquip(string path, List<SavedEquipData> list)
     {
         using (StreamWriter writer = new StreamWriter(path, false))
         {
-            foreach (string line in list)
+            foreach (SavedEquipData line in list)
             {
                 string jsonData = JsonUtility.ToJson(line);
                 string decryptedJson = hashing.Encrypt(jsonData);

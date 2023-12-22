@@ -510,7 +510,7 @@ GameObject:
   - component: {fileID: 4031929794569902559}
   m_Layer: 8
   m_Name: Tornadic
-  m_TagString: Enemy
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -616,6 +616,9 @@ MonoBehaviour:
   rotationSpeed: 50
   bulletRotationMultiplier: 20
   movingObjects: []
+  stump: {fileID: 0}
+  stumpSounds: []
+  bump: 0
 --- !u!58 &6222923354122472729
 CircleCollider2D:
   m_ObjectHideFlags: 0

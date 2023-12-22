@@ -12,6 +12,7 @@ public class CDSkillObject : MonoBehaviour
     public MonoBehaviour monoStep;
     public int num;
     public FieldInfo valueFieldStep;
+    public bool isPassive;
     // Start is called before the first frame update
     void Start()
     {

@@ -3,34 +3,33 @@ using UnityEngine.SceneManagement;
 
 public class RestartGame : MonoBehaviour
 {
-    Move player;
+    PlayerManager player;
+    GameManager gameManager;
     // Start is called before the first frame update
     void Start()
     {
-        player = FindObjectOfType<Move>();
+        player = PlayerManager.instance;
+        gameManager = GameManager.Instance;
         Time.timeScale = 0f;
     }
     public void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Escape) && player.GetComponent<Health>().playerHealthPoint > 0 && !player.otherPanelOpened)
+        if (Input.GetKeyUp(KeyCode.Escape) && player.playerHealthPoint > 0 && !gameManager.isPanelOpen)
         {
-            player.otherPanelOpened = true;
-            player.escPanelIsShowed = false;
-            Destroy(gameObject);
-
-            OnDestroy();
+            gameManager.ClosePanel(gameManager.losePanel);
         }
-    }
-    private void OnDestroy()
-    {
-        Time.timeScale = 1f;
     }
     public void Restart()
     {
+        AudioManager.instance.Play("GameTheme");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     public void OpenOtherScene(string scenename)
     {
+        if (scenename == "Menu")
+        {
+            AudioManager.instance.Play("Theme");
+        }
         SceneManager.LoadScene(scenename);
     }
 }

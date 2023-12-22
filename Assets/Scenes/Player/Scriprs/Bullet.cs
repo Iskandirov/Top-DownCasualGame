@@ -7,31 +7,57 @@ public class Bullet : MonoBehaviour
     public float forceAmount = 30f; // Сила відштовхування
     public bool isPiers;
     public bool isRickoshet;
-    private void FixedUpdate()
+    public bool isLifeSteal;
+    public bool isBulletSlow;
+    public float lifeStealPercent;
+    public float slowPercent;
+    PlayerManager player;
+    private void Start()
     {
-        Invoke("DestroyBullet", 1f);
+        player = PlayerManager.instance;
+        damage = player.damageToGive;
+        isPiers = player.isLevelFive;
+        isRickoshet = player.isRicoshet;
+        isLifeSteal = player.isLifeSteal;
+        isBulletSlow = player.isBulletSlow;
+        lifeStealPercent = player.lifeStealPercent;
+        slowPercent = player.slowPercent;
 
+        Invoke("DestroyBullet", 1f);
     }
-    public void DestroyBullet()
+    void DestroyBullet()
     {
         Destroy(gameObject);
     }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
-
         if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
-
-            collision.GetComponent<HealthPoint>().healthPoint -= damage;
-            FindObjectOfType<StatsCollector>().FindStatName("bulletDamage", damage);
-            collision.GetComponent<HealthPoint>().ChangeToKick();
-
-            if (collision.GetComponentInParent<Forward>() != null)
+            collision.GetComponent<HealthPoint>().TakeDamage(damage);
+            if (isLifeSteal && player.playerHealthPoint < player.playerHealthPointMax)
             {
-                collision.GetComponentInParent<Forward>().isShooted = true;
-                collision.GetComponentInParent<Forward>().Body.AddForce(-(transform.position - collision.transform.position) * forceAmount, ForceMode2D.Impulse);
+                if (player.playerHealthPoint + damage * lifeStealPercent < player.playerHealthPointMax)
+                {
+                    player.playerHealthPoint += damage * lifeStealPercent;
+                    player.fullFillImage.fillAmount += (damage * lifeStealPercent) / player.playerHealthPointMax;
+                }
+                else
+                {
+                    player.playerHealthPoint = player.playerHealthPointMax;
+                    player.fullFillImage.fillAmount = 1;
+                }
+            }
+            Forward enemyMove = collision.GetComponentInParent<Forward>();
+            if (isBulletSlow && enemyMove)
+            {
+                enemyMove.path.maxSpeed = enemyMove.speedMax * slowPercent;
+                enemyMove.moveSlowTime = slowPercent;
+            }
+            GameManager.Instance.FindStatName("bulletDamage", damage);
+
+            if (enemyMove != null)
+            {
+                enemyMove.Body.AddForce(-(transform.position - collision.transform.position) * forceAmount, ForceMode2D.Impulse);
             }
             if (!isPiers)
             {
@@ -88,4 +114,9 @@ public class Bullet : MonoBehaviour
             projectile.GetComponent<Rigidbody2D>().AddForce((randomDirection * 15) * GetComponent<Rigidbody2D>().velocity.magnitude * 2);
         }
     }
+    private void OnLevelWasLoaded(int level)
+    {
+        DestroyImmediate(gameObject);
+    }
+
 }

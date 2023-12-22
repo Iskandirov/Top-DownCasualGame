@@ -3,15 +3,7 @@ using UnityEngine;
 
 public class SetLanguage : MonoBehaviour
 {
-    public LocalizationManager settings;
     public List<GameObject> texts;
-    // Start is called before the first frame update
-    void Start()
-    {
-        settings.StartLoad();
-        settings.UpdateText(texts);
-    }
-
     public TagText FindMyComponentInChildren(GameObject parentObject,string tag)
     {
         TagText component = parentObject.GetComponent<TagText>();

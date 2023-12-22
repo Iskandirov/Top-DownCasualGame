@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class HealthPickUp : MonoBehaviour
 {
-    Expirience playerExp;
+    PlayerManager player;
     // Start is called before the first frame update
     void Start()
     {
-        playerExp = FindObjectOfType<Expirience>();
+        player = PlayerManager.instance;
     }
 
     // Update is called once per frame
@@ -18,19 +18,18 @@ public class HealthPickUp : MonoBehaviour
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && !collision.isTrigger && playerExp.objHealth.playerHealthPoint < playerExp.objHealth.playerHealthPointMax)
+        if (collision.CompareTag("Player") && !collision.isTrigger && player.playerHealthPoint < player.playerHealthPointMax)
         {
-            Debug.Log(2);
-            if (playerExp.objHealth.playerHealthPoint + (playerExp.objHealth.playerHealthPointMax / 100) * 10 >= playerExp.objHealth.playerHealthPointMax)
+            if (player.playerHealthPoint + (player.playerHealthPointMax / 100) * 10 >= player.playerHealthPointMax)
             {
-                playerExp.objHealth.playerHealthPoint = playerExp.objHealth.playerHealthPointMax;
-                playerExp.objHealth.playerHealthPointImg.fullFillImage.fillAmount = 1;
+                player.playerHealthPoint = player.playerHealthPointMax;
+                player.fullFillImage.fillAmount = 1;
                 Destroy(gameObject);
             }
             else
             {
-                playerExp.objHealth.playerHealthPoint += (playerExp.objHealth.playerHealthPointMax / 100) * 10; //Can be baffed by some thing
-                playerExp.objHealth.playerHealthPointImg.fullFillImage.fillAmount = playerExp.objHealth.playerHealthPoint / playerExp.objHealth.playerHealthPointMax;
+                player.playerHealthPoint += (player.playerHealthPointMax / 100) * 10; //Can be baffed by some thing
+                player.fullFillImage.fillAmount = player.playerHealthPoint / player.playerHealthPointMax;
                 Destroy(gameObject);
             }
         }

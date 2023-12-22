@@ -28,8 +28,10 @@ public class TextAppear : MonoBehaviour
     public GameObject boss;
     public GameObject mob;
     public GameObject FinalPanel;
+    PlayerManager player;
     void Start()
     {
+        player = PlayerManager.instance;
         // Запускаємо таймер
         InvokeRepeating("AddLetter", delay, delay);
     }
@@ -60,7 +62,7 @@ public class TextAppear : MonoBehaviour
             {
                 if (textCount < introDialog[tutor.phase].Text.Length - 1)
                 {
-                    Pause();
+                    isPaused = true;
                     timer = 0;
                 }
             }
@@ -74,11 +76,6 @@ public class TextAppear : MonoBehaviour
         isPaused = false;
         isPausedByDots = false;
     }
-    // Метод для зупинки появи тексту
-    public void Pause()
-    {
-        isPaused = true;
-    }
    
     // Метод для відновлення появи тексту
     public void Resume()
@@ -91,6 +88,7 @@ public class TextAppear : MonoBehaviour
             {
                 textMesh.text = " ";
                 isPaused = false;
+                tutor.BlockMoveAndShoot();
             }
             else if(textCount == introDialog[tutor.phase].Text.Length - 1)
             {
@@ -110,18 +108,14 @@ public class TextAppear : MonoBehaviour
                 }
                 else if (tutor.phase == 2)
                 {
-                    tutor.playerMove.enabled = true;
-                    tutor.playerMove.GetComponent<Shoot>().enabled = true;
+                    tutor.MoveOn();
                     tutor.parentPhase2.gameObject.SetActive(true);
-                    isShooting = true;
                 } 
                 else if (tutor.phase == 3)
                 {
-                    tutor.playerMove.enabled = true;
-                    tutor.playerMove.GetComponent<Shoot>().enabled = true;
                     tutor.parentPhase3.gameObject.SetActive(true);
-                    isShooting = true;
-                    tutor.playerMove.isTutor = false;
+                    tutor.MoveOn();
+                    player.isTutor = false;
                 }
                 else if (tutor.phase == 4)
                 {
@@ -134,12 +128,11 @@ public class TextAppear : MonoBehaviour
                     boss.GetComponent<BossAttack>().enabled = true;
                     boss.GetComponent<Forward>().enabled = true;
                     boss.layer = 10;
-                    tutor.playerMove.enabled = true;
-                    tutor.playerMove.GetComponent<Shoot>().enabled = true;
+                    tutor.MoveOn();
                 }
                 else if (tutor.phase == 6)
                 {
-                    tutor.playerMove.enabled = true;
+                    tutor.MoveOn();
                 }
                 else if (tutor.phase == 7)
                 {

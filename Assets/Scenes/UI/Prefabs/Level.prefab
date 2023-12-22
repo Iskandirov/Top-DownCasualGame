@@ -104,7 +104,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2786434232517195244}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 219.4}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -146,8 +146,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Spawn a hallucinogen pill somewhere on map
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6135b4c237c016b4280f017d0b43ae32, type: 2}
+  m_sharedMaterial: {fileID: -4861088412151821870, guid: 6135b4c237c016b4280f017d0b43ae32, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -319,13 +319,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36649fd483e1ca049b7dca13c5f59adb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Exp: {fileID: 4622581140822243996, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
   starObj: {fileID: 564367929296594529, guid: 0c9a4df48ca167e4286984e92de158f6, type: 3}
   firstBuff: {fileID: 7765541699007452962}
   secondBuff: {fileID: 945873658729405090}
   firstBuffBtn: {fileID: 0}
   secondBuffBtn: {fileID: 0}
-  isSkillIcons: 0100000000000000000000000000
+  isSkillIcons: 01000000000000000000000000000000
   SkillIconsMax: 0
   skillsSave:
   - Name: BulletDamage
@@ -339,7 +338,7 @@ MonoBehaviour:
     - bullet_1
     - bullet_2
     - bullet_3
-    - bullet_4
+    - bullet_2
     - bullet_5
     tagRare: 
     Description:
@@ -406,33 +405,32 @@ MonoBehaviour:
     - 2
     - 2
     - 0.3
-  - Name: Pill
+  - Name: Meteor
     ID: 3
     level: 0
     skillObj: {fileID: 0}
     isPassive: 0
-    Image: {fileID: 21300000, guid: 7997cf22a5e9edc44958e8faa242ce42, type: 3}
+    Image: {fileID: 21300000, guid: c7a5c4090c90f2e49a99973c64a66c9b, type: 3}
     CD: 10
     tag:
-    - pill_1
-    - pill_2
-    - pill_3
-    - pill_4
-    - pill_5
+    - meteor_1
+    - meteor_2
+    - meteor_3
+    - meteor_4
+    - meteor_5
     tagRare: 
     Description:
-    - Spawn pill that give you move speed and attack speed but the goustes will follow
-      you
-    - More time effect
-    - More attack speed
-    - More move speed but speed of ghostes x2
-    - Shift recharge less while effects
+    - Create a meteor that hits enemies in area
+    - More damage
+    - +2 meteors
+    - Area after meteor sloves enemies move speed
+    - +5 meteors
     stat1:
     - 0
+    - 10
+    - 2
+    - 0.7
     - 5
-    - 10
-    - 10
-    - 0.5
   - Name: FireWave
     ID: 4
     level: 0
@@ -615,60 +613,8 @@ MonoBehaviour:
     - 0
     - 15
     - 0
-  - Name: Summon
-    ID: 11
-    level: 0
-    skillObj: {fileID: 0}
-    isPassive: 0
-    Image: {fileID: 21300000, guid: 6673043e88c509441af2f35f099a0130, type: 3}
-    CD: 15
-    tag:
-    - summon_1
-    - summon_2
-    - summon_3
-    - summon_4
-    - summon_5
-    tagRare: 
-    Description:
-    - Lures the enemy to fight on your side
-    - More life time
-    - At the end enemie explode in small area
-    - More attack speed
-    - Give a chance to bite to lures hited enemie
-    stat1:
-    - 0
-    - 10
-    - 5
-    - 15
-    - 0.3
-  - Name: Meteor
-    ID: 12
-    level: 0
-    skillObj: {fileID: 0}
-    isPassive: 0
-    Image: {fileID: 21300000, guid: c7a5c4090c90f2e49a99973c64a66c9b, type: 3}
-    CD: 10
-    tag:
-    - meteor_1
-    - meteor_2
-    - meteor_3
-    - meteor_4
-    - meteor_5
-    tagRare: 
-    Description:
-    - Create a meteor that hits enemies in area
-    - More damage
-    - +2 meteors
-    - Area after meteor sloves enemies move speed
-    - +5 meteors
-    stat1:
-    - 0
-    - 10
-    - 2
-    - 0.7
-    - 5
   - Name: Illusion
-    ID: 13
+    ID: 11
     level: 0
     skillObj: {fileID: 0}
     isPassive: 0
@@ -693,6 +639,110 @@ MonoBehaviour:
     - 10
     - 1
     - 0
+  - Name: Trail
+    ID: 12
+    level: 0
+    skillObj: {fileID: 0}
+    isPassive: 1
+    Image: {fileID: 21300000, guid: bdc3c1cb276463f4d9b556c085ae1371, type: 3}
+    CD: 10
+    tag:
+    - trail_1
+    - trail_2
+    - trail_3
+    - trail_4
+    - trail_5
+    tagRare: 
+    Description:
+    - Create a trail that hit enemies
+    - +2 seconds trail life time
+    - More damage
+    - The trail is wider
+    - Each deth from trail restore 10% of enemy maximum HP as HP
+    stat1:
+    - 0
+    - 2
+    - 0.1
+    - 2
+    - 0.1
+  - Name: Vortex
+    ID: 13
+    level: 0
+    skillObj: {fileID: 0}
+    isPassive: 0
+    Image: {fileID: 21300000, guid: abf4de1b0cd36654683ee6ff5d4bcac4, type: 3}
+    CD: 15
+    tag:
+    - vortex_1
+    - vortex_2
+    - vortex_3
+    - vortex_4
+    - vortex_5
+    tagRare: 
+    Description:
+    - Create a vortex that pulls enemies to the center
+    - More life time
+    - More radius
+    - Less recharge
+    - Spawn another vortex in random place
+    stat1:
+    - 0
+    - 0.5
+    - 1
+    - 4
+    - 1
+  - Name: Icewall
+    ID: 14
+    level: 0
+    skillObj: {fileID: 0}
+    isPassive: 0
+    Image: {fileID: 21300000, guid: 961a8eb948fd8e54abcd56a04a844fad, type: 3}
+    CD: 7
+    tag:
+    - Icewall_1
+    - Icewall_2
+    - Icewall_3
+    - Icewall_4
+    - Icewall_5
+    tagRare: 
+    Description:
+    - Create a ice wall that slow down enemies
+    - More life time
+    - Bigger ice wall
+    - Less recharge
+    - Wall dealing damage
+    stat1:
+    - 0
+    - 2
+    - 1
+    - 2
+    - 1
+  - Name: MagicAxe
+    ID: 15
+    level: 0
+    skillObj: {fileID: 0}
+    isPassive: 0
+    Image: {fileID: 21300000, guid: a26882f7239013c4ca769a672dead8f5, type: 3}
+    CD: 11
+    tag:
+    - axe_1
+    - axe_2
+    - axe_3
+    - axe_4
+    - axe_5
+    tagRare: 
+    Description:
+    - Create a spining axe that hit every enemy on his way
+    - More damage
+    - More radius
+    - Less recharge
+    - After axe back to start position create another two axes
+    stat1:
+    - 0
+    - 5
+    - 1
+    - 5
+    - 2
   gold:
     Name: Gold
     ID: 999
@@ -712,8 +762,20 @@ MonoBehaviour:
   choise: 
   isOpenToUpgrade: 0
   isFirstToUpgrade: 0
-  lang: {fileID: 6136369001741475456, guid: b08c4cf5e053b1145b3cc846731f0368, type: 3}
   CDSkillsObject: []
+  resultId:
+    Name: 
+    ID: 0
+    level: 0
+    skillObj: {fileID: 0}
+    isPassive: 0
+    Image: {fileID: 0}
+    CD: 0
+    tag: []
+    tagRare: 
+    Description: []
+    stat1: []
+  abil: {fileID: 0}
 --- !u!114 &393745292006979078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -861,8 +923,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Damage +1
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6135b4c237c016b4280f017d0b43ae32, type: 2}
+  m_sharedMaterial: {fileID: -4861088412151821870, guid: 6135b4c237c016b4280f017d0b43ae32, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

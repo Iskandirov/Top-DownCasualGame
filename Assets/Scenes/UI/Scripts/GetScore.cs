@@ -1,9 +1,8 @@
-using Newtonsoft.Json;
 using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+[DefaultExecutionOrder(10)]
 public class GetScore : MonoBehaviour
 {
     public TextMeshProUGUI timeEnd;
@@ -17,52 +16,55 @@ public class GetScore : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
-        hash = FindObjectOfType<DataHashing>();
+        hash = DataHashing.inst;
         Timer objTimer = FindObjectOfType<Timer>();
-        if (objTimer)
+        if (scoreEnd != null)
         {
-            timeEnd.text = objTimer.time.ToString("00.00");
-            if (float.TryParse(timeEnd.text, out float result))
+            if (objTimer)
             {
-                // Вдале перетворення
-                score = (FindObjectOfType<KillCount>().score + 1) * Mathf.Pow(1 + (0.05f * result), 1.1f) + 1;
-                percent = Mathf.RoundToInt((result / objTimer.timeToWin) * 100);
-                if (percent > 100 && isWinPanel)
+                timeEnd.text = objTimer.time.ToString("00.00");
+                if (float.TryParse(timeEnd.text, out float result))
                 {
-                    percent = 100;
+                    // Вдале перетворення
+                    score = (GameManager.Instance.score + 1) * Mathf.Pow(1 + (0.05f * result), 1.1f) + 1;
+                    percent = Mathf.RoundToInt((result / objTimer.time) * 100);
+                    if (percent >= 100 && isWinPanel)
+                    {
+                        percent = 100;
+                    }
+                    else
+                    {
+                        percent = 99;
+                    }
+                    percentEnd.text = percent.ToString("0.") + "%";
                 }
                 else
                 {
-                    percent = 99;
+                    // Невдале перетворення, обробка помилки або встановлення значення за замовчуванням
+                    score = 0; // Наприклад, встановлення значення за замовчуванням
                 }
-                percentEnd.text = percent.ToString("0.") + "%";
+                scoreEnd.text = score.ToString("0.");
+                score += LoadScore();
             }
             else
             {
-                // Невдале перетворення, обробка помилки або встановлення значення за замовчуванням
-                score = 0; // Наприклад, встановлення значення за замовчуванням
+                score += LoadScore();
+                scoreEnd.text = score.ToString("0.");
             }
-            scoreEnd.text = score.ToString("0.");
-            score += LoadScore();
-        }
-        else
-        {
-            score += LoadScore();
-            scoreEnd.text = score.ToString("0.");
-        }
-        if (FindObjectOfType<Tutor>() != null)
-        {
-            percent = 100;
-            score = 1500;
-            scoreEnd.text = score.ToString("0.");
-            score += LoadScore();
+            if (FindObjectOfType<Tutor>() != null)
+            {
+                percent = 100;
+                score = 1500;
+                scoreEnd.text = score.ToString("0.");
+                score += LoadScore();
+            }
         }
     }
     void Start()
     {
-        SaveScore((int)score, true);
         if (scene)
         {
+            SaveScore((int)score);
             GetComponent<CheckLevel>().CheckPercent(SceneManager.GetActiveScene().buildIndex, percent);
         }
     }
@@ -91,25 +93,25 @@ public class GetScore : MonoBehaviour
             return money;
         }
     }
-    public void SaveScore(int money, bool isInGame)
+    public void SaveScore(int money)
     {
-        string path = Path.Combine(Application.persistentDataPath, "Economy.txt");
+            string path = Path.Combine(Application.persistentDataPath, "Economy.txt");
 
-        if (File.Exists(path))
-        {
-            using (StreamWriter writer = new StreamWriter(path,false))
+            if (File.Exists(path))
             {
-                SavedEconomyData data = new SavedEconomyData();
-                data.money = money;
-                string jsonData = JsonUtility.ToJson(data);
+                using (StreamWriter writer = new StreamWriter(path, false))
+                {
+                    SavedEconomyData data = new SavedEconomyData();
+                    data.money = money;
+                    string jsonData = JsonUtility.ToJson(data);
 
-                // Шифруємо дані перед записом у файл
-                string encryptedJson = hash.Encrypt(jsonData);
-                // Заміняємо WriteLine на Write
-                writer.Write(encryptedJson);
-                writer.Close();
+                    // Шифруємо дані перед записом у файл
+                    string encryptedJson = hash.Encrypt(jsonData);
+                    // Заміняємо WriteLine на Write
+                    writer.Write(encryptedJson);
+                    writer.Close();
+                }
             }
-        }
 
         //// Якщо гра закінчилася успішно, оновлюємо дані про пройдені рівні
         //if (isInGame && isWinPanel)

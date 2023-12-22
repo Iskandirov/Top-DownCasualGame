@@ -38,7 +38,7 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
     Vector3 targetScaleBig;
     Vector3 targetScaleSmall;
 
-    public GameObject lang;
+    public GameManager gameManager;
     List<GameObject> list = new List<GameObject>();
     public DataHashing hashing;
     void Start()
@@ -51,7 +51,7 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
         targetEquipObjects = GameObject.FindGameObjectWithTag("Respawn");
         equipPanel = GameObject.FindGameObjectWithTag("Wall");
         itemData = GameObject.FindGameObjectWithTag("Lightning");
-        lang = GameObject.Find("Main Camera");
+        gameManager = GameManager.Instance;
         SetVisible(false);
         if (gameObject.GetComponent<SetParametersToitem>().level != "4")
         {
@@ -94,7 +94,7 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
             }
         }
         PointActivate();
-        lang.GetComponent<SetLanguage>().settings.UpdateText(list);
+        gameManager.UpdateText(list);
     }
 
     public void PointActivate()
@@ -275,7 +275,7 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
             stats[3].GetComponent<TagText>().tagText = gameObject.GetComponent<SetParametersToitem>().RareTag;
             list.Add(stats[3].gameObject);
         }
-        lang.GetComponent<SetLanguage>().settings.UpdateText(list);
+        gameManager.UpdateText(list);
     }
     public void SetItem(SavedEquipData obj)
     {

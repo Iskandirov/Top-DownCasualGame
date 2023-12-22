@@ -15,4 +15,5 @@ public class SetParametersToitem : MonoBehaviour
     public TextMeshProUGUI Count;
     public string Tag;
     public string RareTag;
+    public string Description;
 }

@@ -29,7 +29,7 @@ public class SaveStatistic : MonoBehaviour
         }
         else if (isInGame)
         {
-            SaveStat(FindObjectOfType<StatsCollector>().statRead);
+            SaveStat(GameManager.Instance.statRead);
         }
     }
     public void LoadScore()

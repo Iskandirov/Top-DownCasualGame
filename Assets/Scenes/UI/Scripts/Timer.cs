@@ -5,36 +5,29 @@ using UnityEngine;
 public class Timer : MonoBehaviour
 {
     public float time;
-    public float timeToWin;
     public GameObject WinPanel;
     public GameObject WinPanelParent;
     TextMeshProUGUI text;
-    Move PanelChecker;
     public bool isDropLooted;
     // Start is called before the first frame update
     void Start()
     {
-        PanelChecker = FindObjectOfType<Move>();
         text = GetComponent<TextMeshProUGUI>();
         StartCoroutine(EndGame());
     }
     private IEnumerator EndGame()
     {
-        yield return new WaitForSeconds(timeToWin);
-
         // Корутина чекає на виконання умови
         while (!isDropLooted)
         {
             yield return null;
         }
-
-        Instantiate(WinPanel, WinPanelParent.transform.position, Quaternion.identity, WinPanelParent.transform);
-        PanelChecker.otherPanelOpened = true;
+        GameManager.Instance.OpenPanel(GameManager.Instance.winPanel);
     }
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        time += Time.deltaTime;
+        time += Time.fixedDeltaTime;
         text.text = time.ToString("00.00");
     }
 }

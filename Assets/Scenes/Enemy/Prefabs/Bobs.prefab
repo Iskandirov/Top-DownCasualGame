@@ -443,12 +443,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d43b841f0e35afa47a6b5c0b26718545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  stepKick: 0.2
-  stepKickMax: 0.2
-  isKick: 0
   healthPoint: 0
-  healthPointMax: 200
+  healthPointMax: 700
   expiriancePoint: {fileID: 1551125564601968996, guid: 011bcb717f1c7644cbb13f13f798cecd, type: 3}
   IsBobs: 1
   anim: {fileID: 8652287431786167269}
@@ -460,7 +456,7 @@ MonoBehaviour:
   burnTick: 0.5
   burnTickMax: 0.5
   expGiven: 0
-  dangerLevel: 0
+  dangerLevel: 10
   bodyAnimBoss: {fileID: 0}
   AnimBossStart: 0
   isBossPart: 0
@@ -482,6 +478,8 @@ MonoBehaviour:
   ColdStart: 1
   debuffsParent: {fileID: 5967280687732449362}
   nameMob: Bobs
+  uiParent: {fileID: 0}
+  healthBossObj: {fileID: 3985779531179115711, guid: a583d3b029d6a7c4ea66e18c2bbba0c9, type: 3}
 --- !u!60 &5112801515918849699
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -669,7 +667,7 @@ MonoBehaviour:
   - {x: -0.018272042, y: -0.4225589, z: 0.000000029802322}
   m_ShapePathHash: -684510710
   m_Mesh: {fileID: 0}
-  m_InstanceId: 66430
+  m_InstanceId: 166854
 --- !u!1 &6418969233144837898
 GameObject:
   m_ObjectHideFlags: 0
@@ -963,7 +961,7 @@ MonoBehaviour:
   - {x: -0.018272042, y: -0.4225589, z: 0.000000029802322}
   m_ShapePathHash: -684510710
   m_Mesh: {fileID: 0}
-  m_InstanceId: 66512
+  m_InstanceId: 166936
 --- !u!1 &7154109843395404649
 GameObject:
   m_ObjectHideFlags: 0
@@ -1147,28 +1145,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3913abf868628ca42bfa5f940214cd24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   enemy: {fileID: 0}
   Body: {fileID: 307614248803877651}
-  speed: 0
   speedMax: 12
   isStunned: 0
   stunnTime: 0.5
   stunnTimeMax: 0.5
   isFly: 0
-  isShooted: 0
-  isSummoned: 0
-  enemyFinded: 0
-  protectPlayer: 0
-  summonTime: 0
   isThree: 0
-  bomb: {fileID: 8381528588111883540, guid: f39d8d106439fe542a7b30c64142ffb9, type: 3}
   anim: {fileID: 8652287431786167269}
   IsOutOfCamera: 0
   isChaising: 0
   acceleration: 0.1
   angle: 0
+  path: {fileID: 0}
+  destination: {fileID: 0}
   isTutorial: 0
+  moveSlowTime: 0
+  player: {fileID: 0}
 --- !u!114 &256618190220434730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1182,7 +1176,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemPrefab: {fileID: 148148908384492936, guid: c761618b29cdf954f8ffec7c1e37fcd1, type: 3}
-  items: {fileID: 6416895844494761421, guid: b08c4cf5e053b1145b3cc846731f0368, type: 3}
   itemsLoaded: []
   spawnRare: 0.4
   spawnMiphical: 0.27
@@ -1220,6 +1213,7 @@ MonoBehaviour:
   attackVFX: {fileID: 3700339383819410429, guid: 3aaf368aef297c948adb82f462f67f26, type: 3}
   attackVFXRange: {fileID: 0}
   attackVFXRangePos: {fileID: 0}
+  objectToHit: {fileID: 0}
 --- !u!114 &6894690055646789181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1242,6 +1236,8 @@ MonoBehaviour:
   attackBools: 000000
   attackTypeInterval: 15
   Index: -1
+  poolSize: 60
+  bulletPool: []
 --- !u!114 &5532664678976221033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1440,7 +1436,7 @@ MonoBehaviour:
   - {x: -0.7389914, y: -0.66529715, z: 0.000000029802322}
   m_ShapePathHash: -1742471489
   m_Mesh: {fileID: 0}
-  m_InstanceId: 66428
+  m_InstanceId: 166852
 --- !u!1 &7545567821778826804
 GameObject:
   m_ObjectHideFlags: 0

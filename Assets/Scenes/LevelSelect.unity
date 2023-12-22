@@ -135,10 +135,9 @@ GameObject:
   - component: {fileID: 202413660}
   - component: {fileID: 202413659}
   - component: {fileID: 202413665}
-  - component: {fileID: 202413664}
-  - component: {fileID: 202413663}
   - component: {fileID: 202413666}
   - component: {fileID: 202413667}
+  - component: {fileID: 202413668}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -212,42 +211,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &202413663
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 202413658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f78a6db0e6cb6543842145d4de5831e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  testText: {fileID: 0}
-  drop: {fileID: 0}
-  localizedText: []
-  language: []
-  items: []
-  dataSett: []
-  IsSettingsPage: 0
-  volume: 0
-  vSync: 0
-  hashing: {fileID: 202413667}
---- !u!114 &202413664
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 202413658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8087b0f398ace6e4f8cb3e2c012d4bf3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  settings: {fileID: 202413663}
-  texts: []
 --- !u!114 &202413665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -335,6 +298,168 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: b151434d44cef4d15394294095127f67e23a32ef9914b48e1a030257a4c17c6d
   iv: 6e7d148ed54ac05985b2bbd900107367
+--- !u!114 &202413668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 202413658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ced970a1c6905da488579a10c2d43ce8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsSettingsPage: 0
+  IsGamePage: 0
+  menuPanel: {fileID: 0}
+  losePanel: {fileID: 0}
+  winPanel: {fileID: 0}
+  levelPanel: {fileID: 0}
+  enemyInfoPanel: {fileID: 0}
+  isPanelOpen: 0
+  statRead: []
+  texts: []
+  localizedText: []
+  language: []
+  locDataItems: []
+  dataSett: []
+  loc: eng
+  volume: 0
+  vSync: 0
+  nameClip: GameTheme
+  items: []
+  upgrades: []
+  itemsRead: []
+  score: 0
+  enemyCount: 0
+  fpsText: {fileID: 0}
+  enemyInfo:
+  - Name: Beany
+    Image: {fileID: 21300000, guid: fefdfeb7ae6525f4f8eca0618c477669, type: 3}
+    Health: 2
+    Damage: 3
+    MoveSpeed: 15
+    Attack: Bite
+    ID: 1
+    Showed: 0
+  - Name: Spiketumble
+    Image: {fileID: 21300000, guid: 4a4c815fa2d3a3c43aa6def5256227e7, type: 3}
+    Health: 2
+    Damage: 10
+    MoveSpeed: 25
+    Attack: Rush
+    ID: 2
+    Showed: 0
+  - Name: Beatty
+    Image: {fileID: 21300000, guid: c8c9cf2e830a0ea4bbe16387bd0003dc, type: 3}
+    Health: 100
+    Damage: 10
+    MoveSpeed: 7.5
+    Attack: Magic sphear
+    ID: 3
+    Showed: 0
+  - Name: Mishroom
+    Image: {fileID: 21300000, guid: 8fd07c5366e786848a732d492f24bee7, type: 3}
+    Health: 1
+    Damage: 10
+    MoveSpeed: 0
+    Attack: Invisible mooshrom mines
+    ID: 4
+    Showed: 0
+  - Name: Kiwi
+    Image: {fileID: 21300000, guid: a2abe356955bfc444bf03d1ea78c1ac4, type: 3}
+    Health: 130
+    Damage: 0.1
+    MoveSpeed: 0
+    Attack: Fast attacking roots
+    ID: 5
+    Showed: 0
+  - Name: TreeSnipe
+    Image: {fileID: 21300000, guid: 0c78f1e197e1d4644b53f27b9a1762dc, type: 3}
+    Health: 75
+    Damage: 25
+    MoveSpeed: 0
+    Attack: Unlimited attack range
+    ID: 6
+    Showed: 0
+  - Name: Rocky
+    Image: {fileID: 21300000, guid: 6a23cc171a62e414bad42043a55fb677, type: 3}
+    Health: 400
+    Damage: 30
+    MoveSpeed: 4
+    Attack: Each other part will be chasing you after boos death
+    ID: 7
+    Showed: 0
+  - Name: Bobs
+    Image: {fileID: 21300000, guid: 69c9a0139bbfb2e44be6adc186ea453c, type: 3}
+    Health: 200
+    Damage: 20
+    MoveSpeed: 12
+    Attack: Bobsy bombs
+    ID: 8
+    Showed: 0
+  - Name: Tornador
+    Image: {fileID: 0}
+    Health: 350
+    Damage: 20
+    MoveSpeed: 12
+    Attack: 
+    ID: 9
+    Showed: 0
+  enemyInfoLoad: []
+  InfoFiller: {fileID: 0}
+  InfoImg: {fileID: 0}
+  InfoName: {fileID: 0}
+  InfoPanel: {fileID: 0}
+  InfoImgPanel: {fileID: 0}
+  InfoNamePanel: {fileID: 0}
+  InfoStatHealtPanel: {fileID: 0}
+  InfoStatDamagePanel: {fileID: 0}
+  InfoStatMoveSpeedPanel: {fileID: 0}
+  characters:
+  - Name: Wizz
+    ID: 1
+    isBuy: 1
+    isEquiped: 1
+    status: choosen
+    health: 100
+    damage: 2
+    move: 20
+    attackSpeed: 0.5
+    spell: jump
+    spellCD: 
+    interactable: 0
+  - Name: Dash
+    ID: 2
+    isBuy: 0
+    isEquiped: 0
+    status: buy
+    health: 75
+    damage: 1
+    move: 25
+    attackSpeed: 0.3
+    spell: untouchable
+    spellCD: 
+    interactable: 1
+  - Name: Nova
+    ID: 3
+    isBuy: 0
+    isEquiped: 0
+    status: buy
+    health: 150
+    damage: 4
+    move: 15
+    attackSpeed: 0.65
+    spell: ricoshet
+    spellCD: 
+    interactable: 1
+  charactersRead: []
+  info:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  isShopingScene: 0
 --- !u!1 &335669562
 GameObject:
   m_ObjectHideFlags: 0
@@ -553,6 +678,63 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -17, y: 0}
   m_Pivot: {x: 0, y: 1}
+--- !u!1001 &901874875
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2133170659027200617, guid: 0a0ad5adf0a9edc4194590529ca626b6, type: 3}
+      propertyPath: m_Name
+      value: AudioManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 2133170659027200619, guid: 0a0ad5adf0a9edc4194590529ca626b6, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2133170659027200619, guid: 0a0ad5adf0a9edc4194590529ca626b6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2133170659027200619, guid: 0a0ad5adf0a9edc4194590529ca626b6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2133170659027200619, guid: 0a0ad5adf0a9edc4194590529ca626b6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2133170659027200619, guid: 0a0ad5adf0a9edc4194590529ca626b6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2133170659027200619, guid: 0a0ad5adf0a9edc4194590529ca626b6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2133170659027200619, guid: 0a0ad5adf0a9edc4194590529ca626b6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2133170659027200619, guid: 0a0ad5adf0a9edc4194590529ca626b6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2133170659027200619, guid: 0a0ad5adf0a9edc4194590529ca626b6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2133170659027200619, guid: 0a0ad5adf0a9edc4194590529ca626b6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2133170659027200619, guid: 0a0ad5adf0a9edc4194590529ca626b6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0a0ad5adf0a9edc4194590529ca626b6, type: 3}
 --- !u!1 &1091926748
 GameObject:
   m_ObjectHideFlags: 0
@@ -712,7 +894,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 1
-  m_Camera: {fileID: 202413660}
+  m_Camera: {fileID: 0}
   m_PlaneDistance: 5
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -854,7 +1036,7 @@ MonoBehaviour:
   sceneValue: 0700000008000000090000000a000000e7030000
   descriptionObjText: []
   descriptionObjImage: []
-  lang: {fileID: 202413664}
+  gameManager: {fileID: 0}
 --- !u!1 &1545056267
 GameObject:
   m_ObjectHideFlags: 0
@@ -1085,8 +1267,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 788105152}
   m_HandleRect: {fileID: 788105151}
   m_Direction: 0
-  m_Value: 0.995116
-  m_Size: 0.9997374
+  m_Value: 0.9951172
+  m_Size: 0.9997373
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

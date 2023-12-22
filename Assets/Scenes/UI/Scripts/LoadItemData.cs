@@ -70,6 +70,7 @@ public class LoadItemData : MonoBehaviour
                 objParam.Tag = itemParams.Tag;
                 objParam.RareTag = itemParams.RareTag;
                 objParam.IDRare = itemParams.IDRare;
+                objParam.Description = itemParams.Description;
                 newObject.GetComponent<MoveItem>().PointActivate();
 
                 objectsListCopy.Add(newObject);

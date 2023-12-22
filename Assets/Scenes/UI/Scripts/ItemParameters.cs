@@ -1,5 +1,6 @@
 using System.IO;
 using System.Security.Policy;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -15,6 +16,7 @@ public class ItemParameters : MonoBehaviour
     public int Count;
     public string Tag;
     public string RareTag;
+    public string Description;
     [SerializeField]
     DataHashing hash;
     Timer dropLooted;
@@ -22,7 +24,7 @@ public class ItemParameters : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        hash = FindObjectOfType<DataHashing>();
+        hash = DataHashing.inst;
         dropLooted = FindObjectOfType<Timer>();
         GetComponent<SpriteRenderer>().sprite = itemImage;
     }
@@ -41,6 +43,7 @@ public class ItemParameters : MonoBehaviour
             data.Level = objParam.Level;
             data.Tag = objParam.Tag;
             data.RareTag = objParam.RareTag;
+            data.Description = objParam.Description;
 
             // Збереження даних у файл
             string fileName = Path.Combine(Application.persistentDataPath, "savedData.txt");
@@ -59,11 +62,11 @@ public class ItemParameters : MonoBehaviour
             {
                 Tutor tut = FindObjectOfType<Tutor>();
                 tut.PhasePlus();
-                tut.text.isShooting = false;
-                tut.playerMove.GetComponent<Shoot>().enabled = false;
-                tut.playerMove.otherPanelOpened = true;
-                tut.playerMove.rb.velocity = Vector3.zero;
-                tut.playerMove.enabled = false;
+                tut.BlockMoveAndShoot();
+            }
+            if (AudioManager.instance != null)
+            {
+                AudioManager.instance.Play("Win");
             }
             Destroy(gameObject);
         }

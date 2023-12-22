@@ -10,13 +10,13 @@ public class ProgressBar : MonoBehaviour
     public bool isNeedToMove;
     public bool playerInZone;
     public List<bool> buffTypes;
-    GameObject player;
+    PlayerManager player;
     
 
     private bool isBuffApplied;
     public void Start()
     {
-        player = FindObjectOfType<Move>().gameObject;
+        player = PlayerManager.instance;
     }
     public void Update()
     {
@@ -83,31 +83,30 @@ public class ProgressBar : MonoBehaviour
             {
                 if (buffTypes[0])
                 {
-                    player.GetComponent<Shoot>().attackSpeed = player.GetComponent<Shoot>().attackSpeedMax * 0.8f;
+                    player.attackSpeed = player.attackSpeedMax * 0.8f;
                 }
                 else if (buffTypes[1])
                 {
-                    player.GetComponent<Shoot>().damageToGive = player.GetComponent<Shoot>().damageToGive * 2f;
+                    player.damageToGive = player.damageToGive * 2f;
                 }
                 else if (buffTypes[2])
                 {
-                    player.GetComponent<Health>().playerHealthRegeneration = player.GetComponent<Health>().playerHealthRegeneration * 2f + 2f;
+                    player.playerHealthRegeneration = player.playerHealthRegeneration * 2f + 2f;
                 }
                 else if (buffTypes[3])
                 {
-                    ElementsCoeficients objCoef = player.GetComponent<ElementsCoeficients>();
-                    objCoef.Fire = objCoef.Fire * 2f;
-                    objCoef.Electricity = objCoef.Electricity * 2f;
-                    objCoef.Water = objCoef.Water * 2f;
-                    objCoef.Dirt = objCoef.Dirt * 2f;
-                    objCoef.Wind = objCoef.Wind * 2f;
-                    objCoef.Grass = objCoef.Grass * 2f;
-                    objCoef.Steam = objCoef.Steam * 2f;
-                    objCoef.Cold = objCoef.Cold * 2f;
+                    player.Fire = player.Fire * 2f;
+                    player.Electricity = player.Electricity * 2f;
+                    player.Water = player.Water * 2f;
+                    player.Dirt = player.Dirt * 2f;
+                    player.Wind = player.Wind * 2f;
+                    player.Grass = player.Grass * 2f;
+                    player.Steam = player.Steam * 2f;
+                    player.Cold = player.Cold * 2f;
                 }
                 else if (buffTypes[4])
                 {
-                    player.GetComponent<Expirience>().multiply = 2;
+                    player.multiply = 2;
                 }
 
                 isBuffApplied = true;
@@ -121,32 +120,31 @@ public class ProgressBar : MonoBehaviour
             isBuffApplied = false;
             if (buffTypes[0])
             {
-                player.GetComponent<Shoot>().attackSpeed = player.GetComponent<Shoot>().attackSpeedMax;
+                player.attackSpeed = player.attackSpeedMax;
 
             }
             else if (buffTypes[1])
             {
-                player.GetComponent<Shoot>().damageToGive = player.GetComponent<Shoot>().damageToGive / 2f;
+                player.damageToGive = player.damageToGive / 2f;
             }
             else if (buffTypes[2])
             {
-                player.GetComponent<Health>().playerHealthRegeneration = player.GetComponent<Health>().playerHealthRegeneration - 2f / 2f;
+                player.playerHealthRegeneration = player.playerHealthRegeneration - 2f / 2f;
             }
             else if (buffTypes[3])
             {
-                ElementsCoeficients objCoef = player.GetComponent<ElementsCoeficients>();
-                objCoef.Fire = objCoef.Fire / 2f;
-                objCoef.Electricity = objCoef.Electricity / 2f;
-                objCoef.Water = objCoef.Water / 2f;
-                objCoef.Dirt = objCoef.Dirt / 2f;
-                objCoef.Wind = objCoef.Wind / 2f;
-                objCoef.Grass = objCoef.Grass / 2f;
-                objCoef.Steam = objCoef.Steam / 2f;
-                objCoef.Cold = objCoef.Cold / 2f;
+                player.Fire = player.Fire / 2f;
+                player.Electricity = player.Electricity / 2f;
+                player.Water = player.Water / 2f;
+                player.Dirt = player.Dirt / 2f;
+                player.Wind = player.Wind / 2f;
+                player.Grass = player.Grass / 2f;
+                player.Steam = player.Steam / 2f;
+                player.Cold = player.Cold / 2f;
             }
             else if (buffTypes[4])
             {
-                player.GetComponent<Expirience>().multiply = 1;
+                player.multiply = 1;
             }
         }
     }

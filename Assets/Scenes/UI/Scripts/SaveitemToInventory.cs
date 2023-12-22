@@ -21,6 +21,7 @@ public class SavedObjectData
     public int Count;
     public string Tag;
     public string RareTag;
+    public string Description;
 }
 [System.Serializable]
 public class SavedCharacterData

@@ -77,8 +77,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1713113091
-  m_SortingLayer: 3
+  m_SortingLayerID: -715851231
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 0851f7742430ed146919027368f3e60a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -227,7 +227,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8914707365513444775}
-  - component: {fileID: 1877402106734092864}
   m_Layer: 3
   m_Name: HP_Bar
   m_TagString: Untagged
@@ -256,19 +255,3 @@ RectTransform:
   m_AnchoredPosition: {x: 15, y: 15}
   m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1877402106734092864
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3719364662872781385}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52f0dac8ee8460b43b4512402ae7b618, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fullFillImage: {fileID: 7479212694396409647}
-  isNeedToMove: 0
-  startPos: {x: 0, y: 0}
-  health: {fileID: 0}

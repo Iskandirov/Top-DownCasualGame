@@ -2,20 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Security.Policy;
 using UnityEngine;
 
-[System.Serializable]
-public class Statistic 
-{
-    public int ID;
-    public string Name;
-    public float stat;
-}
 
 public class StatsCollector : MonoBehaviour
 {
     public List<Statistic> statRead;
+    public static StatsCollector Instance;
+    private void Awake()
+    {
+        Instance ??= this;
+    }
     private void Start()
     {
         LoadScore();

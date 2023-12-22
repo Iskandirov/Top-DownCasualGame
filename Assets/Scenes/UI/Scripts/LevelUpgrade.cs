@@ -5,14 +5,13 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static LevelUpgrade;
 
 public class LevelUpgrade : MonoBehaviour
 {
     [Header("Game Objects")]
-    public Expirience Exp;
     public GameObject starObj;
 
-    ActivateAbilities abilities;
 
     [Header("Description text buttons")]
     public TextMeshProUGUI firstBuff;
@@ -37,25 +36,29 @@ public class LevelUpgrade : MonoBehaviour
     [Header("Checkers")]
     public bool isOpenToUpgrade;
     public bool isFirstToUpgrade;
-    public SetLanguage lang;
     public List<GameObject> CDSkillsObject;
 
     TagText objTextOne;
     TagText objTextTwo;
-    Shoot objShoot;
     SkillCDLink objLinkSpell;
-    ElementsCoeficients cef;
-    SavedSkillsData resultId;
+    public SavedSkillsData resultId;
 
-    Move PanelChecker;
+    PlayerManager player;
+    GameManager gameManager;
+    public GameObject abil;
+    bool empty;
+    public static LevelUpgrade instance;
+    private void Awake()
+    {
+        instance ??= this;
+    }
     // Start is called before the first frame update
     private void Start()
     {
-        PanelChecker = FindObjectOfType<Move>();
+        player = PlayerManager.instance;
+        gameManager = GameManager.Instance;
         resultId = new SavedSkillsData();
-        objShoot = GetComponentInParent<Shoot>();
         objLinkSpell = FindObjectOfType<SkillCDLink>();
-        cef = FindObjectOfType<ElementsCoeficients>();
         SkillIconsMax = isSkillIcons.Count;
     }
     void OnEnable()
@@ -68,8 +71,6 @@ public class LevelUpgrade : MonoBehaviour
 
         LoadSkill(skillsSave);
 
-        //Initiation objects
-        abilities = FindObjectOfType<ActivateAbilities>();
 
         //Random two abilitis ID
         RandomAbil();
@@ -141,7 +142,7 @@ public class LevelUpgrade : MonoBehaviour
             objTextTwo.tagText = gold.tag[0];
             list.Add(secondBuff.gameObject);
         }
-        lang.settings.UpdateText(list);
+        GameManager.Instance.UpdateText(list);
     }
 
     //Choose first button
@@ -167,353 +168,341 @@ public class LevelUpgrade : MonoBehaviour
                 resultId = skillsSave[i];
             }
         }
-        ActivateAbilities abil = abilities;
+        
         if (skillPoint != 999)
         {
-            for (int i = 0; i < abil.countActiveAbilities; i++)
+            for (int i = 0; i < player.countActiveAbilities; i++)
             {
                 if (abil.transform.GetChild(i).GetComponent<CDSkills>().abilityId == skillPoint)
                 {
-                    Instantiate(starObj, abil.abilitiesObj[i].GetComponentInChildren<HorizontalLayoutGroup>().transform);
-
-                    if (skillPoint == 0)
+                    Instantiate(starObj, abil.transform.GetChild(i).GetComponent<CDSkills>().GetComponentInChildren<HorizontalLayoutGroup>().transform);
+                    switch (skillPoint) 
                     {
-                        //Updates for bullet
-                        if (resultId.level == 1)
-                        {
-                            objShoot.isLevelTwo = true;
-                            objShoot.secondBulletCount = (int)resultId.stat1[resultId.level];
-                        }
-                        else if (resultId.level == 2)
-                        {
-                            objShoot.attackSpeed -= resultId.stat1[resultId.level] / 100;
-                        }
-                        else if (resultId.level == 3)
-                        {
-                            objShoot.secondBulletCount = (int)resultId.stat1[resultId.level];
-                        }
-                        else if (resultId.level == 4)
-                        {
-                            objShoot.isLevelFive = true;
-                        }
+                        case 0:
+                            switch (resultId.level)
+                            {
+                                case 1:
+                                    player.secondBulletCount = (int)resultId.stat1[resultId.level];
+                                    break;
+                                case 2:
+                                    player.attackSpeed -= resultId.stat1[resultId.level] / 100;
+                                    break;
+                                case 3:
+                                    player.secondBulletCount = (int)resultId.stat1[resultId.level];
+                                    break;
+                                default:
+                                    break;
+                            }
+                            SkillBoolUpdate(resultId.level, ref player.isLevelTwo, ref empty, ref empty, ref player.isLevelFive);
+                            //Updates for bullet
+                            break;
+                        case 1:
+                            switch (resultId.level)
+                            {
+                                case 1:
+                                    resultId.skillObj.GetComponent<Lightning>().maxEnemiesToShoot += (int)resultId.stat1[resultId.level];
+                                    player.Electricity += 0.1f;
+                                    break;
+                                case 2:
+                                    resultId.skillObj.GetComponent<Lightning>().damage *= (float)resultId.stat1[resultId.level];
+                                    player.Electricity += 0.1f;
+                                    break;
+                                case 3:
+                                    resultId.skillObj.GetComponent<Lightning>().stunTime += (float)resultId.stat1[resultId.level];
+                                    player.Electricity += 0.1f;
+                                    break;
+                                case 4:
+                                    resultId.skillObj.GetComponent<Lightning>().stepMax -= (float)resultId.stat1[resultId.level];
+                                    player.Electricity += 0.1f;
+                                    break;
+                            }
+                            //Updates for lightning
+                            break;
+                        case 2:
+                            switch (resultId.level)
+                            {
+                                case 1:
+                                    resultId.skillObj.GetComponent<SpawnBlood>().radius += (float)resultId.stat1[resultId.level];
+                                    player.Water += 0.1f;
+                                    player.Dirt += 0.1f;
+                                    break;
+                                case 2:
+                                    resultId.skillObj.GetComponent<SpawnBlood>().damage += (float)resultId.stat1[resultId.level];
+                                    player.Water += 0.1f;
+                                    player.Dirt += 0.1f;
+                                    break;
+                                case 3:
+                                    resultId.skillObj.GetComponent<SpawnBlood>().numOfChair += (float)resultId.stat1[resultId.level];
+                                    player.Water += 0.1f;
+                                    player.Dirt += 0.1f;
+                                    break;
+                                case 4:
+                                    resultId.skillObj.GetComponent<SpawnBlood>().damageTickMax -= (float)resultId.stat1[resultId.level];
+                                    player.Water += 0.1f;
+                                    player.Dirt += 0.1f;
+                                    break;
+                            }
+                            //Updates for chair
+                            break;
+                        case 3:
+                            switch (resultId.level)
+                            {
+                                case 1:
+                                    resultId.skillObj.GetComponent<MeteorSpawner>().damage += (float)resultId.stat1[resultId.level];
+                                    player.Fire += 0.1f;
+                                    player.Dirt += 0.1f;
+                                    break;
+                                case 2:
+                                    player.Fire += 0.1f;
+                                    player.Dirt += 0.1f;
+                                    break;
+                                case 3:
+                                    player.Fire += 0.1f;
+                                    player.Dirt += 0.1f;
+                                    break;
+                                case 4:
+                                    player.Fire += 0.1f;
+                                    player.Dirt += 0.1f;
+                                    break;
+                            }
+                            SkillBoolUpdate(resultId.level, ref empty, ref resultId.skillObj.GetComponent<MeteorSpawner>().isThree, ref resultId.skillObj.GetComponent<MeteorSpawner>().isFour, ref resultId.skillObj.GetComponent<MeteorSpawner>().isFive);
+                            //Updates for meteor
+                            break;
+                        case 4:
+                            switch (resultId.level)
+                            {
+                                case 1:
+                                    resultId.skillObj.GetComponent<FireWaveSpawner>().damage += (float)resultId.stat1[resultId.level];
+                                    player.Fire += 0.1f;
+                                    break;
+                                case 2:
+                                    player.Fire += 0.1f;
+                                    break;
+                                case 3:
+                                    resultId.skillObj.GetComponent<FireWaveSpawner>().stepMax -= (float)resultId.stat1[resultId.level];
+                                    player.Fire += 0.1f;
+                                    break;
+                                case 4:
+                                    resultId.skillObj.GetComponent<FireWaveSpawner>().burnDamage = (float)resultId.stat1[resultId.level];
+                                    player.Fire += 0.1f;
+                                    break;
+                            }
+                            SkillBoolUpdate(resultId.level, ref empty, ref resultId.skillObj.GetComponent<FireWaveSpawner>().isLevelThree, ref empty, ref empty);
+                            //Updates for fire wave
+                            break;
+                        case 5:
+                            switch (resultId.level)
+                            {
+                                case 1:
+                                    resultId.skillObj.GetComponent<HealSpawner>().heal += (float)resultId.stat1[resultId.level];
+                                    player.Grass += 0.1f;
+                                    break;
+                                case 2:
+                                    player.Grass += 0.1f;
+                                    break;
+                                case 3:
+                                    resultId.skillObj.GetComponent<HealSpawner>().stepMax -= (float)resultId.stat1[resultId.level];
+                                    player.Grass += 0.1f;
+                                    break;
+                                case 4:
+                                    resultId.skillObj.GetComponent<HealSpawner>().heal += (float)resultId.stat1[resultId.level];
+                                    player.Grass += 0.1f;
+                                    break;
+                            }
+                            SkillBoolUpdate(resultId.level, ref empty, ref resultId.skillObj.GetComponent<HealSpawner>().isLevelTwo, ref empty, ref empty);
+                            //Updates for heal
+                            break;
+                        case 6:
+                            switch (resultId.level)
+                            {
+                                case 1:
+                                    resultId.skillObj.GetComponent<ReloadSkillSpawner>().count += (int)resultId.stat1[resultId.level];
+                                    break;
+                                case 2:
+                                    resultId.skillObj.GetComponent<ReloadSkillSpawner>().stepMax -= resultId.stat1[resultId.level];
+                                    break;
+                                case 3:
+                                    resultId.skillObj.GetComponent<ReloadSkillSpawner>().count += (int)resultId.stat1[resultId.level];
+                                    break;
+                                case 4:
+                                    break;
+                            }
+                            SkillBoolUpdate(resultId.level, ref empty, ref empty, ref empty, ref resultId.skillObj.GetComponent<ReloadSkillSpawner>().isLevelFive);
+                            //Updates for reload
+                            break;
+                        case 7:
+                            switch (resultId.level)
+                            {
+                                case 1:
+                                    resultId.skillObj.GetComponent<ImpulsSpawner>().powerGrow += resultId.stat1[resultId.level];
+                                    player.Wind += 0.1f;
+                                    player.Grass += 0.1f;
+                                    break;
+                                case 2:
+                                    resultId.skillObj.GetComponent<ImpulsSpawner>().stepMax -= resultId.stat1[resultId.level];
+                                    player.Wind += 0.1f;
+                                    player.Grass += 0.1f;
+                                    break;
+                                case 3:
+                                    player.Wind += 0.1f;
+                                    player.Grass += 0.1f;
+                                    break;
+                                case 4:
+                                    player.Wind += 0.1f;
+                                    player.Grass += 0.1f;
+                                    break;
+                            }
+                            SkillBoolUpdate(resultId.level, ref empty, ref empty, ref resultId.skillObj.GetComponent<ImpulsSpawner>().isFour, ref resultId.skillObj.GetComponent<ImpulsSpawner>().isFive);
+                            //Updates for impuls
+                            break;
+                        case 8:
+                            switch (resultId.level)
+                            {
+                                case 1:
+                                    resultId.skillObj.GetComponent<ShieldSpawner>().ShieldHP += resultId.stat1[resultId.level];
+                                    player.Dirt += 0.1f;
+                                    break;
+                                case 2:
+                                    player.Dirt += 0.1f;
+                                    break;
+                                case 3:
+                                    player.Dirt += 0.1f;
+                                    break;
+                                case 4:
+                                    player.Dirt += 0.1f;
+                                    break;
+                            }
+                            SkillBoolUpdate(resultId.level, ref empty, ref resultId.skillObj.GetComponent<ShieldSpawner>().isThree, ref resultId.skillObj.GetComponent<ShieldSpawner>().isFour, ref resultId.skillObj.GetComponent<ShieldSpawner>().isFive);
+                            //Updates for shield
+                            break;
+                        case 9:
+                            switch (resultId.level)
+                            {
+                                case 1:
+                                    player.Steam += 0.1f;
+                                    break;
+                                case 2:
+                                    resultId.skillObj.GetComponent<BeamSpawner>().damage += resultId.stat1[resultId.level];
+                                    player.Steam += 0.1f;
+                                    break;
+                                case 3:
+                                    resultId.skillObj.GetComponent<BeamSpawner>().lifeTime += resultId.stat1[resultId.level];
+                                    player.Steam += 0.1f;
+                                    break;
+                                case 4:
+                                    resultId.skillObj.GetComponent<BeamSpawner>().stepMax -= resultId.stat1[resultId.level];
+                                    player.Steam += 0.1f;
+                                    break;
+                            }
+                            SkillBoolUpdate(resultId.level, ref resultId.skillObj.GetComponent<BeamSpawner>().isTwo, ref empty, ref empty, ref empty);
+                            //Updates for beam
+                            break;
+                        case 10:
+                            switch (resultId.level)
+                            {
+                                case 1:
+                                    resultId.skillObj.GetComponent<TowerSpawner>().lifeTime += (float)resultId.stat1[resultId.level];
+                                    player.Water += 0.1f;
+                                    break;
+                                case 2:
+                                    player.Water += 0.1f;
+                                    break;
+                                case 3:
+                                    resultId.skillObj.GetComponent<TowerSpawner>().attackSpeed -= resultId.stat1[resultId.level] / 100;
+                                    player.Water += 0.1f;
+                                    break;
+                                case 4:
+                                    player.Water += 0.1f;
+                                    break;
+                            }
+                            SkillBoolUpdate(resultId.level, ref empty, ref resultId.skillObj.GetComponent<TowerSpawner>().isThree, ref empty, ref resultId.skillObj.GetComponent<TowerSpawner>().isFive);
+                            //Updates for tower
+                            break;
+                        case 11:
+                            switch (resultId.level)
+                            {
+                                case 2:
+                                    resultId.skillObj.GetComponent<IllusionSpawner>().lifeTime += resultId.stat1[resultId.level];
+                                    break;
+                                default:
+                                    continue;
+                            }
+                            SkillBoolUpdate(resultId.level, ref resultId.skillObj.GetComponent<IllusionSpawner>().isTwo, ref empty, ref resultId.skillObj.GetComponent<IllusionSpawner>().isFour, ref resultId.skillObj.GetComponent<IllusionSpawner>().isFive);
+                            //Updates for illusion
+                            break;
+                        case 12:
+                            switch (resultId.level)
+                            {
+                                case 1:
+                                    resultId.skillObj.GetComponent<Trail>().trailRenderer.time += (float)resultId.stat1[resultId.level];
+                                    break;
+                                case 2:
+                                    resultId.skillObj.GetComponent<Trail>().damage += resultId.stat1[resultId.level];
+                                    break;
+                                case 3:
+                                    resultId.skillObj.GetComponent<Trail>().size += resultId.stat1[resultId.level];
+                                    break;
+                                default:
+                                    continue;
+                            }
+                            SkillBoolUpdate(resultId.level, ref empty, ref empty, ref empty, ref resultId.skillObj.GetComponent<Trail>().isFive);
+                            //Updates for trail
+                            break;
+                        case 13:
+                            switch (resultId.level)
+                            {
+                                case 1:
+                                    resultId.skillObj.GetComponent<VortexSpawner>().lifeTime += resultId.stat1[resultId.level];
+                                    break;
+                                case 2:
+                                    resultId.skillObj.GetComponent<VortexSpawner>().radius += resultId.stat1[resultId.level];
+                                    break;
+                                case 3:
+                                    resultId.skillObj.GetComponent<VortexSpawner>().stepMax -= resultId.stat1[resultId.level];
+                                    break;
+                                default:
+                                    continue;
+                            }
+                            SkillBoolUpdate(resultId.level, ref empty, ref empty, ref empty, ref resultId.skillObj.GetComponent<VortexSpawner>().isFive);
+                            //Updates for vortex
+                            break;
+                        case 14:
+                            switch (resultId.level)
+                            {
+                                case 1:
+                                    resultId.skillObj.GetComponent<IceWallSpawner>().lifeTime += resultId.stat1[resultId.level];
+                                    break;
+                                case 2:
+                                    resultId.skillObj.GetComponent<IceWallSpawner>().wide += resultId.stat1[resultId.level];
+                                    break;
+                                case 3:
+                                    resultId.skillObj.GetComponent<IceWallSpawner>().stepMax -= resultId.stat1[resultId.level];
+                                    break;
+                                case 4:
+                                    resultId.skillObj.GetComponent<IceWallSpawner>().damage += resultId.stat1[resultId.level];
+                                    continue;
+                            }
+                            //Updates for icewall
+                            break;
+                        case 15:
+                            switch (resultId.level)
+                            {
+                                case 1:
+                                    resultId.skillObj.GetComponent<MagicAxeSpawner>().damage += resultId.stat1[resultId.level];
+                                    break;
+                                case 2:
+                                    resultId.skillObj.GetComponent<MagicAxeSpawner>().radius += resultId.stat1[resultId.level];
+                                    break;
+                                case 3:
+                                    resultId.skillObj.GetComponent<MagicAxeSpawner>().stepMax -= resultId.stat1[resultId.level];
+                                    break;
+                                default:
+                                    continue;
+                            }
+                            SkillBoolUpdate(resultId.level, ref empty, ref empty, ref empty, ref resultId.skillObj.GetComponent<MagicAxeSpawner>().isFive);
+                            //Updates for magic axe
+                            break;
                     }
-                    else if (skillPoint == 1)
-                    {
-                        //Updates for lightning
-                        if (resultId.level == 1)
-                        {
-                            resultId.skillObj.GetComponent<Lightning>().maxEnemiesToShoot += (int)resultId.stat1[resultId.level];
-                            cef.Electricity += 0.1f;
-                        }
-                        else if (resultId.level == 2)
-                        {
-                            resultId.skillObj.GetComponent<Lightning>().damage *= (int)resultId.stat1[resultId.level];
-                            cef.Electricity += 0.1f;
-                        }
-                        else if (resultId.level == 3)
-                        {
-                            resultId.skillObj.GetComponent<Lightning>().stunTime += (int)resultId.stat1[resultId.level];
-                            cef.Electricity += 0.1f;
-                        }
-                        else if (resultId.level == 4)
-                        {
-                            resultId.skillObj.GetComponent<Lightning>().stepMax -= (int)resultId.stat1[resultId.level];
-                            cef.Electricity += 0.1f;
-                        }
-                    }
-                    else if (skillPoint == 2)
-                    {
-                        //Updates for chair
-                        if (resultId.level == 1)
-                        {
-                            resultId.skillObj.GetComponent<SpawnBlood>().radius += (int)resultId.stat1[resultId.level];
-                            cef.Water += 0.1f;
-                            cef.Dirt += 0.1f;
-                        }
-                        else if (resultId.level == 2)
-                        {
-                            resultId.skillObj.GetComponent<SpawnBlood>().damage += (int)resultId.stat1[resultId.level];
-                            cef.Water += 0.1f;
-                            cef.Dirt += 0.1f;
-                        }
-                        else if (resultId.level == 3)
-                        {
-                            resultId.skillObj.GetComponent<SpawnBlood>().numOfChair += (int)resultId.stat1[resultId.level];
-                            cef.Water += 0.1f;
-                            cef.Dirt += 0.1f;
-                        }
-                        else if (resultId.level == 4)
-                        {
-                            resultId.skillObj.GetComponent<SpawnBlood>().damageTickMax -= resultId.stat1[resultId.level];
-                            cef.Water += 0.1f;
-                            cef.Dirt += 0.1f;
-                        }
-                    }
-                    else if (skillPoint == 3)
-                    {
-                        //Updates for pill
-                        if (resultId.level == 1)
-                        {
-                            resultId.skillObj.GetComponent<LightOn>().stepGhostMax += (int)resultId.stat1[resultId.level];
-                            cef.Grass += 0.1f;
-                            cef.Wind += 0.1f;
-                        }
-                        else if (resultId.level == 2)
-                        {
-                            resultId.skillObj.GetComponent<LightOn>().attackSpeedBuff += (int)resultId.stat1[resultId.level];
-                            cef.Grass += 0.1f;
-                            cef.Wind += 0.1f;
-                        }
-                        else if (resultId.level == 3)
-                        {
-                            resultId.skillObj.GetComponent<LightOn>().moveSpeedBuff += (int)resultId.stat1[resultId.level];
-                            cef.Grass += 0.1f;
-                            cef.Wind += 0.1f;
-                        }
-                        else if (resultId.level == 4)
-                        {
-                            resultId.skillObj.GetComponent<LightOn>().dashTime = resultId.stat1[resultId.level];
-                            cef.Grass += 0.1f;
-                            cef.Wind += 0.1f;
-                        }
-                    }
-                    else if (skillPoint == 4)
-                    {
-                        //Updates for fire wave
-                        if (resultId.level == 1)
-                        {
-                            resultId.skillObj.GetComponent<FireWaveSpawner>().damage += (int)resultId.stat1[resultId.level];
-                            cef.Fire += 0.1f;
-                        }
-                        else if (resultId.level == 2)
-                        {
-                            resultId.skillObj.GetComponent<FireWaveSpawner>().isLevelThree = true;
-                            cef.Fire += 0.1f;
-                        }
-                        else if (resultId.level == 3)
-                        {
-                            resultId.skillObj.GetComponent<FireWaveSpawner>().stepMax -= (int)resultId.stat1[resultId.level];
-                            cef.Fire += 0.1f;
-                        }
-                        else if (resultId.level == 4)
-                        {
-                            resultId.skillObj.GetComponent<FireWaveSpawner>().burnDamage = (int)resultId.stat1[resultId.level];
-                            cef.Fire += 0.1f;
-                        }
-                    }
-                    else if (skillPoint == 5)
-                    {
-                        //Updates for heal
-                        if (resultId.level == 1)
-                        {
-                            resultId.skillObj.GetComponent<HealSpawner>().heal += (int)resultId.stat1[resultId.level];
-                            cef.Grass += 0.1f;
-                        }
-                        else if (resultId.level == 2)
-                        {
-                            resultId.skillObj.GetComponent<HealSpawner>().isLevelTwo = true;
-                            cef.Grass += 0.1f;
-                        }
-                        else if (resultId.level == 3)
-                        {
-                            resultId.skillObj.GetComponent<HealSpawner>().stepMax -= (int)resultId.stat1[resultId.level];
-                            cef.Grass += 0.1f;
-                        }
-                        else if (resultId.level == 4)
-                        {
-                            resultId.skillObj.GetComponent<HealSpawner>().heal += (int)resultId.stat1[resultId.level];
-                            cef.Grass += 0.1f;
-                        }
-                    }
-                    else if (skillPoint == 6)
-                    {
-                        //Updates for reload
-                        if (resultId.level == 1)
-                        {
-                            resultId.skillObj.GetComponent<ReloadSkillSpawner>().count += (int)resultId.stat1[resultId.level];
-                        }
-                        else if (resultId.level == 2)
-                        {
-                            resultId.skillObj.GetComponent<ReloadSkillSpawner>().stepMax -= (int)resultId.stat1[resultId.level];
-                        }
-                        else if (resultId.level == 3)
-                        {
-                            resultId.skillObj.GetComponent<ReloadSkillSpawner>().count += (int)resultId.stat1[resultId.level];
-                        }
-                        else if (resultId.level == 4)
-                        {
-                            resultId.skillObj.GetComponent<ReloadSkillSpawner>().isLevelFive = true;
-                        }
-                    }
-                    else if (skillPoint == 7)
-                    {
-                        //Updates for impuls
-                        if (resultId.level == 1)
-                        {
-                            resultId.skillObj.GetComponent<ImpulsSpawner>().powerGrow += (int)resultId.stat1[resultId.level];
-                            cef.Wind += 0.1f;
-                            cef.Grass += 0.1f;
-                        }
-                        else if (resultId.level == 2)
-                        {
-                            resultId.skillObj.GetComponent<ImpulsSpawner>().stepMax -= (int)resultId.stat1[resultId.level];
-                            cef.Wind += 0.1f;
-                            cef.Grass += 0.1f;
-                        }
-                        else if (resultId.level == 3)
-                        {
-                            resultId.skillObj.GetComponent<ImpulsSpawner>().isFour = true;
-                            cef.Wind += 0.1f;
-                            cef.Grass += 0.1f;
-                        }
-                        else if (resultId.level == 4)
-                        {
-                            resultId.skillObj.GetComponent<ImpulsSpawner>().isFive = true;
-                            cef.Wind += 0.1f;
-                            cef.Grass += 0.1f;
-                        }
-                    }
-                    else if (skillPoint == 8)
-                    {
-                        //Updates for shield
-                        if (resultId.level == 1)
-                        {
-                            resultId.skillObj.GetComponent<ShieldSpawner>().ShieldHP += (int)resultId.stat1[resultId.level];
-                            cef.Dirt += 0.1f;
-                        }
-                        else if (resultId.level == 2)
-                        {
-                            resultId.skillObj.GetComponent<ShieldSpawner>().isThree = true;
-                            cef.Dirt += 0.1f;
-                        }
-                        else if (resultId.level == 3)
-                        {
-                            resultId.skillObj.GetComponent<ShieldSpawner>().isFour = true;
-                            cef.Dirt += 0.1f;
-                        }
-                        else if (resultId.level == 4)
-                        {
-                            resultId.skillObj.GetComponent<ShieldSpawner>().isFive = true;
-                            cef.Dirt += 0.1f;
-                        }
-                    }
-                    else if (skillPoint == 9)
-                    {
-                        //Updates for beam
-                        if (resultId.level == 1)
-                        {
-                            resultId.skillObj.GetComponent<BeamSpawner>().isTwo = true;
-                            cef.Steam += 0.1f;
-                        }
-                        else if (resultId.level == 2)
-                        {
-                            resultId.skillObj.GetComponent<BeamSpawner>().damage += (int)resultId.stat1[resultId.level];
-                            cef.Steam += 0.1f;
-                        }
-                        else if (resultId.level == 3)
-                        {
-                            resultId.skillObj.GetComponent<BeamSpawner>().lifeTime += (int)resultId.stat1[resultId.level];
-                            cef.Steam += 0.1f;
-                        }
-                        else if (resultId.level == 4)
-                        {
-                            resultId.skillObj.GetComponent<BeamSpawner>().stepMax -= (int)resultId.stat1[resultId.level];
-                            cef.Steam += 0.1f;
-                        }
-                    }
-                    else if (skillPoint == 10)
-                    {
-                        //Updates for tower
-                        if (resultId.level == 1)
-                        {
-                            resultId.skillObj.GetComponent<TowerSpawner>().lifeTime += (int)resultId.stat1[resultId.level];
-                            cef.Water += 0.1f;
-                        }
-                        else if (resultId.level == 2)
-                        {
-                            resultId.skillObj.GetComponent<TowerSpawner>().isThree = true;
-                            cef.Water += 0.1f;
-                        }
-                        else if (resultId.level == 3)
-                        {
-                            resultId.skillObj.GetComponent<TowerSpawner>().attackSpeed -= resultId.stat1[resultId.level] / 100;
-                            cef.Water += 0.1f;
-                        }
-                        else if (resultId.level == 4)
-                        {
-                            resultId.skillObj.GetComponent<TowerSpawner>().isFive = true;
-                            cef.Water += 0.1f;
-                        }
-                    }
-                    else if (skillPoint == 11)
-                    {
-                        //Updates for summon
-                        if (resultId.level == 1)
-                        {
-                            resultId.skillObj.GetComponent<SummonerEnemy>().lifeTime += (int)resultId.stat1[resultId.level];
-                        }
-                        else if (resultId.level == 2)
-                        {
-                            resultId.skillObj.GetComponent<SummonerEnemy>().isThree = true;
-                        }
-                        else if (resultId.level == 3)
-                        {
-                            resultId.skillObj.GetComponent<SummonerEnemy>().attackSpeed -= resultId.stat1[resultId.level] / 100;
-                        }
-                        else if (resultId.level == 4)
-                        {
-                            resultId.skillObj.GetComponent<SummonerEnemy>().isFive = true;
-                        }
-                    }
-                    else if (skillPoint == 12)
-                    {
-                        //Updates for meteor
-                        if (resultId.level == 1)
-                        {
-                            resultId.skillObj.GetComponent<MeteorSpawner>().damage += (int)resultId.stat1[resultId.level];
-                            cef.Fire += 0.1f;
-                            cef.Dirt += 0.1f;
-                        }
-                        else if (resultId.level == 2)
-                        {
-                            resultId.skillObj.GetComponent<MeteorSpawner>().isThree = true;
-                            cef.Fire += 0.1f;
-                            cef.Dirt += 0.1f;
-                        }
-                        else if (resultId.level == 3)
-                        {
-                            resultId.skillObj.GetComponent<MeteorSpawner>().isFour = true;
-                            cef.Fire += 0.1f;
-                            cef.Dirt += 0.1f;
-                        }
-                        else if (resultId.level == 4)
-                        {
-                            resultId.skillObj.GetComponent<MeteorSpawner>().isFive = true;
-                            cef.Fire += 0.1f;
-                            cef.Dirt += 0.1f;
-                        }
-                    }
-                    else if (skillPoint == 13)
-                    {
-                        //Updates for illusion
-                        if (resultId.level == 1)
-                        {
-                            resultId.skillObj.GetComponent<IllusionSpawner>().isTwo = true;
-                        }
-                        else if (resultId.level == 2)
-                        {
-                            resultId.skillObj.GetComponent<IllusionSpawner>().lifeTime += (int)resultId.stat1[resultId.level];
-                        }
-                        else if (resultId.level == 3)
-                        {
-                            resultId.skillObj.GetComponent<IllusionSpawner>().isFour = true;
-                        }
-                        else if (resultId.level == 4)
-                        {
-                            resultId.skillObj.GetComponent<IllusionSpawner>().isFive = true;
-                        }
-                    }
-
                     resultId.level += 1;
                     ModifyJsonField(resultId, resultId.level);
                 }
@@ -522,42 +511,60 @@ public class LevelUpgrade : MonoBehaviour
             {
                 resultId.level += 1;
                 ModifyJsonField(resultId, resultId.level);
-                SetActiveAbil(abil, skillPoint);
+                SetActiveAbil(player, abil, skillPoint);
                 objLinkSpell.valuesList.Add(0);
+
+                isSkillIcons[skillPoint] = true;
+                resultId.skillObj.GetComponent<CDSkillObject>().CD = resultId.CD;
+                resultId.skillObj.GetComponentInParent<CDSkillObject>().number = player.countActiveAbilities - 1;
+                player.abilitiesObj[player.countActiveAbilities - 1].GetComponent<CDSkills>().number = player.countActiveAbilities - 1;
+
                 if (resultId.isPassive == false)
                 {
-                    isSkillIcons[skillPoint] = true;
-                    resultId.skillObj.GetComponent<CDSkillObject>().CD = resultId.CD;
-                    resultId.skillObj.GetComponentInParent<CDSkillObject>().number = abil.countActiveAbilities - 1;
-                    abilities.abilitiesObj[abil.countActiveAbilities - 1].GetComponent<CDSkills>().number = abil.countActiveAbilities - 1;
+                    
                 }
                 else if (resultId.isPassive && skillPoint != 999)
                 {
-                    isSkillIcons[skillPoint] = true;
-                    abilities.abilitiesObj[abil.countActiveAbilities - 1].GetComponent<CDSkills>().number = abil.countActiveAbilities - 1;
-                    abilities.abilitiesObj[abil.countActiveAbilities - 1].GetComponentInChildren<TextMeshProUGUI>().gameObject.SetActive(false);
+                    player.abilitiesObj[player.countActiveAbilities - 1].GetComponentInChildren<TextMeshProUGUI>().gameObject.SetActive(false);
                 }
                
             }
             RemoveLine(skillPoint);
 
-            if (abilities.countActiveAbilities == abilities.abilitiesObj.Length)
+            if (player.countActiveAbilities == player.abilitiesObj.Length)
             {
                 RemoveAllOtherLines();
             }
         }
         else if (skillPoint == 999)
         {
-            FindObjectOfType<KillCount>().score += 20;
+            gameManager.score += 20;
         }
-
-
         objLinkSpell.Check();
 
         SkillIconsMax = skillsSave.Count;
-        Time.timeScale = 1f;
-        gameObject.SetActive(false);
-        PanelChecker.otherPanelOpened = false;
+        //Time.timeScale = 1f;
+        //gameObject.SetActive(false);
+        gameManager.ClosePanel(gameManager.levelPanel);
+        //PanelChecker.otherPanelOpened = false;
+    }
+    public void SkillBoolUpdate(int level, ref bool firstBool, ref bool secondBool, ref bool thirdBool, ref bool fourthBool)
+    {
+        switch (level)
+        {
+            case 1:
+                    firstBool = true;
+                break; 
+            case 2:
+                    secondBool = true;
+                break; 
+            case 3:
+                    thirdBool = true;
+                break; 
+            case 4:
+                    fourthBool = true;
+                break;
+        }
     }
     //Remove ability ID
     public void RemoveLine(int skillPoint)
@@ -587,25 +594,17 @@ public class LevelUpgrade : MonoBehaviour
         LoadSkill(skillsSave);
     }
     //Activate skill if it`s not active
-    public void SetActiveAbil(ActivateAbilities abil, int skillPoint)
+    public void SetActiveAbil(PlayerManager player,GameObject abilObj, int skillPoint)
     {
-        if (resultId.isPassive == false)
+        SetActiviti(resultId.skillObj, true);
+        if (skillPoint == 0)
         {
-            SetActiviti(resultId.skillObj, true);
+            player.damageToGive += resultId.stat1[resultId.level];
         }
-        else
-        {
-            if (skillPoint == 0)
-            {
-                objShoot.damageToGive += resultId.stat1[resultId.level];
-            }
-        }
-        abil.abilitiesObj[abil.countActiveAbilities].SetActive(true);
-        abil.abilities[abil.countActiveAbilities].sprite = Resources.Load<Sprite>(resultId.Name);
-        abil.countActiveAbilities += 1;
-        abil.transform.GetChild(abil.countActiveAbilities-1).GetComponent<CDSkills>().abilityId = skillPoint;
-
-
+        player.abilitiesObj[player.countActiveAbilities].SetActive(true);
+        player.abilities[player.countActiveAbilities].sprite = Resources.Load<Sprite>(resultId.Name);
+        player.countActiveAbilities += 1;
+        abilObj.transform.GetChild(player.countActiveAbilities - 1).GetComponent<CDSkills>().abilityId = skillPoint;
     }
     public void RemoveAllOtherLines()
     {
@@ -731,6 +730,5 @@ public class LevelUpgrade : MonoBehaviour
             File.WriteAllLines(path, skillsUpdatedList.ToArray());
         }
     }
-
 }
 
