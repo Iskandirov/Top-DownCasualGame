@@ -13,16 +13,15 @@ public class Sounds
     public float pitch;
 
     public bool loop;
-
-    [HideInInspector]
-    public AudioSource source;
 }
-
+[DefaultExecutionOrder(11)]
 public class AudioManager : MonoBehaviour
 {
-    public Sounds[] sounds;
+    public Sounds[] sounds, sfx;
+    public AudioSource musicObj, sfxObj;
 
-    public float volume;
+    public float volumeMusic;
+    public float volumeSFX;
 
     public string nameClip;
 
@@ -41,39 +40,36 @@ public class AudioManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
-        foreach (Sounds s in sounds)
-        {
-            s.volume = volume;
-            s.source = gameObject.AddComponent<AudioSource>();
-            s.source.clip = s.clip;
-
-            s.source.volume = s.volume;
-            s.source.pitch = s.pitch;
-            s.source.loop = s.loop;
-        }
-        Play(nameClip);
+        PlayMusic(nameClip);
     }
-    public void ChangeVolume(float volume)
+    public void ChangeVolume(float volume,AudioSource source)
     {
-        foreach (Sounds s in sounds)
-        {
-            s.volume = volume;
-            s.source.volume = volume;
-        }
+        source.volume = volume;
     }
-    public void Play(string name)
+    public void MusicStop()
     {
-        foreach (var sound in sounds)
-        {
-            sound.source.Stop();
-        }
+        musicObj.Stop();
+    }
+    public void PlayMusic(string name)
+    {
+        MusicStop();
         Sounds s = Array.Find(sounds, sound => sound.name == name);
         if (s == null)
         {
             Debug.LogWarning("Sound: " + name + " does not exist");
             return;
         }
-        s.source.Play();
+        musicObj.clip = s.clip;
+        musicObj.Play();
+    }
+    public void PlaySFX(string name)
+    {
+        Sounds s = Array.Find(sfx, sound => sound.name == name);
+        if (s == null)
+        {
+            Debug.LogWarning("Sound: " + name + " does not exist");
+            return;
+        }
+        sfxObj.PlayOneShot(s.clip);
     }
 }

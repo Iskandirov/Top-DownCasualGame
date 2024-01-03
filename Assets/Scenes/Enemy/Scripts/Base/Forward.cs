@@ -91,7 +91,10 @@ public class Forward : MonoBehaviour
 
     public void StartMove()
     {
-        path.maxSpeed = currentSpeed;
+        if (path != null)
+        {
+            path.maxSpeed = currentSpeed;
+        }
     }
     public IEnumerator SlowEnemy(float time, float percent)
     {

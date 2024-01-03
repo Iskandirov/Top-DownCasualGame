@@ -66,7 +66,8 @@ public class ItemParameters : MonoBehaviour
             }
             if (AudioManager.instance != null)
             {
-                AudioManager.instance.Play("Win");
+                AudioManager.instance.MusicStop();
+                AudioManager.instance.PlaySFX("Win");
             }
             Destroy(gameObject);
         }

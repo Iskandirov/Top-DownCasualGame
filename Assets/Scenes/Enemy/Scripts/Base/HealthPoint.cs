@@ -27,8 +27,6 @@ public class HealthPoint : MonoBehaviour
     public float expGiven;
     public float dangerLevel;
 
-    private Camera mainCamera;
-    float spawnRadius = 80f;
 
     [Header("Boss Anim")]
     public Boss_Destroy bodyAnimBoss;
@@ -62,6 +60,7 @@ public class HealthPoint : MonoBehaviour
     public GameObject healthBossObj;
     GameObject health;
     PlayerManager player;
+    SpawnManager spawner;
    
     // Start is called before the first frame update
     void Start()
@@ -74,6 +73,7 @@ public class HealthPoint : MonoBehaviour
             objPart = GetComponent<CutThePart>();
         }
         player = PlayerManager.instance;
+        spawner = SpawnManager.inst;
         objsSprite = GetComponentsInChildren<SpriteRenderer>();
         objDrop = GetComponentInParent<DropItems>();
         objMove = GetComponentInParent<Forward>();
@@ -146,17 +146,16 @@ public class HealthPoint : MonoBehaviour
             else
             {
                 ExpGive();
-                mainCamera = Camera.main;
                 healthPoint = healthPointMax;
                 if (objMove != null)
                 { 
                     // Генеруємо випадкові координати в межах заданої області спавну
-                    Vector3 spawnPosition = SpawnManager.inst.GetRandomSpawnPosition();
+                    Vector3 spawnPosition = spawner.GetRandomSpawnPosition();
                     objMove.transform.position = spawnPosition;
                 }
                 else
                 {
-                    SpawnManager.inst.SpawnObjectInMapBounds(transform.parent.gameObject);
+                    spawner.SpawnObjectInMapBounds(transform.parent.gameObject);
                 }
             }
             if (GetComponentInParent<ElementActiveDebuff>() != null)

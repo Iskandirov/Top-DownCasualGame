@@ -998,7 +998,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc4c5aa051255a34e9231ca975fcd2cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scroll: {fileID: 1918779101}
+  volumeMusic: {fileID: 1918779101}
+  volumeSFX: {fileID: 735430078}
   toggle: {fileID: 370845494}
   drop: {fileID: 1554513401}
 --- !u!1 &370845492
@@ -1374,13 +1375,13 @@ MonoBehaviour:
   m_Direction: 0
   m_Value: 0
   m_Size: 0.1
-  m_NumberOfSteps: 10
+  m_NumberOfSteps: 11
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 324294184}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
-        m_MethodName: SetVolume
+        m_MethodName: SetVolumeSFX
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2911,13 +2912,13 @@ MonoBehaviour:
   m_Direction: 0
   m_Value: 0
   m_Size: 0.1
-  m_NumberOfSteps: 10
+  m_NumberOfSteps: 11
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 324294184}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
-        m_MethodName: SetVolume
+        m_MethodName: SetVolumeMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

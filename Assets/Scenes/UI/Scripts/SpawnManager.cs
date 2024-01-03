@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
+[DefaultExecutionOrder(11)]
 public class SpawnManager : MonoBehaviour
 {
     GameManager gameManager;
@@ -24,9 +24,10 @@ public class SpawnManager : MonoBehaviour
     public Collider2D spawnMapBound;
     public Timer Timer;
     public bool stopSpawn;
-    private Camera mainCamera;
+    public Camera mainCamera;
     public float spawnRadius = 10f;
     public float radiusWeed = 5.0f;
+    public int enemycount;
     private void Awake()
     {
         inst ??= this;
@@ -41,13 +42,6 @@ public class SpawnManager : MonoBehaviour
         enemyPool = InitializeObjectPool(EnemyBody.ToList(), enemyPoolSize);
         StartCoroutine(SpawnRoutine(barrelSpawnInterval));
         StartCoroutine(SpawnEnemyRoutine(enemySpawnInterval));
-    }
-    private void FixedUpdate()
-    {
-        if (!stopSpawn)
-        {
-            mainCamera = Camera.main;
-        }
     }
     List<GameObject> InitializeObjectPool(GameObject objectPrefab,int pool)
     {
@@ -122,7 +116,7 @@ public class SpawnManager : MonoBehaviour
     //Enemy
     private IEnumerator SpawnEnemyRoutine(float interval)
     {
-        while (true)
+        while (enemycount < enemyPoolSize)
         {
             yield return new WaitForSeconds(interval);
 
@@ -131,7 +125,7 @@ public class SpawnManager : MonoBehaviour
     }
     private bool IsInsideCameraBounds(Vector3 position)
     {
-        Vector3 viewportPosition = mainCamera.WorldToViewportPoint(position);
+        Vector3 viewportPosition = GameManager.Instance.GetComponent<Camera>().WorldToViewportPoint(position);
         return viewportPosition.x >= 0f && viewportPosition.x <= 1f && viewportPosition.y >= 0f && viewportPosition.y <= 1f;
     }
 
@@ -155,7 +149,7 @@ public class SpawnManager : MonoBehaviour
         {
             float randomAngle = Random.Range(0f, 2f * Mathf.PI);
             Vector3 spawnOffset = new Vector3(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle), 0f) * spawnRadius;
-            spawnPosition = new Vector3(mainCamera.transform.position.x + spawnOffset.x, mainCamera.transform.position.y + spawnOffset.y, 1.8f);
+            spawnPosition = new Vector3(GameManager.Instance.transform.position.x + spawnOffset.x, GameManager.Instance.transform.position.y + spawnOffset.y, 1.8f);
         } while (IsInsideCameraBounds(spawnPosition) || IsInsideWallBounds(spawnPosition));
 
         return spawnPosition;
@@ -193,6 +187,7 @@ public class SpawnManager : MonoBehaviour
                 timeStepWeed = 0;
             }
         }
+        enemycount++;
     }
     public void IDChecker(string enemyName)
     {

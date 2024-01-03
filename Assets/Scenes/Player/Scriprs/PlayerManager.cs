@@ -150,7 +150,8 @@ public class PlayerManager : MonoBehaviour
         playerAnim.SetBool("IsHit", false);
         if (playerHealthPoint <= 0)
         {
-            AudioManager.instance.Play("PlayerDeath");
+            AudioManager.instance.MusicStop();
+            AudioManager.instance.PlaySFX("PlayerDeath");
             gameManager.OpenPanel(gameManager.losePanel);
         }
     }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class ReloadSkillSpawner : MonoBehaviour
@@ -13,6 +14,7 @@ public class ReloadSkillSpawner : MonoBehaviour
 
     public SkillCDLink spellObj;
     public List<CDSkillObject> spells;
+    public List<CDSkillObject> spellsToRemove;
     int buttonActivateSkill;
     KeyCode keyCode;
     // Start is called before the first frame update
@@ -35,9 +37,18 @@ public class ReloadSkillSpawner : MonoBehaviour
         {
             if (spell.isPassive || spell == gameObject.GetComponent<CDSkillObject>())
             {
-                spells.RemoveAt(spells.IndexOf(spell));
+                spellsToRemove.Add(spell);
+                //spells.RemoveAt(spells.IndexOf(spell));
             }
         }
+        foreach (var remove in spellsToRemove)
+        {
+            if (spells.Contains(remove))
+            {
+                spells.RemoveAt(spells.IndexOf(remove));
+            }
+        }
+        spellsToRemove.Clear();
     }
     // Update is called once per frame
     void FixedUpdate()

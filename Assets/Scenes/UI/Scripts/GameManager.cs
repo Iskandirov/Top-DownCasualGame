@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 [DefaultExecutionOrder(5)]
 public class GameManager : MonoBehaviour
@@ -31,7 +33,8 @@ public class GameManager : MonoBehaviour
     public List<SettingsData> dataSett = new List<SettingsData>();
     public string loc = "eng";
     
-    public float volume;
+    public float volumeMusic;
+    public float volumeSFX;
     public float vSync;
     public string nameClip;
 
@@ -79,16 +82,17 @@ public class GameManager : MonoBehaviour
     DataHashing hashing;
     void Awake()
     {
-        if (Instance != null)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            Instance = this;
-            return;
-        }
-        DontDestroyOnLoad(this);
+        Instance = this;
+        //if (Instance != null)
+        //{
+        //    Destroy(gameObject);
+        //}
+        //else
+        //{
+        //    Instance = this;
+        //    return;
+        //}
+        //DontDestroyOnLoad(this);
 
     }
     // Start is called before the first frame update
@@ -125,7 +129,6 @@ public class GameManager : MonoBehaviour
     {
         if (!IsSettingsPage && IsGamePage)
         {
-            Timer();
             ShowLevel();
         }
     }
@@ -133,6 +136,10 @@ public class GameManager : MonoBehaviour
     {
         if (!IsSettingsPage)
         {
+            if (IsGamePage)
+            {
+                Timer();
+            }
             //can`t press pause after lose
             if (Input.GetKeyUp(KeyCode.Escape) && player.playerHealthPoint > 0)
             {
@@ -153,14 +160,14 @@ public class GameManager : MonoBehaviour
         AudioManager music = AudioManager.instance;
         if (music.nameClip != nameClip && nameClip != null)
         {
-            music.Play(nameClip);
+            music.PlayMusic(nameClip);
             music.nameClip = nameClip;
 
         }
         StartLoad();
         if (music != null)
         {
-            music.volume = volume;
+            music.volumeMusic = volumeMusic;
         }
     }
     //Panels
@@ -378,7 +385,18 @@ public class GameManager : MonoBehaviour
                 {
                     if (float.TryParse(settings.value, out float res))
                     {
-                        volume = res;
+                        volumeMusic = res;
+                        AudioManager.instance.volumeMusic = volumeMusic;
+                        AudioManager.instance.musicObj.volume = volumeMusic;
+                    }
+                }
+                if (settings.key == "sfx")
+                {
+                    if (float.TryParse(settings.value, out float res))
+                    {
+                        volumeSFX = res;
+                        AudioManager.instance.volumeSFX = volumeSFX;
+                        AudioManager.instance.sfxObj.volume = volumeSFX;
                     }
                 }
                 if (settings.key == "v-sync")
@@ -574,14 +592,14 @@ public class GameManager : MonoBehaviour
     //KillCount
     public void Timer()
     {
-        deltaTime += (Time.fixedUnscaledDeltaTime - deltaTime) * 0.1f;
+        deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
 
         // Перевірка, чи настав час оновлення виводу FPS
-        if (Time.fixedUnscaledTime - lastUpdateTime > updateInterval)
+        if (Time.time - lastUpdateTime > updateInterval)
         {
-            float fps = 1.0f / Time.fixedDeltaTime;
+            float fps = 1.0f / Time.deltaTime;
             fpsText.text = "FPS: " + fps.ToString("0.");
-            lastUpdateTime = Time.fixedUnscaledTime;
+            lastUpdateTime = Time.time;
         }
     }
     public int LoadObjectLevelCount(int objectID)

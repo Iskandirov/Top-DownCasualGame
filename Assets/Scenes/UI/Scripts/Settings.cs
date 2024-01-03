@@ -7,7 +7,8 @@ using UnityEngine.UI;
 [DefaultExecutionOrder(10)]
 public class Settings : MonoBehaviour
 {
-    public Scrollbar scroll;
+    public Scrollbar volumeMusic;
+    public Scrollbar volumeSFX;
     public Toggle toggle;
     GameManager gameManager;
     public TMP_Dropdown drop;
@@ -26,7 +27,8 @@ public class Settings : MonoBehaviour
         else
         {
             StartSet();
-            SetVolume();
+            SetVolumeMusic();
+            SetVolumeSFX();
             SetVSync();
             SetLanguage();
         }
@@ -43,25 +45,38 @@ public class Settings : MonoBehaviour
     {
         gameManager = GameManager.Instance;
         drop.value = gameManager.language.IndexOf(gameManager.loc);
-        scroll.value = gameManager.volume;
         toggle.isOn = Convert.ToBoolean(gameManager.vSync);
-        AudioListener.volume = scroll.value;
+        volumeMusic.value = gameManager.volumeMusic;
+        volumeSFX.value = gameManager.volumeSFX;
+        AudioManager.instance.musicObj.volume = volumeMusic.value;
+        AudioManager.instance.sfxObj.volume = volumeSFX.value;
     }
 
     // Метод для зміни гучності гри
-    public void SetVolume()
+    public void SetVolumeMusic()
     {
         List<string> value = new List<string>()
             {
             "volume",
-            scroll.value.ToString(),
+            volumeMusic.value.ToString(),
             // Додаткові значення списку
             };
+       
         gameManager.ChangeSetting(value);
-        AudioManager.instance.ChangeVolume(AudioManager.instance.volume);
-        AudioListener.volume = scroll.value;
+        AudioManager.instance.ChangeVolume(AudioManager.instance.volumeMusic, AudioManager.instance.musicObj);
     }
-
+    public void SetVolumeSFX()
+    {
+       
+        List<string> valueSFX = new List<string>()
+            {
+            "sfx",
+            volumeSFX.value.ToString(),
+            // Додаткові значення списку
+            };
+        gameManager.ChangeSetting(valueSFX);
+        AudioManager.instance.ChangeVolume(AudioManager.instance.volumeSFX, AudioManager.instance.sfxObj);
+    }
     public void SetVSync()
     {
         string value = "0";

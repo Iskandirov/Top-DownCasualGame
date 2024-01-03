@@ -182,6 +182,7 @@ public class LevelUpgrade : MonoBehaviour
                             switch (resultId.level)
                             {
                                 case 1:
+                                    player.isLevelTwo = true;
                                     player.secondBulletCount = (int)resultId.stat1[resultId.level];
                                     break;
                                 case 2:
@@ -190,10 +191,10 @@ public class LevelUpgrade : MonoBehaviour
                                 case 3:
                                     player.secondBulletCount = (int)resultId.stat1[resultId.level];
                                     break;
-                                default:
+                                case 4:
+                                    player.isLevelFive = true;
                                     break;
                             }
-                            SkillBoolUpdate(resultId.level, ref player.isLevelTwo, ref empty, ref empty, ref player.isLevelFive);
                             //Updates for bullet
                             break;
                         case 1:
@@ -253,19 +254,21 @@ public class LevelUpgrade : MonoBehaviour
                                     player.Dirt += 0.1f;
                                     break;
                                 case 2:
+                                    resultId.skillObj.GetComponent<MeteorSpawner>().isThree = true;
                                     player.Fire += 0.1f;
                                     player.Dirt += 0.1f;
                                     break;
                                 case 3:
+                                    resultId.skillObj.GetComponent<MeteorSpawner>().isFour = true;
                                     player.Fire += 0.1f;
                                     player.Dirt += 0.1f;
                                     break;
                                 case 4:
+                                    resultId.skillObj.GetComponent<MeteorSpawner>().isFive = true;
                                     player.Fire += 0.1f;
                                     player.Dirt += 0.1f;
                                     break;
                             }
-                            SkillBoolUpdate(resultId.level, ref empty, ref resultId.skillObj.GetComponent<MeteorSpawner>().isThree, ref resultId.skillObj.GetComponent<MeteorSpawner>().isFour, ref resultId.skillObj.GetComponent<MeteorSpawner>().isFive);
                             //Updates for meteor
                             break;
                         case 4:
@@ -276,6 +279,7 @@ public class LevelUpgrade : MonoBehaviour
                                     player.Fire += 0.1f;
                                     break;
                                 case 2:
+                                    resultId.skillObj.GetComponent<FireWaveSpawner>().isLevelThree = true;
                                     player.Fire += 0.1f;
                                     break;
                                 case 3:
@@ -287,7 +291,6 @@ public class LevelUpgrade : MonoBehaviour
                                     player.Fire += 0.1f;
                                     break;
                             }
-                            SkillBoolUpdate(resultId.level, ref empty, ref resultId.skillObj.GetComponent<FireWaveSpawner>().isLevelThree, ref empty, ref empty);
                             //Updates for fire wave
                             break;
                         case 5:
@@ -298,6 +301,7 @@ public class LevelUpgrade : MonoBehaviour
                                     player.Grass += 0.1f;
                                     break;
                                 case 2:
+                                    resultId.skillObj.GetComponent<HealSpawner>().isLevelTwo = true;
                                     player.Grass += 0.1f;
                                     break;
                                 case 3:
@@ -309,7 +313,6 @@ public class LevelUpgrade : MonoBehaviour
                                     player.Grass += 0.1f;
                                     break;
                             }
-                            SkillBoolUpdate(resultId.level, ref empty, ref resultId.skillObj.GetComponent<HealSpawner>().isLevelTwo, ref empty, ref empty);
                             //Updates for heal
                             break;
                         case 6:
@@ -325,9 +328,9 @@ public class LevelUpgrade : MonoBehaviour
                                     resultId.skillObj.GetComponent<ReloadSkillSpawner>().count += (int)resultId.stat1[resultId.level];
                                     break;
                                 case 4:
+                                    resultId.skillObj.GetComponent<ReloadSkillSpawner>().isLevelFive = true;
                                     break;
                             }
-                            SkillBoolUpdate(resultId.level, ref empty, ref empty, ref empty, ref resultId.skillObj.GetComponent<ReloadSkillSpawner>().isLevelFive);
                             //Updates for reload
                             break;
                         case 7:
@@ -344,15 +347,16 @@ public class LevelUpgrade : MonoBehaviour
                                     player.Grass += 0.1f;
                                     break;
                                 case 3:
+                                    resultId.skillObj.GetComponent<ImpulsSpawner>().isFour = true;
                                     player.Wind += 0.1f;
                                     player.Grass += 0.1f;
                                     break;
                                 case 4:
+                                    resultId.skillObj.GetComponent<ImpulsSpawner>().isFive = true;
                                     player.Wind += 0.1f;
                                     player.Grass += 0.1f;
                                     break;
                             }
-                            SkillBoolUpdate(resultId.level, ref empty, ref empty, ref resultId.skillObj.GetComponent<ImpulsSpawner>().isFour, ref resultId.skillObj.GetComponent<ImpulsSpawner>().isFive);
                             //Updates for impuls
                             break;
                         case 8:
@@ -363,22 +367,25 @@ public class LevelUpgrade : MonoBehaviour
                                     player.Dirt += 0.1f;
                                     break;
                                 case 2:
+                                    resultId.skillObj.GetComponent<ShieldSpawner>().isThree = true;
                                     player.Dirt += 0.1f;
                                     break;
                                 case 3:
+                                    resultId.skillObj.GetComponent<ShieldSpawner>().isFour = true;
                                     player.Dirt += 0.1f;
                                     break;
                                 case 4:
+                                    resultId.skillObj.GetComponent<ShieldSpawner>().isFive = true;
                                     player.Dirt += 0.1f;
                                     break;
                             }
-                            SkillBoolUpdate(resultId.level, ref empty, ref resultId.skillObj.GetComponent<ShieldSpawner>().isThree, ref resultId.skillObj.GetComponent<ShieldSpawner>().isFour, ref resultId.skillObj.GetComponent<ShieldSpawner>().isFive);
                             //Updates for shield
                             break;
                         case 9:
                             switch (resultId.level)
                             {
                                 case 1:
+                                    resultId.skillObj.GetComponent<BeamSpawner>().isTwo = true;
                                     player.Steam += 0.1f;
                                     break;
                                 case 2:
@@ -394,7 +401,6 @@ public class LevelUpgrade : MonoBehaviour
                                     player.Steam += 0.1f;
                                     break;
                             }
-                            SkillBoolUpdate(resultId.level, ref resultId.skillObj.GetComponent<BeamSpawner>().isTwo, ref empty, ref empty, ref empty);
                             //Updates for beam
                             break;
                         case 10:
@@ -405,6 +411,7 @@ public class LevelUpgrade : MonoBehaviour
                                     player.Water += 0.1f;
                                     break;
                                 case 2:
+                                    resultId.skillObj.GetComponent<TowerSpawner>().isThree = true;
                                     player.Water += 0.1f;
                                     break;
                                 case 3:
@@ -412,22 +419,28 @@ public class LevelUpgrade : MonoBehaviour
                                     player.Water += 0.1f;
                                     break;
                                 case 4:
+                                    resultId.skillObj.GetComponent<TowerSpawner>().isFive = true;
                                     player.Water += 0.1f;
                                     break;
                             }
-                            SkillBoolUpdate(resultId.level, ref empty, ref resultId.skillObj.GetComponent<TowerSpawner>().isThree, ref empty, ref resultId.skillObj.GetComponent<TowerSpawner>().isFive);
                             //Updates for tower
                             break;
                         case 11:
                             switch (resultId.level)
                             {
+                                case 1:
+                                    resultId.skillObj.GetComponent<IllusionSpawner>().isTwo = true;
+                                    break;
                                 case 2:
                                     resultId.skillObj.GetComponent<IllusionSpawner>().lifeTime += resultId.stat1[resultId.level];
                                     break;
-                                default:
-                                    continue;
+                                case 3:
+                                    resultId.skillObj.GetComponent<IllusionSpawner>().isFour = true;
+                                    break;
+                                case 4:
+                                    resultId.skillObj.GetComponent<IllusionSpawner>().isFive = true;
+                                    break;
                             }
-                            SkillBoolUpdate(resultId.level, ref resultId.skillObj.GetComponent<IllusionSpawner>().isTwo, ref empty, ref resultId.skillObj.GetComponent<IllusionSpawner>().isFour, ref resultId.skillObj.GetComponent<IllusionSpawner>().isFive);
                             //Updates for illusion
                             break;
                         case 12:
@@ -442,10 +455,10 @@ public class LevelUpgrade : MonoBehaviour
                                 case 3:
                                     resultId.skillObj.GetComponent<Trail>().size += resultId.stat1[resultId.level];
                                     break;
-                                default:
-                                    continue;
+                                case 4:
+                                    resultId.skillObj.GetComponent<Trail>().isFive = true;
+                                    break;
                             }
-                            SkillBoolUpdate(resultId.level, ref empty, ref empty, ref empty, ref resultId.skillObj.GetComponent<Trail>().isFive);
                             //Updates for trail
                             break;
                         case 13:
@@ -460,10 +473,10 @@ public class LevelUpgrade : MonoBehaviour
                                 case 3:
                                     resultId.skillObj.GetComponent<VortexSpawner>().stepMax -= resultId.stat1[resultId.level];
                                     break;
-                                default:
-                                    continue;
+                                case 4:
+                                    resultId.skillObj.GetComponent<VortexSpawner>().isFive = true;
+                                    break;
                             }
-                            SkillBoolUpdate(resultId.level, ref empty, ref empty, ref empty, ref resultId.skillObj.GetComponent<VortexSpawner>().isFive);
                             //Updates for vortex
                             break;
                         case 14:
@@ -496,10 +509,10 @@ public class LevelUpgrade : MonoBehaviour
                                 case 3:
                                     resultId.skillObj.GetComponent<MagicAxeSpawner>().stepMax -= resultId.stat1[resultId.level];
                                     break;
-                                default:
-                                    continue;
+                                case 4:
+                                    resultId.skillObj.GetComponent<MagicAxeSpawner>().isFive = true;
+                                    break;
                             }
-                            SkillBoolUpdate(resultId.level, ref empty, ref empty, ref empty, ref resultId.skillObj.GetComponent<MagicAxeSpawner>().isFive);
                             //Updates for magic axe
                             break;
                     }
@@ -547,24 +560,6 @@ public class LevelUpgrade : MonoBehaviour
         //gameObject.SetActive(false);
         gameManager.ClosePanel(gameManager.levelPanel);
         //PanelChecker.otherPanelOpened = false;
-    }
-    public void SkillBoolUpdate(int level, ref bool firstBool, ref bool secondBool, ref bool thirdBool, ref bool fourthBool)
-    {
-        switch (level)
-        {
-            case 1:
-                    firstBool = true;
-                break; 
-            case 2:
-                    secondBool = true;
-                break; 
-            case 3:
-                    thirdBool = true;
-                break; 
-            case 4:
-                    fourthBool = true;
-                break;
-        }
     }
     //Remove ability ID
     public void RemoveLine(int skillPoint)

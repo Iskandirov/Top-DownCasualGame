@@ -21,14 +21,14 @@ public class RestartGame : MonoBehaviour
     }
     public void Restart()
     {
-        AudioManager.instance.Play("GameTheme");
+        AudioManager.instance.PlayMusic("GameTheme");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     public void OpenOtherScene(string scenename)
     {
         if (scenename == "Menu")
         {
-            AudioManager.instance.Play("Theme");
+            AudioManager.instance.PlayMusic("Theme");
         }
         SceneManager.LoadScene(scenename);
     }
