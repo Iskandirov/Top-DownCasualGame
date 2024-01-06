@@ -5,7 +5,6 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static LevelUpgrade;
 
 public class LevelUpgrade : MonoBehaviour
 {
@@ -29,9 +28,8 @@ public class LevelUpgrade : MonoBehaviour
     //public List<SavedSkillsData> skillsLoad;
     public SavedSkillsData gold;
     public List<string> skillsUpdatedList;
-
     [Header("Two random skill count")]
-    public List<int> choise = new List<int>();
+    public int[] choose;
 
     [Header("Checkers")]
     public bool isOpenToUpgrade;
@@ -48,6 +46,7 @@ public class LevelUpgrade : MonoBehaviour
     public GameObject abil;
     bool empty;
     public static LevelUpgrade instance;
+   
     private void Awake()
     {
         instance ??= this;
@@ -88,60 +87,28 @@ public class LevelUpgrade : MonoBehaviour
 
         List<GameObject> list = new List<GameObject>();
 
-        if (skillsSave.Count > 1)
+        choose = skillsSave.Count > 1
+            ? Enumerable.Range(0, 2)
+                .Select(_ => skillsSave[UnityEngine.Random.Range(0, skillsSave.Count)].ID)
+                .Distinct()
+                .ToArray()
+            : Enumerable.Repeat(999, 2).ToArray();
+
+        for (int i = 0; i < 2; i++)
         {
-            while (choise.Count < 2)
-            {
-                int randomObject = skillsSave[UnityEngine.Random.Range(0, skillsSave.Count)].ID;
-                if (skillsSave.Any(skill => skill.ID == randomObject) && !choise.Contains(randomObject))
-                {
-                    choise.Add(randomObject);
-                }
-            }
+            var skill = i < skillsSave.Count
+                ? skillsSave.First(s => s.ID == choose[i])
+                : gold;
+            var buffText = i == 0 ? firstBuff : secondBuff;
+            var buffBtn = i == 0 ? firstBuffBtn : secondBuffBtn;
+            var objText = i == 0 ? objTextOne : objTextTwo;
 
-            firstBuff.text = skillsSave.First(skill => skill.ID == choise[0]).Description[skillsSave.First(skill => skill.ID == choise[0]).level];
-            firstBuffBtn.sprite = Resources.Load<Sprite>(skillsSave.First(skill => skill.ID == choise[0]).Name);
-            objTextOne.tagText = skillsSave.First(skill => skill.ID == choise[0]).tag[skillsSave.First(skill => skill.ID == choise[0]).level];
-            list.Add(firstBuff.gameObject);
-
-            secondBuff.text = skillsSave.First(skill => skill.ID == choise[1]).Description[skillsSave.First(skill => skill.ID == choise[1]).level];
-            secondBuffBtn.sprite = Resources.Load<Sprite>(skillsSave.First(skill => skill.ID == choise[1]).Name);
-            objTextTwo.tagText = skillsSave.First(skill => skill.ID == choise[1]).tag[skillsSave.First(skill => skill.ID == choise[1]).level];
-            list.Add(secondBuff.gameObject);
+            buffText.text = skill.Description[skill.level];
+            buffBtn.sprite = Resources.Load<Sprite>(skill.Name);
+            objText.tagText = skill.tag[skill.level];
+            list.Add(buffText.gameObject);
         }
-        else if (skillsSave.Count == 1)
-        {
 
-            choise.Add(skillsSave[0].ID);
-
-            firstBuff.text = skillsSave[0].Description[skillsSave[0].level];
-            firstBuffBtn.sprite = Resources.Load<Sprite>(skillsSave[0].Name);
-            objTextOne.tagText = skillsSave[0].tag[skillsSave[0].level];
-            list.Add(firstBuff.gameObject);
-
-            choise.Add(999);
-
-            secondBuff.text = gold.Description[0];
-            secondBuffBtn.sprite = Resources.Load<Sprite>(gold.Name);
-            objTextTwo.tagText = gold.tag[0];
-            list.Add(secondBuff.gameObject);
-        }
-        else if (skillsSave.Count == 0)
-        {
-            choise.Add(999);
-
-            firstBuff.text = gold.Description[0];
-            firstBuffBtn.sprite = Resources.Load<Sprite>(gold.Name);
-            objTextOne.tagText = gold.tag[0];
-            list.Add(firstBuff.gameObject);
-
-            choise.Add(999);
-
-            secondBuff.text = gold.Description[0];
-            secondBuffBtn.sprite = Resources.Load<Sprite>(gold.Name);
-            objTextTwo.tagText = gold.tag[0];
-            list.Add(secondBuff.gameObject);
-        }
         GameManager.Instance.UpdateText(list);
     }
 
@@ -149,15 +116,13 @@ public class LevelUpgrade : MonoBehaviour
     public void UpgradeFirst()
     {
         isFirstToUpgrade = true;
-        Udgrade(choise[0]);
-        choise.Clear();
+        Udgrade(choose[0]);
     }
     //Choose second button
     public void UpgradeSecond()
     {
         isFirstToUpgrade = false;
-        Udgrade(choise[1]);
-        choise.Clear();
+        Udgrade(choose[1]);
     }
     public void Udgrade(int skillPoint)
     {
@@ -173,9 +138,11 @@ public class LevelUpgrade : MonoBehaviour
         {
             for (int i = 0; i < player.countActiveAbilities; i++)
             {
-                if (abil.transform.GetChild(i).GetComponent<CDSkills>().abilityId == skillPoint)
+                var abilityScript = abil.transform.GetChild(i).GetComponent<CDSkills>();
+
+                if (abilityScript.abilityId == skillPoint)
                 {
-                    Instantiate(starObj, abil.transform.GetChild(i).GetComponent<CDSkills>().GetComponentInChildren<HorizontalLayoutGroup>().transform);
+                    Instantiate(starObj, abilityScript.GetComponentInChildren<HorizontalLayoutGroup>().transform);
                     switch (skillPoint) 
                     {
                         case 0:
@@ -516,14 +483,12 @@ public class LevelUpgrade : MonoBehaviour
                             //Updates for magic axe
                             break;
                     }
-                    resultId.level += 1;
-                    ModifyJsonField(resultId, resultId.level);
+                    resultId.Upgrade();
                 }
             }
             if (resultId.level == 0)
             {
-                resultId.level += 1;
-                ModifyJsonField(resultId, resultId.level);
+                resultId.Upgrade();
                 SetActiveAbil(player, abil, skillPoint);
                 objLinkSpell.valuesList.Add(0);
 

@@ -94,6 +94,26 @@ public class SavedSkillsData
     public string tagRare;
     public List<string> Description;
     public List<float> stat1;
+    public int MaxLevel { get; }
+    public SavedSkillsData()
+    {
+        stat1 = new List<float>(4);
+        level = 0;
+        MaxLevel = 5;
+    }
+    public void Upgrade()
+    {
+        if (level < MaxLevel)
+        {
+            level++;
+            ApplyUpgradeEffects();
+        }
+    }
+    private void ApplyUpgradeEffects()
+    {
+        LevelUpgrade.instance.ModifyJsonField(this, level);
+        // Логіка для застосування ефектів покращення
+    }
 }
 [System.Serializable]
 public class SaveEnemyInfo
