@@ -1,29 +1,59 @@
 using System.Collections;
-using System.Numerics;
+using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
-public class FireWave : MonoBehaviour
+public class FireWave : SkillBaseMono
 {
-    public float lifeTime;
-    public float damage;
     public float burnDamage;
     public float fireElement;
+    public bool isTriggerred;
     PlayerManager player;
+    
     // Start is called before the first frame update
     void Start()
     {
         player = PlayerManager.instance;
-        StartCoroutine(TimerSpell());
-    }
+        if (basa.stats[1].isTrigger)
+        {
+            basa.damage += basa.stats[1].value;
+            basa.stats[1].isTrigger = false;
+        }
+        if (basa.stats[2].isTrigger)
+        {
+            isTriggerred = true;
+        }
+        if (basa.stats[3].isTrigger)
+        {
+            basa.stepMax -= basa.stats[3].value;
+            //!!!!
+            basa.skill.skillCD -= StabilizateCurrentReload(basa.skill.skillCD, basa.stats[3].value);
+            //!!!!
+            basa.stats[3].isTrigger = false;
+        }
+        if (basa.stats[4].isTrigger)
+        {
+            burnDamage += basa.stats[4].value;
+            basa.stats[4].isTrigger = false;
+        }
+        //basa = SetToSkillID(gameObject);
+        basa.damage = basa.damage * player.Fire;
 
-    private IEnumerator TimerSpell()
+        //CoroutineToDestroy(gameObject, basa.lifeTime);
+    }
+    public void IsNeedToDestroy()
     {
-        yield return new WaitForSeconds(lifeTime);
-
-        Destroy(gameObject);
-
+        if (!isTriggerred)
+        {
+            Destroy(gameObject);
+        }
     }
+    //public void CreateWave()
+    //{
+    //    FireWave a = Instantiate(this, transform.position, Quaternion.identity);
+    //    a.basa.damage = basa.damage;
+    //    a.fireElement = player.Fire;
+    //    a.burnDamage = burnDamage;
+    //}
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -39,8 +69,8 @@ public class FireWave : MonoBehaviour
                 collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isFire", true, true);
                 collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isFire", true, false);
             }
-            collision.GetComponent<HealthPoint>().TakeDamage((damage * fireElement * collision.GetComponent<HealthPoint>().Water) / collision.GetComponent<HealthPoint>().Fire);
-            GameManager.Instance.FindStatName("fireWaveDamage", (damage * fireElement * collision.GetComponent<HealthPoint>().Water) / collision.GetComponent<HealthPoint>().Fire);
+            collision.GetComponent<HealthPoint>().TakeDamage((basa.damage * collision.GetComponent<HealthPoint>().Water) / collision.GetComponent<HealthPoint>().Fire);
+            GameManager.Instance.FindStatName("fireWaveDamage", (basa.damage * collision.GetComponent<HealthPoint>().Water) / collision.GetComponent<HealthPoint>().Fire);
             if (burnDamage != 0 && collision != null)
             {
                 collision.GetComponent<HealthPoint>().isBurn = true;

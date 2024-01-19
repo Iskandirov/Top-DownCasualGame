@@ -1,11 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
-public class MagicAxe : MonoBehaviour
+public class MagicAxe : SkillBaseMono
 {
-    public float damage;
     public float rotationSpeed = 500f;
     public float speed = 15f;
     public float speedBack = 15f;
@@ -16,9 +14,13 @@ public class MagicAxe : MonoBehaviour
     public bool isFive;
     Vector3 directionToCursor;
     public float timeToBack = 1f;
+    
     // Start is called before the first frame update
     void Start()
     {
+        //basa = SetToSkillID(gameObject);
+        transform.localScale = new Vector2(basa.radius * PlayerManager.instance.Steam, basa.radius * PlayerManager.instance.Steam);
+        //a.cold = cold * coldElement.Cold;
         transform.position = PlayerManager.instance.transform.position;
         // Нормування напрямку курсора
         directionToCursor = PlayerManager.instance.GetMousDirection();
@@ -101,7 +103,7 @@ public class MagicAxe : MonoBehaviour
     {
         if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
-            collision.GetComponent<HealthPoint>().TakeDamage(damage);
+            collision.GetComponent<HealthPoint>().TakeDamage(basa.damage);
         }
     }
 }

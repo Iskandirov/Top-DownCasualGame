@@ -581,6 +581,7 @@ GameObject:
   - component: {fileID: 3257983378389297857}
   - component: {fileID: 3799361325432693524}
   - component: {fileID: 7904428006544985782}
+  - component: {fileID: 6051510987840879429}
   m_Layer: 7
   m_Name: Flash
   m_TagString: Lightning
@@ -627,7 +628,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeTime: 0.4
-  player: {fileID: 8313530370077628586, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
 --- !u!95 &7904428006544985782
 Animator:
   serializedVersion: 4
@@ -648,6 +648,27 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6051510987840879429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5151509403100353409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db1122182e0e29340bebaa5e4426ca12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basa: []
+  skillId: 
+  enemies: []
+  enemiesToShoot: []
+  lightObj: {fileID: 5151509403100353409}
+  maxEnemiesToShoot: 3
+  stunTime: 0
+  step: 0
+  spawnInterval: 0
 --- !u!1 &5347374390082918261
 GameObject:
   m_ObjectHideFlags: 0

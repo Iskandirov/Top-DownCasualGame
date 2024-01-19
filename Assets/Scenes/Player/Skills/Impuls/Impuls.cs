@@ -2,25 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Impuls : MonoBehaviour
+public class Impuls : SkillBaseMono
 {
-    public float lifeTime;
     public float powerGrow;
     public bool isFour;
     public bool isFive;
     public DestroyBarrier barrier;
     public float wind;
     public float grass;
+    
+
     // Start is called before the first frame update
     void Start()
     {
+        wind = PlayerManager.instance.Wind;
+        grass = PlayerManager.instance.Grass;
+        //basa = SetToSkillID(gameObject);
         StartCoroutine(TimerSpell());
 
     }
-
     private IEnumerator TimerSpell()
     {
-        yield return new WaitForSeconds(lifeTime);
+        yield return new WaitForSeconds(basa.lifeTime);
 
         if (isFour)
         {

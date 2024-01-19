@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tower : MonoBehaviour
+public class Tower : SkillBaseMono
 {
-    public float lifeTime;
     public float spawnTick;
     public float spawnTickMax;
     public TowerWave damageObj;
@@ -16,10 +15,14 @@ public class Tower : MonoBehaviour
     Forward objEnemyMove;
     public float waterElement;
     public float fireElement;
+    
     // Start is called before the first frame update
     void Start()
     {
-
+        //basa = SetToSkillID(gameObject);
+        waterElement = PlayerManager.instance.Water;
+        spawnTickMax = basa.damageTickMax;
+        fireElement = PlayerManager.instance.Fire;
         StartCoroutine(TimerSpell());
         StartCoroutine(TimerLife());
         StartCoroutine(TimerAgre(objEnemyMove));
@@ -36,7 +39,7 @@ public class Tower : MonoBehaviour
     }
     private IEnumerator TimerLife()
     {
-        yield return new WaitForSeconds(lifeTime);
+        yield return new WaitForSeconds(basa.lifeTime);
         if (isThree)
         {
             BobmExplode a = Instantiate(bomb, transform.position, Quaternion.identity);

@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 [RequireComponent(typeof(TrailRenderer))]
 [RequireComponent(typeof(EdgeCollider2D))]
-public class Trail : MonoBehaviour
+public class Trail : SkillBaseMono
 {
     public TrailRenderer trailRenderer;
     public EdgeCollider2D edgeCollider;
 
-    public float damage;
     public float size;
 
     static List<EdgeCollider2D> unusedColliders = new List<EdgeCollider2D>();
     PlayerManager player;
     public bool isFive;
+    
     // Start is called before the first frame update
     void Start()
     {
         player = PlayerManager.instance;
+        //basa = SetToSkillID(gameObject);
         trailRenderer = GetComponent<TrailRenderer>();
 
         edgeCollider = GetValidCollider();
@@ -40,7 +41,7 @@ public class Trail : MonoBehaviour
                 if (colliders[j].collider.CompareTag("Enemy"))
                 {
                     // TrailRenderer торкається до об'єкта з тегом "Enemy"
-                    colliders[j].collider.GetComponent<HealthPoint>().healthPoint -= damage;
+                    colliders[j].collider.GetComponent<HealthPoint>().healthPoint -= basa.damage;
                     if (isFive)
                     {
                         if (colliders[j].collider.GetComponent<HealthPoint>().healthPoint <= 0)

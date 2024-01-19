@@ -48,7 +48,7 @@ public class SpawnManager : MonoBehaviour
         List<GameObject>  objectPool = new List<GameObject>();
         for (int i = 0; i < pool; i++)
         {
-            GameObject obj = Instantiate(objectPrefab);
+            GameObject obj = Instantiate(objectPrefab,transform);
             obj.gameObject.SetActive(false);
             objectPool.Add(obj);
         }
@@ -62,7 +62,7 @@ public class SpawnManager : MonoBehaviour
         for (int i = 0; i < pool; i++)
         {
             partNumber = (i / part) % objectPrefab.Count;
-            GameObject obj = Instantiate(objectPrefab[partNumber]);
+            GameObject obj = Instantiate(objectPrefab[partNumber], transform);
             obj.gameObject.SetActive(false);
             objectPool.Add(obj);
         }

@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shield : MonoBehaviour
+public class Shield : SkillBaseMono
 {
     public float healthShield;
     public float healthShieldMissed;
-    public float lifeTime;
     PlayerManager player;
     public SlowArea slowObj;
     public float rockDamage;
@@ -15,11 +14,15 @@ public class Shield : MonoBehaviour
     public bool isFourLevel;
     public bool isFiveLevel;
     public float dirtElement;
+    
     // Start is called before the first frame update
     void Start()
     {
         player = PlayerManager.instance;
-        player.shildActive= true;
+        //basa = SetToSkillID(gameObject);
+        healthShield = basa.damage;
+        player.shildActive = true;
+        dirtElement = player.Dirt;
         if (isFourLevel)
         {
             SlowArea a = Instantiate(slowObj, transform.position, Quaternion.identity, transform);
@@ -27,10 +30,9 @@ public class Shield : MonoBehaviour
         }
         StartCoroutine(TimerSpell());
     }
-
     private IEnumerator TimerSpell()
     {
-        yield return new WaitForSeconds(lifeTime);
+        yield return new WaitForSeconds(basa.lifeTime);
         player.shildActive = false;
         Destroy(gameObject);
     }

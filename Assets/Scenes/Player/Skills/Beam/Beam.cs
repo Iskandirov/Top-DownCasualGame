@@ -1,44 +1,81 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-public class Beam : MonoBehaviour
+public class Beam : SkillBaseMono
 {
-    public float lifeTime;
-    public float damage;
     public float tick;
-    public float tickMax;
     PlayerManager player;
-    public float Steam;
-    public float radius;
     public float addToAndle;
+    public bool isTwo;
     public SpriteRenderer img;
+
     // Start is called before the first frame update
     void Start()
     {
         player = PlayerManager.instance;
-    }
+        //basa = SetToSkillID(gameObject);
+        //CreateBeam(0, 5, 0);
+        if (basa.stats[1].isTrigger)
+        {
+            basa.countObjects += basa.stats[1].value;
+            basa.stats[1].isTrigger = false;
+            CreateBeam(-90, 0, -5);
+            CreateBeam(90, 0, 5);
+        }
+        if (basa.stats[2].isTrigger)
+        {
+            basa.damage += basa.stats[2].value;
+            basa.stats[2].isTrigger = false;
+        }
+        if (basa.stats[3].isTrigger)
+        {
+            basa.lifeTime += basa.stats[3].value;
+            basa.stats[3].isTrigger = false;
+        }
+        if (basa.stats[4].isTrigger)
+        {
+            basa.skill.skill.stepMax -= basa.stats[4].value;
+            basa.stats[4].isTrigger = false;
+        }
+        tick = basa.damageTickMax;
+        basa.damage = basa.damage * player.Steam;
+        transform.localScale = new Vector3(transform.localScale.x + basa.radius, transform.localScale.y + basa.radius);
 
+        CoroutineToDestroy(gameObject, basa.lifeTime);
+        IsThereAnotherBeam();
+    }
+    public void IsThereAnotherBeam()
+    {
+        int angle = -90;
+        List<Beam> beams = FindObjectsOfType<Beam>().ToList();
+        if (beams.Count > 1)
+        {
+            foreach (Beam beam in beams)
+            {
+                beam.addToAndle = angle;
+                angle += 90;
+            }
+        }
+        
+    }
     // Update is called once per frame
     void Update()
     {
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePosition.z = 0f;  // Закріплюємо координату Z на площині
         // Визначаємо відстань від гравця до позиції курсора
-        Vector3 direction = mousePosition - player.transform.position;
-        direction = direction.normalized * radius;
+        Vector3 direction = player.GetMousDirection();
+        direction = direction * basa.radius;
+
+        // Рухаємо об'єкт до кінцевої позиції
+        transform.position = new Vector2(player.transform.position.x, player.transform.position.y);
 
         // Повертаємо коло в напрямку курсора
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle + addToAndle, Vector3.forward);
 
         tick -= Time.deltaTime;
-        transform.position = new Vector2(player.transform.position.x, player.transform.position.y);
-        lifeTime -= Time.deltaTime;
-        if (lifeTime <= 0)
-        {
-            Destroy(gameObject);
-        }
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {
@@ -51,8 +88,8 @@ public class Beam : MonoBehaviour
                 collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isSteam", true, true);
                 collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isSteam", true, false);
             }
-            objHealt.healthPoint -= (damage * Steam * objHealt.Steam) / objHealt.Cold;
-            GameManager.Instance.FindStatName("beamDamage", (damage * Steam * objHealt.Steam) / objHealt.Cold);
+            objHealt.healthPoint -= (basa.damage * objHealt.Steam) / objHealt.Cold;
+            GameManager.Instance.FindStatName("beamDamage", (basa.damage * objHealt.Steam) / objHealt.Cold);
         }
         else if (collision.CompareTag("Barrel") && collision != null)
         {
@@ -65,16 +102,23 @@ public class Beam : MonoBehaviour
         {
             if (tick <= 0)
             {
-                tick = tickMax;
+                tick = basa.damageTickMax;
                 HealthPoint objHealt = collision.GetComponent<HealthPoint>();
                 collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isSteam", true, true);
                 collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isSteam", true, false);
-                objHealt.healthPoint -= (damage * Steam * objHealt.Steam) / objHealt.Cold;
+                objHealt.healthPoint -= (basa.damage * objHealt.Steam) / objHealt.Cold;
             }
         }
         else if (collision.CompareTag("Barrel") && collision != null)
         {
             collision.GetComponent<ObjectHealth>().health -= 1;
         }
+    }
+    private void CreateBeam(float angle, float x, float y)
+    {
+        Beam a = Instantiate(this, new Vector2(transform.position.x + x, transform.position.y + y), Quaternion.identity);
+        a.basa.damage = basa.damage * player.Steam;
+        a.addToAndle = angle;
+        a.transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y);
     }
 }

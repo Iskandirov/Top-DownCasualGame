@@ -86,18 +86,17 @@ public class SavedSkillsData
     public string Name;
     public int ID;
     public int level;
-    public GameObject skillObj;
+    public SkillBase skil;
     public bool isPassive;
     public Sprite Image;
-    public float CD;
     public List<string> tag;
     public string tagRare;
     public List<string> Description;
-    public List<float> stat1;
+    public string type;
     public int MaxLevel { get; }
     public SavedSkillsData()
     {
-        stat1 = new List<float>(4);
+        type = "base";
         level = 0;
         MaxLevel = 5;
     }

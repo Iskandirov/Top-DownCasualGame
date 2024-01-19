@@ -1,28 +1,30 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class HealActive : MonoBehaviour
+public class HealActive : SkillBaseMono
 {
     public PlayerManager player;
-    public float lifeTime;
-    public float heal;
-    public bool isLevelTwo;
+    public bool isTriggered;
     public float Grass;
+    
     // Start is called before the first frame update
     void Start()
     {
         player = PlayerManager.instance;
-        if (isLevelTwo)
+        Grass = player.Grass;
+        //basa = SetToSkillID(gameObject);
+        if (isTriggered)
         {
             player.isInvincible = true;
         }
         if (player.playerHealthPoint != player.playerHealthPointMax)
         {
-            if (player.playerHealthPoint + heal * Grass <= player.playerHealthPointMax)
+            if (player.playerHealthPoint + basa.damage * Grass <= player.playerHealthPointMax)
             {
-                player.playerHealthPoint += heal * Grass;
-                player.fullFillImage.fillAmount += (heal * Grass) / player.playerHealthPointMax;
-                GameManager.Instance.FindStatName("healthHealed", heal * Grass);
+                player.playerHealthPoint += basa.damage * Grass;
+                player.fullFillImage.fillAmount += (basa.damage * Grass) / player.playerHealthPointMax;
+                GameManager.Instance.FindStatName("healthHealed", basa.damage * Grass);
             }
             else
             {
@@ -37,9 +39,9 @@ public class HealActive : MonoBehaviour
 
     private IEnumerator TimerSpell()
     {
-        yield return new WaitForSeconds(lifeTime);
+        yield return new WaitForSeconds(basa.lifeTime);
 
-        if (isLevelTwo)
+        if (isTriggered)
         {
             player.isInvincible = false;
         }
@@ -53,6 +55,6 @@ public class HealActive : MonoBehaviour
     }
     public void isShowed()
     {
-        GetComponent<Animator>().SetBool("IsShowed",true);
+        GetComponent<Animator>().SetBool("IsShowed", true);
     }
 }

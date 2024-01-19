@@ -330,10 +330,29 @@ MonoBehaviour:
   - Name: BulletDamage
     ID: 0
     level: 1
-    skillObj: {fileID: 0}
+    skil:
+      stats:
+      - isTrigger: 0
+        value: 1
+      - isTrigger: 0
+        value: 2
+      - isTrigger: 0
+        value: 0.1
+      - isTrigger: 0
+        value: 3
+      - isTrigger: 0
+        value: 0
+      skill: {fileID: 0}
+      objToSpawn: {fileID: -8596872367541274049, guid: 3a6610572c8eee746a8f961b7b282f2f, type: 3}
+      stepMax: 0.5
+      lifeTime: 0.5
+      damage: 1
+      damageTickMax: 0
+      countObjects: 1
+      radius: 0
+      isReadyToDo: 0
     isPassive: 1
     Image: {fileID: 21300000, guid: fcb67cd5d218010439b6d4b8cea0586f, type: 3}
-    CD: 0
     tag:
     - bullet_1
     - bullet_2
@@ -347,19 +366,33 @@ MonoBehaviour:
     - More attack speed
     - + 1 bullet
     - Piers enemies
-    stat1:
-    - 1
-    - 1
-    - 10
-    - 2
-    - 3
+    type: base
   - Name: Lightning
     ID: 1
     level: 0
-    skillObj: {fileID: 0}
+    skil:
+      stats:
+      - isTrigger: 0
+        value: 5
+      - isTrigger: 0
+        value: 2
+      - isTrigger: 0
+        value: 3
+      - isTrigger: 0
+        value: 2
+      - isTrigger: 0
+        value: 2
+      skill: {fileID: 0}
+      objToSpawn: {fileID: 6051510987840879429, guid: 2f6275aa03e73ec448443be3579db8a3, type: 3}
+      stepMax: 5
+      lifeTime: 3
+      damage: 0
+      damageTickMax: 0
+      countObjects: 3
+      radius: 0
+      isReadyToDo: 0
     isPassive: 0
     Image: {fileID: 21300000, guid: df93d3a7aa8c6cb409a4afc4c31268c0, type: 3}
-    CD: 5
     tag:
     - lightning_1
     - lightning_2
@@ -373,19 +406,33 @@ MonoBehaviour:
     - x3 damage
     - Lightning stun enemies
     - Less recharge time
-    stat1:
-    - 0
-    - 2
-    - 3
-    - 2
-    - 2
+    type: base
   - Name: Puddle
     ID: 2
     level: 0
-    skillObj: {fileID: 0}
+    skil:
+      stats:
+      - isTrigger: 0
+        value: 1
+      - isTrigger: 0
+        value: 1
+      - isTrigger: 0
+        value: 2
+      - isTrigger: 0
+        value: 2
+      - isTrigger: 0
+        value: 0.1
+      skill: {fileID: 0}
+      objToSpawn: {fileID: -2477642690584800929, guid: f385cf86b8d05d846ac406a913a29624, type: 3}
+      stepMax: 7
+      lifeTime: 4
+      damage: 0.5
+      damageTickMax: 0.3
+      countObjects: 1
+      radius: 1
+      isReadyToDo: 0
     isPassive: 0
     Image: {fileID: 21300000, guid: 40c600d109a87d5498330dda9167a354, type: 3}
-    CD: 4
     tag:
     - swamp_puddle_1
     - swamp_puddle_2
@@ -399,19 +446,33 @@ MonoBehaviour:
     - x2 damage
     - + 2 spawned chairs
     - Faster damage
-    stat1:
-    - 0
-    - 2
-    - 2
-    - 2
-    - 0.3
+    type: aoe
   - Name: Meteor
     ID: 3
     level: 0
-    skillObj: {fileID: 0}
+    skil:
+      stats:
+      - isTrigger: 0
+        value: 1
+      - isTrigger: 0
+        value: 0.5
+      - isTrigger: 0
+        value: 2
+      - isTrigger: 0
+        value: 0.3
+      - isTrigger: 0
+        value: 5
+      skill: {fileID: 0}
+      objToSpawn: {fileID: 4259762276879978435, guid: e81ff13d82b14fd42926280f08c68ce1, type: 3}
+      stepMax: 10
+      lifeTime: 5
+      damage: 1
+      damageTickMax: 0.5
+      countObjects: 1
+      radius: 4
+      isReadyToDo: 0
     isPassive: 0
     Image: {fileID: 21300000, guid: c7a5c4090c90f2e49a99973c64a66c9b, type: 3}
-    CD: 10
     tag:
     - meteor_1
     - meteor_2
@@ -425,19 +486,33 @@ MonoBehaviour:
     - +2 meteors
     - Area after meteor sloves enemies move speed
     - +5 meteors
-    stat1:
-    - 0
-    - 10
-    - 2
-    - 0.7
-    - 5
+    type: aoe
   - Name: FireWave
     ID: 4
     level: 0
-    skillObj: {fileID: 0}
+    skil:
+      stats:
+      - isTrigger: 0
+        value: 5
+      - isTrigger: 0
+        value: 5
+      - isTrigger: 0
+        value: 1
+      - isTrigger: 0
+        value: 4
+      - isTrigger: 0
+        value: 1
+      skill: {fileID: 0}
+      objToSpawn: {fileID: 6952950765238762621, guid: 07ec648f247aff34ca1230010d643d86, type: 3}
+      stepMax: 10
+      lifeTime: 1
+      damage: 5
+      damageTickMax: 0
+      countObjects: 1
+      radius: 0
+      isReadyToDo: 0
     isPassive: 0
     Image: {fileID: 21300000, guid: 540d633e11cd2e247a049c833a445091, type: 3}
-    CD: 10
     tag:
     - fire_wave_1
     - fire_wave_2
@@ -451,19 +526,33 @@ MonoBehaviour:
     - +1 wave
     - Less recharge
     - Wave leaves burning effect
-    stat1:
-    - 0
-    - 30
-    - 1
-    - 3
-    - 5
+    type: base
   - Name: Heal
     ID: 5
     level: 0
-    skillObj: {fileID: 0}
+    skil:
+      stats:
+      - isTrigger: 0
+        value: 20
+      - isTrigger: 0
+        value: 10
+      - isTrigger: 0
+        value: 0
+      - isTrigger: 0
+        value: 5
+      - isTrigger: 0
+        value: 15
+      skill: {fileID: 0}
+      objToSpawn: {fileID: 6690938665736954909, guid: b5afacabed965524b92a4e9ee5717778, type: 3}
+      stepMax: 15
+      lifeTime: 1
+      damage: 20
+      damageTickMax: 0
+      countObjects: 1
+      radius: 0
+      isReadyToDo: 0
     isPassive: 0
     Image: {fileID: 21300000, guid: 747c9dfab89ca2944b220f3317a793a3, type: 3}
-    CD: 15
     tag:
     - heal_1
     - heal_2
@@ -477,19 +566,33 @@ MonoBehaviour:
     - Heal give 2 seconds invulnerability
     - Less reacharge time
     - More heal
-    stat1:
-    - 0
-    - 10
-    - 2
-    - 5
-    - 20
+    type: base
   - Name: Reload
     ID: 6
     level: 0
-    skillObj: {fileID: 0}
+    skil:
+      stats:
+      - isTrigger: 0
+        value: 1
+      - isTrigger: 0
+        value: 1
+      - isTrigger: 0
+        value: 3
+      - isTrigger: 0
+        value: 1
+      - isTrigger: 0
+        value: 0.5
+      skill: {fileID: 0}
+      objToSpawn: {fileID: 2487684267938856909, guid: f258bc3b22c048b4e90db68c073a7b89, type: 3}
+      stepMax: 12
+      lifeTime: 1
+      damage: 0
+      damageTickMax: 0
+      countObjects: 1
+      radius: 0
+      isReadyToDo: 0
     isPassive: 0
     Image: {fileID: 21300000, guid: 50d5866ece3d860498f7f02ae53439a1, type: 3}
-    CD: 11
     tag:
     - reload_1
     - reload_2
@@ -503,19 +606,33 @@ MonoBehaviour:
     - Less reacharge time
     - +1 reload skill
     - All skills reacharge time - 50%
-    stat1:
-    - 0
-    - 1
-    - 3
-    - 1
-    - 0.5
+    type: base
   - Name: Impuls
     ID: 7
     level: 0
-    skillObj: {fileID: 0}
+    skil:
+      stats:
+      - isTrigger: 0
+        value: 0
+      - isTrigger: 0
+        value: 5
+      - isTrigger: 0
+        value: 2
+      - isTrigger: 0
+        value: 0
+      - isTrigger: 0
+        value: 0
+      skill: {fileID: 0}
+      objToSpawn: {fileID: 373977947268383860, guid: 7fd5b1a1b890a2344a921003555f88c7, type: 3}
+      stepMax: 10
+      lifeTime: 1
+      damage: 0
+      damageTickMax: 0
+      countObjects: 1
+      radius: 1
+      isReadyToDo: 0
     isPassive: 0
     Image: {fileID: 21300000, guid: 5678ebb08569867459d8d2ee5fd54648, type: 3}
-    CD: 10
     tag:
     - impuls_1
     - impuls_2
@@ -529,19 +646,33 @@ MonoBehaviour:
     - Less reacharge time
     - Create a barier
     - If you will in barrier area at the end of spell you will be healed
-    stat1:
-    - 0
-    - 15
-    - 3
-    - 0
-    - 0
+    type: aoe
   - Name: Shield
     ID: 8
     level: 0
-    skillObj: {fileID: 0}
+    skil:
+      stats:
+      - isTrigger: 0
+        value: 0
+      - isTrigger: 0
+        value: 15
+      - isTrigger: 0
+        value: 0
+      - isTrigger: 0
+        value: 0
+      - isTrigger: 0
+        value: 0
+      skill: {fileID: 0}
+      objToSpawn: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      stepMax: 20
+      lifeTime: 12
+      damage: 20
+      damageTickMax: 0
+      countObjects: 1
+      radius: 0
+      isReadyToDo: 0
     isPassive: 0
     Image: {fileID: 21300000, guid: 89bb1c82bd79e1c468e4e61e7e49eace, type: 3}
-    CD: 20
     tag:
     - shield_1
     - shield_2
@@ -555,19 +686,33 @@ MonoBehaviour:
     - Shield return 50% damage to enemies
     - Give a zone that slow enemies
     - Every 20 lost hp throw rock that damage enemies and stun them
-    stat1:
-    - 0
-    - 30
-    - 0.5
-    - 40
-    - 20
+    type: base
   - Name: Beam
     ID: 9
     level: 0
-    skillObj: {fileID: 0}
+    skil:
+      stats:
+      - isTrigger: 0
+        value: 0
+      - isTrigger: 0
+        value: 2
+      - isTrigger: 0
+        value: 1
+      - isTrigger: 0
+        value: 4
+      - isTrigger: 0
+        value: 5
+      skill: {fileID: 0}
+      objToSpawn: {fileID: 3824504510679716380, guid: bc6dbbe2be906014a9dd32b2bb9fcedc, type: 3}
+      stepMax: 15
+      lifeTime: 6
+      damage: 1
+      damageTickMax: 0.1
+      countObjects: 1
+      radius: 2
+      isReadyToDo: 0
     isPassive: 0
     Image: {fileID: 21300000, guid: 19763962cf519ed4fa42df9b05b4e61f, type: 3}
-    CD: 15
     tag:
     - beam_1
     - beam_2
@@ -581,19 +726,33 @@ MonoBehaviour:
     - More damage
     - More life time
     - Less reacharge time
-    stat1:
-    - 0
-    - 2
-    - 2
-    - 5
-    - 8
+    type: base
   - Name: Tower
     ID: 10
     level: 0
-    skillObj: {fileID: 0}
+    skil:
+      stats:
+      - isTrigger: 0
+        value: 0
+      - isTrigger: 0
+        value: 10
+      - isTrigger: 0
+        value: 0
+      - isTrigger: 0
+        value: 2
+      - isTrigger: 0
+        value: 0
+      skill: {fileID: 0}
+      objToSpawn: {fileID: 3831675836443140198, guid: 616a22a5ca5edc14babd35bbf2552287, type: 3}
+      stepMax: 20
+      lifeTime: 15
+      damage: 4
+      damageTickMax: 0
+      countObjects: 1
+      radius: 0
+      isReadyToDo: 0
     isPassive: 0
     Image: {fileID: 21300000, guid: cbedeaefeb1c15d409f06953f523c31b, type: 3}
-    CD: 20
     tag:
     - tower_1
     - tower_2
@@ -607,19 +766,33 @@ MonoBehaviour:
     - Create a bomb after towers crash
     - More attack speed
     - Provokes nearby enemies
-    stat1:
-    - 0
-    - 10
-    - 0
-    - 15
-    - 0
+    type: base
   - Name: Illusion
     ID: 11
     level: 0
-    skillObj: {fileID: 0}
+    skil:
+      stats:
+      - isTrigger: 0
+        value: 0
+      - isTrigger: 0
+        value: 1
+      - isTrigger: 0
+        value: 10
+      - isTrigger: 0
+        value: 0
+      - isTrigger: 0
+        value: 0
+      skill: {fileID: 0}
+      objToSpawn: {fileID: 2350191526841434779, guid: 8d3eb0f566f082749b8220c1c9834567, type: 3}
+      stepMax: 30
+      lifeTime: 15
+      damage: 1
+      damageTickMax: 0
+      countObjects: 1
+      radius: 0
+      isReadyToDo: 0
     isPassive: 0
     Image: {fileID: 21300000, guid: 6bead8a8a4847194b915de226607a9ac, type: 3}
-    CD: 30
     tag:
     - illusion_1
     - illusion_2
@@ -633,19 +806,33 @@ MonoBehaviour:
     - More life time
     - +1 copie
     - Create a shock line betwen copies
-    stat1:
-    - 0
-    - 1
-    - 10
-    - 1
-    - 0
+    type: base
   - Name: Trail
     ID: 12
     level: 0
-    skillObj: {fileID: 0}
+    skil:
+      stats:
+      - isTrigger: 0
+        value: 0
+      - isTrigger: 0
+        value: 2
+      - isTrigger: 0
+        value: 2
+      - isTrigger: 0
+        value: 1
+      - isTrigger: 0
+        value: 0
+      skill: {fileID: 0}
+      objToSpawn: {fileID: 4506995009783188816, guid: dc0c951fdfe1ff54f914cd1eace96eaa, type: 3}
+      stepMax: 10
+      lifeTime: 5
+      damage: 1
+      damageTickMax: 0.2
+      countObjects: 1
+      radius: 1
+      isReadyToDo: 0
     isPassive: 1
     Image: {fileID: 21300000, guid: bdc3c1cb276463f4d9b556c085ae1371, type: 3}
-    CD: 10
     tag:
     - trail_1
     - trail_2
@@ -659,19 +846,33 @@ MonoBehaviour:
     - More damage
     - The trail is wider
     - Each deth from trail restore 10% of enemy maximum HP as HP
-    stat1:
-    - 0
-    - 2
-    - 0.1
-    - 2
-    - 0.1
+    type: base
   - Name: Vortex
     ID: 13
     level: 0
-    skillObj: {fileID: 0}
+    skil:
+      stats:
+      - isTrigger: 0
+        value: 0
+      - isTrigger: 0
+        value: 5
+      - isTrigger: 0
+        value: 1
+      - isTrigger: 0
+        value: 5
+      - isTrigger: 0
+        value: 0
+      skill: {fileID: 0}
+      objToSpawn: {fileID: 2061853006890161952, guid: 2337b5109383c0049a6c85adab967764, type: 3}
+      stepMax: 15
+      lifeTime: 2
+      damage: 5
+      damageTickMax: 0
+      countObjects: 1
+      radius: 1
+      isReadyToDo: 0
     isPassive: 0
     Image: {fileID: 21300000, guid: abf4de1b0cd36654683ee6ff5d4bcac4, type: 3}
-    CD: 15
     tag:
     - vortex_1
     - vortex_2
@@ -685,19 +886,33 @@ MonoBehaviour:
     - More radius
     - Less recharge
     - Spawn another vortex in random place
-    stat1:
-    - 0
-    - 0.5
-    - 1
-    - 4
-    - 1
+    type: aoe
   - Name: Icewall
     ID: 14
     level: 0
-    skillObj: {fileID: 0}
+    skil:
+      stats:
+      - isTrigger: 0
+        value: 0
+      - isTrigger: 0
+        value: 2
+      - isTrigger: 0
+        value: 1
+      - isTrigger: 0
+        value: 2
+      - isTrigger: 0
+        value: 0
+      skill: {fileID: 0}
+      objToSpawn: {fileID: 4796512543398048128, guid: 1ed952495ca6b264f9e00c5067ede385, type: 3}
+      stepMax: 7
+      lifeTime: 4
+      damage: 1
+      damageTickMax: 0.5
+      countObjects: 1
+      radius: 0
+      isReadyToDo: 0
     isPassive: 0
     Image: {fileID: 21300000, guid: 961a8eb948fd8e54abcd56a04a844fad, type: 3}
-    CD: 7
     tag:
     - Icewall_1
     - Icewall_2
@@ -711,19 +926,33 @@ MonoBehaviour:
     - Bigger ice wall
     - Less recharge
     - Wall dealing damage
-    stat1:
-    - 0
-    - 2
-    - 1
-    - 2
-    - 1
+    type: aoe
   - Name: MagicAxe
     ID: 15
     level: 0
-    skillObj: {fileID: 0}
+    skil:
+      stats:
+      - isTrigger: 0
+        value: 0
+      - isTrigger: 0
+        value: 5
+      - isTrigger: 0
+        value: 1
+      - isTrigger: 0
+        value: 4
+      - isTrigger: 0
+        value: 0
+      skill: {fileID: 0}
+      objToSpawn: {fileID: 6289732212715222565, guid: 0cf5dbb8e0508574aa9ae4b33b4fb8ae, type: 3}
+      stepMax: 11
+      lifeTime: 3
+      damage: 6
+      damageTickMax: 0
+      countObjects: 1
+      radius: 1
+      isReadyToDo: 0
     isPassive: 0
     Image: {fileID: 21300000, guid: a26882f7239013c4ca769a672dead8f5, type: 3}
-    CD: 11
     tag:
     - axe_1
     - axe_2
@@ -737,29 +966,32 @@ MonoBehaviour:
     - More radius
     - Less recharge
     - After axe back to start position create another two axes
-    stat1:
-    - 0
-    - 5
-    - 1
-    - 5
-    - 2
+    type: aoe
   gold:
     Name: Gold
     ID: 999
-    level: 999
-    skillObj: {fileID: 0}
+    level: 0
+    skil:
+      stats: []
+      skill: {fileID: 0}
+      objToSpawn: {fileID: 0}
+      stepMax: 0
+      lifeTime: 0
+      damage: 0
+      damageTickMax: 0
+      countObjects: 0
+      radius: 0
+      isReadyToDo: 0
     isPassive: 1
     Image: {fileID: 21300000, guid: 56f37b92246bcab419528d4c4f956ed6, type: 3}
-    CD: 0
     tag:
     - money
     tagRare: 
     Description:
     - Give 100 gold
-    stat1:
-    - 100
+    type: base
   skillsUpdatedList: []
-  choise: 
+  choose: 
   isOpenToUpgrade: 0
   isFirstToUpgrade: 0
   CDSkillsObject: []
@@ -767,14 +999,23 @@ MonoBehaviour:
     Name: 
     ID: 0
     level: 0
-    skillObj: {fileID: 0}
+    skil:
+      stats: []
+      skill: {fileID: 0}
+      objToSpawn: {fileID: 0}
+      stepMax: 0
+      lifeTime: 0
+      damage: 0
+      damageTickMax: 0
+      countObjects: 0
+      radius: 0
+      isReadyToDo: 0
     isPassive: 0
     Image: {fileID: 0}
-    CD: 0
     tag: []
     tagRare: 
     Description: []
-    stat1: []
+    type: base
   abil: {fileID: 0}
 --- !u!114 &393745292006979078
 MonoBehaviour:

@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : SkillBaseMono
 {
-    public float damage;
-
     public float forceAmount = 30f; // Сила відштовхування
     public bool isPiers;
     public bool isRickoshet;
@@ -12,19 +10,46 @@ public class Bullet : MonoBehaviour
     public float lifeStealPercent;
     public float slowPercent;
     PlayerManager player;
+    GameObject obj;
     private void Start()
     {
         player = PlayerManager.instance;
-        damage = player.damageToGive;
-        isPiers = player.isLevelFive;
+        obj = player.gameObject;
+        if (basa.stats[0].isTrigger)
+        {
+            basa.damage = basa.stats[0].value;
+        }
+        if (basa.stats[1].isTrigger)
+        {
+            player.secondBulletCount = (int)basa.stats[1].value;
+        }
+        if (basa.stats[2].isTrigger)
+        {
+            basa.stepMax -= basa.stats[2].value;
+            basa.stats[2].isTrigger = false;
+        }
+        if (basa.stats[3].isTrigger)
+        {
+            player.secondBulletCount = (int)basa.stats[3].value;
+        }
+        if (basa.stats[4].isTrigger)
+        {
+            isPiers = true;
+        }
+       
         isRickoshet = player.isRicoshet;
         isLifeSteal = player.isLifeSteal;
         isBulletSlow = player.isBulletSlow;
         lifeStealPercent = player.lifeStealPercent;
         slowPercent = player.slowPercent;
 
+        player.CreateBullet(obj.transform.position, this);
+        //CreateBaseSpell(this, this)
+        //player.AsyncDirBullet(obj, Instantiate(this));
+
         Invoke("DestroyBullet", 1f);
     }
+   
     void DestroyBullet()
     {
         Destroy(gameObject);
@@ -33,13 +58,13 @@ public class Bullet : MonoBehaviour
     {
         if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
-            collision.GetComponent<HealthPoint>().TakeDamage(damage);
+            collision.GetComponent<HealthPoint>().TakeDamage(basa.damage);
             if (isLifeSteal && player.playerHealthPoint < player.playerHealthPointMax)
             {
-                if (player.playerHealthPoint + damage * lifeStealPercent < player.playerHealthPointMax)
+                if (player.playerHealthPoint + basa.damage * lifeStealPercent < player.playerHealthPointMax)
                 {
-                    player.playerHealthPoint += damage * lifeStealPercent;
-                    player.fullFillImage.fillAmount += (damage * lifeStealPercent) / player.playerHealthPointMax;
+                    player.playerHealthPoint += basa.damage * lifeStealPercent;
+                    player.fullFillImage.fillAmount += (basa.damage * lifeStealPercent) / player.playerHealthPointMax;
                 }
                 else
                 {
@@ -53,7 +78,7 @@ public class Bullet : MonoBehaviour
                 enemyMove.path.maxSpeed = enemyMove.speedMax * slowPercent;
                 enemyMove.moveSlowTime = slowPercent;
             }
-            GameManager.Instance.FindStatName("bulletDamage", damage);
+            GameManager.Instance.FindStatName("bulletDamage", basa.damage);
 
             if (enemyMove != null)
             {

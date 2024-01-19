@@ -1,21 +1,27 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class IceWall : MonoBehaviour
+public class IceWall : SkillBaseMono
 {
-    public float lifeTime;
-    public float damage;
     public float cold;
     public float damageTick;
-    public float damageTickMax;
+    
+
     void Start()
     {
+        //basa = SetToSkillID(gameObject);
+        damageTick = basa.damageTickMax;
+        Vector3 mousePosition = Input.mousePosition;
+        mousePosition.z = 1.9f; // Задаємо Z-координату для об'єкта
+        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+        transform.position = worldPosition;
+        transform.localScale = new Vector2(basa.radius * PlayerManager.instance.Steam, basa.radius * PlayerManager.instance.Steam);
+        cold = PlayerManager.instance.Cold;
         StartCoroutine(Destroy());
     }
     IEnumerator Destroy()
     {
-        yield return new WaitForSeconds(lifeTime);
+        yield return new WaitForSeconds(basa.lifeTime);
         Destroy(gameObject);
     }
     private void Update()
@@ -39,8 +45,8 @@ public class IceWall : MonoBehaviour
                 StartCoroutine(collision.GetComponentInParent<Forward>().SlowEnemy(1f, 0.1f));
                 if (damageTick <= 0)
                 {
-                    collision.GetComponent<HealthPoint>().TakeDamage((damage * cold) / collision.GetComponent<HealthPoint>().Fire);
-                    damageTick = damageTickMax;
+                    collision.GetComponent<HealthPoint>().TakeDamage((basa.damage * cold) / collision.GetComponent<HealthPoint>().Fire);
+                    damageTick = basa.damageTickMax;
                 }
             }
         }

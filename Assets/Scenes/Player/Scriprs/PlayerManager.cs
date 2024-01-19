@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
+
 [DefaultExecutionOrder(1)]
 public class PlayerManager : MonoBehaviour
 {
@@ -61,7 +63,6 @@ public class PlayerManager : MonoBehaviour
     public bool isLevelTwo;
     [HideInInspector]
     public bool isLevelFive;
-    [HideInInspector]
     public int secondBulletCount;
     [HideInInspector]
     public bool isRicoshet;
@@ -95,7 +96,6 @@ public class PlayerManager : MonoBehaviour
     public GameObject[] abilitiesObj;
     [HideInInspector]
     public int abilityId;
-    [HideInInspector]
     public int countActiveAbilities;
     [Header("CharacterSet settings")]
     public List<CharacterStats> characters;
@@ -123,6 +123,7 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        ShootBullet();
         if (!isTutor)
         {
             CDBaseSkill();
@@ -133,7 +134,7 @@ public class PlayerManager : MonoBehaviour
             rb.position = PlayerMove();
         }
 
-        ShootBullet(gameObject);
+        //ShootBullet(gameObject);
         if (playerHealthRegeneration > 0)
         {
             playerHealthPoint += playerHealthRegeneration / playerHealthPointMax;
@@ -321,42 +322,29 @@ public class PlayerManager : MonoBehaviour
     //====================DASH END=================
     //End Move
     //Shoot
-    static async Task WaitAsync(int miliseconds)
-    {
-        await Task.Delay(miliseconds);
-       
-    }
+
     //static async Task TimeFlow(float fixedValue)
     //{
     //    await Task.Run(() =>
     //    {
-            
+
     //    });
     //}
-    public async void ShootBullet(GameObject position)
+    //public void AsyncDirBullet(GameObject position, Bullet newObject)
+    //{
+    //    if (isLevelTwo)
+    //    {
+    //        for (int i = 1; i < secondBulletCount; i++)
+    //        {
+    //            if (position != null)
+    //            {
+    //                CreateBullet(position.transform.position, newObject);
+    //            }
+    //        }
+    //    }
+    //}
+    public void ShootBullet()
     {
-        //await TimeFlow();
-        instance.attackSpeed -= Time.fixedDeltaTime;
-        if (attackSpeed <= 0)
-        {
-            if (Input.GetMouseButton(0))  // Перевіряємо, чи натиснута ліва кнопка миші
-            {
-                CreateBullet(position.transform.position);
-                attackSpeed = attackSpeedMax;
-
-                if (isLevelTwo)
-                {
-                    for (int i = 1; i < secondBulletCount + 1; i++)
-                    {
-                        await WaitAsync(300);
-                        if (position != null)
-                        {
-                            CreateBullet(position.transform.position);
-                        }
-                    }
-                }
-            }
-        }
         // Визначаємо відстань від гравця до позиції курсора
         Vector3 direction = GetMousDirection();
         direction = direction.normalized * circleRadius;
@@ -371,9 +359,10 @@ public class PlayerManager : MonoBehaviour
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         ShootPoint.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
-    public void CreateBullet(Vector3 position)
+    public void CreateBullet(Vector3 position, Bullet newObject)
     {
-        Bullet newObject = Instantiate(bullet, position, Quaternion.identity);
+        //Bullet newObject = Instantiate(bullet, position, Quaternion.identity);
+        newObject.transform.position = position;
         Vector2 directionBullet = GetMousDirection();
 
         // Запускаємо об'єкт в заданому напрямку

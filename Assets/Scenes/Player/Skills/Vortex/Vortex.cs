@@ -1,24 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using System.Linq;
 using UnityEngine;
 
-public class Vortex : MonoBehaviour
+public class Vortex : SkillBaseMono
 {
     public List<Transform> movingObjects = new List<Transform>(); // Список рухомих об'єктів
     public float bump;
-    public float lifeTime;
-    public float damage;
     public float Steam;
     public float Wind;
+    public bool isFive;
+    
     // Start is called before the first frame update
     void Start()
     {
+        //basa = SetToSkillID(gameObject);
+        
+        Vector3 mousePosition = Input.mousePosition;
+        mousePosition.z = 1.9f; // Задаємо Z-координату для об'єкта
+        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+        transform.position = worldPosition;
+        basa.damage = basa.damage * PlayerManager.instance.Wind;
+        transform.localScale = new Vector2(basa.radius * PlayerManager.instance.Steam, basa.radius * PlayerManager.instance.Steam);
+        if (isFive)
+        {
+            Vortex b = Instantiate(this, new Vector3(transform.position.x + Random.Range(-20, 20), transform.position.y + Random.Range(-20, 20), 1.9f), Quaternion.identity);
+            b.basa.damage = basa.damage * PlayerManager.instance.Wind;
+            b.basa.lifeTime = basa.lifeTime;
+            b.transform.localScale = new Vector2(basa.radius * PlayerManager.instance.Steam, basa.radius * PlayerManager.instance.Steam);
+        }
         StartCoroutine(Destroy());
     }
     IEnumerator Destroy()
     {
-        yield return new WaitForSeconds(lifeTime);
+        yield return new WaitForSeconds(basa.lifeTime);
         DamageDeal();
         Destroy(gameObject);
     }
@@ -26,7 +41,8 @@ public class Vortex : MonoBehaviour
     {
         foreach (Transform movingObject in movingObjects)
         {
-            movingObject.GetComponentInChildren<HealthPoint>().healthPoint -= (damage * Wind * Steam) / (movingObject.GetComponentInChildren<HealthPoint>().Wind * movingObject.GetComponentInChildren<HealthPoint>().Steam);
+            HealthPoint health = movingObject.GetComponentInChildren<HealthPoint>();
+            health.healthPoint -= (basa.damage * Wind * Steam) / (health.Wind * health.Steam);
         }
     }
     // Update is called once per frame

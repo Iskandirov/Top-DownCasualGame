@@ -2,36 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class puddle : MonoBehaviour
+public class puddle : SkillBaseMono
 {
-    public float lifeTime;
     public float damageTick;
-    public float damageTickMax;
 
     public Collider2D[] enemies;
 
-    public float damage;
-
     public Sprite[] lights;
-    public float radius;
 
     HealthPoint objHealth;
     ElementActiveDebuff objElement;
-
+    PlayerManager player;
+    
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.white;
-        Gizmos.DrawWireSphere(transform.position, radius);
+        Gizmos.DrawWireSphere(transform.position, basa.radius);
     }
     // Start is called before the first frame update
     void Start()
     {
+        player = PlayerManager.instance;
+        //basa = SetToSkillID(gameObject);
+        damageTick = basa.damageTickMax;
+        basa.damage = basa.damage * player.Water;
+        basa.radius *= player.Dirt;
+        gameObject.transform.localScale = new Vector2(gameObject.transform.localScale.x + basa.radius, gameObject.transform.localScale.y + basa.radius);
         StartCoroutine(TimerSpell());
         StartCoroutine(CastSpell());
     }
     private IEnumerator TimerSpell()
     {
-        yield return new WaitForSeconds(lifeTime);
+        yield return new WaitForSeconds(basa.lifeTime);
         Destroy(gameObject);
     }
     private IEnumerator CastSpell()
@@ -39,7 +41,7 @@ public class puddle : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(damageTick);
-            enemies = Physics2D.OverlapCircleAll(transform.position, radius);
+            enemies = Physics2D.OverlapCircleAll(transform.position, basa.radius);
 
             for (int i = 0; i < enemies.Length; i++)
             {
@@ -59,11 +61,11 @@ public class puddle : MonoBehaviour
                         objElement.SetBool("isDirt", true, true);
                         objElement.SetBool("isDirt", true, false);
                     }
-                    objHealth.healthPoint -= (damage * objHealth.Electricity) / objHealth.Water * objHealth.Dirt;
-                    GameManager.Instance.FindStatName("puddleDamage", (damage * objHealth.Electricity) / objHealth.Water * objHealth.Dirt);
+                    objHealth.healthPoint -= (basa.damage * objHealth.Electricity) / objHealth.Water * objHealth.Dirt;
+                    GameManager.Instance.FindStatName("puddleDamage", (basa.damage * objHealth.Electricity) / objHealth.Water * objHealth.Dirt);
                 }
             }
-            damageTick = damageTickMax;
+            damageTick = basa.damageTickMax;
         }
     }
 }
