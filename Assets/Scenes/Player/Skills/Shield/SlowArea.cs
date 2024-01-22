@@ -13,7 +13,10 @@ public class SlowArea : MonoBehaviour
         if (collision.CompareTag("Enemy"))
         {
             GameManager.Instance.FindStatName("slowedTime", Time.fixedDeltaTime);
-            collision.GetComponentInParent<Forward>().path.maxSpeed = collision.GetComponentInParent<Forward>().speedMax * 0.5f / dirtElement;
+            if (collision.GetComponentInParent<Forward>() != null)
+            {
+                collision.GetComponentInParent<Forward>().path.maxSpeed = collision.GetComponentInParent<Forward>().speedMax * 0.5f / dirtElement;
+            }
             if (!collision.GetComponentInParent<ElementActiveDebuff>().IsActive("isDirt", true))
             {
                 collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isDirt", true, true);
@@ -24,7 +27,7 @@ public class SlowArea : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy"))
+        if (collision.CompareTag("Enemy") && collision.GetComponentInParent<Forward>() != null)
         {
             collision.GetComponentInParent<Forward>().path.maxSpeed = collision.GetComponentInParent<Forward>().speedMax;
         }

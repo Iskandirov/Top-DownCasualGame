@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 [System.Serializable]
@@ -38,6 +39,7 @@ public class CDSkills : MonoBehaviour
     // Update is called once per frame
     void Start()
     {
+        skill.skill = this;
         skillMono.Set(skill,number);
         cDText = text.GetComponent<TextMeshProUGUI>();
         StartCoroutine(SetBumberToSkill());
@@ -68,27 +70,32 @@ public class CDSkills : MonoBehaviour
             skillMono.CreateSpellByType(type, skill.objToSpawn, skillMono, currentStatLevel);
         }
     }
+    void Spawn(int counter)
+    {
+        skillMono.CreateSpellByType(type, skill.objToSpawn, skillMono, currentStatLevel);
+
+        StartCoroutine(WaitToAnotherObject(counter, skill.spawnDelay));
+    }
     private void Update()
     {
         spriteCD.fillAmount = skillCD / skill.stepMax;
-        if (number != 0)
+        if (number != 0 && !skill.isPassive)
         {
             if (skillCD <= 0 && Input.GetKeyDown(keyCode))
             {
-                skillMono.CreateSpellByType(type, skill.objToSpawn, skillMono, currentStatLevel);
 
-                StartCoroutine(WaitToAnotherObject((int)skill.countObjects, 0f));
-
+                Spawn((int)skill.countObjects);
                 skillCD = skill.stepMax;
             }
         }
-        else if (skillCD <= 0 && Input.GetMouseButton(0) && number == 0)
+        else if (skillCD <= 0 && Input.GetMouseButton(0) && number == 0 && !skill.isPassive)
         {
-            skillMono.CreateSpellByType(type, skill.objToSpawn, skillMono, currentStatLevel);
-
-            StartCoroutine(WaitToAnotherObject(PlayerManager.instance.secondBulletCount, 0.3f));
-
+            Spawn(PlayerManager.instance.secondBulletCount);
             skillCD = skill.stepMax;
+        }
+        else if (skill.isPassive && skill.countObjects > 0)
+        {
+            Spawn((int)skill.countObjects--);
         }
     }
 }

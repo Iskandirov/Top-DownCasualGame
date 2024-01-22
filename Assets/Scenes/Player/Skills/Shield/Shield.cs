@@ -10,63 +10,61 @@ public class Shield : SkillBaseMono
     public SlowArea slowObj;
     public float rockDamage;
     public GameObject rockObj;
-    public bool isThreeLevel;
-    public bool isFourLevel;
-    public bool isFiveLevel;
     public float dirtElement;
     
     // Start is called before the first frame update
     void Start()
     {
         player = PlayerManager.instance;
-        //basa = SetToSkillID(gameObject);
+        if (basa.stats[1].isTrigger)
+        {
+            basa.damage += basa.stats[1].value;
+            basa.stats[1].isTrigger = false;
+        }
+        transform.localScale = new Vector2(transform.localScale.x + basa.radius, transform.localScale.y + basa.radius);
         healthShield = basa.damage;
         player.shildActive = true;
         dirtElement = player.Dirt;
-        if (isFourLevel)
+        if (basa.stats[3].isTrigger)
         {
             SlowArea a = Instantiate(slowObj, transform.position, Quaternion.identity, transform);
             a.dirtElement = dirtElement;
         }
-        StartCoroutine(TimerSpell());
+        CoroutineToDestroy(gameObject, basa.lifeTime);
     }
-    private IEnumerator TimerSpell()
-    {
-        yield return new WaitForSeconds(basa.lifeTime);
-        player.shildActive = false;
-        Destroy(gameObject);
-    }
-
     // Update is called once per frame
     void FixedUpdate()
     {
         transform.position = player.transform.position;
-        if (healthShieldMissed > 20f)
+        if (basa.stats[4].isTrigger)
         {
-            float i = Mathf.Floor(healthShieldMissed / 20f);
-            for (int y = 0; y < i; y++)
+            if (healthShieldMissed > 10f)
             {
-                GameObject newObject = Instantiate(rockObj, new Vector2(transform.position.x + Random.Range(-20, 20), transform.position.y + Random.Range(-20, 20)), Quaternion.identity);
-
-
-                // Перевірка зіткнень з навколишніми об'єктами
-                Collider2D[] colliders = Physics2D.OverlapCircleAll(newObject.transform.position, newObject.GetComponent<Collider2D>().bounds.extents.x);
-
-                foreach (Collider2D collider in colliders)
+                float i = Mathf.Floor(healthShieldMissed / 10f);
+                for (int y = 0; y < i; y++)
                 {
-                    if (collider.CompareTag("Enemy"))
+                    GameObject newObject = Instantiate(rockObj, new Vector2(transform.position.x + Random.Range(-20, 20), transform.position.y + Random.Range(-20, 20)), Quaternion.identity);
+
+
+                    // Перевірка зіткнень з навколишніми об'єктами
+                    Collider2D[] colliders = Physics2D.OverlapCircleAll(newObject.transform.position, newObject.GetComponent<Collider2D>().bounds.extents.x);
+
+                    foreach (Collider2D collider in colliders)
                     {
-                        // Перевірка, чи зіткнення відбулось з іншим об'єктом (не самим собою)
-                        if (collider.gameObject != newObject)
+                        if (collider.CompareTag("Enemy"))
                         {
-                            collider.GetComponent<HealthPoint>().healthPoint -= (rockDamage * dirtElement * collider.GetComponent<HealthPoint>().Dirt) / collider.GetComponent<HealthPoint>().Grass;
-                            // Здійснюйте необхідні дії при зіткненні об'єкта
-                            Debug.Log("Object collided with: " + collider.name);
+                            // Перевірка, чи зіткнення відбулось з іншим об'єктом (не самим собою)
+                            if (collider.gameObject != newObject)
+                            {
+                                collider.GetComponent<HealthPoint>().healthPoint -= (rockDamage * dirtElement * collider.GetComponent<HealthPoint>().Dirt) / collider.GetComponent<HealthPoint>().Grass;
+                                // Здійснюйте необхідні дії при зіткненні об'єкта
+                                Debug.Log("Object collided with: " + collider.name);
+                            }
                         }
                     }
                 }
+                healthShieldMissed = 0;
             }
-            healthShieldMissed = 0;
         }
         if (healthShield <= 0) 
         {

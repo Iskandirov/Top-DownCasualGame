@@ -660,15 +660,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db1122182e0e29340bebaa5e4426ca12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  basa: []
-  skillId: 
+  basa:
+    stats:
+    - isTrigger: 1
+      value: 5
+    - isTrigger: 0
+      value: 2
+    - isTrigger: 0
+      value: 3
+    - isTrigger: 0
+      value: 2
+    - isTrigger: 0
+      value: 2
+    skill: {fileID: 0}
+    objToSpawn: {fileID: 6051510987840879429}
+    stepMax: 5
+    lifeTime: 3
+    damage: 5
+    damageTickMax: 0
+    countObjects: 3
+    radius: 60
+    isPassive: 0
+    spawnDelay: 0.2
+  skillId: 1
+  currentLevel: 0
   enemies: []
   enemiesToShoot: []
-  lightObj: {fileID: 5151509403100353409}
-  maxEnemiesToShoot: 3
-  stunTime: 0
-  step: 0
-  spawnInterval: 0
+  enemyToShoot: {fileID: 0}
+  stunTime: 2
 --- !u!1 &5347374390082918261
 GameObject:
   m_ObjectHideFlags: 0

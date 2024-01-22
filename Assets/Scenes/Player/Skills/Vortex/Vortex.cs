@@ -7,28 +7,44 @@ public class Vortex : SkillBaseMono
 {
     public List<Transform> movingObjects = new List<Transform>(); // Список рухомих об'єктів
     public float bump;
-    public float Steam;
-    public float Wind;
-    public bool isFive;
+    public bool isClone;
     
     // Start is called before the first frame update
     void Start()
     {
-        //basa = SetToSkillID(gameObject);
-        
         Vector3 mousePosition = Input.mousePosition;
         mousePosition.z = 1.9f; // Задаємо Z-координату для об'єкта
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-        transform.position = worldPosition;
-        basa.damage = basa.damage * PlayerManager.instance.Wind;
-        transform.localScale = new Vector2(basa.radius * PlayerManager.instance.Steam, basa.radius * PlayerManager.instance.Steam);
-        if (isFive)
+        if (!isClone)
         {
-            Vortex b = Instantiate(this, new Vector3(transform.position.x + Random.Range(-20, 20), transform.position.y + Random.Range(-20, 20), 1.9f), Quaternion.identity);
-            b.basa.damage = basa.damage * PlayerManager.instance.Wind;
-            b.basa.lifeTime = basa.lifeTime;
-            b.transform.localScale = new Vector2(basa.radius * PlayerManager.instance.Steam, basa.radius * PlayerManager.instance.Steam);
+            transform.position = worldPosition;
+            if (basa.stats[4].isTrigger)
+            {
+                Vortex b = Instantiate(this, new Vector3(transform.position.x + Random.Range(-30, 30), transform.position.y + Random.Range(-30, 30), 1.9f), Quaternion.identity);
+                b.basa.lifeTime = basa.lifeTime;
+                b.isClone = true;
+            }
         }
+        if (basa.stats[1].isTrigger)
+        {
+            basa.lifeTime += basa.stats[1].value;
+            basa.stats[1].isTrigger = false;
+        }
+        if (basa.stats[2].isTrigger)
+        {
+            basa.radius += basa.stats[2].value;
+            basa.stats[2].isTrigger = false;
+        }
+        if (basa.stats[3].isTrigger)
+        {
+            basa.stepMax -= basa.stats[3].value;
+            basa.skill.skillCD -= StabilizateCurrentReload(basa.skill.skillCD, basa.stats[2].value);
+            basa.stats[3].isTrigger = false;
+        }
+       
+        transform.localScale = new Vector2(basa.radius * PlayerManager.instance.Steam, basa.radius * PlayerManager.instance.Steam);
+
+
         StartCoroutine(Destroy());
     }
     IEnumerator Destroy()
@@ -41,8 +57,11 @@ public class Vortex : SkillBaseMono
     {
         foreach (Transform movingObject in movingObjects)
         {
-            HealthPoint health = movingObject.GetComponentInChildren<HealthPoint>();
-            health.healthPoint -= (basa.damage * Wind * Steam) / (health.Wind * health.Steam);
+            if (movingObject.GetComponentInChildren<HealthPoint>() != null)
+            {
+                HealthPoint health = movingObject.GetComponentInChildren<HealthPoint>();
+                health.healthPoint -= (basa.damage * PlayerManager.instance.Wind * PlayerManager.instance.Steam) / (health.Wind * health.Steam);
+            }
         }
     }
     // Update is called once per frame

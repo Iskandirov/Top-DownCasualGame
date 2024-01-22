@@ -4,12 +4,8 @@ using UnityEngine;
 
 public class Tower : SkillBaseMono
 {
-    public float spawnTick;
-    public float spawnTickMax;
     public TowerWave damageObj;
     public BobmExplode bomb;
-    public bool isThree;
-    public bool isFive;
     Collider2D[] colliders;
     float agreTime = 3;
     Forward objEnemyMove;
@@ -19,10 +15,20 @@ public class Tower : SkillBaseMono
     // Start is called before the first frame update
     void Start()
     {
-        //basa = SetToSkillID(gameObject);
         waterElement = PlayerManager.instance.Water;
-        spawnTickMax = basa.damageTickMax;
         fireElement = PlayerManager.instance.Fire;
+
+        if (basa.stats[1].isTrigger)
+        {
+            basa.lifeTime += basa.stats[1].value;
+            basa.stats[1].isTrigger = false;
+        }
+        if (basa.stats[3].isTrigger)
+        {
+            basa.damageTickMax -= basa.stats[3].value;
+            basa.stats[3].isTrigger = false;
+        }
+
         StartCoroutine(TimerSpell());
         StartCoroutine(TimerLife());
         StartCoroutine(TimerAgre(objEnemyMove));
@@ -31,16 +37,15 @@ public class Tower : SkillBaseMono
     {
         while (true)
         {
-            yield return new WaitForSeconds(spawnTick);
+            yield return new WaitForSeconds(basa.damageTickMax);
             TowerWave a = Instantiate(damageObj, transform.position, Quaternion.identity);
             a.waterElement = waterElement;
-            spawnTick = spawnTickMax;
         }
     }
     private IEnumerator TimerLife()
     {
         yield return new WaitForSeconds(basa.lifeTime);
-        if (isThree)
+        if (basa.stats[2].isTrigger)
         {
             BobmExplode a = Instantiate(bomb, transform.position, Quaternion.identity);
             a.fire = fireElement;
@@ -52,24 +57,22 @@ public class Tower : SkillBaseMono
         yield return new WaitForSeconds(agreTime);
         if (a != null)
         {
-            a.SetDestination(PlayerManager.instance.gameObject);
+            a.GetComponentInParent<Forward>().destination.target = PlayerManager.instance.transform;
         }
     }
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (isFive)
+        if (basa.stats[4].isTrigger)
         {
-            colliders = Physics2D.OverlapCircleAll(gameObject.transform.position, 16f);
+            colliders = Physics2D.OverlapCircleAll(transform.position, 16f);
             foreach (Collider2D collider in colliders)
             {
-                if (collider.isTrigger != true && collider.CompareTag("Enemy") && collider.transform.parent.gameObject != gameObject)
+                if (collider.isTrigger != true && collider.CompareTag("Enemy")
+                    && collider.GetComponent<HealthPoint>() != null && collider.GetComponentInParent<Forward>() != null)
                 {
-                    if (collider.GetComponent<HealthPoint>())
-                    {
-                        collider.transform.root.GetComponent<Forward>().SetDestination(gameObject);
-                        objEnemyMove = collider.transform.root.GetComponent<Forward>();
-                    }
+                    collider.GetComponentInParent<Forward>().destination.target = transform;
+                    objEnemyMove = collider.transform.root.GetComponent<Forward>();
                 }
             }
         }

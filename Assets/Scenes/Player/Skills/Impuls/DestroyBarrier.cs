@@ -24,21 +24,18 @@ public class DestroyBarrier : MonoBehaviour
 
         if (isFiveLevel)
         {
-            if (ReferenceEquals(player.gameObject, gameObject))
-            {
 
-                if (player.playerHealthPoint != player.playerHealthPointMax)
+            if (player.playerHealthPoint != player.playerHealthPointMax)
+            {
+                if (player.playerHealthPoint + heal * Grass <= player.playerHealthPointMax)
                 {
-                    if (player.playerHealthPoint + heal * Grass <= player.playerHealthPointMax)
-                    {
-                        player.playerHealthPoint += heal * Grass;
-                        player.fullFillImage.fillAmount += player.playerHealthPoint / player.playerHealthPointMax;
-                    }
-                    else
-                    {
-                        player.playerHealthPoint = player.playerHealthPointMax;
-                        player.fullFillImage.fillAmount -= player.playerHealthPoint / player.playerHealthPointMax;
-                    }
+                    player.playerHealthPoint += heal * Grass;
+                    player.fullFillImage.fillAmount += player.playerHealthPoint / player.playerHealthPointMax;
+                }
+                else
+                {
+                    player.playerHealthPoint = player.playerHealthPointMax;
+                    player.fullFillImage.fillAmount -= player.playerHealthPoint / player.playerHealthPointMax;
                 }
             }
         }

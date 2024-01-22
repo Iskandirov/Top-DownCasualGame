@@ -1,7 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+[Serializable]
+public class EnemyPool
+{
+    public GameObject enemyObj;
+    public List<GameObject> enemyPool;
+    public int poolSize;
+}
+
 [DefaultExecutionOrder(11)]
 public class SpawnManager : MonoBehaviour
 {
@@ -16,11 +25,10 @@ public class SpawnManager : MonoBehaviour
     public float barrelSpawnInterval = 20f; // Інтервал спавну в секундах
 
     [Header("Enemies")]
-    public int enemyPoolSize = 60;
-    public List<GameObject> enemyPool;
+    public List<EnemyPool> enemiesPool;
+
     public float enemySpawnInterval;
     public float timeStepWeed;
-    public GameObject[] EnemyBody;
     public Collider2D spawnMapBound;
     public Timer Timer;
     public bool stopSpawn;
@@ -39,7 +47,10 @@ public class SpawnManager : MonoBehaviour
         player = PlayerManager.instance;
 
         barrelPool = InitializeObjectPool(barrelPrefab, barrelPoolSize);
-        enemyPool = InitializeObjectPool(EnemyBody.ToList(), enemyPoolSize);
+        foreach (var enemyPool in enemiesPool)
+        {
+            enemyPool.enemyPool = InitializeObjectPool(enemyPool.enemyObj, enemyPool.poolSize);
+        }
         StartCoroutine(SpawnRoutine(barrelSpawnInterval));
         StartCoroutine(SpawnEnemyRoutine(enemySpawnInterval));
     }
@@ -110,17 +121,20 @@ public class SpawnManager : MonoBehaviour
     {
         // Отримуємо центр колайдера
         Vector2 colliderCenter = spawnMapBound.bounds.center;
-        Vector2 randomPointInsideCollider = colliderCenter + Random.insideUnitCircle * (spawnMapBound.bounds.extents.magnitude);
+        Vector2 randomPointInsideCollider = colliderCenter + UnityEngine.Random.insideUnitCircle * new Vector2(spawnMapBound.bounds.size.x * 0.6f, spawnMapBound.bounds.size.y * 0.5f);
         obj.transform.position = randomPointInsideCollider;
     }
     //Enemy
     private IEnumerator SpawnEnemyRoutine(float interval)
     {
-        while (enemycount < enemyPoolSize)
+        for (int i = 0; i < enemiesPool.Count; i++)
         {
-            yield return new WaitForSeconds(interval);
+            for (int y = 0; y < enemiesPool[i].poolSize; y++)
+            {
+                yield return new WaitForSeconds(interval);
 
-            SpawnEnemies();
+                SpawnEnemies(enemiesPool[i].enemyPool);
+            }
         }
     }
     private bool IsInsideCameraBounds(Vector3 position)
@@ -147,7 +161,7 @@ public class SpawnManager : MonoBehaviour
         Vector3 spawnPosition;
         do
         {
-            float randomAngle = Random.Range(0f, 2f * Mathf.PI);
+            float randomAngle = UnityEngine.Random.Range(0f, 2f * Mathf.PI);
             Vector3 spawnOffset = new Vector3(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle), 0f) * spawnRadius;
             spawnPosition = new Vector3(GameManager.Instance.transform.position.x + spawnOffset.x, GameManager.Instance.transform.position.y + spawnOffset.y, 1.8f);
         } while (IsInsideCameraBounds(spawnPosition) || IsInsideWallBounds(spawnPosition));
@@ -155,9 +169,9 @@ public class SpawnManager : MonoBehaviour
         return spawnPosition;
     }
 
-    private void SpawnEnemies()
+    private void SpawnEnemies(List<GameObject> pool)
     {
-        GameObject enemy = GetFromPool(enemyPool);
+        GameObject enemy = GetFromPool(pool);
         IDChecker(enemy.name);
 
         if (enemy.GetComponent<Forward>() != null)

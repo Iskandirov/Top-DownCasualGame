@@ -5,8 +5,6 @@ using UnityEngine;
 public class Impuls : SkillBaseMono
 {
     public float powerGrow;
-    public bool isFour;
-    public bool isFive;
     public DestroyBarrier barrier;
     public float wind;
     public float grass;
@@ -17,22 +15,31 @@ public class Impuls : SkillBaseMono
     {
         wind = PlayerManager.instance.Wind;
         grass = PlayerManager.instance.Grass;
-        //basa = SetToSkillID(gameObject);
+        if (basa.stats[1].isTrigger)
+        {
+            basa.radius += basa.stats[1].value;
+            basa.stats[1].isTrigger = false;
+        }
+        if (basa.stats[2].isTrigger)
+        {
+            basa.stepMax -= basa.stats[2].value;
+            basa.skill.skillCD -= StabilizateCurrentReload(basa.skill.skillCD, basa.stats[2].value);
+            basa.stats[2].isTrigger = false;
+        }
         StartCoroutine(TimerSpell());
-
     }
     private IEnumerator TimerSpell()
     {
         yield return new WaitForSeconds(basa.lifeTime);
 
-        if (isFour)
+        if (basa.stats[3].isTrigger)
         {
             GameManager.Instance.FindStatName("barierSpawned", 1);
             DestroyBarrier a = Instantiate(barrier, transform.position, Quaternion.identity);
             a.Grass = grass;
-            if (isFive)
+            if (basa.stats[4].isTrigger)
             {
-                a.isFiveLevel = isFive;
+                a.isFiveLevel = basa.stats[4].isTrigger;
             }
         }
         Destroy(gameObject);
@@ -42,7 +49,7 @@ public class Impuls : SkillBaseMono
     void FixedUpdate()
     {
         transform.position = PlayerManager.instance.transform.position;
-        transform.localScale = new Vector3(transform.localScale.x + Time.fixedDeltaTime * powerGrow * wind,
-            transform.localScale.y + Time.fixedDeltaTime * powerGrow * wind, transform.localScale.z + Time.fixedDeltaTime * powerGrow * wind);
+        transform.localScale = new Vector3((transform.localScale.x + basa.radius) + Time.fixedDeltaTime * powerGrow * wind,
+            (transform.localScale.y + basa.radius) + Time.fixedDeltaTime * powerGrow * wind, (transform.localScale.z + basa.radius) + Time.fixedDeltaTime * powerGrow * wind);
     }
 }

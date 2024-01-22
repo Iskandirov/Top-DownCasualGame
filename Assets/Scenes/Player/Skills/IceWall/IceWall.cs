@@ -9,6 +9,26 @@ public class IceWall : SkillBaseMono
 
     void Start()
     {
+        if (basa.stats[1].isTrigger)
+        {
+            basa.lifeTime += basa.stats[1].value;
+            basa.stats[1].isTrigger = false;
+        }
+        if (basa.stats[2].isTrigger)
+        {
+            basa.radius += basa.stats[2].value;
+            basa.stats[2].isTrigger = false;
+        }
+        if (basa.stats[3].isTrigger)
+        {
+            basa.stepMax -= basa.stats[3].value;
+            basa.stats[3].isTrigger = false;
+        }
+        if (basa.stats[4].isTrigger)
+        {
+            basa.damage += basa.stats[4].value;
+            basa.stats[4].isTrigger = false;
+        }
         //basa = SetToSkillID(gameObject);
         damageTick = basa.damageTickMax;
         Vector3 mousePosition = Input.mousePosition;
@@ -42,12 +62,22 @@ public class IceWall : SkillBaseMono
         {
             if (collision.GetComponentInParent<Forward>())
             {
-                StartCoroutine(collision.GetComponentInParent<Forward>().SlowEnemy(1f, 0.1f));
+                StartCoroutine(collision.GetComponentInParent<Forward>().SlowEnemy(1f, 0.5f));
                 if (damageTick <= 0)
                 {
                     collision.GetComponent<HealthPoint>().TakeDamage((basa.damage * cold) / collision.GetComponent<HealthPoint>().Fire);
                     damageTick = basa.damageTickMax;
                 }
+            }
+        }
+    }
+    public void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy") && !collision.isTrigger)
+        {
+            if (collision.GetComponentInParent<Forward>())
+            {
+                StartCoroutine(collision.GetComponentInParent<Forward>().SlowEnemy(1f, 1f));
             }
         }
     }

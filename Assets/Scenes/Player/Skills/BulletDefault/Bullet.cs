@@ -10,11 +10,15 @@ public class Bullet : SkillBaseMono
     public float lifeStealPercent;
     public float slowPercent;
     PlayerManager player;
-    GameObject obj;
+    public GameObject obj;
     private void Start()
     {
         player = PlayerManager.instance;
-        obj = player.gameObject;
+        if (obj == null)
+        {
+            obj = player.gameObject;
+
+        }
         if (basa.stats[0].isTrigger)
         {
             basa.damage = basa.stats[0].value;
@@ -43,17 +47,13 @@ public class Bullet : SkillBaseMono
         lifeStealPercent = player.lifeStealPercent;
         slowPercent = player.slowPercent;
 
-        player.CreateBullet(obj.transform.position, this);
+        player.ShootBullet(obj.transform.position, this);
         //CreateBaseSpell(this, this)
         //player.AsyncDirBullet(obj, Instantiate(this));
 
-        Invoke("DestroyBullet", 1f);
+        CoroutineToDestroy(gameObject, 1f);
     }
    
-    void DestroyBullet()
-    {
-        Destroy(gameObject);
-    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy") && !collision.isTrigger)

@@ -10,21 +10,41 @@ public class Trail : SkillBaseMono
 
     public float size;
 
-    static List<EdgeCollider2D> unusedColliders = new List<EdgeCollider2D>();
+    public static List<EdgeCollider2D> unusedColliders = new List<EdgeCollider2D>();
     PlayerManager player;
-    public bool isFive;
     
     // Start is called before the first frame update
     void Start()
     {
         player = PlayerManager.instance;
-        //basa = SetToSkillID(gameObject);
+        
         trailRenderer = GetComponent<TrailRenderer>();
-
+        trailRenderer.startWidth = size;
+        trailRenderer.endWidth = size;
         edgeCollider = GetValidCollider();
     }
     private void FixedUpdate()
     {
+        if (basa.stats[1].isTrigger)
+        {
+            basa.lifeTime += basa.stats[1].value;
+            trailRenderer.time = basa.lifeTime;
+            basa.stats[1].isTrigger = false;
+        }
+        if (basa.stats[2].isTrigger)
+        {
+            basa.damage += basa.stats[2].value;
+            basa.stats[2].isTrigger = false;
+        }
+        if (basa.stats[3].isTrigger)
+        {
+            basa.radius += basa.stats[3].value;
+            size += basa.radius;
+            trailRenderer.startWidth = size;
+            trailRenderer.endWidth = size;
+            basa.stats[3].isTrigger = false;
+        }
+        transform.position = player.transform.position;
         SetColliderPointsFromTrail(trailRenderer, edgeCollider);
         //Trail
         for (int i = 0; i < trailRenderer.positionCount; i++)
@@ -42,11 +62,12 @@ public class Trail : SkillBaseMono
                 {
                     // TrailRenderer торкається до об'єкта з тегом "Enemy"
                     colliders[j].collider.GetComponent<HealthPoint>().healthPoint -= basa.damage;
-                    if (isFive)
+                    if (basa.stats[4].isTrigger)
                     {
                         if (colliders[j].collider.GetComponent<HealthPoint>().healthPoint <= 0)
                         {
                             player.playerHealthPoint += colliders[j].collider.GetComponent<HealthPoint>().healthPointMax * 0.1f;
+                            player.fullFillImage.fillAmount = player.playerHealthPoint / player.playerHealthPointMax;
                         }
                     }
 
@@ -83,7 +104,12 @@ public class Trail : SkillBaseMono
     }
     private void OnDestroy()
     {
-        if (edgeCollider != null)
+        // Видаляємо колайдер тільки якщо він був створений в методі GetValidCollider()
+        if (edgeCollider.gameObject.name == "TrailCollder")
+        {
+            Destroy(edgeCollider.gameObject);
+        }
+        else
         {
             edgeCollider.enabled = false;
             unusedColliders.Add(edgeCollider);

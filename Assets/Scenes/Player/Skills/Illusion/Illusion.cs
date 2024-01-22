@@ -1,78 +1,115 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 public class Illusion : SkillBaseMono
 {
     public Zzap zzap;
-    public float x;
-    public float y;
+    public Bullet bullet;
+    public float x = -10;
+    public float y = -7;
     public float xZzap;
     public float yZzap;
-    public bool isFive;
     public float angle;
 
-    bool isTriggeredTwo;
     public float attackSpeed;
     public float attackSpeedMax;
 
     PlayerManager player;
+    public bool isClone;
     
 
     // Start is called before the first frame update
     void Start()
     {
         player = PlayerManager.instance;
-        //basa = SetToSkillID(gameObject);
-        x = -10;
-        y = 10;
-        xZzap = 2;
-        yZzap = -10;
-        angle = 0;
-        if (basa.isReadyToDo)
+        if (basa.stats[1].isTrigger)
         {
-            CreateClone(-5, -5, 10, 0, 112);
-            if (isTriggeredTwo)
+            basa.countObjects += basa.stats[1].value;
+            basa.stats[1].isTrigger = false;
+            if (isClone == false && FindObjectsOfType<Illusion>().ToList().Count < basa.countObjects)
             {
-                CreateClone(10, 0, -10, 5, 240);
+                CreateClone();
             }
+        }
+        if (basa.stats[2].isTrigger)
+        {
+            basa.lifeTime += basa.stats[2].value;
+            basa.stats[2].isTrigger = false;
+        }
+        if (basa.stats[3].isTrigger)
+        {
+            basa.countObjects += basa.stats[3].value;
+            basa.stats[3].isTrigger = false;
+            if (isClone == false && FindObjectsOfType<Illusion>().ToList().Count < basa.countObjects)
+            {
+                CreateClone();
+            }
+        }
+        if (basa.stats[4].isTrigger)
+        {
+            basa.stats[4].isTrigger = true;
         }
        
         attackSpeed = player.attackSpeed / player.Wind;
         attackSpeedMax = attackSpeed;
-        if (isFive)
+        if (basa.stats[4].isTrigger)
         {
-            Zzap a = Instantiate(zzap, transform.position, Quaternion.Euler(0, 0, angle));
-            a.copie = gameObject;
+            Zzap a = Instantiate(zzap, transform.position, Quaternion.Euler(0, 0, angle), transform);
             a.x = xZzap;
             a.y = yZzap;
             a.electicElement = player.Electricity;
             a.lifeTime = basa.lifeTime;
         }
-        StartCoroutine(TimerSpell());
+        CoroutineToDestroy(gameObject, basa.lifeTime);
+        IsThereAnotherBeam();
+
     }
-    private void CreateClone(float x, float y, float xZzap, float yZzap, float angle)
+    public void IsThereAnotherBeam()
+    {
+        int x = -10;
+        int y = -7;
+        int xZzap = -5;
+        int yZzap = 5;
+        bool isReverce = true;
+        List<Illusion> illusions = FindObjectsOfType<Illusion>().ToList();
+        if (illusions.Count > 1)
+        {
+            foreach (Illusion illusion in illusions)
+            {
+                illusion.angle = angle;
+                illusion.x = x;
+                illusion.y = y;
+                illusion.xZzap = xZzap;
+                illusion.yZzap = yZzap;
+                x += 10;
+                y += isReverce ? 14 : -14;
+                xZzap += 10;
+                yZzap += isReverce ? 14 : -14;
+                isReverce = !isReverce;
+            }
+        }
+    }
+    private void CreateClone()
     {
         Illusion a = Instantiate(this, transform.position, Quaternion.identity);
-        a.x = x;
-        a.y = y;
-        a.xZzap = xZzap;
-        a.yZzap = yZzap;
-        a.angle = angle;
+        a.isClone = true;
         a.basa.lifeTime = basa.lifeTime;
-        a.isFive = isFive;
-    }
-    private IEnumerator TimerSpell()
-    {
-        yield return new WaitForSeconds(basa.lifeTime);
-
-        Destroy(gameObject);
+        a.basa.stats[4].isTrigger = basa.stats[4].isTrigger;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
+        attackSpeed -= Time.fixedDeltaTime;
         transform.position = new Vector2(player.transform.position.x + x, player.transform.position.y + y);
-        player.ShootBullet();
+        if (attackSpeed <= 0 && Input.GetMouseButton(0))
+        {
+            Bullet a = Instantiate(bullet, transform.position, Quaternion.identity);
+            a.obj = gameObject;
+            attackSpeed = attackSpeedMax;
+        }
     }
 }

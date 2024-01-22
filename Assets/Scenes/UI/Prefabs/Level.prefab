@@ -350,7 +350,8 @@ MonoBehaviour:
       damageTickMax: 0
       countObjects: 1
       radius: 0
-      isReadyToDo: 0
+      isPassive: 0
+      spawnDelay: 0.3
     isPassive: 1
     Image: {fileID: 21300000, guid: fcb67cd5d218010439b6d4b8cea0586f, type: 3}
     tag:
@@ -386,11 +387,12 @@ MonoBehaviour:
       objToSpawn: {fileID: 6051510987840879429, guid: 2f6275aa03e73ec448443be3579db8a3, type: 3}
       stepMax: 5
       lifeTime: 3
-      damage: 0
+      damage: 5
       damageTickMax: 0
       countObjects: 3
-      radius: 0
-      isReadyToDo: 0
+      radius: 60
+      isPassive: 0
+      spawnDelay: 0.2
     isPassive: 0
     Image: {fileID: 21300000, guid: df93d3a7aa8c6cb409a4afc4c31268c0, type: 3}
     tag:
@@ -430,7 +432,8 @@ MonoBehaviour:
       damageTickMax: 0.3
       countObjects: 1
       radius: 1
-      isReadyToDo: 0
+      isPassive: 0
+      spawnDelay: 0
     isPassive: 0
     Image: {fileID: 21300000, guid: 40c600d109a87d5498330dda9167a354, type: 3}
     tag:
@@ -470,7 +473,8 @@ MonoBehaviour:
       damageTickMax: 0.5
       countObjects: 1
       radius: 4
-      isReadyToDo: 0
+      isPassive: 0
+      spawnDelay: 0.4
     isPassive: 0
     Image: {fileID: 21300000, guid: c7a5c4090c90f2e49a99973c64a66c9b, type: 3}
     tag:
@@ -510,7 +514,8 @@ MonoBehaviour:
       damageTickMax: 0
       countObjects: 1
       radius: 0
-      isReadyToDo: 0
+      isPassive: 0
+      spawnDelay: 0
     isPassive: 0
     Image: {fileID: 21300000, guid: 540d633e11cd2e247a049c833a445091, type: 3}
     tag:
@@ -550,7 +555,8 @@ MonoBehaviour:
       damageTickMax: 0
       countObjects: 1
       radius: 0
-      isReadyToDo: 0
+      isPassive: 0
+      spawnDelay: 0
     isPassive: 0
     Image: {fileID: 21300000, guid: 747c9dfab89ca2944b220f3317a793a3, type: 3}
     tag:
@@ -590,7 +596,8 @@ MonoBehaviour:
       damageTickMax: 0
       countObjects: 1
       radius: 0
-      isReadyToDo: 0
+      isPassive: 0
+      spawnDelay: 0.3
     isPassive: 0
     Image: {fileID: 21300000, guid: 50d5866ece3d860498f7f02ae53439a1, type: 3}
     tag:
@@ -615,7 +622,7 @@ MonoBehaviour:
       - isTrigger: 0
         value: 0
       - isTrigger: 0
-        value: 5
+        value: 2
       - isTrigger: 0
         value: 2
       - isTrigger: 0
@@ -630,7 +637,8 @@ MonoBehaviour:
       damageTickMax: 0
       countObjects: 1
       radius: 1
-      isReadyToDo: 0
+      isPassive: 0
+      spawnDelay: 0
     isPassive: 0
     Image: {fileID: 21300000, guid: 5678ebb08569867459d8d2ee5fd54648, type: 3}
     tag:
@@ -655,7 +663,7 @@ MonoBehaviour:
       - isTrigger: 0
         value: 0
       - isTrigger: 0
-        value: 15
+        value: 20
       - isTrigger: 0
         value: 0
       - isTrigger: 0
@@ -669,8 +677,9 @@ MonoBehaviour:
       damage: 20
       damageTickMax: 0
       countObjects: 1
-      radius: 0
-      isReadyToDo: 0
+      radius: 1
+      isPassive: 0
+      spawnDelay: 0
     isPassive: 0
     Image: {fileID: 21300000, guid: 89bb1c82bd79e1c468e4e61e7e49eace, type: 3}
     tag:
@@ -710,7 +719,8 @@ MonoBehaviour:
       damageTickMax: 0.1
       countObjects: 1
       radius: 2
-      isReadyToDo: 0
+      isPassive: 0
+      spawnDelay: 0.1
     isPassive: 0
     Image: {fileID: 21300000, guid: 19763962cf519ed4fa42df9b05b4e61f, type: 3}
     tag:
@@ -747,10 +757,11 @@ MonoBehaviour:
       stepMax: 20
       lifeTime: 15
       damage: 4
-      damageTickMax: 0
+      damageTickMax: 6
       countObjects: 1
       radius: 0
-      isReadyToDo: 0
+      isPassive: 0
+      spawnDelay: 0
     isPassive: 0
     Image: {fileID: 21300000, guid: cbedeaefeb1c15d409f06953f523c31b, type: 3}
     tag:
@@ -779,7 +790,7 @@ MonoBehaviour:
       - isTrigger: 0
         value: 10
       - isTrigger: 0
-        value: 0
+        value: 1
       - isTrigger: 0
         value: 0
       skill: {fileID: 0}
@@ -790,7 +801,8 @@ MonoBehaviour:
       damageTickMax: 0
       countObjects: 1
       radius: 0
-      isReadyToDo: 0
+      isPassive: 0
+      spawnDelay: 0.2
     isPassive: 0
     Image: {fileID: 21300000, guid: 6bead8a8a4847194b915de226607a9ac, type: 3}
     tag:
@@ -824,13 +836,14 @@ MonoBehaviour:
         value: 0
       skill: {fileID: 0}
       objToSpawn: {fileID: 4506995009783188816, guid: dc0c951fdfe1ff54f914cd1eace96eaa, type: 3}
-      stepMax: 10
+      stepMax: 0
       lifeTime: 5
       damage: 1
       damageTickMax: 0.2
       countObjects: 1
-      radius: 1
-      isReadyToDo: 0
+      radius: 0
+      isPassive: 1
+      spawnDelay: 0
     isPassive: 1
     Image: {fileID: 21300000, guid: bdc3c1cb276463f4d9b556c085ae1371, type: 3}
     tag:
@@ -855,7 +868,7 @@ MonoBehaviour:
       - isTrigger: 0
         value: 0
       - isTrigger: 0
-        value: 5
+        value: 1
       - isTrigger: 0
         value: 1
       - isTrigger: 0
@@ -870,7 +883,8 @@ MonoBehaviour:
       damageTickMax: 0
       countObjects: 1
       radius: 1
-      isReadyToDo: 0
+      isPassive: 0
+      spawnDelay: 0
     isPassive: 0
     Image: {fileID: 21300000, guid: abf4de1b0cd36654683ee6ff5d4bcac4, type: 3}
     tag:
@@ -901,16 +915,17 @@ MonoBehaviour:
       - isTrigger: 0
         value: 2
       - isTrigger: 0
-        value: 0
+        value: 1
       skill: {fileID: 0}
       objToSpawn: {fileID: 4796512543398048128, guid: 1ed952495ca6b264f9e00c5067ede385, type: 3}
       stepMax: 7
       lifeTime: 4
-      damage: 1
+      damage: 0
       damageTickMax: 0.5
       countObjects: 1
-      radius: 0
-      isReadyToDo: 0
+      radius: 1
+      isPassive: 0
+      spawnDelay: 0
     isPassive: 0
     Image: {fileID: 21300000, guid: 961a8eb948fd8e54abcd56a04a844fad, type: 3}
     tag:
@@ -950,7 +965,8 @@ MonoBehaviour:
       damageTickMax: 0
       countObjects: 1
       radius: 1
-      isReadyToDo: 0
+      isPassive: 0
+      spawnDelay: 0
     isPassive: 0
     Image: {fileID: 21300000, guid: a26882f7239013c4ca769a672dead8f5, type: 3}
     tag:
@@ -981,7 +997,8 @@ MonoBehaviour:
       damageTickMax: 0
       countObjects: 0
       radius: 0
-      isReadyToDo: 0
+      isPassive: 0
+      spawnDelay: 0
     isPassive: 1
     Image: {fileID: 21300000, guid: 56f37b92246bcab419528d4c4f956ed6, type: 3}
     tag:
@@ -1009,7 +1026,8 @@ MonoBehaviour:
       damageTickMax: 0
       countObjects: 0
       radius: 0
-      isReadyToDo: 0
+      isPassive: 0
+      spawnDelay: 0
     isPassive: 0
     Image: {fileID: 0}
     tag: []

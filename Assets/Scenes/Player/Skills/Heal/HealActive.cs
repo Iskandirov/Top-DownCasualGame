@@ -5,7 +5,6 @@ using UnityEngine;
 public class HealActive : SkillBaseMono
 {
     public PlayerManager player;
-    public bool isTriggered;
     public float Grass;
     
     // Start is called before the first frame update
@@ -13,8 +12,23 @@ public class HealActive : SkillBaseMono
     {
         player = PlayerManager.instance;
         Grass = player.Grass;
+        if (basa.stats[1].isTrigger)
+        {
+            basa.damage += basa.stats[1].value;
+            basa.stats[1].isTrigger = false;
+        }
+        if (basa.stats[3].isTrigger)
+        {
+            basa.stepMax -= basa.stats[3].value;
+            basa.stats[3].isTrigger = false;
+        }
+        if (basa.stats[4].isTrigger)
+        {
+            basa.damage += basa.stats[4].value;
+            basa.stats[4].isTrigger = false;
+        }
         //basa = SetToSkillID(gameObject);
-        if (isTriggered)
+        if (basa.stats[2].isTrigger)
         {
             player.isInvincible = true;
         }
@@ -41,7 +55,7 @@ public class HealActive : SkillBaseMono
     {
         yield return new WaitForSeconds(basa.lifeTime);
 
-        if (isTriggered)
+        if (basa.stats[2].isTrigger)
         {
             player.isInvincible = false;
         }

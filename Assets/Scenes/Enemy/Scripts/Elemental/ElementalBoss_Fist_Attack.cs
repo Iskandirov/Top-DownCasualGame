@@ -110,7 +110,7 @@ public class ElementalBoss_Fist_Attack : MonoBehaviour
                 collidedObject.healthShield -= damage;
                 FindObjectOfType<StatsCollector>().FindStatName("ShieldAbsorbedDamage", damage);
                 StartCoroutine(ReducePushForce(pushableObjectRigidbody));
-                if (collidedObject.isThreeLevel)
+                if (collidedObject.basa.stats[2].isTrigger)
                 {
                     childrenHealth.healthPoint -= damage / 2;
                     FindObjectOfType<StatsCollector>().FindStatName("ShieldAbsorbedDamage", damage / 2);

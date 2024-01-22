@@ -61,10 +61,10 @@ public class Attack : MonoBehaviour
             shield.healthShield -= damage;
             GameManager.Instance.FindStatName("ShieldAbsorbedDamage", damage);
             isAttack = true;
-            if (shield.isThreeLevel)
+            if (shield.basa.stats[2].isTrigger)
             {
                 GetComponentInChildren<HealthPoint>().healthPoint -= damage / 2;
-                if (shield.isFiveLevel)
+                if (shield.basa.stats[4].isTrigger)
                 {
                     shield.healthShieldMissed += damage;
                 }

@@ -16,8 +16,6 @@ public class Beam : SkillBaseMono
     void Start()
     {
         player = PlayerManager.instance;
-        //basa = SetToSkillID(gameObject);
-        //CreateBeam(0, 5, 0);
         if (basa.stats[1].isTrigger)
         {
             basa.countObjects += basa.stats[1].value;
@@ -65,7 +63,7 @@ public class Beam : SkillBaseMono
     void Update()
     {
         // Визначаємо відстань від гравця до позиції курсора
-        Vector3 direction = player.GetMousDirection();
+        Vector3 direction = player.GetMousDirection(player.transform.position);
         direction = direction * basa.radius;
 
         // Рухаємо об'єкт до кінцевої позиції

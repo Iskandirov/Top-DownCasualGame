@@ -11,20 +11,39 @@ public class MagicAxe : SkillBaseMono
     bool isBack;
     public bool isCreated;
     public bool isFirst;
-    public bool isFive;
     Vector3 directionToCursor;
+    Vector3 directionToCursorForFirstAxe;
+    Vector3 directionToCursorForSecondAxe;
     public float timeToBack = 1f;
     
     // Start is called before the first frame update
     void Start()
     {
+        if (basa.stats[1].isTrigger)
+        {
+            basa.damage += basa.stats[1].value;
+            basa.stats[1].isTrigger = false;
+        }
+        if (basa.stats[2].isTrigger)
+        {
+            basa.radius += basa.stats[2].value;
+            basa.stats[2].isTrigger = false;
+        }
+        if (basa.stats[3].isTrigger)
+        {
+            basa.stepMax -= basa.stats[3].value;
+            basa.skill.skillCD -= StabilizateCurrentReload(basa.skill.skillCD, basa.stats[3].value);
+            basa.stats[3].isTrigger = false;
+        }
         //basa = SetToSkillID(gameObject);
         transform.localScale = new Vector2(basa.radius * PlayerManager.instance.Steam, basa.radius * PlayerManager.instance.Steam);
         //a.cold = cold * coldElement.Cold;
         transform.position = PlayerManager.instance.transform.position;
         // Нормування напрямку курсора
-        directionToCursor = PlayerManager.instance.GetMousDirection();
+        directionToCursor = PlayerManager.instance.GetMousDirection(PlayerManager.instance.transform.position);
 
+        directionToCursorForFirstAxe = new Vector2(Mathf.Cos(-165f * Mathf.Deg2Rad), Mathf.Sin(-165f * Mathf.Deg2Rad));
+        directionToCursorForSecondAxe = new Vector2(Mathf.Cos(-15f * Mathf.Deg2Rad), Mathf.Sin(-15f  * Mathf.Deg2Rad));
         // Запуск coroutine
         StartCoroutine(MoveToAndBack());
     }
@@ -47,12 +66,16 @@ public class MagicAxe : SkillBaseMono
                 if (isFirst)
                 {
                     // Рух об'єкта в напрямку курсора
-                    transform.position -= Quaternion.AngleAxis(-80f, Vector3.down) * directionToCursor * speed * 0.03f;
+                    //transform.position -= Quaternion.AngleAxis(-80f, Vector3.down) * directionToCursor * speed * 0.03f;
+                    transform.position += new Vector3(directionToCursor.x * directionToCursorForFirstAxe.x * speed * 0.6f, 
+                        directionToCursor.y * directionToCursorForFirstAxe.y * speed * 0.4f, 0f);
+
                 }
                 else
                 {
                     // Рух об'єкта в напрямку курсора
-                    transform.position -= Quaternion.AngleAxis(-80f, Vector3.left) * directionToCursor * speed * 0.03f;
+                    transform.position += new Vector3(directionToCursor.x * directionToCursorForSecondAxe.x * speed * 0.6f,
+                        directionToCursor.y * directionToCursorForSecondAxe.y * speed * 0.4f, 0f);
                 }
             }
            
@@ -74,21 +97,16 @@ public class MagicAxe : SkillBaseMono
     {
         playerDirection = PlayerManager.instance.transform.position;
 
-        // Отримання поточної позиції об'єкта
         Vector3 currentPosition = transform.position;
 
-        // Отримання швидкості руху об'єкта вперед
         Vector3 forwardVelocity = currentPosition - playerDirection;
 
-
-        // Оновлення положення об'єкта до початкової позиції
-        float acceleration = speedBack * 2f;
         transform.position = Vector3.MoveTowards(currentPosition, playerDirection, 1.5f);
 
         // Якщо об'єкт повернувся в початкову позицію, то знищи його
         if (forwardVelocity.magnitude < 5f)
         {
-            if (isFive && !isCreated)
+            if (basa.stats[4].isTrigger && !isCreated)
             {
                 MagicAxe a = Instantiate(this, transform.position, Quaternion.identity);
                 a.isCreated = true; 

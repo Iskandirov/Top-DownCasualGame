@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Zzap : MonoBehaviour
 {
-    public GameObject copie;
     public float damage;
     public float x;
     public float y;
@@ -16,6 +15,7 @@ public class Zzap : MonoBehaviour
     void Start()
     {
         StartCoroutine(TimerSpell());
+        transform.position = new Vector2(transform.position.x + x, transform.position.y + y);// +45
     }
     private IEnumerator TimerSpell()
     {
@@ -26,7 +26,6 @@ public class Zzap : MonoBehaviour
     void FixedUpdate()
     {
         damageTick -= Time.fixedDeltaTime;
-        transform.position = new Vector2(copie.transform.position.x + x, copie.transform.position.y + y);// +45
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

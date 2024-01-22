@@ -123,7 +123,7 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        ShootBullet();
+        ArrowToCursor();
         if (!isTutor)
         {
             CDBaseSkill();
@@ -290,7 +290,7 @@ public class PlayerManager : MonoBehaviour
         {
             isDashSkillActive = true;
             isInvincible = true;
-            Vector2 dashDirection = GetMousDirection();
+            Vector2 dashDirection = GetMousDirection(transform.position);
             rb.velocity = dashDirection.normalized * (speed * dashMultiplier);
             Invoke(nameof(StopDashing), .2f);
         }
@@ -313,40 +313,19 @@ public class PlayerManager : MonoBehaviour
         isRicoshet = false;
     }
     //===============STOP SPECIAL SPELL END========
-    public Vector2 GetMousDirection()
+    public Vector2 GetMousDirection(Vector3 position)
     {
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 playerToMouse = mousePosition - transform.position;
+        Vector2 playerToMouse = mousePosition - position;
         return playerToMouse.normalized;
     }
     //====================DASH END=================
     //End Move
     //Shoot
-
-    //static async Task TimeFlow(float fixedValue)
-    //{
-    //    await Task.Run(() =>
-    //    {
-
-    //    });
-    //}
-    //public void AsyncDirBullet(GameObject position, Bullet newObject)
-    //{
-    //    if (isLevelTwo)
-    //    {
-    //        for (int i = 1; i < secondBulletCount; i++)
-    //        {
-    //            if (position != null)
-    //            {
-    //                CreateBullet(position.transform.position, newObject);
-    //            }
-    //        }
-    //    }
-    //}
-    public void ShootBullet()
+    public void ArrowToCursor()
     {
         // Визначаємо відстань від гравця до позиції курсора
-        Vector3 direction = GetMousDirection();
+        Vector3 direction = GetMousDirection(transform.position);
         direction = direction.normalized * circleRadius;
 
         // Визначаємо кінцеву позицію об'єкту на колі
@@ -359,11 +338,10 @@ public class PlayerManager : MonoBehaviour
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         ShootPoint.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
-    public void CreateBullet(Vector3 position, Bullet newObject)
+    public void ShootBullet(Vector3 position, Bullet newObject)
     {
-        //Bullet newObject = Instantiate(bullet, position, Quaternion.identity);
         newObject.transform.position = position;
-        Vector2 directionBullet = GetMousDirection();
+        Vector2 directionBullet = GetMousDirection(position);
 
         // Запускаємо об'єкт в заданому напрямку
         Rigidbody2D rb = newObject.GetComponent<Rigidbody2D>();

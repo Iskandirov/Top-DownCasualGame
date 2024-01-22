@@ -6,7 +6,6 @@ public class FireWave : SkillBaseMono
 {
     public float burnDamage;
     public float fireElement;
-    public bool isTriggerred;
     PlayerManager player;
     
     // Start is called before the first frame update
@@ -18,22 +17,16 @@ public class FireWave : SkillBaseMono
             basa.damage += basa.stats[1].value;
             basa.stats[1].isTrigger = false;
         }
-        if (basa.stats[2].isTrigger)
-        {
-            isTriggerred = true;
-        }
         if (basa.stats[3].isTrigger)
         {
             basa.stepMax -= basa.stats[3].value;
-            //!!!!
             basa.skill.skillCD -= StabilizateCurrentReload(basa.skill.skillCD, basa.stats[3].value);
-            //!!!!
+
             basa.stats[3].isTrigger = false;
         }
         if (basa.stats[4].isTrigger)
         {
-            burnDamage += basa.stats[4].value;
-            basa.stats[4].isTrigger = false;
+            burnDamage = basa.stats[4].value;
         }
         //basa = SetToSkillID(gameObject);
         basa.damage = basa.damage * player.Fire;
@@ -42,7 +35,7 @@ public class FireWave : SkillBaseMono
     }
     public void IsNeedToDestroy()
     {
-        if (!isTriggerred)
+        if (!basa.stats[2].isTrigger)
         {
             Destroy(gameObject);
         }

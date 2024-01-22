@@ -407,8 +407,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59f91e73c61c20e4c81ebf6ef80998ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  basa: []
-  skillId: 
+  basa:
+    stats:
+    - isTrigger: 1
+      value: 1
+    - isTrigger: 0
+      value: 1
+    - isTrigger: 0
+      value: 3
+    - isTrigger: 0
+      value: 1
+    - isTrigger: 0
+      value: 0.5
+    skill: {fileID: 0}
+    objToSpawn: {fileID: 2487684267938856909}
+    stepMax: 12
+    lifeTime: 1
+    damage: 0
+    damageTickMax: 0
+    countObjects: 1
+    radius: 0
+    isPassive: 0
+    spawnDelay: 0.3
+  skillId: 2
+  currentLevel: 0
   spells: []
 --- !u!95 &20813854022646990
 Animator:

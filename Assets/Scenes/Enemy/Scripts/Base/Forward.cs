@@ -59,17 +59,9 @@ public class Forward : MonoBehaviour
         }
         path = GetComponent<AIPath>();
         destination = GetComponent<AIDestinationSetter>();
-            StartCoroutine(SetDestination(player.gameObject));
+        destination.target = player.transform;
         currentSpeed = speedMax;
         path.maxSpeed = currentSpeed;
-    }
-    public IEnumerator SetDestination(GameObject target)
-    {
-        while(target == null)
-        {
-            yield return null;
-        }
-        destination.target = target.transform;
     }
     bool IsObjectOutsideCameraBounds(GameObject obj)
     {

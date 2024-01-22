@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Policy;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
 public class MiShroomMine : MonoBehaviour
 {
@@ -20,48 +19,51 @@ public class MiShroomMine : MonoBehaviour
     }
     private void SetAlphaRecursively(Transform parent, float alpha)
     {
-        // Отримуємо всі об'єкти SpriteRenderer у батьківському об'єкті
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅ'пїЅпїЅпїЅпїЅ SpriteRenderer пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ'пїЅпїЅпїЅ
         SpriteRenderer[] spriteRenderers = parent.GetComponentsInChildren<SpriteRenderer>();
 
-        // Змінюємо альфа та встановлюємо sorting order для всіх об'єктів SpriteRenderer
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ sorting order пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ'пїЅпїЅпїЅпїЅ SpriteRenderer
         foreach (SpriteRenderer spriteRenderer in spriteRenderers)
         {
             Color spriteColor = spriteRenderer.color;
-            spriteColor.a = alpha; // Встановлюємо альфу в 1 для повної видимості
+            spriteColor.a = alpha; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ 1 пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             spriteRenderer.color = spriteColor;
         }
-        if (GetComponentInChildren<Light2D>())
+        if (GetComponentInChildren<UnityEngine.Rendering.Universal.Light2D>())
         {
-            Color spriteColorLight = GetComponentInChildren<Light2D>().color;
-            spriteColorLight.a = alpha; // Встановлюємо альфу в 1 для повної видимості
-            GetComponentInChildren<Light2D>().color = spriteColorLight;
+            Color spriteColorLight = GetComponentInChildren<UnityEngine.Rendering.Universal.Light2D>().color;
+            spriteColorLight.a = alpha; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ 1 пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            GetComponentInChildren<UnityEngine.Rendering.Universal.Light2D>().color = spriteColorLight;
         }
        
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && !collision.isTrigger && player.gameObject != null)
-        {
-            objectToHit = player.gameObject;
-            inZone = true;
-            SetAlphaRecursively(transform, 1f);
-            FindObjectOfType<AudioSource>().Play();
-            GetComponent<Animator>().SetBool("Action", true);
-        }
-        else if (collision.CompareTag("Shield"))
+        if (collision.CompareTag("Shield") && !collision.isTrigger)
         {
             objectToHit = collision.gameObject;
+            inZone = true;
+            SetAlphaRecursively(transform, 1f);
+            GetComponent<Animator>().SetBool("Action", true);
         }
+        else if (collision.CompareTag("Player") && !collision.isTrigger)
+        {
+            objectToHit = collision.gameObject;
+            inZone = true;
+        }
+        
     }
     public void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") && !collision.isTrigger)
         {
             inZone = false;
+            objectToHit = null;
         }
-        else if (collision.CompareTag("Shield"))
+        else if (collision.CompareTag("Shield") && !collision.isTrigger)
         {
+            inZone = false;
             objectToHit = null;
         }
     }

@@ -1,54 +1,57 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Meteor : SkillBaseMono
 {
     public float damageTick;
-    public bool isThree;
-    public bool isFour;
     public bool isFive;
     public float fireDirt;
     
     // Start is called before the first frame update
     void Start()
     {
-
+        if (basa.stats[1].isTrigger)
+        {
+            basa.damage += basa.stats[1].value;
+            basa.stats[1].isTrigger = false;
+        }
+        if (basa.stats[2].isTrigger)
+        {
+            basa.countObjects += basa.stats[2].value;
+            basa.stats[2].isTrigger = false;
+            StartCoroutine(WaitToAnotherObject(2, basa.spawnDelay));
+        }
+        if (basa.stats[3].isTrigger)
+        {
+            basa.lifeTime += basa.stats[3].value;
+            basa.stats[3].isTrigger = false;
+        }
+        if (basa.stats[4].isTrigger)
+        {
+            basa.countObjects += basa.stats[4].value;
+            basa.stats[4].isTrigger = false;
+            StartCoroutine(WaitToAnotherObject(5,basa.spawnDelay));
+        }
         //basa = SetToSkillID(gameObject);
         transform.localScale = new Vector3(transform.localScale.x + basa.radius, transform.localScale.y + basa.radius);
 
         damageTick = basa.damageTickMax;
         fireDirt = PlayerManager.instance.Dirt + PlayerManager.instance.Fire - 1;
-        if (isThree)
+
+        CoroutineToDestroy(gameObject,basa.lifeTime);
+    }
+   
+    private IEnumerator WaitToAnotherObject(int count, float delay)
+    {
+        for (int i = 0; i < count - 1; i++)
         {
+            yield return new WaitForSeconds(delay);
             Meteor b = Instantiate(this, new Vector2(transform.position.x + Random.Range(-20, 20), transform.position.y + Random.Range(-20, 20)), Quaternion.identity);
             b.basa.damage = basa.damage;
-            b.isFour = isFour;
-            b.fireDirt = PlayerManager.instance.Dirt + PlayerManager.instance.Fire - 1;
-            Meteor c = Instantiate(this, new Vector2(transform.position.x + Random.Range(-20, 20), transform.position.y + Random.Range(-20, 20)), Quaternion.identity);
-            c.basa.damage = basa.damage;
-            c.isFour = isFour;
-            c.fireDirt = PlayerManager.instance.Dirt + PlayerManager.instance.Fire - 1;
-            if (isFive)
-            {
-                for (int i = 0; i < 5; i++)
-                {
-                    Meteor x = Instantiate(this, new Vector2(transform.position.x + Random.Range(-20, 20), transform.position.y + Random.Range(-20, 20)), Quaternion.identity);
-                    x.basa.damage = basa.damage;
-                    x.isFour = isFour;
-                    x.fireDirt = PlayerManager.instance.Dirt + PlayerManager.instance.Fire - 1;
-                }
-            }
         }
-        StartCoroutine(TimerSpell());
     }
-
-    private IEnumerator TimerSpell()
-    {
-        yield return new WaitForSeconds(basa.lifeTime);
-        Destroy(gameObject);
-    }
-
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -65,7 +68,7 @@ public class Meteor : SkillBaseMono
                     collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isFire", true, true);
                     collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isFire", true, false);
                 }
-                if (isFour)
+                if (basa.stats[3].isTrigger)
                 {
                     collision.GetComponentInParent<Forward>().path.maxSpeed = collision.GetComponentInParent<Forward>().speedMax * fireDirt / 1.5f;
                 }
@@ -85,7 +88,7 @@ public class Meteor : SkillBaseMono
     {
         if (collision.CompareTag("Enemy"))
         {
-            if (isFour)
+            if (basa.stats[3].isTrigger)
             {
                 collision.GetComponentInParent<Forward>().path.maxSpeed = collision.GetComponentInParent<Forward>().speedMax;
             }
