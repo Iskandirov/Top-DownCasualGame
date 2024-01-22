@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using TMPro;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -257,9 +255,12 @@ public class PlayerManager : MonoBehaviour
     }
     public IEnumerator SlowPlayer(float time, float percent)
     {
-        speed = speedMax * percent;
-        yield return new WaitForSeconds(time);
-        speed = speedMax;
+        if (speed > speedMax * percent)
+        {
+            speed = speedMax * percent;
+            yield return new WaitForSeconds(time);
+            speed = speedMax;
+        }
     }
     //=================RICOSHET===================
     void Ricoshet()

@@ -1,9 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 [System.Serializable]
@@ -83,7 +80,6 @@ public class CDSkills : MonoBehaviour
         {
             if (skillCD <= 0 && Input.GetKeyDown(keyCode))
             {
-
                 Spawn((int)skill.countObjects);
                 skillCD = skill.stepMax;
             }

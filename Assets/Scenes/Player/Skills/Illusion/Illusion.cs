@@ -29,7 +29,7 @@ public class Illusion : SkillBaseMono
         {
             basa.countObjects += basa.stats[1].value;
             basa.stats[1].isTrigger = false;
-            if (isClone == false && FindObjectsOfType<Illusion>().ToList().Count < basa.countObjects)
+            if (isClone == false && FindObjectsOfType<Illusion>().Length < basa.countObjects)
             {
                 CreateClone();
             }
@@ -43,7 +43,7 @@ public class Illusion : SkillBaseMono
         {
             basa.countObjects += basa.stats[3].value;
             basa.stats[3].isTrigger = false;
-            if (isClone == false && FindObjectsOfType<Illusion>().ToList().Count < basa.countObjects)
+            if (isClone == false && FindObjectsOfType<Illusion>().Length < basa.countObjects)
             {
                 CreateClone();
             }
@@ -85,10 +85,14 @@ public class Illusion : SkillBaseMono
                 illusion.xZzap = xZzap;
                 illusion.yZzap = yZzap;
                 x += 10;
-                y += isReverce ? 14 : -14;
+                y += isReverce ? 17 : -17;
                 xZzap += 10;
-                yZzap += isReverce ? 14 : -14;
+                yZzap += isReverce ? 17 : -17;
                 isReverce = !isReverce;
+            }
+            if (illusions.Count > 3)
+            {
+                Destroy(illusions[illusions.Count - 1].gameObject);
             }
         }
     }

@@ -1,10 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 [DefaultExecutionOrder(5)]
 public class GameManager : MonoBehaviour
@@ -71,8 +69,6 @@ public class GameManager : MonoBehaviour
     [Header("CharacterBuy settings")]
     [SerializeField]
     private List<SavedCharacterData> characters = new List<SavedCharacterData>();
-    //[SerializeField]
-    //private List<SavedCharacterData> upgrades = new List<SavedCharacterData>();
     public List<SavedCharacterData> charactersRead = new List<SavedCharacterData>();
 
     public List<CharacterInfo> info;
@@ -83,17 +79,6 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        //if (Instance != null)
-        //{
-        //    Destroy(gameObject);
-        //}
-        //else
-        //{
-        //    Instance = this;
-        //    return;
-        //}
-        //DontDestroyOnLoad(this);
-
     }
     // Start is called before the first frame update
     void Start()
@@ -153,7 +138,6 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-       
     }
     public void AudioStartLoad()
     {
@@ -300,9 +284,7 @@ public class GameManager : MonoBehaviour
         SettingsData data = new SettingsData();
         data.key = value[0];
         data.value = value[1];
-        // Додавання нового елемента до списку
         list.Add(data);
-        // Перевірка, чи вже існує елемент з ключем language в списку
         bool hasLanguage = false;
         foreach (var item in list)
         {
@@ -310,12 +292,10 @@ public class GameManager : MonoBehaviour
             {
                 if (hasLanguage)
                 {
-                    // Якщо елемент з ключем language вже є в списку, видалити його
                     list.Remove(item);
                 }
                 else
                 {
-                    // Якщо елемент з ключем language є в списку, встановити hasLanguage в true
                     hasLanguage = true;
                 }
             }
