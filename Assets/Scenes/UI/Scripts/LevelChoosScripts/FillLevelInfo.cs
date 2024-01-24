@@ -18,11 +18,12 @@ public class FillLevelInfo : MonoBehaviour
     private void Awake()
     {
         hash = FindObjectOfType<DataHashing>();
+        objTransform = transform;
+
     }
     // Start is called before the first frame update
     void Start()
     {
-        objTransform = transform;
         level = FindObjectOfType<CheckLevel>();
         MenuController menu = GetComponent<MenuController>();
         dataLevel.percent = LoadObjectLevel(menu.sceneCount);
@@ -138,27 +139,5 @@ public class FillLevelInfo : MonoBehaviour
         }
 
         return null;
-    }
-    public bool LoadObjectLevelCountIsFull(int objectID)
-    {
-        
-        string path = Path.Combine(Application.persistentDataPath, "Levels.txt");
-
-        if (File.Exists(path))
-        {
-            string[] lines = File.ReadAllLines(path);
-            foreach (string line in lines)
-            {
-                string decode = hash.Decrypt(line);
-
-                SavedLocationsData data = JsonUtility.FromJson<SavedLocationsData>(decode);
-                if (data.IDLevel == objectID)
-                {
-                    return data.isUnlocke;
-                }
-            }
-        }
-
-        return false;
     }
 }

@@ -1,14 +1,66 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+[Serializable]
+public class Elements 
+{
+    public string name;
+    public Sprite elementSprite;
+    public Forward move;
+    public HealthPoint health;
+    public Attack attack;
+    public void Debuff(string name)
+    {
+        switch (name)
+        {
+            case "Fire":
+                health.Water = health.WaterStart / 2;
+                if (attack != null)
+                {
+                    attack.damage = attack.damageMax / 2;
+                }
+                break;
+            case "Electricity":
+                health.Cold = health.ColdStart / 2;
+                break;
+            case "Water":
+                health.Fire = health.FireStart / 2;
+                break;
+            case "Dirt":
+                health.Steam = health.SteamStart / 2;
+                break;
+            case "Wind":
+                health.Electricity = health.ElectricityStart / 2;
+                break;
+            case "Grass":
+                health.Wind = health.WindStart / 2;
+                break;
+            case "Steam":
+                health.Fire = health.FireStart / 2;
+                health.Water = health.WaterStart / 2;
+                break;
+            case "Cold":
+                health.Dirt = health.DirtStart / 2;
+                if (move != null)
+                {
+                    move.SlowEnemy(5f, 0.5f);
+                }
+                break;
+        }
+    }
 
+}
 public class ElementActiveDebuff : MonoBehaviour
 {
+    public List<Elements> elements;
+    public List<Elements> activeEffects;
     public Forward move;
     public HealthPoint health;
     public Attack attack;
     public Transform elementDebuffParent;
-    public DeactivateDebuff elementDebuffObject;
+    public GameObject elementDebuffObject;
     public Dictionary<string, float> activeTimers = new Dictionary<string, float>()
 {
     { "isFire", 3 },
@@ -57,8 +109,17 @@ public class ElementActiveDebuff : MonoBehaviour
     {
         elementObjects = new Dictionary<string, GameObject>();
     }
-
-   
+    //При активації об'єкта в місці зачіпання здібності активується метод з часом життя дебафа, також створюється візуальне відображення дебафа і відбувається начислення самого дебафа
+    //Дебафи одного типу не можуть існувати, лише унікальні
+    //При комбінаціїї відповідних дебафів утворюються інші дебафи, або відбувається унікальна дія
+    public IEnumerable EffectTime(Elements element, int lifeTime)
+    {
+        activeEffects.Add(element);
+        GameObject a = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
+        a.GetComponent<SpriteRenderer>().sprite = element.elementSprite;
+        yield return new WaitForSeconds(lifeTime);
+        activeEffects.Remove(element);
+    }
 
     // Update is called once per frame
     void FixedUpdate()
@@ -66,7 +127,7 @@ public class ElementActiveDebuff : MonoBehaviour
         UpdateActiveTimers();
         if (IsActive("isFire", true) && IsActive("isFire", false))
         {
-            DeactivateDebuff a = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
+            GameObject a = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
             a.GetComponent<SpriteRenderer>().sprite = fire;
             health.Water = health.WaterStart / 2;
             if (attack != null)
@@ -87,9 +148,9 @@ public class ElementActiveDebuff : MonoBehaviour
 
         if (IsActive("isWater", true) && IsActive("isWind", true) && IsActive("isWater", false) && IsActive("isWind", false))
         {
-            DeactivateDebuff a = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
+            GameObject a = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
             a.GetComponent<SpriteRenderer>().sprite = water;
-            DeactivateDebuff b = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
+            GameObject b = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
             b.GetComponent<SpriteRenderer>().sprite = wind;
             if (attack != null)
             {
@@ -121,7 +182,7 @@ public class ElementActiveDebuff : MonoBehaviour
 
         if (IsActive("isCold", true) && IsActive("isCold", false))
         {
-            DeactivateDebuff a = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
+            GameObject a = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
             a.GetComponent<SpriteRenderer>().sprite = cold;
             if (move != null)
             {
@@ -141,7 +202,7 @@ public class ElementActiveDebuff : MonoBehaviour
 
         if (IsActive("isSteam", true) && IsActive("isSteam", false))
         {
-            DeactivateDebuff a = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
+            GameObject a = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
             a.GetComponent<SpriteRenderer>().sprite = steam;
             health.Fire = health.FireStart / 2;
             health.Water = health.WaterStart / 2;
@@ -155,10 +216,10 @@ public class ElementActiveDebuff : MonoBehaviour
 
         if (IsActive("isWater", true) && IsActive("isElectricity", true) && IsActive("isWater", false) && IsActive("isElectricity", false))
         {
-            DeactivateDebuff a = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
+            GameObject a = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
             a.GetComponent<SpriteRenderer>().sprite = water;
 
-            DeactivateDebuff b = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
+            GameObject b = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
             b.GetComponent<SpriteRenderer>().sprite = electricity;
             if (move != null)
             {
@@ -173,13 +234,13 @@ public class ElementActiveDebuff : MonoBehaviour
         }
         if (IsActive("isWater", true) && IsActive("isWater", false))
         {
-            DeactivateDebuff a = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
+            GameObject a = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
             a.GetComponent<SpriteRenderer>().sprite = water;
             SetBool("isWater", false, false);
         } 
         if (IsActive("isDirt", true) && IsActive("isDirt", false))
         {
-            DeactivateDebuff a = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
+            GameObject a = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
             a.GetComponent<SpriteRenderer>().sprite = dirt;
             SetBool("isDirt", false, false);
         }

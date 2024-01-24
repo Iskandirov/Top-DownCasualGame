@@ -111,13 +111,16 @@ public class SpawnManager : MonoBehaviour
     //Enemy
     private IEnumerator SpawnEnemyRoutine(float interval)
     {
-        for (int i = 0; i < enemiesPool.Count; i++)
+        if (!stopSpawn)
         {
-            for (int y = 0; y < enemiesPool[i].poolSize; y++)
+            for (int i = 0; i < enemiesPool.Count; i++)
             {
-                yield return new WaitForSeconds(interval);
+                for (int y = 0; y < enemiesPool[i].poolSize; y++)
+                {
+                    yield return new WaitForSeconds(interval);
 
-                SpawnEnemies(enemiesPool[i].enemyPool);
+                    SpawnEnemies(enemiesPool[i].enemyPool);
+                }
             }
         }
     }

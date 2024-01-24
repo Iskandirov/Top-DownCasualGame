@@ -75,7 +75,6 @@ public class SavedLocationsData
     public int countOfCount;
     public int countOfCountMax;
     public int percent;
-    public bool isUnlocke;
 }
 [System.Serializable]
 public class SavedSkillsData

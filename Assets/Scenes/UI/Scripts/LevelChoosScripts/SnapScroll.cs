@@ -54,12 +54,14 @@ public class SnapScroll : MonoBehaviour
         descriptionObjImage = new Image[descriptionImage.Length];
         for (int i = 0; i < descriptionImage.Length; i++)
         {
-            int objejectCount = instObjects[i].LoadObjectLevelCount(i + sceneValue[0]);
-            int objejectCountMax = instObjects[i].LoadObjectLevelCountOfCountMax(i + sceneValue[0]);
             instObjects[i] = Instantiate(panObj, transform, false);
             instObjectsLock[i] = Instantiate(instObjectsLockObj, transform.position, Quaternion.identity, transform);
-            if (instObjects[i].LoadObjectLevelCountIsFull(i + sceneValue[0]) == true 
-                && objejectCount != objejectCountMax || objejectCount - 1 == objejectCountMax - 1 && objejectCount != objejectCountMax)
+
+            int objejectCount = instObjects[i].LoadObjectLevelCount(i + sceneValue[0]);
+            int objejectCountMax = instObjects[i].LoadObjectLevelCountOfCountMax(i + sceneValue[0]);
+
+            if (instObjects[i].LoadObjectLevelCount(i + sceneValue[0] - 1) == instObjects[i].LoadObjectLevelCountOfCountMax(i + sceneValue[0] - 1)
+                && objejectCount != objejectCountMax)
             {
                 Destroy(instObjectsLock[i]);
             }
