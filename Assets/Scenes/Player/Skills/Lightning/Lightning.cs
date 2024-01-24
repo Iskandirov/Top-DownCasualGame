@@ -17,7 +17,6 @@ public class Lightning : SkillBaseMono
     // Start is called before the first frame update
     void Start()
     {
-       
         player = PlayerManager.instance;
 
         //basa = SetToSkillID(gameObject);
@@ -52,10 +51,11 @@ public class Lightning : SkillBaseMono
                 enemyToShoot = enemiesToShoot[Random.Range(0, enemiesToShoot.Count - 1)];
                 objHealth = enemyToShoot.GetComponent<HealthPoint>();
                 objMove = enemyToShoot.GetComponentInParent<Forward>();
-                if (objHealth.GetComponentInParent<ElementActiveDebuff>() != null && !objHealth.GetComponentInParent<ElementActiveDebuff>().IsActive("isElectricity", true))
+                ElementActiveDebuff element = objHealth.GetComponentInParent<ElementActiveDebuff>();
+                if (element != null && !element.IsActive("isElectricity", true))
                 {
-                    objHealth.GetComponentInParent<ElementActiveDebuff>().SetBool("isElectricity", true, true);
-                    objHealth.GetComponentInParent<ElementActiveDebuff>().SetBool("isElectricity", true, false);
+                    element.SetBool("isElectricity", true, true);
+                    element.SetBool("isElectricity", true, false);
                 }
                 if (objMove != null && basa.stats[4].isTrigger)
                 {

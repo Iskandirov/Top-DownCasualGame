@@ -16,6 +16,11 @@ public class DropItems : MonoBehaviour
     public bool isTutor;
     public string[] rarityType = { "Звичайне", "Рідкісне", "Міфічне", "Легендарне" };
 
+    Transform objTransform;
+    private void Start()
+    {
+        objTransform = transform;
+    }
     public void OnDestroyBoss(GameObject healthObj)
     {
         healthObj.SetActive(false);
@@ -32,7 +37,7 @@ public class DropItems : MonoBehaviour
     void SetStats(List<SavedObjectData> Rarity,bool isTutor)
     {
         int rand = Random.Range(0, Rarity.Count);
-        ItemParameters newItem = Instantiate(itemPrefab, transform.position, transform.rotation);
+        ItemParameters newItem = Instantiate(itemPrefab, objTransform.position, objTransform.rotation);
         newItem.itemName = Rarity[rand].Name;
         newItem.itemImage = Rarity[rand].ImageSprite;
         newItem.itemRareName = Rarity[rand].RareName;

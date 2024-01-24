@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class Vortex : SkillBaseMono
@@ -8,7 +7,7 @@ public class Vortex : SkillBaseMono
     public List<Transform> movingObjects = new List<Transform>(); // —писок рухомих об'Їкт≥в
     public float bump;
     public bool isClone;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,7 +40,7 @@ public class Vortex : SkillBaseMono
             basa.skill.skillCD -= StabilizateCurrentReload(basa.skill.skillCD, basa.stats[2].value);
             basa.stats[3].isTrigger = false;
         }
-       
+
         transform.localScale = new Vector2(basa.radius * PlayerManager.instance.Steam, basa.radius * PlayerManager.instance.Steam);
 
 
@@ -92,28 +91,57 @@ public class Vortex : SkillBaseMono
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy") && !collision.isTrigger)
+        if (!collision.isTrigger)
         {
-            if (collision.GetComponentInParent<Forward>() != null)
+            if (collision.CompareTag("Enemy"))
             {
-                if (!movingObjects.Contains(collision.GetComponentInParent<Forward>().transform))
+                Forward move = collision.GetComponentInParent<Forward>();
+                if (move != null)
                 {
-                    movingObjects.Add(collision.GetComponentInParent<Forward>().transform);
+                    if (!movingObjects.Contains(move.objTransform))
+                    {
+                        movingObjects.Add(move.objTransform);
+                    }
                 }
             }
-            
+            if (collision.CompareTag("Player"))
+            {
+                PlayerManager move = collision.GetComponent<PlayerManager>();
+                if (move != null)
+                {
+                    if (!movingObjects.Contains(move.objTransform))
+                    {
+                        movingObjects.Add(move.objTransform);
+                    }
+                }
+            }
         }
     }
     public void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy") && !collision.isTrigger)
+        if (!collision.isTrigger)
         {
-            if (collision.GetComponentInParent<Forward>() != null)
+            if (collision.CompareTag("Enemy"))
             {
-                if (!movingObjects.Contains(collision.GetComponentInParent<Forward>().transform))
+                Forward move = collision.GetComponentInParent<Forward>();
+                if (move != null)
                 {
-                    int index = movingObjects.IndexOf(collision.GetComponentInParent<Forward>().transform);
-                    movingObjects.RemoveAt(index);
+                    if (!movingObjects.Contains(move.objTransform))
+                    {
+                        int index = movingObjects.IndexOf(move.objTransform);
+                        movingObjects.RemoveAt(index);
+                    }
+                }
+            }
+            if (collision.CompareTag("Player"))
+            {
+                PlayerManager move = collision.GetComponent<PlayerManager>();
+                if (move != null)
+                {
+                    if (!movingObjects.Contains(move.objTransform))
+                    {
+                        movingObjects.Add(move.objTransform);
+                    }
                 }
             }
         }

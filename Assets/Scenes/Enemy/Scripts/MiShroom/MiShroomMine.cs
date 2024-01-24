@@ -10,6 +10,7 @@ public class MiShroomMine : MonoBehaviour
     public MineSpawn parent;
     public bool inZone;
     PlayerManager player;
+    public Animator anim;
     // Start is called before the first frame update
     private void Start()
     {
@@ -45,7 +46,7 @@ public class MiShroomMine : MonoBehaviour
             objectToHit = collision.gameObject;
             inZone = true;
             SetAlphaRecursively(transform, 1f);
-            GetComponent<Animator>().SetBool("Action", true);
+            anim.SetBool("Action", true);
         }
         else if (collision.CompareTag("Player") && !collision.isTrigger)
         {

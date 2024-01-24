@@ -37,7 +37,6 @@ public class TextAppear : MonoBehaviour
     }
     void AddLetter()
     {
-        //Debug.Log(introDialog[tutor.phase - 1].Text[textCount][timer % introDialog[tutor.phase - 1].Text[textCount].Length]);
         // якщо по€ву тексту не зупинено
         if (!isPaused)
         {

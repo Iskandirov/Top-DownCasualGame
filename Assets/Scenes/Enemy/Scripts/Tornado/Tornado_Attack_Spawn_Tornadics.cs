@@ -5,9 +5,12 @@ using UnityEngine;
 public class Tornado_Attack_Spawn_Tornadics : MonoBehaviour
 {
     public Tornadic_Move tornadic;
+    public float tornadicCount = 10;
+    Transform objTransofrm;
     // Start is called before the first frame update
     void Start()
     {
+        objTransofrm = transform;
         StartCoroutine(SpawnTornadics());
     }
 
@@ -21,9 +24,9 @@ public class Tornado_Attack_Spawn_Tornadics : MonoBehaviour
     }
     public void Spawn()
     {
-        for (int i = 0; i <= 10; i++)
+        for (int i = 0; i <= tornadicCount; i++)
         {
-            Tornadic_Move a = Instantiate(tornadic, transform.position, Quaternion.identity);
+            Tornadic_Move a = Instantiate(tornadic, objTransofrm.position, Quaternion.identity);
             a.mainDirection = new Vector2(Random.Range(-1, 2), Random.Range(-1, 2));
         }
     }

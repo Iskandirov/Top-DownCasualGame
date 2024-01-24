@@ -7,34 +7,24 @@ public class ShowBehind : MonoBehaviour
     public int isSomeoneHere;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if ((collision.CompareTag("Player") || collision.CompareTag("Enemy")) && !collision.isTrigger)
-        {
-            isSomeoneHere++;
-            // якщо немаЇ жодного об'Їкту всередин≥, зм≥нюЇмо прозор≥сть на нап≥впрозору
-            if (isSomeoneHere == 1)
-            {
-                foreach (var item in tree)
-                {
-                    Color c = item.color;
-                    c.a = 0.5f;
-                    item.color = c;
-                }
-               
-            }
-        }
+        HideAndShow(collision, 1, isSomeoneHere + 1, 0.5f);
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
+        HideAndShow(collision, 0, isSomeoneHere - 1, 1f);
+    }
+    void HideAndShow(Collider2D collision, int someOneHere, int operation, float opacity)
+    {
         if ((collision.CompareTag("Player") || collision.CompareTag("Enemy")) && !collision.isTrigger)
         {
-            isSomeoneHere--;
+            isSomeoneHere = operation;
             // якщо б≥льше немаЇ об'Їкт≥в всередин≥, зм≥нюЇмо прозор≥сть назад на повну
-            if (isSomeoneHere == 0)
+            if (isSomeoneHere == someOneHere)
             {
                 foreach (var item in tree)
                 {
                     Color c = item.color;
-                    c.a = 1f;
+                    c.a = opacity;
                     item.color = c;
                 }
             }

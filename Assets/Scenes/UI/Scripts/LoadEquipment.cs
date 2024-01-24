@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,11 +7,6 @@ public class LoadEquipment : MonoBehaviour
     public GameObject objToSet;
     public List<GameObject> list;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
     public void SetEquip(int count)
     {
         for (int i = 0; i < count; i++)
@@ -31,10 +25,5 @@ public class LoadEquipment : MonoBehaviour
 
         // Очищення списку
         list.Clear();
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

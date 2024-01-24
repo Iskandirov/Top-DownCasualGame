@@ -19,9 +19,8 @@ public class HealthPoint : MonoBehaviour
     public float burnTickMax;
 
 
-    SpriteRenderer[] objsSprite;
-    DropItems objDrop;
-    Forward objMove;
+    public DropItems objDrop;
+    public Forward objMove;
 
     [Header("Exp info")]
     public float expGiven;
@@ -61,7 +60,7 @@ public class HealthPoint : MonoBehaviour
     GameObject health;
     PlayerManager player;
     SpawnManager spawner;
-   
+    Transform objTransform;
     // Start is called before the first frame update
     void Start()
     {
@@ -74,9 +73,7 @@ public class HealthPoint : MonoBehaviour
         }
         player = PlayerManager.instance;
         spawner = SpawnManager.inst;
-        objsSprite = GetComponentsInChildren<SpriteRenderer>();
-        objDrop = GetComponentInParent<DropItems>();
-        objMove = GetComponentInParent<Forward>();
+        objTransform = transform;
         if (IsBobs)
         {
             uiParent = GameObject.Find("/UI");
@@ -88,7 +85,6 @@ public class HealthPoint : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        
         if (isBurn)
         {
             burnTime -= Time.fixedDeltaTime;
@@ -99,10 +95,7 @@ public class HealthPoint : MonoBehaviour
             burnTick -= Time.fixedDeltaTime;
             if (burnTick <= 0)
             {
-                //ChangeToKick();
                 healthPoint -= burnDamage;
-                //Fire Anim
-                //ChangeToNotKick();
                 burnTick = burnTickMax;
             }
         }
@@ -124,7 +117,7 @@ public class HealthPoint : MonoBehaviour
                 else if (bodyAnimBoss != null && !AnimBossStart)
                 {
                     player.expiriencepoint.fillAmount += expGiven * dangerLevel / player.expNeedToNewLevel;
-                    GameManager.Instance.score += 1;
+                    GameManager.Instance.score++;
                     foreach (var part in bodyAnimBoss.parts)
                     {
                         if (part == gameObject.name)
@@ -140,7 +133,7 @@ public class HealthPoint : MonoBehaviour
                 {
                     objDrop.OnDestroyBoss(health);
                     ExpGive();
-                    Destroy(transform.root.gameObject);
+                    Destroy(objTransform.root.gameObject);
                 }
             }
             else
@@ -155,7 +148,7 @@ public class HealthPoint : MonoBehaviour
                 }
                 else
                 {
-                    spawner.SpawnObjectInMapBounds(transform.parent.gameObject);
+                    spawner.SpawnObjectInMapBounds(objTransform.parent.gameObject);
                 }
             }
             if (GetComponentInParent<ElementActiveDebuff>() != null)
@@ -172,7 +165,7 @@ public class HealthPoint : MonoBehaviour
     
     void ExpGive()
     {
-        EXP a = Instantiate(expiriancePoint, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, 1.9f), Quaternion.identity);
+        EXP a = Instantiate(expiriancePoint, new Vector3(objTransform.position.x, objTransform.position.y, 1.9f), Quaternion.identity);
         a.expBuff = expGiven * dangerLevel;
 
         player.expiriencepoint.fillAmount += expGiven * dangerLevel / player.expNeedToNewLevel;

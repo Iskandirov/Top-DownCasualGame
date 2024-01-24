@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +10,7 @@ using UnityEngine.UI;
 public class PlayerManager : MonoBehaviour
 {
     GameManager gameManager;
-    Animator playerAnim;
+    public Animator playerAnim;
     public Rigidbody2D rb;
     [HideInInspector]
     public static PlayerManager instance;
@@ -34,6 +36,7 @@ public class PlayerManager : MonoBehaviour
     public bool isDashSkillActive = false;
     public bool isTutor;
     public int heroID = 1;
+    public List<float> slowArray = new List<float>();
 
     [Header("Health settings")]
     public float playerHealthPoint;
@@ -97,10 +100,10 @@ public class PlayerManager : MonoBehaviour
     public int countActiveAbilities;
     [Header("CharacterSet settings")]
     public List<CharacterStats> characters;
+    public Transform objTransform;
     private void Awake()
     {
         instance ??= this;
-        //Time.timeScale = 1f;
     }
     private void OnDestroy()
     {
@@ -109,13 +112,13 @@ public class PlayerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerAnim = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody2D>();
         gameManager = GameManager.Instance;
         attackSpeedMax = attackSpeed;
         playerHealthPointMax = playerHealthPoint;
+        objTransform = transform;
         speedMax = speed;
         countActiveAbilities = 1;
+        SetCharacterOnStart();
     }
 
     // Update is called once per frame
@@ -156,7 +159,7 @@ public class PlayerManager : MonoBehaviour
     }
     public void TakeDamage(float damage)
     {
-        if (damage > 0)
+        if (damage > 0 && !isInvincible)
         {
             //Armor
             damage = Armor(damage, armor);
@@ -255,12 +258,20 @@ public class PlayerManager : MonoBehaviour
     }
     public IEnumerator SlowPlayer(float time, float percent)
     {
-        if (speed > speedMax * percent)
+        slowArray.Add(percent);
+        CalculateSlow(speedMax);
+        yield return new WaitForSeconds(time);
+        slowArray.Remove(slowArray.Where(slow => slow == percent).First());
+        CalculateSlow(speedMax);
+    }
+    public void CalculateSlow(float currentSpeed)
+    {
+        foreach (var slowElement in slowArray)
         {
-            speed = speedMax * percent;
-            yield return new WaitForSeconds(time);
-            speed = speedMax;
+            currentSpeed *= Math.Max(slowElement, 0.01f);
         }
+        currentSpeed = Math.Max(currentSpeed, 5.0f);
+        speed = slowArray.Count > 0 ? currentSpeed : speedMax;
     }
     //=================RICOSHET===================
     void Ricoshet()
@@ -291,7 +302,7 @@ public class PlayerManager : MonoBehaviour
         {
             isDashSkillActive = true;
             isInvincible = true;
-            Vector2 dashDirection = GetMousDirection(transform.position);
+            Vector2 dashDirection = GetMousDirection(objTransform.position);
             rb.velocity = dashDirection.normalized * (speed * dashMultiplier);
             Invoke(nameof(StopDashing), .2f);
         }
@@ -326,11 +337,11 @@ public class PlayerManager : MonoBehaviour
     public void ArrowToCursor()
     {
         // Визначаємо відстань від гравця до позиції курсора
-        Vector3 direction = GetMousDirection(transform.position);
+        Vector3 direction = GetMousDirection(objTransform.position);
         direction = direction.normalized * circleRadius;
 
         // Визначаємо кінцеву позицію об'єкту на колі
-        Vector3 targetPosition = transform.position + direction;
+        Vector3 targetPosition = objTransform.position + direction;
 
         // Рухаємо об'єкт до кінцевої позиції
         ShootPoint.transform.position = targetPosition;

@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 [DefaultExecutionOrder(10)]
 public class SpawnBobs : MonoBehaviour
 {
-    Timer timer;
+    public Timer timer;
     public float timeToSpawnBobs;
     float timeToSpawnBobsStart;
     public GameObject bobs;
@@ -12,7 +12,7 @@ public class SpawnBobs : MonoBehaviour
     GameManager gameManager;
     AudioManager audioManager;
     PlayerManager player;
-   
+    public GameObject enemyParentl;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +22,6 @@ public class SpawnBobs : MonoBehaviour
         if (gameManager.LoadObjectLevelCount(SceneManager.GetActiveScene().buildIndex) > 0)
             timeToSpawnBobs += 15;
         timeToSpawnBobsStart = timeToSpawnBobs;
-        timer = FindObjectOfType<Timer>();
     }
 
     // Update is called once per frame
@@ -42,14 +41,15 @@ public class SpawnBobs : MonoBehaviour
                     }
                 }
             }
-            
-            GameObject[] objectsToDelete = GameObject.FindGameObjectsWithTag("Enemy");
 
-            foreach (var obj in objectsToDelete)
-            {
-                Destroy(obj.GetComponentInParent<HealthPoint>().transform.parent.gameObject);
-                gameManager.enemyCount = 0;
-            }
+            //GameObject[] objectsToDelete = GameObject.FindGameObjectsWithTag("Enemy");
+
+            //foreach (var obj in objectsToDelete)
+            //{
+            //    Destroy(obj.GetComponentInParent<HealthPoint>().transform.parent.gameObject);
+            //    gameManager.enemyCount = 0;
+            //}
+            Destroy(enemyParentl);
             SpawnManager.inst.stopSpawn = true;
             if (audioManager != null)
             {

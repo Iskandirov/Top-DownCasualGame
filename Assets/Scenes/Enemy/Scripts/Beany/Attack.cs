@@ -18,20 +18,20 @@ public class Attack : MonoBehaviour
     GameObject objVFX;
     public GameObject objectToHit;
 
-    Forward objMove;
-    Animator objAnim;
+    public Forward objMove;
+    public Animator objAnim;
     PlayerManager player;
+    GameManager manager;
     // Start is called before the first frame update
     void Start()
     {
         player = PlayerManager.instance;
-        objMove = GetComponent<Forward>();
-        objAnim = GetComponent<Animator>();
+        manager = GameManager.Instance;
         if (!objMove.isTutorial)
         {
-            if (GameManager.Instance.LoadObjectLevelCount(SceneManager.GetActiveScene().buildIndex) > 0)
+            if (manager.LoadObjectLevelCount(SceneManager.GetActiveScene().buildIndex) > 0)
             {
-                damageMax += GameManager.Instance.LoadObjectLevelCount(SceneManager.GetActiveScene().buildIndex) * 1.3f;
+                damageMax += manager.LoadObjectLevelCount(SceneManager.GetActiveScene().buildIndex) * 1.3f;
             }
         }
     }
@@ -59,7 +59,7 @@ public class Attack : MonoBehaviour
             objMove.path.maxSpeed = 0;
             Shield shield = collision.collider.GetComponent<Shield>();
             shield.healthShield -= damage;
-            GameManager.Instance.FindStatName("ShieldAbsorbedDamage", damage);
+            manager.FindStatName("ShieldAbsorbedDamage", damage);
             isAttack = true;
             if (shield.basa.stats[2].isTrigger)
             {
@@ -72,14 +72,12 @@ public class Attack : MonoBehaviour
         }
         else if (collision.collider.CompareTag("Player") && isAttack == false)
         {
-            if (player.isInvincible == false)
-            {
                 if (!isRange)
                 {
                     objMove.path.maxSpeed = 0;
                     objAnim.SetBool("IsHit", true);
                     objectToHit = collision.gameObject;
-                    Instantiate(attackVFX, gameObject.transform.position, Quaternion.identity);
+                    Instantiate(attackVFX, transform.position, Quaternion.identity);
                     isAttack = true;
                 }
                 else if (isRange)
@@ -87,20 +85,16 @@ public class Attack : MonoBehaviour
                     Instantiate(attackVFXRange, attackVFXRangePos.transform.position, Quaternion.identity, attackVFXRangePos.transform);
                     isAttack = true;
                 }
-            }
         }
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") && isAttack == false)
         {
-            if (player.isInvincible == false)
-            {
                 if (!isRange)
                 {
                     objectToHit = collision.gameObject;
                 }
-            }
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -123,21 +117,21 @@ public class Attack : MonoBehaviour
             {
                 Shield shield = objectToHit.GetComponent<Shield>();
                 HealthPoint EnemyHealth = objectToHit.GetComponent<HealthPoint>();
-                    if (!player.isInvincible)
-                    {
-                        player.TakeDamage(damage);
-                    }
-                else if (shield != null)
+                if (shield != null)
                 {
                     shield.healthShield -= damage;
-                    GameManager.Instance.FindStatName("ShieldAbsorbedDamage", damage);
+                    manager.FindStatName("ShieldAbsorbedDamage", damage);
                 }
                 else if (EnemyHealth != null)
                 {
                     EnemyHealth.healthPoint -= damage;
-                    GameManager.Instance.FindStatName("bulletDamage", damage);
+                    manager.FindStatName("bulletDamage", damage);
                 }
-               
+                else
+                {
+                    player.TakeDamage(damage);
+                }
+
             }
         }
     }

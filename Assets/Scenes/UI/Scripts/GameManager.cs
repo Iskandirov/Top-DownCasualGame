@@ -892,10 +892,8 @@ public class GameManager : MonoBehaviour
                         }
                     }
                 }
-
             }
         }
-
     }
 }
 [System.Serializable]

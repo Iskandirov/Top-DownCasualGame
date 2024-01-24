@@ -33,10 +33,11 @@ public class Zzap : MonoBehaviour
         {
             if (collision.CompareTag("Enemy"))
             {
-                if (collision.GetComponentInParent<ElementActiveDebuff>() != null && !collision.GetComponentInParent<ElementActiveDebuff>().IsActive("isElectricity", true))
+                ElementActiveDebuff element = collision.GetComponentInParent<ElementActiveDebuff>();
+                if (element != null && !element.IsActive("isElectricity", true))
                 {
-                    collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isElectricity", true, true);
-                    collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isElectricity", true, false);
+                    element.SetBool("isElectricity", true, true);
+                    element.SetBool("isElectricity", true, false);
                 }
                 collision.GetComponent<HealthPoint>().TakeDamage(damage * electicElement);
                 GameManager.Instance.FindStatName("zzapDamage", damage * electicElement);

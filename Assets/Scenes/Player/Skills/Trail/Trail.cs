@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 [RequireComponent(typeof(TrailRenderer))]
@@ -12,12 +11,12 @@ public class Trail : SkillBaseMono
 
     public static List<EdgeCollider2D> unusedColliders = new List<EdgeCollider2D>();
     PlayerManager player;
-    
+    public Transform objTransform;
     // Start is called before the first frame update
     void Start()
     {
         player = PlayerManager.instance;
-        
+        objTransform = transform;
         trailRenderer = GetComponent<TrailRenderer>();
         trailRenderer.startWidth = size;
         trailRenderer.endWidth = size;
@@ -44,7 +43,7 @@ public class Trail : SkillBaseMono
             trailRenderer.endWidth = size;
             basa.stats[3].isTrigger = false;
         }
-        transform.position = player.transform.position;
+        objTransform.position = player.objTransform.position;
         SetColliderPointsFromTrail(trailRenderer, edgeCollider);
         //Trail
         for (int i = 0; i < trailRenderer.positionCount; i++)

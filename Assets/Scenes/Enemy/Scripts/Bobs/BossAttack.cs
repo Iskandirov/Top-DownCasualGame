@@ -21,8 +21,10 @@ public class BossAttack : MonoBehaviour
     public int Index = -1;
     public int poolSize = 60;
     public List<BossBullet> bulletPool;
+    Transform objTransform;
     public void Start()
     {
+        objTransform = transform;
         if (GetComponent<Forward>().isTutorial)
         {
             bulletPrefab.damage = 0;
@@ -78,7 +80,6 @@ public class BossAttack : MonoBehaviour
                 }
             }
 
-            // Зачекайте декілька секунд перед наступною зміною
             yield return new WaitForSeconds(attackTypeInterval);
         }
     }
@@ -96,14 +97,14 @@ public class BossAttack : MonoBehaviour
         if (attackBools[0] == true)
         {
             float angleSinCos = 45f;
-            Vector2 direction ;
+            Vector2 direction;
             // Випустити об'єкти з відповідними напрямками
             for (int i = 0; i < 4;i++)
             {
                 direction = new Vector2(Mathf.Cos((angle + angleSinCos) * Mathf.Deg2Rad), Mathf.Sin((angle + angleSinCos) * Mathf.Deg2Rad));
                 BossBullet bullet = GetFromPool();
-                bullet.startPosition = transform.position;
-                bullet.transform.position = transform.position;
+                bullet.startPosition = objTransform.position;
+                bullet.transform.position = objTransform.position;
                 bullet.transform.rotation = Quaternion.Euler(0, 0, angle);
                 bullet.GetComponent<Rigidbody2D>().velocity = speed * direction;
                 bullet.lifeTime = 3f;
@@ -120,11 +121,11 @@ public class BossAttack : MonoBehaviour
             for (int i = 0; i < 10; i++)
             {
                 BossBullet bullet = GetFromPool();
-                bullet.transform.position = transform.position;
-                bullet.startPosition = transform.position;
+                bullet.transform.position = objTransform.position;
+                bullet.startPosition = objTransform.position;
                 bullet.transform.rotation = Quaternion.Euler(0, 0, angle);
                 bullet.GetComponent<Rigidbody2D>().velocity = speed * new Vector2(Mathf.Cos((angle) * Mathf.Deg2Rad), Mathf.Sin((angle) * Mathf.Deg2Rad));
-                bullet.enemyBody = transform;
+                bullet.enemyBody = objTransform;
                 bullet.isAround = true;
                 bullet.speed = 1f / (1f + i * 0.15f);
                 bullet.lifeTime = 3f;
@@ -139,8 +140,8 @@ public class BossAttack : MonoBehaviour
             {
                 direction = new Vector2(Mathf.Cos((Random.Range(5, 360)) * Mathf.Deg2Rad), Mathf.Sin((Random.Range(5, 360)) * Mathf.Deg2Rad));
                 BossBullet bullet = GetFromPool();
-                bullet.startPosition = transform.position;
-                bullet.transform.position = transform.position;
+                bullet.startPosition = objTransform.position;
+                bullet.transform.position = objTransform.position;
                 bullet.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
                 bullet.GetComponent<Rigidbody2D>().velocity = speed * direction;
                 bullet.lifeTime = 5f;

@@ -281,6 +281,8 @@ MonoBehaviour:
   burnDamage: 0
   burnTick: 0.5
   burnTickMax: 0.5
+  objDrop: {fileID: 256618190220434730}
+  objMove: {fileID: 7752983507903680062}
   expGiven: 0
   dangerLevel: 10
   bodyAnimBoss: {fileID: 0}
@@ -464,6 +466,7 @@ MonoBehaviour:
   enemy: {fileID: 0}
   Body: {fileID: 307614248803877651}
   speedMax: 12
+  currentSpeed: 0
   isStunned: 0
   stunnTime: 0.5
   stunnTimeMax: 0.5
@@ -474,8 +477,8 @@ MonoBehaviour:
   isChaising: 0
   acceleration: 0.1
   angle: 0
-  path: {fileID: 0}
-  destination: {fileID: 0}
+  path: {fileID: -3302408010172682211}
+  destination: {fileID: 1436996216243089024}
   isTutorial: 0
   moveSlowTime: 0
   player: {fileID: 0}
@@ -513,7 +516,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemPrefab: {fileID: 148148908384492936, guid: c761618b29cdf954f8ffec7c1e37fcd1, type: 3}
-  items: {fileID: 6416895844494761421, guid: b08c4cf5e053b1145b3cc846731f0368, type: 3}
   itemsLoaded: []
   spawnRare: 0.4
   spawnMiphical: 0.27
@@ -714,7 +716,7 @@ MonoBehaviour:
   - {x: 0.70648474, y: -0.99732316, z: 0}
   m_ShapePathHash: 2099167530
   m_Mesh: {fileID: 0}
-  m_InstanceId: 259396
+  m_InstanceId: 42340
 --- !u!82 &4330021693577614201
 AudioSource:
   m_ObjectHideFlags: 0

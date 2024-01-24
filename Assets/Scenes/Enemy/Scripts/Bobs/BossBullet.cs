@@ -16,10 +16,13 @@ public class BossBullet : MonoBehaviour
     public float angle = 5;
     public Vector3 startPosition;
     public float lifeTime;
-
+    Transform objTransform;
+    Rigidbody2D rb;
     void Start()
     {
         startPosition = transform.position;
+        objTransform = transform;
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -28,11 +31,10 @@ public class BossBullet : MonoBehaviour
         if (isAround)
         {
             // Визначаємо колову траєкторію навколо цілі
-            Vector3 position = startPosition + new Vector3(Mathf.Cos(Time.time * speed) * distance, Mathf.Sin(Time.time * speed) * distance, 0f);
+            Vector3 position = startPosition + new Vector3(Mathf.Cos(Time.fixedTime * speed) * distance, Mathf.Sin(Time.fixedTime * speed) * distance, 0f);
             distance += 0.3f;
 
-            // Задаємо позицію об'єкту
-            transform.position = position;
+            objTransform.position = position;
 
             lifeTime = 3f;
         }
@@ -46,11 +48,10 @@ public class BossBullet : MonoBehaviour
             speed += 0.1f;
             lifeTime = 3f;
         }
-        //Invoke("DestroyBullet", lifeTime);
     }
     public void DestroyBullet()
     {
-        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        rb.velocity = Vector2.zero;
         speed = 2;
         distance = 5;
         isAround = false;
@@ -60,7 +61,7 @@ public class BossBullet : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && !collision.isTrigger && !PlayerManager.instance.isInvincible)
+        if (collision.CompareTag("Player") && !collision.isTrigger)
         {
             PlayerManager.instance.TakeDamage(damage);
             DestroyBullet();

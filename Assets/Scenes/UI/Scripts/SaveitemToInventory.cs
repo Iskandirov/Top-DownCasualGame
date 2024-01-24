@@ -1,12 +1,9 @@
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 public class SaveitemToInventory : MonoBehaviour
 {
-   
 }
-
 
 [System.Serializable]
 public class SavedObjectData
@@ -99,19 +96,6 @@ public class SavedSkillsData
         type = "base";
         level = 0;
         MaxLevel = 5;
-    }
-    public void Upgrade()
-    {
-        if (level < MaxLevel)
-        {
-            level++;
-            ApplyUpgradeEffects();
-        }
-    }
-    private void ApplyUpgradeEffects()
-    {
-        LevelUpgrade.instance.ModifyJsonField(this, level);
-        // Логіка для застосування ефектів покращення
     }
 }
 [System.Serializable]

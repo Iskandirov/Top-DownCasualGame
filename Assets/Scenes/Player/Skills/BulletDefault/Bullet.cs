@@ -48,8 +48,6 @@ public class Bullet : SkillBaseMono
         slowPercent = player.slowPercent;
 
         player.ShootBullet(obj.transform.position, this);
-        //CreateBaseSpell(this, this)
-        //player.AsyncDirBullet(obj, Instantiate(this));
 
         CoroutineToDestroy(gameObject, 1f);
     }
@@ -127,7 +125,6 @@ public class Bullet : SkillBaseMono
         {
             Vector3 contactPoint = collision.ClosestPoint(nearestEnemy.transform.position);
 
-            // Створення снаряда
             GameObject projectile = Instantiate(gameObject, contactPoint, transform.rotation);
 
             float angle = Random.Range(0f, 360f);

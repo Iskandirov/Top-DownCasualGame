@@ -24,12 +24,12 @@ public class Forward : MonoBehaviour
     public float angle;
 
     private Vector2 velocity;
-    [HideInInspector]
     public AIPath path;
     public AIDestinationSetter destination;
     public bool isTutorial;
     public float moveSlowTime;
     public PlayerManager player;
+    public Transform objTransform;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,7 +39,7 @@ public class Forward : MonoBehaviour
                 speedMax += GameManager.Instance.LoadObjectLevelCount(SceneManager.GetActiveScene().buildIndex) * 1.1f;
         }
         player = PlayerManager.instance;
-
+        objTransform = transform;
         //walk.Play();
         if (isChaising)
         {
@@ -57,17 +57,15 @@ public class Forward : MonoBehaviour
             // Код для режиму редактора Unity
             isStunned = false;
         }
-        path = GetComponent<AIPath>();
-        destination = GetComponent<AIDestinationSetter>();
-        destination.target = player.transform;
+        destination.target = player.objTransform;
         currentSpeed = speedMax;
         path.maxSpeed = currentSpeed;
     }
-    bool IsObjectOutsideCameraBounds(GameObject obj)
+    bool IsObjectOutsideCameraBounds(Vector2 objPosition)
     {
         Camera mainCamera = Camera.main;
 
-        Vector3 objectViewportPosition = mainCamera.WorldToViewportPoint(obj.transform.position);
+        Vector3 objectViewportPosition = mainCamera.WorldToViewportPoint(objPosition);
 
         bool isOutsideBounds = objectViewportPosition.x < -0.5f || objectViewportPosition.x > 1.45f ||
                                objectViewportPosition.y < -0.5f || objectViewportPosition.y > 1.45f;
@@ -98,7 +96,7 @@ public class Forward : MonoBehaviour
     {
         if (!isChaising)
         {
-            if (IsObjectOutsideCameraBounds(gameObject))
+            if (IsObjectOutsideCameraBounds(objTransform.position))
             {
                 anim.enabled = false;
             }
@@ -123,7 +121,7 @@ public class Forward : MonoBehaviour
         else
         {
             // визначаємо напрямок до гравця
-            Vector2 direction = player.transform.position - transform.position;
+            Vector2 direction = player.transform.position - objTransform.position;
             direction.Normalize();
 
             // визначаємо кут між напрямком до гравця і поточним напрямком руху об'єкту
@@ -145,7 +143,7 @@ public class Forward : MonoBehaviour
             velocity = Vector2.ClampMagnitude(velocity, speedMax);
 
             // зміщуємо об'єкт на відстань, що дорівнює швидкості, помноженій на час оновлення
-            transform.Translate(velocity * Time.fixedDeltaTime);
+            objTransform.Translate(velocity * Time.fixedDeltaTime);
         }
     }
 
@@ -163,9 +161,5 @@ public class Forward : MonoBehaviour
             currentSpeed = 0;
             stunnTime -= Time.fixedDeltaTime;
         }
-    }
-    public void Relocate(Transform pos)
-    {
-        gameObject.transform.position = new Vector2(pos.position.x, pos.position.y + 10);
     }
 }

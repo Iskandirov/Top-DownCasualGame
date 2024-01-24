@@ -112,46 +112,6 @@ public class GetScore : MonoBehaviour
                     writer.Close();
                 }
             }
-
-        //// якщо гра зак≥нчилас€ усп≥шно, оновлюЇмо дан≥ про пройден≥ р≥вн≥
-        //if (isInGame && isWinPanel)
-        //{
-        //    string pathLocations = Path.Combine(Application.persistentDataPath, "Levels.txt");
-
-        //    try
-        //    {
-        //        // «читуЇмо вм≥ст файлу
-        //        string[] lines = File.ReadAllLines(pathLocations);
-
-        //        // ќновлюЇмо значенн€ дл€ певного id (наприклад, id = 1)
-        //        int targetId = SceneManager.GetActiveScene().buildIndex;
-        //        for (int i = 0; i < lines.Length; i++)
-        //        {
-        //            string decrypt = hash.Decrypt(lines[i]);
-        //            SavedLocationsData dataLocations = JsonUtility.FromJson<SavedLocationsData>(decrypt);
-        //            if (dataLocations.IDLevel == targetId && dataLocations.countOfCount < dataLocations.countOfCountMax)
-        //            {
-        //                dataLocations.countOfCount += 1;
-        //                lines[i] = JsonUtility.ToJson(dataLocations);
-        //                break; // якщо знайдено в≥дпов≥дне id, виходимо з циклу
-        //            }
-        //        }
-        //        using (StreamWriter writer = new StreamWriter(pathLocations, false))
-        //        {
-        //            foreach (string item in lines)
-        //            {
-        //                string jsonData = JsonUtility.ToJson(item);
-        //                string decryptedJson = hash.Encrypt(jsonData);
-        //                writer.WriteLine(decryptedJson);
-        //            }
-        //            writer.Close();
-        //        }
-        //    }
-        //    catch (IOException e)
-        //    {
-        //        Debug.LogError("Error writing to file: " + e.Message);
-        //    }
-        //}
     }
     public void SaveScore()
     {

@@ -455,6 +455,8 @@ MonoBehaviour:
   burnDamage: 0
   burnTick: 0.5
   burnTickMax: 0.5
+  objDrop: {fileID: 256618190220434730}
+  objMove: {fileID: 7752983507903680062}
   expGiven: 0
   dangerLevel: 10
   bodyAnimBoss: {fileID: 0}
@@ -667,7 +669,7 @@ MonoBehaviour:
   - {x: -0.018272042, y: -0.4225589, z: 0.000000029802322}
   m_ShapePathHash: -684510710
   m_Mesh: {fileID: 0}
-  m_InstanceId: 166854
+  m_InstanceId: 91836
 --- !u!1 &6418969233144837898
 GameObject:
   m_ObjectHideFlags: 0
@@ -961,7 +963,7 @@ MonoBehaviour:
   - {x: -0.018272042, y: -0.4225589, z: 0.000000029802322}
   m_ShapePathHash: -684510710
   m_Mesh: {fileID: 0}
-  m_InstanceId: 166936
+  m_InstanceId: 91918
 --- !u!1 &7154109843395404649
 GameObject:
   m_ObjectHideFlags: 0
@@ -1148,6 +1150,7 @@ MonoBehaviour:
   enemy: {fileID: 0}
   Body: {fileID: 307614248803877651}
   speedMax: 12
+  currentSpeed: 0
   isStunned: 0
   stunnTime: 0.5
   stunnTimeMax: 0.5
@@ -1158,8 +1161,8 @@ MonoBehaviour:
   isChaising: 0
   acceleration: 0.1
   angle: 0
-  path: {fileID: 0}
-  destination: {fileID: 0}
+  path: {fileID: -3302408010172682211}
+  destination: {fileID: 1436996216243089024}
   isTutorial: 0
   moveSlowTime: 0
   player: {fileID: 0}
@@ -1214,6 +1217,8 @@ MonoBehaviour:
   attackVFXRange: {fileID: 0}
   attackVFXRangePos: {fileID: 0}
   objectToHit: {fileID: 0}
+  objMove: {fileID: 7752983507903680062}
+  objAnim: {fileID: 8652287431786167269}
 --- !u!114 &6894690055646789181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1436,7 +1441,7 @@ MonoBehaviour:
   - {x: -0.7389914, y: -0.66529715, z: 0.000000029802322}
   m_ShapePathHash: -1742471489
   m_Mesh: {fileID: 0}
-  m_InstanceId: 166852
+  m_InstanceId: 91834
 --- !u!1 &7545567821778826804
 GameObject:
   m_ObjectHideFlags: 0

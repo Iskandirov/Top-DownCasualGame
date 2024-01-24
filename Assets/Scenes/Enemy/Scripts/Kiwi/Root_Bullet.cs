@@ -8,9 +8,10 @@ public class Root_Bullet : MonoBehaviour
     float delayMax;
     public float damage;
     public float lifeTime;
-
+    PlayerManager player;
     public void Start()
     {
+        player = PlayerManager.instance;
         delayMax = delay;
         Invoke("DestroObj", lifeTime);
     }
@@ -29,10 +30,10 @@ public class Root_Bullet : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.CompareTag("Player") && !collision.collider.isTrigger && !PlayerManager.instance.isInvincible)
+        if (collision.collider.CompareTag("Player") && !collision.collider.isTrigger && !player.isInvincible)
         {
-            PlayerManager.instance.TakeDamage(damage);
-            PlayerManager.instance.SlowPlayer(4f, 0.2f);
+            player.TakeDamage(damage);
+            player.StartCoroutine(player.SlowPlayer(4f, 0.2f));
             Destroy(gameObject);
         }
         else if (collision.collider.CompareTag("Shield"))

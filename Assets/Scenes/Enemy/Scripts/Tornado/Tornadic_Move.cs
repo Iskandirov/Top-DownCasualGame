@@ -13,9 +13,11 @@ public class Tornadic_Move : MonoBehaviour
     private Vector3 currentChaoticDirection;
     private Vector3 targetChaoticDirection;
     private float chaoticChangeTimer;
+    Transform objTransform;
 
     private void Start()
     {
+        objTransform = transform;
         //mainDirection = new Vector3(1f, 0f, 0f); // Заданий основний напрямок
         currentChaoticDirection = Vector3.zero;
         targetChaoticDirection = GetRandomDirection();
@@ -29,7 +31,7 @@ public class Tornadic_Move : MonoBehaviour
     private void FixedUpdate()
     {
         // Рух об'єкта в основному напрямку з базовою швидкістю
-        transform.position += mainDirection * baseMovementSpeed * Time.fixedDeltaTime;
+        objTransform.position += mainDirection * baseMovementSpeed * Time.fixedDeltaTime;
 
         // Зміна хаотичного напрямку з плавністю
         chaoticChangeTimer -= Time.fixedDeltaTime;
@@ -41,9 +43,8 @@ public class Tornadic_Move : MonoBehaviour
         currentChaoticDirection = Vector3.MoveTowards(currentChaoticDirection, targetChaoticDirection, chaoticChangeSpeed * Time.fixedDeltaTime);
 
         // Хаотичний рух по сторонам
-        transform.position += currentChaoticDirection * chaoticMovementSpeed * Time.fixedDeltaTime;
+        objTransform.position += currentChaoticDirection * chaoticMovementSpeed * Time.fixedDeltaTime;
     }
-
     private Vector3 GetRandomDirection()
     {
         return new Vector3(Random.Range(-30f, 30f), Random.Range(-30f, 30f), 0f).normalized;

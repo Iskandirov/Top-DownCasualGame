@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Sphere : MonoBehaviour
@@ -9,9 +6,16 @@ public class Sphere : MonoBehaviour
     public float speed;
     public float angle;
     public float damage;
+    Transform objTransform;
+    PlayerManager player;
+    private void Start()
+    {
+        objTransform = transform;
+        player = PlayerManager.instance;
+    }
     private void FixedUpdate()
     {
-        transform.position = PlayerManager.instance.transform.position + new Vector3(Mathf.Cos(Time.time * speed + angle) * circleRadius, Mathf.Sin(Time.time * speed + angle) * circleRadius, 0f);
+        objTransform.position = player.objTransform.position + new Vector3(Mathf.Cos(Time.time * speed + angle) * circleRadius, Mathf.Sin(Time.time * speed + angle) * circleRadius, 0f);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -25,7 +29,7 @@ public class Sphere : MonoBehaviour
         }
         else if (collision.CompareTag("Barrel"))
         {
-            collision.gameObject.GetComponent<ObjectHealth>().health -= 1;
+            collision.GetComponent<ObjectHealth>().health -= 1;
             FindObjectOfType<SphereAround>().countSphere--;
             Destroy(gameObject);
         }

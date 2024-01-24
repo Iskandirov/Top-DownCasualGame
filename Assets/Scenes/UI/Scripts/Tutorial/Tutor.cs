@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 [DefaultExecutionOrder(10)]
@@ -8,11 +7,11 @@ public class Tutor : MonoBehaviour
 {
     public int phase = 0;
     public Color32 FinalColor;
-    public Light2D wLight;
-    public Light2D aLight;
-    public Light2D sLight;
-    public Light2D dLight;
-    public Light2D ShiftLight;
+    public static Light2D wLight;
+    public static Light2D aLight;
+    public static Light2D sLight;
+    public static Light2D dLight;
+    public static Light2D ShiftLight;
     int lightCount = 0;
     public Animator parentPhase1;
     public Animator parentPhase2;
@@ -21,6 +20,15 @@ public class Tutor : MonoBehaviour
     public bool[] isPressed = new bool[4];
     public Light2D playerLight;
     public PlayerManager player;
+    // Створимо словник для зіставлення клавіш зі світлами
+    Dictionary<KeyCode, Light2D> keysToLights = new Dictionary<KeyCode, Light2D>()
+    {
+        { KeyCode.W, wLight },
+        { KeyCode.A, aLight },
+        { KeyCode.S, sLight },
+        { KeyCode.D, dLight }
+    };
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,46 +53,66 @@ public class Tutor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        player.attackSpeed -= Time.deltaTime;
+        if (player.attackSpeed < 0 && text.isShooting && Input.GetMouseButton(0))
+        {
+            Instantiate(player.bullet);
+            player.attackSpeed = player.attackSpeedMax;
+        }
         if (phase == 0 && text.anim.GetBool("FadeOut") == true)
         {
             StartCoroutine(TurnOn());
-            MoveOn();
-            if (Input.GetKeyDown(KeyCode.W))
+            player.enabled = true;
+            player.rb.velocity = Vector3.zero;
+            //MoveOn();
+            foreach (var keyLightPair in keysToLights)
             {
-                if (!isPressed[0])
+                KeyCode key = keyLightPair.Key;
+                Light2D light = keyLightPair.Value;
+
+                if (Input.GetKeyDown(key) && !isPressed[(int)key])
                 {
-                    wLight.color = FinalColor;
+                    light.color = FinalColor;
                     lightCount++;
-                    isPressed[0] = true;
+                    isPressed[(int)key] = true;
                 }
             }
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                if (!isPressed[1])
-                {
-                    aLight.color = FinalColor;
-                    lightCount++;
-                    isPressed[1] = true;
-                }
-            }
-            if (Input.GetKeyDown(KeyCode.S))
-            {
-                if (!isPressed[2])
-                {
-                    sLight.color = FinalColor;
-                    lightCount++;
-                    isPressed[2] = true;
-                }
-            }
-            if (Input.GetKeyDown(KeyCode.D))
-            {
-                if (!isPressed[3])
-                {
-                    dLight.color = FinalColor;
-                    lightCount++;
-                    isPressed[3] = true;
-                }
-            }
+            //if (Input.GetKeyDown(KeyCode.W))
+            //{
+            //    if (!isPressed[0])
+            //    {
+            //        wLight.color = FinalColor;
+            //        lightCount++;
+            //        isPressed[0] = true;
+            //    }
+            //}
+            //if (Input.GetKeyDown(KeyCode.A))
+            //{
+            //    if (!isPressed[1])
+            //    {
+            //        aLight.color = FinalColor;
+            //        lightCount++;
+            //        isPressed[1] = true;
+            //    }
+            //}
+            //if (Input.GetKeyDown(KeyCode.S))
+            //{
+            //    if (!isPressed[2])
+            //    {
+            //        sLight.color = FinalColor;
+            //        lightCount++;
+            //        isPressed[2] = true;
+            //    }
+            //}
+            //if (Input.GetKeyDown(KeyCode.D))
+            //{
+            //    if (!isPressed[3])
+            //    {
+            //        dLight.color = FinalColor;
+            //        lightCount++;
+            //        isPressed[3] = true;
+            //    }
+            //}
             if (lightCount >= 4)
             {
                 parentPhase1.SetBool("IsFadeOut", true);
@@ -108,7 +136,7 @@ public class Tutor : MonoBehaviour
                 ShiftLight.color = FinalColor;
                 parentPhase3.SetBool("IsFadeOut", true);
                 PhasePlus();
-                Invoke("BlockMoveAndShoo", 0.3f);
+                Invoke("BlockMoveAndShoot", 0.3f);
             }
         }
     }

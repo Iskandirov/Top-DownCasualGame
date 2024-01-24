@@ -11,13 +11,13 @@ public class Tower : SkillBaseMono
     Forward objEnemyMove;
     public float waterElement;
     public float fireElement;
-    
+    Transform objTransform;
     // Start is called before the first frame update
     void Start()
     {
         waterElement = PlayerManager.instance.Water;
         fireElement = PlayerManager.instance.Fire;
-
+        objTransform = transform;
         if (basa.stats[1].isTrigger)
         {
             basa.lifeTime += basa.stats[1].value;
@@ -38,7 +38,7 @@ public class Tower : SkillBaseMono
         while (true)
         {
             yield return new WaitForSeconds(basa.damageTickMax);
-            TowerWave a = Instantiate(damageObj, transform.position, Quaternion.identity);
+            TowerWave a = Instantiate(damageObj, objTransform.position, Quaternion.identity);
             a.waterElement = waterElement;
         }
     }
@@ -47,7 +47,7 @@ public class Tower : SkillBaseMono
         yield return new WaitForSeconds(basa.lifeTime);
         if (basa.stats[2].isTrigger)
         {
-            BobmExplode a = Instantiate(bomb, transform.position, Quaternion.identity);
+            BobmExplode a = Instantiate(bomb, objTransform.position, Quaternion.identity);
             a.fire = fireElement;
         }
         Destroy(gameObject);
@@ -57,7 +57,7 @@ public class Tower : SkillBaseMono
         yield return new WaitForSeconds(agreTime);
         if (a != null)
         {
-            a.GetComponentInParent<Forward>().destination.target = PlayerManager.instance.transform;
+            a.GetComponentInParent<Forward>().destination.target = PlayerManager.instance.objTransform;
         }
     }
     // Update is called once per frame
@@ -65,13 +65,13 @@ public class Tower : SkillBaseMono
     {
         if (basa.stats[4].isTrigger)
         {
-            colliders = Physics2D.OverlapCircleAll(transform.position, 16f);
+            colliders = Physics2D.OverlapCircleAll(objTransform.position, 16f);
             foreach (Collider2D collider in colliders)
             {
                 if (collider.isTrigger != true && collider.CompareTag("Enemy")
                     && collider.GetComponent<HealthPoint>() != null && collider.GetComponentInParent<Forward>() != null)
                 {
-                    collider.GetComponentInParent<Forward>().destination.target = transform;
+                    collider.GetComponentInParent<Forward>().destination.target = objTransform;
                     objEnemyMove = collider.transform.root.GetComponent<Forward>();
                 }
             }

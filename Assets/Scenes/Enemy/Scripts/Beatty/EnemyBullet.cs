@@ -10,17 +10,19 @@ public class EnemyBullet : MonoBehaviour
 
     private GameObject target;
     Collider2D[] colliders;
+    Transform objTransform;
     void Start()
     {
-        colliders = Physics2D.OverlapCircleAll(transform.position, searchRadius);
+        objTransform = transform;
+        colliders = Physics2D.OverlapCircleAll(objTransform.position, searchRadius);
         foreach (Collider2D collider in colliders)
         {
             if (collider.CompareTag("Player"))
             {
                 target = collider.gameObject;
                 Vector3 targetPos = target.transform.position;
-                targetPos.z = transform.position.z;
-                transform.up = targetPos - transform.position;
+                targetPos.z = objTransform.position.z;
+                objTransform.up = targetPos - objTransform.position;
 
                 break;
             }
@@ -31,7 +33,7 @@ public class EnemyBullet : MonoBehaviour
     {
         if (target != null)
         {
-            Vector3 currentPosition = transform.position;
+            Vector3 currentPosition = objTransform.position;
             Vector2 direction = ((Vector2)target.transform.position - (Vector2)currentPosition).normalized;
             rb.velocity = new Vector3(direction.x * speed, direction.y * speed, currentPosition.z);
         }

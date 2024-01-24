@@ -11,11 +11,12 @@ public class Beam : SkillBaseMono
     public float addToAndle;
     public bool isTwo;
     public SpriteRenderer img;
-
+    Transform objTransform;
     // Start is called before the first frame update
     void Start()
     {
         player = PlayerManager.instance;
+        objTransform = transform;
         if (basa.stats[1].isTrigger)
         {
             basa.countObjects += basa.stats[1].value;
@@ -40,7 +41,7 @@ public class Beam : SkillBaseMono
         }
         tick = basa.damageTickMax;
         basa.damage = basa.damage * player.Steam;
-        transform.localScale = new Vector3(transform.localScale.x + basa.radius, transform.localScale.y + basa.radius);
+        objTransform.localScale = new Vector3(objTransform.localScale.x + basa.radius, objTransform.localScale.y + basa.radius);
 
         CoroutineToDestroy(gameObject, basa.lifeTime);
         IsThereAnotherBeam();
@@ -63,15 +64,15 @@ public class Beam : SkillBaseMono
     void Update()
     {
         // Визначаємо відстань від гравця до позиції курсора
-        Vector3 direction = player.GetMousDirection(player.transform.position);
+        Vector3 direction = player.GetMousDirection(player.objTransform.position);
         direction = direction * basa.radius;
 
         // Рухаємо об'єкт до кінцевої позиції
-        transform.position = new Vector2(player.transform.position.x, player.transform.position.y);
+        objTransform.position = new Vector2(player.objTransform.position.x, player.objTransform.position.y);
 
         // Повертаємо коло в напрямку курсора
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.AngleAxis(angle + addToAndle, Vector3.forward);
+        objTransform.rotation = Quaternion.AngleAxis(angle + addToAndle, Vector3.forward);
 
         tick -= Time.deltaTime;
     }
@@ -114,9 +115,9 @@ public class Beam : SkillBaseMono
     }
     private void CreateBeam(float angle, float x, float y)
     {
-        Beam a = Instantiate(this, new Vector2(transform.position.x + x, transform.position.y + y), Quaternion.identity);
+        Beam a = Instantiate(this, new Vector2(objTransform.position.x + x, objTransform.position.y + y), Quaternion.identity);
         a.basa.damage = basa.damage * player.Steam;
         a.addToAndle = angle;
-        a.transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y);
+        a.transform.localScale = new Vector3(objTransform.localScale.x, objTransform.localScale.y);
     }
 }

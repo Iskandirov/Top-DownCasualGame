@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -33,15 +32,13 @@ public class Reload : SkillBaseMono
         }
 
         spells = FindObjectsOfType<CDSkills>().ToList();
-        //basa = SetToSkillID(gameObject);
         for(int i = 0; i < spells.Count;i++)
         {
-            if (spells[i].abilityId == 0 || spells[i].abilityId == 6 || spells[i].abilityId == 12)
+            if (spells[i].abilityId == 0 || spells[i].abilityId == basa.skill.number || !spells[i].isPassive)
             {
                 spells.RemoveAt(i);
             }
         }
-        //FindAllActiveSkill();
         int randomedSkill;
         if (spells != null)
         {
@@ -57,7 +54,8 @@ public class Reload : SkillBaseMono
     {
         spells = FindObjectsOfType<CDSkills>().ToList();
 
-        foreach(var skill in spells)
+        //spells.Where(spell => spell.abilityId != 12);
+        foreach (var skill in spells)
         {
             if (skill.abilityId != 12)
             {

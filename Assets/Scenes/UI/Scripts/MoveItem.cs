@@ -5,7 +5,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using UnityEngine.UIElements.Experimental;
 
 public class MoveItem : MonoBehaviour ,IPointerClickHandler
 {
@@ -46,7 +45,6 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
         hashing = FindObjectOfType<DataHashing>();
         startParent = transform.parent.gameObject;
         fliedSlots = FindObjectOfType<FieldSlots>();
-        // Çíàéòè îá'ºêò çà òåãîì
         GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("Finish");
         targetEquipObjects = GameObject.FindGameObjectWithTag("Respawn");
         equipPanel = GameObject.FindGameObjectWithTag("Wall");
@@ -139,7 +137,6 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
                     {
                         SetVisible(true);
                         transform.SetParent(targetEquipObjects.transform);
-                        //transform.localScale = targetScaleSmall;
                         transform.position = targetEquipObjects.transform.position;
                         toEquipSlot = false;
                     }
@@ -148,7 +145,6 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
                 {
                     transform.SetParent(startParent.transform);
                     transform.SetAsFirstSibling();
-                    //transform.localScale = startScale;
                     transform.position = new Vector3(startPosition.x, startPosition.y + 1f, startPosition.z);
                     toEquipSlot = true;
                     SetVisible(false);
@@ -161,11 +157,12 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
     }
     void CheckChildren(Transform parent, bool enable)
     {
-        foreach (Transform child in parent.transform)
+        foreach (Transform child in parent)
         {
-            if (child.GetComponent<TextMeshProUGUI>())
+            TextMeshProUGUI childText = child.GetComponent<TextMeshProUGUI>();
+            if (childText)
             {
-                child.GetComponent<TextMeshProUGUI>().enabled = enable;
+                childText.enabled = enable;
             }
 
             CheckChildren(child, enable);
@@ -348,9 +345,5 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
         {
             transform.localScale = transform.localScale / 1.1f;
         }
-        //if (eventData.button == PointerEventData.InputButton.Right && !Input.GetMouseButton(0))
-        //{
-        //    transform.localScale = targetScaleSmall;
-        //}
     }
 }

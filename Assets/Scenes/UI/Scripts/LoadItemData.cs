@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.UIElements.Experimental;
 
 public class LoadItemData : MonoBehaviour
 {
@@ -84,7 +83,7 @@ public class LoadItemData : MonoBehaviour
     {
         for (int i = objectsList.Count - 1; i >= 0; i--)
         {
-            GameObject obj = objectsListCopy[i].gameObject; // взяти GameObject елементу
+            GameObject obj = objectsListCopy[i]; // взяти GameObject елементу
             objectsList.RemoveAt(i);
             objectsListCopy.RemoveAt(i);
             Destroy(obj); // видалити елемент зі сцени

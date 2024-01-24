@@ -7,11 +7,12 @@ public class FireWave : SkillBaseMono
     public float burnDamage;
     public float fireElement;
     PlayerManager player;
-    
+    Transform objTransform;
     // Start is called before the first frame update
     void Start()
     {
         player = PlayerManager.instance;
+        objTransform = transform;
         if (basa.stats[1].isTrigger)
         {
             basa.damage += basa.stats[1].value;
@@ -28,10 +29,7 @@ public class FireWave : SkillBaseMono
         {
             burnDamage = basa.stats[4].value;
         }
-        //basa = SetToSkillID(gameObject);
         basa.damage = basa.damage * player.Fire;
-
-        //CoroutineToDestroy(gameObject, basa.lifeTime);
     }
     public void IsNeedToDestroy()
     {
@@ -40,35 +38,31 @@ public class FireWave : SkillBaseMono
             Destroy(gameObject);
         }
     }
-    //public void CreateWave()
-    //{
-    //    FireWave a = Instantiate(this, transform.position, Quaternion.identity);
-    //    a.basa.damage = basa.damage;
-    //    a.fireElement = player.Fire;
-    //    a.burnDamage = burnDamage;
-    //}
-    // Update is called once per frame
     void FixedUpdate()
     {
-        transform.position = player.transform.position;
-        //transform.localScale = new Vector3(transform.localScale.x + Time.deltaTime * 20, transform.localScale.y + Time.deltaTime * 20, transform.localScale.z + Time.deltaTime * 20);
+        objTransform.position = player.objTransform.position;
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy"))
         {
-            if (collision.GetComponentInParent<ElementActiveDebuff>() != null && !collision.GetComponentInParent<ElementActiveDebuff>().IsActive("isFire", true))
+            ElementActiveDebuff element = collision.GetComponentInParent<ElementActiveDebuff>();
+            HealthPoint health = collision.GetComponent<HealthPoint>();
+
+            if (element != null && !element.IsActive("isFire", true))
             {
-                collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isFire", true, true);
-                collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isFire", true, false);
+                element.SetBool("isFire", true, true);
+                element.SetBool("isFire", true, false);
             }
-            collision.GetComponent<HealthPoint>().TakeDamage((basa.damage * collision.GetComponent<HealthPoint>().Water) / collision.GetComponent<HealthPoint>().Fire);
-            GameManager.Instance.FindStatName("fireWaveDamage", (basa.damage * collision.GetComponent<HealthPoint>().Water) / collision.GetComponent<HealthPoint>().Fire);
+
+            health.TakeDamage((basa.damage * health.Water) / health.Fire);
+            GameManager.Instance.FindStatName("fireWaveDamage", (basa.damage * health.Water) / health.Fire);
+
             if (burnDamage != 0 && collision != null)
             {
-                collision.GetComponent<HealthPoint>().isBurn = true;
-                collision.GetComponent<HealthPoint>().burnTime = 3;
-                collision.GetComponent<HealthPoint>().burnDamage = burnDamage;
+                health.isBurn = true;
+                health.burnTime = 3;
+                health.burnDamage = burnDamage;
             }
         }
     }

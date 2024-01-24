@@ -9,17 +9,19 @@ public class EXP : MonoBehaviour
     public float speed;
     public float acceleration = 10f; // Значення прискорення
 
-    public PlayerManager player;
+    PlayerManager player;
+    Transform objTransform;
     public void Awake()
     {
         player = PlayerManager.instance;
+        objTransform = transform;
     }
     private void FixedUpdate()
     {
         if (itWasInPlayerZone)
         {
-            speed += acceleration * Time.fixedDeltaTime; // Збільшуємо швидкість з кожним кадром
-            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.fixedDeltaTime);
+            speed += acceleration * Time.fixedDeltaTime;
+            objTransform.position = Vector2.MoveTowards(objTransform.position, player.transform.position, speed * Time.fixedDeltaTime);
         }
     }
     private void OnTriggerEnter2D(Collider2D other)

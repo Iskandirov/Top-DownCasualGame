@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 [Serializable]
 public class EnemyPool
@@ -36,6 +35,7 @@ public class SpawnManager : MonoBehaviour
     public float spawnRadius = 10f;
     public float radiusWeed = 5.0f;
     public int enemycount;
+    public Transform parent;
     private void Awake()
     {
         inst ??= this;
@@ -46,34 +46,20 @@ public class SpawnManager : MonoBehaviour
         gameManager = GameManager.Instance;
         player = PlayerManager.instance;
 
-        barrelPool = InitializeObjectPool(barrelPrefab, barrelPoolSize);
+        barrelPool = InitializeObjectPool(barrelPrefab, barrelPoolSize,transform);
         foreach (var enemyPool in enemiesPool)
         {
-            enemyPool.enemyPool = InitializeObjectPool(enemyPool.enemyObj, enemyPool.poolSize);
+            enemyPool.enemyPool = InitializeObjectPool(enemyPool.enemyObj, enemyPool.poolSize, parent);
         }
         StartCoroutine(SpawnRoutine(barrelSpawnInterval));
         StartCoroutine(SpawnEnemyRoutine(enemySpawnInterval));
     }
-    List<GameObject> InitializeObjectPool(GameObject objectPrefab,int pool)
+    List<GameObject> InitializeObjectPool(GameObject objectPrefab,int pool,Transform parent)
     {
         List<GameObject>  objectPool = new List<GameObject>();
         for (int i = 0; i < pool; i++)
         {
-            GameObject obj = Instantiate(objectPrefab,transform);
-            obj.gameObject.SetActive(false);
-            objectPool.Add(obj);
-        }
-        return objectPool;
-    }
-    List<GameObject> InitializeObjectPool(List<GameObject> objectPrefab, int pool)
-    {
-        List<GameObject>  objectPool = new List<GameObject>();
-        int part = pool / objectPrefab.Count;
-        int partNumber;
-        for (int i = 0; i < pool; i++)
-        {
-            partNumber = (i / part) % objectPrefab.Count;
-            GameObject obj = Instantiate(objectPrefab[partNumber], transform);
+            GameObject obj = Instantiate(objectPrefab, parent);
             obj.gameObject.SetActive(false);
             objectPool.Add(obj);
         }
@@ -83,9 +69,9 @@ public class SpawnManager : MonoBehaviour
     {
         foreach (GameObject obj in objectPool)
         {
-            if (!obj.gameObject.activeInHierarchy)
+            if (!obj.activeInHierarchy)
             {
-                obj.gameObject.SetActive(true);
+                obj.SetActive(true);
                 return obj;
             }
         }
@@ -97,14 +83,12 @@ public class SpawnManager : MonoBehaviour
     {
         foreach (GameObject obj in objectPool)
         {
-            if (!obj.gameObject.activeInHierarchy)
+            if (!obj.activeInHierarchy)
             {
-                obj.gameObject.SetActive(true);
+                obj.SetActive(true);
                 return obj;
             }
         }
-        //GameObject gameObject = Instantiate(objectPrefab);
-        //objectPool.Add(gameObject);
         return null;
     }
     private IEnumerator SpawnRoutine(float interval)

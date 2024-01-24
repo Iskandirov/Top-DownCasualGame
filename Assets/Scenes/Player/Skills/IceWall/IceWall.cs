@@ -5,10 +5,11 @@ public class IceWall : SkillBaseMono
 {
     public float cold;
     public float damageTick;
-    
+    Transform objTransform;
 
     void Start()
     {
+        objTransform = transform;
         if (basa.stats[1].isTrigger)
         {
             basa.lifeTime += basa.stats[1].value;
@@ -34,8 +35,8 @@ public class IceWall : SkillBaseMono
         Vector3 mousePosition = Input.mousePosition;
         mousePosition.z = 1.9f; // Задаємо Z-координату для об'єкта
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-        transform.position = worldPosition;
-        transform.localScale = new Vector2(basa.radius * PlayerManager.instance.Steam, basa.radius * PlayerManager.instance.Steam);
+        objTransform.position = worldPosition;
+        objTransform.localScale = new Vector2(basa.radius * PlayerManager.instance.Steam, basa.radius * PlayerManager.instance.Steam);
         cold = PlayerManager.instance.Cold;
         StartCoroutine(Destroy());
     }
@@ -44,9 +45,9 @@ public class IceWall : SkillBaseMono
         yield return new WaitForSeconds(basa.lifeTime);
         Destroy(gameObject);
     }
-    private void Update()
+    private void FixedUpdate()
     {
-        damageTick -= Time.deltaTime;
+        damageTick -= Time.fixedDeltaTime;
     }
     public void OnTriggerStay2D(Collider2D collision)
     {

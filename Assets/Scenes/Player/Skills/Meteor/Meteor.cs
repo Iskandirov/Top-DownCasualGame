@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Meteor : SkillBaseMono
@@ -63,17 +61,20 @@ public class Meteor : SkillBaseMono
         {
             if (collision.CompareTag("Enemy"))
             {
-                if (collision.GetComponentInParent<ElementActiveDebuff>() != null && !collision.GetComponentInParent<ElementActiveDebuff>().IsActive("isFire", true))
+                ElementActiveDebuff element = collision.GetComponentInParent<ElementActiveDebuff>();
+                HealthPoint health = collision.GetComponent<HealthPoint>();
+
+                if (element != null && !element.IsActive("isFire", true))
                 {
-                    collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isFire", true, true);
-                    collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isFire", true, false);
+                    element.SetBool("isFire", true, true);
+                    element.SetBool("isFire", true, false);
                 }
                 if (basa.stats[3].isTrigger)
                 {
                     collision.GetComponentInParent<Forward>().path.maxSpeed = collision.GetComponentInParent<Forward>().speedMax * fireDirt / 1.5f;
                 }
-                collision.GetComponent<HealthPoint>().TakeDamage((basa.damage * fireDirt * collision.GetComponent<HealthPoint>().Water) / collision.GetComponent<HealthPoint>().Fire);
-                GameManager.Instance.FindStatName("meteorDamage", (basa.damage * fireDirt * collision.GetComponent<HealthPoint>().Water) / collision.GetComponent<HealthPoint>().Fire);
+                health.TakeDamage((basa.damage * fireDirt * health.Water) / health.Fire);
+                GameManager.Instance.FindStatName("meteorDamage", (basa.damage * fireDirt * health.Water) / health.Fire);
                 damageTick = basa.damageTickMax;
             }
             else if (collision.CompareTag("Barrel") && collision != null)

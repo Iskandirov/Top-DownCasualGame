@@ -12,10 +12,14 @@ public class MineSpawn : MonoBehaviour
     public float radius;
     public bool inZone;
     public SpriteRenderer shadow;
+    public ShadowCaster2D shadow2D;
+    public Light2D light2D;
+    Transform objTransform;
 
     // Start is called before the first frame update
     void Start()
     {
+        objTransform = transform;
         delayMax = delay;
         SetAlphaRecursively(transform, 0f);
     }
@@ -31,24 +35,22 @@ public class MineSpawn : MonoBehaviour
                 continue; // Ігнорувати заданий спрайт
             if (alpha == 1)
             {
-                GetComponent<ShadowCaster2D>().enabled = true;
+                shadow2D.enabled = true;
                 Color spriteColorIgnore = spriteToIgnore.color;
                 spriteColorIgnore.a = 0.2f;
                 spriteToIgnore.color = spriteColorIgnore;
             }
             else
             {
-                GetComponent<ShadowCaster2D>().enabled = false;
+                shadow2D.enabled = false;
             }
             Color spriteColor = spriteRenderer.color;
             spriteColor.a = alpha; // Встановлюємо альфу в 1 для повної видимості
             spriteRenderer.color = spriteColor;
-            if (GetComponentInChildren<Light2D>())
-            {
-                Color spriteColorLight = GetComponentInChildren<Light2D>().color;
-                spriteColorLight.a = alpha; // Встановлюємо альфу в 1 для повної видимості
-                GetComponentInChildren<Light2D>().color = spriteColorLight;
-            }
+
+            Color spriteColorLight = light2D.color;
+            spriteColorLight.a = alpha; // Встановлюємо альфу в 1 для повної видимості
+            light2D.color = spriteColorLight;
         }
     }
     // Update is called once per frame
@@ -62,11 +64,10 @@ public class MineSpawn : MonoBehaviour
         {
             float initialZ = transform.position.z; // Зберегти початкове значення Z
 
-            MiShroomMine a = Instantiate(mine, new Vector3(transform.position.x, transform.position.y, initialZ) + Random.insideUnitSphere * radius, Quaternion.identity);
-
+            MiShroomMine a = Instantiate(mine, new Vector3(objTransform.position.x, objTransform.position.y, initialZ) + Random.insideUnitSphere * radius, Quaternion.identity, objTransform);
+            Transform aTrans = a.transform;
             // Після створення об'єкта встановити початкове значення Z
-            a.transform.position = new Vector3(a.transform.position.x, a.transform.position.y, initialZ);
-            a.parent = this;
+            aTrans.position = new Vector3(aTrans.position.x, aTrans.position.y, initialZ);
             delay = delayMax;
             mineCount++;
         }
@@ -76,7 +77,7 @@ public class MineSpawn : MonoBehaviour
         if (collision.CompareTag("Player") && !collision.isTrigger)
         {
             inZone = true;
-            SetAlphaRecursively(transform, 1f, shadow);
+            SetAlphaRecursively(objTransform, 1f, shadow);
         }
     }
     public void OnTriggerExit2D(Collider2D collision)
@@ -84,7 +85,7 @@ public class MineSpawn : MonoBehaviour
         if (collision.CompareTag("Player") && !collision.isTrigger)
         {
             inZone = false;
-            SetAlphaRecursively(transform, 0f);
+            SetAlphaRecursively(objTransform, 0f);
         }
     }
 }

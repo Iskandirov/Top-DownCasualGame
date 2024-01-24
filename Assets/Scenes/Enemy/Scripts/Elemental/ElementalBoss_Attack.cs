@@ -14,11 +14,10 @@ public class ElementalBoss_Attack : MonoBehaviour
     public bool playerInZone;
     public bool enemyInZone;
 
-    public GameObject player;
     Rigidbody2D playerRB;
-    Animator playerAnim;
+    PlayerManager player;
 
-    public List<GameObject> enemy;
+    public List<Rigidbody2D> enemy;
     public GameObject VFX_DamageArea;
 
     public float initialForce = 30f;
@@ -29,17 +28,18 @@ public class ElementalBoss_Attack : MonoBehaviour
     Animator objAniml;
     Forward objMove;
     Shield objShield;
-
+    Transform objTransform;
     void Start()
     {
-        player = GameObject.FindWithTag("Player");
+        player = PlayerManager.instance;
         playerRB = player.GetComponent<Rigidbody2D>();
-        playerAnim = player.GetComponent<Animator>();
 
         objShield = FindObjectOfType<Shield>();
 
         objAniml = GetComponent<Animator>();
         objMove = GetComponent<Forward>();
+
+        objTransform = transform;
 
         attackCalldownMax = attackCalldown;
     }
@@ -60,12 +60,12 @@ public class ElementalBoss_Attack : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        AddPlayerFromZone(collision);
+        AddPlayerToZone(collision);
     }
 
     public void OnTriggerStay2D(Collider2D collision)
     {
-        AddPlayerFromZone(collision);
+        AddPlayerToZone(collision);
     }
 
     public void OnTriggerExit2D(Collider2D collision)
@@ -78,31 +78,34 @@ public class ElementalBoss_Attack : MonoBehaviour
         {
             playerInZone = false;
         }
-        else if (collision.CompareTag("Enemy"))
+        else if (collision.CompareTag("Enemy") && collision.GetComponent<Rigidbody2D>())
         {
             enemyInZone = false;
-            enemy.Remove(collision.gameObject);
+            enemy.Remove(collision.GetComponent<Rigidbody2D>());
         }
     } 
-    public void AddPlayerFromZone(Collider2D collision)
+    public void AddPlayerToZone(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
             playerInZone = true;
         }
-        else if (collision.CompareTag("Enemy"))
+        else if (collision.CompareTag("Enemy") && collision.GetComponent<Rigidbody2D>())
         {
             enemyInZone = true;
-            enemy.Add(collision.gameObject);
+            enemy.Add(collision.GetComponent<Rigidbody2D>());
         }
     }
     public void SpeedFly()
     {
         VFX_DamageArea.SetActive(true);
         objMove.isFly = true;
-        objMove.Relocate(player.transform);
+        Relocate(player.transform);
     }
-
+    public void Relocate(Transform pos)
+    {
+        objTransform.position = new Vector2(pos.position.x, pos.position.y + 10);
+    }
     public void ToForard()
     {
         VFX_DamageArea.SetActive(false);
@@ -123,9 +126,9 @@ public class ElementalBoss_Attack : MonoBehaviour
             }
             else
             {
-                if (pushableObjectRigidbody != null && !PlayerManager.instance.isInvincible)
+                if (pushableObjectRigidbody != null && !player.isInvincible)
                 {
-                    PlayerManager.instance.TakeDamage(damage);
+                    player.TakeDamage(damage);
                     StartCoroutine(ReducePushForce(pushableObjectRigidbody));
                 }
             }
@@ -133,13 +136,9 @@ public class ElementalBoss_Attack : MonoBehaviour
 
         if (enemyInZone)
         {
-            foreach (GameObject enemyObject in enemy)
+            foreach (Rigidbody2D enemyObject in enemy)
             {
-                Rigidbody2D pushableObjectRigidbody = enemyObject.GetComponent<Rigidbody2D>();
-                if (pushableObjectRigidbody != null)
-                {
-                    StartCoroutine(ReducePushForce(pushableObjectRigidbody));
-                }
+                StartCoroutine(ReducePushForce(enemyObject));
             }
         }
     }
@@ -150,7 +149,7 @@ public class ElementalBoss_Attack : MonoBehaviour
 
         while (elapsedTime < duration)
         {
-            Vector2 direction = (pushableObjectRigidbody.transform.position - transform.position).normalized;
+            Vector2 direction = (pushableObjectRigidbody.transform.position - objTransform.position).normalized;
             pushableObjectRigidbody.velocity = direction * currentForce;
 
             currentForce -= reductionFactor * initialForce * Time.deltaTime;

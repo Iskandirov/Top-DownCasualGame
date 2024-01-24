@@ -14,6 +14,7 @@ public class FillLevelInfo : MonoBehaviour
     public TextMeshProUGUI countOfCount;
     public Image percentImgDone;
     public DataHashing hash;
+    public Transform objTransform;
     private void Awake()
     {
         hash = FindObjectOfType<DataHashing>();
@@ -21,11 +22,12 @@ public class FillLevelInfo : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        objTransform = transform;
         level = FindObjectOfType<CheckLevel>();
-
-        dataLevel.percent = LoadObjectLevel(GetComponent<MenuController>().sceneCount);
-        dataLevel.countOfCount = LoadObjectLevelCount(GetComponent<MenuController>().sceneCount);
-        dataLevel.countOfCountMax = LoadObjectLevelCountOfCountMax(GetComponent<MenuController>().sceneCount);
+        MenuController menu = GetComponent<MenuController>();
+        dataLevel.percent = LoadObjectLevel(menu.sceneCount);
+        dataLevel.countOfCount = LoadObjectLevelCount(menu.sceneCount);
+        dataLevel.countOfCountMax = LoadObjectLevelCountOfCountMax(menu.sceneCount);
         percentImg.fillAmount = (float)dataLevel.percent / 100;
         countImg.fillAmount = (float)dataLevel.countOfCount / dataLevel.countOfCountMax;
 
@@ -34,14 +36,14 @@ public class FillLevelInfo : MonoBehaviour
             percentImgDone.gameObject.SetActive(true);
         }
         
-        dataLevel.IDLevel = GetComponent<MenuController>().sceneCount;
+        dataLevel.IDLevel = menu.sceneCount;
         if (dataLevel.IDLevel == 999)
         {
             percent.gameObject.SetActive(false);
         }
 
         percent.text = dataLevel.percent.ToString() + "%";
-        countOfCount.text = LoadObjectLevelCountText(GetComponent<MenuController>().sceneCount);
+        countOfCount.text = LoadObjectLevelCountText(menu.sceneCount);
         level.SaveInventory(dataLevel.IDLevel, dataLevel.percent);
 
 
@@ -150,7 +152,6 @@ public class FillLevelInfo : MonoBehaviour
                 string decode = hash.Decrypt(line);
 
                 SavedLocationsData data = JsonUtility.FromJson<SavedLocationsData>(decode);
-
                 if (data.IDLevel == objectID)
                 {
                     return data.isUnlocke;

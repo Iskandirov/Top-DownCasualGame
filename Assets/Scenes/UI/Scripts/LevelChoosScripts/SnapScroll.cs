@@ -54,13 +54,12 @@ public class SnapScroll : MonoBehaviour
         descriptionObjImage = new Image[descriptionImage.Length];
         for (int i = 0; i < descriptionImage.Length; i++)
         {
-            
+            int objejectCount = instObjects[i].LoadObjectLevelCount(i + sceneValue[0]);
+            int objejectCountMax = instObjects[i].LoadObjectLevelCountOfCountMax(i + sceneValue[0]);
             instObjects[i] = Instantiate(panObj, transform, false);
             instObjectsLock[i] = Instantiate(instObjectsLockObj, transform.position, Quaternion.identity, transform);
             if (instObjects[i].LoadObjectLevelCountIsFull(i + sceneValue[0]) == true 
-                && instObjects[i].LoadObjectLevelCount(i + sceneValue[0]) != instObjects[i].LoadObjectLevelCountOfCountMax(i + sceneValue[0]) 
-                || instObjects[i].LoadObjectLevelCount(i + sceneValue[0] - 1) == instObjects[i].LoadObjectLevelCountOfCountMax(i + sceneValue[0] - 1)
-                && instObjects[i].LoadObjectLevelCount(i + sceneValue[0]) != instObjects[i].LoadObjectLevelCountOfCountMax(i + sceneValue[0]))
+                && objejectCount != objejectCountMax || objejectCount - 1 == objejectCountMax - 1 && objejectCount != objejectCountMax)
             {
                 Destroy(instObjectsLock[i]);
             }
@@ -84,15 +83,15 @@ public class SnapScroll : MonoBehaviour
             {
                 continue;
             }
-            instObjects[i].transform.localPosition = new Vector2(instObjects[i - 1].transform.localPosition.x + panObj.GetComponent<RectTransform>().sizeDelta.x + spacing,
-                instObjects[i].transform.localPosition.y);
+            instObjects[i].objTransform.localPosition = new Vector2(instObjects[i - 1].objTransform.localPosition.x + panObj.GetComponent<RectTransform>().sizeDelta.x + spacing,
+                instObjects[i].objTransform.localPosition.y);
             if (instObjectsLock[i] != null)
             {
                 instObjectsLock[i].transform.localPosition = new Vector2(instObjectsLock[i - 1].transform.localPosition.x + panObj.GetComponent<RectTransform>().sizeDelta.x + spacing,
                instObjectsLock[i].transform.localPosition.y);
             }
            
-            instObjectsPosition[i] = -instObjects[i].transform.localPosition;
+            instObjectsPosition[i] = -instObjects[i].objTransform.localPosition;
         }
         gameManager.UpdateText(list);
     }
@@ -115,8 +114,8 @@ public class SnapScroll : MonoBehaviour
                 selectPanelObjID = i;
             }
             float scale = Mathf.Clamp(10 / (distance / spacing) * snapScale, 0.5f, 10f);
-            instObjectsScale[i].x = Mathf.SmoothStep(instObjects[i].transform.localRotation.x, scale, scaleSpeed * Time.fixedDeltaTime);
-            instObjectsScale[i].y = Mathf.SmoothStep(instObjects[i].transform.localRotation.y, scale, scaleSpeed * Time.fixedDeltaTime);
+            instObjectsScale[i].x = Mathf.SmoothStep(instObjects[i].objTransform.localRotation.x, scale, scaleSpeed * Time.fixedDeltaTime);
+            instObjectsScale[i].y = Mathf.SmoothStep(instObjects[i].objTransform.localRotation.y, scale, scaleSpeed * Time.fixedDeltaTime);
             instObjects[i].transform.localScale = instObjectsScale[i];
             if (instObjectsLock[i] != null)
             {

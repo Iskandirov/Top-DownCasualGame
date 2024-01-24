@@ -269,7 +269,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d43b841f0e35afa47a6b5c0b26718545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   healthPoint: 0
   healthPointMax: 2
   expiriancePoint: {fileID: 1551125564601968996, guid: 011bcb717f1c7644cbb13f13f798cecd, type: 3}
@@ -282,6 +281,8 @@ MonoBehaviour:
   burnDamage: 0
   burnTick: 0.5
   burnTickMax: 0.5
+  objDrop: {fileID: 0}
+  objMove: {fileID: -6013413010149434249}
   expGiven: 10
   dangerLevel: 1
   bodyAnimBoss: {fileID: 0}
@@ -305,6 +306,8 @@ MonoBehaviour:
   ColdStart: 1
   debuffsParent: {fileID: 3935515225599120917}
   nameMob: Beany
+  uiParent: {fileID: 0}
+  healthBossObj: {fileID: 0}
 --- !u!70 &7694329049011475875
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -352,7 +355,7 @@ MonoBehaviour:
   - {x: -0.022414207, y: -1.1503669, z: -0.00000011920929}
   m_ShapePathHash: -185684241
   m_Mesh: {fileID: 0}
-  m_InstanceId: 62430
+  m_InstanceId: 39848
 --- !u!1 &3261821647298518200
 GameObject:
   m_ObjectHideFlags: 0
@@ -441,28 +444,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3913abf868628ca42bfa5f940214cd24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   enemy: {fileID: 0}
   Body: {fileID: 6384565066757689954}
   speedMax: 12
+  currentSpeed: 0
   isStunned: 0
   stunnTime: 0.5
   stunnTimeMax: 0.5
   isFly: 0
-  isSummoned: 0
-  enemyFinded: 0
-  protectPlayer: 0
-  summonTime: 30
   isThree: 0
-  bomb: {fileID: 8381528588111883540, guid: f39d8d106439fe542a7b30c64142ffb9, type: 3}
   anim: {fileID: 2002965151147493249}
   IsOutOfCamera: 0
   isChaising: 0
   acceleration: 0.1
   angle: 0
-  path: {fileID: 0}
+  path: {fileID: 4265396766713021694}
+  destination: {fileID: 7955902314846012123}
   isTutorial: 0
   moveSlowTime: 0
+  player: {fileID: 0}
 --- !u!50 &6384565066757689954
 Rigidbody2D:
   serializedVersion: 4
@@ -524,6 +524,8 @@ MonoBehaviour:
   attackVFXRange: {fileID: 0}
   attackVFXRangePos: {fileID: 0}
   objectToHit: {fileID: 0}
+  objMove: {fileID: -6013413010149434249}
+  objAnim: {fileID: 2002965151147493249}
 --- !u!95 &2002965151147493249
 Animator:
   serializedVersion: 4

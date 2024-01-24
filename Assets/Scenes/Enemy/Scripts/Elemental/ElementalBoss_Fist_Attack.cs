@@ -12,7 +12,6 @@ public class ElementalBoss_Fist_Attack : MonoBehaviour
     public bool playerInZone;
 
     Rigidbody2D playerRB;
-    Animator playerAnim;
     Collider2D playerCollider;
     PlayerManager player;
 
@@ -37,7 +36,6 @@ public class ElementalBoss_Fist_Attack : MonoBehaviour
         player = PlayerManager.instance;
         attackCalldownMax = attackCalldown;
         playerRB = player.GetComponent<Rigidbody2D>();
-        playerAnim = player.GetComponent<Animator>();
         playerCollider = player.GetComponent<Collider2D>();
 
         objShield = FindObjectOfType<Shield>();
@@ -146,6 +144,5 @@ public class ElementalBoss_Fist_Attack : MonoBehaviour
 
         // Встановлення швидкості та сили відкиду в нуль
         pushableObjectRigidbody.velocity = Vector2.zero;
-        currentForce = 0f;
     }
 }

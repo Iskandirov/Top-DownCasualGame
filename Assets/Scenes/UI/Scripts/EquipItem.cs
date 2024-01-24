@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
@@ -20,7 +19,7 @@ public class EquipItem : MonoBehaviour
             SaveEquip();
         }
 
-        updatedList = new List<SavedEquipData>(); // Ініціалізуємо список updatedList
+        updatedList = new List<SavedEquipData>();
     }
 
     public void onEquip()
@@ -71,10 +70,6 @@ public class EquipItem : MonoBehaviour
 
                 }
                 SaveUpdateEquip(path, updatedList);
-                // Записуємо оновлений масив рядків в файл після завершення циклу foreach
-                //string jsonContent = string.Join("\n", updatedList.ToArray());
-                //string encryptedJson = hashing.Encrypt(jsonContent);
-                //File.WriteAllText(path, encryptedJson);
             }
         }
     }

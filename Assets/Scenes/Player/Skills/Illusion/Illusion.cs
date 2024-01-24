@@ -1,8 +1,7 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 public class Illusion : SkillBaseMono
 {
@@ -19,12 +18,13 @@ public class Illusion : SkillBaseMono
 
     PlayerManager player;
     public bool isClone;
-    
+    Transform objTransform;
 
     // Start is called before the first frame update
     void Start()
     {
         player = PlayerManager.instance;
+        objTransform = transform;
         if (basa.stats[1].isTrigger)
         {
             basa.countObjects += basa.stats[1].value;
@@ -57,7 +57,7 @@ public class Illusion : SkillBaseMono
         attackSpeedMax = attackSpeed;
         if (basa.stats[4].isTrigger)
         {
-            Zzap a = Instantiate(zzap, transform.position, Quaternion.Euler(0, 0, angle), transform);
+            Zzap a = Instantiate(zzap, objTransform.position, Quaternion.Euler(0, 0, angle), objTransform);
             a.x = xZzap;
             a.y = yZzap;
             a.electicElement = player.Electricity;
@@ -98,7 +98,7 @@ public class Illusion : SkillBaseMono
     }
     private void CreateClone()
     {
-        Illusion a = Instantiate(this, transform.position, Quaternion.identity);
+        Illusion a = Instantiate(this, objTransform.position, Quaternion.identity);
         a.isClone = true;
         a.basa.lifeTime = basa.lifeTime;
         a.basa.stats[4].isTrigger = basa.stats[4].isTrigger;
@@ -108,10 +108,10 @@ public class Illusion : SkillBaseMono
     void FixedUpdate()
     {
         attackSpeed -= Time.fixedDeltaTime;
-        transform.position = new Vector2(player.transform.position.x + x, player.transform.position.y + y);
+        objTransform.position = new Vector2(player.objTransform.position.x + x, player.objTransform.position.y + y);
         if (attackSpeed <= 0 && Input.GetMouseButton(0))
         {
-            Bullet a = Instantiate(bullet, transform.position, Quaternion.identity);
+            Bullet a = Instantiate(bullet, objTransform.position, Quaternion.identity);
             a.obj = gameObject;
             attackSpeed = attackSpeedMax;
         }

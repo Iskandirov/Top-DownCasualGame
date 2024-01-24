@@ -46,7 +46,6 @@ public class MoveToPlayerStartPos : MonoBehaviour
         {
             Vector2 collisionNormal = collision.contacts[0].normal; // Отримуємо нормаль зіткнення
             Vector2 reflectedDirection = Vector2.Reflect(moveDirection, collisionNormal); // Обчислюємо відбитий напрямок
-            //GetComponent<Rigidbody2D>().mass += 5500; // ПОТРІБНО ДОДАТИ СВІЙ ЛЕЙЕР ДЛЯ ЦЬОГО ВОРОГА ЩОБ ВІН НЕ ПЕРЕСІКАВСЯ З ВОРОГАМИ ТАКОГО Ж ТИПУ
             moveDirection = reflectedDirection.normalized; // Встановлюємо новий напрямок руху
         }
     }

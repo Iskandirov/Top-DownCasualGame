@@ -8,9 +8,11 @@ public class Kiwi_Attack : MonoBehaviour
     public float launchForce = 10.0f; // Сила запуску
     public float delay;
     float delayMax;
+    Transform objTransform;
     public void Start()
     {
         delayMax = delay;
+        objTransform = transform;
     }
     public void FixedUpdate()
     {
@@ -25,10 +27,10 @@ public class Kiwi_Attack : MonoBehaviour
             {
                 delay = delayMax;
                 // Отримуємо напрямок до гравця
-                Vector2 directionToPlayer = collision.transform.position - transform.position;
+                Vector2 directionToPlayer = collision.transform.position - objTransform.position;
 
                 // Створюємо новий об'єкт з використанням префабу
-                GameObject newObject = Instantiate(root, transform.position, Quaternion.identity);
+                GameObject newObject = Instantiate(root, objTransform.position, Quaternion.identity);
 
                 // Запускаємо новий об'єкт у напрямку гравця
                 Rigidbody2D rb = newObject.GetComponent<Rigidbody2D>();

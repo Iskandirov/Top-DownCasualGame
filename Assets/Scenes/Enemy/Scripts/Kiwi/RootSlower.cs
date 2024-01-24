@@ -5,7 +5,6 @@ using UnityEngine;
 public class RootSlower : MonoBehaviour
 {
     public float damage;
-    public float slowdownEndTime;
     public float damageDelay;
     float damageDelayMax;
     public float lifeTime;
@@ -39,12 +38,15 @@ public class RootSlower : MonoBehaviour
         }
         else if (collision.CompareTag("Player") && !collision.isTrigger && !player.isInvincible)
         {
-            if (damageDelay <= 0 && !player.shildActive)
+            if (damageDelay <= 0)
             {
-                player.TakeDamage(damage);
-                damageDelay = damageDelayMax;
+                if (!player.shildActive)
+                {
+                    player.TakeDamage(damage);
+                    damageDelay = damageDelayMax;
+                }
+                player.StartCoroutine(player.SlowPlayer(damageDelay * 0.9f, 0.5f));
             }
-            player.SlowPlayer(slowdownEndTime, 0.5f);
         }
     }
 }

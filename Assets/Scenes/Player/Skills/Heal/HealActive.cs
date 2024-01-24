@@ -1,16 +1,16 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HealActive : SkillBaseMono
 {
     public PlayerManager player;
     public float Grass;
-    
+    Transform objTransform;
     // Start is called before the first frame update
     void Start()
     {
         player = PlayerManager.instance;
+        objTransform = transform;
         Grass = player.Grass;
         if (basa.stats[1].isTrigger)
         {
@@ -27,7 +27,6 @@ public class HealActive : SkillBaseMono
             basa.damage += basa.stats[4].value;
             basa.stats[4].isTrigger = false;
         }
-        //basa = SetToSkillID(gameObject);
         if (basa.stats[2].isTrigger)
         {
             player.isInvincible = true;
@@ -63,9 +62,9 @@ public class HealActive : SkillBaseMono
 
     }
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        transform.position = player.transform.position;
+        objTransform.position = player.objTransform.position;
     }
     public void isShowed()
     {

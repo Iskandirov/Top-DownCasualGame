@@ -12,15 +12,17 @@ public class SlowArea : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
+            Forward move = collision.GetComponentInParent<Forward>();
+            ElementActiveDebuff element = collision.GetComponentInParent<ElementActiveDebuff>();
             GameManager.Instance.FindStatName("slowedTime", Time.fixedDeltaTime);
-            if (collision.GetComponentInParent<Forward>() != null)
+            if (move != null)
             {
-                collision.GetComponentInParent<Forward>().path.maxSpeed = collision.GetComponentInParent<Forward>().speedMax * 0.5f / dirtElement;
+                move.path.maxSpeed = move.speedMax * 0.5f / dirtElement;
             }
-            if (!collision.GetComponentInParent<ElementActiveDebuff>().IsActive("isDirt", true))
+            if (!element.IsActive("isDirt", true))
             {
-                collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isDirt", true, true);
-                collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isDirt", true, false);
+                element.SetBool("isDirt", true, true);
+                element.SetBool("isDirt", true, false);
             }
                 
         }

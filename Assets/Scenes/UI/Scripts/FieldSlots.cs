@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Security.Policy;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -77,14 +76,6 @@ public class FieldSlots : MonoBehaviour
                         newItem.Stat = statCount.ToString();
 
                         updatedLines.Add(newItem);
-                        //using (StreamWriter writer = new StreamWriter(path, true))
-                        //{
-                        //    string jsonData = JsonUtility.ToJson(newItem);
-                        //    // ЎифруЇмо дан≥ перед записом у файл
-                        //    string encryptedJson = hashing.Encrypt(jsonData);
-                        //    writer.Write(encryptedJson);
-                        //    writer.Close();
-                        //}
                         break;
                     }
                 }

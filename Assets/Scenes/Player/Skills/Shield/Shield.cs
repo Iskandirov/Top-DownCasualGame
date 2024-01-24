@@ -11,23 +11,24 @@ public class Shield : SkillBaseMono
     public float rockDamage;
     public GameObject rockObj;
     public float dirtElement;
-    
+    Transform objTransform;
     // Start is called before the first frame update
     void Start()
     {
         player = PlayerManager.instance;
+        objTransform = transform;
         if (basa.stats[1].isTrigger)
         {
             basa.damage += basa.stats[1].value;
             basa.stats[1].isTrigger = false;
         }
-        transform.localScale = new Vector2(transform.localScale.x + basa.radius, transform.localScale.y + basa.radius);
+        objTransform.localScale = new Vector2(objTransform.localScale.x + basa.radius, objTransform.localScale.y + basa.radius);
         healthShield = basa.damage;
         player.shildActive = true;
         dirtElement = player.Dirt;
         if (basa.stats[3].isTrigger)
         {
-            SlowArea a = Instantiate(slowObj, transform.position, Quaternion.identity, transform);
+            SlowArea a = Instantiate(slowObj, objTransform.position, Quaternion.identity, objTransform);
             a.dirtElement = dirtElement;
         }
         CoroutineToDestroy(gameObject, basa.lifeTime);
@@ -35,7 +36,7 @@ public class Shield : SkillBaseMono
     // Update is called once per frame
     void FixedUpdate()
     {
-        transform.position = player.transform.position;
+        objTransform.position = player.objTransform.position;
         if (basa.stats[4].isTrigger)
         {
             if (healthShieldMissed > 10f)
@@ -43,7 +44,7 @@ public class Shield : SkillBaseMono
                 float i = Mathf.Floor(healthShieldMissed / 10f);
                 for (int y = 0; y < i; y++)
                 {
-                    GameObject newObject = Instantiate(rockObj, new Vector2(transform.position.x + Random.Range(-20, 20), transform.position.y + Random.Range(-20, 20)), Quaternion.identity);
+                    GameObject newObject = Instantiate(rockObj, new Vector2(objTransform.position.x + Random.Range(-20, 20), objTransform.position.y + Random.Range(-20, 20)), Quaternion.identity);
 
 
                     // Перевірка зіткнень з навколишніми об'єктами
@@ -56,7 +57,8 @@ public class Shield : SkillBaseMono
                             // Перевірка, чи зіткнення відбулось з іншим об'єктом (не самим собою)
                             if (collider.gameObject != newObject)
                             {
-                                collider.GetComponent<HealthPoint>().healthPoint -= (rockDamage * dirtElement * collider.GetComponent<HealthPoint>().Dirt) / collider.GetComponent<HealthPoint>().Grass;
+                                HealthPoint health = collider.GetComponent<HealthPoint>();
+                                health.healthPoint -= (rockDamage * dirtElement * health.Dirt) / health.Grass;
                                 // Здійснюйте необхідні дії при зіткненні об'єкта
                                 Debug.Log("Object collided with: " + collider.name);
                             }

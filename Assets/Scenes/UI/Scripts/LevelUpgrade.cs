@@ -2,17 +2,14 @@
 using System.IO;
 using System.Linq;
 using TMPro;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
-using static Cinemachine.DocumentationSortingAttribute;
 
 [DefaultExecutionOrder(11)]
 public class LevelUpgrade : MonoBehaviour
 {
     [Header("Game Objects")]
     public GameObject starObj;
-
 
     [Header("Description text buttons")]
     public TextMeshProUGUI firstBuff;
@@ -25,9 +22,7 @@ public class LevelUpgrade : MonoBehaviour
     [Header("All variations of skill")]
     public List<bool> isSkillIcons;
     public int SkillIconsMax;
-    //public List<SavedSkillsData> skillsSaveTree;
     public List<SavedSkillsData> skillsSave;
-    //public List<SavedSkillsData> skillsLoad;
     public SavedSkillsData gold;
     public List<string> skillsUpdatedList;
     [Header("Two random skill count")]
@@ -46,7 +41,6 @@ public class LevelUpgrade : MonoBehaviour
     PlayerManager player;
     GameManager gameManager;
     public GameObject abil;
-    bool empty;
     public static LevelUpgrade instance;
     private void Awake()
     {
@@ -63,7 +57,6 @@ public class LevelUpgrade : MonoBehaviour
         player = PlayerManager.instance;
         gameManager = GameManager.Instance;
         resultId = new SavedSkillsData();
-        //objLinkSpell = FindObjectOfType<SkillCDLink>();
         SkillIconsMax = isSkillIcons.Count;
         SetActiveAbil(player, abil, 0, true);
     }
@@ -77,10 +70,7 @@ public class LevelUpgrade : MonoBehaviour
 
         LoadSkill(skillsSave);
 
-
-        //Random two abilitis ID
         RandomAbil();
-
     }
 
     //Random two abilitis
@@ -114,7 +104,6 @@ public class LevelUpgrade : MonoBehaviour
             objText.tagText = skill.tag[skill.level];
             list.Add(buffText.gameObject);
         }
-
         GameManager.Instance.UpdateText(list);
     }
     public List<int> GetTwoRandomNumbers(List<SavedSkillsData> list)

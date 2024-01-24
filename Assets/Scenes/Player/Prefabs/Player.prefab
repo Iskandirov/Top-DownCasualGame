@@ -580,7 +580,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1713113091
   m_SortingLayer: 3
-  m_SortingOrder: 2
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: d669064e439451d4c9d93a1ae884349d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1076,7 +1076,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd562a39b0ed174594f94c354d32ca7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
+  playerAnim: {fileID: 2933150211668163815}
+  rb: {fileID: 8313530370077628590}
   speed: 20
   speedMax: 20
   baseSkillCD: 0
@@ -1142,6 +1143,7 @@ MonoBehaviour:
   abilityId: 0
   countActiveAbilities: 0
   characters: []
+  objTransform: {fileID: 0}
 --- !u!95 &2933150211668163815
 Animator:
   serializedVersion: 4

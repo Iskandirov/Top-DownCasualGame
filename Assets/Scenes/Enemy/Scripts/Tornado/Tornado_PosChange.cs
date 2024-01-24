@@ -13,11 +13,16 @@ public class Tornado_PosChange : MonoBehaviour
     public GameObject stump;
     public List<AudioClip> stumpSounds;
     public float bump;
+    Transform objTransform;
+    private void Start()
+    {
+        objTransform = transform;
+    }
     private void FixedUpdate()
     {
         if (isInZone)
         {
-            Vector3 centerPosition = transform.position; // Визначте потрібну позицію центрального об'єкта тут
+            Vector3 centerPosition = objTransform.position; // Визначте потрібну позицію центрального об'єкта тут
 
             foreach (Transform movingObject in movingObjects)
             {
