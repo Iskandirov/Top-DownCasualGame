@@ -16,9 +16,10 @@ public class MagicAxe : SkillBaseMono
     Vector3 directionToCursorForSecondAxe;
     public float timeToBack = 1f;
     Transform objTransform;
-    // Start is called before the first frame update
-    void Start()
+    public EnemyController enemy;
+    private void Start()
     {
+        enemy = EnemyController.instance;
         objTransform = transform;
         if (basa.stats[1].isTrigger)
         {
@@ -119,7 +120,9 @@ public class MagicAxe : SkillBaseMono
     {
         if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
-            collision.GetComponent<HealthPoint>().TakeDamage(basa.damage);
+            enemy.TakeDamage(collision.GetComponent<EnemyState>(), (basa.damage));
+            ElementActiveDebuff debuff = collision.GetComponent<ElementActiveDebuff>();
+            debuff.StartCoroutine(debuff.EffectTime(Elements.status.Cold, 5));
         }
     }
 }

@@ -8,7 +8,7 @@ public class Tower : SkillBaseMono
     public BobmExplode bomb;
     Collider2D[] colliders;
     float agreTime = 3;
-    Forward objEnemyMove;
+    EnemyState objEnemyMove;
     public float waterElement;
     public float fireElement;
     Transform objTransform;
@@ -52,12 +52,12 @@ public class Tower : SkillBaseMono
         }
         Destroy(gameObject);
     }
-    private IEnumerator TimerAgre(Forward a)
+    private IEnumerator TimerAgre(EnemyState a)
     {
         yield return new WaitForSeconds(agreTime);
         if (a != null)
         {
-            a.GetComponentInParent<Forward>().destination.target = PlayerManager.instance.objTransform;
+            //a.GetComponentInParent<Forward>().destination.target = PlayerManager.instance.objTransform;
         }
     }
     // Update is called once per frame
@@ -69,10 +69,10 @@ public class Tower : SkillBaseMono
             foreach (Collider2D collider in colliders)
             {
                 if (collider.isTrigger != true && collider.CompareTag("Enemy")
-                    && collider.GetComponent<HealthPoint>() != null && collider.GetComponentInParent<Forward>() != null)
+                    && collider.GetComponent<EnemyState>() != null)
                 {
-                    collider.GetComponentInParent<Forward>().destination.target = objTransform;
-                    objEnemyMove = collider.transform.root.GetComponent<Forward>();
+                    //collider.GetComponentInParent<Forward>().destination.target = objTransform;
+                    objEnemyMove = collider.transform.root.GetComponent<EnemyState>();
                 }
             }
         }

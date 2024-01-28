@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 public class FireWave : SkillBaseMono
@@ -8,9 +9,11 @@ public class FireWave : SkillBaseMono
     public float fireElement;
     PlayerManager player;
     Transform objTransform;
+    EnemyController enemy;
     // Start is called before the first frame update
     void Start()
     {
+        enemy = EnemyController.instance;
         player = PlayerManager.instance;
         objTransform = transform;
         if (basa.stats[1].isTrigger)
@@ -46,23 +49,22 @@ public class FireWave : SkillBaseMono
     {
         if (collision.CompareTag("Enemy"))
         {
-            ElementActiveDebuff element = collision.GetComponentInParent<ElementActiveDebuff>();
-            HealthPoint health = collision.GetComponent<HealthPoint>();
+            ElementActiveDebuff debuff = collision.GetComponent<ElementActiveDebuff>();
+            EnemyState health = collision.GetComponent<EnemyState>();
 
-            if (element != null && !element.IsActive("isFire", true))
+            if (debuff != null)
             {
-                element.SetBool("isFire", true, true);
-                element.SetBool("isFire", true, false);
+                debuff.StartCoroutine(debuff.EffectTime(Elements.status.Fire, 5));
             }
-
-            health.TakeDamage((basa.damage * health.Water) / health.Fire);
-            GameManager.Instance.FindStatName("fireWaveDamage", (basa.damage * health.Water) / health.Fire);
+            enemy.TakeDamage(health, (basa.damage * debuff.elements.CurrentStatusValue(Elements.status.Water)) 
+                / debuff.elements.CurrentStatusValue(Elements.status.Fire));
+            GameManager.Instance.FindStatName("fireWaveDamage", (basa.damage * debuff.elements.CurrentStatusValue(Elements.status.Water)) 
+                / debuff.elements.CurrentStatusValue(Elements.status.Fire));
 
             if (burnDamage != 0 && collision != null)
             {
-                health.isBurn = true;
-                health.burnTime = 3;
-                health.burnDamage = burnDamage;
+                health.SetBurn();
+                EnemyController.instance.Burn(health,3, 0.2f, burnDamage);
             }
         }
     }

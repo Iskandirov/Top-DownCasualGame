@@ -12,26 +12,21 @@ public class SlowArea : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            Forward move = collision.GetComponentInParent<Forward>();
-            ElementActiveDebuff element = collision.GetComponentInParent<ElementActiveDebuff>();
+            EnemyState move = collision.GetComponent<EnemyState>();
             GameManager.Instance.FindStatName("slowedTime", Time.fixedDeltaTime);
-            if (move != null)
+            EnemyController.instance.SlowEnemy(move, 1f, 0.5f / dirtElement);
+            ElementActiveDebuff debuff = collision.GetComponentInParent<ElementActiveDebuff>();
+            if (debuff != null)
             {
-                move.path.maxSpeed = move.speedMax * 0.5f / dirtElement;
+                debuff.StartCoroutine(debuff.EffectTime(Elements.status.Dirt, 5));
             }
-            if (!element.IsActive("isDirt", true))
-            {
-                element.SetBool("isDirt", true, true);
-                element.SetBool("isDirt", true, false);
-            }
-                
         }
     }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Enemy") && collision.GetComponentInParent<Forward>() != null)
-        {
-            collision.GetComponentInParent<Forward>().path.maxSpeed = collision.GetComponentInParent<Forward>().speedMax;
-        }
-    }
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if (collision.CompareTag("Enemy") && collision.GetComponentInParent<Forward>() != null)
+    //    {
+    //        collision.GetComponentInParent<Forward>().path.maxSpeed = collision.GetComponentInParent<Forward>().speedMax;
+    //    }
+    //}
 }

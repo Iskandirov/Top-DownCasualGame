@@ -7,10 +7,11 @@ public class Vortex : SkillBaseMono
     public List<Transform> movingObjects = new List<Transform>(); // Список рухомих об'єктів
     public float bump;
     public bool isClone;
-
+    Vector3 centerPosition;
     // Start is called before the first frame update
     void Start()
     {
+
         Vector3 mousePosition = Input.mousePosition;
         mousePosition.z = 1.9f; // Задаємо Z-координату для об'єкта
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
@@ -42,6 +43,7 @@ public class Vortex : SkillBaseMono
         }
 
         transform.localScale = new Vector2(basa.radius * PlayerManager.instance.Steam, basa.radius * PlayerManager.instance.Steam);
+        centerPosition = transform.position; // Визначте потрібну позицію центрального об'єкта тут
 
 
         StartCoroutine(Destroy());
@@ -56,19 +58,21 @@ public class Vortex : SkillBaseMono
     {
         foreach (Transform movingObject in movingObjects)
         {
-            if (movingObject.GetComponentInChildren<HealthPoint>() != null)
+            if (movingObject.GetComponent<EnemyState>() != null)
             {
-                HealthPoint health = movingObject.GetComponentInChildren<HealthPoint>();
-                health.healthPoint -= (basa.damage * PlayerManager.instance.Wind * PlayerManager.instance.Steam) / (health.Wind * health.Steam);
+                EnemyState health = movingObject.GetComponent<EnemyState>();
+                ElementActiveDebuff debuff = movingObject.GetComponent<ElementActiveDebuff>();
+                EnemyController.instance.TakeDamage(health, basa.damage * PlayerManager.instance.Wind * PlayerManager.instance.Steam
+                    / (debuff.elements.CurrentStatusValue(Elements.status.Wind) * debuff.elements.CurrentStatusValue(Elements.status.Steam)));
             }
         }
     }
     // Update is called once per frame
     void FixedUpdate()
     {
+
         foreach (Transform movingObject in movingObjects)
         {
-            Vector3 centerPosition = transform.position; // Визначте потрібну позицію центрального об'єкта тут
             if (movingObject != null)
             {
                 Vector3 offset = movingObject.position - centerPosition;
@@ -95,13 +99,10 @@ public class Vortex : SkillBaseMono
         {
             if (collision.CompareTag("Enemy"))
             {
-                Forward move = collision.GetComponentInParent<Forward>();
-                if (move != null)
+                if (!movingObjects.Contains(collision.transform))
                 {
-                    if (!movingObjects.Contains(move.objTransform))
-                    {
-                        movingObjects.Add(move.objTransform);
-                    }
+                    movingObjects.Add(collision.transform);
+                    collision.GetComponent<ElementActiveDebuff>().EffectTime(Elements.status.Wind, 5);
                 }
             }
             if (collision.CompareTag("Player"))
@@ -123,14 +124,10 @@ public class Vortex : SkillBaseMono
         {
             if (collision.CompareTag("Enemy"))
             {
-                Forward move = collision.GetComponentInParent<Forward>();
-                if (move != null)
+                if (!movingObjects.Contains(collision.transform))
                 {
-                    if (!movingObjects.Contains(move.objTransform))
-                    {
-                        int index = movingObjects.IndexOf(move.objTransform);
-                        movingObjects.RemoveAt(index);
-                    }
+                    int index = movingObjects.IndexOf(collision.transform);
+                    movingObjects.RemoveAt(index);
                 }
             }
             if (collision.CompareTag("Player"))

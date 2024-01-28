@@ -6,9 +6,10 @@ public class IceWall : SkillBaseMono
     public float cold;
     public float damageTick;
     Transform objTransform;
-
-    void Start()
+    public EnemyController enemy;
+    private void Start()
     {
+        enemy = EnemyController.instance;
         objTransform = transform;
         if (basa.stats[1].isTrigger)
         {
@@ -61,14 +62,12 @@ public class IceWall : SkillBaseMono
     {
         if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
-            if (collision.GetComponentInParent<Forward>())
+            StartCoroutine(EnemyController.instance.SlowEnemy(collision.GetComponent<EnemyState>(), 1f, 0.5f));
+            if (damageTick <= 0)
             {
-                StartCoroutine(collision.GetComponentInParent<Forward>().SlowEnemy(1f, 0.5f));
-                if (damageTick <= 0)
-                {
-                    collision.GetComponent<HealthPoint>().TakeDamage((basa.damage * cold) / collision.GetComponent<HealthPoint>().Fire);
-                    damageTick = basa.damageTickMax;
-                }
+                enemy.TakeDamage(collision.GetComponent<EnemyState>(), basa.damage * cold 
+                    / collision.GetComponent<ElementActiveDebuff>().elements.CurrentStatusValue(Elements.status.Fire));
+                damageTick = basa.damageTickMax;
             }
         }
     }
@@ -76,10 +75,7 @@ public class IceWall : SkillBaseMono
     {
         if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
-            if (collision.GetComponentInParent<Forward>())
-            {
-                StartCoroutine(collision.GetComponentInParent<Forward>().SlowEnemy(1f, 1f));
-            }
+            StartCoroutine(EnemyController.instance.SlowEnemy(collision.GetComponent<EnemyState>(), 1f, 1f));
         }
     }
 }

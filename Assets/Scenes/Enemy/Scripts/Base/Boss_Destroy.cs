@@ -11,14 +11,14 @@ public class Boss_Destroy : MonoBehaviour
     public float healthMax;
 
     Animator objAnim;
-    Forward objMove;
+    EnemyController objMove;
     Transform objTransform;
     public void Start()
     {
         //parts = new List<string>() { "Head", "Body", "Left_Shoulder", "Left_Arm", "Left_Fist", "Right_Shoulder", "Right_Arm", "Right_Fist" };
 
         objAnim = GetComponent<Animator>();
-        objMove = GetComponent<Forward>();
+        objMove = FindObjectOfType<EnemyController>();
         objTransform = transform;
     }
     public void DestroyEnd()
@@ -40,7 +40,7 @@ public class Boss_Destroy : MonoBehaviour
             child.tag = newTag;
             ChangeChildTags(child, newTag, speed_move);
         }
-        objMove.path.maxSpeed = speed_move;
+        objMove.StartCoroutine(objMove.SlowEnemy(GetComponent<EnemyState>(),99f, speed_move));
     }
     public void GetParts(CutThePart part ,float maxHealth)
     {

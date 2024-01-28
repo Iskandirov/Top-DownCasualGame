@@ -6,10 +6,11 @@ public class Meteor : SkillBaseMono
     public float damageTick;
     public bool isFive;
     public float fireDirt;
-    
-    // Start is called before the first frame update
-    void Start()
+
+    public EnemyController enemy;
+    private void Start()
     {
+        enemy = EnemyController.instance;
         if (basa.stats[1].isTrigger)
         {
             basa.damage += basa.stats[1].value;
@@ -61,20 +62,21 @@ public class Meteor : SkillBaseMono
         {
             if (collision.CompareTag("Enemy"))
             {
-                ElementActiveDebuff element = collision.GetComponentInParent<ElementActiveDebuff>();
-                HealthPoint health = collision.GetComponent<HealthPoint>();
+                EnemyState health = collision.GetComponent<EnemyState>();
 
-                if (element != null && !element.IsActive("isFire", true))
+                ElementActiveDebuff debuff = collision.GetComponentInParent<ElementActiveDebuff>();
+                if (debuff != null)
                 {
-                    element.SetBool("isFire", true, true);
-                    element.SetBool("isFire", true, false);
+                    debuff.StartCoroutine(debuff.EffectTime(Elements.status.Fire, 5));
                 }
                 if (basa.stats[3].isTrigger)
                 {
-                    collision.GetComponentInParent<Forward>().path.maxSpeed = collision.GetComponentInParent<Forward>().speedMax * fireDirt / 1.5f;
+                    EnemyController.instance.SlowEnemy(health, 1f, fireDirt / 1.5f);
                 }
-                health.TakeDamage((basa.damage * fireDirt * health.Water) / health.Fire);
-                GameManager.Instance.FindStatName("meteorDamage", (basa.damage * fireDirt * health.Water) / health.Fire);
+                enemy.TakeDamage(health, (basa.damage * fireDirt * debuff.elements.CurrentStatusValue(Elements.status.Water)) 
+                    / debuff.elements.CurrentStatusValue(Elements.status.Fire));
+                GameManager.Instance.FindStatName("meteorDamage", (basa.damage * fireDirt * debuff.elements.CurrentStatusValue(Elements.status.Water)) 
+                    / debuff.elements.CurrentStatusValue(Elements.status.Fire));
                 damageTick = basa.damageTickMax;
             }
             else if (collision.CompareTag("Barrel") && collision != null)
@@ -85,14 +87,14 @@ public class Meteor : SkillBaseMono
             }
         }
     }
-    public void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Enemy"))
-        {
-            if (basa.stats[3].isTrigger)
-            {
-                collision.GetComponentInParent<Forward>().path.maxSpeed = collision.GetComponentInParent<Forward>().speedMax;
-            }
-        }
-    }
+    //public void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if (collision.CompareTag("Enemy"))
+    //    {
+    //        if (basa.stats[3].isTrigger)
+    //        {
+    //            collision.GetComponentInParent<Forward>().path.maxSpeed = collision.GetComponentInParent<Forward>().speedMax;
+    //        }
+    //    }
+    //}
 }

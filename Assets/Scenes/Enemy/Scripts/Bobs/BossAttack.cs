@@ -25,10 +25,10 @@ public class BossAttack : MonoBehaviour
     public void Start()
     {
         objTransform = transform;
-        if (GetComponent<Forward>().isTutorial)
-        {
-            bulletPrefab.damage = 0;
-        }
+        //if (GetComponent<Forward>().isTutorial)
+        //{
+        //    bulletPrefab.damage = 0;
+        //}
         StartCoroutine(ToggleBoolsCoroutine());
         StartCoroutine(TimerCoroutineTypesAttack());
         InitializeObjectPool();

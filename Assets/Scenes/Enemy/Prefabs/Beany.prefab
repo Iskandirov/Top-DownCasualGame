@@ -178,9 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4760933745411692294}
   - component: {fileID: 5397493030017790455}
-  - component: {fileID: 2473979257493350611}
-  - component: {fileID: 7694329049011475875}
-  - component: {fileID: 5742452521133739494}
+  - component: {fileID: 8017437900717127814}
   m_Layer: 10
   m_Name: Body
   m_TagString: Enemy
@@ -257,93 +255,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2473979257493350611
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3143382399371462002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d43b841f0e35afa47a6b5c0b26718545, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthPoint: 0
-  healthPointMax: 2
-  expiriancePoint: {fileID: 1551125564601968996, guid: 011bcb717f1c7644cbb13f13f798cecd, type: 3}
-  IsBobs: 0
-  anim: {fileID: 0}
-  bodyAnim: {fileID: 0}
-  VFX_Deadarticle: {fileID: 1674387691799443220, guid: 3af42e545a11f3d4083c5e66e00fdc1f, type: 3}
-  isBurn: 0
-  burnTime: 0
-  burnDamage: 0
-  burnTick: 0.5
-  burnTickMax: 0.5
-  objDrop: {fileID: 0}
-  objMove: {fileID: -6013413010149434249}
-  expGiven: 10
-  dangerLevel: 1
-  bodyAnimBoss: {fileID: 0}
-  AnimBossStart: 0
-  isBossPart: 0
-  Fire: 1
-  Electricity: 1
-  Water: 1
-  Dirt: 1
-  Wind: 1
-  Grass: 1
-  Steam: 1
-  Cold: 1
-  FireStart: 1
-  ElectricityStart: 1
-  WaterStart: 1
-  DirtStart: 1
-  WindStart: 1
-  GrassStart: 1
-  SteamStart: 1
-  ColdStart: 1
-  debuffsParent: {fileID: 3935515225599120917}
-  nameMob: Beany
-  uiParent: {fileID: 0}
-  healthBossObj: {fileID: 0}
---- !u!70 &7694329049011475875
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3143382399371462002}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.06, y: -0.06}
-  m_Size: {x: 2.53, y: 2.13}
-  m_Direction: 1
---- !u!114 &5742452521133739494
+--- !u!114 &8017437900717127814
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -374,7 +286,7 @@ MonoBehaviour:
   - {x: -0.022414207, y: -1.1503669, z: -0.00000011920929}
   m_ShapePathHash: -185684241
   m_Mesh: {fileID: 0}
-  m_InstanceId: 227976
+  m_InstanceId: 143522
   m_LocalBounds:
     m_Center: {x: -0.064530134, y: -0.05837214, z: 0}
     m_Extent: {x: 1.2935474, y: 1.0919948, z: 0}
@@ -421,17 +333,17 @@ GameObject:
   m_Component:
   - component: {fileID: 3131333948750598606}
   - component: {fileID: 6384565066757689954}
+  - component: {fileID: 6204732626407282927}
   - component: {fileID: 4676899112522618636}
-  - component: {fileID: 7032251446413390054}
-  - component: {fileID: -6013413010149434249}
   - component: {fileID: 2002965151147493249}
   - component: {fileID: -6889604715851086349}
   - component: {fileID: 8599589958386476373}
   - component: {fileID: 7955902314846012123}
   - component: {fileID: 4265396766713021694}
+  - component: {fileID: 9052210844865406759}
   m_Layer: 10
   m_Name: Beany
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -481,6 +393,28 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &6204732626407282927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4915736915067170013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca74557e13b379f448d0bca0edaca025, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <isSlowed>k__BackingField: 0
+  <isBurn>k__BackingField: 0
+  <isAttack>k__BackingField: 0
+  <mobName>k__BackingField: Beany
+  <attackSpeed>k__BackingField: 0
+  <health>k__BackingField: 0
+  <damage>k__BackingField: 0
+  <timesPerOne>k__BackingField: 1
+  <objTransform>k__BackingField: {fileID: 3131333948750598606}
+  objectToHit: {fileID: 0}
 --- !u!58 &4676899112522618636
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -513,67 +447,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.23, y: 0.67}
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 10.24
---- !u!114 &7032251446413390054
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4915736915067170013}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60f379a579ae4cc43ae0e0775faf574f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 0
-  damageMax: 3
-  stepAttack: 1
-  stepAttackMax: 1
-  isAttack: 0
-  isRange: 0
-  isFive: 0
-  chancToLure: 0
-  attackVFX: {fileID: 3700339383819410429, guid: 3aaf368aef297c948adb82f462f67f26, type: 3}
-  attackVFXRange: {fileID: 0}
-  attackVFXRangePos: {fileID: 0}
-  objectToHit: {fileID: 0}
-  objMove: {fileID: -6013413010149434249}
-  objAnim: {fileID: 2002965151147493249}
---- !u!114 &-6013413010149434249
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4915736915067170013}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3913abf868628ca42bfa5f940214cd24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemy: {fileID: 0}
-  Body: {fileID: 6384565066757689954}
-  speedMax: 12
-  currentSpeed: 0
-  isStunned: 0
-  stunnTime: 0.5
-  stunnTimeMax: 0.5
-  isFly: 0
-  isThree: 0
-  anim: {fileID: 2002965151147493249}
-  IsOutOfCamera: 0
-  isChaising: 0
-  acceleration: 0.1
-  angle: 0
-  path: {fileID: 4265396766713021694}
-  destination: {fileID: 7955902314846012123}
-  isTutorial: 0
-  moveSlowTime: 0
-  player: {fileID: 0}
-  objTransform: {fileID: 0}
+  m_Radius: 5
 --- !u!95 &2002965151147493249
 Animator:
   serializedVersion: 5
@@ -608,56 +484,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   elements:
-  - name: isFire
-    elementSprite: {fileID: 21300000, guid: 1e8f0e88889423a448ecd1333099dccc, type: 3}
-    objectToDebuff:
-    - {fileID: 2473979257493350611}
-    - {fileID: 7032251446413390054}
-    valuel:
-    - 2
-    - 2
-  - name: isElectricity
-    elementSprite: {fileID: 21300000, guid: 2ea2d167a42e9a64482037494e84a443, type: 3}
-    objectToDebuff: []
-    valuel: []
-  - name: isWater
-    elementSprite: {fileID: 878659610, guid: 94903a2a2ede7554a9d23d7fdf46838b, type: 3}
-    objectToDebuff: []
-    valuel: []
-  - name: isDirt
-    elementSprite: {fileID: 21300000, guid: 5d0baa21dbb8ffe40bedee275853ab17, type: 3}
-    objectToDebuff: []
-    valuel: []
-  - name: isWind
-    elementSprite: {fileID: 21300000, guid: 19763962cf519ed4fa42df9b05b4e61f, type: 3}
-    objectToDebuff: []
-    valuel: []
-  - name: isGrass
-    elementSprite: {fileID: 21300000, guid: a3255d65e2fbcd94bbce12c73a6140e6, type: 3}
-    objectToDebuff: []
-    valuel: []
-  - name: isSteam
-    elementSprite: {fileID: 21300000, guid: d5dd3fc813905d140a26d238d89a2310, type: 3}
-    objectToDebuff: []
-    valuel: []
-  - name: isCold
-    elementSprite: {fileID: 21300000, guid: 961a8eb948fd8e54abcd56a04a844fad, type: 3}
-    objectToDebuff: []
-    valuel: []
-  activeEffects: []
-  move: {fileID: -6013413010149434249}
-  health: {fileID: 2473979257493350611}
-  attack: {fileID: 7032251446413390054}
+    statusCurrentData:
+    - 1.1
+    - 1.1
+    - 1.1
+    - 1.1
+    - 1.1
+    - 1.1
+    - 1.1
+    - 1.1
+    isActiveCurrentData: 0000000000000000
+    <elementSprite>k__BackingField:
+    - {fileID: 21300000, guid: 1e8f0e88889423a448ecd1333099dccc, type: 3}
+    - {fileID: 21300000, guid: 2ea2d167a42e9a64482037494e84a443, type: 3}
+    - {fileID: 536176358, guid: 94903a2a2ede7554a9d23d7fdf46838b, type: 3}
+    - {fileID: 21300000, guid: 313e1feb42e6a43469884c93c4098cae, type: 3}
+    - {fileID: 21300000, guid: 9cc7464a83d02834dabf54ca8eedf804, type: 3}
+    - {fileID: 21300000, guid: a3255d65e2fbcd94bbce12c73a6140e6, type: 3}
+    - {fileID: 21300000, guid: 0c31ddfef24ab054ea58bdb78fc973a5, type: 3}
+    - {fileID: 21300000, guid: 961a8eb948fd8e54abcd56a04a844fad, type: 3}
   elementDebuffParent: {fileID: 2309267293645680394}
-  elementDebuffObject: {fileID: 0}
-  fire: {fileID: 21300000, guid: 1e8f0e88889423a448ecd1333099dccc, type: 3}
-  water: {fileID: 974740731, guid: 94903a2a2ede7554a9d23d7fdf46838b, type: 3}
-  wind: {fileID: 21300000, guid: 8738ed5c952c8b340a096cc505074778, type: 3}
-  cold: {fileID: 21300000, guid: e531f9386a8f9d9408289213bab53c7e, type: 3}
-  steam: {fileID: 21300000, guid: 202dc9964a959ed4da44ddd08272134c, type: 3}
-  dirt: {fileID: 21300000, guid: 58685d5e3cafa6e42af04898cb33f765, type: 3}
-  grass: {fileID: -518117258, guid: 94903a2a2ede7554a9d23d7fdf46838b, type: 3}
-  electricity: {fileID: 21300000, guid: 45dd21d4ef0c8c34f8aafb3cf9070b0f, type: 3}
+  acitveDebuffs: []
+  elementDebuffObject: {fileID: 1262367869966813369, guid: 18f8e8e849830084eace680fad057225, type: 3}
 --- !u!114 &8599589958386476373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -716,7 +564,7 @@ MonoBehaviour:
   radius: 1.33
   height: 4.55
   canMove: 1
-  maxSpeed: 1
+  maxSpeed: 20.9
   gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
     serializedVersion: 2
@@ -742,6 +590,41 @@ MonoBehaviour:
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 1
   constrainInsideGraph: 0
+--- !u!70 &9052210844865406759
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4915736915067170013}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.057528976, y: -0.020297537}
+  m_Size: {x: 2.8309243, y: 2.1895766}
+  m_Direction: 1
 --- !u!1 &7150620893135406295
 GameObject:
   m_ObjectHideFlags: 0
@@ -1046,10 +929,5 @@ PrefabInstance:
 --- !u!224 &2309267293645680394 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
-  m_PrefabInstance: {fileID: 4126106226605048177}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &3935515225599120917 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1143665813906544484, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
   m_PrefabInstance: {fileID: 4126106226605048177}
   m_PrefabAsset: {fileID: 0}

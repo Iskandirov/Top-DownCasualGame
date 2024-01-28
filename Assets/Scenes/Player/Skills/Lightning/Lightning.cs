@@ -8,11 +8,10 @@ public class Lightning : SkillBaseMono
     public List<Collider2D> enemies;
     public List<Collider2D> enemiesToShoot;
     public Collider2D enemyToShoot;
-    HealthPoint objHealth;
-    Forward objMove;
+    EnemyState enemy;
     public float stunTime;
     PlayerManager player;
-    
+
 
     // Start is called before the first frame update
     void Start()
@@ -49,34 +48,30 @@ public class Lightning : SkillBaseMono
             if (enemiesToShoot != null && enemiesToShoot.Count > 0)
             {
                 enemyToShoot = enemiesToShoot[Random.Range(0, enemiesToShoot.Count - 1)];
-                objHealth = enemyToShoot.GetComponent<HealthPoint>();
-                objMove = enemyToShoot.GetComponentInParent<Forward>();
-                ElementActiveDebuff element = objHealth.GetComponentInParent<ElementActiveDebuff>();
-                if (element != null && !element.IsActive("isElectricity", true))
+                enemy = enemyToShoot.GetComponent<EnemyState>();
+                ElementActiveDebuff debuff = enemy.GetComponent<ElementActiveDebuff>();
+                debuff.StartCoroutine(debuff.EffectTime(Elements.status.Electricity, 5));
+                if (enemy != null && basa.stats[4].isTrigger)
                 {
-                    element.SetBool("isElectricity", true, true);
-                    element.SetBool("isElectricity", true, false);
-                }
-                if (objMove != null && basa.stats[4].isTrigger)
-                {
-                    objMove.isStunned = true;
-                    objMove.stunnTime = stunTime;
+                    enemy.SetStunned();
+                    //enemyControll.SlowEnemy();
+                    //objMove.stunnTime = stunTime;
                 }
 
 
-                if (objHealth.IsBobs == true)
-                {
-                    enemyToShoot.GetComponentInParent<Animator>().SetBool("IsHit", true);
-                }
+                //if (objHealth.IsBobs == true)
+                //{
+                //    enemyToShoot.GetComponentInParent<Animator>().SetBool("IsHit", true);
+                //}
                 transform.position = enemyToShoot.transform.position;
-                objHealth.healthPoint -= basa.damage * player.Electricity / objHealth.Electricity;
-                GameManager.Instance.FindStatName("lightDamage", basa.damage * player.Electricity / objHealth.Electricity);
+                EnemyController.instance.TakeDamage(enemy, enemy.health - basa.damage * player.Electricity / debuff.elements.CurrentStatusValue(Elements.status.Electricity));
+                GameManager.Instance.FindStatName("lightDamage", basa.damage * player.Electricity
+                    / debuff.elements.CurrentStatusValue(Elements.status.Electricity));
             }
-            else 
+            else
             {
                 Destroy(gameObject);
             }
         }
     }
-        
 }

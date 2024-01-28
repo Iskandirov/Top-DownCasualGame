@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 [RequireComponent(typeof(TrailRenderer))]
 [RequireComponent(typeof(EdgeCollider2D))]
@@ -60,12 +61,12 @@ public class Trail : SkillBaseMono
                 if (colliders[j].collider.CompareTag("Enemy"))
                 {
                     // TrailRenderer торкається до об'єкта з тегом "Enemy"
-                    colliders[j].collider.GetComponent<HealthPoint>().healthPoint -= basa.damage;
+                    EnemyController.instance.TakeDamage(colliders[j].collider.GetComponent<EnemyState>(), colliders[j].collider.GetComponent<EnemyState>().health - basa.damage);
                     if (basa.stats[4].isTrigger)
                     {
-                        if (colliders[j].collider.GetComponent<HealthPoint>().healthPoint <= 0)
+                        if (colliders[j].collider.GetComponent<EnemyState>().health <= 0)
                         {
-                            player.playerHealthPoint += colliders[j].collider.GetComponent<HealthPoint>().healthPointMax * 0.1f;
+                            player.playerHealthPoint += EnemyController.instance.enemies.First(s => s.prefab.mobName == colliders[j].collider.GetComponent<EnemyState>().mobName).healthMax * 0.1f;
                             player.fullFillImage.fillAmount = player.playerHealthPoint / player.playerHealthPointMax;
                         }
                     }

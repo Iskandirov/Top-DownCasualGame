@@ -123,7 +123,7 @@ public class TextAppear : MonoBehaviour
                 } 
                 else if (tutor.phase == 5)
                 {
-                    boss.GetComponent<Attack>().enabled = true;
+                    boss.GetComponent<EnemyState>().enabled = true;
                     boss.GetComponent<BossAttack>().enabled = true;
                     boss.GetComponent<Forward>().enabled = true;
                     boss.layer = 10;

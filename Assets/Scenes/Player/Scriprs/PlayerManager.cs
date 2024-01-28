@@ -104,6 +104,7 @@ public class PlayerManager : MonoBehaviour
     private void Awake()
     {
         instance ??= this;
+        objTransform = transform;
     }
     private void OnDestroy()
     {
@@ -115,7 +116,6 @@ public class PlayerManager : MonoBehaviour
         gameManager = GameManager.Instance;
         attackSpeedMax = attackSpeed;
         playerHealthPointMax = playerHealthPoint;
-        objTransform = transform;
         speedMax = speed;
         countActiveAbilities = 1;
         SetCharacterOnStart();

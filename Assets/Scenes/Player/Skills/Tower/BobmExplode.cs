@@ -22,7 +22,7 @@ public class BobmExplode : MonoBehaviour
         {
             if (collider.CompareTag("Enemy"))
             {
-                collider.GetComponent<HealthPoint>().healthPoint -= damage * fire;
+                EnemyController.instance.TakeDamage(collider.GetComponent<EnemyState>(), collider.GetComponent<EnemyState>().health - damage * fire);
                 GameManager.Instance.FindStatName("bombDamage", damage * fire);
             }
             else if (collider.CompareTag("Barrel") && collider != null)

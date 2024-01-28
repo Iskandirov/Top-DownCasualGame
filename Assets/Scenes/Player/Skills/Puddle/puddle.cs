@@ -62,26 +62,22 @@ public class puddle : SkillBaseMono
 
             foreach (var enemy in enemies)
             {
-                ElementActiveDebuff objElement = enemy.GetComponentInParent<ElementActiveDebuff>();
+                ElementActiveDebuff debuff = enemy.GetComponentInParent<ElementActiveDebuff>();
 
-                if (enemy != null && enemy.CompareTag("Enemy") && objElement != null)
+
+                if (enemy != null && enemy.CompareTag("Enemy") && debuff != null)
                 {
 
-                    HealthPoint objHealth = enemy.GetComponent<HealthPoint>();
+                    EnemyState objHealth = enemy.GetComponent<EnemyState>();
 
-                    if (!objElement.IsActive("isWater", true))
+                    if (debuff != null)
                     {
-                        objElement.SetBool("isWater", true, true);
-                        objElement.SetBool("isWater", true, false);
-
+                        debuff.StartCoroutine(debuff.EffectTime(Elements.status.Water, 5));
+                        debuff.StartCoroutine(debuff.EffectTime(Elements.status.Dirt, 5));
                     }
-                    if (!objElement.IsActive("isDirt", true))
-                    {
-                        objElement.SetBool("isDirt", true, true);
-                        objElement.SetBool("isDirt", true, false);
-                    }
-                    objHealth.healthPoint -= (basa.damage / objHealth.Electricity) * player.Water / objHealth.Water * objHealth.Dirt;
-                    GameManager.Instance.FindStatName("puddleDamage", (basa.damage / objHealth.Electricity) * player.Water / objHealth.Water * objHealth.Dirt);
+                    EnemyController.instance.TakeDamage(objHealth, (basa.damage / debuff.elements.CurrentStatusValue(Elements.status.Electricity)) * player.Water / debuff.elements.CurrentStatusValue(Elements.status.Water) * debuff.elements.CurrentStatusValue(Elements.status.Dirt));
+                    GameManager.Instance.FindStatName("puddleDamage", (basa.damage / debuff.elements.CurrentStatusValue(Elements.status.Electricity)) * player.Water 
+                        / debuff.elements.CurrentStatusValue(Elements.status.Water) * debuff.elements.CurrentStatusValue(Elements.status.Dirt));
                 }
             }
 

@@ -8,10 +8,12 @@ public class Sphere : MonoBehaviour
     public float damage;
     Transform objTransform;
     PlayerManager player;
+    EnemyController enemy;
     private void Start()
     {
         objTransform = transform;
         player = PlayerManager.instance;
+        enemy = EnemyController.instance;
     }
     private void FixedUpdate()
     {
@@ -21,8 +23,8 @@ public class Sphere : MonoBehaviour
     {
         if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
-
-            collision.GetComponent<HealthPoint>().TakeDamage(damage);
+            enemy.TakeDamage(collision.GetComponent<EnemyState>(), damage);
+            //collision.GetComponent<HealthPoint>().TakeDamage(damage);
             FindObjectOfType<SphereAround>().countSphere--;
             Destroy(gameObject);
 

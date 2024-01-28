@@ -80,15 +80,17 @@ public class Beam : SkillBaseMono
     {
         if (collision.CompareTag("Enemy"))
         {
-            HealthPoint objHealt = collision.GetComponent<HealthPoint>();
-            
-            if (collision.GetComponentInParent<ElementActiveDebuff>() != null && !collision.GetComponentInParent<ElementActiveDebuff>().IsActive("isSteam", true))
+            EnemyState objHealt = collision.GetComponent<EnemyState>();
+            ElementActiveDebuff debuff = collision.GetComponent<ElementActiveDebuff>();
+            if (debuff != null)
             {
-                collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isSteam", true, true);
-                collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isSteam", true, false);
+                debuff.StartCoroutine(debuff.EffectTime(Elements.status.Steam, 5));
             }
-            objHealt.healthPoint -= (basa.damage * objHealt.Steam) / objHealt.Cold;
-            GameManager.Instance.FindStatName("beamDamage", (basa.damage * objHealt.Steam) / objHealt.Cold);
+            EnemyController.instance.TakeDamage(objHealt,basa.damage * debuff.elements.CurrentStatusValue(Elements.status.Steam)
+                / debuff.elements.CurrentStatusValue(Elements.status.Cold));
+
+            GameManager.Instance.FindStatName("beamDamage", (basa.damage * debuff.elements.CurrentStatusValue(Elements.status.Steam)) 
+                / debuff.elements.CurrentStatusValue(Elements.status.Cold));
         }
         else if (collision.CompareTag("Barrel") && collision != null)
         {
@@ -102,10 +104,17 @@ public class Beam : SkillBaseMono
             if (tick <= 0)
             {
                 tick = basa.damageTickMax;
-                HealthPoint objHealt = collision.GetComponent<HealthPoint>();
-                collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isSteam", true, true);
-                collision.GetComponentInParent<ElementActiveDebuff>().SetBool("isSteam", true, false);
-                objHealt.healthPoint -= (basa.damage * objHealt.Steam) / objHealt.Cold;
+                EnemyState objHealt = collision.GetComponent<EnemyState>();
+                ElementActiveDebuff debuff = collision.GetComponent<ElementActiveDebuff>();
+                if (debuff != null)
+                {
+                    debuff.StartCoroutine(debuff.EffectTime(Elements.status.Steam, 5));
+                }
+                EnemyController.instance.TakeDamage(objHealt, (basa.damage * debuff.elements.CurrentStatusValue(Elements.status.Steam))
+                    / debuff.elements.CurrentStatusValue(Elements.status.Cold));
+
+                GameManager.Instance.FindStatName("beamDamage", (basa.damage * debuff.elements.CurrentStatusValue(Elements.status.Steam))
+                / debuff.elements.CurrentStatusValue(Elements.status.Cold));
             }
         }
         else if (collision.CompareTag("Barrel") && collision != null)

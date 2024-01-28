@@ -50,13 +50,13 @@ public class SpawnBobs : MonoBehaviour
             //    gameManager.enemyCount = 0;
             //}
             Destroy(enemyParentl);
-            SpawnManager.inst.stopSpawn = true;
+            GetComponent<EnemyController>().SetSpawnStatus(true);
             if (audioManager != null)
             {
                 audioManager.PlayMusic("BossFight1");
             }
             GameObject boss = Instantiate(bobs, transform.position, Quaternion.identity);
-            boss.GetComponent<Forward>().player = player;
+            //boss.GetComponent<Forward>().player = player;
             isSpawned = true;
             timeToSpawnBobs += timeToSpawnBobsStart;
         }

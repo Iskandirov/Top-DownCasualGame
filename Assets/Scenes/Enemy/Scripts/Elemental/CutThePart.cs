@@ -23,25 +23,25 @@ public class CutThePart : MonoBehaviour
             obj.GetComponent<Collider2D>().isTrigger = false;
             obj.transform.localScale = new Vector3(2, 2, 2);
 
-            Forward moveTowardsObject = obj.gameObject.AddComponent<Forward>();
-            moveTowardsObject.isChaising = true;
-            moveTowardsObject.path.maxSpeed = 30;
-            moveTowardsObject.acceleration = 1;
+            //Forward moveTowardsObject = obj.gameObject.AddComponent<Forward>();
+            //moveTowardsObject.isChaising = true;
+            //moveTowardsObject.path.maxSpeed = 30;
+            //moveTowardsObject.acceleration = 1;
 
-            Attack attack = obj.gameObject.AddComponent<Attack>();
-            attack.damage = 2;
-            attack.attackVFX = vfxAttack;
-            attack.stepAttack = 0.3f;
-            attack.stepAttackMax = 0.3f;
+            //Attack attack = obj.gameObject.AddComponent<Attack>();
+            //attack.damage = 2;
+            //attack.attackVFX = vfxAttack;
+            //attack.stepAttack = 0.3f;
+            //attack.stepAttackMax = 0.3f;
 
             Animator anim = obj.gameObject.AddComponent<Animator>();
             anim.transform.root.GetComponent<Animator>();
             anim.runtimeAnimatorController = parentTransform.GetComponent<Animator>().runtimeAnimatorController;
 
-            HealthPoint health = obj.GetComponent<HealthPoint>();
-            health.anim = anim;
-            health.bodyAnim = anim.gameObject;
-            health.isBossPart = true;  
+            //EnemyState health = obj.GetComponent<EnemyState>();
+            //health.anim = anim;
+            //health.bodyAnim = anim.gameObject;
+            //health.isBossPart = true;  
             
             DropItems drop = obj.gameObject.AddComponent<DropItems>();
             drop.itemPrefab = parentTransform.GetComponent<DropItems>().itemPrefab;

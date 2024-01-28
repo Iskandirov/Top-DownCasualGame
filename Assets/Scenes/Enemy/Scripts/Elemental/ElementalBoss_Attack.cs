@@ -99,7 +99,7 @@ public class ElementalBoss_Attack : MonoBehaviour
     public void SpeedFly()
     {
         VFX_DamageArea.SetActive(true);
-        objMove.isFly = true;
+        //objMove.isFly = true;
         Relocate(player.transform);
     }
     public void Relocate(Transform pos)
@@ -110,7 +110,7 @@ public class ElementalBoss_Attack : MonoBehaviour
     {
         VFX_DamageArea.SetActive(false);
 
-        objMove.isFly = false;
+        //objMove.isFly = false;
         objAniml.SetBool("IsJumpAttack", false);
 
         if (playerInZone)

@@ -57,8 +57,9 @@ public class Shield : SkillBaseMono
                             // Перевірка, чи зіткнення відбулось з іншим об'єктом (не самим собою)
                             if (collider.gameObject != newObject)
                             {
-                                HealthPoint health = collider.GetComponent<HealthPoint>();
-                                health.healthPoint -= (rockDamage * dirtElement * health.Dirt) / health.Grass;
+                                EnemyState health = collider.GetComponent<EnemyState>();
+                                EnemyController.instance.TakeDamage(health, (rockDamage * dirtElement * health.GetComponent<ElementActiveDebuff>().elements.CurrentStatusValue(Elements.status.Dirt)) 
+                                    / health.GetComponent<ElementActiveDebuff>().elements.CurrentStatusValue(Elements.status.Grass));
                                 // Здійснюйте необхідні дії при зіткненні об'єкта
                                 Debug.Log("Object collided with: " + collider.name);
                             }

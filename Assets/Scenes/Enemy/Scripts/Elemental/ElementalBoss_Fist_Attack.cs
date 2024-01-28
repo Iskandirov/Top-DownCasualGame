@@ -27,7 +27,7 @@ public class ElementalBoss_Fist_Attack : MonoBehaviour
     Animator objAnim;
     Forward objMove;
     Shield objShield;
-    HealthPoint childrenHealth;
+    EnemyState childrenHealth;
     Collider2D objCollider;
 
     // Start is called before the first frame update
@@ -43,7 +43,7 @@ public class ElementalBoss_Fist_Attack : MonoBehaviour
         objAnim = GetComponent<Animator>();
         objMove = GetComponent<Forward>();
         objCollider = GetComponent<Collider2D>();
-        childrenHealth = GetComponentInChildren<HealthPoint>();
+        childrenHealth = GetComponent<EnemyState>();
     }
 
     // Update is called once per frame
@@ -84,7 +84,7 @@ public class ElementalBoss_Fist_Attack : MonoBehaviour
         {
             zone.SetActive(true);
         }
-        objMove.isFly = true;
+        //objMove.isFly = true;
     }
     public void ToForardFromFist()
     {
@@ -93,7 +93,7 @@ public class ElementalBoss_Fist_Attack : MonoBehaviour
             zone.SetActive(false);
         }
        
-        objMove.isFly = false;
+        //objMove.isFly = false;
         objAnim.SetBool("IsFistAttack", false);
         // Check collision with objects that have a regular collider and the "Shield" tag
         if (playerInZone && objCollider.IsTouching(playerCollider))
@@ -110,7 +110,7 @@ public class ElementalBoss_Fist_Attack : MonoBehaviour
                 StartCoroutine(ReducePushForce(pushableObjectRigidbody));
                 if (collidedObject.basa.stats[2].isTrigger)
                 {
-                    childrenHealth.healthPoint -= damage / 2;
+                    EnemyController.instance.TakeDamage(childrenHealth, childrenHealth.health - damage / 2);
                     FindObjectOfType<StatsCollector>().FindStatName("ShieldAbsorbedDamage", damage / 2);
                 }
                 

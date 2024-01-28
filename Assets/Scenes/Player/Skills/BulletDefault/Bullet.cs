@@ -11,8 +11,10 @@ public class Bullet : SkillBaseMono
     public float slowPercent;
     PlayerManager player;
     public GameObject obj;
+    public EnemyController enemy;
     private void Start()
     {
+        enemy = EnemyController.instance;
         player = PlayerManager.instance;
         if (obj == null)
         {
@@ -56,7 +58,14 @@ public class Bullet : SkillBaseMono
     {
         if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
-            collision.GetComponent<HealthPoint>().TakeDamage(basa.damage);
+            enemy.TakeDamage(collision.GetComponentInParent<EnemyState>(), basa.damage);
+
+            ElementActiveDebuff debuff = collision.GetComponentInParent<ElementActiveDebuff>();
+            if (debuff != null)
+            {
+                debuff.StartCoroutine(debuff.EffectTime(Elements.status.Fire, 5));
+            }
+
             if (isLifeSteal && player.playerHealthPoint < player.playerHealthPointMax)
             {
                 if (player.playerHealthPoint + basa.damage * lifeStealPercent < player.playerHealthPointMax)
@@ -70,18 +79,16 @@ public class Bullet : SkillBaseMono
                     player.fullFillImage.fillAmount = 1;
                 }
             }
-            Forward enemyMove = collision.GetComponentInParent<Forward>();
-            if (isBulletSlow && enemyMove)
+            EnemyState enemyMove = collision.GetComponent<EnemyState>();
+            if (isBulletSlow)
             {
-                enemyMove.path.maxSpeed = enemyMove.speedMax * slowPercent;
-                enemyMove.moveSlowTime = slowPercent;
+                enemy.SlowEnemy(enemyMove, 1f, slowPercent);
+                //enemyControll.moveSlowTime = slowPercent;
             }
             GameManager.Instance.FindStatName("bulletDamage", basa.damage);
 
-            if (enemyMove != null)
-            {
-                enemyMove.Body.AddForce(-(transform.position - collision.transform.position) * forceAmount, ForceMode2D.Impulse);
-            }
+            //enemyMove.GetComponent<Rigidbody2D>().AddForce(-(transform.position - collision.transform.position) * forceAmount, ForceMode2D.Impulse);
+
             if (!isPiers)
             {
                 if (isRickoshet)

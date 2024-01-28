@@ -11,9 +11,11 @@ public class Zzap : MonoBehaviour
     public float damageTick;
     public float damageTickMax;
     public float electicElement;
+    EnemyController enemy;
     // Start is called before the first frame update
     void Start()
     {
+        enemy = EnemyController.instance;
         StartCoroutine(TimerSpell());
         transform.position = new Vector2(transform.position.x + x, transform.position.y + y);// +45
     }
@@ -33,13 +35,12 @@ public class Zzap : MonoBehaviour
         {
             if (collision.CompareTag("Enemy"))
             {
-                ElementActiveDebuff element = collision.GetComponentInParent<ElementActiveDebuff>();
-                if (element != null && !element.IsActive("isElectricity", true))
+                ElementActiveDebuff debuff = collision.GetComponentInParent<ElementActiveDebuff>();
+                if (debuff != null)
                 {
-                    element.SetBool("isElectricity", true, true);
-                    element.SetBool("isElectricity", true, false);
+                    debuff.StartCoroutine(debuff.EffectTime(Elements.status.Electricity, 5));
                 }
-                collision.GetComponent<HealthPoint>().TakeDamage(damage * electicElement);
+                enemy.TakeDamage(collision.GetComponent<EnemyState>(), damage * electicElement);
                 GameManager.Instance.FindStatName("zzapDamage", damage * electicElement);
             }
             damageTick = damageTickMax;
