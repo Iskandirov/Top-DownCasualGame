@@ -72,7 +72,6 @@ public class Boss : Enemy , IAttackable
     public void SetBase()
     {
         uiParent = GameObject.Find("/UI");
-       
     }
 
     public void Attack()
@@ -121,7 +120,9 @@ public class Range : Enemy, IAttackable
 [DefaultExecutionOrder(6)]
 public class EnemyController : MonoBehaviour
 {
-    [field: SerializeField] public List<Boss> bosses { get; private set; }
+    List<Boss> bosses { get; set; }
+    List<Mele> mele { get; set; }
+    List<Range> range { get; set; }
     [field: SerializeField] public List<Enemy> enemies { get; private set; }
     [field: SerializeField] public List<EnemyPool> enemiesPool { get; private set; }
     [field: SerializeField] public float enemySpawnInterval { get; private set; }
@@ -184,13 +185,11 @@ public class EnemyController : MonoBehaviour
     ///Spawn
     List<GameObject> InitializeObjectPool(IEnumerable<Enemy> enemy, GameObject objectPrefab, int pool, Transform parent)
     {
-        Enemy mele = new Mele();
-        mele.att
+        
         List<GameObject> objectPool = new List<GameObject>();
         for (int i = 0; i < pool; i++)
         {
             GameObject obj = Instantiate(objectPrefab, parent);
-
             obj.GetComponent<AIPath>().maxSpeed = enemy.First(s => s.prefab.gameObject == objectPrefab).speedMax;
             obj.GetComponent<EnemyState>().HealthDamage(enemy.First(s => s.prefab.gameObject == objectPrefab).healthMax);
             obj.GetComponent<EnemyState>().Damage(enemy.First(s => s.prefab.gameObject == objectPrefab).damageMax);
