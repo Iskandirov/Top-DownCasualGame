@@ -122,7 +122,7 @@ MonoBehaviour:
   - {x: 0.8614644, y: -0.7691955, z: 0.0000000604333}
   m_ShapePathHash: -1416841124
   m_Mesh: {fileID: 0}
-  m_InstanceId: 89198
+  m_InstanceId: 167360
   m_LocalBounds:
     m_Center: {x: 0.10824466, y: 0.9881858, z: 0}
     m_Extent: {x: 1.4405502, y: 1.7741798, z: 0}
@@ -143,6 +143,7 @@ GameObject:
   - component: {fileID: -4186828833034964472}
   - component: {fileID: -1516422609186455314}
   - component: {fileID: 2803756570310051272}
+  - component: {fileID: 9157853272995678005}
   m_Layer: 10
   m_Name: Mishroom
   m_TagString: Enemy
@@ -391,6 +392,27 @@ CapsuleCollider2D:
   m_Offset: {x: 0.13163288, y: 3.649592}
   m_Size: {x: 7.974085, y: 10.291466}
   m_Direction: 0
+--- !u!95 &9157853272995678005
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4915736915067170013}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1a19b0121c555c847b6186aa245ce3cc, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6470723529243201593
 GameObject:
   m_ObjectHideFlags: 0

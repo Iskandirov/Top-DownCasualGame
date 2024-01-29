@@ -58,9 +58,9 @@ public class Bullet : SkillBaseMono
     {
         if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
-            enemy.TakeDamage(collision.GetComponentInParent<EnemyState>(), basa.damage);
+            enemy.TakeDamage(collision.GetComponent<EnemyState>(), basa.damage);
 
-            ElementActiveDebuff debuff = collision.GetComponentInParent<ElementActiveDebuff>();
+            ElementActiveDebuff debuff = collision.GetComponent<ElementActiveDebuff>();
             if (debuff != null)
             {
                 debuff.StartCoroutine(debuff.EffectTime(Elements.status.Fire, 5));

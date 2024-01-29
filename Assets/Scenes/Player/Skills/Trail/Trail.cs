@@ -60,8 +60,9 @@ public class Trail : SkillBaseMono
             {
                 if (colliders[j].collider.CompareTag("Enemy"))
                 {
+                    Debug.Log(1);
                     // TrailRenderer торкається до об'єкта з тегом "Enemy"
-                    EnemyController.instance.TakeDamage(colliders[j].collider.GetComponent<EnemyState>(), colliders[j].collider.GetComponent<EnemyState>().health - basa.damage);
+                    EnemyController.instance.TakeDamage(colliders[j].collider.GetComponent<EnemyState>(), basa.damage);
                     if (basa.stats[4].isTrigger)
                     {
                         if (colliders[j].collider.GetComponent<EnemyState>().health <= 0)

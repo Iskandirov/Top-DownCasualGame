@@ -31,7 +31,6 @@ RectTransform:
   m_Children:
   - {fileID: 3359472768618087899}
   m_Father: {fileID: 1565558416540812708}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -114,13 +113,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4449393898436475611}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1565558416540812708}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8174591055417854422
 SpriteRenderer:
@@ -205,7 +204,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1979852557475957471}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -317,6 +315,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7233118633762430643}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7.6401787, y: -88.35604, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -325,7 +324,6 @@ Transform:
   - {fileID: 1979852557475957471}
   - {fileID: 8267539931642541973}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2350191526841434779
 MonoBehaviour:
@@ -354,17 +352,17 @@ MonoBehaviour:
     skill: {fileID: 0}
     objToSpawn: {fileID: 2350191526841434779}
     stepMax: 30
-    lifeTime: 25
+    lifeTime: 15
     damage: 1
     damageTickMax: 0
-    countObjects: 2
+    countObjects: 1
     radius: 0
     isPassive: 0
     spawnDelay: 0.2
   skillId: 1
   currentLevel: 0
   zzap: {fileID: 1775432834189943360, guid: 32c068d7b8873934c983e0b340915a9a, type: 3}
-  bullet: {fileID: -8596872367541274049, guid: 3a6610572c8eee746a8f961b7b282f2f, type: 3}
+  bullet: {fileID: 7746328968856795561, guid: cbc957d76f09b5e44a052aed2a3abb1a, type: 3}
   x: -10
   y: -7
   xZzap: 0

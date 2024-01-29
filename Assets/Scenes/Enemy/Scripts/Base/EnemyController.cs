@@ -6,7 +6,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static Enemy;
-using static UnityEngine.EventSystems.EventTrigger;
 
 [Serializable]
 public class EnemyPool 
@@ -41,6 +40,10 @@ public class Enemy
         attackSpeed = attackSpeedMax;
         maxCountPerTime = 1;
     }
+    public interface IAttackable
+    {
+        void Attack();
+    }
     public void HealthChange(float value)
     {
         healthMax = value;
@@ -61,7 +64,7 @@ public class Enemy
     //public abstract GameObject Attack();
 }
 [Serializable]
-public class Boss : Enemy
+public class Boss : Enemy , IAttackable
 {
     GameObject health;
     public GameObject uiParent;
@@ -70,6 +73,11 @@ public class Boss : Enemy
     {
         uiParent = GameObject.Find("/UI");
        
+    }
+
+    public void Attack()
+    {
+        //throw new NotImplementedException();
     }
     //public override GameObject Attack()
     //{
@@ -80,8 +88,13 @@ public class Boss : Enemy
     //}
 }
 [Serializable]
-public class Mele : Enemy
+public class Mele : Enemy, IAttackable
 {
+    public void Attack()
+    {
+        DamageReduce(1);
+        //throw new NotImplementedException();
+    }
     //public override GameObject Attack()
     //{
     //    return attackPrefab;
@@ -91,9 +104,12 @@ public class Mele : Enemy
     //}
 }
 [Serializable]
-public class Range : Enemy
+public class Range : Enemy, IAttackable
 {
-    
+    public void Attack()
+    {
+        //throw new NotImplementedException();
+    }
     //public override GameObject Attack()
     //{
     //    return attackPrefab;
@@ -168,7 +184,8 @@ public class EnemyController : MonoBehaviour
     ///Spawn
     List<GameObject> InitializeObjectPool(IEnumerable<Enemy> enemy, GameObject objectPrefab, int pool, Transform parent)
     {
-
+        Enemy mele = new Mele();
+        mele.att
         List<GameObject> objectPool = new List<GameObject>();
         for (int i = 0; i < pool; i++)
         {
@@ -316,20 +333,20 @@ public class EnemyController : MonoBehaviour
             enemy.GetComponent<Animator>().enabled = IsInsideCameraBounds(player.objTransform.position) ? true : false;
 
             matchingEnemy = enemies.First(s => s.prefab.mobName == enemy.mobName);
-            enemy.GetComponent<AIPath>().maxSpeed = enemy.isSlowed ? matchingEnemy.speedMax : 0;
+            enemy.GetComponent<AIPath>().maxSpeed = enemy.isSlowed ? 0 : matchingEnemy.speedMax;
 
-            if (enemy.isAttack == false)
+            if (enemy.attackSpeed <= 0)
             {
-                if (enemy.attackSpeed <= 0 && enemy.objectToHit != null)
+                if (enemy.objectToHit != null && enemy.isAttack == false)
                 {
                     DamageDeal(enemy);
                     Destroy(objVFX);
                     enemy.SetAttackSpeed(matchingEnemy.attackSpeedMax);
                 }
-                else
-                {
-                    enemy.attackSpeed -= Time.fixedDeltaTime;
-                }
+            }
+            else
+            {
+                enemy.attackSpeed -= Time.fixedDeltaTime;
             }
         }
     }
@@ -404,7 +421,7 @@ public class EnemyController : MonoBehaviour
     ///Attack
     public void DamageDeal(EnemyState enemy)
     {
-        if (enemy.objectToHit.GetComponent<Animator>())
+        //if (enemy.objectToHit.GetComponent<Animator>())
         {
             Shield shield = enemy.objectToHit.GetComponent<Shield>();
             if (shield != null)
