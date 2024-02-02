@@ -9,11 +9,15 @@ public class Root_Bullet : MonoBehaviour
     public float damage;
     public float lifeTime;
     PlayerManager player;
+    public float launchForce = 10.0f; // Сила запуску
     public void Start()
     {
         player = PlayerManager.instance;
         delayMax = delay;
         Invoke("DestroObj", lifeTime);
+        // Отримуємо напрямок до гравця
+        Vector2 directionToPlayer = player.objTransform.position - transform.position;
+        GetComponent<Rigidbody2D>().velocity = directionToPlayer.normalized * launchForce;
     }
     private void FixedUpdate()
     {

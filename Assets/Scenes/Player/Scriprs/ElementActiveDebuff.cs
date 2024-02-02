@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
+using UnityEngine.Rendering.VirtualTexturing;
 
 [Serializable]
 public class Elements
@@ -64,14 +64,18 @@ public class Elements
                 }
                 break;
         }
+        isActiveCurrentData[(int)name] = true;
+
     }
-    public void DeactivateDebuff(EnemyState enemy, status name)
+    public void DeactivateDebuff(EnemyState enemy, status name,GameObject obj)
     {
         switch (name)
         {
             case status.Fire:
+                Debug.Log(statusCurrentData[(int)status.Water]);
                 statusCurrentData[(int)status.Water] *= 2;
                 enemy.Damage(enemy.damage * 2);
+                Debug.Log(statusCurrentData[(int)status.Water]);
                 break;
             case status.Electricity:
                 statusCurrentData[(int)status.Cold] *= 2;
@@ -96,6 +100,7 @@ public class Elements
                 statusCurrentData[(int)status.Dirt] *= 2;
                 break;
         }
+        UnityEngine.Object.Destroy(obj);
         isActiveCurrentData[(int)name] = false;
     }
 }
@@ -107,12 +112,10 @@ public class ElementActiveDebuff : MonoBehaviour
     public Elements elements;
 
     public Transform elementDebuffParent;
-    public List<SpriteRenderer> acitveDebuffs;
     public SpriteRenderer elementDebuffObject;
 
     public IEnumerator EffectTime(Elements.status name, int lifeTime)
     {
-
         SpriteRenderer a = null;
         int elementId = (int)name;
         if (elements.isActiveCurrentData[(int)name] != true)
@@ -121,13 +124,11 @@ public class ElementActiveDebuff : MonoBehaviour
             a = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
             a.sprite = elements.elementSprite[elementId];
             UnikeEffects(a);
-            elements.isActiveCurrentData[(int)name] = true;
         }
         yield return new WaitForSeconds(lifeTime);
         if (a != null)
         {
-            elements.DeactivateDebuff(GetComponent<EnemyState>(),name);
-            Destroy(a.gameObject);
+            elements.DeactivateDebuff(GetComponent<EnemyState>(), name, a.gameObject);
         }
     }
     private void UnikeEffects(SpriteRenderer sprite)

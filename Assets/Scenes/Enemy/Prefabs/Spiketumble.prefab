@@ -201,7 +201,7 @@ MonoBehaviour:
   - {x: 0.01796627, y: -1.9777908, z: 0}
   m_ShapePathHash: 440797959
   m_Mesh: {fileID: 0}
-  m_InstanceId: 111446
+  m_InstanceId: 114216
   m_LocalBounds:
     m_Center: {x: -0.017195702, y: -0.00869751, z: 0}
     m_Extent: {x: 2.038415, y: 1.9690933, z: 0}
@@ -519,13 +519,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <isSlowed>k__BackingField: 0
   <isBurn>k__BackingField: 0
-  <isAttack>k__BackingField: 0
   <mobName>k__BackingField: SpikeTumble
+  <type>k__BackingField: 
   <attackSpeed>k__BackingField: 0
   <health>k__BackingField: 0
   <damage>k__BackingField: 0
   <timesPerOne>k__BackingField: 10
   <objTransform>k__BackingField: {fileID: 4371186130106877483}
+  <objToAttack>k__BackingField: {fileID: 0}
   objectToHit: {fileID: 0}
 --- !u!58 &-8819206724439237132
 CircleCollider2D:
@@ -609,9 +610,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63dfa4f8e1254dd4a9884e9d0ace4cf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 30
+  moveSpeed: 1
   damage: 10
   objToFollow: {fileID: 1293790516886529765}
+  rb: {fileID: -4991387256704243163}
+  objTransform: {fileID: 4371186130106877483}
 --- !u!95 &1093533608105886705
 Animator:
   serializedVersion: 5

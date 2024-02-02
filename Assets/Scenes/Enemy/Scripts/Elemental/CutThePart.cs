@@ -43,19 +43,19 @@ public class CutThePart : MonoBehaviour
             //health.bodyAnim = anim.gameObject;
             //health.isBossPart = true;  
             
-            DropItems drop = obj.gameObject.AddComponent<DropItems>();
-            drop.itemPrefab = parentTransform.GetComponent<DropItems>().itemPrefab;
-            drop.itemsLoaded = parentTransform.GetComponent<DropItems>().itemsLoaded;
+            //DropItems drop = obj.gameObject.AddComponent<DropItems>();
+            //drop.itemPrefab = parentTransform.GetComponent<DropItems>().itemPrefab;
+            //drop.itemsLoaded = parentTransform.GetComponent<DropItems>().itemsLoaded;
 
-            drop.CommonItems = parentTransform.GetComponent<DropItems>().CommonItems;
-            drop.RareItems = parentTransform.GetComponent<DropItems>().RareItems;
-            drop.MiphicalItems = parentTransform.GetComponent<DropItems>().MiphicalItems;
-            drop.LegendaryItems = parentTransform.GetComponent<DropItems>().LegendaryItems;
+            //drop.CommonItems = parentTransform.GetComponent<DropItems>().CommonItems;
+            //drop.RareItems = parentTransform.GetComponent<DropItems>().RareItems;
+            //drop.MiphicalItems = parentTransform.GetComponent<DropItems>().MiphicalItems;
+            //drop.LegendaryItems = parentTransform.GetComponent<DropItems>().LegendaryItems;
 
-            drop.spawnRare = parentTransform.GetComponent<DropItems>().spawnRare;
-            drop.spawnMiphical = parentTransform.GetComponent<DropItems>().spawnMiphical;
-            drop.spawnLegendary = parentTransform.GetComponent<DropItems>().spawnLegendary;
-            drop.rarityType = parentTransform.GetComponent<DropItems>().rarityType;
+            //drop.spawnRare = parentTransform.GetComponent<DropItems>().spawnRare;
+            //drop.spawnMiphical = parentTransform.GetComponent<DropItems>().spawnMiphical;
+            //drop.spawnLegendary = parentTransform.GetComponent<DropItems>().spawnLegendary;
+            //drop.rarityType = parentTransform.GetComponent<DropItems>().rarityType;
 
             obj.parts.Clear();
 

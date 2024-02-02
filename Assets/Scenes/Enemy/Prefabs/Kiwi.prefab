@@ -646,7 +646,6 @@ GameObject:
   - component: {fileID: 4676899112522618636}
   - component: {fileID: 5944500426164884156}
   - component: {fileID: 3118878571880693444}
-  - component: {fileID: 9120351978094444382}
   - component: {fileID: 8518810156848905459}
   - component: {fileID: -6047008906573336293}
   - component: {fileID: 3373883192311042045}
@@ -718,13 +717,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <isSlowed>k__BackingField: 0
   <isBurn>k__BackingField: 0
-  <isAttack>k__BackingField: 0
   <mobName>k__BackingField: Kiwi
+  <type>k__BackingField: 
   <attackSpeed>k__BackingField: 0
   <health>k__BackingField: 0
   <damage>k__BackingField: 0
   <timesPerOne>k__BackingField: 1
   <objTransform>k__BackingField: {fileID: 3131333948750598606}
+  <objToAttack>k__BackingField: {fileID: 8853671543020772513, guid: d8fb17a4937e83a4c89965e8c809ea4e, type: 3}
   objectToHit: {fileID: 0}
 --- !u!58 &4676899112522618636
 CircleCollider2D:
@@ -817,21 +817,6 @@ MonoBehaviour:
   elementDebuffParent: {fileID: 171519794044056683}
   acitveDebuffs: []
   elementDebuffObject: {fileID: 1262367869966813369, guid: 18f8e8e849830084eace680fad057225, type: 3}
---- !u!114 &9120351978094444382
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4915736915067170013}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5efe2aa8f047df4b981c7260e5fe2ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  root: {fileID: 6133880932228023396, guid: d8fb17a4937e83a4c89965e8c809ea4e, type: 3}
-  launchForce: 10
-  delay: 5
 --- !u!114 &8518810156848905459
 MonoBehaviour:
   m_ObjectHideFlags: 0

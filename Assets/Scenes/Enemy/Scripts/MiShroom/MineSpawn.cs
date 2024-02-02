@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -56,11 +54,11 @@ public class MineSpawn : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (mineCount < 20)
+        if (mineCount < 10)
         {
             delay -= Time.fixedDeltaTime;
         }
-        if (mineCount < 20 && delay <= 0)
+        if (mineCount < 10 && delay <= 0)
         {
             float initialZ = transform.position.z; // Зберегти початкове значення Z
 

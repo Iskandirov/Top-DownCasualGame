@@ -691,10 +691,11 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
+  - {fileID: 8640359176983514747}
   - {fileID: 457217320473168973}
   - {fileID: 6788244342283651190}
-  - {fileID: 4853566030818288422}
   - {fileID: 684708702695075477}
+  - {fileID: 4853566030818288422}
   m_Father: {fileID: 3131333948750598606}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5397493030017790455
@@ -789,7 +790,7 @@ MonoBehaviour:
   - {x: -1.8588681, y: -0.36434388, z: 0.00000011920929}
   m_ShapePathHash: 849117982
   m_Mesh: {fileID: 0}
-  m_InstanceId: 185192
+  m_InstanceId: 67470
   m_LocalBounds:
     m_Center: {x: -0.038241386, y: 0.24780422, z: 0}
     m_Extent: {x: 2.5148787, y: 1.2412812, z: 0}
@@ -1033,7 +1034,6 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4760933745411692294}
-  - {fileID: 8640359176983514747}
   - {fileID: 8035282761878176868}
   - {fileID: 6405327560613992337}
   m_Father: {fileID: 0}
@@ -1081,11 +1081,13 @@ MonoBehaviour:
   <isBurn>k__BackingField: 0
   <isAttack>k__BackingField: 0
   <mobName>k__BackingField: Beatty
+  <type>k__BackingField: 
   <attackSpeed>k__BackingField: 0
   <health>k__BackingField: 0
   <damage>k__BackingField: 0
   <timesPerOne>k__BackingField: 1
   <objTransform>k__BackingField: {fileID: 3131333948750598606}
+  <objToAttack>k__BackingField: {fileID: 8853671543020772513, guid: 5968ddaa9293c6b4dad4e5442a8b37b1, type: 3}
   objectToHit: {fileID: 0}
 --- !u!95 &8315049834056483339
 Animator:
@@ -1558,13 +1560,13 @@ Transform:
   m_GameObject: {fileID: 8317152922199400587}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.029999971, y: 0.049999833, z: -0.04170782}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalPosition: {x: 0.014999894, y: 0.029999975, z: -0.020853937}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4612039104271065119}
   - {fileID: 384005478887062022}
-  m_Father: {fileID: 3131333948750598606}
+  m_Father: {fileID: 4760933745411692294}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8688570132022587681
 GameObject:

@@ -11,6 +11,7 @@ public class Lightning : SkillBaseMono
     EnemyState enemy;
     public float stunTime;
     PlayerManager player;
+    public string target;
 
 
     // Start is called before the first frame update
@@ -40,7 +41,7 @@ public class Lightning : SkillBaseMono
         {
             foreach (var enemy in enemies)
             {
-                if (enemy.isTrigger != true && enemy.CompareTag("Enemy"))
+                if (enemy.isTrigger != true && enemy.CompareTag(target))
                 {
                     enemiesToShoot.Add(enemy);
                 }
@@ -54,15 +55,8 @@ public class Lightning : SkillBaseMono
                 if (enemy != null && basa.stats[4].isTrigger)
                 {
                     enemy.SetStunned();
-                    //enemyControll.SlowEnemy();
-                    //objMove.stunnTime = stunTime;
                 }
 
-
-                //if (objHealth.IsBobs == true)
-                //{
-                //    enemyToShoot.GetComponentInParent<Animator>().SetBool("IsHit", true);
-                //}
                 transform.position = enemyToShoot.transform.position;
                 EnemyController.instance.TakeDamage(enemy, enemy.health - basa.damage * player.Electricity / debuff.elements.CurrentStatusValue(Elements.status.Electricity));
                 GameManager.Instance.FindStatName("lightDamage", basa.damage * player.Electricity

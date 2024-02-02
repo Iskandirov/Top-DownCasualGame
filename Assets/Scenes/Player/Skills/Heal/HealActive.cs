@@ -5,6 +5,7 @@ public class HealActive : SkillBaseMono
 {
     public PlayerManager player;
     public float Grass;
+    public float offset = 1.5f;
     Transform objTransform;
     // Start is called before the first frame update
     void Start()
@@ -53,18 +54,21 @@ public class HealActive : SkillBaseMono
     private IEnumerator TimerSpell()
     {
         yield return new WaitForSeconds(basa.lifeTime);
-
+        //foreach (var particle in GetComponentsInChildren<ParticleSystem>())
+        //{
+        //    particle.main.startColor.color = new Color(255, 255, 255, 50);
+        //}
         if (basa.stats[2].isTrigger)
         {
             player.isInvincible = false;
         }
-        Destroy(gameObject);
+        //Destroy(gameObject);
 
     }
     // Update is called once per frame
     void FixedUpdate()
     {
-        objTransform.position = player.objTransform.position;
+        objTransform.position = new Vector3(player.objTransform.position.x, player.objTransform.position.y - 1.5f, player.objTransform.position.z);
     }
     public void isShowed()
     {

@@ -7,21 +7,25 @@ public class MoveToPlayerStartPos : MonoBehaviour
     public float moveSpeed = 5.0f; // Швидкість руху
     public float damage = 10.0f; // Відстань руху
     public Rigidbody2D objToFollow;
+    public Rigidbody2D rb;
     //private Rigidbody2D rb;
     private Vector2 moveDirection;
     AIPath path;
     AIDestinationSetter destination;
     PlayerManager player;
+    public Transform objTransform;
     private void Start()
     {
+        moveSpeed = GetComponent<AIPath>().maxSpeed;
+        GetComponent<AIPath>().enabled= false;
         player = PlayerManager.instance;
         objToFollow.transform.position = player.transform.position;
         moveDirection = (transform.position - player.transform.position).normalized;
 
-        path = GetComponent<AIPath>();
-        path.maxSpeed = moveSpeed;
-        destination = GetComponent<AIDestinationSetter>();
-        destination.target = objToFollow.transform;
+        //path = GetComponent<AIPath>();
+        //path.maxSpeed = moveSpeed;
+        //destination = GetComponent<AIDestinationSetter>();
+        //destination.target = objToFollow.transform;
 
         StartCoroutine(SelfDestroy());
     }
@@ -33,7 +37,8 @@ public class MoveToPlayerStartPos : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        objToFollow.velocity = -moveDirection * moveSpeed;
+        //objToFollow.velocity = -moveDirection * moveSpeed;
+        rb.velocity = new Vector2(objTransform.position.x + moveSpeed * Time.fixedDeltaTime, objTransform.position.y + moveSpeed * Time.fixedDeltaTime);
     }
     public void OnCollisionEnter2D(Collision2D collision)
     {

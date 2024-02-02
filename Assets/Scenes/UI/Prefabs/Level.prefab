@@ -142,7 +142,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Spawn a lightning that hit enemies around you
+  m_text: Summon the healing circle
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6135b4c237c016b4280f017d0b43ae32, type: 2}
   m_sharedMaterial: {fileID: -4861088412151821870, guid: 6135b4c237c016b4280f017d0b43ae32, type: 2}
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 62.55
+  m_fontSize: 66.6
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -340,7 +340,7 @@ MonoBehaviour:
       - isTrigger: 0
         value: 0
       skill: {fileID: 0}
-      objToSpawn: {fileID: -8596872367541274049, guid: 3a6610572c8eee746a8f961b7b282f2f, type: 3}
+      objToSpawn: {fileID: 7746328968856795561, guid: cbc957d76f09b5e44a052aed2a3abb1a, type: 3}
       stepMax: 0.5
       lifeTime: 0.5
       damage: 1
@@ -350,7 +350,7 @@ MonoBehaviour:
       isPassive: 0
       spawnDelay: 0.3
     isPassive: 1
-    Image: {fileID: 21300000, guid: fcb67cd5d218010439b6d4b8cea0586f, type: 3}
+    Image: {fileID: 21300000, guid: 33225d1b38bdf394daa904e36d3129a0, type: 3}
     tag:
     - bullet_1
     - bullet_2
@@ -545,9 +545,9 @@ MonoBehaviour:
       - isTrigger: 0
         value: 15
       skill: {fileID: 0}
-      objToSpawn: {fileID: 6690938665736954909, guid: b5afacabed965524b92a4e9ee5717778, type: 3}
+      objToSpawn: {fileID: -2400126851487179529, guid: 02353f0adb7ebd1488b18bc7b894222a, type: 3}
       stepMax: 15
-      lifeTime: 1
+      lifeTime: 3
       damage: 20
       damageTickMax: 0
       countObjects: 1
@@ -555,7 +555,7 @@ MonoBehaviour:
       isPassive: 0
       spawnDelay: 0
     isPassive: 0
-    Image: {fileID: 21300000, guid: 747c9dfab89ca2944b220f3317a793a3, type: 3}
+    Image: {fileID: 21300000, guid: b7c731c964aab004d857c81164665184, type: 3}
     tag:
     - heal_1
     - heal_2
@@ -1203,7 +1203,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 86.1
+  m_fontSize: 57.7
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1381,7 +1381,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: fcb67cd5d218010439b6d4b8cea0586f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 33225d1b38bdf394daa904e36d3129a0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1666,7 +1666,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7997cf22a5e9edc44958e8faa242ce42, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b7c731c964aab004d857c81164665184, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

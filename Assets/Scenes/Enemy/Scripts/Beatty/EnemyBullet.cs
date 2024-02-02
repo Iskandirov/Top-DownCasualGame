@@ -9,35 +9,20 @@ public class EnemyBullet : MonoBehaviour
 
 
     private GameObject target;
-    Collider2D[] colliders;
     Transform objTransform;
+    Vector3 currentPosition;
+    Vector2 direction;
     void Start()
     {
         objTransform = transform;
-        colliders = Physics2D.OverlapCircleAll(objTransform.position, searchRadius);
-        foreach (Collider2D collider in colliders)
-        {
-            if (collider.CompareTag("Player"))
-            {
-                target = collider.gameObject;
-                Vector3 targetPos = target.transform.position;
-                targetPos.z = objTransform.position.z;
-                objTransform.up = targetPos - objTransform.position;
-
-                break;
-            }
-        }
+        target = PlayerManager.instance.gameObject;
         Invoke("DestroyBullet", 3f);
     }
     private void FixedUpdate()
     {
-        if (target != null)
-        {
-            Vector3 currentPosition = objTransform.position;
-            Vector2 direction = ((Vector2)target.transform.position - (Vector2)currentPosition).normalized;
-            rb.velocity = new Vector3(direction.x * speed, direction.y * speed, currentPosition.z);
-        }
-        
+        currentPosition = objTransform.position;
+        direction = (target.transform.position - currentPosition).normalized;
+        rb.velocity = new Vector3(direction.x * speed, direction.y * speed, currentPosition.z);
     }
     public void DestroyBullet()
     {
@@ -48,22 +33,13 @@ public class EnemyBullet : MonoBehaviour
         if (collision.CompareTag("Shield"))
         {
             collision.GetComponent<Shield>().healthShield -= damage;
-            GameManager.Instance.FindStatName("ShieldAbsorbedDamage",damage);
+            GameManager.Instance.FindStatName("ShieldAbsorbedDamage", damage);
             Destroy(gameObject);
         }
-        else if (collision.CompareTag("Player"))
+        else if (collision.CompareTag("Player") && !collision.isTrigger)
         {
-            foreach (Collider2D collider in colliders)
-            {
-                if (collision == collider)
-                {
-                    if (!collider.isTrigger)
-                    {
-                        PlayerManager.instance.TakeDamage(damage);
-                        Destroy(gameObject);
-                    }
-                }
-            }
+            PlayerManager.instance.TakeDamage(damage);
+            Destroy(gameObject);
         }
     }
 }

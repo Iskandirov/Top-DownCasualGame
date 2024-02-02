@@ -3,8 +3,16 @@ using UnityEngine;
 public class SniperTreeBullet : MonoBehaviour
 {
     public float damage;
+    public float launchForce = 10f;  // Сила запуску об'єкта
     private void Start()
     {
+        Vector2 direction = PlayerManager.instance.transform.position - transform.position;
+
+        direction.Normalize();
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        rb.AddForce(direction.normalized * launchForce, ForceMode2D.Impulse);
+        float angleShot = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(angleShot + 90, Vector3.forward);
         Invoke("Destroyobj", 5);
     }
     void Destroyobj()

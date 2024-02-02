@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class EnemyHealthTutorial : MonoBehaviour
 {
+    public Boss boss;
     TextAppear text;
     public float health;
     public bool isBoss;
@@ -31,8 +32,9 @@ public class EnemyHealthTutorial : MonoBehaviour
 
             if (isBoss)
             {
-                GetComponent<DropItems>().isTutor = true;
-                GetComponent<DropItems>().OnDestroyBoss(healthBossObj);
+                boss.Death(new EnemyState());
+                //GetComponent<DropItems>().isTutor = true;
+                //GetComponent<DropItems>().OnDestroyBoss(healthBossObj);
             }
             Destroy(gameObject);
         }

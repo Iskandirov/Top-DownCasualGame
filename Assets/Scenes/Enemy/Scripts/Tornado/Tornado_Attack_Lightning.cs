@@ -4,17 +4,16 @@ using UnityEngine;
 
 public class Tornado_Attack_Lightning : MonoBehaviour
 {
-    public GameObject target; // Префаб об'єкта для спавну
-    public GameObject objectToSpawn; // Префаб об'єкта для спавну
-    public float spawnRadius = 5.0f;  // Радіус випадкового спавну
-    public float spawnInterval = 3.0f; // Інтервал між спавнами
+    public GameObject target; 
+    public GameObject objectToSpawn; 
+    public float spawnRadius = 5.0f; 
+    public float spawnInterval = 3.0f;
     public float damage = 20;
     public float objectsCount = 50;
     Transform objTransform;
     private void Start()
     {
         objTransform = transform;
-        // Запускаємо корутину, яка буде спавнити об'єкти
         StartCoroutine(SpawnObjects());
     }
 
@@ -60,6 +59,7 @@ public class Tornado_Attack_Lightning : MonoBehaviour
         for (int i = 0; i <= objectsCount; i++)
         {
             Vector3 spawnPosition = objTransform.position + Random.insideUnitSphere * spawnRadius;
+            spawnPosition.z = 0f;
             Instantiate(target, spawnPosition, Quaternion.identity);
             yield return new WaitForSeconds(delay);
         }

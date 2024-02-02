@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using static Enemy;
 
 [Serializable]
@@ -18,6 +19,7 @@ public class EnemyPool
 public class Enemy
 {
     [field: SerializeField] public string name { get; private set; }
+    [field: SerializeField] public string type { get; private set; }
     [field: SerializeField] public EnemyState prefab { get; private set; }
     private float health { get; set; }
     [field: SerializeField] public float healthMax { get; private set; }
@@ -32,7 +34,6 @@ public class Enemy
     [SerializeField] public enum SpawnType { Camera, Map }
     
     [SerializeField] public AIPath path;
-    [field: SerializeField] public GameObject attackPrefab { get; private set; }
     public Enemy()
     {
         health = healthMax;
@@ -40,10 +41,12 @@ public class Enemy
         attackSpeed = attackSpeedMax;
         maxCountPerTime = 1;
     }
-    public interface IAttackable
+    public interface IEnemy
     {
-        void Attack();
+        GameObject Attack(EnemyState enemy);
+        void Death(EnemyState enemy);
     }
+    
     public void HealthChange(float value)
     {
         healthMax = value;
@@ -64,65 +67,147 @@ public class Enemy
     //public abstract GameObject Attack();
 }
 [Serializable]
-public class Boss : Enemy , IAttackable
+public class Boss : Enemy , IEnemy
 {
-    GameObject health;
     public GameObject uiParent;
     public GameObject healthBossObj;
-    public void SetBase()
+
+    public ItemParameters itemPrefab;
+    [HideInInspector]
+    public List<SavedObjectData> itemsLoaded;
+    public float spawnRare = 0.6f;
+    public float spawnMiphical = 0.3f;
+    public float spawnLegendary = 0.05f;
+
+    public List<SavedObjectData> CommonItems;
+    public List<SavedObjectData> RareItems;
+    public List<SavedObjectData> MiphicalItems;
+    public List<SavedObjectData> LegendaryItems;
+    public bool isTutor;
+    public string[] rarityType = { "Звичайне", "Рідкісне", "Міфічне", "Легендарне" };
+
+    public GameObject SetBase()
     {
         uiParent = GameObject.Find("/UI");
+        return healthBossObj;
     }
 
-    public void Attack()
+    public GameObject Attack(EnemyState enemy)
     {
         //throw new NotImplementedException();
+        return enemy.objToAttack.gameObject;
+    } 
+    public void Death(EnemyState enemy)
+    {
+        healthBossObj.SetActive(false);
+        ItemRarity();
+        float randomValue = UnityEngine.Random.value;
+
+        List<SavedObjectData> rarityItems = GetRarityItems(randomValue);
+        if (rarityItems != null)
+            SetStats(rarityItems, isTutor, enemy.objTransform);
     }
-    //public override GameObject Attack()
-    //{
-    //    return attackPrefab;
-    //}
-    //public override void Death()
-    //{
-    //}
+
+    void SetStats(List<SavedObjectData> Rarity, bool isTutor,Transform objTransform)
+    {
+        int rand = UnityEngine.Random.Range(0, Rarity.Count);
+        ItemParameters newItem = UnityEngine.Object.Instantiate(itemPrefab, objTransform.position, objTransform.rotation);
+        newItem.itemName = Rarity[rand].Name;
+        newItem.itemImage = Rarity[rand].ImageSprite;
+        newItem.itemRareName = Rarity[rand].RareName;
+        newItem.itemRare = Rarity[rand].RareSprite;
+        newItem.idRare = Rarity[rand].IDRare;
+        newItem.Stat = Rarity[rand].Stat;
+        newItem.Level = Rarity[rand].Level;
+        newItem.Count = Rarity[rand].Count;
+        newItem.Tag = Rarity[rand].Tag;
+        newItem.RareTag = Rarity[rand].RareTag;
+        newItem.Description = Rarity[rand].Description;
+
+        newItem.isTutor = isTutor;
+    }
+
+    List<SavedObjectData> GetRarityItems(float randomValue)
+    {
+        if (randomValue <= spawnLegendary)
+            return LegendaryItems;
+        else if (randomValue <= spawnMiphical)
+            return MiphicalItems;
+        else if (randomValue <= spawnRare)
+            return RareItems;
+        else if (randomValue <= 1)
+            return CommonItems;
+
+        return null;
+    }
+
+    void ItemRarity()
+    {
+        GameManager.Instance.LoadInventory(itemsLoaded);
+        foreach (SavedObjectData line in itemsLoaded)
+        {
+            switch (line.RareName)
+            {
+                case "Звичайне":
+                    CommonItems.Add(line);
+                    break;
+                case "Рідкісне":
+                    RareItems.Add(line);
+                    break;
+                case "Міфічне":
+                    MiphicalItems.Add(line);
+                    break;
+                case "Легендарне":
+                    LegendaryItems.Add(line);
+                    break;
+            }
+        }
+    }
 }
 [Serializable]
-public class Mele : Enemy, IAttackable
+public class Mele : Enemy, IEnemy
 {
-    public void Attack()
+    public GameObject Attack(EnemyState enemy)
     {
-        DamageReduce(1);
+        Shield shield = enemy.objectToHit.GetComponent<Shield>();
+        if (shield != null)
+        {
+            shield.healthShield -= enemy.damage;
+            GameManager.Instance.FindStatName("ShieldAbsorbedDamage", enemy.damage);
+        }
+        else
+        {
+            PlayerManager.instance.TakeDamage(enemy.damage);
+        }
         //throw new NotImplementedException();
+        return enemy.objToAttack.gameObject;
     }
-    //public override GameObject Attack()
-    //{
-    //    return attackPrefab;
-    //}
-    //public override void Death()
-    //{
-    //}
+    public void Death(EnemyState enemy)
+    {
+        //throw new NotImplementedException();
+        //return enemy.objToAttack.gameObject;
+    }
 }
 [Serializable]
-public class Range : Enemy, IAttackable
+public class Range : Enemy, IEnemy
 {
-    public void Attack()
+    public GameObject Attack(EnemyState enemy)
     {
+        return enemy.objToAttack.gameObject;
         //throw new NotImplementedException();
     }
-    //public override GameObject Attack()
-    //{
-    //    return attackPrefab;
-    //}
-    //public override void Death()
-    //{
-    //}
+    public void Death(EnemyState enemy)
+    {
+        //throw new NotImplementedException();
+        //return enemy.objToAttack.gameObject;
+    }
 }
 [DefaultExecutionOrder(6)]
 public class EnemyController : MonoBehaviour
 {
-    List<Boss> bosses { get; set; }
-    List<Mele> mele { get; set; }
-    List<Range> range { get; set; }
+    [field: SerializeField] public Boss bosses { get; set; }
+    Mele mele { get; set; }
+    Range range { get; set; }
     [field: SerializeField] public List<Enemy> enemies { get; private set; }
     [field: SerializeField] public List<EnemyPool> enemiesPool { get; private set; }
     [field: SerializeField] public float enemySpawnInterval { get; private set; }
@@ -133,6 +218,11 @@ public class EnemyController : MonoBehaviour
     [field: SerializeField] public float spawnRadius { get; private set; }
     [field: SerializeField] public int enemycount { get; private set; }
     [field: SerializeField] public Transform parent { get; private set; }
+    public Timer timer;
+    public float timeToSpawnBobs;
+    public bool isSpawned = false;
+    float timeToSpawnBobsStart;
+
     GameManager gameManager;
     PlayerManager player;
     bool isTutorial;
@@ -155,48 +245,51 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        mele = new Mele();
+        range = new Range();
+        gameManager = GameManager.Instance;
+        int buildIndex = gameManager.LoadObjectLevelCount(SceneManager.GetActiveScene().buildIndex);
         if (!isTutorial)
         {
             foreach (var enemy in enemies)
             {
-                if (GameManager.Instance.LoadObjectLevelCount(SceneManager.GetActiveScene().buildIndex) > 0)
+                if (buildIndex > 0)
                 {
-                    enemy.SetSpeed((enemy.speedMax + GameManager.Instance.LoadObjectLevelCount(SceneManager.GetActiveScene().buildIndex) ) * 1.1f);
-                    enemy.HealthChange((enemy.healthMax + GameManager.Instance.LoadObjectLevelCount(SceneManager.GetActiveScene().buildIndex)) * 1.3f);
-                    enemy.DamageReduce((enemy.damageMax + GameManager.Instance.LoadObjectLevelCount(SceneManager.GetActiveScene().buildIndex)) * 1.3f);
+                    enemy.SetSpeed((enemy.speedMax + buildIndex) * 1.1f);
+                    enemy.HealthChange((enemy.healthMax + buildIndex) * 1.3f);
+                    enemy.DamageReduce((enemy.damageMax + buildIndex) * 1.3f);
                 }
             }
+            timeToSpawnBobs += (buildIndex + 1) * 15;
+
+            timeToSpawnBobsStart = timeToSpawnBobs;
         }
-        //health = Instantiate(healthBossObj, uiParent.transform);
-        //health.GetComponent<RectTransform>().anchoredPosition = new Vector2(Screen.width / 2 - 100f, Screen.height / 2 - 130f);
-        //health.GetComponentInChildren<Image>().fillAmount = 1;
+
         objTransform = transform;
-        gameManager = GameManager.Instance;
         player = PlayerManager.instance;
-        //foreach (var enemyPool in enemiesPool)
+        foreach (var enemyPool in enemiesPool)
         {
-            foreach (var enemyPool in enemiesPool)
-            {
-                enemyPool.enemyPool = InitializeObjectPool(enemies, enemyPool.enemyObj, enemyPool.poolSize, parent);
-            }
+            enemyPool.enemyPool = InitializeObjectPool(enemies, enemyPool.enemyObj, enemyPool.poolSize, parent);
         }
-            StartCoroutine(SpawnEnemyRoutine(enemySpawnInterval));
+        StartCoroutine(SpawnEnemyRoutine(enemySpawnInterval));
     }
     ///Spawn
-    List<GameObject> InitializeObjectPool(IEnumerable<Enemy> enemy, GameObject objectPrefab, int pool, Transform parent)
+    List<GameObject> InitializeObjectPool(List<Enemy> enemy, GameObject objectPrefab, int pool, Transform parent)
     {
         
         List<GameObject> objectPool = new List<GameObject>();
         for (int i = 0; i < pool; i++)
         {
+            matchingEnemy = enemy.First(s => s.prefab.gameObject == objectPrefab);
+           
             GameObject obj = Instantiate(objectPrefab, parent);
-            obj.GetComponent<AIPath>().maxSpeed = enemy.First(s => s.prefab.gameObject == objectPrefab).speedMax;
-            obj.GetComponent<EnemyState>().HealthDamage(enemy.First(s => s.prefab.gameObject == objectPrefab).healthMax);
-            obj.GetComponent<EnemyState>().Damage(enemy.First(s => s.prefab.gameObject == objectPrefab).damageMax);
-            obj.GetComponent<EnemyState>().SetAttackSpeed(enemy.First(s => s.prefab.gameObject == objectPrefab).attackSpeedMax);
+            obj.GetComponent<AIPath>().maxSpeed = matchingEnemy.speedMax;
+            obj.GetComponent<EnemyState>().HealthDamage(matchingEnemy.healthMax);
+            obj.GetComponent<EnemyState>().Damage(matchingEnemy.damageMax);
+            obj.GetComponent<EnemyState>().SetAttackSpeed(matchingEnemy.attackSpeedMax);
             obj.gameObject.SetActive(false);
             obj.GetComponent<AIDestinationSetter>().target = player.objTransform;
-           
+            obj.GetComponent<EnemyState>().SetType(matchingEnemy.type);
             children.Add(obj.GetComponent<EnemyState>());
             objectPool.Add(obj);
         }
@@ -281,7 +374,7 @@ public class EnemyController : MonoBehaviour
                     Vector3 spawnPosition = GetRandomSpawnPosition();
                     spawnPosition += new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0); /** enemy.attackRangeRadius;*/ // Обчислюємо позицію для спавну
                     enemy.transform.position = spawnPosition;
-                    enemy.transform.parent = objTransform;
+                    //enemy.transform.parent = objTransform;
                     break;
                 case SpawnType.Map:
                     SpawnObjectInMapBounds(enemy);
@@ -334,18 +427,11 @@ public class EnemyController : MonoBehaviour
             matchingEnemy = enemies.First(s => s.prefab.mobName == enemy.mobName);
             enemy.GetComponent<AIPath>().maxSpeed = enemy.isSlowed ? 0 : matchingEnemy.speedMax;
 
-            if (enemy.attackSpeed <= 0)
+            AttackSpeed(enemy);
+
+            if (timer.time >= timeToSpawnBobs && isSpawned == false)
             {
-                if (enemy.objectToHit != null && enemy.isAttack == false)
-                {
-                    DamageDeal(enemy);
-                    Destroy(objVFX);
-                    enemy.SetAttackSpeed(matchingEnemy.attackSpeedMax);
-                }
-            }
-            else
-            {
-                enemy.attackSpeed -= Time.fixedDeltaTime;
+                BossSpawn();
             }
         }
     }
@@ -397,44 +483,131 @@ public class EnemyController : MonoBehaviour
                 break;
         }
         matchingEnemy = enemies.First(s => s.prefab.mobName == enemy.mobName);
+        Elements element = enemy.GetComponent<ElementActiveDebuff>().elements;
+        for (int i = 0; i < element.isActiveCurrentData.Count; i++)
+        {
+            if (element.isActiveCurrentData[i])
+            {
+                Debug.Log(enemy.GetComponentInChildren<HorizontalLayoutGroup>().GetComponentInChildren<SpriteRenderer>().gameObject);
+
+                element.DeactivateDebuff(enemy, (Elements.status)i, enemy.GetComponentInChildren<HorizontalLayoutGroup>().GetComponentInChildren<SpriteRenderer>().gameObject);
+                Debug.Log(enemy.GetComponentInChildren<HorizontalLayoutGroup>().GetComponentInChildren<SpriteRenderer>().gameObject);
+            }
+        }
         enemy.HealthDamage(matchingEnemy.healthMax);
     }
     public void TakeDamage(EnemyState enemy, float damage)
     {
         enemy.HealthDamage(enemy.health - damage);
-        matchingEnemy = bosses.FirstOrDefault(s => s.prefab.mobName == enemy.mobName);
+        matchingEnemy = bosses.prefab.mobName == enemy.mobName ? bosses : null;
 
         if (matchingEnemy != null)
         {
-            //GetComponentInChildren<Image>().fillAmount -= damage / healthPointMax;
+            GetComponentInChildren<Image>().fillAmount -= damage / bosses.healthMax;
+            if (enemy.health <= 0)
+            {
+                bosses.Death(enemy);
+                Destroy(enemy.gameObject);
+            }
         }
-        if (enemy.health <= 0)
+        else if (enemy.health <= 0)
         {
             ExpGive(enemy);
+            GameManager.Instance.FindStatName(enemy.mobName, 1);
+
             Respawn(enemy, SpawnType.Camera);
 
-            GameManager.Instance.FindStatName(enemy.mobName, 1);
         }
-
     }
     ///Attack
-    public void DamageDeal(EnemyState enemy)
+    public void AttackSpeed(EnemyState enemy)
     {
-        //if (enemy.objectToHit.GetComponent<Animator>())
+        if (enemy.attackSpeed <= 0)
         {
-            Shield shield = enemy.objectToHit.GetComponent<Shield>();
-            if (shield != null)
+            if (enemy.objectToHit != null)
             {
-                shield.healthShield -= enemy.damage;
-                GameManager.Instance.FindStatName("ShieldAbsorbedDamage", enemy.damage);
-            }
-            else
-            {
-                player.TakeDamage(enemy.damage);
+                DamageDeal(enemy);
+                Destroy(objVFX);
+                enemy.SetAttackSpeed(matchingEnemy.attackSpeedMax);
             }
         }
+        else
+        {
+            enemy.attackSpeed -= Time.fixedDeltaTime;
+        }
     }
-   
+    public void DamageDeal(EnemyState enemy)
+    {
+        switch (enemy.type)
+        {
+            case "range":
+                Instantiate(range.Attack(enemy), enemy.objTransform.position, Quaternion.identity);
+                break;
+            case "mele":
+                Instantiate(mele.Attack(enemy), enemy.transform);
+                break;
+            case "boss":
+                Instantiate(bosses.Attack(enemy), enemy.objTransform.position, Quaternion.identity);
+                break;
+        }
+        ////if (enemy.objectToHit.GetComponent<Animator>())
+        //{
+        //    Shield shield = enemy.objectToHit.GetComponent<Shield>();
+        //    if (shield != null)
+        //    {
+        //        shield.healthShield -= enemy.damage;
+        //        GameManager.Instance.FindStatName("ShieldAbsorbedDamage", enemy.damage);
+        //    }
+        //    else
+        //    {
+        //        player.TakeDamage(enemy.damage);
+        //    }
+        //}
+    }
+    public void BossSpawn()
+    {
+        foreach (SaveEnemyInfo obj in gameManager.enemyInfo)
+        {
+            if (obj.Name.Contains(bosses.prefab.mobName))
+            {
+                if (gameManager.CheckInfo(obj.ID))
+                {
+                    gameManager.FillInfo(obj.ID);
+                    gameManager.enemyInfoLoad.Clear();
+                    gameManager.LoadEnemyInfo();
+                }
+            }
+        }
+        GameObject health = Instantiate(bosses.healthBossObj, bosses.uiParent.transform);
+        health.GetComponent<RectTransform>().anchoredPosition = new Vector2(Screen.width / 2 - 100f, Screen.height / 2 - 130f);
+        health.GetComponentInChildren<Image>().fillAmount = 1;
+
+        //GameObject[] objectsToDelete = GameObject.FindGameObjectsWithTag("Enemy");
+
+        //foreach (var obj in objectsToDelete)
+        //{
+        //    Destroy(obj.GetComponentInParent<HealthPoint>().transform.parent.gameObject);
+        //    gameManager.enemyCount = 0;
+        //}
+        children.Clear();
+        Destroy(parent.gameObject);
+        GetComponent<EnemyController>().SetSpawnStatus(true);
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlayMusic("BossFight1");
+        }
+        GameObject boss = Instantiate(bosses.prefab.gameObject, transform.position, Quaternion.identity);
+        boss.GetComponent<AIPath>().maxSpeed = bosses.speedMax;
+        boss.GetComponent<EnemyState>().HealthDamage(bosses.healthMax);
+        boss.GetComponent<EnemyState>().Damage(bosses.damageMax);
+        boss.GetComponent<EnemyState>().SetAttackSpeed(bosses.attackSpeedMax);
+        boss.GetComponent<AIDestinationSetter>().target = player.objTransform;
+        boss.GetComponent<EnemyState>().SetType(bosses.type);
+
+        //boss.GetComponent<Forward>().player = player;
+        isSpawned = true;
+        timeToSpawnBobs += timeToSpawnBobsStart;
+    }
     //Attack end
 }
 //Health end

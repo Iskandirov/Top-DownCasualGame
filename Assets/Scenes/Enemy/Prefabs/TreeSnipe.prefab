@@ -1077,7 +1077,7 @@ MonoBehaviour:
   - {x: -1.2920961, y: 2.9207718, z: 0.00000045779757}
   m_ShapePathHash: 1924501170
   m_Mesh: {fileID: 0}
-  m_InstanceId: 114822
+  m_InstanceId: 102230
   m_LocalBounds:
     m_Center: {x: -0.16579223, y: 0.8796663, z: 0}
     m_Extent: {x: 2.3570175, y: 2.0996997, z: 0}
@@ -1687,6 +1687,7 @@ GameObject:
   - component: {fileID: -3384518304003089070}
   - component: {fileID: 8623819490877642251}
   - component: {fileID: 7568516957470569664}
+  - component: {fileID: 8848279636520331944}
   m_Layer: 10
   m_Name: TreeSnipe
   m_TagString: Enemy
@@ -1754,13 +1755,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <isSlowed>k__BackingField: 0
   <isBurn>k__BackingField: 0
-  <isAttack>k__BackingField: 0
   <mobName>k__BackingField: TreeSnipe
+  <type>k__BackingField: 
   <attackSpeed>k__BackingField: 0
   <health>k__BackingField: 0
   <damage>k__BackingField: 0
   <timesPerOne>k__BackingField: 1
   <objTransform>k__BackingField: {fileID: 3131333948750598606}
+  <objToAttack>k__BackingField: {fileID: 8853671543020772513, guid: 6529229f3290f67418feafea572e141e, type: 3}
   objectToHit: {fileID: 0}
 --- !u!95 &5944500426164884156
 Animator:
@@ -1830,11 +1832,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e5dbbc5e657c134586773041bd54b21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 6133880932228023396, guid: 6529229f3290f67418feafea572e141e, type: 3}
-  stepShoot: 0
-  damage: 25
-  attackSpeed: 5
-  launchForce: 20
 --- !u!114 &-483010773633304732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1954,6 +1951,41 @@ CapsuleCollider2D:
   m_Offset: {x: 0.34002462, y: 3.1674757}
   m_Size: {x: 10.743323, y: 12.619837}
   m_Direction: 0
+--- !u!58 &8848279636520331944
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4915736915067170013}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 999
 --- !u!1 &5151214281074480194
 GameObject:
   m_ObjectHideFlags: 0
