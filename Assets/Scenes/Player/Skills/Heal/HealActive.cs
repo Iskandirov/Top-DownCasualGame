@@ -62,7 +62,7 @@ public class HealActive : SkillBaseMono
         {
             player.isInvincible = false;
         }
-        //Destroy(gameObject);
+        Destroy(gameObject);
 
     }
     // Update is called once per frame

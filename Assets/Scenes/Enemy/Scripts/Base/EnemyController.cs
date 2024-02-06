@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -96,7 +97,8 @@ public class Boss : Enemy , IEnemy
     {
         //throw new NotImplementedException();
         return enemy.objToAttack.gameObject;
-    } 
+    }
+   
     public void Death(EnemyState enemy)
     {
         healthBossObj.SetActive(false);
@@ -273,6 +275,7 @@ public class EnemyController : MonoBehaviour
         }
         StartCoroutine(SpawnEnemyRoutine(enemySpawnInterval));
     }
+   
     ///Spawn
     List<GameObject> InitializeObjectPool(List<Enemy> enemy, GameObject objectPrefab, int pool, Transform parent)
     {
@@ -488,10 +491,7 @@ public class EnemyController : MonoBehaviour
         {
             if (element.isActiveCurrentData[i])
             {
-                Debug.Log(enemy.GetComponentInChildren<HorizontalLayoutGroup>().GetComponentInChildren<SpriteRenderer>().gameObject);
-
-                element.DeactivateDebuff(enemy, (Elements.status)i, enemy.GetComponentInChildren<HorizontalLayoutGroup>().GetComponentInChildren<SpriteRenderer>().gameObject);
-                Debug.Log(enemy.GetComponentInChildren<HorizontalLayoutGroup>().GetComponentInChildren<SpriteRenderer>().gameObject);
+                element.DeactivateDebuff(enemy, (Elements.status)i, enemy.GetComponentInChildren<HorizontalLayoutGroup>().gameObject.GetComponentInChildren<SpriteRenderer>().gameObject);
             }
         }
         enemy.HealthDamage(matchingEnemy.healthMax);
@@ -610,6 +610,27 @@ public class EnemyController : MonoBehaviour
     }
     //Attack end
 }
+//public void SetOthwerPartsCount(EnemyState enemy)
+//{
+//    // Знаходимо всі об'єкти в сцені з компонентом MyComponent
+//    HealthPoint[] objects = UnityEngine.Object.FindObjectsOfType<HealthPoint>();
+
+//    // Проходимося по знайдених об'єктах
+//    foreach (HealthPoint obj in objects)
+//    {
+//        CutThePart part = obj.GetComponent<CutThePart>();
+//        // Перевіряємо значення булевої змінної у кожному об'єкті
+//        if (obj.isBossPart)
+//        {
+//            if (part.countParts == 1)
+//            {
+//                Death(enemy);
+//                //objDrop.OnDestroyBoss();
+//            }
+//            part.countParts--;
+//        }
+//    }
+//}
 //Health end
 ///Рух кожної частини босса до гравця по траекторії схожої на колесо
 //    // визначаємо напрямок до гравця
@@ -637,7 +658,12 @@ public class EnemyController : MonoBehaviour
 //// зміщуємо об'єкт на відстань, що дорівнює швидкості, помноженій на час оновлення
 //objTransform.Translate(velocity * Time.fixedDeltaTime);
 
-
+//if (isBossPart)
+//{
+//    SetOtherPartsCount();
+//    //ExpGive();
+//    Destroy(gameObject);
+//}
 
 
 ///Boss Destroy 
