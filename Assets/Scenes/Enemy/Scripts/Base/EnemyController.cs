@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -71,6 +70,7 @@ public class Enemy
 public class Boss : Enemy , IEnemy
 {
     public GameObject uiParent;
+    public GameObject health;
     public GameObject healthBossObj;
 
     public ItemParameters itemPrefab;
@@ -90,6 +90,9 @@ public class Boss : Enemy , IEnemy
     public GameObject SetBase()
     {
         uiParent = GameObject.Find("/UI");
+        health = UnityEngine.Object.Instantiate(healthBossObj, uiParent.transform);
+        health.GetComponent<RectTransform>().anchoredPosition = new Vector2(Screen.width / 2 - 100f, Screen.height / 2 - 130f);
+        health.GetComponentInChildren<Image>().fillAmount = 1;
         return healthBossObj;
     }
 
@@ -326,8 +329,14 @@ public class EnemyController : MonoBehaviour
                 for (int y = 0; y < enemiesPool[i].poolSize; y++)
                 {
                     yield return new WaitForSeconds(interval);
-                   
-                    SpawnEnemies(enemiesPool[i].enemyPool, SpawnType.Camera, enemiesPool[i].enemyObj.GetComponent<EnemyState>().timesPerOne);
+                    if (children.Count > 0)
+                    {
+                        SpawnEnemies(enemiesPool[i].enemyPool, SpawnType.Camera, enemiesPool[i].enemyObj.GetComponent<EnemyState>().timesPerOne);
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
             }
         }
@@ -421,20 +430,23 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        foreach (EnemyState enemy in children)
+        if (children.Count > 0)
         {
-            EnemyRotate(enemy);
-
-            enemy.GetComponent<Animator>().enabled = IsInsideCameraBounds(player.objTransform.position) ? true : false;
-
-            matchingEnemy = enemies.First(s => s.prefab.mobName == enemy.mobName);
-            enemy.GetComponent<AIPath>().maxSpeed = enemy.isSlowed ? 0 : matchingEnemy.speedMax;
-
-            AttackSpeed(enemy);
-
-            if (timer.time >= timeToSpawnBobs && isSpawned == false)
+            foreach (EnemyState enemy in children)
             {
-                BossSpawn();
+                EnemyRotate(enemy);
+
+                enemy.GetComponent<Animator>().enabled = IsInsideCameraBounds(player.objTransform.position) ? true : false;
+
+                matchingEnemy = enemies.First(s => s.prefab.mobName == enemy.mobName);
+                enemy.GetComponent<AIPath>().maxSpeed = enemy.isSlowed ? 0 : matchingEnemy.speedMax;
+
+                AttackSpeed(enemy);
+
+                if (timer.time >= timeToSpawnBobs && isSpawned == false)
+                {
+                    BossSpawn();
+                }
             }
         }
     }
@@ -503,7 +515,7 @@ public class EnemyController : MonoBehaviour
 
         if (matchingEnemy != null)
         {
-            GetComponentInChildren<Image>().fillAmount -= damage / bosses.healthMax;
+            bosses.health.GetComponentInChildren<Image>().fillAmount -= damage / bosses.healthMax;
             if (enemy.health <= 0)
             {
                 bosses.Death(enemy);
@@ -578,9 +590,7 @@ public class EnemyController : MonoBehaviour
                 }
             }
         }
-        GameObject health = Instantiate(bosses.healthBossObj, bosses.uiParent.transform);
-        health.GetComponent<RectTransform>().anchoredPosition = new Vector2(Screen.width / 2 - 100f, Screen.height / 2 - 130f);
-        health.GetComponentInChildren<Image>().fillAmount = 1;
+        bosses.healthBossObj = bosses.SetBase();
 
         //GameObject[] objectsToDelete = GameObject.FindGameObjectsWithTag("Enemy");
 

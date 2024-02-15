@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.VFX;
 
 public class ElementalBoss_Attack : MonoBehaviour
 {
@@ -26,7 +24,6 @@ public class ElementalBoss_Attack : MonoBehaviour
 
     public List<Collider2D> bodyParts;
     Animator objAniml;
-    Forward objMove;
     Shield objShield;
     Transform objTransform;
     void Start()
@@ -37,7 +34,6 @@ public class ElementalBoss_Attack : MonoBehaviour
         objShield = FindObjectOfType<Shield>();
 
         objAniml = GetComponent<Animator>();
-        objMove = GetComponent<Forward>();
 
         objTransform = transform;
 
