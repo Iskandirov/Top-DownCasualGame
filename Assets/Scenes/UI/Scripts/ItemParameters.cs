@@ -1,9 +1,5 @@
 using System.IO;
-using System.Security.Policy;
-using Unity.VisualScripting;
 using UnityEngine;
-
-
 public class ItemParameters : MonoBehaviour
 {
     public string itemName;

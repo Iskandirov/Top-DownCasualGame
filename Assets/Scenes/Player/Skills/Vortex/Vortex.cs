@@ -95,25 +95,20 @@ public class Vortex : SkillBaseMono
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {
+       
         if (!collision.isTrigger)
         {
-            if (collision.CompareTag("Enemy"))
+            if (collision.CompareTag("Enemy") && !movingObjects.Contains(collision.transform))
             {
-                if (!movingObjects.Contains(collision.transform))
-                {
-                    movingObjects.Add(collision.transform);
-                    collision.GetComponent<ElementActiveDebuff>().EffectTime(Elements.status.Wind, 5);
-                }
+                movingObjects.Add(collision.transform);
+                collision.GetComponent<ElementActiveDebuff>().EffectTime(Elements.status.Wind, 5);
             }
-            if (collision.CompareTag("Player"))
+            else if (collision.CompareTag("Player"))
             {
                 PlayerManager move = collision.GetComponent<PlayerManager>();
-                if (move != null)
+                if (move != null && !movingObjects.Contains(move.objTransform))
                 {
-                    if (!movingObjects.Contains(move.objTransform))
-                    {
-                        movingObjects.Add(move.objTransform);
-                    }
+                    movingObjects.Add(move.objTransform);
                 }
             }
         }
@@ -122,23 +117,18 @@ public class Vortex : SkillBaseMono
     {
         if (!collision.isTrigger)
         {
-            if (collision.CompareTag("Enemy"))
+            if (collision.CompareTag("Enemy") && !movingObjects.Contains(collision.transform))
             {
-                if (!movingObjects.Contains(collision.transform))
+                int index = movingObjects.IndexOf(collision.transform);
+                movingObjects.RemoveAt(index);
+            }
+            else if (collision.CompareTag("Player"))
+            {
+                PlayerManager move = collision.GetComponent<PlayerManager>();
+                if (move != null && !movingObjects.Contains(move.objTransform))
                 {
                     int index = movingObjects.IndexOf(collision.transform);
                     movingObjects.RemoveAt(index);
-                }
-            }
-            if (collision.CompareTag("Player"))
-            {
-                PlayerManager move = collision.GetComponent<PlayerManager>();
-                if (move != null)
-                {
-                    if (!movingObjects.Contains(move.objTransform))
-                    {
-                        movingObjects.Add(move.objTransform);
-                    }
                 }
             }
         }

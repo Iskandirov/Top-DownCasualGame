@@ -54,13 +54,12 @@ public class LoadItemData : MonoBehaviour
                 GameObject newObject = Instantiate(prefabToInstantiate, transform);
 
                 newObject.transform.SetParent(parentsList[index]); // index - це індекс батька у списку батьків
-                newObject.transform.position = new Vector3(parentsList[index].position.x, parentsList[index].position.y + 1f, parentsList[index].position.z);
+                newObject.transform.position = new Vector3(parentsList[index].position.x, parentsList[index].position.y, parentsList[index].position.z);
                 newObject.transform.localScale = prefabToInstantiate.transform.localScale;
 
                 SetParametersToitem objParam = newObject.GetComponent<SetParametersToitem>();
                 objParam.ItemName = itemName;
                 objParam.ItemImage.sprite = Resources.Load<Sprite>(itemParams.Name);
-                objParam.ItemImage.SetNativeSize();
                 objParam.Rare.sprite = Resources.Load<Sprite>(itemParams.RareName + " " + itemParams.Level.ToString());
                 objParam.ItemStat.text = itemParams.Stat;
                 objParam.level = itemParams.Level.ToString();

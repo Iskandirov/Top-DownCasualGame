@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Sphere : MonoBehaviour
 {
+    public float rotationSpeed = 500f;
     public float circleRadius;
     public float speed;
     public float angle;
@@ -17,6 +18,10 @@ public class Sphere : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        rotationSpeed += speed * 5;
+        // Оновлення кута обертання об'єкта
+        objTransform.rotation = Quaternion.Euler(objTransform.rotation.x, objTransform.rotation.y, rotationSpeed);
+
         objTransform.position = player.objTransform.position + new Vector3(Mathf.Cos(Time.time * speed + angle) * circleRadius, Mathf.Sin(Time.time * speed + angle) * circleRadius, 0f);
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -33,7 +38,7 @@ public class Sphere : MonoBehaviour
         {
             collision.GetComponent<ObjectHealth>().health -= 1;
             FindObjectOfType<SphereAround>().countSphere--;
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
 }

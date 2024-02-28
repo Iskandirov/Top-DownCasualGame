@@ -24,26 +24,23 @@ public class EquipItem : MonoBehaviour
 
     public void onEquip()
     {
-        MoveItem item = gameObject.transform.parent.GetChild(0).GetComponentInChildren<MoveItem>();
+        MoveItem item = transform.parent.GetChild(0).GetComponentInChildren<MoveItem>();
         string path = Path.Combine(Application.persistentDataPath, "EquipedItems.txt");
         if (File.Exists(path))
         {
             string[] jsonLines = File.ReadAllLines(path);
 
-            if (item.isEquipedNow == false)
+            if (item.isEquipedNow == false && jsonLines.Length < 3)
             {
-                if (jsonLines.Length < 3)
+                item.SetItem(equipedItenms);
+                SaveEquip(equipedItenms);
+                MoveItem[] equips = FindObjectsOfType<MoveItem>();
+                foreach (var obj in equips)
                 {
-                    item.SetItem(equipedItenms);
-                    SaveEquip(equipedItenms);
-                    MoveItem[] equips = FindObjectsOfType<MoveItem>();
-                    foreach (var obj in equips)
+                    if (obj.GetComponent<SetParametersToitem>().ItemName == item.GetComponent<SetParametersToitem>().ItemName)
                     {
-                        if (obj.GetComponent<SetParametersToitem>().ItemName == item.GetComponent<SetParametersToitem>().ItemName)
-                        {
-                            obj.button.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = "Зняти";
-                            obj.isEquipedNow = true;
-                        }
+                        obj.button.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = "Зняти";
+                        obj.isEquipedNow = true;
                     }
                 }
             }

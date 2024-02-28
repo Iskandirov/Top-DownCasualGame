@@ -72,10 +72,8 @@ public class Elements
         switch (name)
         {
             case status.Fire:
-                Debug.Log(statusCurrentData[(int)status.Water]);
                 statusCurrentData[(int)status.Water] *= 2;
                 enemy.Damage(enemy.damage * 2);
-                Debug.Log(statusCurrentData[(int)status.Water]);
                 break;
             case status.Electricity:
                 statusCurrentData[(int)status.Cold] *= 2;

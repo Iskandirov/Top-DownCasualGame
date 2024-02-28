@@ -26,7 +26,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1787611321675974066, guid: 8bab4a5065997b04c9db71f0c5e140a6, type: 3}
       propertyPath: m_InstanceId
-      value: -263738
+      value: -623260
+      objectReference: {fileID: 0}
+    - target: {fileID: 2326225974591781405, guid: 8bab4a5065997b04c9db71f0c5e140a6, type: 3}
+      propertyPath: m_InstanceId
+      value: -623210
       objectReference: {fileID: 0}
     - target: {fileID: 2927036144397176274, guid: 8bab4a5065997b04c9db71f0c5e140a6, type: 3}
       propertyPath: damageMax
@@ -130,7 +134,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7623075155113994220, guid: 8bab4a5065997b04c9db71f0c5e140a6, type: 3}
       propertyPath: m_InstanceId
-      value: -263758
+      value: -623280
       objectReference: {fileID: 0}
     - target: {fileID: 7752983507903680062, guid: 8bab4a5065997b04c9db71f0c5e140a6, type: 3}
       propertyPath: path
@@ -195,13 +199,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <isSlowed>k__BackingField: 0
   <isBurn>k__BackingField: 0
-  <isAttack>k__BackingField: 0
   <mobName>k__BackingField: 
+  <type>k__BackingField: 
   <attackSpeed>k__BackingField: 0
   <health>k__BackingField: 0
   <damage>k__BackingField: 0
   <timesPerOne>k__BackingField: 0
   <objTransform>k__BackingField: {fileID: 0}
+  <objToAttack>k__BackingField: {fileID: 0}
   objectToHit: {fileID: 0}
 --- !u!114 &3864534560958072251
 MonoBehaviour:
@@ -215,11 +220,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a2892ba859cd784ca1b5718aa17cef6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
+  mob:
+    <name>k__BackingField: 
+    <type>k__BackingField: 
+    <prefab>k__BackingField: {fileID: 0}
+    <healthMax>k__BackingField: 0
+    <speedMax>k__BackingField: 0
+    <damageMax>k__BackingField: 0
+    <attackSpeedMax>k__BackingField: 0
+    <dangerLevel>k__BackingField: 0
+    <maxCountPerTime>k__BackingField: 1
+    path: {fileID: 0}
+    expGiven: 0
+    uiParent: {fileID: 0}
+    health: {fileID: 0}
+    healthBossObj: {fileID: 0}
+    fillAmountImage: {fileID: 0}
+    itemPrefab: {fileID: 0}
+    itemsLoaded: []
+    spawnRare: 0.6
+    spawnMiphical: 0.3
+    spawnLegendary: 0.05
+    CommonItems: []
+    RareItems: []
+    MiphicalItems: []
+    LegendaryItems: []
+    isTutor: 0
+    rarityType:
+    - "\u0417\u0432\u0438\u0447\u0430\u0439\u043D\u0435"
+    - "\u0420\u0456\u0434\u043A\u0456\u0441\u043D\u0435"
+    - "\u041C\u0456\u0444\u0456\u0447\u043D\u0435"
+    - "\u041B\u0435\u0433\u0435\u043D\u0434\u0430\u0440\u043D\u0435"
   isBoss: 0
   healthBossObj: {fileID: 3985779531179115711, guid: a583d3b029d6a7c4ea66e18c2bbba0c9, type: 3}
-  uiParent: {fileID: 0}
-  healthObj: {fileID: 0}
   healthBobsImg: {fileID: 0}
 --- !u!114 &8327511359202698221
 MonoBehaviour:
@@ -235,13 +268,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <isSlowed>k__BackingField: 0
   <isBurn>k__BackingField: 0
-  <isAttack>k__BackingField: 0
   <mobName>k__BackingField: 
+  <type>k__BackingField: 
   <attackSpeed>k__BackingField: 0
   <health>k__BackingField: 0
   <damage>k__BackingField: 0
   <timesPerOne>k__BackingField: 0
   <objTransform>k__BackingField: {fileID: 0}
+  <objToAttack>k__BackingField: {fileID: 0}
   objectToHit: {fileID: 0}
 --- !u!114 &5597788573981687639 stripped
 MonoBehaviour:

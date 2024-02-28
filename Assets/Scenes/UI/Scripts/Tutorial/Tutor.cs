@@ -1,39 +1,38 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+[Serializable]
+public class LightData
+{
+    public KeyCode Key;
+    public Light2D Light;
+    public bool isPressed;
+}
 [DefaultExecutionOrder(10)]
 public class Tutor : MonoBehaviour
 {
+    public List<LightData> light;
     public int phase = 0;
     public Color32 FinalColor;
     public static Light2D wLight;
     public static Light2D aLight;
     public static Light2D sLight;
     public static Light2D dLight;
-    public static Light2D ShiftLight;
+    public Light2D ShiftLight;
     int lightCount = 0;
     public Animator parentPhase1;
     public Animator parentPhase2;
     public Animator parentPhase3;
     public TextAppear text;
-    public bool[] isPressed = new bool[4];
     public Light2D playerLight;
     public PlayerManager player;
-    // Створимо словник для зіставлення клавіш зі світлами
-    Dictionary<KeyCode, Light2D> keysToLights = new Dictionary<KeyCode, Light2D>()
-    {
-        { KeyCode.W, wLight },
-        { KeyCode.A, aLight },
-        { KeyCode.S, sLight },
-        { KeyCode.D, dLight }
-    };
 
     // Start is called before the first frame update
     void Start()
     {
         player = PlayerManager.instance;
-        text = FindObjectOfType<TextAppear>();
         BlockMoveAndShoot();
     }
     public IEnumerator TurnOn()
@@ -65,16 +64,16 @@ public class Tutor : MonoBehaviour
             player.enabled = true;
             player.rb.velocity = Vector3.zero;
             //MoveOn();
-            foreach (var keyLightPair in keysToLights)
+            foreach (var keyLightPair in light)
             {
                 KeyCode key = keyLightPair.Key;
-                Light2D light = keyLightPair.Value;
+                Light2D light = keyLightPair.Light;
 
-                if (Input.GetKeyDown(key) && !isPressed[(int)key])
+                if (Input.GetKeyDown(key) && !keyLightPair.isPressed)
                 {
                     light.color = FinalColor;
                     lightCount++;
-                    isPressed[(int)key] = true;
+                    keyLightPair.isPressed = true;
                 }
             }
             //if (Input.GetKeyDown(KeyCode.W))

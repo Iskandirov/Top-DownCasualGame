@@ -49,7 +49,7 @@ public class EnemyState : MonoBehaviour
     //Attack 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if ((collision.CompareTag("Shield") || collision.CompareTag("Player")) && !collision.isTrigger)
+        if ((collision.CompareTag("Shield") || collision.CompareTag("Player")) && !collision.isTrigger && attackSpeed <= 0)
         {
             objectToHit = collision.gameObject;
             GetComponent<Animator>().SetBool("IsHit", true);

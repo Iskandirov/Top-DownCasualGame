@@ -1,28 +1,32 @@
 using UnityEngine;
-
 public class EnemyBullet : MonoBehaviour
 {
     public float damage;
     public float speed = 10f;
-    public Rigidbody2D rb;
     public float searchRadius = 10f;
-
+    public float offset;
 
     private GameObject target;
     Transform objTransform;
-    Vector3 currentPosition;
-    Vector2 direction;
+    Transform targetTransform;
     void Start()
     {
         objTransform = transform;
         target = PlayerManager.instance.gameObject;
+        targetTransform = target.transform;
         Invoke("DestroyBullet", 3f);
     }
     private void FixedUpdate()
     {
-        currentPosition = objTransform.position;
-        direction = (target.transform.position - currentPosition).normalized;
-        rb.velocity = new Vector3(direction.x * speed, direction.y * speed, currentPosition.z);
+        // Розрахувати цільову позицію
+        Vector3 targetPosition = targetTransform.position + (targetTransform.forward * offset);
+
+        // Перемістити кулю з постійною швидкістю
+        objTransform.position = Vector3.MoveTowards(objTransform.position, targetPosition, speed * Time.deltaTime);
+
+        //currentPosition = objTransform.position;
+        //direction = (targetTransform.position - currentPosition).normalized;
+        //rb.velocity = new Vector3(direction.x * speed, direction.y * speed, currentPosition.z);
     }
     public void DestroyBullet()
     {

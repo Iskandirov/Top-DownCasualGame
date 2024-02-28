@@ -1092,7 +1092,7 @@ MonoBehaviour:
   text: {fileID: 0}
   axisX: 0
   axisY: 0
-  dashMultiplier: 5
+  dashMultiplier: 100
   isBaseSkillActive: 0
   isDashSkillActive: 0
   isTutor: 0
@@ -1105,7 +1105,7 @@ MonoBehaviour:
   fullFillImage: {fileID: 0}
   isInvincible: 0
   shildActive: 0
-  bullet: {fileID: -8596872367541274049, guid: 3a6610572c8eee746a8f961b7b282f2f, type: 3}
+  bullet: {fileID: 7746328968856795561, guid: cbc957d76f09b5e44a052aed2a3abb1a, type: 3}
   ShootPoint: {fileID: 9086333637465294124}
   damageToGive: 2
   attackSpeed: 0.5
@@ -1123,7 +1123,6 @@ MonoBehaviour:
   expiriencepoint: {fileID: 0}
   level: 1
   expNeedToNewLevel: 30
-  levelUp: {fileID: 0}
   time: {fileID: 0}
   isEnemyInZone: 0
   multiply: 1
@@ -1149,7 +1148,25 @@ MonoBehaviour:
   - {fileID: 0}
   abilityId: 0
   countActiveAbilities: 0
-  characters: []
+  characters:
+  - id: 1
+    health: 100
+    moveSpeed: 20
+    damage: 2
+    attackSpeed: 0.5
+    spellCD: 3
+  - id: 2
+    health: 75
+    moveSpeed: 25
+    damage: 1
+    attackSpeed: 0.3
+    spellCD: 10
+  - id: 3
+    health: 150
+    moveSpeed: 15
+    damage: 4
+    attackSpeed: 0.65
+    spellCD: 15
   objTransform: {fileID: 0}
 --- !u!95 &2933150211668163815
 Animator:

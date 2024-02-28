@@ -10,7 +10,6 @@ public class Lightning : SkillBaseMono
     public Collider2D enemyToShoot;
     EnemyState enemy;
     public float stunTime;
-    PlayerManager player;
     public string target;
 
 

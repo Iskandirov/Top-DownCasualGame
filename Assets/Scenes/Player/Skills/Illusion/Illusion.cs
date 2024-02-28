@@ -16,7 +16,6 @@ public class Illusion : SkillBaseMono
     public float attackSpeed;
     public float attackSpeedMax;
 
-    PlayerManager player;
     public bool isClone;
     Transform objTransform;
 

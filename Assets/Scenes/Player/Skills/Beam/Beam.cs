@@ -1,13 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Beam : SkillBaseMono
 {
     public float tick;
-    PlayerManager player;
     public float addToAndle;
     public bool isTwo;
     public SpriteRenderer img;

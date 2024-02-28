@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class HealActive : SkillBaseMono
 {
-    public PlayerManager player;
     public float Grass;
     public float offset = 1.5f;
     Transform objTransform;

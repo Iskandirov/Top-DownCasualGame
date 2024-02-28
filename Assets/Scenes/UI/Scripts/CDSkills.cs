@@ -31,7 +31,7 @@ public class CDSkills : MonoBehaviour
     public float step;
     public bool isPassive;
 
-    KeyCode keyCode;
+    public KeyCode keyCode;
     TextMeshProUGUI cDText;
     // Update is called once per frame
     void Start()
@@ -57,7 +57,6 @@ public class CDSkills : MonoBehaviour
     private IEnumerator SetBumberToSkill()
     {
         yield return new WaitForSeconds(0.1f);
-        keyCode = (KeyCode)((int)KeyCode.Alpha0 + number);
     }
     private IEnumerator WaitToAnotherObject(int count,float delay)
     {
@@ -75,19 +74,16 @@ public class CDSkills : MonoBehaviour
     }
     private void Update()
     {
+
         spriteCD.fillAmount = skillCD / skill.stepMax;
-        if (number != 0 && !skill.isPassive)
+        if (!skill.isPassive)
         {
-            if (skillCD <= 0 && Input.GetKeyDown(keyCode))
+
+            if (skillCD <= 0 && Input.GetKey(keyCode))
             {
                 Spawn((int)skill.countObjects);
                 skillCD = skill.stepMax;
             }
-        }
-        else if (skillCD <= 0 && Input.GetMouseButton(0) && number == 0 && !skill.isPassive)
-        {
-            Spawn(PlayerManager.instance.secondBulletCount);
-            skillCD = skill.stepMax;
         }
         else if (skill.isPassive && skill.countObjects > 0)
         {

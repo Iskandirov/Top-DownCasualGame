@@ -25,10 +25,7 @@ public class BossAttack : MonoBehaviour
     public void Start()
     {
         objTransform = transform;
-        //if (GetComponent<Forward>().isTutorial)
-        //{
-        //    bulletPrefab.damage = 0;
-        //}
+       
         StartCoroutine(ToggleBoolsCoroutine());
         StartCoroutine(TimerCoroutineTypesAttack());
         InitializeObjectPool();
@@ -38,7 +35,7 @@ public class BossAttack : MonoBehaviour
         bulletPool = new List<BossBullet>();
         for (int i = 0; i < poolSize; i++)
         {
-            BossBullet obj = Instantiate(bulletPrefab);
+            BossBullet obj = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
             obj.gameObject.SetActive(false);
             bulletPool.Add(obj);
         }
@@ -53,7 +50,7 @@ public class BossAttack : MonoBehaviour
                 return obj;
             }
         }
-        BossBullet gameObject = Instantiate(bulletPrefab);
+        BossBullet gameObject = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
         bulletPool.Add(gameObject);
         return gameObject;
     }

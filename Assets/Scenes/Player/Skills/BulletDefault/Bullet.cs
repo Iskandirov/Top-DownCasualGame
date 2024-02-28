@@ -9,7 +9,6 @@ public class Bullet : SkillBaseMono
     public bool isBulletSlow;
     public float lifeStealPercent;
     public float slowPercent;
-    PlayerManager player;
     public GameObject obj;
     public EnemyController enemy;
     private void Start()
@@ -21,28 +20,30 @@ public class Bullet : SkillBaseMono
             obj = player.gameObject;
 
         }
-        if (basa.stats[0].isTrigger)
+        if (basa != null)
         {
-            basa.damage = basa.stats[0].value;
+            if (basa.stats[0].isTrigger)
+            {
+                basa.damage = basa.stats[0].value;
+            }
+            if (basa.stats[1].isTrigger)
+            {
+                player.secondBulletCount = (int)basa.stats[1].value;
+            }
+            if (basa.stats[2].isTrigger)
+            {
+                basa.stepMax -= basa.stats[2].value;
+                basa.stats[2].isTrigger = false;
+            }
+            if (basa.stats[3].isTrigger)
+            {
+                player.secondBulletCount = (int)basa.stats[3].value;
+            }
+            if (basa.stats[4].isTrigger)
+            {
+                isPiers = true;
+            }
         }
-        if (basa.stats[1].isTrigger)
-        {
-            player.secondBulletCount = (int)basa.stats[1].value;
-        }
-        if (basa.stats[2].isTrigger)
-        {
-            basa.stepMax -= basa.stats[2].value;
-            basa.stats[2].isTrigger = false;
-        }
-        if (basa.stats[3].isTrigger)
-        {
-            player.secondBulletCount = (int)basa.stats[3].value;
-        }
-        if (basa.stats[4].isTrigger)
-        {
-            isPiers = true;
-        }
-       
         isRickoshet = player.isRicoshet;
         isLifeSteal = player.isLifeSteal;
         isBulletSlow = player.isBulletSlow;
@@ -106,7 +107,7 @@ public class Bullet : SkillBaseMono
         }
         else if (!collision.isTrigger && collision.CompareTag("TutorEnemy"))
         {
-            collision.GetComponent<EnemyHealthTutorial>().health -= 1;
+            collision.GetComponent<EnemyHealthTutorial>().mob.HealthChange(collision.GetComponent<EnemyHealthTutorial>().mob.healthMax - 1);
             //Destroy(collision.gameObject);
             if (isRickoshet)
             {

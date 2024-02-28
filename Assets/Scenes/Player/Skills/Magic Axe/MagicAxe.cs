@@ -17,6 +17,7 @@ public class MagicAxe : SkillBaseMono
     public float timeToBack = 1f;
     Transform objTransform;
     public EnemyController enemy;
+    public Sphere sphereAxe;
     private void Start()
     {
         enemy = EnemyController.instance;
@@ -63,20 +64,20 @@ public class MagicAxe : SkillBaseMono
                 // Рух об'єкта в напрямку курсора
                 objTransform.position += new Vector3(directionToCursor.x * speed * 0.1f, directionToCursor.y * speed * 0.1f, 0f);
             }
-            else
-            {
-                if (isFirst)
-                {
-                    objTransform.position += new Vector3(directionToCursor.x * directionToCursorForFirstAxe.x * speed * 0.6f, 
-                        directionToCursor.y * directionToCursorForFirstAxe.y * speed * 0.4f, 0f);
+            //else
+            //{
+            //    if (isFirst)
+            //    {
+            //        objTransform.position += new Vector3(directionToCursor.x * directionToCursorForFirstAxe.x * speed * 0.6f,
+            //            directionToCursor.y + directionToCursorForFirstAxe.y * speed * 0.4f, 0f);
 
-                }
-                else
-                {
-                    objTransform.position += new Vector3(directionToCursor.x * directionToCursorForSecondAxe.x * speed * 0.6f,
-                        directionToCursor.y * directionToCursorForSecondAxe.y * speed * 0.4f, 0f);
-                }
-            }
+            //    }
+            //    else
+            //    {
+            //        objTransform.position += new Vector3(directionToCursor.x * directionToCursorForSecondAxe.x * speed * 0.6f,
+            //            directionToCursor.y * directionToCursorForSecondAxe.y * speed * 0.4f, 0f);
+            //    }
+            //}
            
         }
         else
@@ -107,11 +108,9 @@ public class MagicAxe : SkillBaseMono
         {
             if (basa.stats[4].isTrigger && !isCreated)
             {
-                MagicAxe a = Instantiate(this, objTransform.position, Quaternion.identity);
-                a.isCreated = true; 
-                MagicAxe b = Instantiate(this, objTransform.position, Quaternion.identity);
-                b.isCreated = true;
-                b.isFirst = true;
+                Instantiate(sphereAxe, objTransform.position, Quaternion.identity);
+                Sphere a = Instantiate(sphereAxe, objTransform.position, Quaternion.identity);
+                a.angle = 180;
             }
             Destroy(gameObject);
         }

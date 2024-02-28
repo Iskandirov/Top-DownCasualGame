@@ -33,7 +33,7 @@ public class SkillBaseMono : MonoBehaviour
     public SkillBase basa;
     public int skillId;
     public int currentLevel;
-    PlayerManager player;
+    public PlayerManager player;
     public void DestroyObject(GameObject obj)
     {
         GameObject foundObj = GameObject.Find(obj.name+"(Clone)");

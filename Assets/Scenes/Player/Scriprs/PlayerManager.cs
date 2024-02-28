@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-[DefaultExecutionOrder(1)]
+[DefaultExecutionOrder(6)]
 public class PlayerManager : MonoBehaviour
 {
     GameManager gameManager;
@@ -76,7 +76,7 @@ public class PlayerManager : MonoBehaviour
     public Image expiriencepoint;
     public float level;
     public float expNeedToNewLevel;
-    public GameObject levelUp;
+    //public GameObject levelUp;
     public Timer time;
     [HideInInspector]
     public int isEnemyInZone;
@@ -100,6 +100,7 @@ public class PlayerManager : MonoBehaviour
     public int countActiveAbilities;
     [Header("CharacterSet settings")]
     public List<CharacterStats> characters;
+    [HideInInspector]
     public Transform objTransform;
     private void Awake()
     {
@@ -161,12 +162,15 @@ public class PlayerManager : MonoBehaviour
     {
         if (damage > 0 && !isInvincible)
         {
-            //Armor
-            damage = Armor(damage, armor);
-            //Damage deal
-            playerHealthPoint -= damage;
-            gameManager.FindStatName("DamageTaken", damage);
-            fullFillImage.fillAmount -= damage / playerHealthPointMax;
+            if (!isTutor)
+            {
+                //Armor
+                damage = Armor(damage, armor);
+                //Damage deal
+                playerHealthPoint -= damage;
+                gameManager.FindStatName("DamageTaken", damage);
+                fullFillImage.fillAmount -= damage / playerHealthPointMax;
+            }
         }
         playerAnim.SetBool("IsHit", true);
     }
@@ -290,7 +294,8 @@ public class PlayerManager : MonoBehaviour
         if (!isBaseSkillActive)
         {
             isBaseSkillActive = true;
-            Invoke(nameof(StopUntouchible), 4f);
+            isInvincible = true;
+            Invoke(nameof(StopUntouchible), 2f);
         }
     }
     //=================UNTOUCHIBLE END=============
@@ -303,7 +308,7 @@ public class PlayerManager : MonoBehaviour
             isDashSkillActive = true;
             isInvincible = true;
             Vector2 dashDirection = GetMousDirection(objTransform.position);
-            rb.velocity = dashDirection.normalized * (speed * dashMultiplier);
+            rb.velocity = dashDirection.normalized * dashMultiplier;
             Invoke(nameof(StopDashing), .2f);
         }
     }
@@ -317,7 +322,7 @@ public class PlayerManager : MonoBehaviour
     private void StopUntouchible()
     {
         isBaseSkillActive = false;
-
+        isInvincible = false;
     }
     private void StopRicoshet()
     {

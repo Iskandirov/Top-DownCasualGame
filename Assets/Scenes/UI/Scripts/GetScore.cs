@@ -27,12 +27,12 @@ public class GetScore : MonoBehaviour
                 {
                     // Вдале перетворення
                     score = (GameManager.Instance.score + 1) * Mathf.Pow(1 + (0.05f * result), 1.1f) + 1;
-                    percent = Mathf.RoundToInt((result / objTimer.time) * 100);
+                    percent = Mathf.RoundToInt((result / EnemyController.instance.timeToSpawnBobs) * 100);
                     if (percent >= 100 && isWinPanel)
                     {
                         percent = 100;
                     }
-                    else
+                    else if (percent >= 100 && !isWinPanel)
                     {
                         percent = 99;
                     }

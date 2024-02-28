@@ -46,11 +46,10 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
         startParent = transform.parent.gameObject;
         fliedSlots = FindObjectOfType<FieldSlots>();
         GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("Finish");
-        targetEquipObjects = GameObject.FindGameObjectWithTag("Respawn");
-        equipPanel = GameObject.FindGameObjectWithTag("Wall");
+       
         itemData = GameObject.FindGameObjectWithTag("Lightning");
         gameManager = GameManager.Instance;
-        SetVisible(false);
+        //SetVisible(false);
         if (gameObject.GetComponent<SetParametersToitem>().level != "4")
         {
             maxLevel.GetComponent<TagText>().tagText = "level";
@@ -125,17 +124,19 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
         {
             if (!created && toSlot == true)
             {
-
                 if (toEquipSlot == true)
                 {
+                    GameManager.Instance.OpenPanel(GameManager.Instance.menuPanel);
                     bool hasGameController = false;
+                    targetEquipObjects = GameObject.FindGameObjectWithTag("Respawn");
+                    equipPanel = GameObject.FindGameObjectWithTag("Wall");
                     if (targetEquipObjects.CompareTag("GameController"))
                     {
                         hasGameController = true;
                     }
                     if (!hasGameController)
                     {
-                        SetVisible(true);
+                        SetCardInfo();
                         transform.SetParent(targetEquipObjects.transform);
                         transform.position = targetEquipObjects.transform.position;
                         toEquipSlot = false;
@@ -147,7 +148,8 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
                     transform.SetAsFirstSibling();
                     transform.position = new Vector3(startPosition.x, startPosition.y + 1f, startPosition.z);
                     toEquipSlot = true;
-                    SetVisible(false);
+                    GameManager.Instance.ClosePanel(GameManager.Instance.menuPanel);
+                    SetCardInfo();
                 }
             }
             fliedSlots.objToCraft = GetComponent<SetParametersToitem>();
@@ -155,46 +157,14 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
         }
 
     }
-    void CheckChildren(Transform parent, bool enable)
+    public void SetCardInfo()
     {
-        foreach (Transform child in parent)
-        {
-            TextMeshProUGUI childText = child.GetComponent<TextMeshProUGUI>();
-            if (childText)
-            {
-                childText.enabled = enable;
-            }
-
-            CheckChildren(child, enable);
-        }
-    }
-    public void SetVisible(bool isActivate)
-    {
-        equipPanel.GetComponent<Image>().enabled = isActivate;
-        if (stats.Count == 0)
-        {
-            for (int i = 0; i < equipPanel.transform.childCount; i++)
-            {
-                if (equipPanel.transform.GetChild(i).GetComponent<TextMeshProUGUI>())
-                {
-                    if (isActivate == true)
-                    {
-                        if (equipPanel.transform.GetChild(i).CompareTag("Stat"))
-                        {
-                            stats.Add(equipPanel.transform.GetChild(i).GetComponent<TextMeshProUGUI>());
-                        }
-                    }
-                }
-            }
-        }
         for (int i = 0; i < equipPanel.transform.childCount; i++)
         {
             Transform child = equipPanel.transform.GetChild(i);
 
             if (child.GetComponent<Button>())
             {
-                child.GetComponent<Image>().enabled = isActivate;
-                child.GetComponent<Button>().enabled = isActivate;
 
                 if (child.name == "EquipBtn")
                 {
@@ -202,15 +172,9 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
                 }
 
             }
-            else if (child.GetComponent<Image>())
-            {
-                child.GetComponent<Image>().enabled = isActivate;
-            }
             else if (child.GetComponent<TextMeshProUGUI>())
             {
 
-                if (isActivate)
-                {
                     foreach (var obj in itemData.GetComponent<LoadItemData>().objectsList)
                     {
                         if (child.name == "Stat")
@@ -246,9 +210,7 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
                         }
                     }
                 }
-            }
         }
-        CheckChildren(equipPanel.transform, isActivate);
     }
     public void SetItem(SavedObjectData obj)
     {

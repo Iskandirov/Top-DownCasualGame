@@ -790,7 +790,7 @@ MonoBehaviour:
   - {x: -1.8588681, y: -0.36434388, z: 0.00000011920929}
   m_ShapePathHash: 849117982
   m_Mesh: {fileID: 0}
-  m_InstanceId: 67470
+  m_InstanceId: 163012
   m_LocalBounds:
     m_Center: {x: -0.038241386, y: 0.24780422, z: 0}
     m_Extent: {x: 2.5148787, y: 1.2412812, z: 0}
@@ -1057,10 +1057,10 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1736
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 6503
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -1079,7 +1079,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <isSlowed>k__BackingField: 0
   <isBurn>k__BackingField: 0
-  <isAttack>k__BackingField: 0
   <mobName>k__BackingField: Beatty
   <type>k__BackingField: 
   <attackSpeed>k__BackingField: 0
@@ -1087,7 +1086,7 @@ MonoBehaviour:
   <damage>k__BackingField: 0
   <timesPerOne>k__BackingField: 1
   <objTransform>k__BackingField: {fileID: 3131333948750598606}
-  <objToAttack>k__BackingField: {fileID: 8853671543020772513, guid: 5968ddaa9293c6b4dad4e5442a8b37b1, type: 3}
+  <objToAttack>k__BackingField: {fileID: 7885096114691236980, guid: 2fe47683500b46b4b9e2ed74cb092523, type: 3}
   objectToHit: {fileID: 0}
 --- !u!95 &8315049834056483339
 Animator:
@@ -1178,7 +1177,6 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 0c31ddfef24ab054ea58bdb78fc973a5, type: 3}
     - {fileID: 21300000, guid: 961a8eb948fd8e54abcd56a04a844fad, type: 3}
   elementDebuffParent: {fileID: 6405327560613992337}
-  acitveDebuffs: []
   elementDebuffObject: {fileID: 1262367869966813369, guid: 18f8e8e849830084eace680fad057225, type: 3}
 --- !u!114 &-7382446877653863994
 MonoBehaviour:
@@ -1693,6 +1691,18 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -1722,11 +1732,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.7
+      value: 0.14
       objectReference: {fileID: 0}
     - target: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 3.95
+      value: 5.72
       objectReference: {fileID: 0}
     - target: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

@@ -1,3 +1,4 @@
+using Pathfinding;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -107,6 +108,7 @@ public class TextAppear : MonoBehaviour
                 }
                 else if (tutor.phase == 2)
                 {
+                    mob.GetComponent<AIDestinationSetter>().target = player.transform;
                     tutor.MoveOn();
                     tutor.parentPhase2.gameObject.SetActive(true);
                 } 
@@ -123,9 +125,8 @@ public class TextAppear : MonoBehaviour
                 } 
                 else if (tutor.phase == 5)
                 {
-                    boss.GetComponent<EnemyState>().enabled = true;
                     boss.GetComponent<BossAttack>().enabled = true;
-                    boss.GetComponent<Forward>().enabled = true;
+                    boss.GetComponent<AIDestinationSetter>().target = player.transform;
                     boss.layer = 10;
                     tutor.MoveOn();
                 }

@@ -11,7 +11,6 @@ public class Trail : SkillBaseMono
     public float size;
 
     public static List<EdgeCollider2D> unusedColliders = new List<EdgeCollider2D>();
-    PlayerManager player;
     public Transform objTransform;
     // Start is called before the first frame update
     void Start()
@@ -60,7 +59,6 @@ public class Trail : SkillBaseMono
             {
                 if (colliders[j].collider.CompareTag("Enemy"))
                 {
-                    Debug.Log(1);
                     // TrailRenderer торкається до об'єкта з тегом "Enemy"
                     EnemyController.instance.TakeDamage(colliders[j].collider.GetComponent<EnemyState>(), basa.damage);
                     if (basa.stats[4].isTrigger)

@@ -9,6 +9,8 @@ public class Settings : MonoBehaviour
 {
     public Scrollbar volumeMusic;
     public Scrollbar volumeSFX;
+    public Image muteVolume;
+    public Image muteSFX;
     public Toggle toggle;
     GameManager gameManager;
     public TMP_Dropdown drop;
@@ -50,6 +52,8 @@ public class Settings : MonoBehaviour
         volumeSFX.value = gameManager.volumeSFX;
         AudioManager.instance.musicObj.volume = volumeMusic.value;
         AudioManager.instance.sfxObj.volume = volumeSFX.value;
+        muteVolume.gameObject.SetActive(volumeMusic.value == 0 ? true : false);
+        muteSFX.gameObject.SetActive(volumeSFX.value == 0 ? true : false);
     }
 
     // Метод для зміни гучності гри
@@ -64,6 +68,7 @@ public class Settings : MonoBehaviour
        
         gameManager.ChangeSetting(value);
         AudioManager.instance.ChangeVolume(AudioManager.instance.volumeMusic, AudioManager.instance.musicObj);
+        muteVolume.gameObject.SetActive(volumeMusic.value == 0 ? true : false);
     }
     public void SetVolumeSFX()
     {
@@ -76,6 +81,7 @@ public class Settings : MonoBehaviour
             };
         gameManager.ChangeSetting(valueSFX);
         AudioManager.instance.ChangeVolume(AudioManager.instance.volumeSFX, AudioManager.instance.sfxObj);
+        muteSFX.gameObject.SetActive(volumeSFX.value == 0 ? true : false);
     }
     public void SetVSync()
     {

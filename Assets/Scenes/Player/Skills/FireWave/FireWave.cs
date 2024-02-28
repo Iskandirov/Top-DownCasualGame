@@ -1,13 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 
 public class FireWave : SkillBaseMono
 {
     public float burnDamage;
     public float fireElement;
-    PlayerManager player;
     Transform objTransform;
     EnemyController enemy;
     // Start is called before the first frame update

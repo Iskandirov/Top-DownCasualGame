@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
     public List<SaveEnemyInfo> enemyInfo;
     public List<SaveEnemyInfo> enemyInfoLoad;
     public GameObject InfoFiller;
-    public SpriteRenderer InfoImg;
+    public Image InfoImg;
     public TextMeshProUGUI InfoName;
 
     SaveEnemyInfo ShowedEnemy;
@@ -86,15 +86,15 @@ public class GameManager : MonoBehaviour
         getScore = FindObjectOfType<GetScore>();
         player = PlayerManager.instance;
         hashing = DataHashing.inst;
-
         DeleteFile();
+        LoadCharacktersOnStart();
+
         LoadScore();
         StartLoad();
 
         AudioStartLoad();
 
         ItemsStartLoad();
-        LoadCharacktersOnStart();
         StartEnemyInfoLoad();
         foreach (var lang in dataSett)
         {

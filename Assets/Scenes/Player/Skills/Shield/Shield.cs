@@ -6,7 +6,6 @@ public class Shield : SkillBaseMono
 {
     public float healthShield;
     public float healthShieldMissed;
-    PlayerManager player;
     public SlowArea slowObj;
     public float rockDamage;
     public GameObject rockObj;

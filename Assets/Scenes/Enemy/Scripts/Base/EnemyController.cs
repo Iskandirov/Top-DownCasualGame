@@ -34,6 +34,7 @@ public class Enemy
     [SerializeField] public enum SpawnType { Camera, Map }
     
     [SerializeField] public AIPath path;
+    [SerializeField] public float expGiven;
     public Enemy()
     {
         health = healthMax;
@@ -72,6 +73,7 @@ public class Boss : Enemy , IEnemy
     public GameObject uiParent;
     public GameObject health;
     public GameObject healthBossObj;
+    public Image fillAmountImage;
 
     public ItemParameters itemPrefab;
     [HideInInspector]
@@ -93,6 +95,8 @@ public class Boss : Enemy , IEnemy
         health = UnityEngine.Object.Instantiate(healthBossObj, uiParent.transform);
         health.GetComponent<RectTransform>().anchoredPosition = new Vector2(Screen.width / 2 - 100f, Screen.height / 2 - 130f);
         health.GetComponentInChildren<Image>().fillAmount = 1;
+        fillAmountImage = health.GetComponentInChildren<Image>();
+        health.SetActive(true);
         return healthBossObj;
     }
 
@@ -236,7 +240,6 @@ public class EnemyController : MonoBehaviour
     Enemy matchingEnemy;
     public static EnemyController instance;
     [Header("Exp info")]
-    public float expGiven;
     public EXP expiriancePoint;
     GameObject objVFX;
     private void Awake()
@@ -260,9 +263,12 @@ public class EnemyController : MonoBehaviour
             {
                 if (buildIndex > 0)
                 {
-                    enemy.SetSpeed((enemy.speedMax + buildIndex) * 1.1f);
-                    enemy.HealthChange((enemy.healthMax + buildIndex) * 1.3f);
-                    enemy.DamageReduce((enemy.damageMax + buildIndex) * 1.3f);
+                    int firstLevelIndex = SceneManager.GetSceneByName("Level_1").buildIndex - 1;
+                    float levelAceleration = buildIndex + SceneManager.GetActiveScene().buildIndex - firstLevelIndex;
+
+                    enemy.SetSpeed((enemy.speedMax + levelAceleration) * 0.7f);
+                    enemy.HealthChange((enemy.healthMax + levelAceleration) * 0.6f);
+                    enemy.DamageReduce((enemy.damageMax + levelAceleration) * 1.2f);
                 }
             }
             timeToSpawnBobs += (buildIndex + 1) * 15;
@@ -376,6 +382,15 @@ public class EnemyController : MonoBehaviour
     private void SpawnEnemies(List<GameObject> pool, SpawnType type, int count)
     {
         GameObject enemy = GetFromPool(pool);
+        // Отримати поточне ім'я об'єкта
+        string name = enemy.name;
+
+        // Видалити частину імені
+        string newName = name.Replace("(Clone)", "");
+
+        // Змінити ім'я об'єкта
+        enemy.name = newName;
+
         IDChecker(enemy.name);
         for (int i = 0; i < count; i++)
         {
@@ -430,7 +445,7 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (children.Count > 0)
+        try
         {
             foreach (EnemyState enemy in children)
             {
@@ -448,6 +463,10 @@ public class EnemyController : MonoBehaviour
                     BossSpawn();
                 }
             }
+        }
+        catch(Exception e)
+        {
+            Debug.LogWarning("Catched exception modified array");
         }
     }
     ///Health
@@ -479,9 +498,11 @@ public class EnemyController : MonoBehaviour
     {
         matchingEnemy = enemies.First(s => s.prefab.mobName == enemy.mobName);
         EXP a = Instantiate(expiriancePoint, new Vector3(enemy.objTransform.position.x, enemy.objTransform.position.y, 1.9f), Quaternion.identity);
-        a.expBuff = expGiven * matchingEnemy.dangerLevel;
-
-        player.expiriencepoint.fillAmount += expGiven * matchingEnemy.dangerLevel / player.expNeedToNewLevel;
+        a.expBuff = matchingEnemy.expGiven * matchingEnemy.dangerLevel;
+        //if (player.expiriencepoint != null)
+        {
+            player.expiriencepoint.fillAmount += matchingEnemy.expGiven * matchingEnemy.dangerLevel / player.expNeedToNewLevel;
+        }
         GameManager.Instance.score++;
     }
     public void Respawn(EnemyState enemy, SpawnType type)
@@ -515,7 +536,9 @@ public class EnemyController : MonoBehaviour
 
         if (matchingEnemy != null)
         {
-            bosses.health.GetComponentInChildren<Image>().fillAmount -= damage / bosses.healthMax;
+            Debug.Log(bosses.fillAmountImage);
+            Debug.Log(bosses.healthMax);
+            bosses.fillAmountImage.fillAmount -= damage / bosses.healthMax;
             if (enemy.health <= 0)
             {
                 bosses.Death(enemy);
@@ -528,7 +551,6 @@ public class EnemyController : MonoBehaviour
             GameManager.Instance.FindStatName(enemy.mobName, 1);
 
             Respawn(enemy, SpawnType.Camera);
-
         }
     }
     ///Attack
@@ -600,7 +622,7 @@ public class EnemyController : MonoBehaviour
         //    gameManager.enemyCount = 0;
         //}
         children.Clear();
-        Destroy(parent.gameObject);
+        parent.gameObject.SetActive(false);
         GetComponent<EnemyController>().SetSpawnStatus(true);
         if (AudioManager.instance != null)
         {

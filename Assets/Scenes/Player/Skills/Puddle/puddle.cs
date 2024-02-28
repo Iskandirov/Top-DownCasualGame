@@ -5,7 +5,6 @@ public class puddle : SkillBaseMono
 {
     public Collider2D[] enemies;
   
-    PlayerManager player;
     Vector3 halfExtents;
     void OnDrawGizmos()
     {

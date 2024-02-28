@@ -7,7 +7,7 @@ public class SetParametersToitem : MonoBehaviour
     public string ItemName;
     public TextMeshProUGUI ItemStat;
     public Image ItemImage;
-    public Image Rare;
+    public SpriteRenderer Rare;
     public int IDRare;
     public string RareName;
     public string level;

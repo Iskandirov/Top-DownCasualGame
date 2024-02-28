@@ -27,8 +27,8 @@ RectTransform:
   m_GameObject: {fileID: 2365414362462982440}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6018486278008928932}
   m_Father: {fileID: 3772772046346371228}
@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f51effac0f0b7d04eb978823121ba802, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d3e5654d8f824e64db589ea59786ff53, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -151,8 +151,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4291611852
+  m_fontColor: {r: 0.8018868, g: 0.8018868, b: 0.8018868, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 66.6
+  m_fontSize: 73.1
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -205,7 +205,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -126.085464, y: -56.406628, z: -121.10831, w: -38.15742}
+  m_margin: {x: -3.6133728, y: -90.27978, z: -61.853867, w: -107.26673}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -254,8 +254,8 @@ RectTransform:
   m_GameObject: {fileID: 3161841138136722733}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: -2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.37, y: 1.37, z: 1.37}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 9123702652576984259}
   - {fileID: 2365495856371750042}
@@ -319,8 +319,8 @@ MonoBehaviour:
   starObj: {fileID: 564367929296594529, guid: 0c9a4df48ca167e4286984e92de158f6, type: 3}
   firstBuff: {fileID: 7765541699007452962}
   secondBuff: {fileID: 945873658729405090}
-  firstBuffBtn: {fileID: 0}
-  secondBuffBtn: {fileID: 0}
+  firstBuffBtn: {fileID: 5462151232099716288}
+  secondBuffBtn: {fileID: 731583657698186791}
   isSkillIcons: 01000000000000000000000000000000
   SkillIconsMax: 0
   skillsSave:
@@ -375,7 +375,7 @@ MonoBehaviour:
       - isTrigger: 0
         value: 2
       - isTrigger: 0
-        value: 3
+        value: 2
       - isTrigger: 0
         value: 2
       - isTrigger: 0
@@ -384,7 +384,7 @@ MonoBehaviour:
       objToSpawn: {fileID: 6051510987840879429, guid: 2f6275aa03e73ec448443be3579db8a3, type: 3}
       stepMax: 5
       lifeTime: 3
-      damage: 5
+      damage: 3
       damageTickMax: 0
       countObjects: 3
       radius: 60
@@ -402,7 +402,7 @@ MonoBehaviour:
     Description:
     - Spawn a lightning that hit enemies around you
     - + 2 lightnings
-    - x3 damage
+    - x2 damage
     - Lightning stun enemies
     - Less recharge time
     type: base
@@ -426,7 +426,7 @@ MonoBehaviour:
       stepMax: 7
       lifeTime: 4
       damage: 0.5
-      damageTickMax: 0.3
+      damageTickMax: 0.5
       countObjects: 1
       radius: 1
       isPassive: 0
@@ -444,7 +444,7 @@ MonoBehaviour:
     - Spawn the electrican chair that hits enemies that touche him
     - More radius
     - x2 damage
-    - + 2 spawned chairs
+    - + 2 spawned puddle
     - Faster damage
     type: aoe
   - Name: Meteor
@@ -455,7 +455,7 @@ MonoBehaviour:
       - isTrigger: 0
         value: 1
       - isTrigger: 0
-        value: 0.5
+        value: 0.2
       - isTrigger: 0
         value: 2
       - isTrigger: 0
@@ -496,7 +496,7 @@ MonoBehaviour:
       - isTrigger: 0
         value: 5
       - isTrigger: 0
-        value: 5
+        value: 3
       - isTrigger: 0
         value: 1
       - isTrigger: 0
@@ -507,7 +507,7 @@ MonoBehaviour:
       objToSpawn: {fileID: 6952950765238762621, guid: 07ec648f247aff34ca1230010d643d86, type: 3}
       stepMax: 10
       lifeTime: 1
-      damage: 5
+      damage: 2
       damageTickMax: 0
       countObjects: 1
       radius: 0
@@ -671,7 +671,7 @@ MonoBehaviour:
       objToSpawn: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
       stepMax: 20
       lifeTime: 12
-      damage: 20
+      damage: 30
       damageTickMax: 0
       countObjects: 1
       radius: 1
@@ -703,7 +703,7 @@ MonoBehaviour:
       - isTrigger: 0
         value: 2
       - isTrigger: 0
-        value: 1
+        value: 0.5
       - isTrigger: 0
         value: 4
       - isTrigger: 0
@@ -712,8 +712,8 @@ MonoBehaviour:
       objToSpawn: {fileID: 3824504510679716380, guid: bc6dbbe2be906014a9dd32b2bb9fcedc, type: 3}
       stepMax: 15
       lifeTime: 6
-      damage: 1
-      damageTickMax: 0.1
+      damage: 0.5
+      damageTickMax: 0.2
       countObjects: 1
       radius: 2
       isPassive: 0
@@ -826,7 +826,7 @@ MonoBehaviour:
       - isTrigger: 0
         value: 2
       - isTrigger: 0
-        value: 2
+        value: 1
       - isTrigger: 0
         value: 1
       - isTrigger: 0
@@ -835,7 +835,7 @@ MonoBehaviour:
       objToSpawn: {fileID: 4506995009783188816, guid: dc0c951fdfe1ff54f914cd1eace96eaa, type: 3}
       stepMax: 0
       lifeTime: 5
-      damage: 1
+      damage: 0.5
       damageTickMax: 0.2
       countObjects: 1
       radius: 0
@@ -947,7 +947,7 @@ MonoBehaviour:
       - isTrigger: 0
         value: 0
       - isTrigger: 0
-        value: 5
+        value: 2
       - isTrigger: 0
         value: 1
       - isTrigger: 0
@@ -958,7 +958,7 @@ MonoBehaviour:
       objToSpawn: {fileID: 6289732212715222565, guid: 0cf5dbb8e0508574aa9ae4b33b4fb8ae, type: 3}
       stepMax: 11
       lifeTime: 3
-      damage: 6
+      damage: 3
       damageTickMax: 0
       countObjects: 1
       radius: 1
@@ -1045,12 +1045,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 126
+    m_Left: 88
     m_Right: 0
-    m_Top: 58
+    m_Top: 117
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 0
+  m_Spacing: 88.53
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
@@ -1078,7 +1078,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1098,13 +1098,13 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -715851231
   m_SortingLayer: 4
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d443aad6ac593df49a07efb0cbeb8856, type: 3}
-  m_Color: {r: 0, g: 0.6745098, b: 1, a: 1}
+  m_SortingOrder: 10
+  m_Sprite: {fileID: 21300000, guid: 5d3b775fb7f8b644094edc24067b1f61, type: 3}
+  m_Color: {r: 0.764151, g: 0.764151, b: 0.764151, a: 0.91764706}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 655, y: 925}
+  m_Size: {x: 786, y: 1110}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1185,8 +1185,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4291611852
+  m_fontColor: {r: 0.8018868, g: 0.8018868, b: 0.8018868, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1203,8 +1203,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 57.7
-  m_fontSizeBase: 36
+  m_fontSize: 50.1
+  m_fontSizeBase: 50.5
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 6.8
@@ -1239,7 +1239,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -117.79036, y: -44.793503, z: -122.767365, w: -38.157417}
+  m_margin: {x: 5.2818756, y: -82.86544, z: -46.052856, w: -85.602974}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1286,16 +1286,16 @@ RectTransform:
   m_GameObject: {fileID: 5785389796652069833}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.76, y: 0.76, z: 0.76}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6638520536028692151}
   m_Father: {fileID: 9123702652576984259}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 121.674805, y: 122.3568}
+  m_AnchoredPosition: {x: 3.41, y: -3.89}
+  m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &345824461431597398
 CanvasRenderer:
@@ -1418,8 +1418,8 @@ RectTransform:
   m_GameObject: {fileID: 6111346495076331492}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4996934155133996209}
   m_Father: {fileID: 3772772046346371228}
@@ -1457,7 +1457,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f51effac0f0b7d04eb978823121ba802, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d3e5654d8f824e64db589ea59786ff53, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1494,16 +1494,16 @@ RectTransform:
   m_GameObject: {fileID: 7141023079531100083}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.62, y: 0.62, z: 0.62}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4772377936849328413}
   m_Father: {fileID: 6018486278008928932}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 387, y: -1}
-  m_SizeDelta: {x: 650, y: 210}
+  m_AnchoredPosition: {x: 269, y: -1}
+  m_SizeDelta: {x: 482, y: 335}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7141584406695464529
 CanvasRenderer:
@@ -1533,7 +1533,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9f358b733d7e0b54990a4f0331452fbc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4bbf39234edee0f4f8ac588e2889afcd, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1571,16 +1571,16 @@ RectTransform:
   m_GameObject: {fileID: 8811503237662358427}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.76, y: 0.76, z: 0.76}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1200343215403940957}
   m_Father: {fileID: 2365495856371750042}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 121.67999, y: 122.35}
+  m_AnchoredPosition: {x: 8, y: -3.89}
+  m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7617275069094707425
 CanvasRenderer:
@@ -1703,16 +1703,16 @@ RectTransform:
   m_GameObject: {fileID: 9079056477295907981}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.62, y: 0.62, z: 0.62}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6600049919514614896}
   m_Father: {fileID: 4996934155133996209}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 389, y: -1}
-  m_SizeDelta: {x: 650, y: 210}
+  m_AnchoredPosition: {x: 263.4, y: -1}
+  m_SizeDelta: {x: 482, y: 335}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8468265495212849752
 CanvasRenderer:
@@ -1742,7 +1742,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9f358b733d7e0b54990a4f0331452fbc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4bbf39234edee0f4f8ac588e2889afcd, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

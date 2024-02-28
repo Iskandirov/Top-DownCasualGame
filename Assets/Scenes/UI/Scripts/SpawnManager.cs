@@ -1,6 +1,9 @@
+using Pathfinding;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [DefaultExecutionOrder(11)]
@@ -59,7 +62,24 @@ public class SpawnManager : MonoBehaviour
         {
             yield return new WaitForSeconds(interval);
             GameObject barrel = GetFromPool(barrelPool, barrelPrefab);
-            //SpawnObjectInMapBounds(barrel);
+            SpawnObjectInMapBounds(barrel);
+            // Отримати координати та розмір нового об'єкта
+            var bounds = barrel.GetComponent<Renderer>().bounds;
+            var minX = bounds.min.x;
+            var minZ = bounds.min.z;
+            var maxX = bounds.max.x;
+            var maxZ = bounds.max.z;
+
+            var map = AstarPath.active.data.gridGraph.nodes;
+            // Визначити область на карті, яка буде заблокована новим об'єктом
+            foreach (var node in map)
+            {
+                if (node.XCoordinateInGrid >= minX && node.XCoordinateInGrid <= maxX && node.ZCoordinateInGrid >= minZ && node.ZCoordinateInGrid <= maxZ)
+                {
+                    node.Walkable = false;
+                }
+            }
+            AstarPath.active.UpdateGraphs(bounds);
         }
     }
     public void SpawnObjectInMapBounds(GameObject obj)

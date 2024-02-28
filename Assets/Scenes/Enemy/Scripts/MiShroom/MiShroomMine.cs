@@ -1,79 +1,97 @@
+using Unity.VisualScripting;
 using UnityEngine;
-
+using UnityEngine.Rendering.Universal;
 public class MiShroomMine : MonoBehaviour
 {
     public float damage;
-    GameObject objectToHit;
+    GameObject playerToHit;
+    GameObject shieldToHit;
     public MineSpawn parent;
-    public bool inZone;
     PlayerManager player;
     public Animator anim;
     // Start is called before the first frame update
     private void Start()
     {
         player = PlayerManager.instance;   
-        inZone = false;
         SetAlphaRecursively(transform, 0f);
     }
     private void SetAlphaRecursively(Transform parent, float alpha)
     {
-        // �������� �� ��'���� SpriteRenderer � ������������ ��'���
+        // Отримати всі компоненти SpriteRenderer у дочірніх об'єктах
         SpriteRenderer[] spriteRenderers = parent.GetComponentsInChildren<SpriteRenderer>();
 
-        // ������� ����� �� ������������ sorting order ��� ��� ��'���� SpriteRenderer
+        // Перебрати всі SpriteRenderer та змінити їх прозорість
         foreach (SpriteRenderer spriteRenderer in spriteRenderers)
         {
             Color spriteColor = spriteRenderer.color;
-            spriteColor.a = alpha; // ������������ ����� � 1 ��� ����� ��������
+            spriteColor.a = alpha;
             spriteRenderer.color = spriteColor;
         }
-        if (GetComponentInChildren<UnityEngine.Rendering.Universal.Light2D>())
+
+        // Перевірити, чи є дочірні об'єкти з компонентом Light2D
+        if (parent.GetComponentInChildren<Light2D>() != null)
         {
-            Color spriteColorLight = GetComponentInChildren<UnityEngine.Rendering.Universal.Light2D>().color;
-            spriteColorLight.a = alpha; // ������������ ����� � 1 ��� ����� ��������
-            GetComponentInChildren<UnityEngine.Rendering.Universal.Light2D>().color = spriteColorLight;
+            // Отримати компонент Light2D у дочірньому об'єкті
+            Light2D light2D = parent.GetComponentInChildren<Light2D>();
+
+            // Змінити прозорість компонента Light2D
+            Color lightColor = light2D.color;
+            lightColor.a = alpha;
+            light2D.color = lightColor;
         }
-       
+
+        // Рекурсивно викликати метод для дочірніх об'єктів
+        foreach (Transform child in parent)
+        {
+            SetAlphaRecursively(child, alpha);
+        }
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Shield") && !collision.isTrigger)
+        if (collision.CompareTag("Shield"))
         {
-            objectToHit = collision.gameObject;
-            inZone = true;
+            Debug.Log(4);
+            shieldToHit = collision.gameObject;
             SetAlphaRecursively(transform, 1f);
             anim.SetBool("Action", true);
         }
         else if (collision.CompareTag("Player") && !collision.isTrigger)
         {
-            objectToHit = collision.gameObject;
-            inZone = true;
+            if (shieldToHit == null)
+            {
+                SetAlphaRecursively(transform, 1f);
+                anim.SetBool("Action", true);
+                playerToHit = collision.gameObject;
+            }
         }
-        
+
     }
     public void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") && !collision.isTrigger)
         {
-            inZone = false;
-            objectToHit = null;
+            playerToHit = null;
         }
-        else if (collision.CompareTag("Shield") && !collision.isTrigger)
+        if (collision.CompareTag("Shield") && !collision.isTrigger)
         {
-            inZone = false;
-            objectToHit = null;
+            playerToHit = null;
+            shieldToHit = null;
+
         }
     }
     public void DamageDeal()
     {
-        if (inZone && objectToHit.CompareTag("Shield"))
+        Debug.Log(1);
+        if (shieldToHit != null)
         {
-            objectToHit.GetComponent<Shield>().healthShield -= damage;
+            Debug.Log(2);
+            shieldToHit.GetComponent<Shield>().healthShield -= damage;
             GameManager.Instance.FindStatName("ShieldAbsorbedDamage", damage);
         }
-        else if (inZone && objectToHit.CompareTag("Player") && !player.isInvincible)
+        else if (playerToHit != null && !player.isInvincible)
         {
+            Debug.Log(3);
             player.TakeDamage(damage);
         }
         parent.mineCount--;
