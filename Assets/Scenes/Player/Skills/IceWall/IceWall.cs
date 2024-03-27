@@ -62,6 +62,9 @@ public class IceWall : SkillBaseMono
     {
         if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
+            ElementActiveDebuff debuff = collision.GetComponent<ElementActiveDebuff>();
+            debuff.StartCoroutine(debuff.EffectTime(Elements.status.Cold, 5));
+
             StartCoroutine(EnemyController.instance.SlowEnemy(collision.GetComponent<EnemyState>(), 1f, 0.5f));
             if (damageTick <= 0)
             {
@@ -75,6 +78,7 @@ public class IceWall : SkillBaseMono
     {
         if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
+
             StartCoroutine(EnemyController.instance.SlowEnemy(collision.GetComponent<EnemyState>(), 1f, 1f));
         }
     }

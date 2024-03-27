@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,7 +20,6 @@ public class FieldSlots : MonoBehaviour
     void Start()
     {
         hashing = FindObjectOfType<DataHashing>();
-        data = FindObjectOfType<LoadItemData>();
         priceStart = price;
         childrenBtn.interactable = false;
         objScore = FindObjectOfType<GetScore>();
@@ -51,6 +51,7 @@ public class FieldSlots : MonoBehaviour
             string remove = objToCraft.ItemName + " " + objToCraft.level;
             string removeCopy = remove;
             string path = Path.Combine(Application.persistentDataPath, "savedData.txt");
+            //WriteReadFile.Write(path, "SavedObjectData", data.Name,);
             if (File.Exists(path))
             {
                 string[] lines = File.ReadAllLines(path);
@@ -70,8 +71,11 @@ public class FieldSlots : MonoBehaviour
                         newItem.RareSprite = Resources.Load<Sprite>(CheckLevelUpgrade(data));
                         newItem.IDRare = data.IDRare;
                         newItem.Level = data.Level + 1;
+                        newItem.Tag = data.Tag + "_" + data.Level;
+                        newItem.RareTag = data.RareTag + "_" + data.Level;
                         newItem.Count = data.Count;
-                        int statCount = int.Parse(data.Stat);
+                        newItem.Description = data.Description;
+                        float statCount = float.Parse(data.Stat);
                         statCount *= 2;
                         newItem.Stat = statCount.ToString();
 
@@ -119,9 +123,11 @@ public class FieldSlots : MonoBehaviour
                 objScore.score -= price;
                 objScore.SaveScore((int)objScore.score);
                 coinsTxt.text = objScore.score.ToString();
+                GameManager.Instance.ClosePanel(GameManager.Instance.menuPanel);
             }
         }
     }
+    //public
     public void EquipedStillHere()
     {
         string path = Path.Combine(Application.persistentDataPath, "EquipedItems.txt");
@@ -141,8 +147,9 @@ public class FieldSlots : MonoBehaviour
                     {
                         string decrypt = hashing.Decrypt(jsonLine);
                         SavedEquipData data = JsonUtility.FromJson<SavedEquipData>(decrypt);
-                        if (data.Name == dataObj.Name && data.Level == dataObj.Level)
+                        if (data.Name == dataObj.Name && data.Level == dataObj.Level && count.FirstOrDefault(s => s.Name == data.Name) == null)
                         {
+                            Debug.Log(data.Name);
                             count.Add(data);
                         }
                     }

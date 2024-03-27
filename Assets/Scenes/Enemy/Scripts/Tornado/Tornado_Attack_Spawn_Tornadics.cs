@@ -6,6 +6,7 @@ public class Tornado_Attack_Spawn_Tornadics : MonoBehaviour
 {
     public Tornadic_Move tornadic;
     public float tornadicCount = 10;
+    public float interval = 10;
     Transform objTransofrm;
     // Start is called before the first frame update
     void Start()
@@ -18,7 +19,7 @@ public class Tornado_Attack_Spawn_Tornadics : MonoBehaviour
     {
         while(true)
         {
-            yield return new WaitForSeconds(10f);
+            yield return new WaitForSeconds(interval);
             Spawn();
         }
     }

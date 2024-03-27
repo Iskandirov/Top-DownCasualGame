@@ -25,12 +25,7 @@ public class puddle : SkillBaseMono
             basa.damage *= basa.stats[2].value;
             basa.stats[2].isTrigger = false;
         }
-        if (basa.stats[3].isTrigger)
-        {
-            basa.countObjects += basa.stats[3].value;
-            basa.stats[3].isTrigger = false;
-            StartCoroutine(WaitToAnotherObject(2, basa.spawnDelay));
-        }
+       
         if (basa.stats[4].isTrigger)
         {
             basa.damageTickMax -= basa.stats[4].value;
@@ -44,15 +39,7 @@ public class puddle : SkillBaseMono
         StartCoroutine(CastSpell());
         CoroutineToDestroy(gameObject, basa.lifeTime);
     }
-    private IEnumerator WaitToAnotherObject(int count, float delay)
-    {
-        for (int i = 0; i < count - 1; i++)
-        {
-            yield return new WaitForSeconds(delay);
-            GameObject a = Instantiate(gameObject, new Vector3(player.objTransform.position.x + Random.Range(-20, 20), player.objTransform.position.y + Random.Range(-20, 20), 1.9f), Quaternion.identity);
-            a.transform.localScale = new Vector3(1f, 1f, 1f);
-        }
-    }
+   
     private IEnumerator CastSpell()
     {
         while (true)

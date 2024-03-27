@@ -1,9 +1,12 @@
+using Pathfinding;
 using UnityEngine;
 
 public class EnemyState : MonoBehaviour
 {
     [field: SerializeField] public bool isSlowed { get; private set; }
+    [field: SerializeField] public bool isStun { get; private set; }
     [field: SerializeField] public bool isBurn { get; private set; }
+    [field: SerializeField] public bool isAttack { get; private set; }
     [field: SerializeField] public string mobName { get; private set; }
     [field: SerializeField] public string type { get; private set; }
     [field: SerializeField] public float attackSpeed { get; set; }
@@ -12,27 +15,51 @@ public class EnemyState : MonoBehaviour
     [field: SerializeField] public int timesPerOne { get; private set; }
     [field: SerializeField] public Transform objTransform { get; private set; }
     [field: SerializeField] public Transform objToAttack { get; private set; }
+    [field: SerializeField] public GameObject ElementsParent { get; private set; }
+    [SerializeField] public GameObject RepositionPoint;
+    [SerializeField] public AIDestinationSetter destination;
+    [SerializeField] public CircleCollider2D colider;
+    [SerializeField] public AIPath path;
+
     public GameObject objectToHit;
     public void SetStunned()
     {
         isSlowed = true;
-    }  
-    public void SetType(string value)
-    {
-        type = value;
-    } 
+        isStun = true;
+    }
     public void SetNotStunned()
     {
         isSlowed = false;
+        isStun = false;
     }
+    public void Stun(float stunTime)
+    {
+        GetComponent<Animator>().SetBool("IsStuned", true);
+        Invoke("NotStun", stunTime);
+    }
+    public void NotStun()
+    {
+        GetComponent<Animator>().SetBool("IsStuned", false);
+    }
+
+    public void SetType(string value)
+    {
+        type = value;
+    }
+
     public void SetBurn()
     {
         isBurn = !isBurn;
-    } 
+    }
     public void SetIsNotAttack()
     {
         GetComponent<Animator>().SetBool("IsHit", false);
-    } 
+        isAttack = false;
+    }
+    public void Attack()
+    {
+        isAttack = true;
+    }
     public void SetAttackSpeed(float newAttackSpeed)
     {
         attackSpeed = newAttackSpeed;
@@ -40,7 +67,7 @@ public class EnemyState : MonoBehaviour
     public void HealthDamage(float newHealth)
     {
         health = newHealth;
-    } 
+    }
     public void Damage(float damage)
     {
         this.damage = damage;
@@ -55,7 +82,7 @@ public class EnemyState : MonoBehaviour
             GetComponent<Animator>().SetBool("IsHit", true);
         }
     }
-   
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))

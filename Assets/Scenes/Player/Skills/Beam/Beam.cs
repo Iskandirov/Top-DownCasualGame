@@ -65,7 +65,7 @@ public class Beam : SkillBaseMono
         direction = direction * basa.radius;
 
         // Рухаємо об'єкт до кінцевої позиції
-        objTransform.position = new Vector2(player.objTransform.position.x, player.objTransform.position.y);
+        objTransform.position = new Vector3(player.objTransform.position.x, player.objTransform.position.y, 5f);
 
         // Повертаємо коло в напрямку курсора
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -77,21 +77,11 @@ public class Beam : SkillBaseMono
     {
         if (collision.CompareTag("Enemy"))
         {
-            EnemyState objHealt = collision.GetComponent<EnemyState>();
-            ElementActiveDebuff debuff = collision.GetComponent<ElementActiveDebuff>();
-            if (debuff != null)
-            {
-                debuff.StartCoroutine(debuff.EffectTime(Elements.status.Steam, 5));
-            }
-            EnemyController.instance.TakeDamage(objHealt,basa.damage * debuff.elements.CurrentStatusValue(Elements.status.Steam)
-                / debuff.elements.CurrentStatusValue(Elements.status.Cold));
-
-            GameManager.Instance.FindStatName("beamDamage", (basa.damage * debuff.elements.CurrentStatusValue(Elements.status.Steam)) 
-                / debuff.elements.CurrentStatusValue(Elements.status.Cold));
+            Damage(collision);
         }
         else if (collision.CompareTag("Barrel") && collision != null)
         {
-            collision.GetComponent<ObjectHealth>().health -= 1;
+            collision.GetComponent<ObjectHealth>().TakeDamage();
         }
     }
     public void OnTriggerStay2D(Collider2D collision)
@@ -101,23 +91,24 @@ public class Beam : SkillBaseMono
             if (tick <= 0)
             {
                 tick = basa.damageTickMax;
-                EnemyState objHealt = collision.GetComponent<EnemyState>();
-                ElementActiveDebuff debuff = collision.GetComponent<ElementActiveDebuff>();
-                if (debuff != null)
-                {
-                    debuff.StartCoroutine(debuff.EffectTime(Elements.status.Steam, 5));
-                }
-                EnemyController.instance.TakeDamage(objHealt, (basa.damage * debuff.elements.CurrentStatusValue(Elements.status.Steam))
-                    / debuff.elements.CurrentStatusValue(Elements.status.Cold));
-
-                GameManager.Instance.FindStatName("beamDamage", (basa.damage * debuff.elements.CurrentStatusValue(Elements.status.Steam))
-                / debuff.elements.CurrentStatusValue(Elements.status.Cold));
+                Damage(collision);
             }
         }
         else if (collision.CompareTag("Barrel") && collision != null)
         {
-            collision.GetComponent<ObjectHealth>().health -= 1;
+            collision.GetComponent<ObjectHealth>().TakeDamage();
         }
+    }
+    void Damage(Collider2D collision)
+    {
+        EnemyState objHealt = collision.GetComponent<EnemyState>();
+        ElementActiveDebuff debuff = collision.GetComponent<ElementActiveDebuff>();
+        debuff.StartCoroutine(debuff.EffectTime(Elements.status.Steam, 5));
+        EnemyController.instance.TakeDamage(objHealt, (basa.damage * debuff.elements.CurrentStatusValue(Elements.status.Steam))
+            / debuff.elements.CurrentStatusValue(Elements.status.Cold));
+
+        GameManager.Instance.FindStatName("beamDamage", (basa.damage * debuff.elements.CurrentStatusValue(Elements.status.Steam))
+        / debuff.elements.CurrentStatusValue(Elements.status.Cold));
     }
     private void CreateBeam(float angle, float x, float y)
     {

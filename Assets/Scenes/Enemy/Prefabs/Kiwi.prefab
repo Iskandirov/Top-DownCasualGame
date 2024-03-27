@@ -460,7 +460,7 @@ MonoBehaviour:
   - {x: -0.11837023, y: -1.5620173, z: 0.00000025911544}
   m_ShapePathHash: -562663664
   m_Mesh: {fileID: 0}
-  m_InstanceId: 113944
+  m_InstanceId: 192236
   m_LocalBounds:
     m_Center: {x: 0.017199874, y: 0.8882719, z: 0}
     m_Extent: {x: 1.9207116, y: 2.4502892, z: 0}
@@ -716,7 +716,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <isSlowed>k__BackingField: 0
+  <isStun>k__BackingField: 0
   <isBurn>k__BackingField: 0
+  <isAttack>k__BackingField: 0
   <mobName>k__BackingField: Kiwi
   <type>k__BackingField: 
   <attackSpeed>k__BackingField: 0
@@ -725,6 +727,11 @@ MonoBehaviour:
   <timesPerOne>k__BackingField: 1
   <objTransform>k__BackingField: {fileID: 3131333948750598606}
   <objToAttack>k__BackingField: {fileID: 8853671543020772513, guid: d8fb17a4937e83a4c89965e8c809ea4e, type: 3}
+  <ElementsParent>k__BackingField: {fileID: 1508904033268927860}
+  RepositionPoint: {fileID: 4915736915067170013}
+  destination: {fileID: 3373883192311042045}
+  colider: {fileID: 4676899112522618636}
+  path: {fileID: -6047008906573336293}
   objectToHit: {fileID: 0}
 --- !u!58 &4676899112522618636
 CircleCollider2D:
@@ -1422,6 +1429,11 @@ PrefabInstance:
 --- !u!224 &171519794044056683 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+  m_PrefabInstance: {fileID: 1958971034364172816}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1508904033268927860 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1143665813906544484, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
   m_PrefabInstance: {fileID: 1958971034364172816}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7228817836017201728

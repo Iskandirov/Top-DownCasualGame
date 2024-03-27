@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static Enemy;
+using static UnityEngine.EventSystems.EventTrigger;
 
 [Serializable]
 public class EnemyPool 
@@ -31,10 +32,12 @@ public class Enemy
     [field: SerializeField] public int dangerLevel { get; private set; }
     
     [field: SerializeField] public int maxCountPerTime { get; private set; }
+    [field: SerializeField] public bool isSpawnInsideMapBounds { get; private set; }
     [SerializeField] public enum SpawnType { Camera, Map }
     
     [SerializeField] public AIPath path;
     [SerializeField] public float expGiven;
+
     public Enemy()
     {
         health = healthMax;
@@ -64,19 +67,14 @@ public class Enemy
     {
         attackSpeed = value;
     }
-    //public abstract void Death();
-    //public abstract GameObject Attack();
 }
 [Serializable]
 public class Boss : Enemy , IEnemy
 {
-    public GameObject uiParent;
     public GameObject health;
-    public GameObject healthBossObj;
     public Image fillAmountImage;
 
     public ItemParameters itemPrefab;
-    [HideInInspector]
     public List<SavedObjectData> itemsLoaded;
     public float spawnRare = 0.6f;
     public float spawnMiphical = 0.3f;
@@ -91,13 +89,9 @@ public class Boss : Enemy , IEnemy
 
     public GameObject SetBase()
     {
-        uiParent = GameObject.Find("/UI");
-        health = UnityEngine.Object.Instantiate(healthBossObj, uiParent.transform);
-        health.GetComponent<RectTransform>().anchoredPosition = new Vector2(Screen.width / 2 - 100f, Screen.height / 2 - 130f);
-        health.GetComponentInChildren<Image>().fillAmount = 1;
-        fillAmountImage = health.GetComponentInChildren<Image>();
         health.SetActive(true);
-        return healthBossObj;
+        health.GetComponentInChildren<Image>().fillAmount = 1;
+        return health;
     }
 
     public GameObject Attack(EnemyState enemy)
@@ -108,7 +102,7 @@ public class Boss : Enemy , IEnemy
    
     public void Death(EnemyState enemy)
     {
-        healthBossObj.SetActive(false);
+        health.SetActive(false);
         ItemRarity();
         float randomValue = UnityEngine.Random.value;
 
@@ -200,6 +194,7 @@ public class Mele : Enemy, IEnemy
 [Serializable]
 public class Range : Enemy, IEnemy
 {
+
     public GameObject Attack(EnemyState enemy)
     {
         return enemy.objToAttack.gameObject;
@@ -211,7 +206,7 @@ public class Range : Enemy, IEnemy
         //return enemy.objToAttack.gameObject;
     }
 }
-[DefaultExecutionOrder(6)]
+//[DefaultExecutionOrder(6)]
 public class EnemyController : MonoBehaviour
 {
     [field: SerializeField] public Boss bosses { get; set; }
@@ -230,7 +225,6 @@ public class EnemyController : MonoBehaviour
     public Timer timer;
     public float timeToSpawnBobs;
     public bool isSpawned = false;
-    float timeToSpawnBobsStart;
 
     GameManager gameManager;
     PlayerManager player;
@@ -244,7 +238,7 @@ public class EnemyController : MonoBehaviour
     GameObject objVFX;
     private void Awake()
     {
-        instance ??= this;
+        instance = this;
     }
     public void SetSpawnStatus(bool currentStatus)
     {
@@ -256,24 +250,26 @@ public class EnemyController : MonoBehaviour
         mele = new Mele();
         range = new Range();
         gameManager = GameManager.Instance;
-        int buildIndex = gameManager.LoadObjectLevelCount(SceneManager.GetActiveScene().buildIndex);
+        int LevelID = gameManager.LoadObjectLevelCount(SceneManager.GetActiveScene().buildIndex);
+        string path = "Assets/Scenes/Level_1.unity";
+        int index =  SceneUtility.GetBuildIndexByScenePath(path);
+
+
         if (!isTutorial)
         {
             foreach (var enemy in enemies)
             {
-                if (buildIndex > 0)
+                if (LevelID > 0)
                 {
-                    int firstLevelIndex = SceneManager.GetSceneByName("Level_1").buildIndex - 1;
-                    float levelAceleration = buildIndex + SceneManager.GetActiveScene().buildIndex - firstLevelIndex;
-
-                    enemy.SetSpeed((enemy.speedMax + levelAceleration) * 0.7f);
+                    int firstLevelIndex = index - 1;
+                    float levelAceleration = LevelID + SceneManager.GetActiveScene().buildIndex - firstLevelIndex;
+                    enemy.SetSpeed((enemy.speedMax * levelAceleration * 0.33f) * 0.7f);
                     enemy.HealthChange((enemy.healthMax + levelAceleration) * 0.6f);
                     enemy.DamageReduce((enemy.damageMax + levelAceleration) * 1.2f);
                 }
             }
-            timeToSpawnBobs += (buildIndex + 1) * 15;
+            timeToSpawnBobs += (LevelID + 1) * 15;
 
-            timeToSpawnBobsStart = timeToSpawnBobs;
         }
 
         objTransform = transform;
@@ -337,7 +333,8 @@ public class EnemyController : MonoBehaviour
                     yield return new WaitForSeconds(interval);
                     if (children.Count > 0)
                     {
-                        SpawnEnemies(enemiesPool[i].enemyPool, SpawnType.Camera, enemiesPool[i].enemyObj.GetComponent<EnemyState>().timesPerOne);
+                        matchingEnemy = enemies.First(s => s.prefab.mobName == enemiesPool[i].enemyObj.GetComponent<EnemyState>().mobName);
+                        SpawnEnemies(enemiesPool[i].enemyPool, matchingEnemy.isSpawnInsideMapBounds, enemiesPool[i].enemyObj.GetComponent<EnemyState>().timesPerOne);
                     }
                     else
                     {
@@ -347,15 +344,16 @@ public class EnemyController : MonoBehaviour
             }
         }
     }
+    //Перевірка чи об'єкт за межами камери
     private bool IsInsideCameraBounds(Vector3 position)
     {
         Vector3 viewportPosition = GameManager.Instance.GetComponent<Camera>().WorldToViewportPoint(position);
         return viewportPosition.x >= 0f && viewportPosition.x <= 1f && viewportPosition.y >= 0f && viewportPosition.y <= 1f;
     }
-
+    //Перевірка чи об'єкт не за межами стін
     private bool IsInsideWallBounds(Vector3 position)
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(position, 0.1f); // Використовуємо OverlapCircleAll замість OverlapPointAll
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(position, 0.1f);
         foreach (Collider2D collider in colliders)
         {
             if (collider.CompareTag("Wall"))
@@ -365,7 +363,7 @@ public class EnemyController : MonoBehaviour
         }
         return false;
     }
-
+    /*Спавн за межами камери*/
     public Vector3 GetRandomSpawnPosition()
     {
         Vector3 spawnPosition;
@@ -379,7 +377,7 @@ public class EnemyController : MonoBehaviour
         return spawnPosition;
     }
 
-    private void SpawnEnemies(List<GameObject> pool, SpawnType type, int count)
+    private void SpawnEnemies(List<GameObject> pool, bool spawnChoise, int count)
     {
         GameObject enemy = GetFromPool(pool);
         // Отримати поточне ім'я об'єкта
@@ -394,17 +392,17 @@ public class EnemyController : MonoBehaviour
         IDChecker(enemy.name);
         for (int i = 0; i < count; i++)
         {
-            switch (type)
+            switch (spawnChoise)
             {
-                case SpawnType.Camera:
+                case false:
                     float angle = i * Mathf.PI * 2 / 10; // Розраховуємо кут між об'єктами
                     Vector3 spawnPosition = GetRandomSpawnPosition();
                     spawnPosition += new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0); /** enemy.attackRangeRadius;*/ // Обчислюємо позицію для спавну
                     enemy.transform.position = spawnPosition;
-                    //enemy.transform.parent = objTransform;
                     break;
-                case SpawnType.Map:
-                    SpawnObjectInMapBounds(enemy);
+                case true:
+                    enemy.transform.position = SpawnManager.GetRandomPositionInsideCollider();
+                    enemy.GetComponent<EnemyState>().path.maxSpeed = 0;
                     break;
             }
         }
@@ -436,10 +434,13 @@ public class EnemyController : MonoBehaviour
     }
     void EnemyRotate(EnemyState enemy)
     {
-        Transform transform = enemy.transform;
+        if (!enemy.isStun)
+        {
+            Transform transform = enemy.transform;
 
-        transform.rotation = transform.position.x < player.objTransform.position.x
-            ? Quaternion.identity : Quaternion.Euler(0, 180, 0);
+            transform.rotation = transform.position.x < player.objTransform.position.x
+                ? Quaternion.identity : Quaternion.Euler(0, 180, 0);
+        }
     }
     //Move end
     // Update is called once per frame
@@ -450,13 +451,9 @@ public class EnemyController : MonoBehaviour
             foreach (EnemyState enemy in children)
             {
                 EnemyRotate(enemy);
-
                 enemy.GetComponent<Animator>().enabled = IsInsideCameraBounds(player.objTransform.position) ? true : false;
-
                 matchingEnemy = enemies.First(s => s.prefab.mobName == enemy.mobName);
-                enemy.GetComponent<AIPath>().maxSpeed = enemy.isSlowed ? 0 : matchingEnemy.speedMax;
-
-                AttackSpeed(enemy);
+                MoveAndAttack(enemy);
 
                 if (timer.time >= timeToSpawnBobs && isSpawned == false)
                 {
@@ -464,9 +461,40 @@ public class EnemyController : MonoBehaviour
                 }
             }
         }
-        catch(Exception e)
+        catch (Exception e)
         {
-            Debug.LogWarning("Catched exception modified array");
+            Debug.LogWarning(e + " _Catched exception modified array");
+        }
+    }
+    private void MoveAndAttack(EnemyState enemy)
+    {
+        if (enemy.type == "range" && enemy.isActiveAndEnabled && enemy.path.maxSpeed > 0)
+        {
+            float distanceToPlayer = Vector3.Distance(enemy.objTransform.position, player.objTransform.position);
+            float distanceToEdgeAttack = 59f;
+            float distanceToEdgeRetreat = 30f;
+
+            if (distanceToPlayer <= distanceToEdgeAttack)
+            {
+                AttackSpeed(enemy);
+                enemy.SetStunned();
+            }
+            if (distanceToPlayer <= distanceToEdgeRetreat)
+            {
+                enemy.RepositionPoint.transform.position = (player.objTransform.position - enemy.objTransform.position).normalized;
+                enemy.destination.target = enemy.RepositionPoint.transform;
+            }
+            else
+            {
+                enemy.destination.target = player.objTransform;
+                enemy.path.maxSpeed = enemy.isSlowed ? 0 : matchingEnemy.speedMax;
+            }
+        }
+        else if(enemy.isActiveAndEnabled)
+        {
+            enemy.path.maxSpeed = enemy.isSlowed ? 0 : matchingEnemy.speedMax;
+
+            AttackSpeed(enemy);
         }
     }
     ///Health
@@ -494,15 +522,12 @@ public class EnemyController : MonoBehaviour
             //ChangeToNotKick();
         }
     }
-    void ExpGive(EnemyState enemy)
+    void ExpGive(EnemyState enemy, Vector3 pos)
     {
         matchingEnemy = enemies.First(s => s.prefab.mobName == enemy.mobName);
-        EXP a = Instantiate(expiriancePoint, new Vector3(enemy.objTransform.position.x, enemy.objTransform.position.y, 1.9f), Quaternion.identity);
+        EXP a = Instantiate(expiriancePoint, pos, Quaternion.identity);
         a.expBuff = matchingEnemy.expGiven * matchingEnemy.dangerLevel;
-        //if (player.expiriencepoint != null)
-        {
-            player.expiriencepoint.fillAmount += matchingEnemy.expGiven * matchingEnemy.dangerLevel / player.expNeedToNewLevel;
-        }
+        PlayerManager.instance.expiriencepoint.fillAmount += matchingEnemy.expGiven * matchingEnemy.dangerLevel / PlayerManager.instance.expNeedToNewLevel;
         GameManager.Instance.score++;
     }
     public void Respawn(EnemyState enemy, SpawnType type)
@@ -519,38 +544,60 @@ public class EnemyController : MonoBehaviour
                 break;
         }
         matchingEnemy = enemies.First(s => s.prefab.mobName == enemy.mobName);
+
+        /*Видалення  активних дебаффів*/
         Elements element = enemy.GetComponent<ElementActiveDebuff>().elements;
         for (int i = 0; i < element.isActiveCurrentData.Count; i++)
         {
             if (element.isActiveCurrentData[i])
             {
-                element.DeactivateDebuff(enemy, (Elements.status)i, enemy.GetComponentInChildren<HorizontalLayoutGroup>().gameObject.GetComponentInChildren<SpriteRenderer>().gameObject);
+                element.DeactivateDebuff(enemy, (Elements.status)i);
             }
         }
+        for (int i = 0; i < enemy.ElementsParent.transform.childCount; i++)
+        {
+            Transform child = enemy.ElementsParent.transform.GetChild(i);
+
+            Destroy(child.gameObject);
+        }
+
         enemy.HealthDamage(matchingEnemy.healthMax);
     }
     public void TakeDamage(EnemyState enemy, float damage)
     {
-        enemy.HealthDamage(enemy.health - damage);
-        matchingEnemy = bosses.prefab.mobName == enemy.mobName ? bosses : null;
-
-        if (matchingEnemy != null)
+        if (enemy.GetComponentInChildren<SpriteRenderer>().color.a != 0)
         {
-            Debug.Log(bosses.fillAmountImage);
-            Debug.Log(bosses.healthMax);
-            bosses.fillAmountImage.fillAmount -= damage / bosses.healthMax;
-            if (enemy.health <= 0)
+            enemy.HealthDamage(enemy.health - damage);
+
+            matchingEnemy = bosses.prefab.mobName == enemy.mobName ? bosses : null;
+            if (matchingEnemy != null)
             {
-                bosses.Death(enemy);
-                Destroy(enemy.gameObject);
+                bosses.fillAmountImage.fillAmount -= damage / bosses.healthMax;
+                if (enemy.health <= 0)
+                {
+                    if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 0 && s.isActive == true) != null)
+                    {
+                        DailyQuests.instance.UpdateValue(0, 1, false);
+                    }
+                    bosses.Death(enemy);
+                    Destroy(enemy.gameObject);
+                }
             }
-        }
-        else if (enemy.health <= 0)
-        {
-            ExpGive(enemy);
-            GameManager.Instance.FindStatName(enemy.mobName, 1);
-
-            Respawn(enemy, SpawnType.Camera);
+            else if (enemy.health <= 0)
+            {
+                if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 0 && s.isActive == true) != null)
+                {
+                    DailyQuests.instance.UpdateValue(0, 1, false);
+                }
+                if (enemy.mobName.Equals("MiShroom") && DailyQuests.instance.quest.FirstOrDefault(s => s.id == 2 && s.isActive == true) != null)
+                {
+                    DailyQuests.instance.UpdateValue(2, 1, false);
+                }
+                GameManager.Instance.FindStatName(enemy.mobName, 1);
+                Vector3 pos = enemy.transform.position;
+                Respawn(enemy, SpawnType.Camera);
+                ExpGive(enemy, pos);
+            }
         }
     }
     ///Attack
@@ -558,17 +605,14 @@ public class EnemyController : MonoBehaviour
     {
         if (enemy.attackSpeed <= 0)
         {
-            if (enemy.objectToHit != null)
+            if (enemy.objectToHit != null && enemy.isAttack)
             {
+                enemy.SetAttackSpeed(matchingEnemy.attackSpeedMax);
                 DamageDeal(enemy);
                 Destroy(objVFX);
-                enemy.SetAttackSpeed(matchingEnemy.attackSpeedMax);
             }
         }
-        else
-        {
-            enemy.attackSpeed -= Time.fixedDeltaTime;
-        }
+        enemy.attackSpeed -= Time.fixedDeltaTime;
     }
     public void DamageDeal(EnemyState enemy)
     {
@@ -584,20 +628,8 @@ public class EnemyController : MonoBehaviour
                 Instantiate(bosses.Attack(enemy), enemy.objTransform.position, Quaternion.identity);
                 break;
         }
-        ////if (enemy.objectToHit.GetComponent<Animator>())
-        //{
-        //    Shield shield = enemy.objectToHit.GetComponent<Shield>();
-        //    if (shield != null)
-        //    {
-        //        shield.healthShield -= enemy.damage;
-        //        GameManager.Instance.FindStatName("ShieldAbsorbedDamage", enemy.damage);
-        //    }
-        //    else
-        //    {
-        //        player.TakeDamage(enemy.damage);
-        //    }
-        //}
     }
+    //Attack end
     public void BossSpawn()
     {
         foreach (SaveEnemyInfo obj in gameManager.enemyInfo)
@@ -612,15 +644,9 @@ public class EnemyController : MonoBehaviour
                 }
             }
         }
-        bosses.healthBossObj = bosses.SetBase();
+        bosses.health = bosses.SetBase();
 
-        //GameObject[] objectsToDelete = GameObject.FindGameObjectsWithTag("Enemy");
 
-        //foreach (var obj in objectsToDelete)
-        //{
-        //    Destroy(obj.GetComponentInParent<HealthPoint>().transform.parent.gameObject);
-        //    gameManager.enemyCount = 0;
-        //}
         children.Clear();
         parent.gameObject.SetActive(false);
         GetComponent<EnemyController>().SetSpawnStatus(true);
@@ -635,120 +661,9 @@ public class EnemyController : MonoBehaviour
         boss.GetComponent<EnemyState>().SetAttackSpeed(bosses.attackSpeedMax);
         boss.GetComponent<AIDestinationSetter>().target = player.objTransform;
         boss.GetComponent<EnemyState>().SetType(bosses.type);
-
-        //boss.GetComponent<Forward>().player = player;
+        children.Add(boss.GetComponent<EnemyState>());
         isSpawned = true;
-        timeToSpawnBobs += timeToSpawnBobsStart;
+
     }
-    //Attack end
 }
-//public void SetOthwerPartsCount(EnemyState enemy)
-//{
-//    // Знаходимо всі об'єкти в сцені з компонентом MyComponent
-//    HealthPoint[] objects = UnityEngine.Object.FindObjectsOfType<HealthPoint>();
-
-//    // Проходимося по знайдених об'єктах
-//    foreach (HealthPoint obj in objects)
-//    {
-//        CutThePart part = obj.GetComponent<CutThePart>();
-//        // Перевіряємо значення булевої змінної у кожному об'єкті
-//        if (obj.isBossPart)
-//        {
-//            if (part.countParts == 1)
-//            {
-//                Death(enemy);
-//                //objDrop.OnDestroyBoss();
-//            }
-//            part.countParts--;
-//        }
-//    }
-//}
-//Health end
-///Рух кожної частини босса до гравця по траекторії схожої на колесо
-//    // визначаємо напрямок до гравця
-//    Vector2 direction = player.transform.position - objTransform.position;
-//    direction.Normalize();
-
-//            // визначаємо кут між напрямком до гравця і поточним напрямком руху об'єкту
-//            angle = Vector2.Angle(velocity, direction);
-
-//            // якщо кут між векторами більший за 20 градусів - зменшуємо швидкість
-//            if (angle > 20f)
-//            {
-//                // зменшуємо швидкість з поступовим нарощуванням
-//                velocity = Vector2.Lerp(velocity, direction* speedMax, Time.fixedDeltaTime* acceleration);
-//            }
-//            else // якщо кут менший - збільшуємо швидкість
-//{
-//    // збільшуємо швидкість з поступовим нарощуванням
-//    velocity = Vector2.Lerp(velocity, direction * speedMax, Time.fixedDeltaTime * acceleration);
-//}
-
-//// обмежуємо максимальну швидкість
-//velocity = Vector2.ClampMagnitude(velocity, speedMax);
-
-//// зміщуємо об'єкт на відстань, що дорівнює швидкості, помноженій на час оновлення
-//objTransform.Translate(velocity * Time.fixedDeltaTime);
-
-//if (isBossPart)
-//{
-//    SetOtherPartsCount();
-//    //ExpGive();
-//    Destroy(gameObject);
-//}
-
-
-///Boss Destroy 
-//if (IsBobs)
-//{
-//    if (isBossPart)
-//    {
-//        SetOtherPartsCount();
-//        //ExpGive();
-//        Destroy(gameObject);
-//    }
-//    else if (bodyAnimBoss != null && !AnimBossStart)
-//    {
-//        player.expiriencepoint.fillAmount += expGiven * dangerLevel / player.expNeedToNewLevel;
-//        GameManager.Instance.score++;
-//        foreach (var part in bodyAnimBoss.parts)
-//        {
-//            if (part == gameObject.name)
-//            {
-//                bodyAnimBoss.GetParts(objPart, healthPointMax);
-//                bodyAnimBoss.DestroyStart();
-//            }
-//        }
-//        AnimBossStart = true;
-//        bodyAnimBoss = null;
-//    }
-//    else if (!AnimBossStart)
-//    {
-//        objDrop.OnDestroyBoss(health);
-//        //ExpGive();
-//        Destroy(objTransform.root.gameObject);
-//    }
-//}
-
-///SetParentToBossesParts
-//public void SetOthwerPartsCount()
-//{
-//    // Знаходимо всі об'єкти в сцені з компонентом MyComponent
-//    HealthPoint[] objects = FindObjectsOfType<HealthPoint>();
-
-//    // Проходимося по знайдених об'єктах
-//    foreach (HealthPoint obj in objects)
-//    {
-//        CutThePart part = obj.GetComponent<CutThePart>();
-//        // Перевіряємо значення булевої змінної у кожному об'єкті
-//        if (obj.isBossPart)
-//        {
-//            if (part.countParts == 1)
-//            {
-//                objDrop.OnDestroyBoss(health);
-//            }
-//            part.countParts--;
-//        }
-//    }
-//}
 

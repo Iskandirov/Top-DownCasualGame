@@ -22,7 +22,7 @@ public class Timer : MonoBehaviour
         {
             yield return null;
         }
-        GameManager.Instance.OpenPanel(GameManager.Instance.winPanel);
+        GameManager.Instance.OpenPanel(GameManager.Instance.winPanel, true);
     }
     // Update is called once per frame
     void FixedUpdate()

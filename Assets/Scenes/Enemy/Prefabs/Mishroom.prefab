@@ -122,7 +122,7 @@ MonoBehaviour:
   - {x: 0.8614644, y: -0.7691955, z: 0.0000000604333}
   m_ShapePathHash: -1416841124
   m_Mesh: {fileID: 0}
-  m_InstanceId: 80994
+  m_InstanceId: 193934
   m_LocalBounds:
     m_Center: {x: 0.10824466, y: 0.9881858, z: 0}
     m_Extent: {x: 1.4405502, y: 1.7741798, z: 0}
@@ -209,7 +209,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <isSlowed>k__BackingField: 0
+  <isStun>k__BackingField: 0
   <isBurn>k__BackingField: 0
+  <isAttack>k__BackingField: 0
   <mobName>k__BackingField: MiShroom
   <type>k__BackingField: 
   <attackSpeed>k__BackingField: 0
@@ -218,6 +220,11 @@ MonoBehaviour:
   <timesPerOne>k__BackingField: 1
   <objTransform>k__BackingField: {fileID: 3131333948750598606}
   <objToAttack>k__BackingField: {fileID: 4889505555044842593, guid: 9da0f9967bc44bc43ac81ff477cd28f0, type: 3}
+  <ElementsParent>k__BackingField: {fileID: 1508904033268927860}
+  RepositionPoint: {fileID: 0}
+  destination: {fileID: -1516422609186455314}
+  colider: {fileID: 7740972013901989062}
+  path: {fileID: -4186828833034964472}
   objectToHit: {fileID: 0}
 --- !u!114 &52609980637534413
 MonoBehaviour:
@@ -234,7 +241,7 @@ MonoBehaviour:
   mineCount: -31
   mine: {fileID: -6701964296001457324, guid: 9da0f9967bc44bc43ac81ff477cd28f0, type: 3}
   delay: 1
-  radius: 60
+  radius: 30
   inZone: 0
   shadow2D: {fileID: 7488936325659443482}
   light2D: {fileID: 438564141238699191}
@@ -446,7 +453,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 90
+  m_Radius: 25
 --- !u!1001 &1958971034364172816
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -547,6 +554,11 @@ PrefabInstance:
 --- !u!224 &171519794044056683 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+  m_PrefabInstance: {fileID: 1958971034364172816}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1508904033268927860 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1143665813906544484, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
   m_PrefabInstance: {fileID: 1958971034364172816}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8854266490592511302
@@ -760,6 +772,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 1069854388324315366, guid: 9da0f9967bc44bc43ac81ff477cd28f0, type: 3}
     - {fileID: -6701964296001457324, guid: 9da0f9967bc44bc43ac81ff477cd28f0, type: 3}
+    - {fileID: 8539223824765098553, guid: 9da0f9967bc44bc43ac81ff477cd28f0, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

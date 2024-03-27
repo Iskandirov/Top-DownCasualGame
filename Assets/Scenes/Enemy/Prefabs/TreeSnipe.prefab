@@ -1077,7 +1077,7 @@ MonoBehaviour:
   - {x: -1.2920961, y: 2.9207718, z: 0.00000045779757}
   m_ShapePathHash: 1924501170
   m_Mesh: {fileID: 0}
-  m_InstanceId: 112588
+  m_InstanceId: 70546
   m_LocalBounds:
     m_Center: {x: -0.16579223, y: 0.8796663, z: 0}
     m_Extent: {x: 2.3570175, y: 2.0996997, z: 0}
@@ -1754,7 +1754,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <isSlowed>k__BackingField: 0
+  <isStun>k__BackingField: 0
   <isBurn>k__BackingField: 0
+  <isAttack>k__BackingField: 0
   <mobName>k__BackingField: TreeSnipe
   <type>k__BackingField: 
   <attackSpeed>k__BackingField: 0
@@ -1763,6 +1765,11 @@ MonoBehaviour:
   <timesPerOne>k__BackingField: 1
   <objTransform>k__BackingField: {fileID: 3131333948750598606}
   <objToAttack>k__BackingField: {fileID: 8853671543020772513, guid: 6529229f3290f67418feafea572e141e, type: 3}
+  <ElementsParent>k__BackingField: {fileID: 1508904033268927860}
+  RepositionPoint: {fileID: 4915736915067170013}
+  destination: {fileID: 8623819490877642251}
+  colider: {fileID: 8848279636520331944}
+  path: {fileID: -3384518304003089070}
   objectToHit: {fileID: 0}
 --- !u!95 &5944500426164884156
 Animator:
@@ -3412,6 +3419,11 @@ PrefabInstance:
 --- !u!224 &171519794044056683 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+  m_PrefabInstance: {fileID: 1958971034364172816}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1508904033268927860 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1143665813906544484, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
   m_PrefabInstance: {fileID: 1958971034364172816}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7228817836017201728

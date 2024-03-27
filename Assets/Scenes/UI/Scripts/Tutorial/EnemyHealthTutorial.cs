@@ -8,18 +8,21 @@ public class EnemyHealthTutorial : MonoBehaviour
     public bool isBoss;
     public GameObject healthBossObj;
     public Image healthBobsImg;
+    EnemyState state;
     // Start is called before the first frame update
     void Start()
     {
         text = FindObjectOfType<TextAppear>();
         if (isBoss)
         {
-            mob.healthBossObj = mob.SetBase();
+            mob.health = mob.SetBase();
+            GetComponent<BossAttack>().damage = 0;
         }
+        state = GetComponent<EnemyState>();
     }
     private void FixedUpdate()
     {
-        if (mob.healthMax <= 0)
+        if (state.health <= 0)
         {
             text.tutor.PhasePlus();
             text.tutor.BlockMoveAndShoot();

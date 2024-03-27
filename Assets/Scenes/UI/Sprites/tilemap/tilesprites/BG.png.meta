@@ -20,11 +20,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
-  ignoreMasterTextureLimit: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -44,7 +45,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -63,6 +64,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
   cookieLightType: 0
   platformSettings:
   - serializedVersion: 3
@@ -75,6 +77,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -87,6 +90,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -99,6 +103,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -111,6 +116,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
@@ -925,47 +931,46 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      BG_30: 183088712
-      BG_11: 1648799866
-      BG_5: 120522884
-      BG_29: 708173382
-      BG_2: -1229513729
-      BG_9: 2060620282
-      BG_32: 2047752900
-      BG_23: -2069053788
-      BG_25: -1249644240
-      BG_4: -1454048154
-      BG_3: -1235271749
-      BG_16: -574599069
-      BG_21: -1604550929
-      BG_8: 691671818
-      BG_7: 1968663738
-      BG_22: -2135060108
-      BG_35: -1059109131
-      BG_1: -276158031
-      BG_28: 1931791575
-      BG_18: 878659610
-      BG_33: 536176358
-      BG_31: -822339074
-      BG_19: 974740731
-      BG_14: 225841558
-      BG_15: -579983720
-      BG_20: 130964637
-      BG_24: 2124430091
-      BG_6: -1122801995
-      BG_27: -1293933343
-      BG_34: -767005948
-      BG_17: 1253549437
       BG_0: -518117258
+      BG_1: -276158031
+      BG_10: -1562616635
+      BG_11: 1648799866
       BG_12: -832305186
       BG_13: -1437105645
-      BG_37: 1456305826
-      BG_36: -20727257
+      BG_14: 225841558
+      BG_15: -579983720
+      BG_16: -574599069
+      BG_17: 1253549437
+      BG_18: 878659610
+      BG_19: 974740731
+      BG_2: -1229513729
+      BG_20: 130964637
+      BG_21: -1604550929
+      BG_22: -2135060108
+      BG_23: -2069053788
+      BG_24: 2124430091
+      BG_25: -1249644240
       BG_26: 42656832
-      BG_10: -1562616635
-  spritePackingTag: 
+      BG_27: -1293933343
+      BG_28: 1931791575
+      BG_29: 708173382
+      BG_3: -1235271749
+      BG_30: 183088712
+      BG_31: -822339074
+      BG_32: 2047752900
+      BG_33: 536176358
+      BG_34: -767005948
+      BG_35: -1059109131
+      BG_36: -20727257
+      BG_37: 1456305826
+      BG_4: -1454048154
+      BG_5: 120522884
+      BG_6: -1122801995
+      BG_7: 1968663738
+      BG_8: 691671818
+      BG_9: 2060620282
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

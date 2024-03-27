@@ -372,6 +372,37 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.21, y: 1.06}
   m_Direction: 0
+--- !u!1 &1795965529959222995
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7798750456642079520}
+  m_Layer: 0
+  m_Name: RePosPoint
+  m_TagString: Stat
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7798750456642079520
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1795965529959222995}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3131333948750598606}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2211702976728069500
 GameObject:
   m_ObjectHideFlags: 0
@@ -790,7 +821,7 @@ MonoBehaviour:
   - {x: -1.8588681, y: -0.36434388, z: 0.00000011920929}
   m_ShapePathHash: 849117982
   m_Mesh: {fileID: 0}
-  m_InstanceId: 53976
+  m_InstanceId: 125240
   m_LocalBounds:
     m_Center: {x: -0.038241386, y: 0.24780422, z: 0}
     m_Extent: {x: 2.5148787, y: 1.2412812, z: 0}
@@ -868,6 +899,7 @@ Transform:
   - {fileID: 4760933745411692294}
   - {fileID: 8035282761878176868}
   - {fileID: 6405327560613992337}
+  - {fileID: 7798750456642079520}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &6384565066757689954
@@ -892,7 +924,7 @@ Rigidbody2D:
     m_Bits: 1736
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 6503
+    m_Bits: 6439
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -910,7 +942,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <isSlowed>k__BackingField: 0
+  <isStun>k__BackingField: 0
   <isBurn>k__BackingField: 0
+  <isAttack>k__BackingField: 0
   <mobName>k__BackingField: Beatty
   <type>k__BackingField: 
   <attackSpeed>k__BackingField: 0
@@ -919,6 +953,11 @@ MonoBehaviour:
   <timesPerOne>k__BackingField: 1
   <objTransform>k__BackingField: {fileID: 3131333948750598606}
   <objToAttack>k__BackingField: {fileID: 7885096114691236980, guid: 2fe47683500b46b4b9e2ed74cb092523, type: 3}
+  <ElementsParent>k__BackingField: {fileID: 5653604245954178702}
+  RepositionPoint: {fileID: 1795965529959222995}
+  destination: {fileID: 2685349443915097406}
+  colider: {fileID: 4984594028824807400}
+  path: {fileID: -6548056170261668659}
   objectToHit: {fileID: 0}
 --- !u!95 &8315049834056483339
 Animator:
@@ -1106,7 +1145,7 @@ CapsuleCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1589,6 +1628,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+--- !u!1 &5653604245954178702 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1143665813906544484, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+  m_PrefabInstance: {fileID: 4731804245489449450}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &6405327560613992337 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}

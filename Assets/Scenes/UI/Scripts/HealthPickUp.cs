@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class HealthPickUp : MonoBehaviour
@@ -25,6 +26,10 @@ public class HealthPickUp : MonoBehaviour
                 player.fullFillImage.fillAmount = player.playerHealthPoint / player.playerHealthPointMax;
                 Destroy(gameObject);
             }
+            if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 5 && s.isActive == true) != null)
+            {
+                DailyQuests.instance.UpdateValue(5, 1, false);
+            }
+            }
         }
-    }
 }

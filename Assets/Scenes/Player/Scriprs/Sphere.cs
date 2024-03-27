@@ -36,7 +36,7 @@ public class Sphere : MonoBehaviour
         }
         else if (collision.CompareTag("Barrel"))
         {
-            collision.GetComponent<ObjectHealth>().health -= 1;
+            collision.GetComponent<ObjectHealth>().TakeDamage();
             FindObjectOfType<SphereAround>().countSphere--;
             //Destroy(gameObject);
         }

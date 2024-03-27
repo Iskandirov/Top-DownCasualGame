@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class DestroyBarrier : MonoBehaviour
@@ -28,12 +29,20 @@ public class DestroyBarrier : MonoBehaviour
             {
                 if (player.playerHealthPoint + heal * Grass <= player.playerHealthPointMax)
                 {
-                    player.playerHealthPoint += heal * Grass;
+                    if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 1 && s.isActive == true) != null)
+                    {
+                        DailyQuests.instance.UpdateValue(1, heal * Grass, false);
+                    }
+                        player.playerHealthPoint += heal * Grass;
                     player.fullFillImage.fillAmount += player.playerHealthPoint / player.playerHealthPointMax;
                 }
                 else
                 {
-                    player.playerHealthPoint = player.playerHealthPointMax;
+                    if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 1 && s.isActive == true) != null)
+                    {
+                        DailyQuests.instance.UpdateValue(1, heal * Grass, false);
+                    }
+                        player.playerHealthPoint = player.playerHealthPointMax;
                     player.fullFillImage.fillAmount -= player.playerHealthPoint / player.playerHealthPointMax;
                 }
             }

@@ -14,6 +14,8 @@ public class Settings : MonoBehaviour
     public Toggle toggle;
     GameManager gameManager;
     public TMP_Dropdown drop;
+    public TextMeshProUGUI volumeValueTxt;
+    public TextMeshProUGUI sfxValueTxt;
     public static Settings instance;
 
     private void Awake()
@@ -69,6 +71,7 @@ public class Settings : MonoBehaviour
         gameManager.ChangeSetting(value);
         AudioManager.instance.ChangeVolume(AudioManager.instance.volumeMusic, AudioManager.instance.musicObj);
         muteVolume.gameObject.SetActive(volumeMusic.value == 0 ? true : false);
+        volumeValueTxt.text = ((AudioManager.instance.volumeMusic * 100) + "%").ToString();
     }
     public void SetVolumeSFX()
     {
@@ -82,6 +85,7 @@ public class Settings : MonoBehaviour
         gameManager.ChangeSetting(valueSFX);
         AudioManager.instance.ChangeVolume(AudioManager.instance.volumeSFX, AudioManager.instance.sfxObj);
         muteSFX.gameObject.SetActive(volumeSFX.value == 0 ? true : false);
+        sfxValueTxt.text = ((AudioManager.instance.volumeSFX * 100) + "%").ToString();
     }
     public void SetVSync()
     {

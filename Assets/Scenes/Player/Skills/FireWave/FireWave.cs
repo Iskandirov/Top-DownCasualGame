@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class FireWave : SkillBaseMono
@@ -52,10 +53,15 @@ public class FireWave : SkillBaseMono
             {
                 debuff.StartCoroutine(debuff.EffectTime(Elements.status.Fire, 5));
             }
-            enemy.TakeDamage(health, (basa.damage * debuff.elements.CurrentStatusValue(Elements.status.Water)) 
-                / debuff.elements.CurrentStatusValue(Elements.status.Fire));
-            GameManager.Instance.FindStatName("fireWaveDamage", (basa.damage * debuff.elements.CurrentStatusValue(Elements.status.Water)) 
-                / debuff.elements.CurrentStatusValue(Elements.status.Fire));
+            float damage = (basa.damage * debuff.elements.CurrentStatusValue(Elements.status.Water))
+                / debuff.elements.CurrentStatusValue(Elements.status.Fire);
+
+            enemy.TakeDamage(health, damage);
+            GameManager.Instance.FindStatName("fireWaveDamage", damage);
+            if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 3 && s.isActive == true) != null)
+            {
+                DailyQuests.instance.UpdateValue(3, damage, false);
+            }
 
             if (burnDamage != 0 && collision != null)
             {

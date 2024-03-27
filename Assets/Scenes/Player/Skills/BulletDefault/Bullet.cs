@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 public class Bullet : SkillBaseMono
 {
@@ -28,7 +29,7 @@ public class Bullet : SkillBaseMono
             }
             if (basa.stats[1].isTrigger)
             {
-                player.secondBulletCount = (int)basa.stats[1].value;
+                basa.countObjects = (int)basa.stats[1].value;
             }
             if (basa.stats[2].isTrigger)
             {
@@ -37,7 +38,7 @@ public class Bullet : SkillBaseMono
             }
             if (basa.stats[3].isTrigger)
             {
-                player.secondBulletCount = (int)basa.stats[3].value;
+                basa.countObjects = (int)basa.stats[3].value;
             }
             if (basa.stats[4].isTrigger)
             {
@@ -49,8 +50,14 @@ public class Bullet : SkillBaseMono
         isBulletSlow = player.isBulletSlow;
         lifeStealPercent = player.lifeStealPercent;
         slowPercent = player.slowPercent;
-
-        player.ShootBullet(obj.transform.position, this);
+        if (player.isAuto)
+        {
+            player.AutoShoot(obj.transform.position,this);
+        }
+        else
+        {
+            player.ShootBullet(obj.transform.position, this);
+        }
 
         CoroutineToDestroy(gameObject, 1f);
     }
@@ -68,6 +75,10 @@ public class Bullet : SkillBaseMono
             {
                 if (player.playerHealthPoint + basa.damage * lifeStealPercent < player.playerHealthPointMax)
                 {
+                    if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 1 && s.isActive == true) != null)
+                    {
+                        DailyQuests.instance.UpdateValue(1, basa.damage * lifeStealPercent, false);
+                    }
                     player.playerHealthPoint += basa.damage * lifeStealPercent;
                     player.fullFillImage.fillAmount += (basa.damage * lifeStealPercent) / player.playerHealthPointMax;
                 }
@@ -84,7 +95,10 @@ public class Bullet : SkillBaseMono
                 //enemyControll.moveSlowTime = slowPercent;
             }
             GameManager.Instance.FindStatName("bulletDamage", basa.damage);
-
+            if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 3 && s.isActive == true) != null)
+            {
+                DailyQuests.instance.UpdateValue(3, basa.damage, false);
+            }
             //enemyMove.GetComponent<Rigidbody2D>().AddForce(-(transform.position - collision.transform.position) * forceAmount, ForceMode2D.Impulse);
 
             if (!isPiers)
@@ -97,9 +111,9 @@ public class Bullet : SkillBaseMono
             }
 
         }
-        else if (collision.CompareTag("Barrel"))
+        else if (collision.CompareTag("Barrel") && !collision.isTrigger)
         {
-            collision.gameObject.GetComponent<ObjectHealth>().health -= 1;
+            collision.gameObject.GetComponent<ObjectHealth>().TakeDamage();
             if (!isPiers)
             {
                 Destroy(gameObject);
@@ -107,12 +121,14 @@ public class Bullet : SkillBaseMono
         }
         else if (!collision.isTrigger && collision.CompareTag("TutorEnemy"))
         {
-            collision.GetComponent<EnemyHealthTutorial>().mob.HealthChange(collision.GetComponent<EnemyHealthTutorial>().mob.healthMax - 1);
-            //Destroy(collision.gameObject);
-            if (isRickoshet)
+            EnemyState enemyHealth = collision.GetComponent<EnemyState>();
+            enemyHealth.HealthDamage(enemyHealth.health - 1);
+            if (collision.GetComponent<EnemyHealthTutorial>().mob.type == "boss")
             {
-                Ricoshet(collision);
+                Boss mob = collision.GetComponent<EnemyHealthTutorial>().mob;
+                mob.fillAmountImage.fillAmount = (enemyHealth.health - 1) / mob.healthMax;
             }
+
             Destroy(gameObject);
         }
         else if (!collision.isTrigger)

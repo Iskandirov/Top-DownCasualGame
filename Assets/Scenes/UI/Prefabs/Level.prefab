@@ -254,7 +254,7 @@ RectTransform:
   m_GameObject: {fileID: 3161841138136722733}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: -2}
-  m_LocalScale: {x: 1.37, y: 1.37, z: 1.37}
+  m_LocalScale: {x: 1.21, y: 1.21, z: 1.21}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 9123702652576984259}
@@ -384,7 +384,7 @@ MonoBehaviour:
       objToSpawn: {fileID: 6051510987840879429, guid: 2f6275aa03e73ec448443be3579db8a3, type: 3}
       stepMax: 5
       lifeTime: 3
-      damage: 3
+      damage: 0
       damageTickMax: 0
       countObjects: 3
       radius: 60
@@ -422,7 +422,7 @@ MonoBehaviour:
       - isTrigger: 0
         value: 0.1
       skill: {fileID: 0}
-      objToSpawn: {fileID: -2477642690584800929, guid: f385cf86b8d05d846ac406a913a29624, type: 3}
+      objToSpawn: {fileID: 9141553291226132075, guid: 72cf62a44a5e6544dadcf87059ef2ccf, type: 3}
       stepMax: 7
       lifeTime: 4
       damage: 0.5
@@ -463,7 +463,7 @@ MonoBehaviour:
       - isTrigger: 0
         value: 5
       skill: {fileID: 0}
-      objToSpawn: {fileID: 4259762276879978435, guid: e81ff13d82b14fd42926280f08c68ce1, type: 3}
+      objToSpawn: {fileID: -6857545640722590778, guid: e81ff13d82b14fd42926280f08c68ce1, type: 3}
       stepMax: 10
       lifeTime: 5
       damage: 1
@@ -473,7 +473,7 @@ MonoBehaviour:
       isPassive: 0
       spawnDelay: 0.4
     isPassive: 0
-    Image: {fileID: 21300000, guid: c7a5c4090c90f2e49a99973c64a66c9b, type: 3}
+    Image: {fileID: 21300000, guid: 01cbf1adb8b00ea4fb7bf1eaf56454d3, type: 3}
     tag:
     - meteor_1
     - meteor_2
@@ -760,7 +760,7 @@ MonoBehaviour:
       isPassive: 0
       spawnDelay: 0
     isPassive: 0
-    Image: {fileID: 21300000, guid: cbedeaefeb1c15d409f06953f523c31b, type: 3}
+    Image: {fileID: 21300000, guid: 182b18770dfcf3842ba67afdc472f1ec, type: 3}
     tag:
     - tower_1
     - tower_2
@@ -774,7 +774,7 @@ MonoBehaviour:
     - Create a bomb after towers crash
     - More attack speed
     - Provokes nearby enemies
-    type: base
+    type: aoe
   - Name: Illusion
     ID: 11
     level: 0

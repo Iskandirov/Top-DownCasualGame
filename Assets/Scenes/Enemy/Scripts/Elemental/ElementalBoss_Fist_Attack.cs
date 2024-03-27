@@ -25,7 +25,6 @@ public class ElementalBoss_Fist_Attack : MonoBehaviour
     public List<Collider2D> handParts;
 
     Animator objAnim;
-    Forward objMove;
     Shield objShield;
     EnemyState childrenHealth;
     Collider2D objCollider;
@@ -41,7 +40,6 @@ public class ElementalBoss_Fist_Attack : MonoBehaviour
         objShield = FindObjectOfType<Shield>();
 
         objAnim = GetComponent<Animator>();
-        objMove = GetComponent<Forward>();
         objCollider = GetComponent<Collider2D>();
         childrenHealth = GetComponent<EnemyState>();
     }
@@ -125,6 +123,7 @@ public class ElementalBoss_Fist_Attack : MonoBehaviour
                 }
             }
         }
+        CineMachineCameraShake.instance.Shake(10, .1f);
     }
     private IEnumerator ReducePushForce(Rigidbody2D pushableObjectRigidbody)
     {

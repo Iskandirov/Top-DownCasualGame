@@ -1,4 +1,5 @@
 using System.IO;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,9 +14,11 @@ public class GetScore : MonoBehaviour
     public bool scene;
     public bool isWinPanel;
     DataHashing hash;
+    static GetScore instance;
     // Start is called before the first frame update
     private void Awake()
     {
+        instance = this;
         hash = DataHashing.inst;
         Timer objTimer = FindObjectOfType<Timer>();
         if (scoreEnd != null)
@@ -23,6 +26,10 @@ public class GetScore : MonoBehaviour
             if (objTimer)
             {
                 timeEnd.text = objTimer.time.ToString("00.00");
+                if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 6 && s.isActive == true) != null)
+                {
+                    DailyQuests.instance.UpdateValue(6, objTimer.time - EnemyController.instance.timeToSpawnBobs, true);
+                }
                 if (float.TryParse(timeEnd.text, out float result))
                 {
                     // Вдале перетворення
@@ -126,5 +133,9 @@ public class GetScore : MonoBehaviour
             writer.Close();
         }
     }
-
+    public static string SaveMoney_Static(int money)
+    {
+        instance.SaveScore(money);
+        return instance.LoadScore().ToString();
+    }
 }

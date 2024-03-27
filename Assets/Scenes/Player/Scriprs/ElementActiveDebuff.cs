@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering.VirtualTexturing;
 
 [Serializable]
 public class Elements
@@ -65,9 +64,8 @@ public class Elements
                 break;
         }
         isActiveCurrentData[(int)name] = true;
-
     }
-    public void DeactivateDebuff(EnemyState enemy, status name,GameObject obj)
+    public void DeactivateDebuff(EnemyState enemy, status name)
     {
         switch (name)
         {
@@ -98,7 +96,6 @@ public class Elements
                 statusCurrentData[(int)status.Dirt] *= 2;
                 break;
         }
-        UnityEngine.Object.Destroy(obj);
         isActiveCurrentData[(int)name] = false;
     }
 }
@@ -116,7 +113,7 @@ public class ElementActiveDebuff : MonoBehaviour
     {
         SpriteRenderer a = null;
         int elementId = (int)name;
-        if (elements.isActiveCurrentData[(int)name] != true)
+        if (elements.isActiveCurrentData[(int)name] != true && GetComponentInChildren<SpriteRenderer>().color.a != 0)
         {
             elements.Debuff(GetComponent<EnemyState>(), name);
             a = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
@@ -126,7 +123,8 @@ public class ElementActiveDebuff : MonoBehaviour
         yield return new WaitForSeconds(lifeTime);
         if (a != null)
         {
-            elements.DeactivateDebuff(GetComponent<EnemyState>(), name, a.gameObject);
+            elements.DeactivateDebuff(GetComponent<EnemyState>(), name);
+            Destroy(a.gameObject);
         }
     }
     private void UnikeEffects(SpriteRenderer sprite)

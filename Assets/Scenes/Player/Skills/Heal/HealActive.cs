@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class HealActive : SkillBaseMono
@@ -37,12 +38,21 @@ public class HealActive : SkillBaseMono
             {
                 player.playerHealthPoint += basa.damage * Grass;
                 player.fullFillImage.fillAmount += (basa.damage * Grass) / player.playerHealthPointMax;
+                if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 1 && s.isActive == true) != null)
+                {
+                    DailyQuests.instance.UpdateValue(1, basa.damage * Grass, false);
+                }
                 GameManager.Instance.FindStatName("healthHealed", basa.damage * Grass);
             }
             else
             {
                 GameManager.Instance.FindStatName("healthHealed", player.playerHealthPointMax - player.playerHealthPoint);
-                player.playerHealthPoint = player.playerHealthPointMax;
+                if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 1 && s.isActive == true) != null)
+                {
+                    DailyQuests.instance.UpdateValue(1, player.playerHealthPointMax - player.playerHealthPoint, false);
+                }
+
+                    player.playerHealthPoint = player.playerHealthPointMax;
                 player.fullFillImage.fillAmount = 1f;
             }
         }

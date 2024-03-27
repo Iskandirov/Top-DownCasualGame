@@ -137,6 +137,7 @@ public class ElementalBoss_Attack : MonoBehaviour
                 StartCoroutine(ReducePushForce(enemyObject));
             }
         }
+        CineMachineCameraShake.instance.Shake(30, .1f);
     }
     private IEnumerator ReducePushForce(Rigidbody2D pushableObjectRigidbody)
     {

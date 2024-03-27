@@ -173,7 +173,7 @@ MonoBehaviour:
   - {x: -1.8763807, y: -2.1276636, z: 0.0000007167676}
   m_ShapePathHash: -1202089507
   m_Mesh: {fileID: 0}
-  m_InstanceId: 115304
+  m_InstanceId: 69754
   m_LocalBounds:
     m_Center: {x: 0.06646538, y: -0.013715982, z: 0}
     m_Extent: {x: 2.3094654, y: 2.1139476, z: 0}
@@ -840,7 +840,7 @@ Rigidbody2D:
     m_Bits: 1736
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 6503
+    m_Bits: 6439
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -858,7 +858,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <isSlowed>k__BackingField: 0
+  <isStun>k__BackingField: 0
   <isBurn>k__BackingField: 0
+  <isAttack>k__BackingField: 0
   <mobName>k__BackingField: Rocky
   <type>k__BackingField: 
   <attackSpeed>k__BackingField: 0
@@ -867,6 +869,11 @@ MonoBehaviour:
   <timesPerOne>k__BackingField: 1
   <objTransform>k__BackingField: {fileID: 3151732145393461625}
   <objToAttack>k__BackingField: {fileID: 0}
+  <ElementsParent>k__BackingField: {fileID: 4030735953378498180}
+  RepositionPoint: {fileID: 0}
+  destination: {fileID: 8297755234387073348}
+  colider: {fileID: 1006861745610266145}
+  path: {fileID: -6660110898093213199}
   objectToHit: {fileID: 0}
 --- !u!114 &-283225651504800213
 MonoBehaviour:
@@ -1839,6 +1846,11 @@ PrefabInstance:
 --- !u!224 &2405455048085794715 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+  m_PrefabInstance: {fileID: 4048473290303144416}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4030735953378498180 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1143665813906544484, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
   m_PrefabInstance: {fileID: 4048473290303144416}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8366623747404129773

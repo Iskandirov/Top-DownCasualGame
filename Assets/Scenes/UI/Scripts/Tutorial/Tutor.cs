@@ -13,7 +13,7 @@ public class LightData
 [DefaultExecutionOrder(10)]
 public class Tutor : MonoBehaviour
 {
-    public List<LightData> light;
+    public List<LightData> light2D;
     public int phase = 0;
     public Color32 FinalColor;
     public static Light2D wLight;
@@ -64,7 +64,7 @@ public class Tutor : MonoBehaviour
             player.enabled = true;
             player.rb.velocity = Vector3.zero;
             //MoveOn();
-            foreach (var keyLightPair in light)
+            foreach (var keyLightPair in light2D)
             {
                 KeyCode key = keyLightPair.Key;
                 Light2D light = keyLightPair.Light;

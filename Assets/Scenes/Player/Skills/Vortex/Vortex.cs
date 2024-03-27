@@ -61,7 +61,10 @@ public class Vortex : SkillBaseMono
             if (movingObject.GetComponent<EnemyState>() != null)
             {
                 EnemyState health = movingObject.GetComponent<EnemyState>();
+
                 ElementActiveDebuff debuff = movingObject.GetComponent<ElementActiveDebuff>();
+                debuff.StartCoroutine(debuff.EffectTime(Elements.status.Wind, 5));
+
                 EnemyController.instance.TakeDamage(health, basa.damage * PlayerManager.instance.Wind * PlayerManager.instance.Steam
                     / (debuff.elements.CurrentStatusValue(Elements.status.Wind) * debuff.elements.CurrentStatusValue(Elements.status.Steam)));
             }
@@ -95,7 +98,6 @@ public class Vortex : SkillBaseMono
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {
-       
         if (!collision.isTrigger)
         {
             if (collision.CompareTag("Enemy") && !movingObjects.Contains(collision.transform))

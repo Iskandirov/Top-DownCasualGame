@@ -10,6 +10,8 @@ public class Trail : SkillBaseMono
 
     public float size;
 
+    public float hitDelay = 0.5f;
+
     public static List<EdgeCollider2D> unusedColliders = new List<EdgeCollider2D>();
     public Transform objTransform;
     // Start is called before the first frame update
@@ -57,23 +59,31 @@ public class Trail : SkillBaseMono
             // перевіряємо, чи є в масіві Colliders об'єкт з тегом "Enemy"
             for (int j = 0; j < colliders.Length; j++)
             {
-                if (colliders[j].collider.CompareTag("Enemy"))
+                if (colliders[j].collider.CompareTag("Enemy") && hitDelay <= 0)
                 {
-                    // TrailRenderer торкається до об'єкта з тегом "Enemy"
+                    ElementActiveDebuff debuff = colliders[j].collider.GetComponentInParent<ElementActiveDebuff>();
+                    debuff.StartCoroutine(debuff.EffectTime(Elements.status.Grass, 5));
+
                     EnemyController.instance.TakeDamage(colliders[j].collider.GetComponent<EnemyState>(), basa.damage);
                     if (basa.stats[4].isTrigger)
                     {
                         if (colliders[j].collider.GetComponent<EnemyState>().health <= 0)
                         {
-                            player.playerHealthPoint += EnemyController.instance.enemies.First(s => s.prefab.mobName == colliders[j].collider.GetComponent<EnemyState>().mobName).healthMax * 0.1f;
+                            float heal = EnemyController.instance.enemies.First(s => s.prefab.mobName == colliders[j].collider.GetComponent<EnemyState>().mobName).healthMax * 0.1f;
+                            if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 1 && s.isActive == true) != null)
+                            {
+                                DailyQuests.instance.UpdateValue(1, heal, false);
+                            }
+                            player.playerHealthPoint += heal;
                             player.fullFillImage.fillAmount = player.playerHealthPoint / player.playerHealthPointMax;
                         }
                     }
-
+                    hitDelay = 0.5f;
                     return;
                 }
             }
         }
+        hitDelay -= Time.fixedDeltaTime;
     }
     EdgeCollider2D GetValidCollider()
     {

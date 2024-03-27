@@ -108,7 +108,13 @@ public class Illusion : SkillBaseMono
     {
         attackSpeed -= Time.fixedDeltaTime;
         objTransform.position = new Vector2(player.objTransform.position.x + x, player.objTransform.position.y + y);
-        if (attackSpeed <= 0 && Input.GetMouseButton(0))
+        if (attackSpeed <= 0 && Input.GetMouseButton(0) && !player.isAuto)
+        {
+            Bullet a = Instantiate(bullet, objTransform.position, Quaternion.identity);
+            a.obj = gameObject;
+            attackSpeed = attackSpeedMax;
+        }
+        else if(attackSpeed <= 0 && player.isAuto)
         {
             Bullet a = Instantiate(bullet, objTransform.position, Quaternion.identity);
             a.obj = gameObject;

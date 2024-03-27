@@ -60,11 +60,11 @@ public class SnapScroll : MonoBehaviour
             int objejectCount = instObjects[i].LoadObjectLevelCount(i + sceneValue[0]);
             int objejectCountMax = instObjects[i].LoadObjectLevelCountOfCountMax(i + sceneValue[0]);
 
-            if (instObjects[i].LoadObjectLevelCount(i + sceneValue[0] - 1) == instObjects[i].LoadObjectLevelCountOfCountMax(i + sceneValue[0] - 1)
-                && objejectCount != objejectCountMax)
+            if (instObjects[i].LoadObjectLevelCount(i + sceneValue[0] - 1) == instObjects[i].LoadObjectLevelCountOfCountMax(i + sceneValue[0] - 1) && objejectCount != objejectCountMax)
             {
                 Destroy(instObjectsLock[i]);
             }
+         
             descriptionObjText[i] = instObjects[i].GetComponentInChildren<TagText>();
             descriptionObjImage[i] = instObjects[i].GetComponentInChildren<Slider>().GetComponentInChildren<Image>();
             instObjects[i].GetComponent<MenuController>().sceneCount = sceneValue[i];
@@ -94,6 +94,15 @@ public class SnapScroll : MonoBehaviour
             }
            
             instObjectsPosition[i] = -instObjects[i].objTransform.localPosition;
+        }
+        int count = 0;
+        foreach (var scene in instObjects)
+        {
+            if ((sceneValue[sceneValue.Length - 1] == scene.dataLevel.IDLevel && scene.dataLevel.countOfCount == scene.dataLevel.countOfCountMax))
+            {
+                Destroy(instObjectsLock[count]);
+                count++;
+            }
         }
         gameManager.UpdateText(list);
     }

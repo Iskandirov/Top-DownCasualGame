@@ -12,8 +12,6 @@ public class MagicAxe : SkillBaseMono
     public bool isCreated;
     public bool isFirst;
     Vector3 directionToCursor;
-    Vector3 directionToCursorForFirstAxe;
-    Vector3 directionToCursorForSecondAxe;
     public float timeToBack = 1f;
     Transform objTransform;
     public EnemyController enemy;
@@ -38,15 +36,12 @@ public class MagicAxe : SkillBaseMono
             basa.skill.skillCD -= StabilizateCurrentReload(basa.skill.skillCD, basa.stats[3].value);
             basa.stats[3].isTrigger = false;
         }
-        //basa = SetToSkillID(gameObject);
         objTransform.localScale = new Vector2(basa.radius * PlayerManager.instance.Steam, basa.radius * PlayerManager.instance.Steam);
-        //a.cold = cold * coldElement.Cold;
         objTransform.position = PlayerManager.instance.objTransform.position;
+
         // Нормування напрямку курсора
         directionToCursor = PlayerManager.instance.GetMousDirection(PlayerManager.instance.objTransform.position);
 
-        directionToCursorForFirstAxe = new Vector2(Mathf.Cos(-165f * Mathf.Deg2Rad), Mathf.Sin(-165f * Mathf.Deg2Rad));
-        directionToCursorForSecondAxe = new Vector2(Mathf.Cos(-15f * Mathf.Deg2Rad), Mathf.Sin(-15f  * Mathf.Deg2Rad));
         // Запуск coroutine
         StartCoroutine(MoveToAndBack());
     }
@@ -61,24 +56,8 @@ public class MagicAxe : SkillBaseMono
         {
             if (!isCreated)
             {
-                // Рух об'єкта в напрямку курсора
                 objTransform.position += new Vector3(directionToCursor.x * speed * 0.1f, directionToCursor.y * speed * 0.1f, 0f);
             }
-            //else
-            //{
-            //    if (isFirst)
-            //    {
-            //        objTransform.position += new Vector3(directionToCursor.x * directionToCursorForFirstAxe.x * speed * 0.6f,
-            //            directionToCursor.y + directionToCursorForFirstAxe.y * speed * 0.4f, 0f);
-
-            //    }
-            //    else
-            //    {
-            //        objTransform.position += new Vector3(directionToCursor.x * directionToCursorForSecondAxe.x * speed * 0.6f,
-            //            directionToCursor.y * directionToCursorForSecondAxe.y * speed * 0.4f, 0f);
-            //    }
-            //}
-           
         }
         else
         {
@@ -89,7 +68,6 @@ public class MagicAxe : SkillBaseMono
     public IEnumerator MoveToAndBack()
     {
         yield return new WaitForSeconds(timeToBack);
-        // Запуск таймера
         isBack = true;
     }
 
@@ -119,9 +97,10 @@ public class MagicAxe : SkillBaseMono
     {
         if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
-            enemy.TakeDamage(collision.GetComponent<EnemyState>(), (basa.damage));
             ElementActiveDebuff debuff = collision.GetComponent<ElementActiveDebuff>();
             debuff.StartCoroutine(debuff.EffectTime(Elements.status.Cold, 5));
+
+            enemy.TakeDamage(collision.GetComponent<EnemyState>(), (basa.damage));
         }
     }
 }

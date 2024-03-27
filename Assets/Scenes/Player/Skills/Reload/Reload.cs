@@ -34,8 +34,9 @@ public class Reload : SkillBaseMono
         spells = FindObjectsOfType<CDSkills>().ToList();
         for(int i = 0; i < spells.Count;i++)
         {
-            if (spells[i].abilityId == 0 || spells[i].abilityId == basa.skill.number || !spells[i].isPassive)
+            if (spells[i].abilityId == 0 || spells[i].abilityId == basa.skill.abilityId || spells[i].skill.isPassive)
             {
+                Debug.Log(spells[i].skill.objToSpawn.name);
                 spells.RemoveAt(i);
             }
         }

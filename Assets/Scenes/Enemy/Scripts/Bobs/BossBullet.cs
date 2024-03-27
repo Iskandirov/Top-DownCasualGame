@@ -14,13 +14,11 @@ public class BossBullet : MonoBehaviour
     public float distance = 20f;
     public float speed = 5;
     public float angle = 5;
-    public Vector3 startPosition;
     public float lifeTime;
-    Transform objTransform;
+    public Transform objTransform;
     Rigidbody2D rb;
     void Start()
     {
-        startPosition = transform.position;
         objTransform = transform;
         rb = GetComponent<Rigidbody2D>();
     }
@@ -31,8 +29,8 @@ public class BossBullet : MonoBehaviour
         if (isAround)
         {
             // ¬изначаЇмо колову траЇктор≥ю навколо ц≥л≥
-            Vector3 position = startPosition + new Vector3(Mathf.Cos(Time.fixedTime * speed) * distance, Mathf.Sin(Time.fixedTime * speed) * distance, 0f);
-            distance += 0.3f;
+            Vector3 position = enemyBody.position + new Vector3(Mathf.Cos(Time.fixedTime * speed) * distance, Mathf.Sin(Time.fixedTime * speed) * distance, 0f);
+            distance += 0.7f;
 
             objTransform.position = position;
 

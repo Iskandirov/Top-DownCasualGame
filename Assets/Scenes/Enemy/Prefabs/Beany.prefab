@@ -370,7 +370,7 @@ MonoBehaviour:
   - {x: -0.022414207, y: -1.1503669, z: -0.00000011920929}
   m_ShapePathHash: -185684241
   m_Mesh: {fileID: 0}
-  m_InstanceId: 46128
+  m_InstanceId: 184558
   m_LocalBounds:
     m_Center: {x: -0.064530134, y: -0.05837214, z: 0}
     m_Extent: {x: 1.2935474, y: 1.0919948, z: 0}
@@ -473,7 +473,7 @@ Rigidbody2D:
     m_Bits: 1736
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 6519
+    m_Bits: 6455
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -491,7 +491,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <isSlowed>k__BackingField: 0
+  <isStun>k__BackingField: 0
   <isBurn>k__BackingField: 0
+  <isAttack>k__BackingField: 0
   <mobName>k__BackingField: Beany
   <type>k__BackingField: 
   <attackSpeed>k__BackingField: 0
@@ -500,6 +502,11 @@ MonoBehaviour:
   <timesPerOne>k__BackingField: 1
   <objTransform>k__BackingField: {fileID: 3131333948750598606}
   <objToAttack>k__BackingField: {fileID: 6104557255805548285, guid: f6628e1b224b08a408b87970599a6ba4, type: 3}
+  <ElementsParent>k__BackingField: {fileID: 3935515225599120917}
+  RepositionPoint: {fileID: 0}
+  destination: {fileID: 7955902314846012123}
+  colider: {fileID: 4676899112522618636}
+  path: {fileID: 4265396766713021694}
   objectToHit: {fileID: 0}
 --- !u!58 &4676899112522618636
 CircleCollider2D:
@@ -585,7 +592,7 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 44c95388782ff2c42b925a4a9d6780a1, type: 3}
     - {fileID: 21300000, guid: a49be9837647d934794313ca63d737d4, type: 3}
     - {fileID: 21300000, guid: 313e1feb42e6a43469884c93c4098cae, type: 3}
-    - {fileID: 21300000, guid: 9cc7464a83d02834dabf54ca8eedf804, type: 3}
+    - {fileID: 21300000, guid: e6f3a2e0f7805ff418565efd86a41cfa, type: 3}
     - {fileID: 21300000, guid: a3255d65e2fbcd94bbce12c73a6140e6, type: 3}
     - {fileID: 21300000, guid: 0c31ddfef24ab054ea58bdb78fc973a5, type: 3}
     - {fileID: 21300000, guid: 961a8eb948fd8e54abcd56a04a844fad, type: 3}
@@ -1030,5 +1037,10 @@ PrefabInstance:
 --- !u!224 &2309267293645680394 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+  m_PrefabInstance: {fileID: 4126106226605048177}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3935515225599120917 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1143665813906544484, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
   m_PrefabInstance: {fileID: 4126106226605048177}
   m_PrefabAsset: {fileID: 0}

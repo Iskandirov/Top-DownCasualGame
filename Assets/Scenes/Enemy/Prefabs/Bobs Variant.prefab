@@ -26,11 +26,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1787611321675974066, guid: 8bab4a5065997b04c9db71f0c5e140a6, type: 3}
       propertyPath: m_InstanceId
-      value: -623260
+      value: -74998
       objectReference: {fileID: 0}
     - target: {fileID: 2326225974591781405, guid: 8bab4a5065997b04c9db71f0c5e140a6, type: 3}
       propertyPath: m_InstanceId
-      value: -623210
+      value: -74948
       objectReference: {fileID: 0}
     - target: {fileID: 2927036144397176274, guid: 8bab4a5065997b04c9db71f0c5e140a6, type: 3}
       propertyPath: damageMax
@@ -134,7 +134,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7623075155113994220, guid: 8bab4a5065997b04c9db71f0c5e140a6, type: 3}
       propertyPath: m_InstanceId
-      value: -623280
+      value: -75018
       objectReference: {fileID: 0}
     - target: {fileID: 7752983507903680062, guid: 8bab4a5065997b04c9db71f0c5e140a6, type: 3}
       propertyPath: path
@@ -180,6 +180,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6eb1402c17e84a9282a7f0f62eb584f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &904767597680243077 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5967280687732449362, guid: 8bab4a5065997b04c9db71f0c5e140a6, type: 3}
+  m_PrefabInstance: {fileID: 6799990673120743895}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4108003558637854865 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7448078597982695750, guid: 8bab4a5065997b04c9db71f0c5e140a6, type: 3}
@@ -198,7 +203,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <isSlowed>k__BackingField: 0
+  <isStun>k__BackingField: 0
   <isBurn>k__BackingField: 0
+  <isAttack>k__BackingField: 0
   <mobName>k__BackingField: 
   <type>k__BackingField: 
   <attackSpeed>k__BackingField: 0
@@ -207,6 +214,11 @@ MonoBehaviour:
   <timesPerOne>k__BackingField: 0
   <objTransform>k__BackingField: {fileID: 0}
   <objToAttack>k__BackingField: {fileID: 0}
+  <ElementsParent>k__BackingField: {fileID: 904767597680243077}
+  RepositionPoint: {fileID: 0}
+  destination: {fileID: 5597788573981687639}
+  colider: {fileID: 5409705857649302946}
+  path: {fileID: 897647976440422858}
   objectToHit: {fileID: 0}
 --- !u!114 &3864534560958072251
 MonoBehaviour:
@@ -230,11 +242,10 @@ MonoBehaviour:
     <attackSpeedMax>k__BackingField: 0
     <dangerLevel>k__BackingField: 0
     <maxCountPerTime>k__BackingField: 1
+    <isSpawnInsideMapBounds>k__BackingField: 0
     path: {fileID: 0}
     expGiven: 0
-    uiParent: {fileID: 0}
     health: {fileID: 0}
-    healthBossObj: {fileID: 0}
     fillAmountImage: {fileID: 0}
     itemPrefab: {fileID: 0}
     itemsLoaded: []
@@ -267,7 +278,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <isSlowed>k__BackingField: 0
+  <isStun>k__BackingField: 0
   <isBurn>k__BackingField: 0
+  <isAttack>k__BackingField: 0
   <mobName>k__BackingField: 
   <type>k__BackingField: 
   <attackSpeed>k__BackingField: 0
@@ -276,7 +289,17 @@ MonoBehaviour:
   <timesPerOne>k__BackingField: 0
   <objTransform>k__BackingField: {fileID: 0}
   <objToAttack>k__BackingField: {fileID: 0}
+  <ElementsParent>k__BackingField: {fileID: 0}
+  RepositionPoint: {fileID: 0}
+  destination: {fileID: 0}
+  colider: {fileID: 0}
+  path: {fileID: 0}
   objectToHit: {fileID: 0}
+--- !u!58 &5409705857649302946 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 1534964057862147189, guid: 8bab4a5065997b04c9db71f0c5e140a6, type: 3}
+  m_PrefabInstance: {fileID: 6799990673120743895}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &5597788573981687639 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1436996216243089024, guid: 8bab4a5065997b04c9db71f0c5e140a6, type: 3}

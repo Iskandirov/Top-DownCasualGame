@@ -16,23 +16,12 @@ public class Meteor : SkillBaseMono
             basa.damage += basa.stats[1].value;
             basa.stats[1].isTrigger = false;
         }
-        if (basa.stats[2].isTrigger)
-        {
-            basa.countObjects += basa.stats[2].value;
-            basa.stats[2].isTrigger = false;
-            StartCoroutine(WaitToAnotherObject(2, basa.spawnDelay));
-        }
         if (basa.stats[3].isTrigger)
         {
             basa.lifeTime += basa.stats[3].value;
             basa.stats[3].isTrigger = false;
         }
-        if (basa.stats[4].isTrigger)
-        {
-            basa.countObjects += basa.stats[4].value;
-            basa.stats[4].isTrigger = false;
-            StartCoroutine(WaitToAnotherObject(5,basa.spawnDelay));
-        }
+       
         //basa = SetToSkillID(gameObject);
         transform.localScale = new Vector3(transform.localScale.x + basa.radius, transform.localScale.y + basa.radius);
 
@@ -42,15 +31,7 @@ public class Meteor : SkillBaseMono
         CoroutineToDestroy(gameObject,basa.lifeTime);
     }
    
-    private IEnumerator WaitToAnotherObject(int count, float delay)
-    {
-        for (int i = 0; i < count - 1; i++)
-        {
-            yield return new WaitForSeconds(delay);
-            Meteor b = Instantiate(this, new Vector2(transform.position.x + Random.Range(-20, 20), transform.position.y + Random.Range(-20, 20)), Quaternion.identity);
-            b.basa.damage = basa.damage;
-        }
-    }
+   
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -64,7 +45,7 @@ public class Meteor : SkillBaseMono
             {
                 EnemyState health = collision.GetComponent<EnemyState>();
 
-                ElementActiveDebuff debuff = collision.GetComponentInParent<ElementActiveDebuff>();
+                ElementActiveDebuff debuff = collision.GetComponent<ElementActiveDebuff>();
                 if (debuff != null)
                 {
                     debuff.StartCoroutine(debuff.EffectTime(Elements.status.Fire, 5));
@@ -73,15 +54,16 @@ public class Meteor : SkillBaseMono
                 {
                     EnemyController.instance.SlowEnemy(health, 1f, fireDirt / 1.5f);
                 }
-                enemy.TakeDamage(health, (basa.damage * fireDirt * debuff.elements.CurrentStatusValue(Elements.status.Water)) 
-                    / debuff.elements.CurrentStatusValue(Elements.status.Fire));
-                GameManager.Instance.FindStatName("meteorDamage", (basa.damage * fireDirt * debuff.elements.CurrentStatusValue(Elements.status.Water)) 
-                    / debuff.elements.CurrentStatusValue(Elements.status.Fire));
+                float damage = (basa.damage * fireDirt * debuff.elements.CurrentStatusValue(Elements.status.Water))
+                    / debuff.elements.CurrentStatusValue(Elements.status.Fire);
+                enemy.TakeDamage(health, damage);
+                GameManager.Instance.FindStatName("meteorDamage", damage);
+                DailyQuests.instance.UpdateValue(3, damage, false);
                 damageTick = basa.damageTickMax;
             }
             else if (collision.CompareTag("Barrel") && collision != null)
             {
-                collision.GetComponent<ObjectHealth>().health -= 1;
+                collision.GetComponent<ObjectHealth>().TakeDamage();
                 damageTick = basa.damageTickMax;
 
             }

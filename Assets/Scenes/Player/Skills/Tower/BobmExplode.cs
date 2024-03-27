@@ -27,7 +27,7 @@ public class BobmExplode : MonoBehaviour
             }
             else if (collider.CompareTag("Barrel") && collider != null)
             {
-                collider.gameObject.GetComponent<ObjectHealth>().health -= damage * fire;
+                collider.gameObject.GetComponent<ObjectHealth>().TakeDamage();
             }
         }
         Destroy(gameObject);

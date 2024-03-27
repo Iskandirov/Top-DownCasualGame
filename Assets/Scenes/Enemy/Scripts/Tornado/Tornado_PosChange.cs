@@ -51,9 +51,8 @@ public class Tornado_PosChange : MonoBehaviour
     {
         if (collision.CompareTag("Tree") && !collision.isTrigger)
         {
-            GameObject a = Instantiate(stump, collision.transform.position, Quaternion.identity);
-            a.GetComponent<AudioSource>().clip = stumpSounds[Random.Range(0, stumpSounds.Count)];
-            a.GetComponent<AudioSource>().Play();
+            Instantiate(stump, collision.transform.position, Quaternion.identity);
+            AudioManager.instance.PlaySFX("Stump");
             Destroy(collision.gameObject);
         }
         if (collision.CompareTag("Player") && !collision.isTrigger)

@@ -19,6 +19,7 @@ public class Lightning : SkillBaseMono
         player = PlayerManager.instance;
 
         //basa = SetToSkillID(gameObject);
+      
         if (basa.stats[1].isTrigger)
         {
             basa.countObjects += (int)basa.stats[1].value;
@@ -28,6 +29,11 @@ public class Lightning : SkillBaseMono
         {
             basa.damage *= basa.stats[2].value;
             basa.stats[2].isTrigger = false;
+        }
+        if (basa.stats[3].isTrigger)
+        {
+            stunTime = basa.stats[2].value;
+            //basa.stats[3].isTrigger = false;
         }
         if (basa.stats[4].isTrigger)
         {
@@ -51,15 +57,16 @@ public class Lightning : SkillBaseMono
                 enemy = enemyToShoot.GetComponent<EnemyState>();
                 ElementActiveDebuff debuff = enemy.GetComponent<ElementActiveDebuff>();
                 debuff.StartCoroutine(debuff.EffectTime(Elements.status.Electricity, 5));
-                if (enemy != null && basa.stats[4].isTrigger)
+                if (enemy != null && basa.stats[3].isTrigger)
                 {
-                    enemy.SetStunned();
+                    enemy.Stun(stunTime);
                 }
 
                 transform.position = enemyToShoot.transform.position;
-                EnemyController.instance.TakeDamage(enemy, enemy.health - basa.damage * player.Electricity / debuff.elements.CurrentStatusValue(Elements.status.Electricity));
+                EnemyController.instance.TakeDamage(enemy, basa.damage * player.Electricity / debuff.elements.CurrentStatusValue(Elements.status.Electricity));
                 GameManager.Instance.FindStatName("lightDamage", basa.damage * player.Electricity
                     / debuff.elements.CurrentStatusValue(Elements.status.Electricity));
+                CineMachineCameraShake.instance.Shake(10, .1f);
             }
             else
             {

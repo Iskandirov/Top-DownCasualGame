@@ -201,7 +201,7 @@ MonoBehaviour:
   - {x: 0.01796627, y: -1.9777908, z: 0}
   m_ShapePathHash: 440797959
   m_Mesh: {fileID: 0}
-  m_InstanceId: 114216
+  m_InstanceId: 70070
   m_LocalBounds:
     m_Center: {x: -0.017195702, y: -0.00869751, z: 0}
     m_Extent: {x: 2.038415, y: 1.9690933, z: 0}
@@ -519,6 +519,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <isSlowed>k__BackingField: 0
   <isBurn>k__BackingField: 0
+  <isAttack>k__BackingField: 0
   <mobName>k__BackingField: SpikeTumble
   <type>k__BackingField: 
   <attackSpeed>k__BackingField: 0
@@ -527,6 +528,7 @@ MonoBehaviour:
   <timesPerOne>k__BackingField: 10
   <objTransform>k__BackingField: {fileID: 4371186130106877483}
   <objToAttack>k__BackingField: {fileID: 0}
+  <ElementsParent>k__BackingField: {fileID: 1864469292038245758}
   objectToHit: {fileID: 0}
 --- !u!58 &-8819206724439237132
 CircleCollider2D:
@@ -753,7 +755,6 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 0c31ddfef24ab054ea58bdb78fc973a5, type: 3}
     - {fileID: 21300000, guid: 961a8eb948fd8e54abcd56a04a844fad, type: 3}
   elementDebuffParent: {fileID: 1102823975715075169}
-  acitveDebuffs: []
   elementDebuffObject: {fileID: 1262367869966813369, guid: 18f8e8e849830084eace680fad057225, type: 3}
 --- !u!1 &5012606462119499245
 GameObject:
@@ -1033,5 +1034,10 @@ PrefabInstance:
 --- !u!224 &1102823975715075169 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+  m_PrefabInstance: {fileID: 1585532114575039002}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1864469292038245758 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1143665813906544484, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
   m_PrefabInstance: {fileID: 1585532114575039002}
   m_PrefabAsset: {fileID: 0}

@@ -5,8 +5,9 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.VFX;
 
-[DefaultExecutionOrder(6)]
+//[DefaultExecutionOrder(6)]
 public class PlayerManager : MonoBehaviour
 {
     GameManager gameManager;
@@ -64,13 +65,17 @@ public class PlayerManager : MonoBehaviour
     public bool isLevelTwo;
     [HideInInspector]
     public bool isLevelFive;
-    public int secondBulletCount;
     [HideInInspector]
     public bool isRicoshet;
     [HideInInspector]
     public bool isLifeSteal;
     [HideInInspector]
     public bool isBulletSlow;
+    public bool isAuto;
+    public Image autoimage;
+    public Sprite[] autoState;
+    public VisualEffect AutoActiveCurve;
+    public float offset;
 
     [Header("Expiriance settings")]
     public Image expiriencepoint;
@@ -102,6 +107,7 @@ public class PlayerManager : MonoBehaviour
     public List<CharacterStats> characters;
     [HideInInspector]
     public Transform objTransform;
+
     private void Awake()
     {
         instance ??= this;
@@ -110,6 +116,7 @@ public class PlayerManager : MonoBehaviour
     private void OnDestroy()
     {
         instance = null;
+        OnButtonClicked -= OnButtonClickHandler;
     }
     // Start is called before the first frame update
     void Start()
@@ -120,11 +127,13 @@ public class PlayerManager : MonoBehaviour
         speedMax = speed;
         countActiveAbilities = 1;
         SetCharacterOnStart();
+        OnButtonClicked += OnButtonClickHandler;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+       
         ArrowToCursor();
         if (!isTutor)
         {
@@ -143,8 +152,35 @@ public class PlayerManager : MonoBehaviour
             fullFillImage.fillAmount += playerHealthRegeneration / playerHealthPointMax;
         }
     }
+    //Тестовий делегат
+    public delegate void ButtonClickHandler();
+    public event ButtonClickHandler OnButtonClicked;
+    private void OnButtonClickHandler()
+    {
+        autoimage.sprite = isAuto ? autoState[0] : autoState[1];
+        isAuto = !isAuto;
+        AutoActiveCurve.gameObject.SetActive(isAuto);
+       
+    }
+
+    //Кінець тестовому делегату
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            OnButtonClicked?.Invoke();
+        }
+        if (isAuto)
+        {
+            // Отримати поточне значення офсету
+            offset = AutoActiveCurve.GetFloat("offset");
+
+            // Додати до офсету значення Time.deltaTime, щоб змінювати його на 1 за секунду
+            offset += Time.deltaTime;
+
+            // Встановити нове значення офсету
+            AutoActiveCurve.SetFloat("offset", offset);
+        }
         BaseSkillSelector();
     }
     //Health
@@ -153,13 +189,16 @@ public class PlayerManager : MonoBehaviour
         playerAnim.SetBool("IsHit", false);
         if (playerHealthPoint <= 0)
         {
+            //DailyQuests.instance.UpdateValue(4, 0);
             AudioManager.instance.MusicStop();
             AudioManager.instance.PlaySFX("PlayerDeath");
-            gameManager.OpenPanel(gameManager.losePanel);
+            gameManager.OpenPanel(gameManager.losePanel, true);
         }
     }
     public void TakeDamage(float damage)
     {
+        playerAnim.SetBool("IsHit", true);
+
         if (damage > 0 && !isInvincible)
         {
             if (!isTutor)
@@ -170,9 +209,12 @@ public class PlayerManager : MonoBehaviour
                 playerHealthPoint -= damage;
                 gameManager.FindStatName("DamageTaken", damage);
                 fullFillImage.fillAmount -= damage / playerHealthPointMax;
+                if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 4 && s.isActive == true) != null)
+                {
+                    DailyQuests.instance.UpdateValue(4, damage, false);
+                }
             }
         }
-        playerAnim.SetBool("IsHit", true);
     }
     public float Armor(float damage,float armor)
     {
@@ -239,7 +281,7 @@ public class PlayerManager : MonoBehaviour
             playerAnim.SetBool("IsMove", true);
             if (axisX != horizontalInput)
             {
-                StartCoroutine(SlowPlayer(0.2f, 0.7f));
+                StartCoroutine(SlowPlayer(0.2f, 0.9f));
                 axisX = horizontalInput;
             }
         }
@@ -248,7 +290,7 @@ public class PlayerManager : MonoBehaviour
             playerAnim.SetBool("IsMove", true);
             if (axisY != verticalInput)
             {
-                StartCoroutine(SlowPlayer(0.2f, 0.7f));
+                StartCoroutine(SlowPlayer(0.2f, 0.9f));
                 axisY = verticalInput;
             }
         }
@@ -358,12 +400,40 @@ public class PlayerManager : MonoBehaviour
     public void ShootBullet(Vector3 position, Bullet newObject)
     {
         newObject.transform.position = position;
-        Vector2 directionBullet = GetMousDirection(position);
 
+        Vector2 directionBullet = GetMousDirection(position);
         // Запускаємо об'єкт в заданому напрямку
         Rigidbody2D rb = newObject.GetComponent<Rigidbody2D>();
         rb.AddForce(directionBullet.normalized * launchForce, ForceMode2D.Impulse);
         float angleShot = Mathf.Atan2(directionBullet.y, directionBullet.x) * Mathf.Rad2Deg;
+        newObject.transform.rotation = Quaternion.AngleAxis(angleShot + 90, Vector3.forward);
+    }
+    public void AutoShoot(Vector3 position, Bullet newObject)
+    {
+        newObject.transform.position = position;
+
+        Vector2 nearest = new Vector3(999, 999, 999);
+        float nearestDistSqr = Mathf.Infinity;
+
+        foreach (var enemy in EnemyController.instance.children)
+        {
+            Vector3 enemyPos = enemy.objTransform.position;
+            float distSqr = (enemyPos - position).sqrMagnitude;
+
+            if (distSqr < nearestDistSqr)
+            {
+                nearestDistSqr = distSqr;
+                nearest = enemyPos;
+            }
+        }
+        Vector2 myPos = new Vector2(objTransform.position.x, objTransform.position.y);
+        Vector2 direction = nearest - myPos;
+        direction.Normalize();
+
+        // Запускаємо об'єкт в заданому напрямку
+        Rigidbody2D rb = newObject.GetComponent<Rigidbody2D>();
+        rb.AddForce(direction.normalized * launchForce, ForceMode2D.Impulse);
+        float angleShot = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         newObject.transform.rotation = Quaternion.AngleAxis(angleShot + 90, Vector3.forward);
     }
     //End Shoot

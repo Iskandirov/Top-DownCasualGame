@@ -70,7 +70,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.001
-  far clip plane: 116.9
+  far clip plane: 21.51
   field of view: 60
   orthographic: 1
   orthographic size: 37
@@ -86,7 +86,7 @@ Camera:
   m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
-  m_OcclusionCulling: 0
+  m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
 --- !u!114 &6416895844494761416
@@ -194,7 +194,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsSettingsPage: 0
-  IsGamePage: 0
+  IsGamePage: 1
   menuPanel: {fileID: 0}
   losePanel: {fileID: 0}
   winPanel: {fileID: 0}
@@ -203,6 +203,7 @@ MonoBehaviour:
   isPanelOpen: 0
   statRead: []
   texts:
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -217,8 +218,229 @@ MonoBehaviour:
   volumeSFX: 0
   vSync: 0
   nameClip: GameTheme
-  items: []
-  upgrades: []
+  items:
+  - Name: "\u0435\u043D\u0435\u0440\u0433\u0435\u0442\u0438\u0447\u043D\u0438\u0439
+      \u0437\u0430\u0440\u044F\u0434"
+    ImageSprite: {fileID: 21300000, guid: 78a8664d624f51148a0e38edf30aba49, type: 3}
+    RareName: "\u0417\u0432\u0438\u0447\u0430\u0439\u043D\u0435"
+    RareSprite: {fileID: 21300000, guid: ae7f3237fbd41d04f95cc2313e98c395, type: 3}
+    IDRare: 1
+    Stat: 3
+    Level: 1
+    Count: 0
+    Tag: energy_charge
+    RareTag: common
+    Description: "\u0417\u0430\u0440\u044F\u0434\u0436\u0430\u0454 \u0432\u0430\u0448\u043E\u0433\u043E
+      \u043F\u0435\u0440\u0441\u043E\u043D\u0430\u0436\u0430 \u0435\u043D\u0435\u0440\u0433\u0456\u0454\u044E
+      \u0442\u0430 \u043F\u043E\u0432\u0438\u0448\u0430\u0454 \u0439\u043E\u0433\u043E
+      \u0448\u0432\u0438\u0434\u043A\u0456\u0441\u0442\u044C \u043D\u0430 3"
+  - Name: "\u0448\u0435\u0441\u0442\u0435\u0440\u043D\u044F"
+    ImageSprite: {fileID: 21300000, guid: c932988704fb79c40bb45341e7656797, type: 3}
+    RareName: "\u0420\u0456\u0434\u043A\u0456\u0441\u043D\u0435"
+    RareSprite: {fileID: 21300000, guid: 3d8f059b7b17c7045bce65146d7f3cab, type: 3}
+    IDRare: 2
+    Stat: 0,1
+    Level: 1
+    Count: 0
+    Tag: gear
+    RareTag: uncommon
+    Description: "\u0417\u0430\u0433\u0430\u0434\u043A\u043E\u0432\u0438\u0439 \u043C\u0435\u0445\u0430\u043D\u0456\u0437\u043C
+      \u044F\u043A\u0438\u0439 \u0437\u043C\u0443\u0448\u0443\u0454 \u0430\u0442\u0430\u043A\u0443
+      \u043F\u0440\u0438\u0448\u0432\u0438\u0434\u0448\u0443\u0432\u0430\u0442\u0438\u0441\u044C
+      \u043D\u0430 0,1"
+  - Name: "\u0435\u0442\u0435\u0440\u043D\u0456\u0439\u0441\u044C\u043A\u0456-\u043A\u0440\u0438\u0441\u0442\u0430\u043B\u0438"
+    ImageSprite: {fileID: 21300000, guid: dd3e8c4cb0651254daed8d8eb979c064, type: 3}
+    RareName: "\u041C\u0456\u0444\u0456\u0447\u043D\u0435"
+    RareSprite: {fileID: 21300000, guid: a1ec008b10212aa4bb88132a5c0d83bf, type: 3}
+    IDRare: 3
+    Stat: 1
+    Level: 1
+    Count: 0
+    Tag: eternium_crystals
+    RareTag: mythical
+    Description: "\u0414\u0440\u0435\u0432\u043D\u0456\u0439 \u043A\u0440\u0438\u0441\u0442\u0430\u043B
+      \u044F\u043A\u0438\u0439 \u043F\u043E\u0437\u0438\u0442\u0438\u0432\u043D\u043E
+      \u0432\u043F\u043B\u0438\u0432\u0430\u0454 \u043D\u0430 \u0432\u0430\u0448\u043E\u0433\u043E
+      \u043F\u0435\u0440\u0441\u043E\u043D\u0430\u0436\u0430 \u0456 \u043F\u0456\u0434\u043D\u0456\u043C\u0430\u0454
+      \u0439\u043E\u0433\u043E \u0448\u043A\u043E\u0434\u0443 \u043D\u0430 1"
+  - Name: "\u043E\u043A\u043E \u0434\u0440\u0430\u043A\u043E\u043D\u0430"
+    ImageSprite: {fileID: 21300000, guid: 0415cf29cbe37e345986c70f9e361c6c, type: 3}
+    RareName: "\u041B\u0435\u0433\u0435\u043D\u0434\u0430\u0440\u043D\u0435"
+    RareSprite: {fileID: 21300000, guid: 3b43a0b6d5121b941ae63634953eb68d, type: 3}
+    IDRare: 4
+    Stat: 10
+    Level: 1
+    Count: 0
+    Tag: dragon's_eye
+    RareTag: legendary
+    Description: "\u041E\u043A\u043E \u0441\u0442\u0430\u0440\u043E\u0433\u043E \u0434\u0440\u0430\u043A\u043E\u043D\u0430
+      \u044F\u043A\u0435 \u0434\u043E\u0437\u0432\u043E\u043B\u044F\u0454 \u0432\u0430\u0448\u043E\u043C\u0443
+      \u043F\u0435\u0440\u0441\u043E\u043D\u0430\u0436\u0443 \u0431\u0430\u0447\u0438\u0442\u0438
+      \u043D\u0430 20 \u043C\u0435\u0442\u0440\u0456\u0432 \u0434\u0430\u043B\u044C\u0448\u0435"
+  - Name: "\u043A\u043B\u0438\u043A \u043B\u0456\u0442\u0443\u0447\u043E\u0457 \u043C\u0438\u0448\u0456"
+    ImageSprite: {fileID: 21300000, guid: eeeda2eaa780b374289dcffde5f8b4aa, type: 3}
+    RareName: "\u0417\u0432\u0438\u0447\u0430\u0439\u043D\u0435"
+    RareSprite: {fileID: 21300000, guid: ae7f3237fbd41d04f95cc2313e98c395, type: 3}
+    IDRare: 1
+    Stat: 0,1
+    Level: 1
+    Count: 0
+    Tag: beatty`s_claw
+    RareTag: common
+    Description: "\u041A\u043B\u0438\u043A\u0438 \u0437\u043B\u0456\u0441\u043D\u043E\u0457
+      \u043B\u0456\u0442\u0443\u0447\u043E\u0457 \u043C\u0438\u0448\u0456 \u044F\u043A\u0438\u0439
+      \u043D\u0430\u0434\u0430\u0454 \u043C\u043E\u0436\u043B\u0438\u0432\u0456\u0441\u0442\u044C
+      \u043F\u043E\u0432\u0435\u0440\u0442\u0430\u0442\u0438 10% \u0432\u0456\u0434
+      \u0437\u0430\u0432\u0434\u0430\u043D\u043E\u0457 \u0448\u043A\u043E\u0434\u0438
+      \u0443 \u0432\u0438\u0433\u043B\u044F\u0434\u0456 \u0437\u0434\u043E\u0440\u043E\u0432'\u044F"
+  - Name: "\u043E\u043A\u043E \u0434\u0435\u0440\u0435\u0432'\u044F\u043D\u043E\u0433\u043E
+      \u0441\u043D\u0430\u0439\u043F\u0435\u0440\u0430"
+    ImageSprite: {fileID: 21300000, guid: 3f482917caa939242a2e177d029b11cc, type: 3}
+    RareName: "\u0417\u0432\u0438\u0447\u0430\u0439\u043D\u0435"
+    RareSprite: {fileID: 21300000, guid: ae7f3237fbd41d04f95cc2313e98c395, type: 3}
+    IDRare: 1
+    Stat: 30
+    Level: 1
+    Count: 0
+    Tag: treesnipe`s_eye
+    RareTag: common
+    Description: "\u041F\u043B\u0456\u0434 \u0434\u0435\u0440\u0435\u0432'\u044F\u043D\u043E\u0433\u043E
+      \u0441\u043D\u0430\u0439\u043F\u0435\u0440\u0430 \u044F\u043A\u0438\u0439 \u0437\u0431\u0456\u043B\u044C\u0448\u0443\u0454
+      \u0448\u0432\u0438\u0434\u043A\u0456\u0441\u0442\u044C \u0432\u043E\u0433\u043D\u044F\u043D\u0438\u0445
+      \u043A\u0443\u043B\u044C \u043D\u0430 30"
+  - Name: "\u0432\u0438\u0436\u0438\u043C\u043A\u0430 \u0437 \u0433\u0440\u0438\u0431\u0456\u0432"
+    ImageSprite: {fileID: 21300000, guid: 4138420afea76f04e886671c70c4fe52, type: 3}
+    RareName: "\u0420\u0456\u0434\u043A\u0456\u0441\u043D\u0435"
+    RareSprite: {fileID: 21300000, guid: 656ac49ed3d206840856d9c1e2c25f32, type: 3}
+    IDRare: 2
+    Stat: 0,2
+    Level: 1
+    Count: 0
+    Tag: mushi_extract
+    RareTag: uncommon
+    Description: "\u0412\u0438\u0436\u0438\u043C\u043A\u0430 \u0437 \u043D\u0435\u0432\u0438\u0434\u0438\u043C\u0438\u0445
+      \u0433\u0440\u0438\u0431\u0456\u0432 \u0432\u0438\u043F\u0438\u0432\u0448\u0438
+      \u044F\u043A\u0443 \u043C\u043E\u0436\u043D\u0430 \u0437\u0431\u0456\u043B\u044C\u0448\u0438\u0442\u0438
+      \u0448\u043A\u043E\u0434\u0443 \u0432\u043E\u0434\u044F\u043D\u0438\u043C\u0438
+      \u0437\u0430\u043A\u043B\u0438\u043D\u0430\u043D\u043D\u044F\u043C\u0438 \u043D\u0430
+      0.2, \u0448\u043A\u043E\u0434\u0443 \u043F\u043E\u0432\u0456\u0442\u0440\u044F\u043D\u0438\u043C\u0438
+      \u0437\u0430\u043A\u043B\u0438\u043D\u0430\u043D\u043D\u044F\u043C\u0438 \u043D\u0430
+      0.2, \u0448\u043A\u043E\u0434\u0443 \u0442\u0440\u0430\u0432'\u044F\u043D\u0438\u043C\u0438
+      \u0437\u0430\u043A\u043B\u0438\u043D\u0430\u043D\u043D\u044F\u043C\u0438 \u043D\u0430
+      0.2 \u0442\u0430 \u0448\u043A\u043E\u0434\u0443 \u0437\u0430\u043A\u043B\u0438\u043D\u0430\u043D\u043D\u044F\u043C\u0438
+      \u0437\u0435\u043C\u043B\u0456 \u043D\u0430 0.2"
+  - Name: "\u043A\u043E\u0440\u0456\u043D\u044C \u043A\u0456\u0432\u0456"
+    ImageSprite: {fileID: 21300000, guid: 4a6be77079137d84ba9f610f321b9f42, type: 3}
+    RareName: "\u0420\u0456\u0434\u043A\u0456\u0441\u043D\u0435"
+    RareSprite: {fileID: 21300000, guid: 656ac49ed3d206840856d9c1e2c25f32, type: 3}
+    IDRare: 2
+    Stat: 0,8
+    Level: 1
+    Count: 0
+    Tag: kiwi`s_root
+    RareTag: uncommon
+    Description: "\u041A\u043E\u0440\u0456\u043D\u044C \u0437\u0432\u0456\u0440\u0430
+      \u044F\u043A\u0438\u0439 \u043D\u0430\u0434\u0430\u0454 \u0432\u043E\u0433\u043D\u044F\u043D\u0438\u043C
+      \u043A\u0443\u043B\u044F\u043C \u043C\u043E\u0436\u043B\u0438\u0432\u0456\u0441\u0442\u044C
+      \u0441\u043F\u043E\u0432\u0456\u043B\u044C\u043D\u044E\u0432\u0430\u0442\u0438
+      \u0432\u043E\u0440\u043E\u0433\u0456\u0432 \u043D\u0430 20%"
+  - Name: "\u0441\u043B\u0438\u0437"
+    ImageSprite: {fileID: 21300000, guid: 9c0635e00a8c3374b9a77215894cd016, type: 3}
+    RareName: "\u041C\u0456\u0444\u0456\u0447\u043D\u0435"
+    RareSprite: {fileID: 21300000, guid: c7a9eb9cdec06e34ea5a0031e706d442, type: 3}
+    IDRare: 3
+    Stat: 0,4
+    Level: 1
+    Count: 0
+    Tag: beany`s_mucus
+    RareTag: mythical
+    Description: "\u0411\u0440\u0438\u0434\u043A\u0438\u0439 \u0441\u043B\u0438\u0437
+      \u044F\u043A\u0438\u0439 \u043F\u0456\u0434\u0456\u0439\u043C\u0430\u0454 \u0448\u043A\u043E\u0434\u0443
+      \u0432\u0456\u0434 \u0432\u043E\u0433\u043D\u044E \u043D\u0430 40% \u0430\u043B\u0435
+      \u0437\u043C\u0435\u043D\u0448\u0443\u0454 \u0448\u043A\u043E\u0434\u0443 \u0432\u0456\u0434
+      \u043C\u043E\u0440\u043E\u0437\u0443 \u043D\u0430 40%"
+  - Name: "\u0441\u0444\u0435\u0440\u0430 \u0431\u043E\u0431\u0441\u0430"
+    ImageSprite: {fileID: 21300000, guid: fe4f7a4d1a0ee624b86d55e19714d237, type: 3}
+    RareName: "\u041B\u0435\u0433\u0435\u043D\u0434\u0430\u0440\u043D\u0435"
+    RareSprite: {fileID: 21300000, guid: 3b43a0b6d5121b941ae63634953eb68d, type: 3}
+    IDRare: 4
+    Stat: 1
+    Level: 1
+    Count: 0
+    Tag: bobses_sphere
+    RareTag: legendary
+    Description: "\u0414\u043E\u0434\u0430\u0454 \u0441\u0444\u0435\u0440\u0443 \u044F\u043A\u0430
+      \u0431\u0443\u0434\u0435 \u043A\u0440\u0443\u0436\u043B\u044F\u0442\u0438 \u043D\u0430\u0432\u043A\u043E\u043B\u043E
+      \u0432\u0430\u0448\u043E\u0433\u043E \u0433\u0435\u0440\u043E\u044F \u0456
+      \u043F\u0440\u0438 \u043A\u043E\u043D\u0442\u0430\u043A\u0442\u0456 \u0437
+      \u0432\u043E\u0440\u043E\u0433\u043E\u043C \u0432\u0437\u0440\u0438\u0432\u0430\u0442\u0438\u0441\u044C
+      \u0442\u0430 \u043D\u0430\u043D\u043E\u0441\u0438\u0442\u0438 \u0439\u043E\u043C\u0443
+      15 \u0448\u043A\u043E\u0434\u0438, \u043C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u043E
+      \u043C\u043E\u0436\u0435 \u0431\u0443\u0442\u0438 2 \u0441\u0444\u0435\u0440\u0438
+      \u043E\u0434\u043D\u043E\u0447\u0430\u0441\u043D\u043E"
+  - Name: "\u0449\u0438\u0442 \u0440\u043E\u043A\u043A\u0456"
+    ImageSprite: {fileID: 21300000, guid: 273fdbace14bbac4587618ebdd77b558, type: 3}
+    RareName: "\u041B\u0435\u0433\u0435\u043D\u0434\u0430\u0440\u043D\u0435"
+    RareSprite: {fileID: 21300000, guid: 3b43a0b6d5121b941ae63634953eb68d, type: 3}
+    IDRare: 4
+    Stat: 20
+    Level: 1
+    Count: 0
+    Tag: rocky`s_shiled
+    RareTag: legendary
+    Description: "\u041C\u0456\u0446\u043D\u0438\u0439 \u0449\u0438\u0442 \u044F\u043A\u0438\u0439
+      \u043F\u0456\u0434\u0456\u0439\u043C\u0430\u0454 \u0431\u0440\u043E\u043D\u044E
+      \u0432\u0430\u0448\u043E\u0433\u043E \u043F\u0435\u0440\u0441\u043E\u043D\u0430\u0436\u0430
+      \u043D\u0430 20"
+  upgrades:
+  - ID: 1
+    ImageSprite: {fileID: 21300000, guid: ae7f3237fbd41d04f95cc2313e98c395, type: 3}
+    IDRare: 1
+  - ID: 2
+    ImageSprite: {fileID: 21300000, guid: 73b54bff82779f6418c230808158756d, type: 3}
+    IDRare: 1
+  - ID: 3
+    ImageSprite: {fileID: 21300000, guid: a54f172c6dc5a8a438d9e7dc10fca92e, type: 3}
+    IDRare: 1
+  - ID: 4
+    ImageSprite: {fileID: 21300000, guid: 91b8d62948c7e8947aaba46390a2c8a1, type: 3}
+    IDRare: 1
+  - ID: 1
+    ImageSprite: {fileID: 21300000, guid: 3d8f059b7b17c7045bce65146d7f3cab, type: 3}
+    IDRare: 2
+  - ID: 2
+    ImageSprite: {fileID: 21300000, guid: 50f4e4ad4fdb6134cb08de6567ee347e, type: 3}
+    IDRare: 2
+  - ID: 3
+    ImageSprite: {fileID: 21300000, guid: aec824ae13125b34b9669fd4e05ad04b, type: 3}
+    IDRare: 2
+  - ID: 4
+    ImageSprite: {fileID: 21300000, guid: 93df575aa9f6a524aa55a374411cdd25, type: 3}
+    IDRare: 2
+  - ID: 1
+    ImageSprite: {fileID: 21300000, guid: a1ec008b10212aa4bb88132a5c0d83bf, type: 3}
+    IDRare: 3
+  - ID: 2
+    ImageSprite: {fileID: 21300000, guid: c1abcf205c7196140afaceec044f0ca8, type: 3}
+    IDRare: 3
+  - ID: 3
+    ImageSprite: {fileID: 21300000, guid: 6d2aad1aa8e8297429cab9bd609950b2, type: 3}
+    IDRare: 3
+  - ID: 4
+    ImageSprite: {fileID: 21300000, guid: 306809571ba421a4a835d70bdf204cb6, type: 3}
+    IDRare: 3
+  - ID: 1
+    ImageSprite: {fileID: 21300000, guid: 7cb48bbbefb626c4c8ae208b0fad33e1, type: 3}
+    IDRare: 4
+  - ID: 2
+    ImageSprite: {fileID: 21300000, guid: 8389f80ad961db9469312b57424dc683, type: 3}
+    IDRare: 4
+  - ID: 3
+    ImageSprite: {fileID: 21300000, guid: e3b2dab50c0ec194e90b105b6e64aec3, type: 3}
+    IDRare: 4
+  - ID: 4
+    ImageSprite: {fileID: 21300000, guid: a91acd8006e29cf4883c8041e5a91b4f, type: 3}
+    IDRare: 4
   itemsRead: []
   score: 0
   enemyCount: 0
@@ -227,7 +449,7 @@ MonoBehaviour:
   - Name: Beany
     Image: {fileID: 21300000, guid: fefdfeb7ae6525f4f8eca0618c477669, type: 3}
     Health: 2
-    Damage: 3
+    Damage: 1
     MoveSpeed: 15
     Attack: Bite
     ID: 1
@@ -242,58 +464,58 @@ MonoBehaviour:
     Showed: 0
   - Name: Beatty
     Image: {fileID: 21300000, guid: c8c9cf2e830a0ea4bbe16387bd0003dc, type: 3}
-    Health: 100
-    Damage: 10
-    MoveSpeed: 7.5
+    Health: 7
+    Damage: 5
+    MoveSpeed: 1
     Attack: Magic sphear
     ID: 3
     Showed: 0
   - Name: Mishroom
     Image: {fileID: 21300000, guid: 8fd07c5366e786848a732d492f24bee7, type: 3}
-    Health: 1
-    Damage: 10
+    Health: 5
+    Damage: 0
     MoveSpeed: 0
     Attack: Invisible mooshrom mines
     ID: 4
     Showed: 0
   - Name: Kiwi
     Image: {fileID: 21300000, guid: a2abe356955bfc444bf03d1ea78c1ac4, type: 3}
-    Health: 130
-    Damage: 0.1
+    Health: 25
+    Damage: 10
     MoveSpeed: 0
     Attack: Fast attacking roots
     ID: 5
     Showed: 0
   - Name: TreeSnipe
     Image: {fileID: 21300000, guid: 0c78f1e197e1d4644b53f27b9a1762dc, type: 3}
-    Health: 75
-    Damage: 25
+    Health: 6
+    Damage: 20
     MoveSpeed: 0
-    Attack: Unlimited attack range
+    Attack: 'Unlimited attack range '
     ID: 6
     Showed: 0
   - Name: Rocky
     Image: {fileID: 21300000, guid: 6a23cc171a62e414bad42043a55fb677, type: 3}
-    Health: 400
-    Damage: 30
+    Health: 1200
+    Damage: 25
     MoveSpeed: 4
-    Attack: Each other part will be chasing you after boos death
+    Attack: Jump & Ground smash
     ID: 7
     Showed: 0
   - Name: Bobs
     Image: {fileID: 21300000, guid: 69c9a0139bbfb2e44be6adc186ea453c, type: 3}
-    Health: 200
+    Health: 400
     Damage: 20
-    MoveSpeed: 12
+    MoveSpeed: 11
     Attack: Bobsy bombs
     ID: 8
     Showed: 0
   - Name: Tornador
     Image: {fileID: 0}
-    Health: 350
+    Health: 700
     Damage: 20
-    MoveSpeed: 12
-    Attack: 
+    MoveSpeed: 15
+    Attack: Tornadics & lightnings
     ID: 9
     Showed: 0
   enemyInfoLoad: []
@@ -356,7 +578,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6416895844494761269}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!114 &8651399062274846821
 MonoBehaviour:
   m_ObjectHideFlags: 0

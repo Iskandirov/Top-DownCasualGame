@@ -24,13 +24,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4259762276063848936}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4259762276879978434}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4259762276063848942
 SpriteRenderer:
@@ -73,12 +73,12 @@ SpriteRenderer:
   m_SortingLayerID: -615793817
   m_SortingLayer: -1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c7a5c4090c90f2e49a99973c64a66c9b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 01cbf1adb8b00ea4fb7bf1eaf56454d3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 0.15, y: 0.15}
+  m_DrawMode: 1
+  m_Size: {x: 15, y: 15}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -93,8 +93,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4259762276879978434}
-  - component: {fileID: 4259762276879978435}
+  - component: {fileID: -6857545640722590778}
   - component: {fileID: 4259762276879978444}
+  - component: {fileID: 7613459515186902630}
   m_Layer: 7
   m_Name: Meteor
   m_TagString: Untagged
@@ -109,6 +110,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4259762276879978445}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -116,9 +118,8 @@ Transform:
   m_Children:
   - {fileID: 4259762276063848943}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4259762276879978435
+--- !u!114 &-6857545640722590778
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,7 +128,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4259762276879978445}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: caf5ce5b23f3e6441bcfd08e64d81343, type: 3}
+  m_Script: {fileID: 11500000, guid: a8d6cc5908e18334a8ef8dda7d279ed3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   basa:
@@ -135,7 +136,7 @@ MonoBehaviour:
     - isTrigger: 1
       value: 1
     - isTrigger: 0
-      value: 0.5
+      value: 0.2
     - isTrigger: 0
       value: 2
     - isTrigger: 0
@@ -143,7 +144,7 @@ MonoBehaviour:
     - isTrigger: 0
       value: 5
     skill: {fileID: 0}
-    objToSpawn: {fileID: 4259762276879978435}
+    objToSpawn: {fileID: -6857545640722590778}
     stepMax: 10
     lifeTime: 5
     damage: 1
@@ -154,9 +155,10 @@ MonoBehaviour:
     spawnDelay: 0.4
   skillId: 3
   currentLevel: 0
-  damageTick: 0.2
-  isFive: 0
-  fireDirt: 0
+  player: {fileID: 0}
+  meteor: {fileID: 1910052030087472207, guid: e552a05d2f2cb1e4f93e43392f867f8d, type: 3}
+  enemiesInDanger: []
+  enemy: {fileID: 0}
 --- !u!58 &4259762276879978444
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -167,9 +169,49 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -4.4, y: -4.92}
   serializedVersion: 2
-  m_Radius: 0.62
+  m_Radius: 18.04905
+--- !u!95 &7613459515186902630
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4259762276879978445}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2ca1eb49a54cff942abc3ac55925e9ac, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

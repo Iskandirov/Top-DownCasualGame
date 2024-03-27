@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-[DefaultExecutionOrder(5)]
+//[DefaultExecutionOrder(5)]
 public class GameManager : MonoBehaviour
 {
     public bool IsSettingsPage;
@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public GameObject winPanel;
     public GameObject levelPanel;
     public GameObject enemyInfoPanel;
+    public GameObject QuestPanel;
     [HideInInspector]
     public bool isPanelOpen;
 
@@ -74,7 +75,6 @@ public class GameManager : MonoBehaviour
     public List<CharacterInfo> info;
     GetScore getScore;
     public bool isShopingScene;
-    PlayerManager player;
     DataHashing hashing;
     void Awake()
     {
@@ -84,7 +84,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         getScore = FindObjectOfType<GetScore>();
-        player = PlayerManager.instance;
         hashing = DataHashing.inst;
         DeleteFile();
         LoadCharacktersOnStart();
@@ -126,13 +125,13 @@ public class GameManager : MonoBehaviour
                 Timer();
             }
             //can`t press pause after lose
-            if (Input.GetKeyUp(KeyCode.Escape) && player.playerHealthPoint > 0)
+            if (Input.GetKeyUp(KeyCode.Escape) && PlayerManager.instance.playerHealthPoint > 0)
             {
                 if (!isPanelOpen)
                 {
-                    OpenPanel(menuPanel);
+                    OpenPanel(menuPanel,true);
                 }
-                else
+                else if(menuPanel.activeSelf)
                 {
                     ClosePanel(menuPanel);
                 }
@@ -157,19 +156,26 @@ public class GameManager : MonoBehaviour
     //Panels
     void ShowLevel()
     {
+        PlayerManager player = PlayerManager.instance;
+
         if (player.expiriencepoint.fillAmount >= 1)
         {
-            OpenPanel(levelPanel);
+            OpenPanel(levelPanel,false);
 
             player.level += 1;
             player.expiriencepoint.fillAmount = 0;
             player.expNeedToNewLevel += player.expNeedToNewLevel * 0.4f;
         }
     }
-    public void OpenPanel(GameObject panel)
+    public void OpenPanel(GameObject panel,bool questOpen)
     {
         panel.SetActive(true);
         isPanelOpen = true;
+        if (questOpen)
+        {
+            QuestPanel.SetActive(true);
+            GetComponent<DailyQuests>().SetQuestData();
+        }
         Time.timeScale = 0f;
 
     }
@@ -177,6 +183,10 @@ public class GameManager : MonoBehaviour
     {
         panel.SetActive(false);
         isPanelOpen = false;
+        if (QuestPanel != null)
+        {
+            QuestPanel.SetActive(false);
+        }
         Time.timeScale = 1f;
     }
     //Load
@@ -661,14 +671,18 @@ public class GameManager : MonoBehaviour
                 {
                     item.Showed = true;
                     InfoFiller.SetActive(true);
-                    InfoImg.gameObject.SetActive(true);
-                    InfoName.gameObject.SetActive(true);
                     InfoImg.sprite = Resources.Load<Sprite>(item.Name + "_" + item.ID);
                     InfoName.text = item.Name;
                     ShowedEnemy.Name = item.Name;
                     ShowedEnemy.MoveSpeed = item.MoveSpeed;
                     ShowedEnemy.Health = item.Health;
                     ShowedEnemy.Damage = item.Damage;
+
+                    InfoImgPanel.sprite = Resources.Load<Sprite>(item.Name + "_" + item.ID);
+                    InfoNamePanel.text = ShowedEnemy.Name.ToString();
+                    InfoStatDamagePanel.text = ShowedEnemy.Damage.ToString();
+                    InfoStatHealtPanel.text = ShowedEnemy.Health.ToString();
+                    InfoStatMoveSpeedPanel.text = ShowedEnemy.MoveSpeed.ToString();
                 }
                 string jsonData = JsonUtility.ToJson(item);
                 string decryptedJson = hashing.Encrypt(jsonData);
@@ -723,7 +737,7 @@ public class GameManager : MonoBehaviour
     {
         if (!isPanelOpen)
         {
-            OpenPanel(InfoPanel);
+            OpenPanel(InfoPanel,false);
             InfoImgPanel.sprite = InfoImg.sprite;
             InfoNamePanel.text = ShowedEnemy.Name.ToString();
             InfoStatHealtPanel.text = ShowedEnemy.Health.ToString();

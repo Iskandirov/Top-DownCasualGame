@@ -43,6 +43,7 @@ public class CDSkills : MonoBehaviour
     }
     void FixedUpdate()
     {
+        spriteCD.fillAmount = skillCD / skill.stepMax;
         skillCD -= Time.fixedDeltaTime;
         if (skillCD <= 0)
         {
@@ -74,13 +75,16 @@ public class CDSkills : MonoBehaviour
     }
     private void Update()
     {
-
-        spriteCD.fillAmount = skillCD / skill.stepMax;
-        if (!skill.isPassive)
+        if (!skill.isPassive && skillCD <= 0)
         {
-
-            if (skillCD <= 0 && Input.GetKey(keyCode))
+            if (PlayerManager.instance.isAuto && abilityId == 0)
             {
+                Spawn((int)skill.countObjects);
+                skillCD = skill.stepMax;
+            }
+            else if(Input.GetKey(keyCode))
+            {
+                //CineMachineCameraShake.instance.Shake(10, .1f);
                 Spawn((int)skill.countObjects);
                 skillCD = skill.stepMax;
             }
@@ -90,4 +94,5 @@ public class CDSkills : MonoBehaviour
             Spawn((int)skill.countObjects--);
         }
     }
+    
 }

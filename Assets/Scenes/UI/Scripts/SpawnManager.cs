@@ -1,9 +1,5 @@
-using Pathfinding;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [DefaultExecutionOrder(11)]
@@ -13,22 +9,29 @@ public class SpawnManager : MonoBehaviour
 
     [Header("Barrels")]
     public int barrelPoolSize = 5;
-    public List<GameObject> barrelPool;
-    public GameObject barrelPrefab; // Префаб об'єкта, який потрібно спавнити
-    public float barrelSpawnInterval = 20f; // Інтервал спавну в секундах
-    [field: SerializeField] public Collider2D spawnMapBound { get; private set; }
+    public int explosionBarrelPoolSize = 5;
+    public List<GameObject> barrelLootPool;
+    public List<GameObject> barrelExplosionPool;
+    public GameObject[] barrelPrefab;
+    public float barrelSpawnInterval = 20f;
+
+    [field: SerializeField] public static Collider2D spawnMapBoundStatic { get; private set; }
+    [field: SerializeField] public  Collider2D spawnMapBound { get; private set; }
 
     private void Awake()
     {
+        spawnMapBoundStatic = spawnMapBound;
         inst ??= this;
     }
     // Start is called before the first frame update
     void Start()
     {
-        barrelPool = InitializeObjectPool(barrelPrefab, barrelPoolSize,transform);
-       
-        StartCoroutine(SpawnRoutine(barrelSpawnInterval));
-       
+        barrelLootPool = InitializeObjectPool(barrelPrefab[0], barrelPoolSize,transform);
+        barrelExplosionPool = InitializeObjectPool(barrelPrefab[1], explosionBarrelPoolSize, transform);
+
+        StartCoroutine(SpawnRoutine(barrelLootPool, barrelPrefab[0], barrelSpawnInterval));
+        StartCoroutine(SpawnRoutine(barrelExplosionPool, barrelPrefab[1], barrelSpawnInterval));
+
     }
     List<GameObject> InitializeObjectPool(GameObject objectPrefab,int pool,Transform parent)
     {
@@ -56,15 +59,15 @@ public class SpawnManager : MonoBehaviour
         return gameObject;
     }
     
-    private IEnumerator SpawnRoutine(float interval)
+    private IEnumerator SpawnRoutine(List<GameObject> objList,GameObject obj, float interval)
     {
         while (true)
         {
             yield return new WaitForSeconds(interval);
-            GameObject barrel = GetFromPool(barrelPool, barrelPrefab);
-            SpawnObjectInMapBounds(barrel);
+            GameObject barrel = GetFromPool(objList, obj);
+            barrel.transform.position = GetRandomPositionInsideCollider();
             // Отримати координати та розмір нового об'єкта
-            var bounds = barrel.GetComponent<Renderer>().bounds;
+            var bounds = barrel.GetComponentInChildren<Renderer>().bounds;
             var minX = bounds.min.x;
             var minZ = bounds.min.z;
             var maxX = bounds.max.x;
@@ -82,13 +85,26 @@ public class SpawnManager : MonoBehaviour
             AstarPath.active.UpdateGraphs(bounds);
         }
     }
-    public void SpawnObjectInMapBounds(GameObject obj)
+    void SpawnObjectInMapBounds(Collider2D obj)
     {
-        // Отримуємо центр колайдера
         Vector2 colliderCenter = spawnMapBound.bounds.center;
-        Vector2 randomPointInsideCollider = colliderCenter + UnityEngine.Random.insideUnitCircle * new Vector2(spawnMapBound.bounds.size.x * 0.6f, spawnMapBound.bounds.size.y * 0.5f);
+        Vector2 randomPointInsideCollider = colliderCenter + Random.insideUnitCircle * new Vector2(spawnMapBound.bounds.size.x * 0.6f, spawnMapBound.bounds.size.y * 0.5f);
         obj.transform.position = randomPointInsideCollider;
     }
+    public static Vector3 GetRandomPositionInsideCollider()
+    {
+        // Отримати мінімальні та максимальні координати spawnArea
+        Vector2 min = spawnMapBoundStatic.bounds.min;
+        Vector2 max = spawnMapBoundStatic.bounds.max;
 
+        // Створити об'єкт в випадковій точці всередині spawnArea
+        Vector3 randomPosition = new Vector3(
+            Random.Range(min.x, max.x),
+            Random.Range(min.y, max.y),
+            0
+        );
+
+        return randomPosition;
+    }
 
 }

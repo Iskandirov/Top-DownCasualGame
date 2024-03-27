@@ -12,7 +12,6 @@ public class MineSpawn : MonoBehaviour
     public ShadowCaster2D shadow2D;
     public Light2D light2D;
     Transform objTransform;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -47,9 +46,8 @@ public class MineSpawn : MonoBehaviour
         }
         if (mineCount < 10 && delay <= 0)
         {
-            Transform initial = transform; // Зберегти початкове значення Z
-
-            MiShroomMine a = Instantiate(mine, new Vector3(initial.position.x, initial.position.y, initial.position.z) + Random.insideUnitSphere * radius, Quaternion.identity,transform.parent);
+            Random.InitState((int)Time.time);
+            MiShroomMine a = Instantiate(mine, new Vector3(objTransform.position.x + Random.Range(-radius, radius), objTransform.position.y + Random.Range(-radius, radius)), Quaternion.identity, objTransform.parent);
             a.parent = this;
             delay = delayMax;
             mineCount++;

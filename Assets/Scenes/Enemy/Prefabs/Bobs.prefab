@@ -542,7 +542,7 @@ MonoBehaviour:
   - {x: -0.7936312, y: -0.8136051, z: 0.000000029802322}
   m_ShapePathHash: -1182724170
   m_Mesh: {fileID: 0}
-  m_InstanceId: 111544
+  m_InstanceId: 78944
   m_LocalBounds:
     m_Center: {x: 0.32843423, y: 0.21485567, z: 0}
     m_Extent: {x: 2.3384855, y: 1.5647073, z: 0}
@@ -671,7 +671,7 @@ MonoBehaviour:
   - {x: -0.018272042, y: -0.4225589, z: 0.000000029802322}
   m_ShapePathHash: -684510710
   m_Mesh: {fileID: 0}
-  m_InstanceId: 111536
+  m_InstanceId: 78936
   m_LocalBounds:
     m_Center: {x: 0.12046313, y: 0.14001858, z: 0}
     m_Extent: {x: 0.5613047, y: 0.5625775, z: 0}
@@ -968,7 +968,7 @@ MonoBehaviour:
   - {x: -0.018272042, y: -0.4225589, z: 0.000000029802322}
   m_ShapePathHash: -684510710
   m_Mesh: {fileID: 0}
-  m_InstanceId: 111612
+  m_InstanceId: 79014
   m_LocalBounds:
     m_Center: {x: 0.12046313, y: 0.14001858, z: 0}
     m_Extent: {x: 0.5613047, y: 0.5625775, z: 0}
@@ -1068,10 +1068,8 @@ GameObject:
   - component: {fileID: 307614248803877651}
   - component: {fileID: -8285670843784243504}
   - component: {fileID: 8652287431786167269}
-  - component: {fileID: 256618190220434730}
   - component: {fileID: 6894690055646789181}
   - component: {fileID: 5532664678976221033}
-  - component: {fileID: -9193388209170955378}
   - component: {fileID: 5208560844869466460}
   - component: {fileID: -3302408010172682211}
   - component: {fileID: 1436996216243089024}
@@ -1141,7 +1139,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <isSlowed>k__BackingField: 0
+  <isStun>k__BackingField: 0
   <isBurn>k__BackingField: 0
+  <isAttack>k__BackingField: 0
   <mobName>k__BackingField: Bobs
   <type>k__BackingField: 
   <attackSpeed>k__BackingField: 0
@@ -1150,6 +1150,11 @@ MonoBehaviour:
   <timesPerOne>k__BackingField: 1
   <objTransform>k__BackingField: {fileID: 5881257310812086731}
   <objToAttack>k__BackingField: {fileID: 7885096114691236980, guid: 90a4178bc4056e946926b7136801f400, type: 3}
+  <ElementsParent>k__BackingField: {fileID: 5967280687732449362}
+  RepositionPoint: {fileID: 0}
+  destination: {fileID: 1436996216243089024}
+  colider: {fileID: 1534964057862147189}
+  path: {fileID: -3302408010172682211}
   objectToHit: {fileID: 0}
 --- !u!95 &8652287431786167269
 Animator:
@@ -1172,18 +1177,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &256618190220434730
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7448078597982695750}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1375abe95b940134c957f7c5318644b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6894690055646789181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1201,10 +1194,11 @@ MonoBehaviour:
   defaultInterval: 0.5
   randomeInterval: 1
   roundInterval: 1
-  speed: 30
+  speed: 40
+  damage: 20
   aceleration: 1
   attackBools: 000000
-  attackTypeInterval: 15
+  attackTypeInterval: 10
   Index: -1
   poolSize: 60
   bulletPool: []
@@ -1242,23 +1236,6 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 961a8eb948fd8e54abcd56a04a844fad, type: 3}
   elementDebuffParent: {fileID: 4918461076317722957}
   elementDebuffObject: {fileID: 1262367869966813369, guid: 18f8e8e849830084eace680fad057225, type: 3}
---- !u!114 &-9193388209170955378
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7448078597982695750}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd223fe7cf1951d4baa6af9bdb405517, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parts: []
-  partOff: {fileID: 0}
-  expiriancePoint: {fileID: 0}
-  VFX_Deadarticle: {fileID: 0}
-  healthMax: 0
 --- !u!114 &5208560844869466460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2003,5 +1980,10 @@ PrefabInstance:
 --- !u!224 &4918461076317722957 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1823664961834970747, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
+  m_PrefabInstance: {fileID: 6705604573521721142}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5967280687732449362 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1143665813906544484, guid: e188e521e811556409a0dd04d02e70f4, type: 3}
   m_PrefabInstance: {fileID: 6705604573521721142}
   m_PrefabAsset: {fileID: 0}
