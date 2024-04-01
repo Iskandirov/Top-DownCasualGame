@@ -8,4 +8,8 @@ public class Perk : MonoBehaviour
     public PerkBase perk;
     public Image BuyedPerksImg;
     public Image perkImage;
+
+    public string statName;
+    public string statValue;
+    public string price;
 }

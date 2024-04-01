@@ -1,28 +1,16 @@
-using System;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class TabGroup : MonoBehaviour
 {
-    [SerializeField] List<TabButton> tabButtons;
+    public List<TabButton> tabButtons;
     public Sprite tabIdle;
     public Sprite tabHover;
     public Sprite tabActive;
-    [SerializeField] TabButton selectedTab;
+    public TabButton selectedTab;
     [SerializeField] List<GameObject> objToSwap;
     [SerializeField] GameObject objToShow;
     [SerializeField] Tooltip tooltip;
-
-    [Header("BuyPerkSettings")]
-    [SerializeField] Image perkImage;
-    [SerializeField] TextMeshProUGUI perkName;
-    [SerializeField] TextMeshProUGUI statName;
-    [SerializeField] TextMeshProUGUI statValue;
-    [SerializeField] TextMeshProUGUI price;
-    [SerializeField] Button perkBuyButton;
-    public TextMeshProUGUI money;
     public void Subscribe(TabButton button)
     {
         if (tabButtons == null)
@@ -76,17 +64,17 @@ public class TabGroup : MonoBehaviour
         }
         else
         {
+            PerkSystem perkSytstem = GetComponent<PerkSystem>();
+            PotionSystem potionSytstem = GetComponent<PotionSystem>();
             objToShow.SetActive(true);
-            TabButton tab = tabButtons.Find(t => t == selectedTab);
-            perkImage.sprite = tab.GetComponent<Perk>().perkImage.sprite;
-            perkImage.SetNativeSize();
-            perkName.text = tab.tooltipText;
-            statName.text = tab.statName;
-            statValue.text = tab.statValue;
-            price.text = tab.price;
-            perkBuyButton.interactable = int.Parse(price.text) <= int.Parse(money.text) 
-                && tab.GetComponent<Perk>().perk.isActive && !tab.GetComponent<Perk>().perk.buyed ? true : false;
-
+            if (perkSytstem != null)
+            {
+                perkSytstem.SetDescription();
+            }
+            else
+            {
+                potionSytstem.SetDescription();
+            }
         }
     }
     void ResetTabs()
@@ -99,10 +87,22 @@ public class TabGroup : MonoBehaviour
     }
     public void GetResultScore()
     {
-        money.text = GetScore.SaveMoney_Static(int.Parse(money.text) - int.Parse(price.text));
-        Perk perk = tabButtons.Find(b => b.tooltipText == perkName.text).GetComponent<Perk>();
+        PerkSystem perkStstem = GetComponent<PerkSystem>();
+        perkStstem.money.text = GetScore.SaveMoney_Static(int.Parse(perkStstem.money.text) - int.Parse(perkStstem.price.text));
+        Perk perk = tabButtons.Find(b => b.tooltipText == perkStstem.perkName.text).GetComponent<Perk>();
         perk.perk.buyed = true;
-        perkBuyButton.interactable = false;
+        perkStstem.perkBuyButton.interactable = false;
         PerkSystem.ReloadPerkData_Static();
+        string statValue = perk.statValue;
+        string numericValue = "";
+
+        foreach (char c in statValue)
+        {
+            if (char.IsDigit(c))
+            {
+                numericValue += c;
+            }
+        }
+            PlayerPrefs.SetFloat(perk.statName, float.Parse(numericValue));
     }
 }

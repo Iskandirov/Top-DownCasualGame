@@ -7,7 +7,7 @@ public class LoadItemData : MonoBehaviour
     public GameObject prefabToInstantiate;
     public List<SavedObjectData> objectsList;
     public List<GameObject> objectsListCopy;
-    public List<Transform> parentsList;
+    public List<Transform> parentItemsList;
     public FieldSlots craftObj;
     int index;
     public SetLanguage lang;
@@ -53,8 +53,8 @@ public class LoadItemData : MonoBehaviour
 
                 GameObject newObject = Instantiate(prefabToInstantiate, transform);
 
-                newObject.transform.SetParent(parentsList[index]); // index - це індекс батька у списку батьків
-                newObject.transform.position = new Vector3(parentsList[index].position.x, parentsList[index].position.y, parentsList[index].position.z);
+                newObject.transform.SetParent(parentItemsList[index]); // index - це індекс батька у списку батьків
+                newObject.transform.position = new Vector3(parentItemsList[index].position.x, parentItemsList[index].position.y, parentItemsList[index].position.z);
                 newObject.transform.localScale = prefabToInstantiate.transform.localScale;
 
                 SetParametersToitem objParam = newObject.GetComponent<SetParametersToitem>();
@@ -75,6 +75,7 @@ public class LoadItemData : MonoBehaviour
                 lang.FindMyComponentInChildren(newObject, itemParams.Tag);
                 index++; // переходимо до наступного батька у списку батьків
             }
+
         }
     }
 

@@ -179,6 +179,13 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
 
     }
+    public void OpenPanel(GameObject panel)
+    {
+        panel.SetActive(true);
+        isPanelOpen = true;
+        Time.timeScale = 0f;
+
+    }
     public void ClosePanel(GameObject panel)
     {
         panel.SetActive(false);

@@ -1,5 +1,4 @@
 using System.IO;
-using System.Security.Policy;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,6 +14,7 @@ public class FillLevelInfo : MonoBehaviour
     public Image percentImgDone;
     public DataHashing hash;
     public Transform objTransform;
+    public GameObject levelInfoPanel;
     private void Awake()
     {
         hash = FindObjectOfType<DataHashing>();
@@ -139,5 +139,9 @@ public class FillLevelInfo : MonoBehaviour
         }
 
         return null;
+    }
+    public void OpenLevelInfo()
+    {
+        levelInfoPanel.SetActive(true);
     }
 }

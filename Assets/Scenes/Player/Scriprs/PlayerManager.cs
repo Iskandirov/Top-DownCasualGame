@@ -1,13 +1,59 @@
+using Pathfinding;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.VFX;
+[Serializable]
+class PerksBuffs 
+{
+    public string key;
+    public float value;
+    public Stats parameters;
+   
+}
+[Serializable]
+public class Potions 
+{
+    public string key;
+    public bool isActive;
+    public float value;
+    public PotionsType parameters;
+}
 
-//[DefaultExecutionOrder(6)]
+public enum Stats
+{
+    Nothing,
+    MoveSpeed,
+    Damage,
+    AttackSpeed,
+    Health,
+    ExpirianceRadius,
+    FireDamage,
+    Armor,  
+    LoadSpeed,
+    WaterDamage,
+    Effectivness,
+    ReloadSkills,
+    ExplosionDamage,
+    Regeneration,
+    ExpirianceGain,    
+    EquipmentBuff,
+}
+public enum PotionsType
+{
+    Nothing,
+    Heal,
+    Bomb,    
+    Ligma,
+    Totem,
+    TimeFreeze,
+}
+
 public class PlayerManager : MonoBehaviour
 {
     GameManager gameManager;
@@ -107,7 +153,10 @@ public class PlayerManager : MonoBehaviour
     public List<CharacterStats> characters;
     [HideInInspector]
     public Transform objTransform;
-
+    [Header("Perks settings")]
+    [SerializeField] List<PerksBuffs> statsToBuff;
+    [Header("Potions settings")]
+    [SerializeField] List<Potions> potions;
     private void Awake()
     {
         instance ??= this;
@@ -121,10 +170,23 @@ public class PlayerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        foreach (var perk in statsToBuff)
+        {
+            if (PlayerPrefs.HasKey(perk.key))
+            {
+                perk.value = PlayerPrefs.GetFloat(perk.key);
+            }
+        } 
+        foreach (var potion in potions)
+        {
+            if (PlayerPrefs.HasKey(potion.key))
+            {
+                potion.value = PlayerPrefs.GetInt(potion.key);
+            }
+        }
         gameManager = GameManager.Instance;
         attackSpeedMax = attackSpeed;
         playerHealthPointMax = playerHealthPoint;
-        speedMax = speed;
         countActiveAbilities = 1;
         SetCharacterOnStart();
         OnButtonClicked += OnButtonClickHandler;
@@ -463,26 +525,44 @@ public class PlayerManager : MonoBehaviour
     //Character set
     public void SetCharacterOnStart()
     {
-        foreach (var character in characters)
+        foreach (var info in gameManager.charactersRead)
         {
-            foreach (var info in gameManager.charactersRead)
-            {
-                if (character.id == info.ID && info.isEquiped)
-                {
-                    playerHealthPointMax = character.health;
-                    playerHealthPoint = character.health;
+            CharacterStats character = characters.Find(i => i.id == info.ID && info.isEquiped);
 
-                    speedMax = character.moveSpeed;
-                    speed = character.moveSpeed;
-                    heroID = character.id;
-                    baseSkillCDMax = character.spellCD;
+            playerHealthPointMax = character.health + GivePerkStatValue(Stats.Health);
+            playerHealthPoint = character.health + GivePerkStatValue(Stats.Health);
 
-                    attackSpeedMax = character.attackSpeed;
-                    attackSpeed = character.attackSpeed;
-                    damageToGive = character.damage;
-                    break;
-                }
-            }
+            speedMax = character.moveSpeed + GivePerkStatValue(Stats.MoveSpeed);
+            speed = character.moveSpeed + GivePerkStatValue(Stats.MoveSpeed);
+            heroID = character.id;
+            baseSkillCDMax = character.spellCD + GivePerkStatValue(Stats.ReloadSkills);
+
+            attackSpeedMax = character.attackSpeed + GivePerkStatValue(Stats.AttackSpeed);
+            attackSpeed = character.attackSpeed + GivePerkStatValue(Stats.AttackSpeed);
+            damageToGive = character.damage + GivePerkStatValue(Stats.Damage);
+            GetComponent<CircleCollider2D>().radius += GivePerkStatValue(Stats.ExpirianceRadius);
+            Fire += GivePerkStatValue(Stats.FireDamage) / 100;
+            Water += GivePerkStatValue(Stats.WaterDamage) / 100;
+            armor += GivePerkStatValue(Stats.Armor);
+            /*Ўвидк≥сть захвату зони*/
+            playerHealthRegeneration += GivePerkStatValue(Stats.Regeneration);
+            multiply += (int)GivePerkStatValue(Stats.ExpirianceGain);
+            break;
+        }
+        foreach (var potion in potions)
+        {
+            potion.isActive = bool.Parse(PlayerPrefs.GetInt(potion.key+"Bool").ToString());
+        }
+    }
+    float GivePerkStatValue(Stats stat)
+    {
+        if (statsToBuff.Find(b => b.parameters.Equals(stat)).value != 0)
+        {
+            return statsToBuff.Find(b => b.parameters.Equals(stat)).value;
+        }
+        else
+        {
+            return 0;
         }
     }
 }

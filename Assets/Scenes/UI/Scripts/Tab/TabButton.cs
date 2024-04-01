@@ -4,16 +4,14 @@ using UnityEngine.EventSystems;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Image))]
-public class TabButton : MonoBehaviour , IPointerEnterHandler, IPointerExitHandler,IPointerClickHandler
+public class TabButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [SerializeField]TabGroup tabGroup;
     public Image bg;
     [SerializeField] UnityEvent onTabSelected;
     [SerializeField] UnityEvent onTabDeselected;
     public string tooltipText;
-    public string statName;
-    public string statValue;
-    public string price;
+
     // Start is called before the first frame update
     void Start()
     {
