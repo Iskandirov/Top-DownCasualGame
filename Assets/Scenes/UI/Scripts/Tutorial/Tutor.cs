@@ -76,42 +76,7 @@ public class Tutor : MonoBehaviour
                     keyLightPair.isPressed = true;
                 }
             }
-            //if (Input.GetKeyDown(KeyCode.W))
-            //{
-            //    if (!isPressed[0])
-            //    {
-            //        wLight.color = FinalColor;
-            //        lightCount++;
-            //        isPressed[0] = true;
-            //    }
-            //}
-            //if (Input.GetKeyDown(KeyCode.A))
-            //{
-            //    if (!isPressed[1])
-            //    {
-            //        aLight.color = FinalColor;
-            //        lightCount++;
-            //        isPressed[1] = true;
-            //    }
-            //}
-            //if (Input.GetKeyDown(KeyCode.S))
-            //{
-            //    if (!isPressed[2])
-            //    {
-            //        sLight.color = FinalColor;
-            //        lightCount++;
-            //        isPressed[2] = true;
-            //    }
-            //}
-            //if (Input.GetKeyDown(KeyCode.D))
-            //{
-            //    if (!isPressed[3])
-            //    {
-            //        dLight.color = FinalColor;
-            //        lightCount++;
-            //        isPressed[3] = true;
-            //    }
-            //}
+            
             if (lightCount >= 4)
             {
                 parentPhase1.SetBool("IsFadeOut", true);

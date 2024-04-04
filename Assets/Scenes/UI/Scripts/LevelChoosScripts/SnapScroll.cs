@@ -55,6 +55,7 @@ public class SnapScroll : MonoBehaviour
         for (int i = 0; i < descriptionImage.Length; i++)
         {
             instObjects[i] = Instantiate(panObj, transform, false);
+           
             instObjectsLock[i] = Instantiate(instObjectsLockObj, transform.position, Quaternion.identity, transform);
 
             int objejectCount = instObjects[i].LoadObjectLevelCount(i + sceneValue[0]);
@@ -94,6 +95,10 @@ public class SnapScroll : MonoBehaviour
             }
            
             instObjectsPosition[i] = -instObjects[i].objTransform.localPosition;
+            if (i == descriptionImage.Length - 1)
+            {
+                instObjects[i].levelInfoPanel.gameObject.SetActive(false);
+            }
         }
         int count = 0;
         foreach (var scene in instObjects)

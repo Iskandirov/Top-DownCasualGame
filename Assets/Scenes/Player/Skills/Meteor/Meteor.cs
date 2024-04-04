@@ -11,6 +11,7 @@ public class Meteor : SkillBaseMono
     private void Start()
     {
         enemy = EnemyController.instance;
+        player = PlayerManager.instance;
         if (basa.stats[1].isTrigger)
         {
             basa.damage += basa.stats[1].value;

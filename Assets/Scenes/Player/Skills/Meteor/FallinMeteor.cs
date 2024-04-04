@@ -11,6 +11,7 @@ public class FallinMeteor : SkillBaseMono
     private void Start()
     {
         enemy = EnemyController.instance;
+        player = PlayerManager.instance;
         if (basa.stats[2].isTrigger)
         {
             basa.countObjects += basa.stats[2].value;

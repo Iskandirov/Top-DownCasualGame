@@ -50,7 +50,7 @@ public class Bullet : SkillBaseMono
         isBulletSlow = player.isBulletSlow;
         lifeStealPercent = player.lifeStealPercent;
         slowPercent = player.slowPercent;
-        if (player.isAuto)
+        if (!player.isTutor && player.isAuto && EnemyController.instance.children.Count > 0)
         {
             player.AutoShoot(obj.transform.position,this);
         }

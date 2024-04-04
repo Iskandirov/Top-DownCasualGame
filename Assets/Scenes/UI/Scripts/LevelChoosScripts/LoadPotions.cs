@@ -1,15 +1,16 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class LoadPotions : MonoBehaviour
 {
     public List<Potions> potionsType;
-    public GameObject potionPrefab;
-    public GameObject selectedPotion;
+    public PotionSelect potionPrefab;
+    public PotionSelect selectedPotion;
+    public Image selectedPotionSlot;
+    public Sprite baseSlotImage;
     private void OnEnable()
     {
         PotionsType[] potions = (PotionsType[])Enum.GetValues(typeof(PotionsType));
@@ -19,30 +20,34 @@ public class LoadPotions : MonoBehaviour
             Potions p = potionsType.Find(p => p.parameters == potion);
             if (PlayerPrefs.HasKey(potion.ToString()))
             {
-                p.value = PlayerPrefs.GetInt(potion.ToString()) > 0 ? PlayerPrefs.GetInt(potion.ToString()) : 0;
+                p.value = PlayerPrefs.GetInt(potion.ToString());
             }
         }
         int offset = 120;
         RectTransform parentRect = GetComponent<RectTransform>();
-        foreach (var potion in potionsType)
+        if (transform.childCount <= 1)
         {
-            if (potion.value > 0)
+            foreach (var potion in potionsType)
             {
-                GameObject example = Instantiate(potionPrefab, transform.parent);
-                example.transform.SetParent(transform, false);
-                example.transform.position = Vector3.zero;
-                example.transform.localPosition = new Vector3(-parentRect.offsetMin.x + offset, parentRect.offsetMin.y - 100, 0);
-                example.GetComponentInChildren<TextMeshProUGUI>().text = potion.value.ToString();
-                example.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>(potion.key);
-                example.transform.GetChild(0).GetComponent<Image>().SetNativeSize();
-                example.GetComponent<Button>().onClick.AddListener(OnClickHandler);
-                offset += 120;
+                if (potion.value > 0)
+                {
+                    PotionSelect example = Instantiate(potionPrefab, transform.parent);
+                    example.transform.SetParent(transform, false);
+                    example.transform.position = Vector3.zero;
+                    example.transform.localPosition = new Vector3(-parentRect.offsetMin.x + offset, parentRect.offsetMin.y - 100, 0);
+                    example.CountText.text = potion.value.ToString();
+                    example.potionImage.sprite = Resources.Load<Sprite>(potion.key);
+                    example.potionImage.SetNativeSize();
+                    example.loader = this;
+                    example.basePotion = potion;
+                    offset += 120;
+                }
             }
         }
     }
-    void OnClickHandler()
+    public void SelectSlot()
     {
-        Debug.Log(1);
-        selectedPotion = transform.parent.GetComponentsInChildren<Button>().First(b => b.).gameObject;
+        selectedPotionSlot = EventSystem.current.currentSelectedGameObject.transform.GetChild(0).GetComponent<Image>();
     }
+    
 }

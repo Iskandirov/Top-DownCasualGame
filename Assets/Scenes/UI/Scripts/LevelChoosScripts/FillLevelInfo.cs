@@ -2,6 +2,7 @@ using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static Cinemachine.DocumentationSortingAttribute;
 
 public class FillLevelInfo : MonoBehaviour
 {
@@ -14,16 +15,19 @@ public class FillLevelInfo : MonoBehaviour
     public Image percentImgDone;
     public DataHashing hash;
     public Transform objTransform;
-    public GameObject levelInfoPanel;
+    public LevelInfoLoad levelInfoPanel;
     private void Awake()
     {
         hash = FindObjectOfType<DataHashing>();
+        levelInfoPanel = FindObjectOfType<LevelInfoLoad>();
         objTransform = transform;
-
     }
     // Start is called before the first frame update
     void Start()
     {
+        GetComponent<Button>().onClick.AddListener(SelectLevelID);
+        GetComponent<Button>().onClick.AddListener(() => FindAnyObjectByType<GameManager>().OpenPanel(levelInfoPanel.gameObject));
+
         level = FindObjectOfType<CheckLevel>();
         MenuController menu = GetComponent<MenuController>();
         dataLevel.percent = LoadObjectLevel(menu.sceneCount);
@@ -38,6 +42,7 @@ public class FillLevelInfo : MonoBehaviour
         }
         
         dataLevel.IDLevel = menu.sceneCount;
+
         if (dataLevel.IDLevel == 999)
         {
             percent.gameObject.SetActive(false);
@@ -49,7 +54,11 @@ public class FillLevelInfo : MonoBehaviour
 
 
     }
+    void SelectLevelID()
+    {
+        levelInfoPanel.levelID = dataLevel.IDLevel;
 
+    }
     public int LoadObjectLevel(int objectID)
     {
         string path = Path.Combine(Application.persistentDataPath, "Levels.txt");
@@ -139,9 +148,5 @@ public class FillLevelInfo : MonoBehaviour
         }
 
         return null;
-    }
-    public void OpenLevelInfo()
-    {
-        levelInfoPanel.SetActive(true);
     }
 }

@@ -232,7 +232,7 @@ public class PlayerManager : MonoBehaviour
         {
             OnButtonClicked?.Invoke();
         }
-        if (isAuto)
+        if (isAuto && AutoActiveCurve != null)
         {
             // Отримати поточне значення офсету
             offset = AutoActiveCurve.GetFloat("offset");
@@ -472,6 +472,7 @@ public class PlayerManager : MonoBehaviour
     }
     public void AutoShoot(Vector3 position, Bullet newObject)
     {
+
         newObject.transform.position = position;
 
         Vector2 nearest = new Vector3(999, 999, 999);
@@ -498,6 +499,7 @@ public class PlayerManager : MonoBehaviour
         float angleShot = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         newObject.transform.rotation = Quaternion.AngleAxis(angleShot + 90, Vector3.forward);
     }
+    
     //End Shoot
     //Expiriance
     public void OnTriggerEnter2D(Collider2D collision)
@@ -549,10 +551,10 @@ public class PlayerManager : MonoBehaviour
             multiply += (int)GivePerkStatValue(Stats.ExpirianceGain);
             break;
         }
-        foreach (var potion in potions)
-        {
-            potion.isActive = bool.Parse(PlayerPrefs.GetInt(potion.key+"Bool").ToString());
-        }
+        //foreach (var potion in potions)
+        //{
+        //    potion.isActive = bool.Parse(PlayerPrefs.GetInt(potion.key+"Bool").ToString());
+        //}
     }
     float GivePerkStatValue(Stats stat)
     {

@@ -72,6 +72,8 @@ public class SavedHouseholditemsData
 public class SavedLocationsData
 {
     public int IDLevel;
+    public string name;
+    public string description;
     public int countOfCount;
     public int countOfCountMax;
     public int percent;

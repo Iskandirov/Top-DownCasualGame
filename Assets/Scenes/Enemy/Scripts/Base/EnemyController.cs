@@ -580,6 +580,7 @@ public class EnemyController : MonoBehaviour
                         DailyQuests.instance.UpdateValue(0, 1, false);
                     }
                     bosses.Death(enemy);
+                    children.Clear();
                     Destroy(enemy.gameObject);
                 }
             }

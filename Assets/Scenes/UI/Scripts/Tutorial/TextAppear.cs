@@ -116,7 +116,6 @@ public class TextAppear : MonoBehaviour
                 {
                     tutor.parentPhase3.gameObject.SetActive(true);
                     tutor.MoveOn();
-                    player.isTutor = false;
                 }
                 else if (tutor.phase == 4)
                 {
