@@ -5,6 +5,7 @@ public class RestartGame : MonoBehaviour
 {
     PlayerManager player;
     GameManager gameManager;
+    [SerializeField] ASyncLoader loader;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +23,8 @@ public class RestartGame : MonoBehaviour
     public void Restart()
     {
         AudioManager.instance.PlayMusic("GameTheme");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        loader.LoadLevelBtn(SceneManager.GetActiveScene().buildIndex);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     public void OpenOtherScene(string scenename)
     {
@@ -30,6 +32,7 @@ public class RestartGame : MonoBehaviour
         {
             AudioManager.instance.PlayMusic("Theme");
         }
-        SceneManager.LoadScene(scenename);
+        loader.LoadLevelBtn(scenename);
+        //SceneManager.LoadScene(scenename);
     }
 }

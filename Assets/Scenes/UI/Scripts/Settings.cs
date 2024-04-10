@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+
 [DefaultExecutionOrder(10)]
 public class Settings : MonoBehaviour
 {
-    public Scrollbar volumeMusic;
-    public Scrollbar volumeSFX;
+    public Slider volumeMusic;
+    public Slider volumeSFX;
     public Image muteVolume;
     public Image muteSFX;
     public Toggle toggle;
@@ -17,7 +18,19 @@ public class Settings : MonoBehaviour
     public TextMeshProUGUI volumeValueTxt;
     public TextMeshProUGUI sfxValueTxt;
     public static Settings instance;
-
+    [Header("Resolution")]
+    [SerializeField] TMP_Dropdown resolutionDropdown;
+    Resolution[] resolutions;
+    List<Resolution> filtredResolutions;
+    RefreshRate currentRefreshRate;
+    int currentResolutionIndex = 0;
+    public Dictionary<int, int> resolutionVariations = new Dictionary<int, int>()
+{
+    { 1280, 720 },
+    { 1920, 1080 },
+    { 2560, 1440 },
+    { 3840, 2160 }
+};
     private void Awake()
     {
         instance ??= this;
@@ -35,7 +48,50 @@ public class Settings : MonoBehaviour
             SetVolumeSFX();
             SetVSync();
             SetLanguage();
+            SetResolutionStart();
         }
+    }
+    void SetResolutionStart()
+    {
+        filtredResolutions = new List<Resolution>();
+
+        resolutionDropdown.ClearOptions();
+        currentRefreshRate = Screen.currentResolution.refreshRateRatio;
+
+        foreach (var screenSize in resolutionVariations)
+        {
+            Resolution newRes = new Resolution();
+            newRes.width = screenSize.Key;
+            newRes.height = screenSize.Value;
+            filtredResolutions.Add(newRes);
+
+            // Set current resolution if it matches
+            if (screenSize.Key == Screen.width && screenSize.Value == Screen.height)
+            {
+                currentResolutionIndex = filtredResolutions.Count - 1;
+            }
+        }
+        List<string> options = new List<string>();
+        for (int i = 0; i < filtredResolutions.Count; i++)
+        {
+            string resolutionOption = filtredResolutions[i].width + "x" + filtredResolutions[i].height;
+            options.Add(resolutionOption);
+            if (filtredResolutions[i].width == Screen.width && filtredResolutions[i].height == Screen.height)
+            {
+                currentResolutionIndex = i;
+            }
+        }
+
+        resolutionDropdown.AddOptions(options);
+        resolutionDropdown.value = currentResolutionIndex;
+        resolutionDropdown.RefreshShownValue();
+    }
+
+    public void SetResolution(int resolutionIndex)
+    {
+        Resolution resolution = filtredResolutions[resolutionIndex];
+        Screen.SetResolution(resolution.width, resolution.height, true);
+        GameManager.SaveResolution(resolution);
     }
     private IEnumerator WaitTillLoad()
     {
@@ -71,7 +127,7 @@ public class Settings : MonoBehaviour
         gameManager.ChangeSetting(value);
         AudioManager.instance.ChangeVolume(AudioManager.instance.volumeMusic, AudioManager.instance.musicObj);
         muteVolume.gameObject.SetActive(volumeMusic.value == 0 ? true : false);
-        volumeValueTxt.text = ((AudioManager.instance.volumeMusic * 100) + "%").ToString();
+        volumeValueTxt.text = (AudioManager.instance.volumeMusic * 100).ToString("0.") + "%";
     }
     public void SetVolumeSFX()
     {
@@ -85,7 +141,7 @@ public class Settings : MonoBehaviour
         gameManager.ChangeSetting(valueSFX);
         AudioManager.instance.ChangeVolume(AudioManager.instance.volumeSFX, AudioManager.instance.sfxObj);
         muteSFX.gameObject.SetActive(volumeSFX.value == 0 ? true : false);
-        sfxValueTxt.text = ((AudioManager.instance.volumeSFX * 100) + "%").ToString();
+        sfxValueTxt.text = ((AudioManager.instance.volumeSFX * 100).ToString("0.") + "%");
     }
     public void SetVSync()
     {

@@ -92,6 +92,7 @@
     <Compile Include="Assets\Scenes\UI\Scripts\LevelChoosScripts\CheckLevel.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\SniperTree\SniperTreeBullet.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_Unity_Mathematics_quaternion.cs" />
+    <Compile Include="Assets\Scenes\UI\Scripts\LevelChoosScripts\LoadCharacters.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\Items\ItemData.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\RotationTile.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_UI_FontData.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_TMPro_TMP_SpriteCharacter.cs" />
     <Compile Include="Assets\Scenes\Player\Skills\Lightning\Lightning.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\SniperTree\SnipetreeAttack.cs" />
+    <Compile Include="Assets\Scenes\UI\Scripts\Potions\UsePotion.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_EventSystems_EventTrigger_TriggerEvent.cs" />
     <Compile Include="Assets\Scenes\Player\Skills\Puddle\CreatePuddle.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_UI_Toggle_ToggleEvent.cs" />
@@ -114,6 +116,7 @@
     <Compile Include="Assets\Scenes\UI\Scripts\ItemParameters.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\Tutorial\ResumeDialogFromAnim.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_TMPro_TMP_Style.cs" />
+    <Compile Include="Assets\Scenes\UI\Scripts\Characters\CharacterInfo.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_ParticleSystem_MinMaxGradient.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\Base\EnemyState.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\ObjectToShow.cs" />
@@ -162,7 +165,6 @@
     <Compile Include="Assets\Scenes\Player\Skills\Meteor\Meteor.cs" />
     <Compile Include="Assets\Scenes\Player\Skills\Trail\Trail.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\SkillBaseMono.cs" />
-    <Compile Include="Assets\Scenes\UI\Scripts\CharacterInfo.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\ShowEquipment.cs" />
     <Compile Include="Assets\Scenes\Player\Skills\Tower\Tower.cs" />
     <Compile Include="Assets\Scenes\Player\Skills\Tower\TowerWave.cs" />
@@ -185,6 +187,7 @@
     <Compile Include="Assets\Scenes\UI\Scripts\MenuController.cs" />
     <Compile Include="Assets\Scenes\Player\Skills\Shield\SlowArea.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_TMPro_VerticalAlignmentOptions.cs" />
+    <Compile Include="Assets\Scenes\UI\Scripts\Characters\CharacterSystem.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\AudioManager.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\ObjectHealth.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_UI_Button_ButtonClickedEvent.cs" />
@@ -204,7 +207,9 @@
     <Compile Include="Assets\Scenes\UI\Scripts\Tooltip.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\Potions\PotionSystem.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\LevelChoosScripts\SnapScroll.cs" />
+    <Compile Include="Assets\Scenes\UI\Scripts\LevelChoosScripts\CharacterSelect.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\SaveStatistic.cs" />
+    <Compile Include="Assets\Scenes\UI\Scripts\ASyncLoader.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_TextCore_GlyphRect.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\CineMachineCameraShake.cs" />
     <Compile Include="Assets\Scenes\Player\Skills\Illusion\Zzap.cs" />
@@ -1367,6 +1372,10 @@
     <ProjectReference Include="PackageToolsEditor.csproj">
       <Project>{F160234D-D93E-A68C-DD98-55F807A3F31C}</Project>
       <Name>PackageToolsEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="UniRx.csproj">
+      <Project>{E7A0725C-5EFF-7C47-A244-76BFCD56E10C}</Project>
+      <Name>UniRx</Name>
     </ProjectReference>
     <ProjectReference Include="AstarPathfindingProjectEditor.csproj">
       <Project>{8A217B19-83DE-9E82-DAE9-561A38385CAB}</Project>

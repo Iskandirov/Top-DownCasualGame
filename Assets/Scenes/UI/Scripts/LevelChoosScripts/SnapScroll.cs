@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -36,10 +37,10 @@ public class SnapScroll : MonoBehaviour
 
     public Sprite[] descriptionImage;
     public int[] sceneValue;
-    public TagText[] descriptionObjText;
     public Image[] descriptionObjImage;
 
     public GameManager gameManager;
+    public GameObject loader;
     // Start is called before the first frame update
     void Start()
     {
@@ -50,37 +51,23 @@ public class SnapScroll : MonoBehaviour
         instObjectsLock = new GameObject[descriptionImage.Length];
         instObjectsPosition = new Vector2[descriptionImage.Length];
         instObjectsScale = new Vector2[descriptionImage.Length];
-        descriptionObjText = new TagText[descriptionImage.Length];
         descriptionObjImage = new Image[descriptionImage.Length];
         for (int i = 0; i < descriptionImage.Length; i++)
         {
             instObjects[i] = Instantiate(panObj, transform, false);
-           
+            instObjects[i].levelInfoPanel = loader;
             instObjectsLock[i] = Instantiate(instObjectsLockObj, transform.position, Quaternion.identity, transform);
 
             int objejectCount = instObjects[i].LoadObjectLevelCount(i + sceneValue[0]);
             int objejectCountMax = instObjects[i].LoadObjectLevelCountOfCountMax(i + sceneValue[0]);
-
+           
             if (instObjects[i].LoadObjectLevelCount(i + sceneValue[0] - 1) == instObjects[i].LoadObjectLevelCountOfCountMax(i + sceneValue[0] - 1) && objejectCount != objejectCountMax)
             {
                 Destroy(instObjectsLock[i]);
             }
-         
-            descriptionObjText[i] = instObjects[i].GetComponentInChildren<TagText>();
+
             descriptionObjImage[i] = instObjects[i].GetComponentInChildren<Slider>().GetComponentInChildren<Image>();
             instObjects[i].GetComponent<MenuController>().sceneCount = sceneValue[i];
-            if (i < descriptionImage.Length)
-            {
-                gameManager.FindMyComponentInChildren(descriptionObjText[i].gameObject, "description_lvl_" + i);
-            }
-            else
-            {
-                gameManager.FindMyComponentInChildren(descriptionObjText[i].gameObject, "description_lvl_last");
-            }
-            if (descriptionObjText[i].gameObject.GetComponent<TagText>())
-            {
-                list.Add(descriptionObjText[i].gameObject);
-            }
             descriptionObjImage[i].sprite = descriptionImage[i];
             if (i == 0)
             {
@@ -95,10 +82,7 @@ public class SnapScroll : MonoBehaviour
             }
            
             instObjectsPosition[i] = -instObjects[i].objTransform.localPosition;
-            if (i == descriptionImage.Length - 1)
-            {
-                instObjects[i].levelInfoPanel.gameObject.SetActive(false);
-            }
+            
         }
         int count = 0;
         foreach (var scene in instObjects)

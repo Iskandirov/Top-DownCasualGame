@@ -21,9 +21,6 @@ public class LevelInfoLoad : MonoBehaviour
     [SerializeField] MenuController playButton;
     [SerializeField] DataHashing hash;
     public int levelID;
-    private void Awake()
-    {
-    }
     void OnEnable()
     {
         string path = Path.Combine(Application.persistentDataPath, "Levels.txt");
@@ -39,8 +36,6 @@ public class LevelInfoLoad : MonoBehaviour
                 SavedLocationsData data = JsonUtility.FromJson<SavedLocationsData>(decode);
                 if (data.IDLevel == levelID)
                 {
-                    Debug.Log(data.IDLevel);
-                    Debug.Log(data.name);
                     levelName.text = data.name;
                     countOfCount.text = data.countOfCount + "/" + data.countOfCountMax;
                     levelDescription.text = data.description;
@@ -48,16 +43,19 @@ public class LevelInfoLoad : MonoBehaviour
                     break;
                 }
             }
-            SavedCharacterData character = GameManager.Instance.charactersRead.Find(ch => ch.isEquiped);
-            playerName.text = character.Name;
-            healthValue.text = character.health;
-            damageValue.text = character.damage;
-            speedValue.text = character.move;
-            attackSpeedValue.text = character.attackSpeed;
-            specialAttack.text = character.spell;
-            playerImage.sprite = Resources.Load<Sprite>(character.Name);
+            LoadCharacterInfo();
         }
         playButton.sceneCount = levelID;
-
+    }
+    public void LoadCharacterInfo()
+    {
+        SavedCharacterData character = GameManager.Instance.charactersRead.Find(ch => ch.ID == PlayerPrefs.GetInt("Character"));
+        playerName.text = character.Name;
+        healthValue.text = character.health;
+        damageValue.text = character.damage;
+        speedValue.text = character.move;
+        attackSpeedValue.text = character.attackSpeed;
+        specialAttack.text = character.spell;
+        playerImage.sprite = Resources.Load<Sprite>(character.Name);
     }
 }

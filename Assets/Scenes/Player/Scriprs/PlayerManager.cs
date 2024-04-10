@@ -8,6 +8,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.VFX;
+using static UnityEngine.Rendering.DebugUI;
+
 [Serializable]
 class PerksBuffs 
 {
@@ -22,7 +24,9 @@ public class Potions
     public string key;
     public bool isActive;
     public float value;
+    public float callDown;
     public PotionsType parameters;
+   
 }
 
 public enum Stats
@@ -46,7 +50,6 @@ public enum Stats
 }
 public enum PotionsType
 {
-    Nothing,
     Heal,
     Bomb,    
     Ligma,
@@ -157,6 +160,10 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] List<PerksBuffs> statsToBuff;
     [Header("Potions settings")]
     [SerializeField] List<Potions> potions;
+    [SerializeField] List<UsePotion> potionsObj;
+    [SerializeField] BobmExplode bomb;
+    [SerializeField] Sprite bombImg;
+    [SerializeField] bool canBeSaved = false;
     private void Awake()
     {
         instance ??= this;
@@ -166,6 +173,14 @@ public class PlayerManager : MonoBehaviour
     {
         instance = null;
         OnButtonClicked -= OnButtonClickHandler;
+        foreach (var potion in potions)
+        {
+            if (PlayerPrefs.GetString(potion.key + "Bool") == "True")
+            {
+                PlayerPrefs.SetString(potion.key + "Bool",false.ToString());
+            }
+        }
+        LoadPotions.SetPotionValue(potions, true);
     }
     // Start is called before the first frame update
     void Start()
@@ -176,12 +191,21 @@ public class PlayerManager : MonoBehaviour
             {
                 perk.value = PlayerPrefs.GetFloat(perk.key);
             }
-        } 
+        }
+        int count = 0;
         foreach (var potion in potions)
         {
-            if (PlayerPrefs.HasKey(potion.key))
+            if (PlayerPrefs.GetString(potion.key + "Bool") == "True")
             {
-                potion.value = PlayerPrefs.GetInt(potion.key);
+                potion.isActive = bool.Parse(PlayerPrefs.GetString(potion.key + "Bool"));
+
+                Image img = potionsObj[count].GetComponent<Image>();
+                img.sprite = Resources.Load<Sprite>(potion.key);
+                img.SetNativeSize();
+                img.color = new Color(255, 255, 255, 255);
+                potionsObj[count].type = potion.parameters;
+                potionsObj[count].callDownMax = potion.callDown;
+                count++;
             }
         }
         gameManager = GameManager.Instance;
@@ -251,10 +275,20 @@ public class PlayerManager : MonoBehaviour
         playerAnim.SetBool("IsHit", false);
         if (playerHealthPoint <= 0)
         {
-            //DailyQuests.instance.UpdateValue(4, 0);
-            AudioManager.instance.MusicStop();
-            AudioManager.instance.PlaySFX("PlayerDeath");
-            gameManager.OpenPanel(gameManager.losePanel, true);
+            if (canBeSaved)
+            {
+                playerHealthPoint = playerHealthPointMax * 0.2f;
+                fullFillImage.fillAmount = playerHealthPoint / playerHealthPointMax;
+                GameManager.Instance.FindStatName("healthHealed", playerHealthPointMax * 0.2f);
+                canBeSaved = false;
+            }
+            else
+            {
+                //DailyQuests.instance.UpdateValue(4, 0);
+                AudioManager.instance.MusicStop();
+                AudioManager.instance.PlaySFX("PlayerDeath");
+                gameManager.OpenPanel(gameManager.losePanel, true);
+            }
         }
     }
     public void TakeDamage(float damage)
@@ -284,6 +318,33 @@ public class PlayerManager : MonoBehaviour
         float modifier = (0.052f * armor) / (0.9f + 0.052f * absArmor);
         damage -= damage * modifier;
         return damage;
+    }
+    public void HealHealth(float value)
+    {
+        if (playerHealthPoint != playerHealthPointMax)
+        {
+            if (playerHealthPoint + value <= playerHealthPointMax)
+            {
+                playerHealthPoint += value;
+                fullFillImage.fillAmount += (value) / playerHealthPointMax;
+                if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 1 && s.isActive == true) != null)
+                {
+                    DailyQuests.instance.UpdateValue(1, value, false);
+                }
+                GameManager.Instance.FindStatName("healthHealed", value);
+            }
+            else
+            {
+                GameManager.Instance.FindStatName("healthHealed", playerHealthPointMax - playerHealthPoint);
+                if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 1 && s.isActive == true) != null)
+                {
+                    DailyQuests.instance.UpdateValue(1, playerHealthPointMax - playerHealthPoint, false);
+                }
+
+                playerHealthPoint = playerHealthPointMax;
+                fullFillImage.fillAmount = 1f;
+            }
+        }
     }
     //End Health
     //Move
@@ -527,34 +588,25 @@ public class PlayerManager : MonoBehaviour
     //Character set
     public void SetCharacterOnStart()
     {
-        foreach (var info in gameManager.charactersRead)
-        {
-            CharacterStats character = characters.Find(i => i.id == info.ID && info.isEquiped);
+        CharacterStats character = characters.Find(i => i.id == PlayerPrefs.GetInt("Character") && gameManager.charactersRead.Find(c => c.isEquiped).isEquiped);
+        playerHealthPointMax = character.health + GivePerkStatValue(Stats.Health);
+        playerHealthPoint = character.health + GivePerkStatValue(Stats.Health);
 
-            playerHealthPointMax = character.health + GivePerkStatValue(Stats.Health);
-            playerHealthPoint = character.health + GivePerkStatValue(Stats.Health);
+        speedMax = character.moveSpeed + GivePerkStatValue(Stats.MoveSpeed);
+        speed = character.moveSpeed + GivePerkStatValue(Stats.MoveSpeed);
+        heroID = character.id;
+        baseSkillCDMax = character.spellCD + GivePerkStatValue(Stats.ReloadSkills);
 
-            speedMax = character.moveSpeed + GivePerkStatValue(Stats.MoveSpeed);
-            speed = character.moveSpeed + GivePerkStatValue(Stats.MoveSpeed);
-            heroID = character.id;
-            baseSkillCDMax = character.spellCD + GivePerkStatValue(Stats.ReloadSkills);
-
-            attackSpeedMax = character.attackSpeed + GivePerkStatValue(Stats.AttackSpeed);
-            attackSpeed = character.attackSpeed + GivePerkStatValue(Stats.AttackSpeed);
-            damageToGive = character.damage + GivePerkStatValue(Stats.Damage);
-            GetComponent<CircleCollider2D>().radius += GivePerkStatValue(Stats.ExpirianceRadius);
-            Fire += GivePerkStatValue(Stats.FireDamage) / 100;
-            Water += GivePerkStatValue(Stats.WaterDamage) / 100;
-            armor += GivePerkStatValue(Stats.Armor);
-            /*Ўвидк≥сть захвату зони*/
-            playerHealthRegeneration += GivePerkStatValue(Stats.Regeneration);
-            multiply += (int)GivePerkStatValue(Stats.ExpirianceGain);
-            break;
-        }
-        //foreach (var potion in potions)
-        //{
-        //    potion.isActive = bool.Parse(PlayerPrefs.GetInt(potion.key+"Bool").ToString());
-        //}
+        attackSpeedMax = character.attackSpeed + GivePerkStatValue(Stats.AttackSpeed);
+        attackSpeed = character.attackSpeed + GivePerkStatValue(Stats.AttackSpeed);
+        damageToGive = character.damage + GivePerkStatValue(Stats.Damage);
+        GetComponent<CircleCollider2D>().radius += GivePerkStatValue(Stats.ExpirianceRadius);
+        Fire += GivePerkStatValue(Stats.FireDamage) / 100;
+        Water += GivePerkStatValue(Stats.WaterDamage) / 100;
+        armor += GivePerkStatValue(Stats.Armor);
+        /*Ўвидк≥сть захвату зони*/
+        playerHealthRegeneration += GivePerkStatValue(Stats.Regeneration);
+        multiply += (int)GivePerkStatValue(Stats.ExpirianceGain);
     }
     float GivePerkStatValue(Stats stat)
     {
@@ -566,6 +618,42 @@ public class PlayerManager : MonoBehaviour
         {
             return 0;
         }
+    }
+    //Potion
+    public void UsePotion(PotionsType type)
+    {
+        switch (type)
+        {
+            case PotionsType.Heal:
+                HealHealth(50 * Grass);
+                break;
+            case PotionsType.Bomb:
+                ThowBomb();
+                break;
+            case PotionsType.Ligma:
+                 Debug.Log("Ligma");
+                break;
+            case PotionsType.TimeFreeze:
+                TimeFreeze();
+                break;
+            case PotionsType.Totem:
+                canBeSaved = true;
+                break;
+        }
+    }
+    void ThowBomb()
+    {
+        BobmExplode a = Instantiate(bomb);
+        a.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = bombImg;
+        a.transform.GetChild(0).GetComponent<SpriteRenderer>().transform.localScale = new Vector3(1,1,1);
+    }
+    void TimeFreeze()
+    {
+        foreach (var enemy in EnemyController.instance.children)
+        {
+            StartCoroutine(EnemyController.instance.FreezeEnemy(enemy));
+        }
+       
     }
 }
 

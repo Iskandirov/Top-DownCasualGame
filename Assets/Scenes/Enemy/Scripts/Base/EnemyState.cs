@@ -5,6 +5,7 @@ public class EnemyState : MonoBehaviour
 {
     [field: SerializeField] public bool isSlowed { get; private set; }
     [field: SerializeField] public bool isStun { get; private set; }
+    public bool isFreezed;
     [field: SerializeField] public bool isBurn { get; private set; }
     [field: SerializeField] public bool isAttack { get; private set; }
     [field: SerializeField] public string mobName { get; private set; }

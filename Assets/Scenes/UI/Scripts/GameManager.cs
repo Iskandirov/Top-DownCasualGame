@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-//[DefaultExecutionOrder(5)]
 public class GameManager : MonoBehaviour
 {
     public bool IsSettingsPage;
@@ -73,7 +72,6 @@ public class GameManager : MonoBehaviour
     public List<SavedCharacterData> charactersRead = new List<SavedCharacterData>();
 
     public List<CharacterInfo> info;
-    GetScore getScore;
     public bool isShopingScene;
     DataHashing hashing;
     void Awake()
@@ -83,8 +81,12 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        getScore = FindObjectOfType<GetScore>();
+        //PlayerPrefs.DeleteAll();
         hashing = DataHashing.inst;
+        if (!PlayerPrefs.HasKey("Character"))
+        {
+            PlayerPrefs.SetInt("Character", 1);
+        }
         DeleteFile();
         LoadCharacktersOnStart();
 
@@ -105,8 +107,20 @@ public class GameManager : MonoBehaviour
         UpdateText(texts);
         score = 0;
     }
+    public static void SaveResolution(Resolution resolution)
+    {
+        string json = JsonUtility.ToJson(resolution);
+        PlayerPrefs.SetString("Resolution", json);
+    }
+    public static Resolution LoadResolution()
+    {
+        string json = PlayerPrefs.GetString("Resolution");
+        return JsonUtility.FromJson<Resolution>(json);
+    }
     private void OnLevelWasLoaded(int level)
     {
+        Resolution resolution = LoadResolution();
+        Screen.SetResolution(resolution.width, resolution.height, true);
         Time.timeScale = 1f;
     }
     private void FixedUpdate()
@@ -797,30 +811,16 @@ public class GameManager : MonoBehaviour
         string path = Path.Combine(Application.persistentDataPath, "CharacketInfo.txt");
         using (StreamWriter writer = new StreamWriter(path, false))
         {
-            SavedCharacterData data = new SavedCharacterData();
             foreach (SavedCharacterData item in characters)
             {
-                data.Name = item.Name;
-                data.ID = item.ID;
-                data.isBuy = item.isBuy;
-                data.isEquiped = item.isEquiped;
-                data.status = item.status;
-                data.interactable = item.interactable;
-                data.move = item.move;
-                data.attackSpeed = item.attackSpeed;
-                data.damage = item.damage;
-                data.health = item.health;
-                data.spell = item.spell;
-                data.spellCD = item.spellCD;
-
-                string jsonData = JsonUtility.ToJson(data);
+                string jsonData = JsonUtility.ToJson(item);
                 string decryptedJson = hashing.Encrypt(jsonData);
                 writer.WriteLine(decryptedJson);
             }
             writer.Close();
         }
     }
-    private void SaveCharacterUpgrade(int id)
+    public void SaveCharacterUpgrade(int id)
     {
         string path = Path.Combine(Application.persistentDataPath, "CharacketInfo.txt");
         using (StreamWriter writer = new StreamWriter(path, false))
@@ -840,52 +840,7 @@ public class GameManager : MonoBehaviour
             writer.Close();
         }
     }
-    private void SaveEquip(int id)
-    {
-        string path = Path.Combine(Application.persistentDataPath, "CharacketInfo.txt");
-        using (StreamWriter writer = new StreamWriter(path, false))
-        {
-            foreach (SavedCharacterData item in charactersRead)
-            {
-                if (item.ID == id)
-                {
-                    item.isEquiped = true;
-                    item.status = "choosen";
-                    item.interactable = false;
-                }
-                else
-                {
-                    item.isEquiped = false;
-                    if (item.isBuy)
-                    {
-                        item.status = "sold_out";
-                        item.interactable = true;
-                    }
-                }
-
-                string jsonData = JsonUtility.ToJson(item);
-                string decryptedJson = hashing.Encrypt(jsonData);
-                writer.WriteLine(decryptedJson);
-            }
-            writer.Close();
-        }
-    }
-    public void BuyChoose(CharacterInfo info)
-    {
-        if (info.buyButton.tagText == "buy" && getScore.score >= info.price)
-        {
-            getScore.score = getScore.LoadScore() - info.price;
-            getScore.SaveScore((int)getScore.score);
-            getScore.scoreEnd.text = getScore.LoadScore().ToString();
-            SaveCharacterUpgrade(info.id);
-            SetParameters();
-        }
-        else if (info.buyButton.tagText == "sold_out")
-        {
-            SaveEquip(info.id);
-            SetParameters();
-        }
-    }
+    
     public void SetParameters()
     {
         charactersRead.Clear();
@@ -898,24 +853,28 @@ public class GameManager : MonoBehaviour
                 {
                     if (character.id == item.ID)
                     {
-                        character.Name.text = item.Name;
+                        character.Name = item.Name;
                         character.buyButton.tagText = item.status;
-                        character.damage.text = item.damage;
-                        character.health.text = item.health;
-                        character.spell.text = item.spell;
-                        character.attackSpeed.text = item.attackSpeed;
-                        character.move.text = item.move;
-                        if (item.isBuy == true)
+                        character.damage = int.Parse(item.damage);
+                        character.health = int.Parse(item.health);
+                        character.spell = item.spell;
+                        character.attackSpeed = float.Parse(item.attackSpeed);
+                        character.move = int.Parse(item.move);
+                        character.description = item.description;
+                        character.characterName.text = item.Name;
+                        //if (item.isBuy == true)
                         {
                             character.check.SetActive(item.isBuy);
-                            character.priceObj.SetActive(!item.isBuy);
-                            character.button.interactable = item.interactable;
+                            character.price = item.price;
+                            //character.button.interactable = item.interactable;
                         }
                     }
                 }
             }
         }
     }
+    //Potion
+   
 }
 [System.Serializable]
 public class Statistic

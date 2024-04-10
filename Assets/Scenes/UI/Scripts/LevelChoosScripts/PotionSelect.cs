@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,21 +17,20 @@ public class PotionSelect : MonoBehaviour
     public LoadPotions loader;
     public void DeselectSlot()
     {
-
-        
-        loader.selectedPotionSlot.sprite = potionImage.sprite;
-        loader.selectedPotionSlot.SetNativeSize();
+        loader.selectedSlots.Find(slot => slot.gameObject == EquipedBySlot).sprite = loader.baseSlotImage;
+        loader.selectedSlots.Find(slot => slot.gameObject == EquipedBySlot).SetNativeSize();
         EquipedBySlot = null;
         basePotion.isActive = false;
         activeObj.SetActive(false);
         deselectButton.gameObject.SetActive(false);
         loader.selectedPotion = null;
+        PlayerPrefs.SetString(basePotion.key + "Bool", basePotion.isActive.ToString());
     }
     public void SelectSlot()
     {
-        PotionSelect selected = transform.parent.GetComponentsInChildren<PotionSelect>().FirstOrDefault(p => p.basePotion.isActive 
+        PotionSelect selected = transform.parent.GetComponentsInChildren<PotionSelect>().FirstOrDefault(p => p.basePotion.isActive
         && p.EquipedBySlot == loader.selectedPotionSlot.gameObject);
-       
+
 
         if (loader.selectedPotion == null || loader.selectedPotion.gameObject != gameObject && basePotion.isActive == false)
         {
@@ -41,19 +42,18 @@ public class PotionSelect : MonoBehaviour
                 selected.activeObj.SetActive(false);
                 selected.EquipedBySlot = null;
                 selected.basePotion.isActive = false;
-                selected.activeObj.SetActive(false);
                 selected.deselectButton.gameObject.SetActive(false);
                 selected.loader.selectedPotion = null;
+                PlayerPrefs.SetString(selected.basePotion.key + "Bool", selected.basePotion.isActive.ToString());
             }
-            EquipedBySlot = loader.selectedPotionSlot.gameObject;
-            basePotion.isActive = true;
-            activeObj.SetActive(true);
-            deselectButton.gameObject.SetActive(true);
             EquipedBySlot = loader.selectedPotionSlot.gameObject;
             loader.selectedPotionSlot.sprite = potionImage.sprite;
             loader.selectedPotionSlot.SetNativeSize();
             loader.selectedPotion = this;
-
+            basePotion.isActive = true;
+            activeObj.SetActive(true);
+            deselectButton.gameObject.SetActive(true);
+            PlayerPrefs.SetString(basePotion.key + "Bool", basePotion.isActive.ToString());
         }
     }
 }

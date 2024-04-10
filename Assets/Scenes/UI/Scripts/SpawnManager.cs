@@ -85,12 +85,6 @@ public class SpawnManager : MonoBehaviour
             AstarPath.active.UpdateGraphs(bounds);
         }
     }
-    void SpawnObjectInMapBounds(Collider2D obj)
-    {
-        Vector2 colliderCenter = spawnMapBound.bounds.center;
-        Vector2 randomPointInsideCollider = colliderCenter + Random.insideUnitCircle * new Vector2(spawnMapBound.bounds.size.x * 0.6f, spawnMapBound.bounds.size.y * 0.5f);
-        obj.transform.position = randomPointInsideCollider;
-    }
     public static Vector3 GetRandomPositionInsideCollider()
     {
         // Отримати мінімальні та максимальні координати spawnArea

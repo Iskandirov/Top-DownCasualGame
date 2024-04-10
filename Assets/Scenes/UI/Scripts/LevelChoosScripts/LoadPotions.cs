@@ -10,25 +10,19 @@ public class LoadPotions : MonoBehaviour
     public PotionSelect potionPrefab;
     public PotionSelect selectedPotion;
     public Image selectedPotionSlot;
+    public List<Image> selectedSlots;
     public Sprite baseSlotImage;
     private void OnEnable()
     {
-        PotionsType[] potions = (PotionsType[])Enum.GetValues(typeof(PotionsType));
-
-        foreach (PotionsType potion in potions)
-        {
-            Potions p = potionsType.Find(p => p.parameters == potion);
-            if (PlayerPrefs.HasKey(potion.ToString()))
-            {
-                p.value = PlayerPrefs.GetInt(potion.ToString());
-            }
-        }
+        SetPotionValue(potionsType, false);
         int offset = 120;
         RectTransform parentRect = GetComponent<RectTransform>();
         if (transform.childCount <= 1)
         {
             foreach (var potion in potionsType)
             {
+                //PlayerPrefs.DeleteKey(potion.key + "Bool");
+
                 if (potion.value > 0)
                 {
                     PotionSelect example = Instantiate(potionPrefab, transform.parent);
@@ -41,6 +35,7 @@ public class LoadPotions : MonoBehaviour
                     example.loader = this;
                     example.basePotion = potion;
                     offset += 120;
+                    potion.isActive = false;
                 }
             }
         }
@@ -49,5 +44,20 @@ public class LoadPotions : MonoBehaviour
     {
         selectedPotionSlot = EventSystem.current.currentSelectedGameObject.transform.GetChild(0).GetComponent<Image>();
     }
-    
+    public static void SetPotionValue(List<Potions> potionsType, bool isResset)
+    {
+        PotionsType[] potions = (PotionsType[])Enum.GetValues(typeof(PotionsType));
+        foreach (PotionsType potion in potions)
+        {
+            Potions p = potionsType.Find(p => p.parameters == potion);
+            if (PlayerPrefs.HasKey(potion.ToString()))
+            {
+                p.value = PlayerPrefs.GetInt(potion.ToString());
+                if (isResset && p.isActive)
+                {
+                    PlayerPrefs.SetInt(potion.ToString(), (int)p.value - 1);
+                }
+            }
+        }
+    }
 }

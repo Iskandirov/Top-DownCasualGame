@@ -1223,20 +1223,36 @@ MonoBehaviour:
     parameters: 15
   potions:
   - key: UpHealer
+    isActive: 0
     value: 0
-    parameters: 1
+    callDown: 15
+    parameters: 0
   - key: Bomb
+    isActive: 0
     value: 0
-    parameters: 2
+    callDown: 30
+    parameters: 1
   - key: Saver shield
+    isActive: 0
     value: 0
-    parameters: 4
-  - key: 'Ligma potion '
-    value: 0
+    callDown: 60
     parameters: 3
-  - key: Timefreeze
+  - key: 'Ligma potion '
+    isActive: 0
     value: 0
-    parameters: 5
+    callDown: 25
+    parameters: 2
+  - key: Timefreeze
+    isActive: 0
+    value: 0
+    callDown: 45
+    parameters: 4
+  potionsObj:
+  - {fileID: 0}
+  - {fileID: 0}
+  bomb: {fileID: 0}
+  bombImg: {fileID: 0}
+  canBeSaved: 0
 --- !u!95 &2933150211668163815
 Animator:
   serializedVersion: 5

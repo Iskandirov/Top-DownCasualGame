@@ -2,62 +2,41 @@ using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static Cinemachine.DocumentationSortingAttribute;
 
 public class FillLevelInfo : MonoBehaviour
 {
     public CheckLevel level;
     public SavedLocationsData dataLevel;
-    public TextMeshProUGUI percent;
-    public Image percentImg;
-    public Image countImg;
-    public TextMeshProUGUI countOfCount;
     public Image percentImgDone;
     public DataHashing hash;
     public Transform objTransform;
-    public LevelInfoLoad levelInfoPanel;
+    public GameObject levelInfoPanel;
     private void Awake()
     {
         hash = FindObjectOfType<DataHashing>();
-        levelInfoPanel = FindObjectOfType<LevelInfoLoad>();
         objTransform = transform;
     }
     // Start is called before the first frame update
     void Start()
     {
         GetComponent<Button>().onClick.AddListener(SelectLevelID);
-        GetComponent<Button>().onClick.AddListener(() => FindAnyObjectByType<GameManager>().OpenPanel(levelInfoPanel.gameObject));
+        GetComponent<Button>().onClick.AddListener(() => FindAnyObjectByType<GameManager>().OpenPanel(levelInfoPanel));
 
         level = FindObjectOfType<CheckLevel>();
         MenuController menu = GetComponent<MenuController>();
         dataLevel.percent = LoadObjectLevel(menu.sceneCount);
         dataLevel.countOfCount = LoadObjectLevelCount(menu.sceneCount);
         dataLevel.countOfCountMax = LoadObjectLevelCountOfCountMax(menu.sceneCount);
-        percentImg.fillAmount = (float)dataLevel.percent / 100;
-        countImg.fillAmount = (float)dataLevel.countOfCount / dataLevel.countOfCountMax;
 
-        if (dataLevel.percent == 100)
-        {
-            percentImgDone.gameObject.SetActive(true);
-        }
-        
         dataLevel.IDLevel = menu.sceneCount;
 
-        if (dataLevel.IDLevel == 999)
-        {
-            percent.gameObject.SetActive(false);
-        }
-
-        percent.text = dataLevel.percent.ToString() + "%";
-        countOfCount.text = LoadObjectLevelCountText(menu.sceneCount);
         level.SaveInventory(dataLevel.IDLevel, dataLevel.percent);
 
 
     }
     void SelectLevelID()
     {
-        levelInfoPanel.levelID = dataLevel.IDLevel;
-
+        levelInfoPanel.transform.GetChild(0).GetComponent<LevelInfoLoad>().levelID = dataLevel.IDLevel;
     }
     public int LoadObjectLevel(int objectID)
     {

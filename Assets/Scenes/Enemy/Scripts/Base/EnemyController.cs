@@ -230,7 +230,7 @@ public class EnemyController : MonoBehaviour
     PlayerManager player;
     bool isTutorial;
     public Transform objTransform;
-    [SerializeField] public List<EnemyState> children;
+    public List<EnemyState> children;
     Enemy matchingEnemy;
     public static EnemyController instance;
     [Header("Exp info")]
@@ -425,6 +425,15 @@ public class EnemyController : MonoBehaviour
     }
     //Spawn end
     ///Move
+    public IEnumerator FreezeEnemy(EnemyState enemy)
+    {
+        enemy.isFreezed = true;
+        enemy.path.maxSpeed = 0;
+        yield return new WaitForSeconds(5f);
+        enemy.isFreezed = false;
+        matchingEnemy = enemies.First(s => s.prefab.mobName == enemy.mobName);
+        enemy.path.maxSpeed = matchingEnemy.speedMax;
+    }
     public IEnumerator SlowEnemy(EnemyState enemy, float time, float percent)
     {
         float speed = enemies.First(i => i.name == enemy.mobName).speedMax;
@@ -450,14 +459,17 @@ public class EnemyController : MonoBehaviour
         {
             foreach (EnemyState enemy in children)
             {
-                EnemyRotate(enemy);
-                enemy.GetComponent<Animator>().enabled = IsInsideCameraBounds(player.objTransform.position) ? true : false;
-                matchingEnemy = enemies.First(s => s.prefab.mobName == enemy.mobName);
-                MoveAndAttack(enemy);
-
-                if (timer.time >= timeToSpawnBobs && isSpawned == false)
+                if (!enemy.isFreezed)
                 {
-                    BossSpawn();
+                    EnemyRotate(enemy);
+                    enemy.GetComponent<Animator>().enabled = IsInsideCameraBounds(player.objTransform.position) ? true : false;
+                    matchingEnemy = enemies.First(s => s.prefab.mobName == enemy.mobName);
+                    MoveAndAttack(enemy);
+
+                    if (timer.time >= timeToSpawnBobs && isSpawned == false)
+                    {
+                        BossSpawn();
+                    }
                 }
             }
         }

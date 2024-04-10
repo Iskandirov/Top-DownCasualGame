@@ -200,6 +200,7 @@ MonoBehaviour:
   winPanel: {fileID: 0}
   levelPanel: {fileID: 0}
   enemyInfoPanel: {fileID: 0}
+  QuestPanel: {fileID: 0}
   isPanelOpen: 0
   statRead: []
   texts:
@@ -537,10 +538,13 @@ MonoBehaviour:
     health: 100
     damage: 2
     move: 20
-    attackSpeed: 0.5
+    attackSpeed: 0,5
     spell: jump
     spellCD: 3
     interactable: 0
+    price: 10000
+    description: Hot headed young mage. Love to explore new places, bad with formulas.
+      Also love his mom
   - Name: Dash
     ID: 2
     isBuy: 0
@@ -549,10 +553,13 @@ MonoBehaviour:
     health: 75
     damage: 1
     move: 25
-    attackSpeed: 0.3
+    attackSpeed: 0,3
     spell: untouchable
     spellCD: 10
     interactable: 1
+    price: 15000
+    description: hasty guy that not love to speak too much, always busy, like activities
+      like mageball
   - Name: Nova
     ID: 3
     isBuy: 0
@@ -561,10 +568,13 @@ MonoBehaviour:
     health: 150
     damage: 4
     move: 15
-    attackSpeed: 0.65
+    attackSpeed: 0,65
     spell: ricoshet
     spellCD: 15
     interactable: 1
+    price: 20000
+    description: Brutaly outside vulnerable inside. Love animals, love to making
+      sweet pies in free time
   charactersRead: []
   info:
   - {fileID: 0}

@@ -110,14 +110,12 @@ public class DailyQuests : MonoBehaviour
         {
             lastRandomTime = DateTime.MinValue;
         }
-        if (DateTime.Today < lastRandomTime)
-        {
-            TimeToNextRandom.text = GetTimeToNextRandom();
-        }
-        else
+        if(DateTime.Today > lastRandomTime)
         {
             RandomGenerateQuest(pathFile);
         }
+        TimeToNextRandom.text = GetTimeToNextRandom();
+
         LoadScore(pathFile);
         var questsToUpdate = quest.FindAll(s => s.isCompleteInOneRound);
         foreach (var q in questsToUpdate)

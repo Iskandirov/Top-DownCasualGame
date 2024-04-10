@@ -17,7 +17,7 @@ public class TabGroup : MonoBehaviour
         {
             tabButtons = new List<TabButton>();
         }
-        tabButtons.Add(button);
+        //tabButtons.Add(button);
     }
     public void OnTabEnter(TabButton button,string text)
     {
@@ -66,14 +66,19 @@ public class TabGroup : MonoBehaviour
         {
             PerkSystem perkSytstem = GetComponent<PerkSystem>();
             PotionSystem potionSytstem = GetComponent<PotionSystem>();
+            CharacterSystem characterSytstem = GetComponent<CharacterSystem>();
             objToShow.SetActive(true);
             if (perkSytstem != null)
             {
                 perkSytstem.SetDescription();
             }
-            else
+            else if(potionSytstem != null)
             {
                 potionSytstem.SetDescription();
+            }
+            else
+            {
+                characterSytstem.SetDescription();
             }
         }
     }

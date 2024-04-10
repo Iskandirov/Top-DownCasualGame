@@ -35,6 +35,8 @@ public class SavedCharacterData
     public string spell;
     public string spellCD;
     public bool interactable;
+    public int price;
+    public string description;
 }
 
 [System.Serializable]
