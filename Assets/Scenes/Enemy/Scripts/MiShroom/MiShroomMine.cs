@@ -51,7 +51,6 @@ public class MiShroomMine : MonoBehaviour
     {
         if (collision.CompareTag("Shield"))
         {
-            Debug.Log(4);
             shieldToHit = collision.gameObject;
             SetAlphaRecursively(transform, 1f);
             anim.SetBool("Action", true);
@@ -82,16 +81,13 @@ public class MiShroomMine : MonoBehaviour
     }
     public void DamageDeal()
     {
-        Debug.Log(1);
         if (shieldToHit != null)
         {
-            Debug.Log(2);
             shieldToHit.GetComponent<Shield>().healthShield -= damage;
             GameManager.Instance.FindStatName("ShieldAbsorbedDamage", damage);
         }
         else if (playerToHit != null && !player.isInvincible)
         {
-            Debug.Log(3);
             player.TakeDamage(damage);
         }
         parent.mineCount--;

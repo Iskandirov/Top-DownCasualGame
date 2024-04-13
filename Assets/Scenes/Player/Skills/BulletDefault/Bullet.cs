@@ -68,8 +68,10 @@ public class Bullet : SkillBaseMono
         {
             ElementActiveDebuff debuff = collision.GetComponent<ElementActiveDebuff>();
             debuff.StartCoroutine(debuff.EffectTime(Elements.status.Fire, 5));
-
-            enemy.TakeDamage(collision.GetComponent<EnemyState>(), basa.damage);
+            if (collision != null)
+            {
+                enemy.TakeDamage(collision.GetComponent<EnemyState>(), basa.damage);
+            }
 
             if (isLifeSteal && player.playerHealthPoint < player.playerHealthPointMax)
             {

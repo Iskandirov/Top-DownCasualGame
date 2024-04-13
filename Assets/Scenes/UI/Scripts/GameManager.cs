@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -116,6 +117,11 @@ public class GameManager : MonoBehaviour
     {
         string json = PlayerPrefs.GetString("Resolution");
         return JsonUtility.FromJson<Resolution>(json);
+    }
+    public static Sprite[] ExtractSpriteListFromTexture(string textureName)
+    {
+        Texture2D texture = Resources.Load<Texture2D>(textureName);
+        return Resources.LoadAll<Sprite>(texture.name);
     }
     private void OnLevelWasLoaded(int level)
     {
@@ -692,14 +698,14 @@ public class GameManager : MonoBehaviour
                 {
                     item.Showed = true;
                     InfoFiller.SetActive(true);
-                    InfoImg.sprite = Resources.Load<Sprite>(item.Name + "_" + item.ID);
+                    InfoImg.sprite = ExtractSpriteListFromTexture("enemy").First(e => e.name == item.Name + "_" + item.ID);
                     InfoName.text = item.Name;
                     ShowedEnemy.Name = item.Name;
                     ShowedEnemy.MoveSpeed = item.MoveSpeed;
                     ShowedEnemy.Health = item.Health;
                     ShowedEnemy.Damage = item.Damage;
 
-                    InfoImgPanel.sprite = Resources.Load<Sprite>(item.Name + "_" + item.ID);
+                    InfoImgPanel.sprite = ExtractSpriteListFromTexture("enemy").First(e => e.name == item.Name + "_" + item.ID);
                     InfoNamePanel.text = ShowedEnemy.Name.ToString();
                     InfoStatDamagePanel.text = ShowedEnemy.Damage.ToString();
                     InfoStatHealtPanel.text = ShowedEnemy.Health.ToString();

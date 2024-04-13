@@ -90,7 +90,8 @@ public class Boss : Enemy , IEnemy
     public GameObject SetBase()
     {
         health.SetActive(true);
-        health.GetComponentInChildren<Image>().fillAmount = 1;
+        fillAmountImage = health.GetComponentInChildren<Image>();
+        fillAmountImage.fillAmount = 1;
         return health;
     }
 

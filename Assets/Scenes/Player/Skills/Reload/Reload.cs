@@ -36,7 +36,6 @@ public class Reload : SkillBaseMono
         {
             if (spells[i].abilityId == 0 || spells[i].abilityId == basa.skill.abilityId || spells[i].skill.isPassive)
             {
-                Debug.Log(spells[i].skill.objToSpawn.name);
                 spells.RemoveAt(i);
             }
         }

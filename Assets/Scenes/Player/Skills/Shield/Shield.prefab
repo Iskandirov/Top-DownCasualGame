@@ -27,7 +27,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.48, y: 1.48, z: 1.48}
+  m_LocalScale: {x: 0.79, y: 0.79, z: 0.79}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7916109652606774832}
@@ -73,12 +73,12 @@ SpriteRenderer:
   m_SortingLayerID: 1713113091
   m_SortingLayer: 3
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 89bb1c82bd79e1c468e4e61e7e49eace, type: 3}
+  m_Sprite: {fileID: 601544452, guid: 80073ee2232738341a4cd9ab8fed1276, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.6666667}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 8.360001, y: 9.930272}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -155,6 +155,7 @@ MonoBehaviour:
     spawnDelay: 0
   skillId: 2
   currentLevel: 0
+  player: {fileID: 0}
   healthShield: 30
   healthShieldMissed: 0
   slowObj: {fileID: -653662045394503945, guid: f8fdadc8cffe5994489e37bb25ca8c67, type: 3}

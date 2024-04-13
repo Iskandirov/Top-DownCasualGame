@@ -100,7 +100,7 @@ public class LevelUpgrade : MonoBehaviour
             var objText = i == 0 ? objTextOne : objTextTwo;
 
             buffText.text = skill.Description[skill.level];
-            buffBtn.sprite = Resources.Load<Sprite>(skill.Name);
+            buffBtn.sprite = GameManager.ExtractSpriteListFromTexture("skills").First(s => s.name == skill.Name);
             objText.tagText = skill.tag[skill.level];
             list.Add(buffText.gameObject);
         }
@@ -231,7 +231,7 @@ public class LevelUpgrade : MonoBehaviour
         else
         {
             player.abilitiesObj[player.countActiveAbilities].SetActive(true);
-            player.abilities[player.countActiveAbilities].sprite = Resources.Load<Sprite>(resultId.Name);
+            player.abilities[player.countActiveAbilities].sprite = GameManager.ExtractSpriteListFromTexture("skills").First(s => s.name == resultId.Name);
             player.countActiveAbilities++;
         }
 

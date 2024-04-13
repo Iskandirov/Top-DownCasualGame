@@ -136,10 +136,10 @@ public class DailyQuests : MonoBehaviour
                 questText[counter].text = q.description;
                 questRewardText[counter].text = q.reward.ToString();
 
-                Texture2D texture = Resources.Load<Texture2D>("Quest");
-                Sprite[] sprites = Resources.LoadAll<Sprite>(texture.name);
+                Sprite[] sprites = GameManager.ExtractSpriteListFromTexture("Quest");
 
                 questImage[counter].sprite = Array.Find(sprites, sprite => sprite.name == q.nameQuest);
+                questImage[counter].SetNativeSize();
                 questProgressText[counter].text = q.progress.ToString() + " / " + q.goal.ToString();
                 questProgressFill[counter].fillAmount = q.progress / q.goal;
                 bool isQuestDone = questProgressFill[counter].fillAmount == 1 && q.isActive ? true : false;

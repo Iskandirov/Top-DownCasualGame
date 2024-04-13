@@ -244,6 +244,7 @@ public class PlayerManager : MonoBehaviour
     private void OnButtonClickHandler()
     {
         autoimage.sprite = isAuto ? autoState[0] : autoState[1];
+        autoimage.SetNativeSize();
         isAuto = !isAuto;
         AutoActiveCurve.gameObject.SetActive(isAuto);
        
@@ -550,7 +551,7 @@ public class PlayerManager : MonoBehaviour
                 nearest = enemyPos;
             }
         }
-        Vector2 myPos = new Vector2(objTransform.position.x, objTransform.position.y);
+        Vector2 myPos = new Vector2(position.x, position.y);
         Vector2 direction = nearest - myPos;
         direction.Normalize();
 

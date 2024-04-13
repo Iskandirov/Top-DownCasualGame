@@ -11,6 +11,7 @@ public class TabGroup : MonoBehaviour
     [SerializeField] List<GameObject> objToSwap;
     [SerializeField] GameObject objToShow;
     [SerializeField] Tooltip tooltip;
+    [SerializeField] TabGroup tabs;
     public void Subscribe(TabButton button)
     {
         if (tabButtons == null)
@@ -76,9 +77,13 @@ public class TabGroup : MonoBehaviour
             {
                 potionSytstem.SetDescription();
             }
-            else
+            else if(characterSytstem != null)
             {
                 characterSytstem.SetDescription();
+            }
+            else
+            {
+                tabs.objToSwap.Find(o => o.gameObject.activeSelf).SetActive(false);
             }
         }
     }

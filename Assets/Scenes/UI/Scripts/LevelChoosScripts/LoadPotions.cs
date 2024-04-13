@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -30,7 +31,8 @@ public class LoadPotions : MonoBehaviour
                     example.transform.position = Vector3.zero;
                     example.transform.localPosition = new Vector3(-parentRect.offsetMin.x + offset, parentRect.offsetMin.y - 100, 0);
                     example.CountText.text = potion.value.ToString();
-                    example.potionImage.sprite = Resources.Load<Sprite>(potion.key);
+                    Sprite[] sprites = GameManager.ExtractSpriteListFromTexture("Quest");
+                    example.potionImage.sprite = sprites.First(p => p.name == potion.key);
                     example.potionImage.SetNativeSize();
                     example.loader = this;
                     example.basePotion = potion;
