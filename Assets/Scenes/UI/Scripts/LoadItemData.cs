@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 public class LoadItemData : MonoBehaviour
@@ -59,7 +60,8 @@ public class LoadItemData : MonoBehaviour
 
                 SetParametersToitem objParam = newObject.GetComponent<SetParametersToitem>();
                 objParam.ItemName = itemName;
-                objParam.ItemImage.sprite = Resources.Load<Sprite>(itemParams.Name);
+                objParam.ItemImage.sprite = GameManager.ExtractSpriteListFromTexture("items").First(i => i.name == itemParams.Name);
+                objParam.ItemImage.SetNativeSize();
                 objParam.Rare.sprite = Resources.Load<Sprite>(itemParams.RareName + " " + itemParams.Level.ToString());
                 objParam.ItemStat.text = itemParams.Stat;
                 objParam.level = itemParams.Level.ToString();

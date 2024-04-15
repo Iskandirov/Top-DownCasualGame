@@ -198,14 +198,17 @@ public class PlayerManager : MonoBehaviour
             if (PlayerPrefs.GetString(potion.key + "Bool") == "True")
             {
                 potion.isActive = bool.Parse(PlayerPrefs.GetString(potion.key + "Bool"));
-
-                Image img = potionsObj[count].GetComponent<Image>();
-                img.sprite = Resources.Load<Sprite>(potion.key);
-                img.SetNativeSize();
-                img.color = new Color(255, 255, 255, 255);
-                potionsObj[count].type = potion.parameters;
-                potionsObj[count].callDownMax = potion.callDown;
-                count++;
+                if (potionsObj.Count > 0)
+                {
+                    Image img = potionsObj[count].GetComponent<Image>();
+                    img.sprite = Resources.Load<Sprite>(potion.key);
+                    img.SetNativeSize();
+                    img.color = new Color(255, 255, 255, 255);
+                    potionsObj[count].type = potion.parameters;
+                    potionsObj[count].callDownMax = potion.callDown;
+                    count++;
+                }
+               
             }
         }
         gameManager = GameManager.Instance;
@@ -351,7 +354,7 @@ public class PlayerManager : MonoBehaviour
     //Move
     void BaseSkillSelector()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !isReloading && !isTutor)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !isReloading)
         {
             isReloading = true;
             //Player special spell

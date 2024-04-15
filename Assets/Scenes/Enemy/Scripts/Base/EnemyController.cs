@@ -7,7 +7,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static Enemy;
-using static UnityEngine.EventSystems.EventTrigger;
 
 [Serializable]
 public class EnemyPool 
@@ -73,6 +72,8 @@ public class Boss : Enemy , IEnemy
 {
     public GameObject health;
     public Image fillAmountImage;
+    public SpriteRenderer Avatar;
+    public Sprite AvatarSprite;
 
     public ItemParameters itemPrefab;
     public List<SavedObjectData> itemsLoaded;
@@ -92,6 +93,7 @@ public class Boss : Enemy , IEnemy
         health.SetActive(true);
         fillAmountImage = health.GetComponentInChildren<Image>();
         fillAmountImage.fillAmount = 1;
+        Avatar.sprite = AvatarSprite;
         return health;
     }
 

@@ -1,6 +1,7 @@
 using Cinemachine;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,7 +27,7 @@ public class LoadEquipedItems : MonoBehaviour
                 {
                     SavedObjectData data = JsonUtility.FromJson<SavedObjectData>(decrypt);
                     Image objImage = slots[i].transform.GetChild(0).GetComponentInChildren<Image>();
-                    objImage.sprite = Resources.Load<Sprite>(data.Name);
+                    objImage.sprite = GameManager.ExtractSpriteListFromTexture("items").First(o => o.name == data.Name);
                     objImage.SetNativeSize();
                     objImage.rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
                     objImage.rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
@@ -46,15 +47,12 @@ public class LoadEquipedItems : MonoBehaviour
                         case "енергетичний заряд":
                             player.speed += float.Parse(data.Stat);
                             break;
-
                         case "шестерня":
                             player.attackSpeed -= float.Parse(data.Stat);
                             break;
-
                         case "етернійські-кристали":
                             player.damageToGive += float.Parse(data.Stat);
                             break;
-
                         case "око дракона":
                             cam.m_Lens.OrthographicSize += float.Parse(data.Stat);
                             break;

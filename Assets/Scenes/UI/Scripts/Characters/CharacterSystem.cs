@@ -29,15 +29,17 @@ public class CharacterSystem : MonoBehaviour
         attackSpeed.text = tab.attackSpeed.ToString();
         price.text = tab.price.ToString();
         description.text = tab.description;
-
-        button.interactable = int.Parse(price.text) <= int.Parse(money.text) ? true : false;
+       
+        button.interactable = int.Parse(price.text) <= int.Parse(money.text) && !tab.check.activeSelf ? true : false;
     }
     public void BuyCharacter()
     {
         CharacterInfo character = GetComponent<TabGroup>().tabButtons.Find(t => t == GetComponent<TabGroup>().selectedTab).GetComponent<CharacterInfo>();
+        Debug.Log(character);
         money.text = GetScore.SaveMoney_Static(int.Parse(money.text) - int.Parse(price.text));
         GameManager.Instance.SaveCharacterUpgrade(character.id);
         PlayerPrefs.SetInt("Character", character.id);
         character.check.SetActive(true);
+        //button.interactable = false;
     }
 }

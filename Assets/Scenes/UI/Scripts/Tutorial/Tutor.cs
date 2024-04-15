@@ -100,7 +100,7 @@ public class Tutor : MonoBehaviour
                 ShiftLight.color = FinalColor;
                 parentPhase3.SetBool("IsFadeOut", true);
                 PhasePlus();
-                Invoke("BlockMoveAndShoot", 0.3f);
+                Invoke("BlockMoveAndShoot", .3f);
             }
         }
     }

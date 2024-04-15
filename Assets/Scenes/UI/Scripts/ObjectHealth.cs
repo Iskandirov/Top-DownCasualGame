@@ -9,6 +9,7 @@ public class ObjectHealth : MonoBehaviour
     [SerializeField] List<GameObject> SpawnableObjects;
     [SerializeField] Animator explodeAnim;
     [SerializeField] List<EnemyState> enemiesInExplosionArea;
+    [SerializeField] PlayerManager playerInExplosionArea;
     public void TakeDamage()
     {
         health -= 1;
@@ -44,7 +45,12 @@ public class ObjectHealth : MonoBehaviour
                 controller.TakeDamage(enemy, explosionDamage);
             }
         }
+        if (playerInExplosionArea != null)
+        {
+            playerInExplosionArea.TakeDamage(explosionDamage);
+        }
         enemiesInExplosionArea.Clear();
+        playerInExplosionArea = null;
         explodeAnim.SetBool("isGoingExplode", false);
         gameObject.SetActive(false);
         health = healthMax;
@@ -54,6 +60,10 @@ public class ObjectHealth : MonoBehaviour
         if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
             enemiesInExplosionArea.Add(collision.GetComponent<EnemyState>());
+        } 
+        if (collision.CompareTag("Player") && !collision.isTrigger)
+        {
+            playerInExplosionArea = collision.GetComponent<PlayerManager>();
         }
         
     }
@@ -62,6 +72,10 @@ public class ObjectHealth : MonoBehaviour
         if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
             enemiesInExplosionArea.Remove(collision.GetComponent<EnemyState>());
+        }
+        if (collision.CompareTag("Player") && !collision.isTrigger)
+        {
+            playerInExplosionArea = null;
         }
     }
 }

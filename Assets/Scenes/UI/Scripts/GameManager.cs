@@ -71,9 +71,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private List<SavedCharacterData> characters = new List<SavedCharacterData>();
     public List<SavedCharacterData> charactersRead = new List<SavedCharacterData>();
-
-    public List<CharacterInfo> info;
     public bool isShopingScene;
+    public List<CharacterInfo> info;
     DataHashing hashing;
     void Awake()
     {
@@ -131,19 +130,16 @@ public class GameManager : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (!IsSettingsPage && IsGamePage)
+        if (!IsSettingsPage && IsGamePage && !PlayerManager.instance.isTutor)
         {
             ShowLevel();
+            Timer();
         }
     }
     private void Update()
     {
         if (!IsSettingsPage)
         {
-            if (IsGamePage)
-            {
-                Timer();
-            }
             //can`t press pause after lose
             if (Input.GetKeyUp(KeyCode.Escape) && PlayerManager.instance.playerHealthPoint > 0)
             {
@@ -540,9 +536,9 @@ public class GameManager : MonoBehaviour
 
                 SavedObjectData data = JsonUtility.FromJson<SavedObjectData>(decryptedJson);
 
-                data.ImageSprite = Resources.Load<Sprite>(data.Name);
+                data.ImageSprite = ExtractSpriteListFromTexture("items").First(d => d.name == data.Name);
 
-                data.RareSprite = Resources.Load<Sprite>(data.RareName + " " + data.Level);
+                //data.RareSprite = Resources.Load<Sprite>(data.RareName + " " + data.Level);
                 itemsRead.Add(data);
             }
         }
@@ -860,7 +856,7 @@ public class GameManager : MonoBehaviour
                     if (character.id == item.ID)
                     {
                         character.Name = item.Name;
-                        character.buyButton.tagText = item.status;
+                        //character.buyButton.tagText = item.status;
                         character.damage = int.Parse(item.damage);
                         character.health = int.Parse(item.health);
                         character.spell = item.spell;

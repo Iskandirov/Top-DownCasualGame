@@ -39,7 +39,7 @@ public class LevelInfoLoad : MonoBehaviour
                     levelName.text = data.name;
                     countOfCount.text = data.countOfCount + "/" + data.countOfCountMax;
                     levelDescription.text = data.description;
-                    levelImage.sprite = Resources.Load<Sprite>("loh");
+                    levelImage.sprite = GameManager.ExtractSpriteListFromTexture("items").First(s => s.name == "слиз");
                     break;
                 }
             }
@@ -56,6 +56,6 @@ public class LevelInfoLoad : MonoBehaviour
         speedValue.text = character.move;
         attackSpeedValue.text = character.attackSpeed;
         specialAttack.text = character.spell;
-        playerImage.sprite = Resources.Load<Sprite>(character.Name);
+        playerImage.sprite = GameManager.ExtractSpriteListFromTexture("heroes").First(s => s.name == character.Name);
     }
 }

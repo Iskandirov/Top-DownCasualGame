@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class LoadCharacters : MonoBehaviour
 {
