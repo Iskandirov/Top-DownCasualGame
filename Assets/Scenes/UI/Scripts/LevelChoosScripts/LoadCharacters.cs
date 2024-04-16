@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 public class LoadCharacters : MonoBehaviour
@@ -43,7 +44,7 @@ public class LoadCharacters : MonoBehaviour
                     example.transform.position = Vector3.zero;
                     example.transform.localPosition = new Vector3(-parentRect.offsetMin.x + offset, parentRect.offsetMin.y - 250, 0);
                     example.characterName.text = character.Name;
-                    example.characterImage.sprite = Resources.Load<Sprite>(character.Name);
+                    example.characterImage.sprite = GameManager.ExtractSpriteListFromTexture("heroes").First(c => c.name == character.Name);
                     example.characterImage.SetNativeSize();
                     example.active.SetActive(character.isEquiped);
                     offset += 220;

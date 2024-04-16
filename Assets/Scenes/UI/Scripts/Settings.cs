@@ -5,7 +5,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-[DefaultExecutionOrder(10)]
 public class Settings : MonoBehaviour
 {
     public Slider volumeMusic;
@@ -47,11 +46,11 @@ public class Settings : MonoBehaviour
             SetVolumeMusic();
             SetVolumeSFX();
             SetVSync();
-            SetLanguage();
             SetResolutionStart();
+            SetLanguage();
         }
     }
-    void SetResolutionStart()
+    public void SetResolutionStart()
     {
         filtredResolutions = new List<Resolution>();
 
@@ -81,10 +80,13 @@ public class Settings : MonoBehaviour
                 currentResolutionIndex = i;
             }
         }
-
-        resolutionDropdown.AddOptions(options);
-        resolutionDropdown.value = currentResolutionIndex;
-        resolutionDropdown.RefreshShownValue();
+        if (resolutionDropdown.IsActive())
+        {
+            resolutionDropdown.AddOptions(options);
+            resolutionDropdown.value = currentResolutionIndex;
+            resolutionDropdown.RefreshShownValue();
+        }
+        GameManager.SaveResolution(filtredResolutions[currentResolutionIndex]);
     }
 
     public void SetResolution(int resolutionIndex)
@@ -104,14 +106,17 @@ public class Settings : MonoBehaviour
     void StartSet()
     {
         gameManager = GameManager.Instance;
-        drop.value = gameManager.language.IndexOf(gameManager.loc);
-        toggle.isOn = Convert.ToBoolean(gameManager.vSync);
-        volumeMusic.value = gameManager.volumeMusic;
-        volumeSFX.value = gameManager.volumeSFX;
-        AudioManager.instance.musicObj.volume = volumeMusic.value;
-        AudioManager.instance.sfxObj.volume = volumeSFX.value;
-        muteVolume.gameObject.SetActive(volumeMusic.value == 0 ? true : false);
-        muteSFX.gameObject.SetActive(volumeSFX.value == 0 ? true : false);
+        if (drop.IsActive())
+        {
+            drop.value = gameManager.language.IndexOf(gameManager.loc);
+            toggle.isOn = Convert.ToBoolean(gameManager.vSync);
+            volumeMusic.value = gameManager.volumeMusic;
+            volumeSFX.value = gameManager.volumeSFX;
+            AudioManager.instance.musicObj.volume = volumeMusic.value;
+            AudioManager.instance.sfxObj.volume = volumeSFX.value;
+            muteVolume.gameObject.SetActive(volumeMusic.value == 0 ? true : false);
+            muteSFX.gameObject.SetActive(volumeSFX.value == 0 ? true : false);
+        }
     }
 
     // Метод для зміни гучності гри

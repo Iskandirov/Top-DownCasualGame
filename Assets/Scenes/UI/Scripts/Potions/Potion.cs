@@ -10,7 +10,7 @@ public class Potion : MonoBehaviour
     public PotionBase potion;
     private void Start()
     {
-        potion.count = PlayerPrefs.GetInt(potion.type.ToString());
+        potion.count = PlayerPrefs.GetInt(potion.potionName.ToString());
         count.text = potion.count.ToString();
         price.text = potion.price.ToString();
     }

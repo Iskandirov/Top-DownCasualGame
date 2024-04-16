@@ -8,7 +8,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.VFX;
-using static UnityEngine.Rendering.DebugUI;
 
 [Serializable]
 class PerksBuffs 
@@ -201,7 +200,7 @@ public class PlayerManager : MonoBehaviour
                 if (potionsObj.Count > 0)
                 {
                     Image img = potionsObj[count].GetComponent<Image>();
-                    img.sprite = Resources.Load<Sprite>(potion.key);
+                    img.sprite = GameManager.ExtractSpriteListFromTexture("Quest").First(instance => instance.name == potion.key);
                     img.SetNativeSize();
                     img.color = new Color(255, 255, 255, 255);
                     potionsObj[count].type = potion.parameters;
@@ -545,13 +544,16 @@ public class PlayerManager : MonoBehaviour
 
         foreach (var enemy in EnemyController.instance.children)
         {
-            Vector3 enemyPos = enemy.objTransform.position;
-            float distSqr = (enemyPos - position).sqrMagnitude;
-
-            if (distSqr < nearestDistSqr)
+            /*if (enemy.gameObject.activeSelf*/ //умова щоб не автоатакувати в невидимих грибів)
             {
-                nearestDistSqr = distSqr;
-                nearest = enemyPos;
+                Vector3 enemyPos = enemy.objTransform.position;
+                float distSqr = (enemyPos - position).sqrMagnitude;
+
+                if (distSqr < nearestDistSqr)
+                {
+                    nearestDistSqr = distSqr;
+                    nearest = enemyPos;
+                }
             }
         }
         Vector2 myPos = new Vector2(position.x, position.y);

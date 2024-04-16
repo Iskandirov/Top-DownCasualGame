@@ -33,7 +33,8 @@ public class PotionSystem : MonoBehaviour
         List<TabButton> tabs = GetComponent<TabGroup>().tabButtons;
         foreach (var tab in tabs)
         {
-            tab.GetComponent<Potion>().potion.potionName = tab.tooltipText;
+            Potion potion = tab.GetComponent<Potion>();
+            potion.potion.potionName = tab.tooltipText;
         }
     }
     public void SetDescription()
@@ -47,13 +48,13 @@ public class PotionSystem : MonoBehaviour
         reloadValue.text = tab.potion.reloadTime.ToString();
         price.text = tab.potion.price.ToString();
         description.text = tab.potion.description;
-        if (!PlayerPrefs.HasKey(tab.potion.type.ToString()))
+        if (!PlayerPrefs.HasKey(tab.potion.potionName.ToString()))
         {
-            PlayerPrefs.SetInt(tab.potion.type.ToString(), 0);
+            PlayerPrefs.SetInt(tab.potion.potionName.ToString(), 0);
         }
-        if (PlayerPrefs.GetInt(tab.potion.type.ToString()) > 0)
+        if (PlayerPrefs.GetInt(tab.potion.potionName.ToString()) > 0)
         {
-            tab.potion.count = PlayerPrefs.GetInt(tab.potion.type.ToString());
+            tab.potion.count = PlayerPrefs.GetInt(tab.potion.potionName.ToString());
         }
         perkBuyButton.interactable = int.Parse(price.text) <= int.Parse(money.text) ? true : false;
     }
@@ -64,6 +65,6 @@ public class PotionSystem : MonoBehaviour
         tab.count.text = potionCount.ToString();
         money.text = GetScore.SaveMoney_Static(int.Parse(money.text) - int.Parse(tab.price.text));
         SetDescription();
-        PlayerPrefs.SetInt(tab.potion.type.ToString(), potionCount);
+        PlayerPrefs.SetInt(tab.potion.potionName.ToString(), potionCount);
     }
 }

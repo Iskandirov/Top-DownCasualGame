@@ -74,15 +74,18 @@ public class GameManager : MonoBehaviour
     public bool isShopingScene;
     public List<CharacterInfo> info;
     DataHashing hashing;
+    Settings settings;
     void Awake()
     {
         Instance = this;
+       
     }
     // Start is called before the first frame update
     void Start()
     {
         //PlayerPrefs.DeleteAll();
         hashing = DataHashing.inst;
+        settings = Settings.instance;
         if (!PlayerPrefs.HasKey("Character"))
         {
             PlayerPrefs.SetInt("Character", 1);
@@ -154,6 +157,7 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    
     public void AudioStartLoad()
     {
         AudioManager music = AudioManager.instance;

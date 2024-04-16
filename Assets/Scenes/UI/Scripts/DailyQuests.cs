@@ -43,6 +43,7 @@ public class DailyQuests : MonoBehaviour
     DateTime currentDataTime = DateTime.Now;
     public GetScore score;
     public static DailyQuests instance;
+    public Animator anim;
     //private void OnLevelWasLoaded(int level)
     //{
     //    quest[4].progress = 0;
@@ -125,6 +126,10 @@ public class DailyQuests : MonoBehaviour
         SaveQuest(pathFile);
         SetQuestData();
 
+    }
+    public void AnimationPopUp(string boolName)
+    {
+        anim.SetBool(boolName, !anim.GetBool(boolName));
     }
     public void SetQuestData()
     {
