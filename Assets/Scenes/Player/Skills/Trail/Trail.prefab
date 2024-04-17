@@ -55,7 +55,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e3b6c8e9065ce6e46bf9f96a5ee31e21, type: 2}
+  - {fileID: 2100000, guid: 8089513837a9789429675f23f2e428b4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -80,7 +80,7 @@ TrailRenderer:
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 1
+    widthMultiplier: 5
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -164,9 +164,11 @@ MonoBehaviour:
     spawnDelay: 0
   skillId: 0
   currentLevel: 0
+  player: {fileID: 0}
   trailRenderer: {fileID: 411543035822511523}
   edgeCollider: {fileID: 6823750717904613870}
   size: 0.7
+  hitDelay: 0.5
   objTransform: {fileID: 0}
 --- !u!68 &6823750717904613870
 EdgeCollider2D:

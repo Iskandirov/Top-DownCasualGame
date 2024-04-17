@@ -54,7 +54,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e3b6c8e9065ce6e46bf9f96a5ee31e21, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 8cfe024a7dd14034c851d0e86b1cd31a, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.6179542, g: 0.6698113, b: 0.4518067, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -122,7 +122,7 @@ MonoBehaviour:
   - {x: 0.8614644, y: -0.7691955, z: 0.0000000604333}
   m_ShapePathHash: -1416841124
   m_Mesh: {fileID: 0}
-  m_InstanceId: 193934
+  m_InstanceId: -372426
   m_LocalBounds:
     m_Center: {x: 0.10824466, y: 0.9881858, z: 0}
     m_Extent: {x: 1.4405502, y: 1.7741798, z: 0}
@@ -210,6 +210,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <isSlowed>k__BackingField: 0
   <isStun>k__BackingField: 0
+  isFreezed: 0
   <isBurn>k__BackingField: 0
   <isAttack>k__BackingField: 0
   <mobName>k__BackingField: MiShroom
@@ -608,6 +609,10 @@ PrefabInstance:
     - target: {fileID: 4273819005101591333, guid: 9da0f9967bc44bc43ac81ff477cd28f0, type: 3}
       propertyPath: m_SortingOrder
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4607648583866671705, guid: 9da0f9967bc44bc43ac81ff477cd28f0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.71
       objectReference: {fileID: 0}
     - target: {fileID: 4889505555044842593, guid: 9da0f9967bc44bc43ac81ff477cd28f0, type: 3}
       propertyPath: m_RootOrder

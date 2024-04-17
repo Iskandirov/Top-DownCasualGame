@@ -30,5 +30,9 @@ public class MenuController : MonoBehaviour
         {
             Debug.Log("Folder not found: " + Application.persistentDataPath);
         }
+    } 
+    public void CleanPlayerPrefs()
+    {
+        PlayerPrefs.DeleteAll();
     }
 }
