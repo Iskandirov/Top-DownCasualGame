@@ -23,19 +23,19 @@ public class RotationTile : MonoBehaviour
                 if (tile != null)
                 {
                     // Отримуємо випадкове значення для вибору ротації
-                    int randomValue = Random.Range(0, 2);
+                    int randomValue = Random.Range(0, 360);
 
                     Quaternion rotation;
-
-                    // Вибираємо ротацію на основі випадкового значення
-                    if (randomValue == 0)
-                    {
-                        rotation = Quaternion.Euler(0f, 0f, 0f); // 0 градусів
-                    }
-                    else
-                    {
-                        rotation = Quaternion.Euler(0f, 0f, 180f); // 180 градусів
-                    }
+                    rotation = Quaternion.Euler(0f, 0f, randomValue); // 0 градусів
+                    //// Вибираємо ротацію на основі випадкового значення
+                    //if (randomValue == 0)
+                    //{
+                    //    rotation = Quaternion.Euler(0f, 0f, 0f); // 0 градусів
+                    //}
+                    //else
+                    //{
+                    //    rotation = Quaternion.Euler(0f, 0f, 180f); // 180 градусів
+                    //}
 
                     Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, rotation, Vector3.one);
                     tilemap.SetTransformMatrix(position, matrix);
