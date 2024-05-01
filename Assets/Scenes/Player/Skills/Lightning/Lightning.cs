@@ -41,7 +41,7 @@ public class Lightning : SkillBaseMono
             basa.skill.skillCD -= StabilizateCurrentReload(basa.skill.skillCD, basa.stats[2].value);
             basa.stats[4].isTrigger = false;
         }
-        enemies = Physics2D.OverlapCircleAll(gameObject.transform.position, basa.radius).ToList();
+        enemies = Physics2D.OverlapCircleAll(transform.position, basa.radius).ToList();
         if (enemies != null && enemies.Count > 0)
         {
             foreach (var enemy in enemies)

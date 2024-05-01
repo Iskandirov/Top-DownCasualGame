@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class FallinMeteor : SkillBaseMono
 {
-    [SerializeField] Meteor meteor;
     [SerializeField] List<EnemyState> enemiesInDanger;
     public EnemyController enemy;
+    public float damageTick;
     private void Start()
     {
         enemy = EnemyController.instance;
@@ -34,28 +34,29 @@ public class FallinMeteor : SkillBaseMono
             b.basa.damage = basa.damage;
         }
     }
-    public void Fall()
+    public void FixedUpdate()
     {
-        foreach (var creature in enemiesInDanger)
+        damageTick -= Time.fixedDeltaTime;
+        if (damageTick <= 0)
         {
-            ElementActiveDebuff debuff = creature.GetComponent<ElementActiveDebuff>();
-            if (debuff != null)
+            foreach (var creature in enemiesInDanger)
             {
-                debuff.StartCoroutine(debuff.EffectTime(Elements.status.Fire, 5));
+                ElementActiveDebuff debuff = creature.GetComponent<ElementActiveDebuff>();
+                if (debuff != null)
+                {
+                    debuff.StartCoroutine(debuff.EffectTime(Elements.status.Fire, 5));
+                }
+                float damage = (basa.damage * debuff.elements.CurrentStatusValue(Elements.status.Water))
+                    / debuff.elements.CurrentStatusValue(Elements.status.Fire);
+                enemy.TakeDamage(creature, damage);
+                GameManager.Instance.FindStatName("meteorDamage", damage);
+                if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 3 && s.isActive == true) != null)
+                {
+                    DailyQuests.instance.UpdateValue(3, damage, false);
+                }
             }
-            float damage = (basa.damage * debuff.elements.CurrentStatusValue(Elements.status.Water))
-                / debuff.elements.CurrentStatusValue(Elements.status.Fire);
-            enemy.TakeDamage(creature, damage);
-            GameManager.Instance.FindStatName("meteorDamage", damage);
-            if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 3 && s.isActive == true) != null)
-            {
-                DailyQuests.instance.UpdateValue(3, damage, false);
-            }
+            damageTick = basa.damageTickMax;
         }
-        Meteor a = Instantiate(meteor, transform.position, Quaternion.identity);
-        a.basa = basa;
-        CineMachineCameraShake.instance.Shake(10, .1f);
-        Destroy(gameObject);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

@@ -83,17 +83,15 @@ public class SkillBaseMono : MonoBehaviour
     public void CreateBaseSpell(SkillBaseMono mono, SkillBaseMono objInfo, int currentLevel)
     {
         player = PlayerManager.instance;
-        SkillBaseMono a = Instantiate(mono, new Vector3(player.objTransform.position.x, player.objTransform.position.y, 1.9f), Quaternion.identity);
+        SkillBaseMono a = Instantiate(mono, new Vector3(player.objTransform.position.x, player.objTransform.position.y, 0f), Quaternion.identity);
         a.basa = objInfo.basa;
         a.currentLevel = currentLevel;
-        a.transform.localScale = new Vector3(1f, 1f, 1f);
     }
     public void CreateAOESpell(SkillBaseMono mono, SkillBaseMono objInfo, int currentLevel) 
     {
         player = PlayerManager.instance;
-        SkillBaseMono a = Instantiate(mono, new Vector3(player.objTransform.position.x + UnityEngine.Random.Range(-20, 20), player.objTransform.position.y + UnityEngine.Random.Range(-20, 20), 1.9f), Quaternion.identity);
+        SkillBaseMono a = Instantiate(mono, new Vector3(player.objTransform.position.x + UnityEngine.Random.Range(-20, 20), player.objTransform.position.y + UnityEngine.Random.Range(-20, 20), 0f), Quaternion.identity);
         a.basa = objInfo.basa;
         a.currentLevel = currentLevel;
-        a.transform.localScale = new Vector3(1f, 1f, 1f);
     }
 }

@@ -100,7 +100,7 @@ public class Boss : Enemy , IEnemy
     public GameObject Attack(EnemyState enemy)
     {
         //throw new NotImplementedException();
-        return enemy.objToAttack.gameObject;
+        return enemy.AttackObj.gameObject;
     }
    
     public void Death(EnemyState enemy)
@@ -186,7 +186,7 @@ public class Mele : Enemy, IEnemy
             PlayerManager.instance.TakeDamage(enemy.damage);
         }
         //throw new NotImplementedException();
-        return enemy.objToAttack.gameObject;
+        return enemy.AttackObj.gameObject;
     }
     public void Death(EnemyState enemy)
     {
@@ -200,7 +200,7 @@ public class Range : Enemy, IEnemy
 
     public GameObject Attack(EnemyState enemy)
     {
-        return enemy.objToAttack.gameObject;
+        return enemy.AttackObj.gameObject;
         //throw new NotImplementedException();
     }
     public void Death(EnemyState enemy)

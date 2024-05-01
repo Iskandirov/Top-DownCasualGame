@@ -15,7 +15,7 @@ public class EnemyState : MonoBehaviour
     [field: SerializeField] public float damage { get; private set; }
     [field: SerializeField] public int timesPerOne { get; private set; }
     [field: SerializeField] public Transform objTransform { get; private set; }
-    [field: SerializeField] public Transform objToAttack { get; private set; }
+    [field: SerializeField] public Transform AttackObj { get; private set; }
     [field: SerializeField] public GameObject ElementsParent { get; private set; }
     [SerializeField] public GameObject RepositionPoint;
     [SerializeField] public AIDestinationSetter destination;
@@ -60,6 +60,7 @@ public class EnemyState : MonoBehaviour
     public void Attack()
     {
         isAttack = true;
+        Instantiate(AttackObj, objTransform.position, Quaternion.identity);
     }
     public void SetAttackSpeed(float newAttackSpeed)
     {
