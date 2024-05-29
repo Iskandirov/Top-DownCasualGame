@@ -29,7 +29,11 @@ public class ObjectHealth : MonoBehaviour
     }
     void CreateLoot()
     {
-        Instantiate(SpawnableObjects[Random.Range(0, SpawnableObjects.Count)], transform.position, Quaternion.identity);
+        GameObject a = Instantiate(SpawnableObjects[Random.Range(0, SpawnableObjects.Count)], transform.position, Quaternion.identity);
+        if (a.GetComponent<EnemyState>() != null)
+        {
+            FindObjectOfType<EnemyController>().children.Add(a.GetComponent<EnemyState>());
+        }
     }
     void ExplodeAnimActivate()
     {

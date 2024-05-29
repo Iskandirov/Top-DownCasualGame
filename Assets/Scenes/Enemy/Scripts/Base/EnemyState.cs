@@ -60,7 +60,7 @@ public class EnemyState : MonoBehaviour
     public void Attack()
     {
         isAttack = true;
-        Instantiate(AttackObj, objTransform.position, Quaternion.identity);
+        //Instantiate(AttackObj, objTransform.position, Quaternion.identity);
     }
     public void SetAttackSpeed(float newAttackSpeed)
     {

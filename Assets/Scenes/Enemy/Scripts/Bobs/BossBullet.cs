@@ -26,7 +26,7 @@ public class BossBullet : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (isAround)
+        if (isAround && enemyBody != null)
         {
             // ¬изначаЇмо колову траЇктор≥ю навколо ц≥л≥
             Vector3 position = enemyBody.position + new Vector3(Mathf.Cos(Time.fixedTime * speed) * distance, Mathf.Sin(Time.fixedTime * speed) * distance, 0f);

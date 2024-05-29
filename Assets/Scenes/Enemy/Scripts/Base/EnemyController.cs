@@ -75,19 +75,7 @@ public class Boss : Enemy , IEnemy
     public SpriteRenderer Avatar;
     public Sprite AvatarSprite;
 
-    public ItemParameters itemPrefab;
-    public List<SavedObjectData> itemsLoaded;
-    public float spawnRare = 0.6f;
-    public float spawnMiphical = 0.3f;
-    public float spawnLegendary = 0.05f;
-
-    public List<SavedObjectData> CommonItems;
-    public List<SavedObjectData> RareItems;
-    public List<SavedObjectData> MiphicalItems;
-    public List<SavedObjectData> LegendaryItems;
     public bool isTutor;
-    public string[] rarityType = { "Звичайне", "Рідкісне", "Міфічне", "Легендарне" };
-
     public GameObject SetBase()
     {
         health.SetActive(true);
@@ -106,68 +94,8 @@ public class Boss : Enemy , IEnemy
     public void Death(EnemyState enemy)
     {
         health.SetActive(false);
-        ItemRarity();
-        float randomValue = UnityEngine.Random.value;
-
-        List<SavedObjectData> rarityItems = GetRarityItems(randomValue);
-        if (rarityItems != null)
-            SetStats(rarityItems, isTutor, enemy.objTransform);
-    }
-
-    void SetStats(List<SavedObjectData> Rarity, bool isTutor,Transform objTransform)
-    {
-        int rand = UnityEngine.Random.Range(0, Rarity.Count);
-        ItemParameters newItem = UnityEngine.Object.Instantiate(itemPrefab, objTransform.position, objTransform.rotation);
-        newItem.itemName = Rarity[rand].Name;
-        newItem.itemImage = Rarity[rand].ImageSprite;
-        newItem.itemRareName = Rarity[rand].RareName;
-        newItem.itemRare = Rarity[rand].RareSprite;
-        newItem.idRare = Rarity[rand].IDRare;
-        newItem.Stat = Rarity[rand].Stat;
-        newItem.Level = Rarity[rand].Level;
-        newItem.Count = Rarity[rand].Count;
-        newItem.Tag = Rarity[rand].Tag;
-        newItem.RareTag = Rarity[rand].RareTag;
-        newItem.Description = Rarity[rand].Description;
-
-        newItem.isTutor = isTutor;
-    }
-
-    List<SavedObjectData> GetRarityItems(float randomValue)
-    {
-        if (randomValue <= spawnLegendary)
-            return LegendaryItems;
-        else if (randomValue <= spawnMiphical)
-            return MiphicalItems;
-        else if (randomValue <= spawnRare)
-            return RareItems;
-        else if (randomValue <= 1)
-            return CommonItems;
-
-        return null;
-    }
-
-    void ItemRarity()
-    {
-        GameManager.Instance.LoadInventory(itemsLoaded);
-        foreach (SavedObjectData line in itemsLoaded)
-        {
-            switch (line.RareName)
-            {
-                case "Звичайне":
-                    CommonItems.Add(line);
-                    break;
-                case "Рідкісне":
-                    RareItems.Add(line);
-                    break;
-                case "Міфічне":
-                    MiphicalItems.Add(line);
-                    break;
-                case "Легендарне":
-                    LegendaryItems.Add(line);
-                    break;
-            }
-        }
+        LootManager.inst.DropLoot(isTutor, enemy.objTransform);
+       
     }
 }
 [Serializable]
@@ -254,7 +182,7 @@ public class EnemyController : MonoBehaviour
         range = new Range();
         gameManager = GameManager.Instance;
         int LevelID = gameManager.LoadObjectLevelCount(SceneManager.GetActiveScene().buildIndex);
-        string path = "Assets/Scenes/Level_1.unity";
+        string path = "Assets/Scenes/Level_2.unity";
         int index =  SceneUtility.GetBuildIndexByScenePath(path);
 
 
@@ -350,7 +278,7 @@ public class EnemyController : MonoBehaviour
     //Перевірка чи об'єкт за межами камери
     private bool IsInsideCameraBounds(Vector3 position)
     {
-        Vector3 viewportPosition = GameManager.Instance.GetComponent<Camera>().WorldToViewportPoint(position);
+        Vector3 viewportPosition = mainCamera.WorldToViewportPoint(position);
         return viewportPosition.x >= 0f && viewportPosition.x <= 1f && viewportPosition.y >= 0f && viewportPosition.y <= 1f;
     }
     //Перевірка чи об'єкт не за межами стін
@@ -374,7 +302,7 @@ public class EnemyController : MonoBehaviour
         {
             float randomAngle = UnityEngine.Random.Range(0f, 2f * Mathf.PI);
             Vector3 spawnOffset = new Vector3(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle), 0f) * spawnRadius;
-            spawnPosition = new Vector3(GameManager.Instance.transform.position.x + spawnOffset.x, GameManager.Instance.transform.position.y + spawnOffset.y, 1.8f);
+            spawnPosition = new Vector3(mainCamera.transform.position.x + spawnOffset.x, mainCamera.transform.position.y + spawnOffset.y, 1.8f);
         } while (IsInsideCameraBounds(spawnPosition) || IsInsideWallBounds(spawnPosition));
 
         return spawnPosition;
@@ -404,6 +332,7 @@ public class EnemyController : MonoBehaviour
                     enemy.transform.position = spawnPosition;
                     break;
                 case true:
+                    Debug.Log(4);
                     enemy.transform.position = SpawnManager.GetRandomPositionInsideCollider();
                     enemy.GetComponent<EnemyState>().path.maxSpeed = 0;
                     break;

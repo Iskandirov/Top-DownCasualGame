@@ -24,10 +24,13 @@ public class CreatePuddle : SkillBaseMono
             a.transform.localScale = new Vector3(1f, 1f, 1f);
         }
     }
-    private void OnDestroy()
+    public void CreateActualPuddle()
     {
         puddle a = Instantiate(puddle, puddlePos.position, Quaternion.identity);
         a.basa = basa;
-        Destroy(gameObject); 
+    }
+    private void OnDestroy()
+    {
+        Destroy(gameObject);
     }
 }

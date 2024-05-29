@@ -33,6 +33,7 @@ public class Settings : MonoBehaviour
     private void Awake()
     {
         instance ??= this;
+        SetResolutionStart();
     }
     public void Start()
     {
@@ -46,7 +47,6 @@ public class Settings : MonoBehaviour
             SetVolumeMusic();
             SetVolumeSFX();
             SetVSync();
-            SetResolutionStart();
             SetLanguage();
         }
     }
@@ -62,6 +62,7 @@ public class Settings : MonoBehaviour
             Resolution newRes = new Resolution();
             newRes.width = screenSize.Key;
             newRes.height = screenSize.Value;
+            newRes.refreshRateRatio = Screen.currentResolution.refreshRateRatio;
             filtredResolutions.Add(newRes);
 
             // Set current resolution if it matches
@@ -86,13 +87,13 @@ public class Settings : MonoBehaviour
             resolutionDropdown.value = currentResolutionIndex;
             resolutionDropdown.RefreshShownValue();
         }
-        GameManager.SaveResolution(filtredResolutions[currentResolutionIndex]);
+        SetResolution(currentResolutionIndex);
     }
 
     public void SetResolution(int resolutionIndex)
     {
         Resolution resolution = filtredResolutions[resolutionIndex];
-        Screen.SetResolution(resolution.width, resolution.height, true);
+        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreenMode);
         GameManager.SaveResolution(resolution);
     }
     private IEnumerator WaitTillLoad()

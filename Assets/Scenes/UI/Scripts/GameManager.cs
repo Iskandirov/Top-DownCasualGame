@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -75,6 +76,8 @@ public class GameManager : MonoBehaviour
     public List<CharacterInfo> info;
     DataHashing hashing;
     Settings settings;
+    [SerializeField] DailyQuests quest;
+    [SerializeField] TextMeshProUGUI resolutionTxt;
     void Awake()
     {
         Instance = this;
@@ -110,15 +113,40 @@ public class GameManager : MonoBehaviour
         UpdateText(texts);
         score = 0;
     }
+    class ResolutionRes 
+    {
+        public int width;
+        public int height;
+        public RefreshRate frameRate;
+    }
+
     public static void SaveResolution(Resolution resolution)
     {
-        string json = JsonUtility.ToJson(resolution);
+        ResolutionRes res = new ResolutionRes();
+        res.width = resolution.width;
+        res.height = resolution.height;
+        res.frameRate = resolution.refreshRateRatio;
+
+        string json = JsonUtility.ToJson(res);
         PlayerPrefs.SetString("Resolution", json);
     }
     public static Resolution LoadResolution()
     {
-        string json = PlayerPrefs.GetString("Resolution");
-        return JsonUtility.FromJson<Resolution>(json);
+        string json;
+        if (PlayerPrefs.HasKey("Resolution"))
+        {
+            json = PlayerPrefs.GetString("Resolution");
+        }
+        else
+        {
+            json = JsonUtility.ToJson(Screen.currentResolution);
+        }
+        ResolutionRes newRes = JsonUtility.FromJson<ResolutionRes>(json);
+        Resolution newResolution = new Resolution();
+        newResolution.width = newRes.width;
+        newResolution.height = newRes.height;
+        newResolution.refreshRateRatio = newRes.frameRate;
+        return newResolution;
     }
     public static Sprite[] ExtractSpriteListFromTexture(string textureName)
     {
@@ -128,7 +156,7 @@ public class GameManager : MonoBehaviour
     private void OnLevelWasLoaded(int level)
     {
         Resolution resolution = LoadResolution();
-        Screen.SetResolution(resolution.width, resolution.height, true);
+        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreenMode);
         Time.timeScale = 1f;
     }
     private void FixedUpdate()
@@ -141,6 +169,12 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
+        if (resolutionTxt != null)
+        {
+            resolutionTxt.text = Screen.currentResolution.ToString();
+            Debug.Log(resolutionTxt.text);
+
+        }
         if (!IsSettingsPage)
         {
             //can`t press pause after lose
@@ -194,7 +228,7 @@ public class GameManager : MonoBehaviour
         if (questOpen)
         {
             QuestPanel.SetActive(true);
-            GetComponent<DailyQuests>().SetQuestData();
+            quest.SetQuestData();
         }
         Time.timeScale = 0f;
 
