@@ -66,7 +66,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.10967779, y: -0.12224865}
+  m_Offset: {x: -2.545868, y: -5.0976334}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -77,7 +77,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 19.46194, y: 7.275503}
+  m_Size: {x: 40.362, y: 12.393219}
   m_EdgeRadius: 0
 --- !u!114 &9087528788484653529
 MonoBehaviour:
@@ -146,7 +146,7 @@ Transform:
   m_GameObject: {fileID: 4477941199075120646}
   serializedVersion: 2
   m_LocalRotation: {x: -0.27059805, y: 0.6532815, z: -0.27059805, w: 0.6532815}
-  m_LocalPosition: {x: 0, y: 0, z: -40}
+  m_LocalPosition: {x: -20, y: -5, z: 18}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -197,7 +197,7 @@ VisualEffect:
       - m_Value: 0
         m_Name: ParticlesLifetime
         m_Overridden: 1
-      - m_Value: 3
+      - m_Value: 10
         m_Name: SpikesLifetime
         m_Overridden: 1
       - m_Value: 2
@@ -212,7 +212,7 @@ VisualEffect:
       - m_Value: 3
         m_Name: SpikesCount
         m_Overridden: 1
-      - m_Value: 10
+      - m_Value: 3
         m_Name: GroundIceLifetime
         m_Overridden: 1
       - m_Value: 25
@@ -329,6 +329,6 @@ VFXRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1021341013
-  m_SortingLayer: 5
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 1

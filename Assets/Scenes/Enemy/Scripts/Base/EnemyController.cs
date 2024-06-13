@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -211,8 +212,28 @@ public class EnemyController : MonoBehaviour
         }
         StartCoroutine(SpawnEnemyRoutine(enemySpawnInterval));
     }
-   
+
     ///Spawn
+    static public bool GetSpawnPositionNotInAIPath(float radius, Vector2 pos)
+    {
+        // Створити список доступних позицій
+        List<Vector3> availablePositions = new List<Vector3>();
+
+        // Отримати вузли сітки
+        var nodes = AstarPath.active.data.gridGraph.nodes;
+
+        // Перебрати всі вузли в радіусі
+        foreach (var node in nodes.Where(n => Mathf.Abs(n.position.x) > radius || Mathf.Abs(n.position.y) > radius))
+        {
+            if (node.Walkable)
+            {
+                availablePositions.Add(new Vector3(node.XCoordinateInGrid, node.ZCoordinateInGrid));
+                Debug.Log(new Vector3(node.XCoordinateInGrid, node.ZCoordinateInGrid));
+            }
+        }
+
+        return availablePositions.Contains(pos);
+    }
     List<GameObject> InitializeObjectPool(List<Enemy> enemy, GameObject objectPrefab, int pool, Transform parent)
     {
         
@@ -234,12 +255,12 @@ public class EnemyController : MonoBehaviour
         }
         return objectPool;
     }
-    public void SpawnObjectInMapBounds(GameObject obj)
+    public Vector3 SpawnObjectInMapBounds()
     {
         // Отримуємо центр колайдера
         Vector2 colliderCenter = spawnMapBound.bounds.center;
         Vector2 randomPointInsideCollider = colliderCenter + UnityEngine.Random.insideUnitCircle * new Vector2(spawnMapBound.bounds.size.x * 0.6f, spawnMapBound.bounds.size.y * 0.5f);
-        obj.transform.position = randomPointInsideCollider;
+        return randomPointInsideCollider;
     }
     GameObject GetFromPool(List<GameObject> objectPool)
     {
@@ -276,10 +297,13 @@ public class EnemyController : MonoBehaviour
         }
     }
     //Перевірка чи об'єкт за межами камери
-    private bool IsInsideCameraBounds(Vector3 position)
+    private bool IsInsideCameraBounds(Vector3 position,bool needToBeOutside)
     {
         Vector3 viewportPosition = mainCamera.WorldToViewportPoint(position);
-        return viewportPosition.x >= 0f && viewportPosition.x <= 1f && viewportPosition.y >= 0f && viewportPosition.y <= 1f;
+        if (needToBeOutside)
+            return viewportPosition.x >= 0f && viewportPosition.x <= 1f && viewportPosition.y >= 0f && viewportPosition.y <= 1f;
+        else
+            return viewportPosition.x <= 0.2f && viewportPosition.x >= 0.8f && viewportPosition.y <= 0.2f && viewportPosition.y >= 0.8f;
     }
     //Перевірка чи об'єкт не за межами стін
     private bool IsInsideWallBounds(Vector3 position)
@@ -295,15 +319,15 @@ public class EnemyController : MonoBehaviour
         return false;
     }
     /*Спавн за межами камери*/
-    public Vector3 GetRandomSpawnPosition()
+    public Vector3 GetRandomSpawnPosition(Vector3 pos, bool needToBeOutside,float radius)
     {
         Vector3 spawnPosition;
         do
         {
             float randomAngle = UnityEngine.Random.Range(0f, 2f * Mathf.PI);
-            Vector3 spawnOffset = new Vector3(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle), 0f) * spawnRadius;
-            spawnPosition = new Vector3(mainCamera.transform.position.x + spawnOffset.x, mainCamera.transform.position.y + spawnOffset.y, 1.8f);
-        } while (IsInsideCameraBounds(spawnPosition) || IsInsideWallBounds(spawnPosition));
+            Vector3 spawnOffset = new Vector3(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle), 0f) * radius;
+            spawnPosition = new Vector3(pos.x + spawnOffset.x, pos.y + spawnOffset.y, 0);
+        } while (IsInsideCameraBounds(spawnPosition, needToBeOutside) || IsInsideWallBounds(spawnPosition));
 
         return spawnPosition;
     }
@@ -327,12 +351,11 @@ public class EnemyController : MonoBehaviour
             {
                 case false:
                     float angle = i * Mathf.PI * 2 / 10; // Розраховуємо кут між об'єктами
-                    Vector3 spawnPosition = GetRandomSpawnPosition();
+                    Vector3 spawnPosition = GetRandomSpawnPosition(mainCamera.transform.position,true,spawnRadius);
                     spawnPosition += new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0); /** enemy.attackRangeRadius;*/ // Обчислюємо позицію для спавну
                     enemy.transform.position = spawnPosition;
                     break;
                 case true:
-                    Debug.Log(4);
                     enemy.transform.position = SpawnManager.GetRandomPositionInsideCollider();
                     enemy.GetComponent<EnemyState>().path.maxSpeed = 0;
                     break;
@@ -394,7 +417,7 @@ public class EnemyController : MonoBehaviour
                 if (!enemy.isFreezed)
                 {
                     EnemyRotate(enemy);
-                    enemy.GetComponent<Animator>().enabled = IsInsideCameraBounds(player.objTransform.position) ? true : false;
+                    enemy.GetComponent<Animator>().enabled = IsInsideCameraBounds(player.objTransform.position,true) ? true : false;
                     matchingEnemy = enemies.First(s => s.prefab.mobName == enemy.mobName);
                     MoveAndAttack(enemy);
 
@@ -480,11 +503,11 @@ public class EnemyController : MonoBehaviour
         {
             case SpawnType.Camera:
                 // Генеруємо випадкові координати в межах заданої області спавну
-                Vector3 spawnPosition = GetRandomSpawnPosition();
+                Vector3 spawnPosition = GetRandomSpawnPosition(mainCamera.transform.position, true, spawnRadius);
                 enemy.objTransform.position = spawnPosition;
                 break;
             case SpawnType.Map:
-                SpawnObjectInMapBounds(objTransform.parent.gameObject);
+                objTransform.parent.transform.position = SpawnObjectInMapBounds();
                 break;
         }
         matchingEnemy = enemies.First(s => s.prefab.mobName == enemy.mobName);

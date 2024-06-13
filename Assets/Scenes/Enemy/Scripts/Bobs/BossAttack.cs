@@ -1,156 +1,78 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class BossAttack : MonoBehaviour
 {
     public BossBullet bulletPrefab;
 
+    public float delay = 2f;
     public float interval = 2f;
-    public float defaultInterval = 2f;
-    public float randomeInterval = 2f;
-    public float roundInterval = 2f;
-
-    private float angle = 0f;
-    public float speed = 5f;
     public float damage = 20;
-    public float aceleration = 1f;
 
     public List<bool> attackBools;
-    public float attackTypeInterval = 5f;
     public int Index = -1;
     public int poolSize = 60;
     public List<BossBullet> bulletPool;
-    Transform objTransform;
+    [Header("Attack settings")]
+    public List<GroupCollector> attack_groups;
+    public Animator anim;
     public void Start()
     {
-        objTransform = transform;
-       
-        StartCoroutine(ToggleBoolsCoroutine());
         StartCoroutine(TimerCoroutineTypesAttack());
-        InitializeObjectPool();
-    }
-    void InitializeObjectPool()
-    {
-        bulletPool = new List<BossBullet>();
-        for (int i = 0; i < poolSize; i++)
-        {
-            BossBullet obj = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-            obj.gameObject.SetActive(false);
-            bulletPool.Add(obj);
-        }
-    }
-    public BossBullet GetFromPool()
-    {
-        foreach (BossBullet obj in bulletPool)
-        {
-            if (!obj.gameObject.activeInHierarchy)
-            {
-                obj.gameObject.SetActive(true);
-                return obj;
-            }
-        }
-        BossBullet gameObject = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-        bulletPool.Add(gameObject);
-        return gameObject;
-    }
-    private IEnumerator ToggleBoolsCoroutine()
-    {
-        while (true)
-        {
-            if (Index < attackBools.Count - 1)
-            {
-                Index++;
-            }
-            else
-            {
-                Index = 0;
-            }
-            attackBools[Index] = true;
-
-            // Виключаємо всі інші були
-            for (int i = 0; i < attackBools.Count; i++)
-            {
-                if (i != Index)
-                {
-                    attackBools[i] = false;
-                }
-            }
-
-            yield return new WaitForSeconds(attackTypeInterval);
-        }
     }
     private IEnumerator TimerCoroutineTypesAttack()
     {
         while (true)
         {
+            if (!attack_groups.Find(g => g.gameObject.activeSelf))
+            {
+                anim.SetBool("AttackEnd", true);
+            }
             yield return new WaitForSeconds(interval);
             AttackTypes();
         }
-    } 
+    }
+    public void StartRecover()
+    {
+        foreach (var group in attack_groups)
+        {
+            group.gameObject.SetActive(true);
+        }
+
+        StartCoroutine(EnemyController.instance.SlowEnemy(GetComponent<EnemyState>(), 5f, 0f));
+    }
+    public void EndRecover()
+    {
+        anim.SetBool("AttackEnd", false);
+        GetComponent<EnemyState>().SetNotStunned();
+        anim.SetBool("IsMoveToPlayer", true);
+    }
     private void AttackTypes()
     {
-        if (attackBools[0] == true)
+        if (attack_groups.Find(g => g.gameObject.activeSelf) && !anim.GetBool("AttackEnd"))
         {
-            float angleSinCos = 45f;
-            Vector2 direction;
-            // Випустити об'єкти з відповідними напрямками
-            for (int i = 0; i < 8;i++)
+            foreach (var bullet in attack_groups.Find(g => g.gameObject.activeSelf).transform.GetComponentsInChildren<BossBullet>())
             {
-                direction = new Vector2(Mathf.Cos((angle + angleSinCos) * Mathf.Deg2Rad), Mathf.Sin((angle + angleSinCos) * Mathf.Deg2Rad));
-                BossBullet bullet = GetFromPool();
-                bullet.transform.position = objTransform.position;
-                bullet.transform.rotation = Quaternion.Euler(0, 0, angle);
-                bullet.GetComponent<Rigidbody2D>().velocity = speed * direction;
-                bullet.lifeTime = 3f;
-                bullet.damage = damage;
-                bullet.Invoke("DestroyBullet", bullet.lifeTime);
-                angleSinCos += 45;
+                bullet.state = true;
             }
-           
-            ;
-            angle += 45f + aceleration;
-            interval = defaultInterval;
+            StartCoroutine(DeactivateGroup(delay));
         }
-        else if (attackBools[1] == true)
-        {
-            for (int i = 0; i < 10; i++)
-            {
-                BossBullet bullet = GetFromPool();
-                bullet.transform.position = objTransform.position;
-                bullet.transform.rotation = Quaternion.Euler(0, 0, angle);
-                bullet.GetComponent<Rigidbody2D>().velocity = speed / 2 * new Vector2(Mathf.Cos((angle) * Mathf.Deg2Rad), Mathf.Sin((angle) * Mathf.Deg2Rad));
-                bullet.enemyBody = objTransform;
-                bullet.objTransform = bullet.transform;
-                bullet.isAround = true;
-                bullet.speed = 1f + i * 0.15f;
-                bullet.lifeTime = 3f;
-                bullet.damage = damage;
-                bullet.Invoke("DestroyBullet", bullet.lifeTime);
-            }
-            interval = roundInterval;
-        }
-        else if (attackBools[2] == true)
-        {
-            Vector2 direction;
-            for (int i = 0; i < 30; i++)
-            {
-                direction = new Vector2(Mathf.Cos((Random.Range(5, 360)) * Mathf.Deg2Rad), Mathf.Sin((Random.Range(5, 360)) * Mathf.Deg2Rad));
-                BossBullet bullet = GetFromPool();
-                bullet.transform.position = objTransform.position;
-                bullet.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
-                bullet.GetComponent<Rigidbody2D>().velocity = speed / 1.5f * direction;
-                bullet.lifeTime = 5f;
-                bullet.damage = damage;
-                bullet.Invoke("DestroyBullet", bullet.lifeTime);
-            }
-            interval = randomeInterval;
-        }
-        
     }
-    private void Update()
+    public void MoveToPlayer()
     {
-        aceleration += 0.1f;
+        transform.position = EnemyController.instance.GetRandomSpawnPosition(PlayerManager.instance.objTransform.position, false,25f);
+        anim.SetBool("IsMoveToPlayer", false);
+    }
+    public IEnumerator DeactivateGroup(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        GroupCollector group = attack_groups.Find(g => g.gameObject.activeSelf);
+        foreach (var bullet in group.group)
+        {
+            bullet.gameObject.SetActive(true);
+            bullet.state = false;
+        }
+        group.gameObject.SetActive(false);
     }
 }

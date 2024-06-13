@@ -172,7 +172,6 @@ public class GameManager : MonoBehaviour
         if (resolutionTxt != null)
         {
             resolutionTxt.text = Screen.currentResolution.ToString();
-            Debug.Log(resolutionTxt.text);
 
         }
         if (!IsSettingsPage)

@@ -7,6 +7,7 @@ public class HealActive : SkillBaseMono
     public float Grass;
     public float offset = 1.5f;
     Transform objTransform;
+    public GameObject grassVfx;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +35,7 @@ public class HealActive : SkillBaseMono
         }
         player.HealHealth(basa.damage * Grass);
         StartCoroutine(TimerSpell());
+        Instantiate(grassVfx);
     }
 
     private IEnumerator TimerSpell()
