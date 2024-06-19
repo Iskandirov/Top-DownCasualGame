@@ -420,6 +420,7 @@ public class GameManager : MonoBehaviour
             {
                 // Розшифрувати JSON рядок
                 string decrypt = hashing.Decrypt(item);
+                Debug.Log(decrypt);
                 SettingsData data = JsonUtility.FromJson<SettingsData>(decrypt);
                 SettingsData settings = new SettingsData();
                 settings.key = data.key;
@@ -435,6 +436,7 @@ public class GameManager : MonoBehaviour
                 {
                     if (float.TryParse(settings.value, out float res))
                     {
+                        
                         volumeMusic = res;
                         AudioManager.instance.volumeMusic = volumeMusic;
                         AudioManager.instance.musicObj.volume = volumeMusic;
@@ -526,7 +528,7 @@ public class GameManager : MonoBehaviour
         list.Add(new SettingsData { key = "volume", value = "0,5" });
         list.Add(new SettingsData { key = "v-sync", value = "0" });
         // Відкриття файлу для запису
-        using (StreamWriter writer = new StreamWriter(path, true))
+        using (StreamWriter writer = new StreamWriter(path, false))
         {
             // Запис усіх елементів зі списку до файлу
             foreach (var item in list)

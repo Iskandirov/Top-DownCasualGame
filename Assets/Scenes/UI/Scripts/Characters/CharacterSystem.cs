@@ -12,7 +12,6 @@ public class CharacterSystem : MonoBehaviour
     public TextMeshProUGUI move;
     public TextMeshProUGUI attackSpeed;
     public TextMeshProUGUI description;
-    public TagText buyButton;
     public TextMeshProUGUI price;
     public TextMeshProUGUI money;
     public Button button;
@@ -40,6 +39,6 @@ public class CharacterSystem : MonoBehaviour
         GameManager.Instance.SaveCharacterUpgrade(character.id);
         PlayerPrefs.SetInt("Character", character.id);
         character.check.SetActive(true);
-        //button.interactable = false;
+        button.interactable = false;
     }
 }

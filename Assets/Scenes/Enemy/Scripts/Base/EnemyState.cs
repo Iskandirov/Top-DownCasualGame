@@ -54,7 +54,7 @@ public class EnemyState : MonoBehaviour
     }
     public void SetIsNotAttack()
     {
-        GetComponent<Animator>().SetBool("IsHit", false);
+        GetComponent<Animator>().SetBool("Attack", false);
         isAttack = false;
     }
     public void Attack()
@@ -68,7 +68,12 @@ public class EnemyState : MonoBehaviour
     }
     public void HealthDamage(float newHealth)
     {
+        GetComponent<Animator>().SetTrigger("Hit");
         health = newHealth;
+    }
+    public void StopHit()
+    {
+        GetComponent<Animator>().SetTrigger("Hit");
     }
     public void Damage(float damage)
     {
@@ -81,7 +86,7 @@ public class EnemyState : MonoBehaviour
         if ((collision.CompareTag("Shield") || collision.CompareTag("Player")) && !collision.isTrigger && attackSpeed <= 0)
         {
             objectToHit = collision.gameObject;
-            GetComponent<Animator>().SetBool("IsHit", true);
+            GetComponent<Animator>().SetBool("Attack", true);
         }
     }
 

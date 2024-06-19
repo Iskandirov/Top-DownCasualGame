@@ -19,9 +19,7 @@ public class Settings : MonoBehaviour
     public static Settings instance;
     [Header("Resolution")]
     [SerializeField] TMP_Dropdown resolutionDropdown;
-    Resolution[] resolutions;
     List<Resolution> filtredResolutions;
-    RefreshRate currentRefreshRate;
     int currentResolutionIndex = 0;
     public Dictionary<int, int> resolutionVariations = new Dictionary<int, int>()
 {
@@ -55,7 +53,6 @@ public class Settings : MonoBehaviour
         filtredResolutions = new List<Resolution>();
 
         resolutionDropdown.ClearOptions();
-        currentRefreshRate = Screen.currentResolution.refreshRateRatio;
 
         foreach (var screenSize in resolutionVariations)
         {
