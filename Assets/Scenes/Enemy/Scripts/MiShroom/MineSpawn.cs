@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
 public class MineSpawn : MonoBehaviour
 {
@@ -8,34 +7,19 @@ public class MineSpawn : MonoBehaviour
     public float delay;
     float delayMax;
     public float radius;
-    public bool inZone;
-    public ShadowCaster2D shadow2D;
-    public Light2D light2D;
     Transform objTransform;
+    public Animator anim;
     // Start is called before the first frame update
     void Start()
     {
         mineCount = 0;
         objTransform = transform;
         delayMax = delay;
-        SetAlphaRecursively(transform, 0f);
+        SetAlphaRecursively();
     }
-    private void SetAlphaRecursively(Transform parent, float alpha)
+    private void SetAlphaRecursively()
     {
-        SpriteRenderer[] spriteRenderers = parent.GetComponentsInChildren<SpriteRenderer>();
-
-        foreach (SpriteRenderer spriteRenderer in spriteRenderers)
-        {
-            shadow2D.enabled = alpha == 1 ? true : false;
-
-            Color spriteColor = spriteRenderer.color;
-            spriteColor.a = alpha; 
-            spriteRenderer.color = spriteColor;
-
-            Color spriteColorLight = light2D.color;
-            spriteColorLight.a = alpha; 
-            light2D.color = spriteColorLight;
-        }
+        anim.SetTrigger("Invisible");
     }
     // Update is called once per frame
     void FixedUpdate()
@@ -57,16 +41,14 @@ public class MineSpawn : MonoBehaviour
     {
         if (collision.CompareTag("Player") && !collision.isTrigger)
         {
-            inZone = true;
-            SetAlphaRecursively(objTransform, 1f);
+            SetAlphaRecursively();
         }
     }
     public void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") && !collision.isTrigger)
         {
-            inZone = false;
-            SetAlphaRecursively(objTransform, 0f);
+            SetAlphaRecursively();
         }
     }
 }

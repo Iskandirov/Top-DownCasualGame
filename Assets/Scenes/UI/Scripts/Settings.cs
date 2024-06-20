@@ -42,10 +42,10 @@ public class Settings : MonoBehaviour
         else
         {
             StartSet();
-            SetVolumeMusic();
-            SetVolumeSFX();
-            SetVSync();
-            SetLanguage();
+            //SetVolumeMusic();
+            //SetVolumeSFX();
+            //SetVSync();
+            //SetLanguage();
         }
     }
     public void SetResolutionStart()

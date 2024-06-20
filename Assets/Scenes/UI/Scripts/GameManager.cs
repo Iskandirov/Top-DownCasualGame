@@ -200,7 +200,6 @@ public class GameManager : MonoBehaviour
             music.nameClip = nameClip;
 
         }
-        StartLoad();
         if (music != null)
         {
             music.volumeMusic = volumeMusic;
@@ -420,7 +419,7 @@ public class GameManager : MonoBehaviour
             {
                 // Розшифрувати JSON рядок
                 string decrypt = hashing.Decrypt(item);
-                Debug.Log(decrypt);
+                
                 SettingsData data = JsonUtility.FromJson<SettingsData>(decrypt);
                 SettingsData settings = new SettingsData();
                 settings.key = data.key;

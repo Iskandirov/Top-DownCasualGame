@@ -539,14 +539,13 @@ public class PlayerManager : MonoBehaviour
 
         Vector2 nearest = new Vector3(999, 999, 999);
         float nearestDistSqr = Mathf.Infinity;
-
+       
         foreach (var enemy in EnemyController.instance.children)
         {
             /*if (enemy.gameObject.activeSelf*/ //умова щоб не автоатакувати в невидимих грибів)
             {
                 Vector3 enemyPos = enemy.objTransform.position;
                 float distSqr = (enemyPos - position).sqrMagnitude;
-
                 if (distSqr < nearestDistSqr)
                 {
                     nearestDistSqr = distSqr;
@@ -557,12 +556,19 @@ public class PlayerManager : MonoBehaviour
         Vector2 myPos = new Vector2(position.x, position.y);
         Vector2 direction = nearest - myPos;
         direction.Normalize();
-
-        // Запускаємо об'єкт в заданому напрямку
-        Rigidbody2D rb = newObject.GetComponent<Rigidbody2D>();
-        rb.AddForce(direction.normalized * launchForce, ForceMode2D.Impulse);
-        float angleShot = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        newObject.transform.rotation = Quaternion.AngleAxis(angleShot + 90, Vector3.forward);
+        float distance = Vector3.Distance(nearest, myPos);
+        if (EnemyController.instance.children.First(e => e.objTransform.position.x == nearest.x).GetComponentInChildren<SpriteRenderer>().color.a != 0 && distance < 50)
+        {
+            // Запускаємо об'єкт в заданому напрямку
+            Rigidbody2D rb = newObject.GetComponent<Rigidbody2D>();
+            rb.AddForce(direction.normalized * launchForce, ForceMode2D.Impulse);
+            float angleShot = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            newObject.transform.rotation = Quaternion.AngleAxis(angleShot + 90, Vector3.forward);
+        }
+        else
+        {
+            Destroy(newObject.gameObject);
+        }
     }
     
     //End Shoot

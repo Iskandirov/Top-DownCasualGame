@@ -125,7 +125,6 @@ public class Mele : Enemy, IEnemy
 [Serializable]
 public class Range : Enemy, IEnemy
 {
-
     public GameObject Attack(EnemyState enemy)
     {
         return enemy.AttackObj.gameObject;
@@ -182,7 +181,7 @@ public class EnemyController : MonoBehaviour
         range = new Range();
         gameManager = GameManager.Instance;
         int LevelID = gameManager.LoadObjectLevelCount(SceneManager.GetActiveScene().buildIndex);
-        string path = "Assets/Scenes/Level_2.unity";
+        string path = "Assets/Scenes/Level_1.unity";
         int index =  SceneUtility.GetBuildIndexByScenePath(path);
 
 
@@ -586,7 +585,7 @@ public class EnemyController : MonoBehaviour
         switch (enemy.type)
         {
             case "range":
-                Instantiate(range.Attack(enemy), enemy.objTransform.position, Quaternion.identity);
+                Instantiate(range.Attack(enemy), enemy.attackPoint.position, Quaternion.identity);
                 break;
             case "mele":
                 Instantiate(mele.Attack(enemy), enemy.transform);

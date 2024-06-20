@@ -10,6 +10,7 @@ public class CharacterSelect : MonoBehaviour
     public Image characterImage;
     public GameObject active;
     public LevelInfoLoad loader;
+    public int charID;
     private void Start()
     {
         loader = FindObjectOfType<LevelInfoLoad>();
@@ -54,7 +55,7 @@ public class CharacterSelect : MonoBehaviour
                 File.Create(path);
             }
 
-            PlayerPrefs.SetInt("Character",transform.GetSiblingIndex());
+            PlayerPrefs.SetInt("Character",charID);
             loader.LoadCharacterInfo();
         }
     }

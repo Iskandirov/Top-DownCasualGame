@@ -1,17 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{03F2743C-F95C-8D38-8DA8-91A69DE401DE}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NavMeshPlusEditor", "NavMeshPlusEditor.csproj", "{43D69CCA-DD06-340B-973A-B9402B52046F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniRx", "UniRx.csproj", "{E7A0725C-5EFF-7C47-A244-76BFCD56E10C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{03F2743C-F95C-8D38-8DA8-91A69DE401DE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstarPathfindingProjectEditor", "AstarPathfindingProjectEditor.csproj", "{8A217B19-83DE-9E82-DAE9-561A38385CAB}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstarPathfindingProject", "AstarPathfindingProject.csproj", "{146015A5-4C31-0094-109A-E7F1C94AFBD8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NavMeshPlus", "NavMeshPlus.csproj", "{5E1C26AD-E2A0-B599-61A4-D45EBA739879}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstarPathfindingProjectEditor", "AstarPathfindingProjectEditor.csproj", "{8A217B19-83DE-9E82-DAE9-561A38385CAB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackageToolsEditor", "PackageToolsEditor.csproj", "{F160234D-D93E-A68C-DD98-55F807A3F31C}"
 EndProject
@@ -23,6 +23,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{03F2743C-F95C-8D38-8DA8-91A69DE401DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03F2743C-F95C-8D38-8DA8-91A69DE401DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03F2743C-F95C-8D38-8DA8-91A69DE401DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03F2743C-F95C-8D38-8DA8-91A69DE401DE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{43D69CCA-DD06-340B-973A-B9402B52046F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{43D69CCA-DD06-340B-973A-B9402B52046F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43D69CCA-DD06-340B-973A-B9402B52046F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -31,14 +35,6 @@ Global
 		{E7A0725C-5EFF-7C47-A244-76BFCD56E10C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7A0725C-5EFF-7C47-A244-76BFCD56E10C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7A0725C-5EFF-7C47-A244-76BFCD56E10C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{03F2743C-F95C-8D38-8DA8-91A69DE401DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{03F2743C-F95C-8D38-8DA8-91A69DE401DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{03F2743C-F95C-8D38-8DA8-91A69DE401DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{03F2743C-F95C-8D38-8DA8-91A69DE401DE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8A217B19-83DE-9E82-DAE9-561A38385CAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8A217B19-83DE-9E82-DAE9-561A38385CAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8A217B19-83DE-9E82-DAE9-561A38385CAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8A217B19-83DE-9E82-DAE9-561A38385CAB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{146015A5-4C31-0094-109A-E7F1C94AFBD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{146015A5-4C31-0094-109A-E7F1C94AFBD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{146015A5-4C31-0094-109A-E7F1C94AFBD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -47,6 +43,10 @@ Global
 		{5E1C26AD-E2A0-B599-61A4-D45EBA739879}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E1C26AD-E2A0-B599-61A4-D45EBA739879}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E1C26AD-E2A0-B599-61A4-D45EBA739879}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A217B19-83DE-9E82-DAE9-561A38385CAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A217B19-83DE-9E82-DAE9-561A38385CAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A217B19-83DE-9E82-DAE9-561A38385CAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A217B19-83DE-9E82-DAE9-561A38385CAB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F160234D-D93E-A68C-DD98-55F807A3F31C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F160234D-D93E-A68C-DD98-55F807A3F31C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F160234D-D93E-A68C-DD98-55F807A3F31C}.Release|Any CPU.ActiveCfg = Release|Any CPU

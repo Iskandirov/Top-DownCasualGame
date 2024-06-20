@@ -205,7 +205,7 @@ MonoBehaviour:
   - {x: 0.8614644, y: -0.7691955, z: 0.0000000604333}
   m_ShapePathHash: -1416841124
   m_Mesh: {fileID: 0}
-  m_InstanceId: -9968
+  m_InstanceId: 72272
   m_LocalBounds:
     m_Center: {x: 0.10824466, y: 0.9881858, z: 0}
     m_Extent: {x: 1.4405502, y: 1.7741798, z: 0}
@@ -428,6 +428,7 @@ MonoBehaviour:
   <AttackObj>k__BackingField: {fileID: 4889505555044842593, guid: 9da0f9967bc44bc43ac81ff477cd28f0, type: 3}
   <ElementsParent>k__BackingField: {fileID: 1508904033268927860}
   RepositionPoint: {fileID: 0}
+  attackPoint: {fileID: 4124082382373812519}
   destination: {fileID: -1516422609186455314}
   colider: {fileID: 7740972013901989062}
   path: {fileID: -4186828833034964472}
@@ -448,9 +449,7 @@ MonoBehaviour:
   mine: {fileID: -6701964296001457324, guid: 9da0f9967bc44bc43ac81ff477cd28f0, type: 3}
   delay: 1
   radius: 30
-  inZone: 0
-  shadow2D: {fileID: 7488936325659443482}
-  light2D: {fileID: 438564141238699191}
+  anim: {fileID: 9157853272995678005}
 --- !u!114 &3118878571880693444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1263,17 +1262,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9da0f9967bc44bc43ac81ff477cd28f0, type: 3}
---- !u!114 &438564141238699191 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9004590892642238961, guid: 9da0f9967bc44bc43ac81ff477cd28f0, type: 3}
-  m_PrefabInstance: {fileID: 8854266490592511302}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &4124082382373812519 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4889505555044842593, guid: 9da0f9967bc44bc43ac81ff477cd28f0, type: 3}

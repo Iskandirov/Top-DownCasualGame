@@ -18,6 +18,7 @@ public class EnemyState : MonoBehaviour
     [field: SerializeField] public Transform AttackObj { get; private set; }
     [field: SerializeField] public GameObject ElementsParent { get; private set; }
     [SerializeField] public GameObject RepositionPoint;
+    [SerializeField] public Transform attackPoint;
     [SerializeField] public AIDestinationSetter destination;
     [SerializeField] public CircleCollider2D colider;
     [SerializeField] public AIPath path;
