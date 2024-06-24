@@ -93,7 +93,6 @@ public class PlayerManager : MonoBehaviour
     public float armor;
     public Image fullFillImage;
     public bool isInvincible = false;
-    public bool shildActive;
 
     [Header("Shoot settings")]
     public Bullet bullet;
@@ -247,7 +246,6 @@ public class PlayerManager : MonoBehaviour
         autoimage.SetNativeSize();
         isAuto = !isAuto;
         AutoActiveCurve.gameObject.SetActive(isAuto);
-       
     }
 
     //Кінець тестовому делегату
@@ -423,7 +421,8 @@ public class PlayerManager : MonoBehaviour
             playerAnim.SetBool("IsMove", false);
         }
 
-        rb.velocity = new Vector2(horizontalInput * speed, verticalInput * speed);
+        Vector2 normalizedInput = new Vector2(horizontalInput, verticalInput).normalized;
+        rb.velocity = normalizedInput * speed;
         return new Vector2(rb.position.x, rb.position.y);
     }
     public IEnumerator SlowPlayer(float time, float percent)

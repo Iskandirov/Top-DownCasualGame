@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class UsePotion : MonoBehaviour
@@ -5,6 +6,7 @@ public class UsePotion : MonoBehaviour
     public KeyCode uningButton;
     public PotionsType type;
     public float callDown;
+    public TextMeshProUGUI refreshTime;
     public float callDownMax;
     private void Update()
     {
@@ -16,6 +18,12 @@ public class UsePotion : MonoBehaviour
         else
         {
             callDown -= Time.deltaTime;
+            refreshTime.text = callDown.ToString("0");
+
+        }
+        if (callDown <= 0)
+        {
+            refreshTime.text = " ";
         }
     }
 }
