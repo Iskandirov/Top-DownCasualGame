@@ -13351,19 +13351,19 @@ MonoBehaviour:
     AvatarSprite: {fileID: 602514671, guid: ae893d4348e305740b4f2b456291893d, type: 3}
     isTutor: 0
   <enemies>k__BackingField:
-  - <name>k__BackingField: Beanstalk
+  - <name>k__BackingField: Beany
     <type>k__BackingField: mele
     <prefab>k__BackingField: {fileID: 6204732626407282927, guid: 3d751f437f9d0bd4f95fca499dff5adb, type: 3}
     <healthMax>k__BackingField: 2
     <speedMax>k__BackingField: 15
-    <damageMax>k__BackingField: 5
-    <attackSpeedMax>k__BackingField: 2
+    <damageMax>k__BackingField: 1
+    <attackSpeedMax>k__BackingField: 1
     <dangerLevel>k__BackingField: 1
     <maxCountPerTime>k__BackingField: 1
     <isSpawnInsideMapBounds>k__BackingField: 0
     path: {fileID: 4265396766713021694, guid: 3d751f437f9d0bd4f95fca499dff5adb, type: 3}
     expGiven: 20
-  - <name>k__BackingField: Bramble
+  - <name>k__BackingField: Kiwi
     <type>k__BackingField: range
     <prefab>k__BackingField: {fileID: 5882593093894512458, guid: 1bfae951c937a2d44acd2cc6aa1fda4e, type: 3}
     <healthMax>k__BackingField: 25
@@ -13375,7 +13375,7 @@ MonoBehaviour:
     <isSpawnInsideMapBounds>k__BackingField: 0
     path: {fileID: -6047008906573336293, guid: 1bfae951c937a2d44acd2cc6aa1fda4e, type: 3}
     expGiven: 50
-  - <name>k__BackingField: Glowbow
+  - <name>k__BackingField: TreeSnipe
     <type>k__BackingField: range
     <prefab>k__BackingField: {fileID: -1435352344212963996, guid: 26881540aa9ad064aa358f8b6c4c6bca, type: 3}
     <healthMax>k__BackingField: 6
@@ -13387,7 +13387,7 @@ MonoBehaviour:
     <isSpawnInsideMapBounds>k__BackingField: 0
     path: {fileID: -3384518304003089070, guid: 26881540aa9ad064aa358f8b6c4c6bca, type: 3}
     expGiven: 40
-  - <name>k__BackingField: Dewdrop
+  - <name>k__BackingField: Beatty
     <type>k__BackingField: range
     <prefab>k__BackingField: {fileID: -2481660046733721877, guid: b774d02900feadc468c2abddd3d9a972, type: 3}
     <healthMax>k__BackingField: 7
@@ -13399,7 +13399,7 @@ MonoBehaviour:
     <isSpawnInsideMapBounds>k__BackingField: 0
     path: {fileID: -6548056170261668659, guid: b774d02900feadc468c2abddd3d9a972, type: 3}
     expGiven: 30
-  - <name>k__BackingField: Infiltrator
+  - <name>k__BackingField: MiShroom
     <type>k__BackingField: range
     <prefab>k__BackingField: {fileID: -3907749373565090756, guid: 938daef3968ddc349ab1a0547298333c, type: 3}
     <healthMax>k__BackingField: 5
@@ -13411,10 +13411,10 @@ MonoBehaviour:
     <isSpawnInsideMapBounds>k__BackingField: 0
     path: {fileID: -4186828833034964472, guid: 938daef3968ddc349ab1a0547298333c, type: 3}
     expGiven: 60
-  - <name>k__BackingField: Pit Popper
+  - <name>k__BackingField: Bobs
     <type>k__BackingField: boss
     <prefab>k__BackingField: {fileID: -8285670843784243504, guid: 8bab4a5065997b04c9db71f0c5e140a6, type: 3}
-    <healthMax>k__BackingField: 400
+    <healthMax>k__BackingField: 800
     <speedMax>k__BackingField: 12
     <damageMax>k__BackingField: 20
     <attackSpeedMax>k__BackingField: 0.1
@@ -13423,7 +13423,7 @@ MonoBehaviour:
     <isSpawnInsideMapBounds>k__BackingField: 0
     path: {fileID: -3302408010172682211, guid: 8bab4a5065997b04c9db71f0c5e140a6, type: 3}
     expGiven: 100
-  - <name>k__BackingField: RockCat
+  - <name>k__BackingField: Rocky
     <type>k__BackingField: boss
     <prefab>k__BackingField: {fileID: 6112974571091526269, guid: 6051deff61c93794fb6fd3903bdb1242, type: 3}
     <healthMax>k__BackingField: 1200
@@ -13435,10 +13435,10 @@ MonoBehaviour:
     <isSpawnInsideMapBounds>k__BackingField: 0
     path: {fileID: -6660110898093213199, guid: 6051deff61c93794fb6fd3903bdb1242, type: 3}
     expGiven: 100
-  - <name>k__BackingField: Wrecker
+  - <name>k__BackingField: Tornador
     <type>k__BackingField: boss
     <prefab>k__BackingField: {fileID: 8383774992967265144, guid: 61e325e548e07144b9bbc5de4b2dafac, type: 3}
-    <healthMax>k__BackingField: 700
+    <healthMax>k__BackingField: 1500
     <speedMax>k__BackingField: 20
     <damageMax>k__BackingField: 20
     <attackSpeedMax>k__BackingField: 5
@@ -15108,63 +15108,71 @@ MonoBehaviour:
   enemyCount: 0
   fpsText: {fileID: 156201716}
   enemyInfo:
-  - Name: Beanstalk
-    Image: {fileID: -285420134, guid: 4e1a0071e3bd4d24abd77b4acb59267a, type: 3}
+  - Name: Beany
+    Image: {fileID: 21300000, guid: fefdfeb7ae6525f4f8eca0618c477669, type: 3}
     Health: 2
     Damage: 1
     MoveSpeed: 15
     Attack: Bite
     ID: 1
     Showed: 0
-  - Name: Dewdrop
-    Image: {fileID: 0}
+  - Name: Spiketumble
+    Image: {fileID: 21300000, guid: 4a4c815fa2d3a3c43aa6def5256227e7, type: 3}
+    Health: 2
+    Damage: 10
+    MoveSpeed: 25
+    Attack: Rush
+    ID: 2
+    Showed: 0
+  - Name: Beatty
+    Image: {fileID: 21300000, guid: c8c9cf2e830a0ea4bbe16387bd0003dc, type: 3}
     Health: 7
     Damage: 5
     MoveSpeed: 1
     Attack: Magic sphear
     ID: 3
     Showed: 0
-  - Name: Infiltrator
-    Image: {fileID: 0}
+  - Name: Mishroom
+    Image: {fileID: 21300000, guid: 8fd07c5366e786848a732d492f24bee7, type: 3}
     Health: 5
     Damage: 0
     MoveSpeed: 0
     Attack: Invisible mooshrom mines
     ID: 4
     Showed: 0
-  - Name: Bramble
-    Image: {fileID: 0}
+  - Name: Kiwi
+    Image: {fileID: 21300000, guid: a2abe356955bfc444bf03d1ea78c1ac4, type: 3}
     Health: 25
     Damage: 10
     MoveSpeed: 0
     Attack: Fast attacking roots
     ID: 5
     Showed: 0
-  - Name: Glowbow
-    Image: {fileID: 0}
+  - Name: TreeSnipe
+    Image: {fileID: 21300000, guid: 0c78f1e197e1d4644b53f27b9a1762dc, type: 3}
     Health: 6
     Damage: 20
     MoveSpeed: 0
     Attack: 'Unlimited attack range '
     ID: 6
     Showed: 0
-  - Name: RockCat
-    Image: {fileID: 0}
+  - Name: Rocky
+    Image: {fileID: 21300000, guid: 6a23cc171a62e414bad42043a55fb677, type: 3}
     Health: 1200
     Damage: 25
     MoveSpeed: 4
     Attack: Jump & Ground smash
     ID: 7
     Showed: 0
-  - Name: Pit Popper
-    Image: {fileID: 0}
+  - Name: Bobs
+    Image: {fileID: 21300000, guid: 69c9a0139bbfb2e44be6adc186ea453c, type: 3}
     Health: 400
     Damage: 20
     MoveSpeed: 11
     Attack: Bobsy bombs
     ID: 8
     Showed: 0
-  - Name: Wrecker
+  - Name: Tornador
     Image: {fileID: 0}
     Health: 700
     Damage: 20
@@ -63899,7 +63907,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6416895844494761417, guid: b08c4cf5e053b1145b3cc846731f0368, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.499696
+      value: 6.499688
       objectReference: {fileID: 0}
     - target: {fileID: 6416895844494761417, guid: b08c4cf5e053b1145b3cc846731f0368, type: 3}
       propertyPath: m_LocalPosition.y
@@ -64426,6 +64434,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 591032516}
     m_Modifications:
+    - target: {fileID: 2014835355, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2014835357, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2014835357, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2014835357, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2014835357, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2014835357, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
+      propertyPath: m_Intensity
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2014835357, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 2000
+      objectReference: {fileID: 0}
     - target: {fileID: 2254235971519498339, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -64506,6 +64542,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2933150211668163815, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3222384256279487117, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
       propertyPath: text
       value: 
@@ -64582,6 +64622,10 @@ PrefabInstance:
       propertyPath: abilitiesObj.Array.data[4]
       value: 
       objectReference: {fileID: 1430845506}
+    - target: {fileID: 6653886308444737804, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
+      propertyPath: m_Intensity
+      value: 0.24
+      objectReference: {fileID: 0}
     - target: {fileID: 8313530370077628586, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
       propertyPath: m_Name
       value: Player

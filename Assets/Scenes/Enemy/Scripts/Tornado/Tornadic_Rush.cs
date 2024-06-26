@@ -9,7 +9,7 @@ public class Tornadic_Rush : MonoBehaviour
     [SerializeField] float speedRush = 10;
     [SerializeField] bool state = false;
     [SerializeField] bool rush = false;
-    [SerializeField] int playerToched = 0;
+    [SerializeField] bool playerToched = false;
     Transform objTransofrm;
     Vector2 object1Pos;
     Vector2 object2Pos;
@@ -36,7 +36,7 @@ public class Tornadic_Rush : MonoBehaviour
             direction.Normalize();
             direction.x *= objTransofrm.rotation.y < 0 ? -1 : 1;
             objTransofrm.Translate(direction * speedRush * Time.deltaTime);
-            if (playerToched == 1)
+            if (playerToched)
             {
                 PlayerManager.instance.TakeDamage(5f);
             }
@@ -45,7 +45,7 @@ public class Tornadic_Rush : MonoBehaviour
     public void RushAnim()
     {
         state = !state;
-        anim.SetTrigger("Rush");
+        anim.SetBool("Rush", state);
     }
     public void RushMove()
     {
@@ -64,21 +64,16 @@ public class Tornadic_Rush : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.CompareTag("Shield"))
+        if (collision.collider.CompareTag("Player"))
         {
-            collision.collider.GetComponent<Shield>().healthShield -= 5f;
-            GameManager.Instance.FindStatName("ShieldAbsorbedDamage", 5f);
-        }
-        else if (collision.collider.CompareTag("Player"))
-        {
-            playerToched = 1;
+            playerToched = true;
         }
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.collider.CompareTag("Player") || collision.collider.CompareTag("Shield"))
+        if (collision.collider.CompareTag("Player"))
         {
-            playerToched = 0;
+            playerToched = false;
         }
     }
 }

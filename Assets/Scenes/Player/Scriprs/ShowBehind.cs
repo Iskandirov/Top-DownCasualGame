@@ -2,14 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-[System.Obsolete]
+
 public class ShowBehind : MonoBehaviour
 {
     public List<GameObject> imagesToHover; // компонент для зміни прозорості
     public ParticleSystem particles; // компонент для зміни прозорості
     public int isSomeoneHere;
-
-    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (imagesToHover.Count > 0)
@@ -45,8 +43,6 @@ public class ShowBehind : MonoBehaviour
         }
         
     }
-
-    [System.Obsolete]
     public IEnumerator ReturnParticle(float delay, float targetCount)
     {
         yield return new WaitForSeconds(delay);
