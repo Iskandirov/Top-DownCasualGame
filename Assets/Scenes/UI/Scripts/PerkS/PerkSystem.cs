@@ -118,7 +118,7 @@ public class PerkSystem : MonoBehaviour
         Perk tab = GetComponent<TabGroup>().tabButtons.Find(t => t == GetComponent<TabGroup>().selectedTab).GetComponent<Perk>();
         perkImage.sprite = tab.perkImage.sprite;
         perkImage.SetNativeSize();
-        perkName.text = tab.GetComponent<TabButtons>().tooltipText;
+        perkName.text = tab.GetComponent<TabButton>().tooltipText;
         statName.text = tab.statName;
         statValue.text = tab.statValue;
         price.text = tab.price;

@@ -1,6 +1,6 @@
 using Cyan;
 using UnityEngine;
-[System.Obsolete]
+
 public class FireHeatBlit : MonoBehaviour
 {
     [SerializeField] Blit blit;

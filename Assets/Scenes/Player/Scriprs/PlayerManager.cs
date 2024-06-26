@@ -93,6 +93,7 @@ public class PlayerManager : MonoBehaviour
     public float armor;
     public Image fullFillImage;
     public bool isInvincible = false;
+    public bool shildActive;
 
     [Header("Shoot settings")]
     public Bullet bullet;
@@ -168,7 +169,7 @@ public class PlayerManager : MonoBehaviour
     private void OnDestroy()
     {
         instance = null;
-        OnAttackTypeSwitch -= OnSwitchClickHandler;
+        OnButtonClicked -= OnButtonClickHandler;
         foreach (var potion in potions)
         {
             if (PlayerPrefs.GetString(potion.key + "Bool") == "True")
@@ -212,7 +213,7 @@ public class PlayerManager : MonoBehaviour
         playerHealthPointMax = playerHealthPoint;
         countActiveAbilities = 1;
         SetCharacterOnStart();
-        OnAttackTypeSwitch += OnSwitchClickHandler;
+        OnButtonClicked += OnButtonClickHandler;
     }
 
     // Update is called once per frame
@@ -238,14 +239,15 @@ public class PlayerManager : MonoBehaviour
         }
     }
     //Тестовий делегат
-    public delegate void AutoAttackSwitchHandler();
-    public event AutoAttackSwitchHandler OnAttackTypeSwitch;
-    private void OnSwitchClickHandler()
+    public delegate void ButtonClickHandler();
+    public event ButtonClickHandler OnButtonClicked;
+    private void OnButtonClickHandler()
     {
         autoimage.sprite = isAuto ? autoState[0] : autoState[1];
         autoimage.SetNativeSize();
         isAuto = !isAuto;
         AutoActiveCurve.gameObject.SetActive(isAuto);
+       
     }
 
     //Кінець тестовому делегату
@@ -253,7 +255,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            OnAttackTypeSwitch?.Invoke();
+            OnButtonClicked?.Invoke();
         }
         if (isAuto && AutoActiveCurve != null)
         {
@@ -271,7 +273,7 @@ public class PlayerManager : MonoBehaviour
     //Health
     public void HitEnd()
     {
-        playerAnim.SetTrigger("Hit");
+        playerAnim.SetBool("IsHit", false);
         if (playerHealthPoint <= 0)
         {
             if (canBeSaved)
@@ -292,7 +294,7 @@ public class PlayerManager : MonoBehaviour
     }
     public void TakeDamage(float damage)
     {
-        playerAnim.SetTrigger("Hit");
+        playerAnim.SetBool("IsHit", true);
 
         if (damage > 0 && !isInvincible)
         {
@@ -317,6 +319,33 @@ public class PlayerManager : MonoBehaviour
         float modifier = (0.052f * armor) / (0.9f + 0.052f * absArmor);
         damage -= damage * modifier;
         return damage;
+    }
+    public void HealHealth(float value)
+    {
+        if (playerHealthPoint != playerHealthPointMax)
+        {
+            if (playerHealthPoint + value <= playerHealthPointMax)
+            {
+                playerHealthPoint += value;
+                fullFillImage.fillAmount += (value) / playerHealthPointMax;
+                if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 1 && s.isActive == true) != null)
+                {
+                    DailyQuests.instance.UpdateValue(1, value, false);
+                }
+                GameManager.Instance.FindStatName("healthHealed", value);
+            }
+            else
+            {
+                GameManager.Instance.FindStatName("healthHealed", playerHealthPointMax - playerHealthPoint);
+                if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 1 && s.isActive == true) != null)
+                {
+                    DailyQuests.instance.UpdateValue(1, playerHealthPointMax - playerHealthPoint, false);
+                }
+
+                playerHealthPoint = playerHealthPointMax;
+                fullFillImage.fillAmount = 1f;
+            }
+        }
     }
     //End Health
     //Move
@@ -394,8 +423,7 @@ public class PlayerManager : MonoBehaviour
             playerAnim.SetBool("IsMove", false);
         }
 
-        Vector2 normalizedInput = new Vector2(horizontalInput, verticalInput).normalized;
-        rb.velocity = normalizedInput * speed;
+        rb.velocity = new Vector2(horizontalInput * speed, verticalInput * speed);
         return new Vector2(rb.position.x, rb.position.y);
     }
     public IEnumerator SlowPlayer(float time, float percent)
@@ -623,35 +651,6 @@ public class PlayerManager : MonoBehaviour
                 break;
         }
     }
-    //Potions
-    public void HealHealth(float value)
-    {
-        if (playerHealthPoint != playerHealthPointMax)
-        {
-            if (playerHealthPoint + value <= playerHealthPointMax)
-            {
-                playerHealthPoint += value;
-                fullFillImage.fillAmount += (value) / playerHealthPointMax;
-                if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 1 && s.isActive == true) != null)
-                {
-                    DailyQuests.instance.UpdateValue(1, value, false);
-                }
-                GameManager.Instance.FindStatName("healthHealed", value);
-            }
-            else
-            {
-                GameManager.Instance.FindStatName("healthHealed", playerHealthPointMax - playerHealthPoint);
-                if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 1 && s.isActive == true) != null)
-                {
-                    DailyQuests.instance.UpdateValue(1, playerHealthPointMax - playerHealthPoint, false);
-                }
-
-                playerHealthPoint = playerHealthPointMax;
-                fullFillImage.fillAmount = 1f;
-            }
-        }
-    }
-
     void ThowBomb()
     {
         BobmExplode a = Instantiate(bomb);
@@ -664,12 +663,8 @@ public class PlayerManager : MonoBehaviour
         {
             StartCoroutine(EnemyController.instance.FreezeEnemy(enemy));
         }
+       
     }
-    void SaveFromDeath()
-    {
-
-    }
-    //Potions End
 }
 
 [System.Serializable]

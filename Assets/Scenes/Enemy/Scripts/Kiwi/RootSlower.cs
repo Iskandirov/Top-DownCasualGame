@@ -32,7 +32,7 @@ public class RootSlower : MonoBehaviour
             if (damageDelay <= 0)
             {
                 collision.GetComponent<Shield>().healthShield -= damage;
-                GameManager.Instance.FindStatName("ShieldAbsorbedDamage", damage);
+                FindObjectOfType<StatsCollector>().FindStatName("ShieldAbsorbedDamage", damage);
                 damageDelay = damageDelayMax;
             }
         }
@@ -40,8 +40,11 @@ public class RootSlower : MonoBehaviour
         {
             if (damageDelay <= 0)
             {
-                player.TakeDamage(damage);
-                damageDelay = damageDelayMax;
+                if (!player.shildActive)
+                {
+                    player.TakeDamage(damage);
+                    damageDelay = damageDelayMax;
+                }
                 player.StartCoroutine(player.SlowPlayer(damageDelay * 0.9f, 0.9f));
             }
         }

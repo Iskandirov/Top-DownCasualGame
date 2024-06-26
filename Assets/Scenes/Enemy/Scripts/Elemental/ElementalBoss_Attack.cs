@@ -117,7 +117,7 @@ public class ElementalBoss_Attack : MonoBehaviour
             if (collidedObject != null && collidedObject.CompareTag("Shield"))
             {
                 collidedObject.healthShield -= damage;
-                GameManager.Instance.FindStatName("ShieldAbsorbedDamage", damage);
+                FindObjectOfType<StatsCollector>().FindStatName("ShieldAbsorbedDamage", damage);
                 StartCoroutine(ReducePushForce(pushableObjectRigidbody));
             }
             else

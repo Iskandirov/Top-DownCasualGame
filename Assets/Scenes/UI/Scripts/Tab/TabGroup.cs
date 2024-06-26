@@ -3,24 +3,24 @@ using UnityEngine;
 
 public class TabGroup : MonoBehaviour
 {
-    public List<TabButtons> tabButtons;
+    public List<TabButton> tabButtons;
     public Sprite tabIdle;
     public Sprite tabHover;
     public Sprite tabActive;
-    public TabButtons selectedTab;
+    public TabButton selectedTab;
     [SerializeField] List<GameObject> objToSwap;
     [SerializeField] GameObject objToShow;
     [SerializeField] Tooltip tooltip;
     [SerializeField] TabGroup tabs;
-    public void Subscribe(TabButtons button)
+    public void Subscribe(TabButton button)
     {
         if (tabButtons == null)
         {
-            tabButtons = new List<TabButtons>();
+            tabButtons = new List<TabButton>();
         }
         //tabButtons.Add(button);
     }
-    public void OnTabEnter(TabButtons button,string text)
+    public void OnTabEnter(TabButton button,string text)
     {
         ResetTabs();
         if (selectedTab == null || button != selectedTab)
@@ -29,13 +29,13 @@ public class TabGroup : MonoBehaviour
         }
         Tooltip.ShowTooltip_Static(text);
     }
-    public void OnTabExit(TabButtons button)
+    public void OnTabExit(TabButton button)
     {
         ResetTabs();
         Tooltip.HideTooltip_Static();
         
     }
-    public void OnTabSelected(TabButtons button)
+    public void OnTabSelected(TabButton button)
     {
         if (selectedTab != null)
         {
@@ -89,7 +89,7 @@ public class TabGroup : MonoBehaviour
     }
     void ResetTabs()
     {
-        foreach (TabButtons button in tabButtons)
+        foreach (TabButton button in tabButtons)
         {
             if (selectedTab != null && button == selectedTab) { continue; }
             button.bg.sprite = tabIdle;

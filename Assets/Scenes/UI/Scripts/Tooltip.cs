@@ -7,7 +7,7 @@ public class Tooltip : MonoBehaviour
     [SerializeField] TextMeshProUGUI tooltipText;
     [SerializeField] RectTransform backgroundRectTransfrom;
     [SerializeField] RectTransform parentTransform;
-    [SerializeField] Camera mainCamera;
+    [SerializeField] Camera camera;
     private void Awake()
     {
         instance = this;
@@ -24,7 +24,7 @@ public class Tooltip : MonoBehaviour
     private void FixedUpdate()
     {
         Vector2 localPoint;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(parentTransform, Input.mousePosition, mainCamera, out localPoint);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(parentTransform, Input.mousePosition, camera, out localPoint);
         transform.localPosition = localPoint;
     }
     void ShowTooltip(string toolTipString)
