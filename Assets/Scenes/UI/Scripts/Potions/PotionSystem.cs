@@ -30,7 +30,7 @@ public class PotionSystem : MonoBehaviour
     private void Awake()
     {
         //PlayerPrefs.DeleteAll();
-        List<TabButton> tabs = GetComponent<TabGroup>().tabButtons;
+        List<TabButtons> tabs = GetComponent<TabGroup>().tabButtons;
         foreach (var tab in tabs)
         {
             Potion potion = tab.GetComponent<Potion>();
@@ -42,7 +42,7 @@ public class PotionSystem : MonoBehaviour
         Potion tab = GetComponent<TabGroup>().tabButtons.Find(t => t == GetComponent<TabGroup>().selectedTab).GetComponent<Potion>();
         perkImage.sprite = tab.perkImage.sprite;
         perkImage.SetNativeSize();
-        potionName.text = tab.GetComponent<TabButton>().tooltipText;
+        potionName.text = tab.GetComponent<TabButtons>().tooltipText;
         statName.text = tab.potion.statName;
         statValue.text = tab.potion.statValue;
         reloadValue.text = tab.potion.reloadTime.ToString();

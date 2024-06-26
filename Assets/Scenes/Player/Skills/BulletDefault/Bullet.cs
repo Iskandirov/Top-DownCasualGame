@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class Bullet : SkillBaseMono
@@ -12,9 +13,12 @@ public class Bullet : SkillBaseMono
     public float slowPercent;
     public GameObject obj;
     public EnemyController enemy;
-    private void Start()
+    private void OnEnable()
     {
         enemy = EnemyController.instance;
+    }
+    private void Start()
+    {
         player = PlayerManager.instance;
         if (obj == null)
         {
@@ -45,33 +49,35 @@ public class Bullet : SkillBaseMono
                 isPiers = true;
             }
         }
-        isRickoshet = player.isRicoshet;
         isLifeSteal = player.isLifeSteal;
         isBulletSlow = player.isBulletSlow;
         lifeStealPercent = player.lifeStealPercent;
         slowPercent = player.slowPercent;
-        if (!player.isTutor && player.isAuto && EnemyController.instance.children.Count > 0)
+        if (!player.isTutor && player.isAuto && EnemyController.instance.children.Count > 0 && !isRickoshet)
         {
             player.AutoShoot(obj.transform.position,this);
         }
-        else
+        else if(!isRickoshet)
         {
             player.ShootBullet(obj.transform.position, this);
         }
+        isRickoshet = player.isRicoshet;
 
         CoroutineToDestroy(gameObject, 1f);
     }
-   
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
             ElementActiveDebuff debuff = collision.GetComponent<ElementActiveDebuff>();
             debuff.StartCoroutine(debuff.EffectTime(Elements.status.Fire, 5));
-            if (collision != null)
+            if (enemy == null)
             {
-                enemy.TakeDamage(collision.GetComponent<EnemyState>(), basa.damage);
+                Debug.Log(enemy);
             }
+            enemy.TakeDamage(collision.GetComponent<EnemyState>(), basa.damage);
+            
 
             if (isLifeSteal && player.playerHealthPoint < player.playerHealthPointMax)
             {
@@ -138,25 +144,27 @@ public class Bullet : SkillBaseMono
             Destroy(gameObject);
         }
     }
+    IEnumerator LayerChange(Bullet bullet)
+    {
+        bullet.gameObject.layer = 0;
+        yield return new WaitForSeconds(0.2f);
+        bullet.gameObject.layer = 7;
+    }
     public void Ricoshet(Collider2D collision)
     {
         // Пошук найближчого об'єкта з тегом Enemy
-        Collider2D nearestEnemy = Physics2D.OverlapCircle(gameObject.transform.position, 100f, 10);
+        Collider2D nearestEnemy = Physics2D.OverlapCircle(transform.position, 100f, 10);
 
-        // Якщо найближчий об'єкт існує
         if (nearestEnemy != null)
         {
             Vector3 contactPoint = collision.ClosestPoint(nearestEnemy.transform.position);
 
-            GameObject projectile = Instantiate(gameObject, contactPoint, transform.rotation);
-
+            Bullet projectile = Instantiate(this, contactPoint, transform.rotation);
+            projectile.StartCoroutine(LayerChange(projectile));
+            projectile.isRickoshet = true;
             float angle = Random.Range(0f, 360f);
             Vector3 randomDirection = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0f);
-            // Визначення напрямку до найближчого об'єкта
-            //Vector3 directionToEnemy = nearestEnemy.transform.position - transform.position;
-
-            // Надання снаряду швидкості в напрямку до найближчого об'єкта
-            projectile.GetComponent<Rigidbody2D>().AddForce((randomDirection * 15) * GetComponent<Rigidbody2D>().velocity.magnitude * 2);
+            projectile.GetComponent<Rigidbody2D>().AddForce(randomDirection * 15 * GetComponent<Rigidbody2D>().velocity.magnitude * 3);
         }
     }
     private void OnLevelWasLoaded(int level)

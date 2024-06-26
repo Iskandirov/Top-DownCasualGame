@@ -38,7 +38,7 @@ public class Tornado_Attack_Lightning : MonoBehaviour
                         if (ShieldIsActive.CompareTag("Shield"))
                         {
                             ShieldIsActive.GetComponent<Shield>().healthShield -= damage;
-                            FindObjectOfType<StatsCollector>().FindStatName("ShieldAbsorbedDamage", damage);
+                            GameManager.Instance.FindStatName("ShieldAbsorbedDamage", damage);
                         }
                     }
                     else if(!PlayerManager.instance.isInvincible)
