@@ -380,12 +380,18 @@ public class EnemyController : MonoBehaviour
     ///Move
     public IEnumerator FreezeEnemy(EnemyState enemy)
     {
+        enemy.GetComponent<Animator>().SetTrigger("Stun");
         enemy.isFreezed = true;
         enemy.path.maxSpeed = 0;
         yield return new WaitForSeconds(5f);
-        enemy.isFreezed = false;
-        matchingEnemy = enemies.First(s => s.prefab.mobName == enemy.mobName);
-        enemy.path.maxSpeed = matchingEnemy.speedMax;
+        if (enemy.isFreezed)
+        {
+            enemy.GetComponent<Animator>().SetTrigger("Stun");
+            enemy.isFreezed = false;
+            matchingEnemy = enemies.First(s => s.prefab.mobName == enemy.mobName);
+            enemy.path.maxSpeed = matchingEnemy.speedMax;
+        }
+       
     }
     public IEnumerator SlowEnemy(EnemyState enemy, float time, float percent)
     {
