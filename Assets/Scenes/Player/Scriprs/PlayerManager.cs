@@ -631,29 +631,30 @@ public class PlayerManager : MonoBehaviour
             return 0;
         }
     }
+
     //Potion
+    [Obsolete]
     public void UsePotion(PotionsType type)
     {
         switch (type)
         {
             case PotionsType.Heal:
                 HealHealth(50 * Grass);
-                StartCoroutine(VFXPotionDestroy(potionUseVFX));
+                StartCoroutine(VFXPotionDestroy(potionUseVFX, Color.green));
                 break;
             case PotionsType.Bomb:
                 ThowBomb();
-                StartCoroutine(VFXPotionDestroy(potionUseVFX));
+                StartCoroutine(VFXPotionDestroy(potionUseVFX, Color.black));
                 break;
             case PotionsType.TimeFreeze:
                 TimeFreeze();
-                StartCoroutine(VFXPotionDestroy(potionUseVFX));
+                StartCoroutine(VFXPotionDestroy(potionUseVFX,Color.blue));
                 break;
             case PotionsType.Totem:
-                canBeSaved = true;
-                StartCoroutine(VFXPotionDestroy(potionUseVFX));
+                SaveTotem();
+                StartCoroutine(VFXPotionDestroy(potionUseVFX, Color.yellow));
                 break; 
             case PotionsType.None:
-                Debug.Log("Lol");
                 break;
         }
     }
@@ -670,10 +671,21 @@ public class PlayerManager : MonoBehaviour
             StartCoroutine(EnemyController.instance.FreezeEnemy(enemy));
         }
        
+    } 
+    void SaveTotem()
+    {
+        canBeSaved = true;
     }
-    IEnumerator VFXPotionDestroy(GameObject potionVFX)
+
+    [Obsolete]
+    IEnumerator VFXPotionDestroy(GameObject potionVFX, Color color)
     {
         GameObject a = Instantiate(potionVFX, objTransform.position, Quaternion.identity);
+       
+        foreach (var particle in a.GetComponentsInChildren<ParticleSystem>())
+        {
+            particle.startColor = color;
+        }
         yield return new WaitForSeconds(2f);
         Destroy(a);
     }
