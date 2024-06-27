@@ -49,9 +49,10 @@ public enum PotionsType
 {
     Heal,
     Bomb,    
-    Ligma,
     Totem,
     TimeFreeze,
+    None,
+
 }
 
 public class PlayerManager : MonoBehaviour
@@ -161,6 +162,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] BobmExplode bomb;
     [SerializeField] Sprite bombImg;
     [SerializeField] bool canBeSaved = false;
+    [SerializeField] GameObject potionUseVFX;
     private void Awake()
     {
         instance ??= this;
@@ -636,18 +638,22 @@ public class PlayerManager : MonoBehaviour
         {
             case PotionsType.Heal:
                 HealHealth(50 * Grass);
+                StartCoroutine(VFXPotionDestroy(potionUseVFX));
                 break;
             case PotionsType.Bomb:
                 ThowBomb();
-                break;
-            case PotionsType.Ligma:
-                 Debug.Log("Ligma");
+                StartCoroutine(VFXPotionDestroy(potionUseVFX));
                 break;
             case PotionsType.TimeFreeze:
                 TimeFreeze();
+                StartCoroutine(VFXPotionDestroy(potionUseVFX));
                 break;
             case PotionsType.Totem:
                 canBeSaved = true;
+                StartCoroutine(VFXPotionDestroy(potionUseVFX));
+                break; 
+            case PotionsType.None:
+                Debug.Log("Lol");
                 break;
         }
     }
@@ -664,6 +670,12 @@ public class PlayerManager : MonoBehaviour
             StartCoroutine(EnemyController.instance.FreezeEnemy(enemy));
         }
        
+    }
+    IEnumerator VFXPotionDestroy(GameObject potionVFX)
+    {
+        GameObject a = Instantiate(potionVFX, objTransform.position, Quaternion.identity);
+        yield return new WaitForSeconds(2f);
+        Destroy(a);
     }
 }
 
