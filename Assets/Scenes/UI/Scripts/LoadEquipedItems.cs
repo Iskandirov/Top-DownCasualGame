@@ -45,43 +45,44 @@ public class LoadEquipedItems : MonoBehaviour
                     switch (data.Name)
                     {
                         case "енергетичний заряд":
-                            player.speed += float.Parse(data.Stat);
+                            player.speed += float.Parse(data.Stat) * (player.GivePerkStatValue(Stats.EquipmentBuff) / 100);
                             break;
                         case "шестерня":
-                            player.attackSpeed -= float.Parse(data.Stat);
+                            player.attackSpeed -= float.Parse(data.Stat) * (player.GivePerkStatValue(Stats.EquipmentBuff) / 100);
                             break;
                         case "етернійські-кристали":
-                            player.damageToGive += float.Parse(data.Stat);
+                            player.damageToGive += float.Parse(data.Stat) * (player.GivePerkStatValue(Stats.EquipmentBuff) / 100);
                             break;
                         case "око дракона":
-                            cam.m_Lens.OrthographicSize += float.Parse(data.Stat);
+                            cam.m_Lens.OrthographicSize += float.Parse(data.Stat) * (player.GivePerkStatValue(Stats.EquipmentBuff) / 100);
                             break;
                         case "клик літучої миші":
                             player.isLifeSteal = true;
-                            player.lifeStealPercent = float.Parse(data.Stat);
+                            player.lifeStealPercent = float.Parse(data.Stat) * (player.GivePerkStatValue(Stats.EquipmentBuff) / 100);
                             break;
                         case "око дерев'яного снайпера":
-                            player.launchForce += float.Parse(data.Stat);
+                            player.launchForce += float.Parse(data.Stat) * (player.GivePerkStatValue(Stats.EquipmentBuff) / 100);
                             break; 
                         case "вижимка з грибів":
-                            player.Wind += float.Parse(data.Stat);
-                            player.Water += float.Parse(data.Stat);
-                            player.Grass += float.Parse(data.Stat);
-                            player.Dirt += float.Parse(data.Stat);
+                            player.Wind += float.Parse(data.Stat) * (player.GivePerkStatValue(Stats.EquipmentBuff) / 100);
+                            player.Water += float.Parse(data.Stat) * (player.GivePerkStatValue(Stats.EquipmentBuff) / 100);
+                            player.Grass += float.Parse(data.Stat) * (player.GivePerkStatValue(Stats.EquipmentBuff) / 100);
+                            player.Dirt += float.Parse(data.Stat) * (player.GivePerkStatValue(Stats.EquipmentBuff) / 100);
                             break;
                         case "корінь ківі":
                             player.isBulletSlow = true;
-                            player.slowPercent += float.Parse(data.Stat);
+                            player.slowPercent += float.Parse(data.Stat) * (player.GivePerkStatValue(Stats.EquipmentBuff) / 100);
                             break;
                         case "слиз":
-                            player.Fire += float.Parse(data.Stat);
-                            player.Cold -= float.Parse(data.Stat);
+                            player.Fire += float.Parse(data.Stat) * (player.GivePerkStatValue(Stats.EquipmentBuff) / 100);
+                            player.Cold -= float.Parse(data.Stat) * (player.GivePerkStatValue(Stats.EquipmentBuff) / 100);
                             break;
                         case "сфера бобса":
                             FindObjectOfType<SphereAround>().isStart = true;
+                            FindObjectOfType<SphereAround>().sphere.damage *= (player.GivePerkStatValue(Stats.EquipmentBuff) / 100);
                             break;
                         case "щит роккі":
-                            player.armor += float.Parse(data.Stat);
+                            player.armor += float.Parse(data.Stat) * (player.GivePerkStatValue(Stats.EquipmentBuff) / 100);
                             break;
                     }
                 }

@@ -17,6 +17,7 @@ public class ProgressBar : MonoBehaviour
     public void Start()
     {
         player = PlayerManager.instance;
+        timeNeeded *= player.GivePerkStatValue(Stats.LoadSpeed) / 100;
     }
     public void Update()
     {

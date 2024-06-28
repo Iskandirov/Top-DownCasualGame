@@ -49,6 +49,7 @@ public class Tower : SkillBaseMono
         {
             BobmExplode a = Instantiate(bomb, objTransform.position, Quaternion.identity);
             a.fire = fireElement;
+            a.damage *= player.GivePerkStatValue(Stats.ExplosionDamage) / 100;
         }
         Destroy(gameObject);
     }

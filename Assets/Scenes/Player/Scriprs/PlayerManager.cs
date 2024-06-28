@@ -43,6 +43,7 @@ public enum Stats
     ExplosionDamage,
     Regeneration,
     ExpirianceGain,    
+    PotionShield,    
     EquipmentBuff,
 }
 public enum PotionsType
@@ -156,6 +157,7 @@ public class PlayerManager : MonoBehaviour
     public Transform objTransform;
     [Header("Perks settings")]
     [SerializeField] List<PerksBuffs> statsToBuff;
+    [SerializeField] Shield PotionShield;
     [Header("Potions settings")]
     [SerializeField] List<Potions> potions;
     [SerializeField] List<UsePotion> potionsObj;
@@ -280,7 +282,7 @@ public class PlayerManager : MonoBehaviour
         {
             if (canBeSaved)
             {
-                playerHealthPoint = playerHealthPointMax * 0.2f;
+                playerHealthPoint = playerHealthPointMax * ((0.2f + GivePerkStatValue(Stats.Effectivness)) / 100);
                 fullFillImage.fillAmount = playerHealthPoint / playerHealthPointMax;
                 GameManager.Instance.FindStatName("healthHealed", playerHealthPointMax * 0.2f);
                 canBeSaved = false;
@@ -620,7 +622,7 @@ public class PlayerManager : MonoBehaviour
         playerHealthRegeneration += GivePerkStatValue(Stats.Regeneration);
         multiply += (int)GivePerkStatValue(Stats.ExpirianceGain);
     }
-    float GivePerkStatValue(Stats stat)
+    public float GivePerkStatValue(Stats stat)
     {
         if (statsToBuff.Find(b => b.parameters.Equals(stat)).value != 0)
         {
@@ -639,8 +641,11 @@ public class PlayerManager : MonoBehaviour
         switch (type)
         {
             case PotionsType.Heal:
-                HealHealth(50 * Grass);
+                HealHealth(50 * Grass * GivePerkStatValue(Stats.Effectivness) / 100);
                 StartCoroutine(VFXPotionDestroy(potionUseVFX, Color.green));
+                Shield shield = Instantiate(PotionShield);
+                shield.isPotions = true;
+                shield.healthShield = playerHealthPointMax * (GivePerkStatValue(Stats.PotionShield) / 100);
                 break;
             case PotionsType.Bomb:
                 ThowBomb();
@@ -661,6 +666,7 @@ public class PlayerManager : MonoBehaviour
     void ThowBomb()
     {
         BobmExplode a = Instantiate(bomb);
+        a.damage *= (GivePerkStatValue(Stats.Effectivness) + GivePerkStatValue(Stats.ExplosionDamage)) / 100;
         a.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = bombImg;
         a.transform.GetChild(0).GetComponent<SpriteRenderer>().transform.localScale = new Vector3(1,1,1);
     }
@@ -668,7 +674,7 @@ public class PlayerManager : MonoBehaviour
     {
         foreach (var enemy in EnemyController.instance.children)
         {
-            StartCoroutine(EnemyController.instance.FreezeEnemy(enemy));
+            StartCoroutine(EnemyController.instance.FreezeEnemy(enemy,5f * GivePerkStatValue(Stats.Effectivness) / 100));
         }
        
     } 

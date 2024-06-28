@@ -378,11 +378,11 @@ public class EnemyController : MonoBehaviour
     }
     //Spawn end
     ///Move
-    public IEnumerator FreezeEnemy(EnemyState enemy)
+    public IEnumerator FreezeEnemy(EnemyState enemy,float time)
     {
         enemy.isFreezed = true;
         enemy.path.maxSpeed = 0;
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(time);
         enemy.isFreezed = false;
         matchingEnemy = enemies.First(s => s.prefab.mobName == enemy.mobName);
         enemy.path.maxSpeed = matchingEnemy.speedMax;
