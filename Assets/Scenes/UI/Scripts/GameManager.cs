@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
     public GameObject InfoFiller;
     public Image InfoImg;
     public TextMeshProUGUI InfoName;
+    public List<Sprite> ElementsImg;
 
     SaveEnemyInfo ShowedEnemy;
 

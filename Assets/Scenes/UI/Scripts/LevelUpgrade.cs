@@ -14,6 +14,12 @@ public class LevelUpgrade : MonoBehaviour
     [Header("Description text buttons")]
     public TextMeshProUGUI firstBuff;
     public TextMeshProUGUI secondBuff;
+    public TextMeshProUGUI firstBuffReload;
+    public TextMeshProUGUI secondBuffReload; 
+    public TextMeshProUGUI firstBuffDamage;
+    public TextMeshProUGUI secondBuffDamage; 
+    public List<Image> firstBuffElements;
+    public List<Image> secondBuffElements;
 
     [Header("Image buttons")]
     public Image firstBuffBtn;
@@ -96,10 +102,15 @@ public class LevelUpgrade : MonoBehaviour
                 ? skillsSave.FirstOrDefault(s => s.ID == choose[i])
                 : gold;
             var buffText = i == 0 ? firstBuff : secondBuff;
+            var buffCD = i == 0 ? firstBuff : secondBuff;
+            var buffDMG = i == 0 ? firstBuff : secondBuff;
+            //List<Image> buffImg = i == 0 ? firstBuff : secondBuff;
             var buffBtn = i == 0 ? firstBuffBtn : secondBuffBtn;
             var objText = i == 0 ? objTextOne : objTextTwo;
 
             buffText.text = skill.Description[skill.level];
+            buffCD.text = skill.skil.stepMax.ToString();
+            buffDMG.text = skill.skil.damage.ToString();
             buffBtn.sprite = GameManager.ExtractSpriteListFromTexture("skills").First(s => s.name == skill.Name);
             objText.tagText = skill.tag[skill.level];
             list.Add(buffText.gameObject);

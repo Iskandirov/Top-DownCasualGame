@@ -85,7 +85,7 @@ SpriteRenderer:
   m_Size: {x: 4.15, y: 4.9}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &3824504510679716383
@@ -212,11 +212,11 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 1.4664345, y: 2.2980123}
+    - - {x: -0.8761656, y: 1.347715}
       - {x: -2.6404092, y: 0.20040964}
-      - {x: 1.6704702, y: -2.403239}
-      - {x: 4.9085455, y: -1.5432174}
-      - {x: 4.8457384, y: 1.9092418}
+      - {x: -0.8002634, y: -0.579529}
+      - {x: 4.594184, y: -0.6242722}
+      - {x: 4.3159027, y: 1.259136}
   m_UseDelaunayMesh: 0
 --- !u!1001 &188216702277087050
 PrefabInstance:
@@ -229,6 +229,10 @@ PrefabInstance:
     - target: {fileID: 543480648980802784, guid: 28c15754821f1f44fb066a7a0f0ed799, type: 3}
       propertyPath: m_Name
       value: Smoke_VFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 1548745012914484397, guid: 28c15754821f1f44fb066a7a0f0ed799, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1548745012914484397, guid: 28c15754821f1f44fb066a7a0f0ed799, type: 3}
       propertyPath: m_LocalPosition.x
@@ -269,6 +273,10 @@ PrefabInstance:
     - target: {fileID: 1548745012914484397, guid: 28c15754821f1f44fb066a7a0f0ed799, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1548745012914484397, guid: 28c15754821f1f44fb066a7a0f0ed799, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

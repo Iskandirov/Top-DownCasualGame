@@ -22,7 +22,6 @@ public class Elements
     public List<float> statusCurrentData;
     public List<bool> isActiveCurrentData;
    
-    [field: SerializeField] public List<Sprite> elementSprite { get; private set; }
     public float CurrentStatusValue(status name)
     {
         return statusCurrentData[(int)name];
@@ -117,7 +116,7 @@ public class ElementActiveDebuff : MonoBehaviour
         {
             elements.Debuff(GetComponent<EnemyState>(), name);
             a = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
-            a.sprite = elements.elementSprite[elementId];
+            a.sprite = GameManager.Instance.ElementsImg[elementId];
             UnikeEffects(a);
         }
         yield return new WaitForSeconds(lifeTime);
