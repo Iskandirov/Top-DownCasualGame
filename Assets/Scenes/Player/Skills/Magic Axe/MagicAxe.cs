@@ -36,7 +36,7 @@ public class MagicAxe : SkillBaseMono
             basa.skill.skillCD -= StabilizateCurrentReload(basa.skill.skillCD, basa.stats[3].value);
             basa.stats[3].isTrigger = false;
         }
-        objTransform.localScale = new Vector2(basa.radius * PlayerManager.instance.Steam, basa.radius * PlayerManager.instance.Steam);
+        objTransform.localScale = new Vector2(basa.radius * PlayerManager.instance.Cold, basa.radius * PlayerManager.instance.Cold);
         objTransform.position = PlayerManager.instance.objTransform.position;
 
         // Нормування напрямку курсора

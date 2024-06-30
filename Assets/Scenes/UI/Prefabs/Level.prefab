@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 6055642534850470046}
   - component: {fileID: 1786262984882264518}
   m_Layer: 3
-  m_Name: Image (10)
+  m_Name: DMG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -163,7 +163,7 @@ GameObject:
   - component: {fileID: 7849581652242822104}
   - component: {fileID: 8310933340550127917}
   m_Layer: 3
-  m_Name: Image (9)
+  m_Name: CD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1079,7 +1079,7 @@ GameObject:
   - component: {fileID: 3421389788894662666}
   - component: {fileID: 8120864611342976029}
   m_Layer: 3
-  m_Name: Image (6)
+  m_Name: Elements
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1155,7 +1155,7 @@ GameObject:
   - component: {fileID: 1451269982361649828}
   - component: {fileID: 4400615508087132501}
   m_Layer: 3
-  m_Name: Image (7)
+  m_Name: Elements
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1283,9 +1283,58 @@ MonoBehaviour:
   starObj: {fileID: 564367929296594529, guid: 0c9a4df48ca167e4286984e92de158f6, type: 3}
   firstBuff: {fileID: 7765541699007452962}
   secondBuff: {fileID: 945873658729405090}
+  firstBuffReload: {fileID: 7594168840005138187}
+  secondBuffReload: {fileID: 9023210674655050469}
+  firstBuffDamage: {fileID: 3194558542533511965}
+  secondBuffDamage: {fileID: 4401943126996706195}
+  firstBuffElements:
+  - {fileID: 2169208993139753413}
+  - {fileID: 5482231424189200147}
+  - {fileID: 8209682927873024940}
+  secondBuffElements:
+  - {fileID: 2369560412845419392}
+  - {fileID: 6948057650598092837}
+  - {fileID: 4305839254751971890}
+  colorBG:
+  - {r: 1, g: 0.46666667, b: 0.46666667, a: 0}
+  - {r: 0.46666667, g: 1, b: 0.5411765, a: 0}
+  - {r: 1, g: 1, b: 1, a: 0}
   firstBuffBtn: {fileID: 5462151232099716288}
   secondBuffBtn: {fileID: 731583657698186791}
   isSkillIcons: 01000000000000000000000000000000
+  SkillElements:
+  - skillName: Bullet
+    SkillElements: 000000000000000000000000
+  - skillName: Lightning
+    SkillElements: 010000000100000001000000
+  - skillName: Puddle
+    SkillElements: 020000000200000003000000
+  - skillName: Meteor
+    SkillElements: 000000000000000003000000
+  - skillName: FireWave
+    SkillElements: 000000000000000004000000
+  - skillName: Heal
+    SkillElements: 050000000500000005000000
+  - skillName: Reload
+    SkillElements: 040000000600000007000000
+  - skillName: Impuls
+    SkillElements: 040000000400000001000000
+  - skillName: Shield
+    SkillElements: 030000000300000003000000
+  - skillName: Beam
+    SkillElements: 060000000600000004000000
+  - skillName: Tower
+    SkillElements: 030000000200000002000000
+  - skillName: Illusion
+    SkillElements: 010000000100000006000000
+  - skillName: Trail
+    SkillElements: 050000000300000005000000
+  - skillName: Vortex
+    SkillElements: 040000000400000006000000
+  - skillName: IceWall
+    SkillElements: 070000000700000007000000
+  - skillName: MagicAxe
+    SkillElements: 070000000700000007000000
   SkillIconsMax: 0
   skillsSave:
   - Name: Bullet
@@ -1314,7 +1363,7 @@ MonoBehaviour:
       isPassive: 0
       spawnDelay: 0.3
     isPassive: 1
-    Image: {fileID: -1251755808, guid: 80073ee2232738341a4cd9ab8fed1276, type: 3}
+    Elements: 000000000000000000000000
     tag:
     - bullet_1
     - bullet_2
@@ -1355,7 +1404,7 @@ MonoBehaviour:
       isPassive: 0
       spawnDelay: 0.2
     isPassive: 0
-    Image: {fileID: 1871054248, guid: 80073ee2232738341a4cd9ab8fed1276, type: 3}
+    Elements: 010000000100000001000000
     tag:
     - lightning_1
     - lightning_2
@@ -1396,7 +1445,7 @@ MonoBehaviour:
       isPassive: 0
       spawnDelay: 0
     isPassive: 0
-    Image: {fileID: 193363521, guid: 80073ee2232738341a4cd9ab8fed1276, type: 3}
+    Elements: 020000000200000003000000
     tag:
     - swamp_puddle_1
     - swamp_puddle_2
@@ -1437,7 +1486,7 @@ MonoBehaviour:
       isPassive: 0
       spawnDelay: 0.4
     isPassive: 0
-    Image: {fileID: -932591123, guid: 80073ee2232738341a4cd9ab8fed1276, type: 3}
+    Elements: 000000000000000003000000
     tag:
     - meteor_1
     - meteor_2
@@ -1478,7 +1527,7 @@ MonoBehaviour:
       isPassive: 0
       spawnDelay: 0
     isPassive: 0
-    Image: {fileID: 1468079231, guid: 80073ee2232738341a4cd9ab8fed1276, type: 3}
+    Elements: 000000000000000004000000
     tag:
     - fire_wave_1
     - fire_wave_2
@@ -1519,7 +1568,7 @@ MonoBehaviour:
       isPassive: 0
       spawnDelay: 0
     isPassive: 0
-    Image: {fileID: -1576071822, guid: 80073ee2232738341a4cd9ab8fed1276, type: 3}
+    Elements: 050000000500000005000000
     tag:
     - heal_1
     - heal_2
@@ -1560,7 +1609,7 @@ MonoBehaviour:
       isPassive: 0
       spawnDelay: 0.3
     isPassive: 0
-    Image: {fileID: 1350816774, guid: 80073ee2232738341a4cd9ab8fed1276, type: 3}
+    Elements: 070000000600000004000000
     tag:
     - reload_1
     - reload_2
@@ -1601,7 +1650,7 @@ MonoBehaviour:
       isPassive: 0
       spawnDelay: 0
     isPassive: 0
-    Image: {fileID: 65512057, guid: 80073ee2232738341a4cd9ab8fed1276, type: 3}
+    Elements: 040000000400000001000000
     tag:
     - impuls_1
     - impuls_2
@@ -1642,7 +1691,7 @@ MonoBehaviour:
       isPassive: 0
       spawnDelay: 0
     isPassive: 0
-    Image: {fileID: 601544452, guid: 80073ee2232738341a4cd9ab8fed1276, type: 3}
+    Elements: 030000000300000003000000
     tag:
     - shield_1
     - shield_2
@@ -1683,7 +1732,7 @@ MonoBehaviour:
       isPassive: 0
       spawnDelay: 0.1
     isPassive: 0
-    Image: {fileID: -268567002, guid: 80073ee2232738341a4cd9ab8fed1276, type: 3}
+    Elements: 060000000600000004000000
     tag:
     - beam_1
     - beam_2
@@ -1724,7 +1773,7 @@ MonoBehaviour:
       isPassive: 0
       spawnDelay: 0
     isPassive: 0
-    Image: {fileID: -1698748156, guid: 80073ee2232738341a4cd9ab8fed1276, type: 3}
+    Elements: 030000000200000002000000
     tag:
     - tower_1
     - tower_2
@@ -1765,7 +1814,7 @@ MonoBehaviour:
       isPassive: 0
       spawnDelay: 0.2
     isPassive: 0
-    Image: {fileID: -385525968, guid: 80073ee2232738341a4cd9ab8fed1276, type: 3}
+    Elements: 010000000100000006000000
     tag:
     - illusion_1
     - illusion_2
@@ -1806,7 +1855,7 @@ MonoBehaviour:
       isPassive: 1
       spawnDelay: 0
     isPassive: 1
-    Image: {fileID: -1343980491, guid: 80073ee2232738341a4cd9ab8fed1276, type: 3}
+    Elements: 050000000500000003000000
     tag:
     - trail_1
     - trail_2
@@ -1847,7 +1896,7 @@ MonoBehaviour:
       isPassive: 0
       spawnDelay: 0
     isPassive: 0
-    Image: {fileID: 41652276, guid: 80073ee2232738341a4cd9ab8fed1276, type: 3}
+    Elements: 040000000400000006000000
     tag:
     - vortex_1
     - vortex_2
@@ -1888,7 +1937,7 @@ MonoBehaviour:
       isPassive: 0
       spawnDelay: 0
     isPassive: 0
-    Image: {fileID: 109548653, guid: 80073ee2232738341a4cd9ab8fed1276, type: 3}
+    Elements: 070000000700000007000000
     tag:
     - Icewall_1
     - Icewall_2
@@ -1929,7 +1978,7 @@ MonoBehaviour:
       isPassive: 0
       spawnDelay: 0
     isPassive: 0
-    Image: {fileID: 1997149453, guid: 80073ee2232738341a4cd9ab8fed1276, type: 3}
+    Elements: 070000000700000007000000
     tag:
     - axe_1
     - axe_2
@@ -1961,7 +2010,7 @@ MonoBehaviour:
       isPassive: 0
       spawnDelay: 0
     isPassive: 1
-    Image: {fileID: 21300000, guid: 56f37b92246bcab419528d4c4f956ed6, type: 3}
+    Elements: 
     tag:
     - money
     tagRare: 
@@ -1990,7 +2039,7 @@ MonoBehaviour:
       isPassive: 0
       spawnDelay: 0
     isPassive: 0
-    Image: {fileID: 0}
+    Elements: 
     tag: []
     tagRare: 
     Description: []
@@ -2064,7 +2113,7 @@ GameObject:
   - component: {fileID: 1879128359313370286}
   - component: {fileID: 3214737744140979570}
   m_Layer: 3
-  m_Name: Image (5)
+  m_Name: DMG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2215,7 +2264,7 @@ GameObject:
   - component: {fileID: 7055707191183741306}
   - component: {fileID: 2621038968580304175}
   m_Layer: 3
-  m_Name: Image (4)
+  m_Name: CD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2439,7 +2488,7 @@ GameObject:
   - component: {fileID: 2518396310160043769}
   - component: {fileID: 1621990654269431244}
   m_Layer: 3
-  m_Name: Image (3)
+  m_Name: Elements
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2515,7 +2564,7 @@ GameObject:
   - component: {fileID: 6061906414892882487}
   - component: {fileID: 8886729188615828173}
   m_Layer: 3
-  m_Name: Image (6)
+  m_Name: Elements
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2667,7 +2716,7 @@ GameObject:
   - component: {fileID: 8656015561319615935}
   - component: {fileID: 5462151232099716288}
   m_Layer: 3
-  m_Name: Button
+  m_Name: Skill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3031,7 +3080,7 @@ GameObject:
   - component: {fileID: 5545655092785794471}
   - component: {fileID: 8797288731293377376}
   m_Layer: 3
-  m_Name: Image (7)
+  m_Name: Elements
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3182,7 +3231,7 @@ GameObject:
   - component: {fileID: 6114973643194834667}
   - component: {fileID: 5817799590820987963}
   m_Layer: 3
-  m_Name: Image (8)
+  m_Name: Elements
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3259,7 +3308,7 @@ GameObject:
   - component: {fileID: 6383154898185095498}
   - component: {fileID: 731583657698186791}
   m_Layer: 3
-  m_Name: Button (1)
+  m_Name: Skill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

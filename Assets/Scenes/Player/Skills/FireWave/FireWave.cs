@@ -4,7 +4,6 @@ using UnityEngine;
 public class FireWave : SkillBaseMono
 {
     public float burnDamage;
-    public float fireElement;
     Transform objTransform;
     EnemyController enemy;
     // Start is called before the first frame update

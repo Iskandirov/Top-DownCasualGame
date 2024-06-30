@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-
 public class SaveitemToInventory : MonoBehaviour
 {
 }
@@ -88,7 +87,7 @@ public class SavedSkillsData
     public int level;
     public SkillBase skil;
     public bool isPassive;
-    public Sprite Image;
+    public List<Elements.status> Elements;
     public List<string> tag;
     public string tagRare;
     public List<string> Description;

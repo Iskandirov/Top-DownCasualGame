@@ -4,7 +4,12 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
+[System.Serializable]
+public class ElementsSprites
+{
+    public string skillName;
+    public List<Elements.status> SkillElements;
+}
 [DefaultExecutionOrder(11)]
 public class LevelUpgrade : MonoBehaviour
 {
@@ -20,6 +25,7 @@ public class LevelUpgrade : MonoBehaviour
     public TextMeshProUGUI secondBuffDamage; 
     public List<Image> firstBuffElements;
     public List<Image> secondBuffElements;
+    public List<Color> colorBG;
 
     [Header("Image buttons")]
     public Image firstBuffBtn;
@@ -27,6 +33,7 @@ public class LevelUpgrade : MonoBehaviour
 
     [Header("All variations of skill")]
     public List<bool> isSkillIcons;
+    public List<ElementsSprites> SkillElements;
     public int SkillIconsMax;
     public List<SavedSkillsData> skillsSave;
     public SavedSkillsData gold;
@@ -102,15 +109,19 @@ public class LevelUpgrade : MonoBehaviour
                 ? skillsSave.FirstOrDefault(s => s.ID == choose[i])
                 : gold;
             var buffText = i == 0 ? firstBuff : secondBuff;
-            var buffCD = i == 0 ? firstBuff : secondBuff;
-            var buffDMG = i == 0 ? firstBuff : secondBuff;
-            //List<Image> buffImg = i == 0 ? firstBuff : secondBuff;
+            var buffCD = i == 0 ? firstBuffReload : secondBuffReload;
+            var buffDMG = i == 0 ? firstBuffDamage : secondBuffDamage;
+            var buffElementImg = i == 0 ? firstBuffElements : secondBuffElements;
             var buffBtn = i == 0 ? firstBuffBtn : secondBuffBtn;
             var objText = i == 0 ? objTextOne : objTextTwo;
 
             buffText.text = skill.Description[skill.level];
             buffCD.text = skill.skil.stepMax.ToString();
             buffDMG.text = skill.skil.damage.ToString();
+            for (int y = 0; y < buffElementImg.Count; y++)
+            {
+                buffElementImg[y].sprite = GameManager.Instance.ElementsImg[(int)SkillElements.Find(s => s.skillName == skill.Name).SkillElements[y]];
+            }
             buffBtn.sprite = GameManager.ExtractSpriteListFromTexture("skills").First(s => s.name == skill.Name);
             objText.tagText = skill.tag[skill.level];
             list.Add(buffText.gameObject);
@@ -290,7 +301,7 @@ public class LevelUpgrade : MonoBehaviour
             {
                 SavedSkillsData data = JsonUtility.FromJson<SavedSkillsData>(jsonLine);
 
-                data.Image = Resources.Load<Sprite>(data.Name);
+                //data.Image = Resources.Load<Sprite>(data.Name);
 
                 itemsRead.Add(data);
             }
