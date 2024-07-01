@@ -5717,6 +5717,15 @@ MonoBehaviour:
   InfoFiller: {fileID: 1338357268}
   InfoImg: {fileID: 1381625175}
   InfoName: {fileID: 1838647526}
+  ElementsImg:
+  - {fileID: 21300000, guid: f9cd9c466388d694b81c2b42c31f5a0b, type: 3}
+  - {fileID: 21300000, guid: 2bc20075ed610dd4e9db3474920c177a, type: 3}
+  - {fileID: 21300000, guid: bf690c43a1d9eee4482cb36d399f0576, type: 3}
+  - {fileID: 21300000, guid: f23b20b174502c647b80fcb9ec54f9a3, type: 3}
+  - {fileID: 21300000, guid: d7ee4cfba0bc5e5478a46540f010800a, type: 3}
+  - {fileID: 21300000, guid: 2d5010af587dba644903f49f3d25be95, type: 3}
+  - {fileID: 21300000, guid: d75170722d79ae74fabafaa703271612, type: 3}
+  - {fileID: 21300000, guid: 68dc7750b1bc23645b841a0761be9c3f, type: 3}
   InfoPanel: {fileID: 1814696909}
   InfoImgPanel: {fileID: 1733432014}
   InfoNamePanel: {fileID: 1310651067}
@@ -5736,6 +5745,7 @@ MonoBehaviour:
     spell: Jump
     spellCD: 3
     interactable: 0
+    skillImg: {fileID: -260607289, guid: 80073ee2232738341a4cd9ab8fed1276, type: 3}
     price: 10000
     description: Hot headed young mage. Love to explore new places, bad with formulas.
       Also love his mom
@@ -5751,6 +5761,7 @@ MonoBehaviour:
     spell: Untouchable
     spellCD: 15
     interactable: 1
+    skillImg: {fileID: -1412088382, guid: 80073ee2232738341a4cd9ab8fed1276, type: 3}
     price: 15000
     description: hasty guy that not love to speak too much, always busy, like activities
       like mageball
@@ -5766,6 +5777,7 @@ MonoBehaviour:
     spell: Ricoshet
     spellCD: 25
     interactable: 1
+    skillImg: {fileID: -1135385298, guid: 80073ee2232738341a4cd9ab8fed1276, type: 3}
     price: 20000
     description: Brutaly outside vulnerable inside. Love animals, love to making
       sweet pies in free time
@@ -19442,6 +19454,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b89bff3e4987e2c4291fd1e2e0a4d9cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1871119929 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5269087027521703412, guid: 72d3b4de5c5de484ebe33d179b10eeed, type: 3}
+  m_PrefabInstance: {fileID: 1871119925}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1878960047
@@ -67421,7 +67444,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6416895844494761417, guid: b08c4cf5e053b1145b3cc846731f0368, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -132.6858
+      value: -132.70723
       objectReference: {fileID: 0}
     - target: {fileID: 6416895844494761417, guid: b08c4cf5e053b1145b3cc846731f0368, type: 3}
       propertyPath: m_LocalPosition.y
@@ -68180,6 +68203,10 @@ PrefabInstance:
       propertyPath: autoimage
       value: 
       objectReference: {fileID: 656301894}
+    - target: {fileID: 3222384256279487117, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
+      propertyPath: baseSkillImg
+      value: 
+      objectReference: {fileID: 1871119929}
     - target: {fileID: 3222384256279487117, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
       propertyPath: fullFillImage
       value: 

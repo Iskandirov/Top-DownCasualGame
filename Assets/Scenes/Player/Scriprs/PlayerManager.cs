@@ -72,6 +72,7 @@ public class PlayerManager : MonoBehaviour
     public float baseSkillCD;
     public float baseSkillCDMax;
     public Image spriteCD;
+    public Image baseSkillImg;
     public TextMeshProUGUI text;
     private bool isReloading;
     [HideInInspector]
@@ -129,6 +130,7 @@ public class PlayerManager : MonoBehaviour
     public Image expiriencepoint;
     public float level;
     public float expNeedToNewLevel;
+    public GameObject levelUpgradeEffect;
     //public GameObject levelUp;
     public Timer time;
     [HideInInspector]
@@ -621,6 +623,7 @@ public class PlayerManager : MonoBehaviour
         /*Ўвидк≥сть захвату зони*/
         playerHealthRegeneration += GivePerkStatValue(Stats.Regeneration);
         multiply += (int)GivePerkStatValue(Stats.ExpirianceGain);
+        baseSkillImg.sprite = GameManager.ExtractSpriteListFromTexture("skills").First(s => s.name == gameManager.charactersRead.Find(c => c.isEquiped).spell);
     }
     public float GivePerkStatValue(Stats stat)
     {

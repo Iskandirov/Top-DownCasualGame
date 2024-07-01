@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,6 +7,8 @@ using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.VFX;
+
 public class GameManager : MonoBehaviour
 {
     public bool IsSettingsPage;
@@ -79,6 +82,7 @@ public class GameManager : MonoBehaviour
     Settings settings;
     [SerializeField] DailyQuests quest;
     [SerializeField] TextMeshProUGUI resolutionTxt;
+    GameObject a;
     void Awake()
     {
         Instance = this;
@@ -207,17 +211,21 @@ public class GameManager : MonoBehaviour
         }
     }
     //Panels
-    void ShowLevel()
+    void DestroyVFX()
+    {
+        Destroy(a);
+        OpenPanel(levelPanel, false);
+    }
+    public void ShowLevel()
     {
         PlayerManager player = PlayerManager.instance;
-
         if (player.expiriencepoint.fillAmount >= 1)
         {
-            OpenPanel(levelPanel,false);
-
-            player.level += 1;
+            a = Instantiate(player.levelUpgradeEffect, player.objTransform.position, Quaternion.identity, player.objTransform);
             player.expiriencepoint.fillAmount = 0;
+            player.level += 1;
             player.expNeedToNewLevel += player.expNeedToNewLevel * 0.4f;
+            Invoke("DestroyVFX",1.5f);
         }
     }
     public void OpenPanel(GameObject panel,bool questOpen)

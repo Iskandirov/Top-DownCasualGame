@@ -34,6 +34,7 @@ public class SavedCharacterData
     public string spell;
     public string spellCD;
     public bool interactable;
+    public Sprite skillImg;
     public int price;
     public string description;
 }

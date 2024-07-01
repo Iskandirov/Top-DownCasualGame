@@ -15066,6 +15066,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3162221353454294214, guid: 795be6e00e797404ea289983826f0480, type: 3}
   m_PrefabInstance: {fileID: 46133130}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1217966222 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5269087027521703412, guid: 72d3b4de5c5de484ebe33d179b10eeed, type: 3}
+  m_PrefabInstance: {fileID: 1871119925}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1220928105 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8497586757604508272, guid: f5eba9a236a48394d882a664ddf20f29, type: 3}
@@ -16293,6 +16304,7 @@ MonoBehaviour:
     spell: Jump
     spellCD: 3
     interactable: 0
+    skillImg: {fileID: -260607289, guid: 80073ee2232738341a4cd9ab8fed1276, type: 3}
     price: 10000
     description: Hot headed young mage. Love to explore new places, bad with formulas.
       Also love his mom
@@ -16308,6 +16320,7 @@ MonoBehaviour:
     spell: Untouchable
     spellCD: 15
     interactable: 1
+    skillImg: {fileID: -1412088382, guid: 80073ee2232738341a4cd9ab8fed1276, type: 3}
     price: 15000
     description: hasty guy that not love to speak too much, always busy, like activities
       like mageball
@@ -16323,6 +16336,7 @@ MonoBehaviour:
     spell: Ricoshet
     spellCD: 25
     interactable: 1
+    skillImg: {fileID: -1135385298, guid: 80073ee2232738341a4cd9ab8fed1276, type: 3}
     price: 20000
     description: Brutaly outside vulnerable inside. Love animals, love to making
       sweet pies in free time
@@ -30549,6 +30563,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
+    - target: {fileID: 4449812636872756728, guid: 72d3b4de5c5de484ebe33d179b10eeed, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5269087027521703412, guid: 72d3b4de5c5de484ebe33d179b10eeed, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5773109702879302746, guid: 72d3b4de5c5de484ebe33d179b10eeed, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8313530371128728559, guid: 72d3b4de5c5de484ebe33d179b10eeed, type: 3}
       propertyPath: cam
       value: 
@@ -32012,7 +32038,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e3b6c8e9065ce6e46bf9f96a5ee31e21, type: 2}
+  - {fileID: 2100000, guid: f008ed70c4676fa43b1b079551b45631, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -91774,11 +91800,71 @@ PrefabInstance:
       value: Level
       objectReference: {fileID: 0}
     - target: {fileID: 3772772046346371228, guid: 1b6bf50f988a7fb45bb3ea37fc1779af, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3772772046346371228, guid: 1b6bf50f988a7fb45bb3ea37fc1779af, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3772772046346371228, guid: 1b6bf50f988a7fb45bb3ea37fc1779af, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3772772046346371228, guid: 1b6bf50f988a7fb45bb3ea37fc1779af, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3772772046346371228, guid: 1b6bf50f988a7fb45bb3ea37fc1779af, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3772772046346371228, guid: 1b6bf50f988a7fb45bb3ea37fc1779af, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3772772046346371228, guid: 1b6bf50f988a7fb45bb3ea37fc1779af, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 720.00006
+      objectReference: {fileID: 0}
+    - target: {fileID: 3772772046346371228, guid: 1b6bf50f988a7fb45bb3ea37fc1779af, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1387.0199
+      objectReference: {fileID: 0}
+    - target: {fileID: 3772772046346371228, guid: 1b6bf50f988a7fb45bb3ea37fc1779af, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3772772046346371228, guid: 1b6bf50f988a7fb45bb3ea37fc1779af, type: 3}
       propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3772772046346371228, guid: 1b6bf50f988a7fb45bb3ea37fc1779af, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3772772046346371228, guid: 1b6bf50f988a7fb45bb3ea37fc1779af, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3772772046346371228, guid: 1b6bf50f988a7fb45bb3ea37fc1779af, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3772772046346371228, guid: 1b6bf50f988a7fb45bb3ea37fc1779af, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3772772046346371228, guid: 1b6bf50f988a7fb45bb3ea37fc1779af, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3772772046346371228, guid: 1b6bf50f988a7fb45bb3ea37fc1779af, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3772772046346371228, guid: 1b6bf50f988a7fb45bb3ea37fc1779af, type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3772772046346371228, guid: 1b6bf50f988a7fb45bb3ea37fc1779af, type: 3}
@@ -92678,7 +92764,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6416895844494761417, guid: b08c4cf5e053b1145b3cc846731f0368, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -143.60756
+      value: -143.62003
       objectReference: {fileID: 0}
     - target: {fileID: 6416895844494761417, guid: b08c4cf5e053b1145b3cc846731f0368, type: 3}
       propertyPath: m_LocalPosition.y
@@ -93150,6 +93236,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 323239598}
     - target: {fileID: 3222384256279487117, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
+      propertyPath: baseSkillImg
+      value: 
+      objectReference: {fileID: 1217966222}
+    - target: {fileID: 3222384256279487117, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
       propertyPath: fullFillImage
       value: 
       objectReference: {fileID: 1832177806}
@@ -93161,6 +93251,10 @@ PrefabInstance:
       propertyPath: expiriencepoint
       value: 
       objectReference: {fileID: 1871119926}
+    - target: {fileID: 3222384256279487117, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
+      propertyPath: levelUpgradeEffect
+      value: 
+      objectReference: {fileID: 1173937985863283591, guid: f439b6aa60af364459f86e6e43081cec, type: 3}
     - target: {fileID: 3222384256279487117, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
       propertyPath: abilities.Array.data[0]
       value: 
