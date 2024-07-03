@@ -127,9 +127,9 @@ public class DailyQuests : MonoBehaviour
         SetQuestData();
 
     }
-    public void AnimationPopUp(string boolName)
+    public void AnimationPopUp()
     {
-        anim.SetBool(boolName, !anim.GetBool(boolName));
+        anim.SetTrigger("PoP");
     }
     public void SetQuestData()
     {

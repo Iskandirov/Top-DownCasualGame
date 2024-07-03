@@ -26,7 +26,7 @@ public class FieldSlots : MonoBehaviour
     }
     public void CheckCraft()
     {
-        int count = int.Parse(objToCraft.GetComponent<SetParametersToitem>().Count.text);
+        int count = int.Parse(objToCraft.GetComponent<SetParametersToitem>().Count);
 
         int level = int.Parse(objToCraft.GetComponent<SetParametersToitem>().level);
 

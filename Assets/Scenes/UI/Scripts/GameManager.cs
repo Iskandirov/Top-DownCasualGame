@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
 using UnityEngine.VFX;
 
@@ -187,10 +188,12 @@ public class GameManager : MonoBehaviour
                 if (!isPanelOpen)
                 {
                     OpenPanel(menuPanel,true);
+                    TimeScale(0);
                 }
                 else if(menuPanel.activeSelf)
                 {
                     ClosePanel(menuPanel);
+                    TimeScale(1);
                 }
             }
         }
@@ -215,6 +218,7 @@ public class GameManager : MonoBehaviour
     {
         Destroy(a);
         OpenPanel(levelPanel, false);
+        TimeScale(0);
     }
     public void ShowLevel()
     {
@@ -228,6 +232,10 @@ public class GameManager : MonoBehaviour
             Invoke("DestroyVFX",1.5f);
         }
     }
+    public void TimeScale(float timeScale)
+    {
+        Time.timeScale = timeScale;
+    }
     public void OpenPanel(GameObject panel,bool questOpen)
     {
         panel.SetActive(true);
@@ -237,14 +245,12 @@ public class GameManager : MonoBehaviour
             QuestPanel.SetActive(true);
             quest.SetQuestData();
         }
-        Time.timeScale = 0f;
 
     }
     public void OpenPanel(GameObject panel)
     {
         panel.SetActive(true);
         isPanelOpen = true;
-        Time.timeScale = 0f;
 
     }
     public void ClosePanel(GameObject panel)
@@ -808,6 +814,7 @@ public class GameManager : MonoBehaviour
         if (!isPanelOpen)
         {
             OpenPanel(InfoPanel,false);
+            TimeScale(0);
             InfoImgPanel.sprite = InfoImg.sprite;
             InfoNamePanel.text = ShowedEnemy.Name.ToString();
             InfoStatHealtPanel.text = ShowedEnemy.Health.ToString();

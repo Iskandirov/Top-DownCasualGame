@@ -22,6 +22,7 @@ public class EnemyState : MonoBehaviour
     [SerializeField] public AIDestinationSetter destination;
     [SerializeField] public CircleCollider2D colider;
     [SerializeField] public AIPath path;
+    [SerializeField] public GameObject stunVFX;
 
     public GameObject objectToHit;
     public void SetStunned()
@@ -36,12 +37,16 @@ public class EnemyState : MonoBehaviour
     }
     public void Stun(float stunTime)
     {
-        GetComponent<Animator>().SetBool("IsStuned", true);
+        GetComponent<Animator>().SetTrigger("Stun");
+        stunVFX.SetActive(true);
+
         Invoke("NotStun", stunTime);
     }
     public void NotStun()
     {
-        GetComponent<Animator>().SetBool("IsStuned", false);
+        GetComponent<Animator>().SetTrigger("Stun");
+        stunVFX.SetActive(false);
+
     }
 
     public void SetType(string value)

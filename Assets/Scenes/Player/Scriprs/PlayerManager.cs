@@ -279,7 +279,7 @@ public class PlayerManager : MonoBehaviour
     //Health
     public void HitEnd()
     {
-        playerAnim.SetBool("IsHit", false);
+        playerAnim.SetTrigger("Hit");
         if (playerHealthPoint <= 0)
         {
             if (canBeSaved)
@@ -295,12 +295,13 @@ public class PlayerManager : MonoBehaviour
                 AudioManager.instance.MusicStop();
                 AudioManager.instance.PlaySFX("PlayerDeath");
                 gameManager.OpenPanel(gameManager.losePanel, true);
+                gameManager.TimeScale(0);
             }
         }
     }
     public void TakeDamage(float damage)
     {
-        playerAnim.SetBool("IsHit", true);
+        playerAnim.SetTrigger("Hit");
 
         if (damage > 0 && !isInvincible)
         {

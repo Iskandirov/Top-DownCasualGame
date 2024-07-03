@@ -62,11 +62,11 @@ public class LoadItemData : MonoBehaviour
                 objParam.ItemName = itemName;
                 objParam.ItemImage.sprite = GameManager.ExtractSpriteListFromTexture("items").First(i => i.name == itemParams.Name);
                 objParam.ItemImage.SetNativeSize();
-                objParam.Rare.sprite = Resources.Load<Sprite>(itemParams.RareName + " " + itemParams.Level.ToString());
-                objParam.ItemStat.text = itemParams.Stat;
+               // objParam.Rare.sprite = Resources.Load<Sprite>(itemParams.RareName + " " + itemParams.Level.ToString());
+                objParam.ItemStat = itemParams.Stat;
                 objParam.level = itemParams.Level.ToString();
                 objParam.RareName = itemParams.RareName;
-                objParam.Count.text = count.ToString();
+                objParam.Count = count.ToString();
                 objParam.Tag = itemParams.Tag;
                 objParam.RareTag = itemParams.RareTag;
                 objParam.IDRare = itemParams.IDRare;

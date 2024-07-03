@@ -19,16 +19,12 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
 
     GameObject targetEquipObjects;
     public bool toEquipSlot;
-    private GameObject startParent;
+    private Shelf startParent;
     public GameObject equipPanel;
     LoadItemData itemData;
 
     public Button button;
     public bool isEquipedNow;
-    public GameObject equipedChecker;
-    public GameObject pointToCraft;
-    public GameObject maxLevel;
-    public GameObject LevelCount;
 
     [Range(0, 50)]
     public float XY = 2f;
@@ -41,22 +37,14 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
     void Start()
     {
         hashing = FindObjectOfType<DataHashing>();
-        startParent = transform.parent.gameObject;
+        startParent = transform.parent.GetComponent<Shelf>();
         fliedSlots = FindObjectOfType<FieldSlots>();
         GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("Finish");
 
         itemData = FindObjectOfType<LoadItemData>();
         gameManager = GameManager.Instance;
-
-        //SetVisible(false);
-        if (GetComponent<SetParametersToitem>().level != "4")
-        {
-            maxLevel.GetComponent<TagText>().tagText = "level";
-            maxLevel.GetComponent<TextMeshProUGUI>().text = "Max level";
-            LevelCount.SetActive(true);
-            LevelCount.GetComponent<TextMeshProUGUI>().text = gameObject.GetComponent<SetParametersToitem>().level;
-        }
-        list.Add(maxLevel);
+        startParent.count.text = GetComponent<SetParametersToitem>().Count;
+        startParent.level.text = GetComponent<SetParametersToitem>().level != "4" ? gameObject.GetComponent<SetParametersToitem>().level : "Max";
         foreach (GameObject obj in objectsWithTag)
         {
             targetObjects.Add(obj);
@@ -92,26 +80,26 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
 
     public void PointActivate()
     {
-        int count = int.Parse(gameObject.GetComponent<SetParametersToitem>().Count.text);
-        int level = int.Parse(gameObject.GetComponent<SetParametersToitem>().level);
+        int count = int.Parse(GetComponent<SetParametersToitem>().Count);
+        int level = int.Parse(GetComponent<SetParametersToitem>().level);
         if (count >= 3 && level < 4)
         {
-            pointToCraft.SetActive(true);
+            startParent.pointToUpgrade.SetActive(true);
         }
         else if (count < 3 || level >= 4)
         {
-            pointToCraft.SetActive(false);
+            startParent.pointToUpgrade.SetActive(false);
         }
     }
     private void FixedUpdate()
     {
         if (isEquipedNow)
         {
-            equipedChecker.SetActive(true);
+            startParent.checker.SetActive(true);
         }
         else
         {
-            equipedChecker.SetActive(false);
+            startParent.checker.SetActive(false);
         }
     }
     public void OnPointerClick(PointerEventData eventData)
@@ -135,7 +123,7 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
                     ItemData item = equipPanel.GetComponent<ItemData>();
                     item.itemName.text = fliedSlots.objToCraft.ItemName;
                     item.level.text = fliedSlots.objToCraft.level;
-                    item.stat = fliedSlots.objToCraft.ItemStat;
+                    item.stat.text = fliedSlots.objToCraft.ItemStat;
                     item.rare.text = fliedSlots.objToCraft.RareName;
                     item.description.text = fliedSlots.objToCraft.Description;
                     item.itemTag = fliedSlots.objToCraft.Tag;
@@ -212,7 +200,7 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
         SetParametersToitem param = GetComponent<SetParametersToitem>();
 
         obj.level.text = obj.level.text == param.level ? obj.level.text : obj.level.text;
-        obj.stat.text = obj.stat.text == param.ItemStat.text ? obj.stat.text : obj.stat.text;
+        obj.stat.text = obj.stat.text == param.ItemStat ? obj.stat.text : obj.stat.text;
 
         if (obj.itemName.text == param.ItemName)
         {
@@ -237,7 +225,7 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
 
             obj.Level = checker.Level.ToString() == param.level ? checker.Level : obj.Level;
             obj.Name = checker.Name == param.ItemName ? checker.Name : obj.Name;
-            obj.Stat = checker.Stat == param.ItemStat.text ? checker.Stat : obj.Stat;
+            obj.Stat = checker.Stat == param.ItemStat ? checker.Stat : obj.Stat;
             obj.Tag = checker.Tag == param.Tag ? checker.Tag : obj.Tag;
         }
         return obj;
