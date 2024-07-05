@@ -8,8 +8,11 @@ public class LootManager : MonoBehaviour
 
     public List<ItemParameters> itemRareObj;
     public List<SavedObjectData> itemsLoaded;
+    [Range(0,1)]
     public float spawnRare = 0.6f;
+    [Range(0, 1)]
     public float spawnMiphical = 0.3f;
+    [Range(0, 1)]
     public float spawnLegendary = 0.05f;
 
     public List<SavedObjectData> CommonItems;

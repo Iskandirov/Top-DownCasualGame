@@ -29,7 +29,7 @@ public class EnemyHealthTutorial : MonoBehaviour
 
             if (isBoss)
             {
-                mob.Death(GetComponent<EnemyState>());
+                mob.Death(state);
                 //GetComponent<DropItems>().isTutor = true;
                 //GetComponent<DropItems>().OnDestroyBoss(healthBossObj);
             }

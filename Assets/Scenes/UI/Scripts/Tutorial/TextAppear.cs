@@ -115,6 +115,7 @@ public class TextAppear : MonoBehaviour
                 else if (tutor.phase == 3)
                 {
                     tutor.parentPhase3.gameObject.SetActive(true);
+                    tutor.skillObject.SetActive(true);
                     tutor.MoveOn();
                 }
                 else if (tutor.phase == 4)

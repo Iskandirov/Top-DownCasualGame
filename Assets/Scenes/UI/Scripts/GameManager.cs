@@ -45,8 +45,6 @@ public class GameManager : MonoBehaviour
     [Header("Items settings")]
     [SerializeField]
     private List<SavedObjectData> items = new List<SavedObjectData>();
-    [SerializeField]
-    private List<SavedUpgradeImage> upgrades = new List<SavedUpgradeImage>();
     public List<SavedObjectData> itemsRead = new List<SavedObjectData>();
 
     [Header("KillCount settings")]
@@ -570,7 +568,7 @@ public class GameManager : MonoBehaviour
         path = Path.Combine(Application.persistentDataPath, "UpgradeImage.txt");
         if (!File.Exists(path))
         {
-            SaveUpgrade();
+            //SaveUpgrade();
         }
         LoadInventory(itemsRead);
     }
@@ -603,7 +601,7 @@ public class GameManager : MonoBehaviour
     private void SaveInventory()
     {
         string path = Path.Combine(Application.persistentDataPath, "ItemInventory.txt");
-        using (StreamWriter writer = new StreamWriter(path, true))
+        using (StreamWriter writer = new StreamWriter(path, false))
         {
             SavedObjectData data = new SavedObjectData();
             foreach (SavedObjectData item in items)
@@ -624,26 +622,6 @@ public class GameManager : MonoBehaviour
             }
             writer.Close();
         }
-    }
-    private void SaveUpgrade()
-    {
-        string path = Path.Combine(Application.persistentDataPath, "UpgradeImage.txt");
-        using (StreamWriter writer = new StreamWriter(path, true))
-        {
-            SavedUpgradeImage data = new SavedUpgradeImage();
-            foreach (SavedUpgradeImage item in upgrades)
-            {
-                data.ID = item.ID;
-                data.IDRare = item.IDRare;
-
-                string jsonData = JsonUtility.ToJson(data);
-                string decryptedJson = hashing.Encrypt(jsonData);
-                writer.WriteLine(decryptedJson);
-            }
-            writer.Close();
-        }
-
-
     }
     private void DeleteFile()
     {

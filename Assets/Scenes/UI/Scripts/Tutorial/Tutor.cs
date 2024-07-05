@@ -25,6 +25,8 @@ public class Tutor : MonoBehaviour
     public Animator parentPhase1;
     public Animator parentPhase2;
     public Animator parentPhase3;
+    public GameObject skillObject;
+    public GameObject shootobject;
     public TextAppear text;
     public Light2D playerLight;
     public PlayerManager player;
@@ -55,8 +57,13 @@ public class Tutor : MonoBehaviour
         player.attackSpeed -= Time.deltaTime;
         if (player.attackSpeed < 0 && text.isShooting && Input.GetMouseButton(0))
         {
-            Instantiate(player.bullet);
-            player.attackSpeed = player.attackSpeedMax;
+            shootobject.SetActive(true);
+            //Instantiate(player.bullet);
+            //player.attackSpeed = player.attackSpeedMax;
+        }
+        else if(!text.isShooting)
+        {
+            shootobject.SetActive(false);
         }
         if (phase == 0 && text.anim.GetBool("FadeOut") == true)
         {
@@ -99,6 +106,7 @@ public class Tutor : MonoBehaviour
             {
                 ShiftLight.color = FinalColor;
                 parentPhase3.SetBool("IsFadeOut", true);
+
                 PhasePlus();
                 Invoke("BlockMoveAndShoot", .3f);
             }

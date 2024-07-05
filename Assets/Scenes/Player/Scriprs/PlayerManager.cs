@@ -225,13 +225,8 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-       
-        ArrowToCursor();
-        if (!isTutor)
-        {
-            CDBaseSkill();
-        }
-       
+        //ArrowToCursor();
+        CDBaseSkill();
         if (!isDashSkillActive)
         {
             rb.position = PlayerMove();
@@ -512,22 +507,22 @@ public class PlayerManager : MonoBehaviour
     //====================DASH END=================
     //End Move
     //Shoot
-    public void ArrowToCursor()
-    {
-        // Визначаємо відстань від гравця до позиції курсора
-        Vector3 direction = GetMousDirection(objTransform.position);
-        direction = direction.normalized * circleRadius;
+    //public void ArrowToCursor()
+    //{
+    //    // Визначаємо відстань від гравця до позиції курсора
+    //    Vector3 direction = GetMousDirection(objTransform.position);
+    //    direction = direction.normalized * circleRadius;
 
-        // Визначаємо кінцеву позицію об'єкту на колі
-        Vector3 targetPosition = objTransform.position + direction;
+    //    // Визначаємо кінцеву позицію об'єкту на колі
+    //    Vector3 targetPosition = objTransform.position + direction;
 
-        // Рухаємо об'єкт до кінцевої позиції
-        ShootPoint.transform.position = targetPosition;
+    //    // Рухаємо об'єкт до кінцевої позиції
+    //    ShootPoint.transform.position = targetPosition;
 
-        // Повертаємо коло в напрямку курсора
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        ShootPoint.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-    }
+    //    // Повертаємо коло в напрямку курсора
+    //    float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+    //    ShootPoint.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+    //}
     public void ShootBullet(Vector3 position, Bullet newObject)
     {
         newObject.transform.position = position;

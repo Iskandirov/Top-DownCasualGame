@@ -12,14 +12,13 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
     public Vector3 startScale;
     public List<GameObject> targetObjects;
     FieldSlots fliedSlots;
-    public TextMeshProUGUI count;
     public bool toSlot;
     public bool created;
     public bool second;
 
     GameObject targetEquipObjects;
     public bool toEquipSlot;
-    private Shelf startParent;
+    public Shelf startParent;
     public GameObject equipPanel;
     LoadItemData itemData;
 
@@ -37,14 +36,13 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
     void Start()
     {
         hashing = FindObjectOfType<DataHashing>();
-        startParent = transform.parent.GetComponent<Shelf>();
+       
         fliedSlots = FindObjectOfType<FieldSlots>();
         GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("Finish");
 
         itemData = FindObjectOfType<LoadItemData>();
         gameManager = GameManager.Instance;
-        startParent.count.text = GetComponent<SetParametersToitem>().Count;
-        startParent.level.text = GetComponent<SetParametersToitem>().level != "4" ? gameObject.GetComponent<SetParametersToitem>().level : "Max";
+        
         foreach (GameObject obj in objectsWithTag)
         {
             targetObjects.Add(obj);
@@ -75,11 +73,15 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
             }
         }
         PointActivate();
+       
+        startParent.count.text = GetComponent<SetParametersToitem>().Count;
+        startParent.level.text = GetComponent<SetParametersToitem>().level != "4" ? gameObject.GetComponent<SetParametersToitem>().level : "Max";
         gameManager.UpdateText(list);
     }
 
     public void PointActivate()
     {
+        startParent = transform.parent.GetComponent<Shelf>();
         int count = int.Parse(GetComponent<SetParametersToitem>().Count);
         int level = int.Parse(GetComponent<SetParametersToitem>().level);
         if (count >= 3 && level < 4)
@@ -139,7 +141,7 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
                     {
                         transform.SetParent(targetEquipObjects.transform);
                         transform.position = targetEquipObjects.transform.position;
-                        transform.localScale = new Vector3(.75f, .75f, .75f);
+                        transform.localScale = transform.localScale * 1.5f;
                         toEquipSlot = false;
                     }
                 }
@@ -147,8 +149,8 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
                 {
                     transform.SetParent(startParent.transform);
                     transform.SetAsFirstSibling();
-                    transform.position = new Vector3(startPosition.x, startPosition.y, startPosition.z);
-                    transform.localScale = new Vector3(.45f, .45f, .45f);
+                    transform.localPosition = Vector3.zero;
+                    transform.localScale = startScale;
                     toEquipSlot = true;
                     GameManager.Instance.ClosePanel(GameManager.Instance.menuPanel);
                 }
@@ -238,8 +240,7 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
             if (toSlot == true)
             {
                 transform.localScale = targetScaleBig;
-                //timer = 0f;
-                transform.SetAsLastSibling(); // Äîäàéòå öåé ðÿäîê êîäó
+                transform.SetAsLastSibling(); 
             }
         }
         else
@@ -247,8 +248,7 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
             if (toSlot == true)
             {
                 transform.localScale = targetScaleBig / 2;
-                //timer = 0f;
-                transform.SetAsFirstSibling(); // Äîäàéòå öåé ðÿäîê êîäó
+                transform.SetAsFirstSibling(); 
             }
         }
     }
@@ -260,7 +260,7 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
             if (toSlot == true)
             {
                 transform.localScale = targetScaleSmall;
-                transform.SetAsFirstSibling(); // Äîäàéòå öåé ðÿäîê êîäó
+                transform.SetAsFirstSibling();
             }
         }
         else
@@ -268,7 +268,7 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
             if (toSlot == true)
             {
                 transform.localScale = targetScaleSmall / 2;
-                transform.SetAsFirstSibling(); // Äîäàéòå öåé ðÿäîê êîäó
+                transform.SetAsFirstSibling(); 
             }
         }
     }
