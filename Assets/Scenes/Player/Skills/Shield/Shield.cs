@@ -1,6 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
 
 public class Shield : SkillBaseMono
 {
@@ -26,20 +26,25 @@ public class Shield : SkillBaseMono
             }
             objTransform.localScale = new Vector2(objTransform.localScale.x + basa.radius, objTransform.localScale.y + basa.radius);
             healthShield = basa.damage;
-            player.shildActive = true;
             dirtElement = player.Dirt;
             if (basa.stats[3].isTrigger)
             {
                 SlowArea a = Instantiate(slowObj, objTransform.position, Quaternion.identity, objTransform);
                 a.dirtElement = dirtElement;
             }
+            player.isInvincible = true;
+            StartCoroutine(DeactivateInvincible());
             CoroutineToDestroy(gameObject, basa.lifeTime);
         }
+    }
+    public IEnumerator DeactivateInvincible()
+    {
+        yield return new WaitForSeconds(basa.lifeTime);
+        player.isInvincible = false;
     }
     // Update is called once per frame
     void FixedUpdate()
     {
-
         objTransform.position = player.objTransform.position;
 
         if (basa.stats[4].isTrigger && !isPotions)
@@ -76,6 +81,7 @@ public class Shield : SkillBaseMono
         }
         if (healthShield <= 0) 
         {
+            player.isInvincible = false;
             Destroy(gameObject);
         }
     }

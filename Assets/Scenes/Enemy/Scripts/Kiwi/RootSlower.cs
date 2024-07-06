@@ -40,11 +40,8 @@ public class RootSlower : MonoBehaviour
         {
             if (damageDelay <= 0)
             {
-                if (!player.shildActive)
-                {
-                    player.TakeDamage(damage);
-                    damageDelay = damageDelayMax;
-                }
+                player.TakeDamage(damage);
+                damageDelay = damageDelayMax;
                 player.StartCoroutine(player.SlowPlayer(damageDelay * 0.9f, 0.9f));
             }
         }

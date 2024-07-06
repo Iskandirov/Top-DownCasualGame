@@ -96,7 +96,6 @@ public class PlayerManager : MonoBehaviour
     public float armor;
     public Image fullFillImage;
     public bool isInvincible = false;
-    public bool shildActive;
 
     [Header("Shoot settings")]
     public Bullet bullet;
@@ -175,7 +174,7 @@ public class PlayerManager : MonoBehaviour
     private void OnDestroy()
     {
         instance = null;
-        OnButtonClicked -= OnButtonClickHandler;
+        OnAttackTypeSwitch -= OnSwitchClickHandler;
         foreach (var potion in potions)
         {
             if (PlayerPrefs.GetString(potion.key + "Bool") == "True")
@@ -219,7 +218,7 @@ public class PlayerManager : MonoBehaviour
         playerHealthPointMax = playerHealthPoint;
         countActiveAbilities = 1;
         SetCharacterOnStart();
-        OnButtonClicked += OnButtonClickHandler;
+        OnAttackTypeSwitch += OnSwitchClickHandler;
     }
 
     // Update is called once per frame
@@ -240,9 +239,9 @@ public class PlayerManager : MonoBehaviour
         }
     }
     //Тестовий делегат
-    public delegate void ButtonClickHandler();
-    public event ButtonClickHandler OnButtonClicked;
-    private void OnButtonClickHandler()
+    public delegate void AutoAttackSwitchHandler();
+    public event AutoAttackSwitchHandler OnAttackTypeSwitch;
+    private void OnSwitchClickHandler()
     {
         autoimage.sprite = isAuto ? autoState[0] : autoState[1];
         autoimage.SetNativeSize();
@@ -256,7 +255,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            OnButtonClicked?.Invoke();
+            OnAttackTypeSwitch?.Invoke();
         }
         if (isAuto && AutoActiveCurve != null)
         {
@@ -321,33 +320,6 @@ public class PlayerManager : MonoBehaviour
         float modifier = (0.052f * armor) / (0.9f + 0.052f * absArmor);
         damage -= damage * modifier;
         return damage;
-    }
-    public void HealHealth(float value)
-    {
-        if (playerHealthPoint != playerHealthPointMax)
-        {
-            if (playerHealthPoint + value <= playerHealthPointMax)
-            {
-                playerHealthPoint += value;
-                fullFillImage.fillAmount += (value) / playerHealthPointMax;
-                if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 1 && s.isActive == true) != null)
-                {
-                    DailyQuests.instance.UpdateValue(1, value, false);
-                }
-                GameManager.Instance.FindStatName("healthHealed", value);
-            }
-            else
-            {
-                GameManager.Instance.FindStatName("healthHealed", playerHealthPointMax - playerHealthPoint);
-                if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 1 && s.isActive == true) != null)
-                {
-                    DailyQuests.instance.UpdateValue(1, playerHealthPointMax - playerHealthPoint, false);
-                }
-
-                playerHealthPoint = playerHealthPointMax;
-                fullFillImage.fillAmount = 1f;
-            }
-        }
     }
     //End Health
     //Move
@@ -634,6 +606,34 @@ public class PlayerManager : MonoBehaviour
     }
 
     //Potion
+    public void HealHealth(float value)
+    {
+        if (playerHealthPoint != playerHealthPointMax)
+        {
+            if (playerHealthPoint + value <= playerHealthPointMax)
+            {
+                playerHealthPoint += value;
+                fullFillImage.fillAmount += (value) / playerHealthPointMax;
+                if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 1 && s.isActive == true) != null)
+                {
+                    DailyQuests.instance.UpdateValue(1, value, false);
+                }
+                GameManager.Instance.FindStatName("healthHealed", value);
+            }
+            else
+            {
+                GameManager.Instance.FindStatName("healthHealed", playerHealthPointMax - playerHealthPoint);
+                if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 1 && s.isActive == true) != null)
+                {
+                    DailyQuests.instance.UpdateValue(1, playerHealthPointMax - playerHealthPoint, false);
+                }
+
+                playerHealthPoint = playerHealthPointMax;
+                fullFillImage.fillAmount = 1f;
+            }
+        }
+    }
+
     [Obsolete]
     public void UsePotion(PotionsType type)
     {

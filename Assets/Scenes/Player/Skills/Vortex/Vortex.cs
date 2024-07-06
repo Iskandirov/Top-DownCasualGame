@@ -51,25 +51,25 @@ public class Vortex : SkillBaseMono
     IEnumerator Destroy()
     {
         yield return new WaitForSeconds(basa.lifeTime);
-        DamageDeal();
+        //DamageDeal();
         Destroy(gameObject);
     }
-    void DamageDeal()
-    {
-        foreach (Transform movingObject in movingObjects)
-        {
-            if (movingObject.GetComponent<EnemyState>() != null)
-            {
-                EnemyState health = movingObject.GetComponent<EnemyState>();
+    //void DamageDeal()
+    //{
+    //    foreach (Transform movingObject in movingObjects)
+    //    {
+    //        if (movingObject.GetComponent<EnemyState>() != null)
+    //        {
+    //            EnemyState health = movingObject.GetComponent<EnemyState>();
 
-                ElementActiveDebuff debuff = movingObject.GetComponent<ElementActiveDebuff>();
-                debuff.StartCoroutine(debuff.EffectTime(Elements.status.Wind, 5));
+    //            ElementActiveDebuff debuff = movingObject.GetComponent<ElementActiveDebuff>();
+    //            debuff.StartCoroutine(debuff.EffectTime(Elements.status.Wind, 5));
 
-                EnemyController.instance.TakeDamage(health, basa.damage * PlayerManager.instance.Wind * PlayerManager.instance.Steam
-                    / (debuff.elements.CurrentStatusValue(Elements.status.Wind) * debuff.elements.CurrentStatusValue(Elements.status.Steam)));
-            }
-        }
-    }
+    //            EnemyController.instance.TakeDamage(health, basa.damage * PlayerManager.instance.Wind * PlayerManager.instance.Steam
+    //                / (debuff.elements.CurrentStatusValue(Elements.status.Wind) * debuff.elements.CurrentStatusValue(Elements.status.Steam)));
+    //        }
+    //    }
+    //}
     // Update is called once per frame
     void FixedUpdate()
     {
