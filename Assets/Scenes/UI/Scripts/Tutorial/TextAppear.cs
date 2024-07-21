@@ -11,7 +11,7 @@ public class TextAppear : MonoBehaviour
 {
     public TextMeshProUGUI textMesh;
     public DialogPhase[] introDialog;
-    public int textCount;
+    public int textCount = 0;
     public float delay = 1;
     public float delayDots = 1;
 
@@ -33,6 +33,14 @@ public class TextAppear : MonoBehaviour
     void Start()
     {
         player = PlayerManager.instance;
+        //Debug.Log(0 == introDialog.Length);
+        for (int i = 0; i < introDialog.Length; i++)
+        {
+            for (int y = 0; y < introDialog[i].Text.Length - 1; y++)
+            {
+                introDialog[i].Text[y] = GameManager.Instance.localizedText.Find(p => p.key == "phrase_" + (i + 1) + "_" + (y + 1) && p.language == GameManager.Instance.loc).value;
+            }
+        }
         // Запускаємо таймер
         InvokeRepeating("AddLetter", delay, delay);
     }

@@ -21,15 +21,18 @@ public class CharacterSystem : MonoBehaviour
         characterImage.sprite = tab.characterImage;
         characterImage.SetNativeSize();
         Name.text = tab.Name;
-        spell.text = tab.spell;
+        spell.GetComponent<TagText>().tagText = "base_spell_" + tab.id;
+        description.GetComponent<TagText>().tagText = "character_description_" + tab.id;
+        //spell.text = tab.spell;
         health.text = tab.health.ToString();
         damage.text = tab.damage.ToString();
         move.text = tab.move.ToString();
         attackSpeed.text = tab.attackSpeed.ToString();
         price.text = tab.price.ToString();
-        description.text = tab.description;
+        //description.text = tab.description;
        
         button.interactable = int.Parse(price.text) <= int.Parse(money.text) && !tab.check.activeSelf ? true : false;
+        GameManager.Instance.UpdateText(GameManager.Instance.texts);
     }
     public void BuyCharacter()
     {

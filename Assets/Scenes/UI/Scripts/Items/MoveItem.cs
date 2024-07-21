@@ -123,11 +123,11 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
                     fliedSlots.CheckCraft();
 
                     ItemData item = equipPanel.GetComponent<ItemData>();
-                    item.itemName.text = fliedSlots.objToCraft.ItemName;
+                    item.itemName.GetComponent<TagText>().tagText = fliedSlots.objToCraft.Tag;
                     item.level.text = fliedSlots.objToCraft.level;
                     item.stat.text = fliedSlots.objToCraft.ItemStat;
-                    item.rare.text = fliedSlots.objToCraft.RareName;
-                    item.description.text = fliedSlots.objToCraft.Description;
+                    item.rare.GetComponent<TagText>().tagText = fliedSlots.objToCraft.RareTag;
+                    item.description.GetComponent<TagText>().tagText = "descriprion_info_" + fliedSlots.objToCraft.Tag;//fliedSlots.objToCraft.Description;
                     item.itemTag = fliedSlots.objToCraft.Tag;
                     item.raretag = fliedSlots.objToCraft.RareTag;
                     //Другий в порядку
@@ -156,7 +156,7 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
                 }
             }
         }
-
+        gameManager.UpdateText(GameManager.Instance.texts);
     }
     public void SetCardInfo()
     {
@@ -201,8 +201,8 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
     {
         SetParametersToitem param = GetComponent<SetParametersToitem>();
 
-        obj.level.text = obj.level.text == param.level ? obj.level.text : obj.level.text;
-        obj.stat.text = obj.stat.text == param.ItemStat ? obj.stat.text : obj.stat.text;
+        //obj.level.text = obj.level.text == param.level ? obj.level.text : obj.level.text;
+        //obj.stat.text = obj.stat.text == param.ItemStat ? obj.stat.text : obj.stat.text;
 
         if (obj.itemName.text == param.ItemName)
         {

@@ -1,6 +1,7 @@
 using System.IO;
 using System.Linq;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -35,9 +36,12 @@ public class LevelInfoLoad : MonoBehaviour
                 SavedLocationsData data = JsonUtility.FromJson<SavedLocationsData>(decode);
                 if (data.IDLevel == levelID)
                 {
-                    levelName.text = data.name;
+                    //levelName.text = data.name;
+                    levelName.GetComponent<TagText>().tagText = "level_name_" + levelID;
                     countOfCount.text = data.countOfCount + "/" + data.countOfCountMax;
-                    levelDescription.text = data.description;
+                    //levelDescription.text = data.description;
+                    specialAttack.GetComponent<TagText>().tagText = "base_spell_" + levelID;
+                    levelDescription.GetComponent<TagText>().tagText = "description_lvl_" + levelID;
                     levelImage.sprite = GameManager.ExtractSpriteListFromTexture("items").First(s => s.name == "слиз");
                     break;
                 }
@@ -45,6 +49,7 @@ public class LevelInfoLoad : MonoBehaviour
             LoadCharacterInfo();
         }
         playButton.sceneCount = levelID;
+        GameManager.Instance.UpdateText(GameManager.Instance.texts);
     }
     public void LoadCharacterInfo()
     {

@@ -118,11 +118,12 @@ public class PerkSystem : MonoBehaviour
         Perk tab = GetComponent<TabGroup>().tabButtons.Find(t => t == GetComponent<TabGroup>().selectedTab).GetComponent<Perk>();
         perkImage.sprite = tab.perkImage.sprite;
         perkImage.SetNativeSize();
-        perkName.text = tab.GetComponent<TabButton>().tooltipText;
-        statName.text = tab.statName;
+        perkName.text = tab.GetComponent<TabButtons>().tooltipText;
+        statName.GetComponent<TagText>().tagText = tab.statName;
         statValue.text = tab.statValue;
         price.text = tab.price;
         perkBuyButton.interactable = int.Parse(price.text) <= int.Parse(money.text)
             && tab.perk.isActive && !tab.perk.buyed ? true : false;
+        GameManager.Instance.UpdateText(GameManager.Instance.texts);
     }
 }
