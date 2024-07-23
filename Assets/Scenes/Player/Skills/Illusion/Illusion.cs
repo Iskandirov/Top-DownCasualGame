@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
+using UnityEngine.VFX.Utility;
 
 public class Illusion : SkillBaseMono
 {
@@ -61,6 +63,8 @@ public class Illusion : SkillBaseMono
             a.y = yZzap;
             a.electicElement = player.Electricity;
             a.lifeTime = basa.lifeTime;
+            GameObject b = a.GetComponent<VFXPropertyBinder>().m_Bindings[0].gameObject;
+            Debug.Log(b.name);
         }
         CoroutineToDestroy(gameObject, basa.lifeTime);
         IsThereAnotherBeam();
