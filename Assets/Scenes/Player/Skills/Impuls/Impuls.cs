@@ -10,9 +10,15 @@ public class Impuls : SkillBaseMono
     public float grass;
     Transform objTransform;
 
+
+    [SerializeField] private float shockWaveTime = .75f;
+    private Coroutine shockWaveCoroutine;
+    private Material mat;
+    private static int waveDistanceFromCenter = Shader.PropertyToID("_WaveDistance");
     // Start is called before the first frame update
     void Start()
     {
+        mat = GetComponentInChildren<SpriteRenderer>().material;
         wind = PlayerManager.instance.Wind;
         grass = PlayerManager.instance.Grass;
         objTransform = transform;
@@ -28,7 +34,26 @@ public class Impuls : SkillBaseMono
             basa.stats[2].isTrigger = false;
         }
         StartCoroutine(TimerSpell());
+        CallShockWave();
     }
+    public void CallShockWave()
+    {
+        shockWaveCoroutine = StartCoroutine(ShockWaveAction(-0.1f, 1f));
+    }
+    private IEnumerator ShockWaveAction(float startPos, float endPos)
+    {
+        mat.SetFloat(waveDistanceFromCenter, startPos);
+        float lerpedAmount = 0f;
+        float elapsedTime = 0f;
+        while (elapsedTime < basa.lifeTime)
+        {
+            elapsedTime += Time.deltaTime;
+            lerpedAmount = Mathf.Lerp(startPos, endPos, (elapsedTime / basa.lifeTime));
+            mat.SetFloat(waveDistanceFromCenter, lerpedAmount);
+            yield return null;
+        }
+    }
+
     private IEnumerator TimerSpell()
     {
         yield return new WaitForSeconds(basa.lifeTime);
