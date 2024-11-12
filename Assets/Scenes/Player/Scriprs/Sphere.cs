@@ -1,3 +1,4 @@
+using FSMC.Runtime;
 using UnityEngine;
 
 public class Sphere : MonoBehaviour
@@ -9,12 +10,12 @@ public class Sphere : MonoBehaviour
     public float damage;
     Transform objTransform;
     PlayerManager player;
-    EnemyController enemy;
+    FSMC_Executer enemy;
     private void Start()
     {
         objTransform = transform;
         player = PlayerManager.instance;
-        enemy = EnemyController.instance;
+        enemy = FSMC_Executer.instance;
     }
     private void FixedUpdate()
     {
@@ -28,8 +29,7 @@ public class Sphere : MonoBehaviour
     {
         if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
-            enemy.TakeDamage(collision.GetComponent<EnemyState>(), damage);
-            //collision.GetComponent<HealthPoint>().TakeDamage(damage);
+            enemy.TakeDamage( damage);
             FindObjectOfType<SphereAround>().countSphere--;
             Destroy(gameObject);
 
@@ -38,7 +38,7 @@ public class Sphere : MonoBehaviour
         {
             collision.GetComponent<ObjectHealth>().TakeDamage();
             FindObjectOfType<SphereAround>().countSphere--;
-            //Destroy(gameObject);
+            Destroy(gameObject);
         }
     }
 }

@@ -55,7 +55,7 @@ public class HealActive : SkillBaseMono
     // Update is called once per frame
     void FixedUpdate()
     {
-        objTransform.position = new Vector3(player.objTransform.position.x, player.objTransform.position.y - 1.5f, player.objTransform.position.z);
+        objTransform.position = new Vector3(player.ShootPoint.transform.position.x + 1f, player.ShootPoint.transform.position.y - 8.5f, player.ShootPoint.transform.position.z);
     }
     public void isShowed()
     {

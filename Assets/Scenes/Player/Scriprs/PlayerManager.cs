@@ -1,3 +1,4 @@
+using Spine.Unity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -55,7 +56,6 @@ public enum PotionsType
     None,
 
 }
-
 public class PlayerManager : MonoBehaviour
 {
     GameManager gameManager;
@@ -63,6 +63,7 @@ public class PlayerManager : MonoBehaviour
     public Rigidbody2D rb;
     [HideInInspector]
     public static PlayerManager instance;
+    public List<GameObject> characterPrefabs;
 
     [Header("Move settings")]
     public float speed;
@@ -87,6 +88,7 @@ public class PlayerManager : MonoBehaviour
     public bool isTutor;
     public int heroID = 1;
     public List<float> slowArray = new List<float>();
+    public SkeletonAnimation anim;
 
     [Header("Health settings")]
     public float playerHealthPoint;
@@ -124,6 +126,7 @@ public class PlayerManager : MonoBehaviour
     public Sprite[] autoState;
     public VisualEffect AutoActiveCurve;
     public float offset;
+    public EnemySpawner enemies;
 
     [Header("Expiriance settings")]
     public Image expiriencepoint;
@@ -147,11 +150,6 @@ public class PlayerManager : MonoBehaviour
     public float Cold;
 
     [Header("Abilities")]
-    public Image[] abilities;
-    public GameObject[] abilitiesObj;
-    [HideInInspector]
-    public int abilityId;
-    public int countActiveAbilities;
     [Header("CharacterSet settings")]
     public List<CharacterStats> characters;
     [HideInInspector]
@@ -166,6 +164,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] Sprite bombImg;
     [SerializeField] bool canBeSaved = false;
     [SerializeField] GameObject potionUseVFX;
+    private float targetRotation = 0f;
     private void Awake()
     {
         instance ??= this;
@@ -216,7 +215,6 @@ public class PlayerManager : MonoBehaviour
         gameManager = GameManager.Instance;
         attackSpeedMax = attackSpeed;
         playerHealthPointMax = playerHealthPoint;
-        countActiveAbilities = 1;
         SetCharacterOnStart();
         OnAttackTypeSwitch += OnSwitchClickHandler;
     }
@@ -373,7 +371,7 @@ public class PlayerManager : MonoBehaviour
     {
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         float verticalInput = Input.GetAxisRaw("Vertical");
-
+        anim.AnimationName = horizontalInput == 0 && verticalInput == 0 ? "Idle" : "Run";
         if (horizontalInput != 0)
         {
             playerAnim.SetBool("IsMove", true);
@@ -382,6 +380,10 @@ public class PlayerManager : MonoBehaviour
                 StartCoroutine(SlowPlayer(0.2f, 0.9f));
                 axisX = horizontalInput;
             }
+             targetRotation = horizontalInput > 0 ? 180f : 0f;
+
+            // Плавне обертання до цільового кута
+            transform.rotation = Quaternion.Euler(0, Mathf.LerpAngle(transform.rotation.eulerAngles.y, targetRotation, 5), 0);
         }
         else if (verticalInput != 0)
         {
@@ -514,9 +516,9 @@ public class PlayerManager : MonoBehaviour
         Vector2 nearest = new Vector3(999, 999, 999);
         float nearestDistSqr = Mathf.Infinity;
        
-        foreach (var enemy in EnemyController.instance.children)
+        foreach (var enemy in enemies.children)
         {
-            /*if (enemy.gameObject.activeSelf*/ //умова щоб не автоатакувати в невидимих грибів)
+            if (enemy.gameObject.activeSelf) //умова щоб не автоатакувати в невидимих грибів)
             {
                 Vector3 enemyPos = enemy.objTransform.position;
                 float distSqr = (enemyPos - position).sqrMagnitude;
@@ -531,13 +533,20 @@ public class PlayerManager : MonoBehaviour
         Vector2 direction = nearest - myPos;
         direction.Normalize();
         float distance = Vector3.Distance(nearest, myPos);
-        if (EnemyController.instance.children.First(e => e.objTransform.position.x == nearest.x).GetComponentInChildren<SpriteRenderer>().color.a != 0 && distance < 50)
+        if (enemies.children.First(e => e.objTransform).gameObject.activeSelf)
         {
-            // Запускаємо об'єкт в заданому напрямку
-            Rigidbody2D rb = newObject.GetComponent<Rigidbody2D>();
-            rb.AddForce(direction.normalized * launchForce, ForceMode2D.Impulse);
-            float angleShot = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            newObject.transform.rotation = Quaternion.AngleAxis(angleShot + 90, Vector3.forward);
+            if (enemies.children.First(e => e.transform.position.x == nearest.x).GetComponentInChildren<SpriteRenderer>().color.a != 0 && distance < 50)
+            {
+                // Запускаємо об'єкт в заданому напрямку
+                Rigidbody2D rb = newObject.GetComponent<Rigidbody2D>();
+                rb.AddForce(direction.normalized * launchForce, ForceMode2D.Impulse);
+                float angleShot = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                newObject.transform.rotation = Quaternion.AngleAxis(angleShot + 90, Vector3.forward);
+            }
+            else
+            {
+                Destroy(newObject.gameObject);
+            }
         }
         else
         {
@@ -592,6 +601,8 @@ public class PlayerManager : MonoBehaviour
         playerHealthRegeneration += GivePerkStatValue(Stats.Regeneration);
         multiply += (int)GivePerkStatValue(Stats.ExpirianceGain);
         baseSkillImg.sprite = GameManager.ExtractSpriteListFromTexture("skills").First(s => s.name == gameManager.charactersRead.Find(c => c.isEquiped).spell);
+
+        //gameObject = characters[character.id + 1];
     }
     public float GivePerkStatValue(Stats stat)
     {
@@ -614,19 +625,13 @@ public class PlayerManager : MonoBehaviour
             {
                 playerHealthPoint += value;
                 fullFillImage.fillAmount += (value) / playerHealthPointMax;
-                if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 1 && s.isActive == true) != null)
-                {
-                    DailyQuests.instance.UpdateValue(1, value, false);
-                }
+                DailyQuests.instance.UpdateValue(1, value, false);
                 GameManager.Instance.FindStatName("healthHealed", value);
             }
             else
             {
                 GameManager.Instance.FindStatName("healthHealed", playerHealthPointMax - playerHealthPoint);
-                if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 1 && s.isActive == true) != null)
-                {
-                    DailyQuests.instance.UpdateValue(1, playerHealthPointMax - playerHealthPoint, false);
-                }
+                DailyQuests.instance.UpdateValue(1, playerHealthPointMax - playerHealthPoint, false);
 
                 playerHealthPoint = playerHealthPointMax;
                 fullFillImage.fillAmount = 1f;
@@ -640,11 +645,15 @@ public class PlayerManager : MonoBehaviour
         switch (type)
         {
             case PotionsType.Heal:
-                HealHealth(50 * Grass * GivePerkStatValue(Stats.Effectivness) / 100);
+                HealHealth(25 * Grass * (GivePerkStatValue(Stats.Effectivness) + 1));
                 StartCoroutine(VFXPotionDestroy(potionUseVFX, Color.green));
-                Shield shield = Instantiate(PotionShield);
-                shield.isPotions = true;
-                shield.healthShield = playerHealthPointMax * (GivePerkStatValue(Stats.PotionShield) / 100);
+                if (GivePerkStatValue(Stats.PotionShield) != 0)
+                {
+                    Shield shield = Instantiate(PotionShield);
+                    shield.isPotions = true;
+                    shield.healthShield = playerHealthPointMax * (GivePerkStatValue(Stats.PotionShield));
+                }
+                
                 break;
             case PotionsType.Bomb:
                 ThowBomb();
@@ -665,15 +674,17 @@ public class PlayerManager : MonoBehaviour
     void ThowBomb()
     {
         BobmExplode a = Instantiate(bomb);
-        a.damage *= (GivePerkStatValue(Stats.Effectivness) + GivePerkStatValue(Stats.ExplosionDamage)) / 100;
+        a.damage *= ((GivePerkStatValue(Stats.Effectivness) + 1) + GivePerkStatValue(Stats.ExplosionDamage));
         a.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = bombImg;
         a.transform.GetChild(0).GetComponent<SpriteRenderer>().transform.localScale = new Vector3(1,1,1);
     }
     void TimeFreeze()
     {
-        foreach (var enemy in EnemyController.instance.children)
+        EnemySpawner enemies = FindAnyObjectByType<EnemySpawner>();
+        foreach (var enemy in enemies.children)
         {
-            StartCoroutine(EnemyController.instance.FreezeEnemy(enemy,5f * GivePerkStatValue(Stats.Effectivness) / 100));
+            enemy.SetFloat("Stun Time", 5f * (GivePerkStatValue(Stats.Effectivness) + 1));
+            enemy.SetCurrentState("Stun");
         }
        
     } 

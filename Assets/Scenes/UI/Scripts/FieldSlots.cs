@@ -73,7 +73,7 @@ public class FieldSlots : MonoBehaviour
                         newItem.Level = data.Level + 1;
                         newItem.Tag = data.Tag + "_" + data.Level;
                         newItem.RareTag = data.RareTag + "_" + data.Level;
-                        newItem.Count = data.Count;
+                        newItem.Price = data.Price;
                         newItem.Description = data.Description;
                         float statCount = float.Parse(data.Stat);
                         statCount *= 2;
@@ -143,6 +143,7 @@ public class FieldSlots : MonoBehaviour
                 {
                     string decryptData = hashing.Decrypt(dataLine);
                     SavedObjectData dataObj = JsonUtility.FromJson<SavedObjectData>(decryptData);
+
                     foreach (string jsonLine in jsonData)
                     {
                         string decrypt = hashing.Decrypt(jsonLine);

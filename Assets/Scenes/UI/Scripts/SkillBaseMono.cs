@@ -86,6 +86,10 @@ public class SkillBaseMono : MonoBehaviour
         SkillBaseMono a = Instantiate(mono, new Vector3(player.objTransform.position.x, player.objTransform.position.y, 0f), Quaternion.identity);
         a.basa = objInfo.basa;
         a.currentLevel = currentLevel;
+        if (basa.isPassive)
+        {
+            a.transform.parent = player.transform;
+        }
     }
     public void CreateAOESpell(SkillBaseMono mono, SkillBaseMono objInfo, int currentLevel) 
     {
@@ -93,5 +97,9 @@ public class SkillBaseMono : MonoBehaviour
         SkillBaseMono a = Instantiate(mono, new Vector3(player.objTransform.position.x + UnityEngine.Random.Range(-20, 20), player.objTransform.position.y + UnityEngine.Random.Range(-20, 20), 0f), Quaternion.identity);
         a.basa = objInfo.basa;
         a.currentLevel = currentLevel;
+        if (basa.isPassive)
+        {
+            a.transform.parent = player.transform;
+        }
     }
 }

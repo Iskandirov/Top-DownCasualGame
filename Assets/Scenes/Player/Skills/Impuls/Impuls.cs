@@ -11,7 +11,7 @@ public class Impuls : SkillBaseMono
     Transform objTransform;
 
 
-    [SerializeField] private float shockWaveTime = .75f;
+    //[SerializeField] private float shockWaveTime = .75f;
     private Coroutine shockWaveCoroutine;
     private Material mat;
     private static int waveDistanceFromCenter = Shader.PropertyToID("_WaveDistance");
@@ -74,7 +74,7 @@ public class Impuls : SkillBaseMono
     // Update is called once per frame
     void FixedUpdate()
     {
-        objTransform.position = PlayerManager.instance.objTransform.position;
+        objTransform.position = PlayerManager.instance.ShootPoint.transform.position;
         objTransform.localScale = new Vector3((objTransform.localScale.x + basa.radius) + Time.fixedDeltaTime * powerGrow * wind,
             (objTransform.localScale.y + basa.radius) + Time.fixedDeltaTime * powerGrow * wind, (objTransform.localScale.z + basa.radius) + Time.fixedDeltaTime * powerGrow * wind);
     }

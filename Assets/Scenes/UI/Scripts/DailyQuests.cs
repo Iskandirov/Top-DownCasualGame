@@ -4,8 +4,8 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using TMPro;
 using UnityEngine.Networking;
+using TMPro;
 using UnityEngine.UI;
 using System.Linq;
 
@@ -192,15 +192,17 @@ public class DailyQuests : MonoBehaviour
         else
         {
             string timeDate = webrequest.downloadHandler.text;
-            //Debug.Log(timeDate);
             currentDataTime = ParseDateTime(timeDate);
         }
     }
-    DateTime ParseDateTime(in string dateTime)
+    DateTime ParseDateTime(string dateTime)
     {
+        dateTime = dateTime.Replace(" ", "");
+        //"datetime": "2024-10-08T00:23:02.023202+03:00",
         string date = Regex.Match(dateTime, @"\d{4}-\d{2}-\d{2}").Value;
-        string time = Regex.Match(dateTime, @"\d{2}:\d{2}:\d{2}\.\d{3}").Value;
-        return DateTime.Parse(string.Format("{0} {1}", date, time));
+        string time = Regex.Match(dateTime, @"\d{2}:\d{2}:\d{2}").Value;
+
+        return DateTime.Parse($"{date} {time}");
     }
     private string GetTimeToNextRandom()
     {

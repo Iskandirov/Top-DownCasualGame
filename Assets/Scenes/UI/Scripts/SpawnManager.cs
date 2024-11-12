@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,9 +13,9 @@ public class SpawnManager : MonoBehaviour
     public int explosionBarrelPoolSize = 5;
     public List<GameObject> barrelLootPool;
     public List<GameObject> barrelExplosionPool;
-    public GameObject[] barrelPrefab;
     public float barrelSpawnInterval = 20f;
-
+    public GameObject[] barrelPrefab;
+    
     [field: SerializeField] public static Collider2D spawnMapBoundStatic { get; private set; }
     [field: SerializeField] public  Collider2D spawnMapBound { get; private set; }
 
@@ -93,8 +94,8 @@ public class SpawnManager : MonoBehaviour
 
         // Створити об'єкт в випадковій точці всередині spawnArea
         Vector3 randomPosition = new Vector3(
-            Random.Range(min.x, max.x),
-            Random.Range(min.y, max.y),
+            UnityEngine.Random.Range(min.x, max.x),
+            UnityEngine.Random.Range(min.y, max.y),
             0
         );
 

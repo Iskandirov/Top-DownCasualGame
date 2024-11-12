@@ -1,3 +1,4 @@
+using FSMC.Runtime;
 using System.Collections;
 using UnityEngine;
 
@@ -54,14 +55,14 @@ public class puddle : SkillBaseMono
                 if (enemy != null && enemy.CompareTag("Enemy") && debuff != null)
                 {
 
-                    EnemyState objHealth = enemy.GetComponent<EnemyState>();
+                    FSMC_Executer objHealth = enemy.GetComponent<FSMC_Executer>();
 
                     if (debuff != null)
                     {
                         debuff.StartCoroutine(debuff.EffectTime(Elements.status.Water, 5));
                         debuff.StartCoroutine(debuff.EffectTime(Elements.status.Dirt, 5));
                     }
-                    EnemyController.instance.TakeDamage(objHealth, (basa.damage / debuff.elements.CurrentStatusValue(Elements.status.Electricity)) * player.Water / debuff.elements.CurrentStatusValue(Elements.status.Water) * debuff.elements.CurrentStatusValue(Elements.status.Dirt));
+                    objHealth.TakeDamage(basa.damage / debuff.elements.CurrentStatusValue(Elements.status.Electricity) * player.Water / debuff.elements.CurrentStatusValue(Elements.status.Water) * debuff.elements.CurrentStatusValue(Elements.status.Dirt));
                     GameManager.Instance.FindStatName("puddleDamage", (basa.damage / debuff.elements.CurrentStatusValue(Elements.status.Electricity)) * player.Water 
                         / debuff.elements.CurrentStatusValue(Elements.status.Water) * debuff.elements.CurrentStatusValue(Elements.status.Dirt));
                 }

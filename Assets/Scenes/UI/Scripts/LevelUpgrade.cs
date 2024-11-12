@@ -46,6 +46,12 @@ public class LevelUpgrade : MonoBehaviour
     public bool isFirstToUpgrade;
     public List<GameObject> CDSkillsObject;
 
+    public Image[] abilities;
+    public GameObject[] abilitiesObj;
+    [HideInInspector]
+    public int abilityId;
+    public int countActiveAbilities;
+
     TagText objTextOne;
     TagText objTextTwo;
     //SkillCDLink objLinkSpell;
@@ -68,6 +74,7 @@ public class LevelUpgrade : MonoBehaviour
     private void Start()
     {
         player = PlayerManager.instance;
+        countActiveAbilities = 1;
         gameManager = GameManager.Instance;
         resultId = new SavedSkillsData();
         SkillIconsMax = isSkillIcons.Count;
@@ -76,11 +83,8 @@ public class LevelUpgrade : MonoBehaviour
     void OnEnable()
     {
         string path = Path.Combine(Application.persistentDataPath, "SkillData.txt");
-        if (!File.Exists(path))
-        {
-            SaveSkill();
-        }
-
+        File.Delete(path);
+        SaveSkill();
         LoadSkill(skillsSave);
 
         RandomAbil();
@@ -130,8 +134,9 @@ public class LevelUpgrade : MonoBehaviour
     }
     public List<int> GetTwoRandomNumbers(List<SavedSkillsData> list)
     {
-        int index1 = list[Random.Range(0, list.Count)].ID;
-        int index2 = list[Random.Range(0, list.Count)].ID;
+        System.Random a = new System.Random();
+        int index1 = list[a.Next(0, list.Count)].ID;
+        int index2 = list[a.Next(0, list.Count)].ID;
 
         while (index1 == index2)
         {
@@ -164,7 +169,7 @@ public class LevelUpgrade : MonoBehaviour
         
         if (skillPoint != 999)
         {
-            for (int i = 0; i < player.countActiveAbilities; i++)
+            for (int i = 0; i < countActiveAbilities; i++)
             {
                 var abilityScript = abil.transform.GetChild(i).GetComponent<CDSkills>();
 
@@ -185,17 +190,17 @@ public class LevelUpgrade : MonoBehaviour
                 SetActiveAbil(player, abil, skillPoint,false);
 
                 isSkillIcons[skillPoint] = true;
-                player.abilitiesObj[player.countActiveAbilities - 1].GetComponent<CDSkills>().number = player.countActiveAbilities - 1;
+                abilitiesObj[countActiveAbilities - 1].GetComponent<CDSkills>().number = countActiveAbilities - 1;
 
                 if (resultId.isPassive)
                 {
-                    player.abilitiesObj[player.countActiveAbilities - 1].GetComponentInChildren<TextMeshProUGUI>().gameObject.SetActive(false);
+                    abilitiesObj[countActiveAbilities - 1].GetComponentInChildren<TextMeshProUGUI>().gameObject.SetActive(false);
                 }
             }
             ModifyJsonField(resultId, ++resultId.level);
             RemoveLine(skillPoint);
 
-            if (player.countActiveAbilities == player.abilitiesObj.Length)
+            if (countActiveAbilities == abilitiesObj.Length)
             {
                 RemoveAllOtherLines();
             }
@@ -252,12 +257,12 @@ public class LevelUpgrade : MonoBehaviour
         }
         else
         {
-            player.abilitiesObj[player.countActiveAbilities].SetActive(true);
-            player.abilities[player.countActiveAbilities].sprite = GameManager.ExtractSpriteListFromTexture("skills").First(s => s.name == resultId.Name);
-            player.countActiveAbilities++;
+            abilitiesObj[countActiveAbilities].SetActive(true);
+            abilities[countActiveAbilities].sprite = GameManager.ExtractSpriteListFromTexture("skills").First(s => s.name == resultId.Name);
+            countActiveAbilities++;
         }
 
-        CDSkills skill = abilObj.transform.GetChild(player.countActiveAbilities - 1).GetComponent<CDSkills>();
+        CDSkills skill = abilObj.transform.GetChild(countActiveAbilities - 1).GetComponent<CDSkills>();
         SetSkillData(skill, skillPoint);
         if (isFirst)
         {

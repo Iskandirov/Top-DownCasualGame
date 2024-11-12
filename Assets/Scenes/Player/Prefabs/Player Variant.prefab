@@ -78,11 +78,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2254235971519498339, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1.4196409
+      value: -164.43134
       objectReference: {fileID: 0}
     - target: {fileID: 2254235971519498339, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -10
+      value: -285.648
       objectReference: {fileID: 0}
     - target: {fileID: 2254235971519498339, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -97,8 +97,32 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3222384256279487117, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3222384256279487117, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
+      propertyPath: speed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3222384256279487117, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3222384256279487117, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
+      propertyPath: attackSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3222384256279487117, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
+      propertyPath: damageToGive
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3222384256279487117, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
+      propertyPath: baseSkillCDMax
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3222384256279487117, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
+      propertyPath: playerHealthPoint
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 3720857610996137803, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
       propertyPath: m_SortingLayer
@@ -127,8 +151,118 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 5884465385155736624, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
     - {fileID: 8824984762015125416, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
+    - {fileID: 8043460109651039372, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
+    - {fileID: 8159056775710100312, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
+    - {fileID: 3426292596444206932, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
     m_RemovedGameObjects:
     - {fileID: 521229772142710553, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8313530370077628586, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3401689498539154603}
+    - targetCorrespondingSourceObject: {fileID: 8313530370077628586, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1080045522621017177}
+    - targetCorrespondingSourceObject: {fileID: 8313530370077628586, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3707845447389119499}
   m_SourcePrefab: {fileID: 100100000, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
+--- !u!1 &8097421780546493499 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8313530370077628586, guid: 9c33d585a159da54c9ccd5a0fcdf9cb7, type: 3}
+  m_PrefabInstance: {fileID: 216249636260283537}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &3401689498539154603
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8097421780546493499}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 2bfce2a09045a3b49bbfb4dabf4dc661, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1080045522621017177
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8097421780546493499}
+  m_Mesh: {fileID: 0}
+--- !u!114 &3707845447389119499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8097421780546493499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skeletonDataAsset: {fileID: 11400000, guid: 25ccb02255cf48a42ab8bd37dcef6f21, type: 2}
+  initialSkinName: 
+  fixPrefabOverrideViaMeshFilter: 2
+  initialFlipX: 0
+  initialFlipY: 0
+  updateWhenInvisible: 3
+  separatorSlotNames: []
+  zSpacing: 0
+  useClipping: 1
+  immutableTriangles: 0
+  pmaVertexColors: 0
+  clearStateOnDisable: 0
+  tintBlack: 0
+  singleSubmesh: 0
+  fixDrawOrder: 0
+  addNormals: 0
+  calculateTangents: 0
+  maskInteraction: 0
+  maskMaterials:
+    materialsMaskDisabled: []
+    materialsInsideMask: []
+    materialsOutsideMask: []
+  disableRenderingOnOverride: 1
+  physicsPositionInheritanceFactor: {x: 1, y: 1}
+  physicsRotationInheritanceFactor: 1
+  physicsMovementRelativeTo: {fileID: 0}
+  updateTiming: 1
+  unscaledTime: 0
+  _animationName: 
+  loop: 1
+  timeScale: 1

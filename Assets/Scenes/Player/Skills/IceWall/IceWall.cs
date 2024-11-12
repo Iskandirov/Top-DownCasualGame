@@ -1,3 +1,4 @@
+using FSMC.Runtime;
 using System.Collections;
 using UnityEngine;
 
@@ -6,10 +7,8 @@ public class IceWall : SkillBaseMono
     public float cold;
     public float damageTick;
     Transform objTransform;
-    public EnemyController enemy;
     private void Start()
     {
-        enemy = EnemyController.instance;
         objTransform = transform;
         if (basa.stats[1].isTrigger)
         {
@@ -62,15 +61,16 @@ public class IceWall : SkillBaseMono
     {
         if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
-            Debug.Log(1);
+            FSMC_Executer enemy = collision.GetComponent<FSMC_Executer>();
             ElementActiveDebuff debuff = collision.GetComponent<ElementActiveDebuff>();
             debuff.StartCoroutine(debuff.EffectTime(Elements.status.Cold, 5));
 
-            StartCoroutine(EnemyController.instance.SlowEnemy(collision.GetComponent<EnemyState>(), 1f, 0.3f));
+            enemy.SetFloat("SlowTime",1f);
+            enemy.SetFloat("SlowPercent",.3f);
+            enemy.SetCurrentState("Slow");
             if (damageTick <= 0)
             {
-                enemy.TakeDamage(collision.GetComponent<EnemyState>(), basa.damage * cold 
-                    / collision.GetComponent<ElementActiveDebuff>().elements.CurrentStatusValue(Elements.status.Fire));
+                enemy.TakeDamage(basa.damage * cold  / collision.GetComponent<ElementActiveDebuff>().elements.CurrentStatusValue(Elements.status.Fire));
                 damageTick = basa.damageTickMax;
             }
         }
@@ -79,7 +79,10 @@ public class IceWall : SkillBaseMono
     {
         if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
-            StartCoroutine(EnemyController.instance.SlowEnemy(collision.GetComponent<EnemyState>(), 1f, 1f));
+            FSMC_Executer enemy = collision.GetComponent<FSMC_Executer>();
+            enemy.SetFloat("SlowTime", 0.1f);
+            enemy.SetFloat("SlowPercent", .9f);
+            enemy.SetCurrentState("Slow");
         }
     }
 }

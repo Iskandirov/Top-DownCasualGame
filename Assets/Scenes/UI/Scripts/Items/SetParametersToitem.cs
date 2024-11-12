@@ -12,6 +12,7 @@ public class SetParametersToitem : MonoBehaviour
     public string level;
     public string Stat;
     public string Count;
+    public string Price;
     public string Tag;
     public string RareTag;
     public string Description;

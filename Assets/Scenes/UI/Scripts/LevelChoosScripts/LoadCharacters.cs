@@ -10,6 +10,7 @@ public class LoadCharacters : MonoBehaviour
     [SerializeField] DataHashing hashing;
     private void OnEnable()
     {
+        itemsRead.Clear();
         string path = Path.Combine(Application.persistentDataPath, "CharacketInfo.txt");
         if (File.Exists(path))
         {

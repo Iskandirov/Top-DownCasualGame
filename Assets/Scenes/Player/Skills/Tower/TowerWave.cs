@@ -1,3 +1,4 @@
+using FSMC.Runtime;
 using System.Collections;
 using UnityEngine;
 
@@ -30,11 +31,10 @@ public class TowerWave : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            EnemyState objHealt = collision.GetComponent<EnemyState>();
+            FSMC_Executer objHealt = collision.GetComponent<FSMC_Executer>();
             ElementActiveDebuff debuff = collision.GetComponentInParent<ElementActiveDebuff>();
                 debuff.StartCoroutine(debuff.EffectTime(Elements.status.Water, 5));
-            EnemyController.instance.TakeDamage(objHealt, damage * waterElement * debuff.elements.CurrentStatusValue(Elements.status.Water) 
-                / debuff.elements.CurrentStatusValue(Elements.status.Dirt));
+            objHealt.TakeDamage(damage * waterElement * debuff.elements.CurrentStatusValue(Elements.status.Water) / debuff.elements.CurrentStatusValue(Elements.status.Dirt));
             GameManager.Instance.FindStatName("towerWaveDamage", (damage * waterElement * debuff.elements.CurrentStatusValue(Elements.status.Water)) 
                 / debuff.elements.CurrentStatusValue(Elements.status.Dirt));
         }

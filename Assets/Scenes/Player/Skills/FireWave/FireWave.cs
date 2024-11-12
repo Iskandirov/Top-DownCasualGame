@@ -1,3 +1,6 @@
+using FSMC.Runtime;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -5,11 +8,9 @@ public class FireWave : SkillBaseMono
 {
     public float burnDamage;
     Transform objTransform;
-    EnemyController enemy;
     // Start is called before the first frame update
     void Start()
     {
-        enemy = EnemyController.instance;
         player = PlayerManager.instance;
         objTransform = transform;
         if (basa.stats[1].isTrigger)
@@ -39,14 +40,14 @@ public class FireWave : SkillBaseMono
     }
     void FixedUpdate()
     {
-        objTransform.position = player.objTransform.position;
+        objTransform.position = player.ShootPoint.transform.position;
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy"))
         {
             ElementActiveDebuff debuff = collision.GetComponent<ElementActiveDebuff>();
-            EnemyState health = collision.GetComponent<EnemyState>();
+            FSMC_Executer health = collision.GetComponent<FSMC_Executer>();
 
             if (debuff != null)
             {
@@ -55,7 +56,7 @@ public class FireWave : SkillBaseMono
             float damage = (basa.damage * debuff.elements.CurrentStatusValue(Elements.status.Water))
                 / debuff.elements.CurrentStatusValue(Elements.status.Fire);
 
-            enemy.TakeDamage(health, damage);
+            health.TakeDamage(damage);
             GameManager.Instance.FindStatName("fireWaveDamage", damage);
             if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 3 && s.isActive == true) != null)
             {
@@ -64,8 +65,28 @@ public class FireWave : SkillBaseMono
 
             if (burnDamage != 0 && collision != null)
             {
-                health.SetBurn();
-                EnemyController.instance.Burn(health,3, 0.2f, burnDamage);
+                StartCoroutine(Burn(health, 3,2, 0.2f));
+            }
+        }
+    }
+    IEnumerator Burn(FSMC_Executer enemy,float damage,float time,float delay)
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(delay);
+            if (time > 0)
+            {
+                time -= Time.fixedDeltaTime;
+                delay -= Time.fixedDeltaTime;
+                if (delay <= 0)
+                {
+                    enemy.TakeDamage(damage);
+                }
+            }
+            else
+            {
+                //End Fire Anim
+                //ChangeToNotKick();
             }
         }
     }

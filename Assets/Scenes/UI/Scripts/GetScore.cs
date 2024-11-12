@@ -15,6 +15,7 @@ public class GetScore : MonoBehaviour
     public bool isWinPanel;
     DataHashing hash;
     static GetScore instance;
+    public float timeToSpawnBoss;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -28,13 +29,13 @@ public class GetScore : MonoBehaviour
                 timeEnd.text = objTimer.time.ToString("00.00");
                 if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 6 && s.isActive == true) != null)
                 {
-                    DailyQuests.instance.UpdateValue(6, objTimer.time - EnemyController.instance.timeToSpawnBobs, true);
+                    DailyQuests.instance.UpdateValue(6, objTimer.time - timeToSpawnBoss, true);
                 }
                 if (float.TryParse(timeEnd.text, out float result))
                 {
                     // Вдале перетворення
                     score = (GameManager.Instance.score + 1) * Mathf.Pow(1 + (0.05f * result), 1.1f) + 1;
-                    percent = Mathf.RoundToInt((result / EnemyController.instance.timeToSpawnBobs) * 100);
+                    percent = Mathf.RoundToInt((result / timeToSpawnBoss) * 100);
                     if (percent >= 100 && isWinPanel)
                     {
                         percent = 100;

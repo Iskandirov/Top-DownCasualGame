@@ -14,7 +14,7 @@ public class ItemParameters : MonoBehaviour
     public string itemRareName;
     public string Stat;
     public int Level;
-    public int Count;
+    public int Price;
     public string Tag;
     public string RareTag;
     public string Description;

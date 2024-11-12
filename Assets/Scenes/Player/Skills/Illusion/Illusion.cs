@@ -111,7 +111,7 @@ public class Illusion : SkillBaseMono
     void FixedUpdate()
     {
         attackSpeed -= Time.fixedDeltaTime;
-        objTransform.position = new Vector2(player.objTransform.position.x + x, player.objTransform.position.y + y);
+        objTransform.position = new Vector2(player.ShootPoint.transform.position.x + x, player.ShootPoint.transform.position.y + y);
         if (attackSpeed <= 0 && Input.GetMouseButton(0) && !player.isAuto)
         {
             Bullet a = Instantiate(bullet, objTransform.position, Quaternion.identity);

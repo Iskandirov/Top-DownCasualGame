@@ -1,3 +1,4 @@
+using FSMC.Runtime;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -65,7 +66,7 @@ public class Beam : SkillBaseMono
         direction = direction * basa.radius;
 
         // Рухаємо об'єкт до кінцевої позиції
-        objTransform.position = new Vector3(player.objTransform.position.x, player.objTransform.position.y, 5f);
+        objTransform.position = new Vector3(player.ShootPoint.transform.position.x, player.ShootPoint.transform.position.y, 5f);
 
         // Повертаємо коло в напрямку курсора
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -101,11 +102,11 @@ public class Beam : SkillBaseMono
     }
     void Damage(Collider2D collision)
     {
-        EnemyState objHealt = collision.GetComponent<EnemyState>();
+        FSMC_Executer objHealt = collision.GetComponent<FSMC_Executer>();
         ElementActiveDebuff debuff = collision.GetComponent<ElementActiveDebuff>();
         debuff.StartCoroutine(debuff.EffectTime(Elements.status.Steam, 5));
-        EnemyController.instance.TakeDamage(objHealt, (basa.damage * debuff.elements.CurrentStatusValue(Elements.status.Steam))
-            / debuff.elements.CurrentStatusValue(Elements.status.Cold));
+        
+        objHealt.TakeDamage((basa.damage * debuff.elements.CurrentStatusValue(Elements.status.Steam)) / debuff.elements.CurrentStatusValue(Elements.status.Cold));
 
         GameManager.Instance.FindStatName("beamDamage", (basa.damage * debuff.elements.CurrentStatusValue(Elements.status.Steam))
         / debuff.elements.CurrentStatusValue(Elements.status.Cold));

@@ -18,6 +18,7 @@ public class HealthPickUp : MonoBehaviour
             {
                 player.playerHealthPoint = player.playerHealthPointMax;
                 player.fullFillImage.fillAmount = 1;
+
                 Destroy(gameObject);
             }
             else
@@ -26,10 +27,8 @@ public class HealthPickUp : MonoBehaviour
                 player.fullFillImage.fillAmount = player.playerHealthPoint / player.playerHealthPointMax;
                 Destroy(gameObject);
             }
-            if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 5 && s.isActive == true) != null)
-            {
-                DailyQuests.instance.UpdateValue(5, 1, false);
-            }
-            }
+            DailyQuests.instance.UpdateValue(1, (player.playerHealthPointMax / 100) * 10, false);
+            DailyQuests.instance.UpdateValue(5, 1, false);
         }
+    }
 }

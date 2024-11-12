@@ -1062,12 +1062,12 @@
       <HintPath>Library\ScriptAssemblies\Unity.2D.Aseprite.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.VSCode.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Unity.AI.Navigation.Editor.ConversionSystem">
       <HintPath>Library\ScriptAssemblies\Unity.AI.Navigation.Editor.ConversionSystem.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.VSCode.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Editor">
@@ -1236,13 +1236,29 @@
       <Project>{03F2743C-F95C-8D38-8DA8-91A69DE401DE}</Project>
       <Name>Assembly-CSharp</Name>
     </ProjectReference>
+    <ProjectReference Include="spine-csharp.csproj">
+      <Project>{AA0F6AE0-F53E-8362-FF51-9008A624EEFD}</Project>
+      <Name>spine-csharp</Name>
+    </ProjectReference>
     <ProjectReference Include="UniRx.csproj">
       <Project>{E7A0725C-5EFF-7C47-A244-76BFCD56E10C}</Project>
       <Name>UniRx</Name>
     </ProjectReference>
+    <ProjectReference Include="FSMC.Runtime.csproj">
+      <Project>{001806C8-E513-B8B0-8E26-C7678E38D8FF}</Project>
+      <Name>FSMC.Runtime</Name>
+    </ProjectReference>
     <ProjectReference Include="AstarPathfindingProject.csproj">
       <Project>{146015A5-4C31-0094-109A-E7F1C94AFBD8}</Project>
       <Name>AstarPathfindingProject</Name>
+    </ProjectReference>
+    <ProjectReference Include="spine-unity.csproj">
+      <Project>{DDD73890-6559-0367-343B-C54035AF0C58}</Project>
+      <Name>spine-unity</Name>
+    </ProjectReference>
+    <ProjectReference Include="FSMC.Editor.csproj">
+      <Project>{E69115D6-438F-0F68-75C8-5A74BC7288F7}</Project>
+      <Name>FSMC.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="NavMeshPlus.csproj">
       <Project>{5E1C26AD-E2A0-B599-61A4-D45EBA739879}</Project>
@@ -1259,6 +1275,10 @@
     <ProjectReference Include="NavMeshPlusEditor.csproj">
       <Project>{43D69CCA-DD06-340B-973A-B9402B52046F}</Project>
       <Name>NavMeshPlusEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="spine-unity-editor.csproj">
+      <Project>{CB509C22-DB20-C9C0-40CC-D8C4677155A7}</Project>
+      <Name>spine-unity-editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

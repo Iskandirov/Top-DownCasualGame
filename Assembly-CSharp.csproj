@@ -92,6 +92,7 @@
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_TextCore_Text_Character.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_TextCore_GlyphMetrics.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scenes\Enemy\Scripts\Base\StateChase.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\LevelChoosScripts\CheckLevel.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\SniperTree\SniperTreeBullet.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_Unity_Mathematics_quaternion.cs" />
@@ -124,7 +125,6 @@
     <Compile Include="Assets\Scenes\UI\Scripts\Characters\CharacterInfo.cs" />
     <Compile Include="Assets\AdditionalAssets\StylizedAOEVFXwithIndicators\Scripts\SelfDestroyEffect.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_ParticleSystem_MinMaxGradient.cs" />
-    <Compile Include="Assets\Scenes\Enemy\Scripts\Base\EnemyState.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\ObjectToShow.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_UI_InputField_OnChangeEvent.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\DailyQuests.cs" />
@@ -142,7 +142,7 @@
     <Compile Include="Assets\Scenes\UI\Scripts\SetLanguage.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_TMPro_TextAlignmentOptions.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\CompiledGameInfo.cs" />
-    <Compile Include="Assets\Scenes\Enemy\Scripts\Base\EnemyController.cs" />
+    <Compile Include="Assets\Scenes\Enemy\Scripts\Base\StateDeath.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\PerkS\Perk.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_TMPro_TMP_InputField_SelectionEvent.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\Base\EXP.cs" />
@@ -151,6 +151,7 @@
     <Compile Include="Assets\Scenes\Player\Scriprs\FireHat.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\Bobs\GroupCollector.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\DestroyVFX.cs" />
+    <Compile Include="Assets\Scenes\Enemy\Scripts\Base\EnemySpawner.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\WriteReadFile.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\FieldSlots.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\Tornado\Tornado_PosChange.cs" />
@@ -159,6 +160,8 @@
     <Compile Include="Assets\Scenes\Player\Scriprs\MeshTrail.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\Beatty\EnemyBullet.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\Items\SetParametersToitem.cs" />
+    <Compile Include="Assets\Scenes\Enemy\Scripts\Base\StateHit.cs" />
+    <Compile Include="Assets\Scenes\Enemy\Scripts\Base\StunState.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_UI_AnimationTriggers.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_UI_Scrollbar_ScrollEvent.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\Tornado\Tornadic_Move.cs" />
@@ -180,10 +183,12 @@
     <Compile Include="Assets\Scenes\UI\Prefabs\Interactableobjects\LootDrop\LootDrop.cs" />
     <Compile Include="Assets\Scenes\Player\Skills\Illusion\Illusion.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\ProgressBar.cs" />
+    <Compile Include="Assets\Scenes\Enemy\Scripts\Base\StateSlowed.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_Events_UnityEventBase.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\Elemental\ElementalBoss_Attack.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\Tab\TabGroup.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_TextCore_Text_TextStyle.cs" />
+    <Compile Include="Assets\Scenes\Player\Skills\Trail\GrowMat_Script.cs" />
     <Compile Include="Assets\Scenes\Player\Skills\Shield\Shield.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_ParticleSystem_MinMaxCurve.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_TMPro_TMP_InputField_TouchScreenKeyboardEvent.cs" />
@@ -199,6 +204,7 @@
     <Compile Include="Assets\Scenes\UI\Scripts\Characters\CharacterSystem.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\AudioManager.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\ObjectHealth.cs" />
+    <Compile Include="Assets\Scenes\Enemy\Scripts\Base\StateAttack.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_UI_Button_ButtonClickedEvent.cs" />
     <Compile Include="Assets\Scenes\Player\Skills\Puddle\puddle.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_TextCore_Text_SpriteCharacter.cs" />
@@ -240,32 +246,57 @@
     <Compile Include="Assets\Scenes\UI\Scripts\Tutorial\CutsceneManager.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\StatsCollector.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_UI_InputField_EndEditEvent.cs" />
-    <Compile Include="Assets\Scenes\Enemy\Scripts\Base\DropItems.cs" />
+    <Compile Include="Assets\Scenes\Player\Skills\Trail\VeinPool.cs" />
     <Compile Include="Assets\Scenes\Player\Skills\Impuls\DestroyBarrier.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\Tornado\Tortador_Lightnong.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\Elemental\CutThePart.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\FSMC\README.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
+    <None Include="Assets\Spine\version.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Assets\ScriptTemplates\01-FSMC__Behaviour-NewFSMCBehaviour.cs.txt" />
+    <None Include="Assets\Scenes\Player\EXP\Nova\Hero_3.atlas.txt" />
+    <None Include="Assets\Scenes\UI\Sprites\Emotes\Spritesheets\vector_style2.xml" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
+    <None Include="Assets\Scenes\UI\Sprites\Emotes\Spritesheets\pixel_style8.xml" />
+    <None Include="Assets\Scenes\UI\Sprites\Emotes\Spritesheets\pixel_style2.xml" />
+    <None Include="Assets\Scenes\UI\Sprites\Emotes\Spritesheets\pixel_style3.xml" />
+    <None Include="Assets\Scenes\Player\EXP\Dash\Heroes.atlas.txt" />
+    <None Include="Assets\Scenes\UI\Sprites\Emotes\Spritesheets\vector_style4.xml" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
+    <None Include="Assets\Scenes\Player\EXP\Stark\Stark.atlas.txt" />
+    <None Include="Assets\Scenes\UI\Sprites\Emotes\Spritesheets\vector_style5.xml" />
+    <None Include="Assets\Scenes\UI\Test\Нова папка\parasitic host, Nature San.atlas.txt" />
+    <None Include="Assets\Scenes\UI\Sprites\Emotes\Spritesheets\vector_style7.xml" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\Scenes\UI\Sprites\Emotes\Spritesheets\vector_style1.xml" />
     <None Include="Assets\AdditionalAssets\StylizedAOEVFXwithIndicators\Documentation.txt" />
+    <None Include="Assets\Scenes\UI\Sprites\Emotes\Spritesheets\pixel_style4.xml" />
+    <None Include="Assets\Scenes\UI\Sprites\Emotes\Spritesheets\vector_style8.xml" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+    <None Include="Assets\Scenes\UI\Test\kek\Tetiana\skeleton.atlas.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
+    <None Include="Assets\Scenes\UI\Sprites\Emotes\License.txt" />
+    <None Include="Assets\Scenes\UI\Sprites\Emotes\Spritesheets\pixel_style7.xml" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
+    <None Include="Assets\Scenes\UI\Sprites\Emotes\Spritesheets\pixel_style5.xml" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+    <None Include="Assets\Scenes\UI\Sprites\Emotes\Spritesheets\pixel_style6.xml" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
+    <None Include="Assets\Scenes\UI\Sprites\Emotes\Spritesheets\vector_style3.xml" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
+    <None Include="Assets\Scenes\UI\Sprites\Emotes\Spritesheets\vector_style6.xml" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
+    <None Include="Assets\Scenes\UI\Sprites\Emotes\Spritesheets\pixel_style1.xml" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
     <None Include="Assets\TextMesh Pro\Fonts\OFL.txt" />
@@ -1211,12 +1242,12 @@
       <HintPath>Library\ScriptAssemblies\Unity.2D.Aseprite.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.VSCode.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Unity.AI.Navigation.Editor.ConversionSystem">
       <HintPath>Library\ScriptAssemblies\Unity.AI.Navigation.Editor.ConversionSystem.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.VSCode.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Editor">
@@ -1381,13 +1412,29 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="spine-csharp.csproj">
+      <Project>{AA0F6AE0-F53E-8362-FF51-9008A624EEFD}</Project>
+      <Name>spine-csharp</Name>
+    </ProjectReference>
     <ProjectReference Include="UniRx.csproj">
       <Project>{E7A0725C-5EFF-7C47-A244-76BFCD56E10C}</Project>
       <Name>UniRx</Name>
     </ProjectReference>
+    <ProjectReference Include="FSMC.Runtime.csproj">
+      <Project>{001806C8-E513-B8B0-8E26-C7678E38D8FF}</Project>
+      <Name>FSMC.Runtime</Name>
+    </ProjectReference>
     <ProjectReference Include="AstarPathfindingProject.csproj">
       <Project>{146015A5-4C31-0094-109A-E7F1C94AFBD8}</Project>
       <Name>AstarPathfindingProject</Name>
+    </ProjectReference>
+    <ProjectReference Include="spine-unity.csproj">
+      <Project>{DDD73890-6559-0367-343B-C54035AF0C58}</Project>
+      <Name>spine-unity</Name>
+    </ProjectReference>
+    <ProjectReference Include="FSMC.Editor.csproj">
+      <Project>{E69115D6-438F-0F68-75C8-5A74BC7288F7}</Project>
+      <Name>FSMC.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="NavMeshPlus.csproj">
       <Project>{5E1C26AD-E2A0-B599-61A4-D45EBA739879}</Project>
@@ -1404,6 +1451,10 @@
     <ProjectReference Include="NavMeshPlusEditor.csproj">
       <Project>{43D69CCA-DD06-340B-973A-B9402B52046F}</Project>
       <Name>NavMeshPlusEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="spine-unity-editor.csproj">
+      <Project>{CB509C22-DB20-C9C0-40CC-D8C4677155A7}</Project>
+      <Name>spine-unity-editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -606,12 +606,13 @@ public class GameManager : MonoBehaviour
             SavedObjectData data = new SavedObjectData();
             foreach (SavedObjectData item in items)
             {
+                Debug.Log(item.Price);
                 data.Name = item.Name;
                 data.IDRare = item.IDRare;
                 data.RareName = item.RareName;
                 data.Stat = item.Stat;
                 data.Level = item.Level;
-                data.Count = item.Count;
+                data.Price = item.Price;
                 data.Tag = item.Tag;
                 data.RareTag = item.RareTag;
                 data.Description = item.Description;

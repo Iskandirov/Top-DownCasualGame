@@ -1,5 +1,5 @@
+using FSMC.Runtime;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Zzap : MonoBehaviour
@@ -11,11 +11,9 @@ public class Zzap : MonoBehaviour
     public float damageTick;
     public float damageTickMax;
     public float electicElement;
-    EnemyController enemy;
     // Start is called before the first frame update
     void Start()
     {
-        enemy = EnemyController.instance;
         StartCoroutine(TimerSpell());
         transform.position = new Vector2(transform.position.x + x, transform.position.y + y);// +45
     }
@@ -40,7 +38,7 @@ public class Zzap : MonoBehaviour
                 {
                     debuff.StartCoroutine(debuff.EffectTime(Elements.status.Electricity, 5));
                 }
-                enemy.TakeDamage(collision.GetComponent<EnemyState>(), damage * electicElement);
+                collision.GetComponent<FSMC_Executer>().TakeDamage(damage * electicElement);
                 GameManager.Instance.FindStatName("zzapDamage", damage * electicElement);
             }
             damageTick = damageTickMax;

@@ -1479,28 +1479,28 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: SetStunned
+    functionName: MuteSpeed
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 0.75
-    functionName: Attack
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 1.9833333
-    functionName: SetIsNotAttack
+    functionName: DealDamage
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 2
-    functionName: SetNotStunned
+    functionName: SetCurrentState
+    data: Chase
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 2
+    functionName: UnMuteSpeed
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

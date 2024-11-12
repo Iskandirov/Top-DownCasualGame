@@ -11,11 +11,12 @@ public class BossAttack : MonoBehaviour
     public float damage = 20;
 
     public List<bool> attackBools;
-    public int Index = -1;
+    public int index = 0;
     public int poolSize = 60;
     public List<BossBullet> bulletPool;
     [Header("Attack settings")]
-    public List<GroupCollector> attack_groups;
+    public List<GroupCollector> attackGroup;
+    public List<string> attackAnimBoolName;
     public Animator anim;
     public void Start()
     {
@@ -25,54 +26,67 @@ public class BossAttack : MonoBehaviour
     {
         while (true)
         {
-            if (!attack_groups.Find(g => g.gameObject.activeSelf))
-            {
-                anim.SetBool("AttackEnd", true);
-            }
+           
             yield return new WaitForSeconds(interval);
             AttackTypes();
         }
     }
     public void StartRecover()
     {
-        foreach (var group in attack_groups)
+        foreach (var group in attackGroup)
         {
             group.gameObject.SetActive(true);
         }
-
-        StartCoroutine(EnemyController.instance.SlowEnemy(GetComponent<EnemyState>(), 5f, 0f));
     }
     public void EndRecover()
     {
         anim.SetBool("AttackEnd", false);
-        GetComponent<EnemyState>().SetNotStunned();
+       // GetComponent<EnemyState>().SetNotStunned();
         anim.SetBool("IsMoveToPlayer", true);
     }
     private void AttackTypes()
     {
-        if (attack_groups.Find(g => g.gameObject.activeSelf) && !anim.GetBool("AttackEnd"))
+        if (index < attackAnimBoolName.Count && !anim.GetBool("AttackEnd"))
         {
-            foreach (var bullet in attack_groups.Find(g => g.gameObject.activeSelf).transform.GetComponentsInChildren<BossBullet>())
-            {
-                bullet.state = true;
-            }
-            StartCoroutine(DeactivateGroup(delay));
+            anim.SetBool(attackAnimBoolName[index], true);
+            index++;
+        }
+        else
+        {
+            index = 0;
+        }
+    }
+    public void StartAttack()
+    {
+        foreach (var bullet in attackGroup[index - 1].group)
+        {
+            bullet.gameObject.layer = LayerMask.NameToLayer("EnemyBullet");
+        }
+    }
+    public void DeactivateAttack(string BoolName)
+    {
+        foreach(var bullet in attackGroup[index - 1].group)
+        {
+            bullet.gameObject.layer = LayerMask.NameToLayer("Enemy");
+        }
+        anim.SetBool(BoolName, false);
+        attackGroup[index - 1].gameObject.SetActive(false);
+        if (index == attackAnimBoolName.Count)
+        {
+            anim.SetBool("AttackEnd", true);
         }
     }
     public void MoveToPlayer()
     {
-        transform.position = EnemyController.instance.GetRandomSpawnPosition(PlayerManager.instance.objTransform.position, false,25f);
+        transform.position = GetRandomPosition(PlayerManager.instance.objTransform.position,25f);
         anim.SetBool("IsMoveToPlayer", false);
     }
-    public IEnumerator DeactivateGroup(float delay)
+    public Vector3 GetRandomPosition(Vector3 pos,  float radius)
     {
-        yield return new WaitForSeconds(delay);
-        GroupCollector group = attack_groups.Find(g => g.gameObject.activeSelf);
-        foreach (var bullet in group.group)
-        {
-            bullet.gameObject.SetActive(true);
-            bullet.state = false;
-        }
-        group.gameObject.SetActive(false);
+        float randomAngle = Random.Range(0f, 2f * Mathf.PI);
+        Vector3 spawnOffset = new Vector3(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle), 0f) * radius;
+        Vector3 spawnPosition = new Vector3(pos.x + spawnOffset.x, pos.y + spawnOffset.y, 0);
+
+        return spawnPosition;
     }
 }

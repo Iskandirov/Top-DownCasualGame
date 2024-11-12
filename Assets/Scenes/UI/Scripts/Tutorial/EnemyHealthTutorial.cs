@@ -1,39 +1,45 @@
+using FSMC.Runtime;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class EnemyHealthTutorial : MonoBehaviour
 {
-    public Boss mob;
+    //public EnemyState mob;
     TextAppear text;
     public bool isBoss;
-    public GameObject healthBossObj;
-    public Image healthBobsImg;
-    EnemyState state;
+    public bool isCutScene;
+    FSMC_Executer mobScript;
+    public LootManager loot;
     // Start is called before the first frame update
     void Start()
     {
+        isCutScene = true;
         text = FindObjectOfType<TextAppear>();
         if (isBoss)
         {
-            mob.health = mob.SetBase();
+            //mob.CurrentHealth = mob.MaxHealth;
             GetComponent<BossAttack>().damage = 0;
         }
-        state = GetComponent<EnemyState>();
+        mobScript = GetComponent<FSMC_Executer>();
     }
     private void FixedUpdate()
     {
-        if (state.health <= 0)
+        if(isCutScene)
+        {
+            mobScript.MuteSpeed();
+        }
+        if (mobScript.health <= 0)
         {
             text.tutor.PhasePlus();
             text.tutor.BlockMoveAndShoot();
 
             if (isBoss)
             {
-                mob.Death(state);
-                //GetComponent<DropItems>().isTutor = true;
-                //GetComponent<DropItems>().OnDestroyBoss(healthBossObj);
+                //mob.Die();
+                loot.DropLoot(true, transform);
             }
             Destroy(gameObject);
         }
     }
+    
 }

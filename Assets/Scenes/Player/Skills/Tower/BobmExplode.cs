@@ -1,3 +1,4 @@
+using FSMC.Runtime;
 using System.Collections;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public class BobmExplode : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        transform.position = PlayerManager.instance.objTransform.position;
         StartCoroutine(TimerSpell());
     }
 
@@ -16,13 +18,13 @@ public class BobmExplode : MonoBehaviour
     {
         yield return new WaitForSeconds(lifeTime);
 
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 5f);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 20f);
 
         foreach (Collider2D collider in colliders)
         {
             if (collider.CompareTag("Enemy"))
             {
-                EnemyController.instance.TakeDamage(collider.GetComponent<EnemyState>(), collider.GetComponent<EnemyState>().health - damage * fire);
+                collider.GetComponent<FSMC_Executer>().TakeDamage(collider.GetComponent<FSMC_Executer>().health - damage * fire);
                 GameManager.Instance.FindStatName("bombDamage", damage * fire);
             }
             else if (collider.CompareTag("Barrel") && collider != null)

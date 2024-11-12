@@ -1,3 +1,4 @@
+using FSMC.Runtime;
 using UnityEngine;
 
 public class SlowArea : MonoBehaviour
@@ -12,9 +13,10 @@ public class SlowArea : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            EnemyState move = collision.GetComponent<EnemyState>();
             GameManager.Instance.FindStatName("slowedTime", Time.fixedDeltaTime);
-            EnemyController.instance.SlowEnemy(move, 1f, 0.5f / dirtElement);
+            collision.GetComponent<FSMC_Executer>().SetFloat("SlowPercent", 0.5f / dirtElement);
+            collision.GetComponent<FSMC_Executer>().SetFloat("SlowTime", .5f);
+            collision.GetComponent<FSMC_Executer>().SetCurrentState("Slow");
             ElementActiveDebuff debuff = collision.GetComponentInParent<ElementActiveDebuff>();
             if (debuff != null)
             {
@@ -22,6 +24,7 @@ public class SlowArea : MonoBehaviour
             }
         }
     }
+    //
     //private void OnTriggerExit2D(Collider2D collision)
     //{
     //    if (collision.CompareTag("Enemy") && collision.GetComponentInParent<Forward>() != null)

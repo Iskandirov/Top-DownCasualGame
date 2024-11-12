@@ -8,6 +8,8 @@ public class ShowBehind : MonoBehaviour
     public List<GameObject> imagesToHover; // компонент для зміни прозорості
     public ParticleSystem particles; // компонент для зміни прозорості
     public int isSomeoneHere;
+
+    [System.Obsolete]
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (imagesToHover.Count > 0)
@@ -18,7 +20,9 @@ public class ShowBehind : MonoBehaviour
         {
             StartCoroutine(ReturnParticle(1f, 0f));
         }
-    } 
+    }
+
+    [System.Obsolete]
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (imagesToHover.Count > 0)
@@ -31,18 +35,22 @@ public class ShowBehind : MonoBehaviour
             //particles.startLifetime *= Time.fixedDeltaTime;
         }
     }
+
+    [System.Obsolete]
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (imagesToHover.Count > 0)
         {
             HideAndShow(collision, 0, isSomeoneHere - 1, 1f);
         }
-        else 
+        else if(isActiveAndEnabled)
         {
             StartCoroutine(ReturnParticle(1f,1f));
         }
         
     }
+
+    [System.Obsolete]
     public IEnumerator ReturnParticle(float delay, float targetCount)
     {
         yield return new WaitForSeconds(delay);

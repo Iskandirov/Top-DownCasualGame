@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using FSMC.Runtime;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 
@@ -12,17 +13,12 @@ public class Bullet : SkillBaseMono
     public float lifeStealPercent;
     public float slowPercent;
     public GameObject obj;
-    public EnemyController enemy;
-    private void OnEnable()
-    {
-        enemy = EnemyController.instance;
-    }
     private void Start()
     {
         player = PlayerManager.instance;
         if (obj == null)
         {
-            obj = player.gameObject;
+            obj = player.ShootPoint;
 
         }
         if (basa != null)
@@ -53,9 +49,9 @@ public class Bullet : SkillBaseMono
         isBulletSlow = player.isBulletSlow;
         lifeStealPercent = player.lifeStealPercent;
         slowPercent = player.slowPercent;
-        if (!player.isTutor && player.isAuto && EnemyController.instance.children.Count > 0 && !isRickoshet)
+        if (!player.isTutor && player.isAuto && !isRickoshet)
         {
-            player.AutoShoot(obj.transform.position,this);
+            player.AutoShoot(obj.transform.position, this);
         }
         else if(!isRickoshet)
         {
@@ -64,18 +60,16 @@ public class Bullet : SkillBaseMono
         isRickoshet = player.isRicoshet;
         CoroutineToDestroy(gameObject, 1f);
     }
-   
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
             ElementActiveDebuff debuff = collision.GetComponent<ElementActiveDebuff>();
             debuff.StartCoroutine(debuff.EffectTime(Elements.status.Fire, 5));
-            if (enemy == null)
-            {
-                //enemy.TakeDamage(collision.GetComponent<EnemyState>(), basa.damage);
-            }
-            enemy.TakeDamage(collision.GetComponent<EnemyState>(), basa.damage);
+            FSMC_Executer enemyMove = collision.GetComponent<FSMC_Executer>();
+            
+            enemyMove.TakeDamage(basa.damage);
             if (isLifeSteal && player.playerHealthPoint < player.playerHealthPointMax)
             {
                 if (player.playerHealthPoint + basa.damage * lifeStealPercent < player.playerHealthPointMax)
@@ -93,18 +87,20 @@ public class Bullet : SkillBaseMono
                     player.fullFillImage.fillAmount = 1;
                 }
             }
-            EnemyState enemyMove = collision.GetComponent<EnemyState>();
             if (isBulletSlow)
             {
-                enemy.SlowEnemy(enemyMove, 1f, slowPercent);
+                enemyMove.StateMachine.SetFloat("SlowTime", 1f);
+                enemyMove.StateMachine.SetFloat("SlowPercent", slowPercent);
+                enemyMove.StateMachine.SetCurrentState("Slowed", enemyMove);
                 //enemyControll.moveSlowTime = slowPercent;
             }
             GameManager.Instance.FindStatName("bulletDamage", basa.damage);
-            if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 3 && s.isActive == true) != null)
+            if (DailyQuests.instance != null)
             {
                 DailyQuests.instance.UpdateValue(3, basa.damage, false);
+
             }
-            //enemyMove.GetComponent<Rigidbody2D>().AddForce(-(transform.position - collision.transform.position) * forceAmount, ForceMode2D.Impulse);
+            enemyMove.GetComponent<Rigidbody2D>().AddForce(-(transform.position - collision.transform.position) * forceAmount, ForceMode2D.Impulse);
 
             if (!isPiers)
             {
@@ -126,12 +122,12 @@ public class Bullet : SkillBaseMono
         }
         else if (!collision.isTrigger && collision.CompareTag("TutorEnemy"))
         {
-            EnemyState enemyHealth = collision.GetComponent<EnemyState>();
-            enemyHealth.HealthDamage(enemyHealth.health - 1);
-            if (collision.GetComponent<EnemyHealthTutorial>().mob.type == "boss")
+            //EnemyState enemyHealth = collision.GetComponent<EnemyState>();
+            //enemyHealth.Damage(enemyHealth.CurrentHealth - 1);
+            // if (collision.GetComponent<EnemyHealthTutorial>().mob.type == "boss")
             {
-                Boss mob = collision.GetComponent<EnemyHealthTutorial>().mob;
-                mob.fillAmountImage.fillAmount = (enemyHealth.health - 1) / mob.healthMax;
+                //Boss mob = collision.GetComponent<EnemyHealthTutorial>().mob;
+                //mob.fillAmountImage.fillAmount = (enemyHealth.CurrentHealth - 1) / mob.healthMax;
             }
 
             Destroy(gameObject);

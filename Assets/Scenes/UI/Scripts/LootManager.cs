@@ -44,7 +44,7 @@ public class LootManager : MonoBehaviour
         newItem.idRare = Rarity[rand].IDRare;
         newItem.Stat = Rarity[rand].Stat;
         newItem.Level = Rarity[rand].Level;
-        newItem.Count = Rarity[rand].Count;
+        newItem.Price = Rarity[rand].Price;
         newItem.Tag = Rarity[rand].Tag;
         newItem.RareTag = Rarity[rand].RareTag;
         newItem.Description = Rarity[rand].Description;

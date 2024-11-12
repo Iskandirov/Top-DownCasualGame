@@ -53,7 +53,7 @@ public class Tornadic_Move : MonoBehaviour
     {
         if (collision.collider.CompareTag("Player") && !collision.collider.isTrigger && !PlayerManager.instance.isInvincible)
         {
-            PlayerManager.instance.TakeDamage(damage);
+            collision.collider.GetComponent<PlayerManager>().TakeDamage(damage);
             Destroy(gameObject);
         }
         else if (collision.collider.CompareTag("Shield"))

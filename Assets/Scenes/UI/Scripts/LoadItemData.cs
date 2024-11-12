@@ -31,6 +31,7 @@ public class LoadItemData : MonoBehaviour
             {
                 string decrypt = hashing.Decrypt(jsonLine);
                 SavedObjectData data = JsonUtility.FromJson<SavedObjectData>(decrypt);
+
                 (string, int) key = (data.Name, data.Level);
                 if (uniqueObjects.ContainsKey(key))
                 {
@@ -49,12 +50,13 @@ public class LoadItemData : MonoBehaviour
             {
                 string itemName = item.Name;
                 int itemLevel = item.Level;
+                item.Price = GameManager.Instance.itemsRead.Find(i => i.Name == itemName).Price;
                 SavedObjectData itemParams = item;
                 int count = objectCounts[(itemName, itemLevel)];
 
                 GameObject newObject = Instantiate(prefabToInstantiate, transform);
 
-                newObject.transform.SetParent(parentItemsList[index]); // index - це індекс батька у списку батьків
+                newObject.transform.SetParent(parentItemsList[index]);
                 newObject.transform.position = new Vector3(parentItemsList[index].position.x, parentItemsList[index].position.y, parentItemsList[index].position.z);
                 newObject.transform.localScale = prefabToInstantiate.transform.localScale;
 
@@ -62,17 +64,17 @@ public class LoadItemData : MonoBehaviour
                 objParam.ItemName = itemName;
                 objParam.ItemImage.sprite = GameManager.ExtractSpriteListFromTexture("items").First(i => i.name == itemParams.Name);
                 objParam.ItemImage.SetNativeSize();
-               // objParam.Rare.sprite = Resources.Load<Sprite>(itemParams.RareName + " " + itemParams.Level.ToString());
                 objParam.ItemStat = itemParams.Stat;
                 objParam.level = itemParams.Level.ToString();
                 objParam.RareName = itemParams.RareName;
                 objParam.Count = count.ToString();
+                objParam.Price = itemParams.Price.ToString();
                 objParam.Tag = itemParams.Tag;
                 objParam.RareTag = itemParams.RareTag;
                 objParam.IDRare = itemParams.IDRare;
                 objParam.Description = itemParams.Description;
                 newObject.GetComponent<MoveItem>().PointActivate();
-
+                Debug.Log(objParam.Price);
                 objectsListCopy.Add(newObject);
                 lang.FindMyComponentInChildren(newObject, itemParams.Tag);
                 index++; // переходимо до наступного батька у списку батьків

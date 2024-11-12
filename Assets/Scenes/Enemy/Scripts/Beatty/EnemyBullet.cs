@@ -9,24 +9,20 @@ public class EnemyBullet : MonoBehaviour
     private GameObject target;
     Transform objTransform;
     Transform targetTransform;
+    Vector3 targetPosition;
     void Start()
     {
         objTransform = transform;
-        target = PlayerManager.instance.gameObject;
+        target = PlayerManager.instance.ShootPoint;
         targetTransform = target.transform;
-        Invoke("DestroyBullet", 3f);
+        Invoke("DestroyBullet", 4f);
     }
     private void FixedUpdate()
     {
-        // Розрахувати цільову позицію
-        Vector3 targetPosition = targetTransform.position + (targetTransform.forward * offset);
+        targetPosition = targetTransform.position + (targetTransform.forward * offset);
 
-        // Перемістити кулю з постійною швидкістю
         objTransform.position = Vector3.MoveTowards(objTransform.position, targetPosition, speed * Time.deltaTime);
 
-        //currentPosition = objTransform.position;
-        //direction = (targetTransform.position - currentPosition).normalized;
-        //rb.velocity = new Vector3(direction.x * speed, direction.y * speed, currentPosition.z);
     }
     public void DestroyBullet()
     {
@@ -42,7 +38,7 @@ public class EnemyBullet : MonoBehaviour
         }
         else if (collision.CompareTag("Player") && !collision.isTrigger)
         {
-            PlayerManager.instance.TakeDamage(damage);
+            collision.GetComponent<PlayerManager>().TakeDamage(damage);
             Destroy(gameObject);
         }
     }

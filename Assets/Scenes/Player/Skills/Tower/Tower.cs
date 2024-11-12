@@ -1,3 +1,5 @@
+using FSMC.Runtime;
+using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +10,7 @@ public class Tower : SkillBaseMono
     public BobmExplode bomb;
     Collider2D[] colliders;
     float agreTime = 3;
-    EnemyState objEnemyMove;
+    FSMC_Executer objEnemyMove;
     public float waterElement;
     public float fireElement;
     Transform objTransform;
@@ -53,12 +55,12 @@ public class Tower : SkillBaseMono
         }
         Destroy(gameObject);
     }
-    private IEnumerator TimerAgre(EnemyState a)
+    private IEnumerator TimerAgre(FSMC_Executer a)
     {
         yield return new WaitForSeconds(agreTime);
         if (a != null)
         {
-            //a.GetComponentInParent<Forward>().destination.target = PlayerManager.instance.objTransform;
+            a.GetComponent<AIDestinationSetter>().target = PlayerManager.instance.objTransform;
         }
     }
     // Update is called once per frame
@@ -70,10 +72,10 @@ public class Tower : SkillBaseMono
             foreach (Collider2D collider in colliders)
             {
                 if (collider.isTrigger != true && collider.CompareTag("Enemy")
-                    && collider.GetComponent<EnemyState>() != null)
+                    && collider.GetComponent<FSMC_Executer>() != null)
                 {
-                    //collider.GetComponentInParent<Forward>().destination.target = objTransform;
-                    objEnemyMove = collider.transform.root.GetComponent<EnemyState>();
+                    collider.GetComponent<FSMC_Executer>().GetComponent<AIDestinationSetter>().target = objTransform;
+                    objEnemyMove = collider.transform.root.GetComponent<FSMC_Executer>();
                 }
             }
         }

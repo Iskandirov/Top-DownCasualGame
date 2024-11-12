@@ -143,18 +143,17 @@ public class ElementalBoss_Attack : MonoBehaviour
     {
         float elapsedTime = 0f;
         float currentForce = initialForce;
-
         while (elapsedTime < duration)
         {
-            Vector2 direction = (pushableObjectRigidbody.transform.position - objTransform.position).normalized;
-            pushableObjectRigidbody.velocity = direction * currentForce;
+            Vector2 direction = (pushableObjectRigidbody.transform.position - objTransform.position);
+            direction = direction.normalized * currentForce;
+            direction *= 1000;
+            pushableObjectRigidbody.AddForce(direction, ForceMode2D.Force);
 
             currentForce -= reductionFactor * initialForce * Time.deltaTime;
             elapsedTime += Time.deltaTime;
-
             yield return null;
         }
-
         // Встановлення швидкості та сили відкиду в нуль
         pushableObjectRigidbody.velocity = Vector2.zero;
     }

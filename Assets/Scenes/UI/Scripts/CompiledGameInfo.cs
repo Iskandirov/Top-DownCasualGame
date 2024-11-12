@@ -8,14 +8,14 @@ public class CompiledGameInfo : MonoBehaviour
     void Start()
     {
         info[0].text = GameManager.Instance.enabled.ToString();
-        info[1].text = EnemyController.instance.enabled.ToString();
-        info[3].text = EnemyController.instance.enemiesPool.Count.ToString();
-        info[4].text = EnemyController.instance.enemies.Count.ToString();
+        //info[1].text = EnemyState.instance.enabled.ToString();
+        //info[3].text = EnemyState.instance.enemiesPool.Count.ToString();
+        //info[4].text = EnemyState.instance.enemies.Count.ToString();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        info[2].text = EnemyController.instance.children.Count.ToString();
+        //info[2].text = EnemyState.instance.children.Count.ToString();
     }
 }

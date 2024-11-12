@@ -994,8 +994,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1364,7 +1364,7 @@ MonoBehaviour:
       radius: 0
       isPassive: 0
       spawnDelay: 0.3
-    isPassive: 1
+    isPassive: 0
     Elements: 000000000000000000000000
     tag:
     - bullet_1
@@ -1688,7 +1688,7 @@ MonoBehaviour:
       lifeTime: 12
       damage: 60
       damageTickMax: 0
-      countObjects: 1
+      countObjects: 6
       radius: 1
       isPassive: 0
       spawnDelay: 0
@@ -1843,11 +1843,11 @@ MonoBehaviour:
       - isTrigger: 0
         value: 1
       - isTrigger: 0
-        value: 1
+        value: 0.2
       - isTrigger: 0
         value: 0
       skill: {fileID: 0}
-      objToSpawn: {fileID: 4506995009783188816, guid: dc0c951fdfe1ff54f914cd1eace96eaa, type: 3}
+      objToSpawn: {fileID: -6488929622799030495, guid: d5a238b6b5fb1074daf614cddc720bd9, type: 3}
       stepMax: 0
       lifeTime: 5
       damage: 0.5
@@ -2024,6 +2024,20 @@ MonoBehaviour:
   isOpenToUpgrade: 0
   isFirstToUpgrade: 0
   CDSkillsObject: []
+  abilities:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  abilitiesObj:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  abilityId: 0
+  countActiveAbilities: 0
   resultId:
     Name: 
     ID: 0
@@ -2405,8 +2419,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

@@ -6,7 +6,7 @@ public class SniperTreeBullet : MonoBehaviour
     public float launchForce = 10f;  // Сила запуску об'єкта
     private void Start()
     {
-        Vector2 direction = PlayerManager.instance.transform.position - transform.position;
+        Vector2 direction = PlayerManager.instance.ShootPoint.transform.position - transform.position;
 
         direction.Normalize();
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
@@ -23,11 +23,12 @@ public class SniperTreeBullet : MonoBehaviour
     {
         if (collision.CompareTag("Player") && !collision.isTrigger && !PlayerManager.instance.isInvincible)
         {
-            PlayerManager.instance.TakeDamage(damage);
+            collision.GetComponent<PlayerManager>().TakeDamage(damage);
             Destroy(gameObject);
         }
         else if (collision.CompareTag("Shield") && !collision.isTrigger)
         {
+
             collision.GetComponent<Shield>().healthShield -= damage;
             GameManager.Instance.FindStatName("ShieldAbsorbedDamage", damage);
             Destroy(gameObject);

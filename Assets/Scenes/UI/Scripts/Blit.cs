@@ -39,15 +39,17 @@ as a workaround for 2D Renderer not supporting features (prior to 2021.2). Uncom
 			private RenderTargetIdentifier source { get; set; }
 			private RenderTargetIdentifier destination { get; set; }
 
-			RenderTargetHandle m_TemporaryColorTexture;
-			RenderTargetHandle m_DestinationTexture;
+            [System.Obsolete]
+            RenderTargetHandle m_TemporaryColorTexture;
+            [System.Obsolete]
+            RenderTargetHandle m_DestinationTexture;
 			string m_ProfilerTag;
 
 #if !UNITY_2020_2_OR_NEWER // v8
 			private ScriptableRenderer renderer;
 #endif
-
-			public BlitPass(RenderPassEvent renderPassEvent, BlitSettings settings, string tag) {
+            [System.Obsolete]
+            public BlitPass(RenderPassEvent renderPassEvent, BlitSettings settings, string tag) {
 				this.renderPassEvent = renderPassEvent;
 				this.settings = settings;
 				blitMaterial = settings.blitMaterial;
@@ -57,8 +59,8 @@ as a workaround for 2D Renderer not supporting features (prior to 2021.2). Uncom
 					m_DestinationTexture.Init(settings.dstTextureId);
 				}
 			}
-
-			public void Setup(ScriptableRenderer renderer) {
+            [System.Obsolete]
+            public void Setup(ScriptableRenderer renderer) {
 #if UNITY_2020_2_OR_NEWER // v10+
 				if (settings.requireDepthNormals)
 					ConfigureInput(ScriptableRenderPassInput.Normal);
@@ -66,8 +68,8 @@ as a workaround for 2D Renderer not supporting features (prior to 2021.2). Uncom
 				this.renderer = renderer;
 #endif
 			}
-
-			public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData) {
+            [System.Obsolete]
+            public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData) {
 				CommandBuffer cmd = CommandBufferPool.Get(m_ProfilerTag);
 				RenderTextureDescriptor opaqueDesc = renderingData.cameraData.cameraTargetDescriptor;
 				opaqueDesc.depthBufferBits = 0;
@@ -121,10 +123,10 @@ as a workaround for 2D Renderer not supporting features (prior to 2021.2). Uncom
 				context.ExecuteCommandBuffer(cmd);
 				CommandBufferPool.Release(cmd);
 			}
-
-			public override void FrameCleanup(CommandBuffer cmd) {
+			[System.Obsolete]
+            public override void FrameCleanup(CommandBuffer cmd) {
 				if (settings.dstType == Target.TextureID) {
-					cmd.ReleaseTemporaryRT(m_DestinationTexture.id);
+                    cmd.ReleaseTemporaryRT(m_DestinationTexture.id);
 				}
 				if (source == destination || (settings.srcType == settings.dstType && settings.srcType == Target.CameraColor)) {
 					cmd.ReleaseTemporaryRT(m_TemporaryColorTexture.id);
@@ -161,8 +163,8 @@ as a workaround for 2D Renderer not supporting features (prior to 2021.2). Uncom
 
 		public BlitSettings settings = new BlitSettings();
 		public BlitPass blitPass;
-
-		public override void Create() {
+        [System.Obsolete]
+        public override void Create() {
 			var passIndex = settings.blitMaterial != null ? settings.blitMaterial.passCount - 1 : 1;
 			settings.blitMaterialPassIndex = Mathf.Clamp(settings.blitMaterialPassIndex, -1, passIndex);
 			blitPass = new BlitPass(settings.Event, settings, name);
@@ -177,8 +179,8 @@ as a workaround for 2D Renderer not supporting features (prior to 2021.2). Uncom
 				settings.graphicsFormat = SystemInfo.GetGraphicsFormat(UnityEngine.Experimental.Rendering.DefaultFormat.LDR);
 			}
 		}
-
-		public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData) {
+        [System.Obsolete]
+        public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData) {
 
 			if (settings.blitMaterial == null) {
 				Debug.LogWarningFormat("Missing Blit Material. {0} blit pass will not execute. Check for missing reference in the assigned renderer.", GetType().Name);

@@ -1,3 +1,4 @@
+using FSMC.Runtime;
 using Pathfinding;
 using System.Collections;
 using TMPro;
@@ -112,11 +113,13 @@ public class TextAppear : MonoBehaviour
                 else if (tutor.phase == 1)
                 {
                     mob.SetActive(true);
+                    mob.AddComponent<EnemyHealthTutorial>();
                     CutsceneManager.Instance.StartCutscene("EnemyShow");
                 }
                 else if (tutor.phase == 2)
                 {
-                    mob.GetComponent<AIDestinationSetter>().target = player.transform;
+                    mob.GetComponent<EnemyHealthTutorial>().isCutScene = false;
+
                     tutor.MoveOn();
                     tutor.parentPhase2.gameObject.SetActive(true);
                 } 
@@ -134,9 +137,12 @@ public class TextAppear : MonoBehaviour
                 else if (tutor.phase == 5)
                 {
                     boss.GetComponent<BossAttack>().enabled = true;
+                    boss.GetComponent<EnemyHealthTutorial>().isCutScene = false;
+                    boss.GetComponent<FSMC_Executer>().UnMuteSpeed();
+                    boss.GetComponent<FSMC_Executer>().SetCurrentState("Chase");
                     boss.GetComponent<AIDestinationSetter>().target = player.transform;
-                    boss.layer = 10;
                     tutor.MoveOn();
+
                 }
                 else if (tutor.phase == 6)
                 {

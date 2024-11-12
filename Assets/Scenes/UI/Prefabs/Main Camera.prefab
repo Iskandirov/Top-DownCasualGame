@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6943899697868481301}
   - component: {fileID: 1867452487123272109}
   - component: {fileID: 4771157334789863649}
+  - component: {fileID: 5118097946407041814}
   - component: {fileID: 8651399062274846821}
   m_Layer: 11
   m_Name: Main Camera
@@ -212,7 +213,1377 @@ MonoBehaviour:
   - {fileID: 0}
   localizedText: []
   language: []
-  locDataItems: []
+  locDataItems:
+  - key: v-sync
+    value: "\u0412\u0435\u0440\u0442\u0438\u043A\u0430\u043B\u044C\u043D\u0430 \u0441\u0438\u043D\u0445\u0440\u043E\u043D\u0456\u0437\u0430\u0446\u0456\u044F"
+    language: ua
+  - key: v-sync
+    value: V-sync
+    language: eng
+  - key: play
+    value: "\u0413\u0440\u0430\u0442\u0438"
+    language: ua
+  - key: play
+    value: Play
+    language: eng
+  - key: forge
+    value: "\u041A\u0443\u0437\u043D\u044F"
+    language: ua
+  - key: forge
+    value: Forge
+    language: eng
+  - key: shop
+    value: "\u041C\u0430\u0433\u0430\u0437\u0438\u043D"
+    language: ua
+  - key: shop
+    value: Shop
+    language: eng
+  - key: settings
+    value: "\u041D\u0430\u043B\u0430\u0448\u0442\u0443\u0432\u0430\u043D\u043D\u044F"
+    language: ua
+  - key: settings
+    value: Settings
+    language: eng
+  - key: energy_charge
+    value: "\u0415\u043D\u0435\u0440\u0433\u0435\u0442\u0438\u0447\u043D\u0438\u0439
+      \u0437\u0430\u0440\u044F\u0434"
+    language: ua
+  - key: energy_charge
+    value: Energy charge
+    language: eng
+  - key: gear
+    value: "\u0428\u0435\u0441\u0442\u0435\u0440\u043D\u044F"
+    language: ua
+  - key: gear
+    value: Gear
+    language: eng
+  - key: eternium_crystals
+    value: "\u0415\u0442\u0435\u0440\u043D\u0456\u0439\u0441\u044C\u043A\u0456 \u043A\u0440\u0438\u0441\u0442\u0430\u043B\u0438"
+    language: ua
+  - key: eternium_crystals
+    value: Eternium crystals
+    language: eng
+  - key: dragon's_eye
+    value: "\u041E\u043A\u043E \u0434\u0440\u0430\u043A\u043E\u043D\u0430"
+    language: ua
+  - key: dragon's_eye
+    value: Dragon's eye
+    language: eng
+  - key: damage
+    value: "\u0428\u043A\u043E\u0434\u0430"
+    language: ua
+  - key: damage
+    value: Damage
+    language: eng
+  - key: regeneration
+    value: "\u0420\u0435\u0433\u0435\u043D\u0435\u0440\u0430\u0446\u0456\u044F"
+    language: ua
+  - key: regeneration
+    value: Regeneration
+    language: eng
+  - key: attack_speed
+    value: "\u0428\u0432\u0438\u0434\u043A\u0456\u0441\u0442\u044C \u0430\u0442\u0430\u043A\u0438"
+    language: ua
+  - key: attack_speed
+    value: Attack speed
+    language: eng
+  - key: level
+    value: "\u0420\u0456\u0432\u0435\u043D\u044C"
+    language: ua
+  - key: level
+    value: Level
+    language: eng
+  - key: attributes
+    value: "\u0425\u0430\u0440\u0430\u043A\u0442\u0435\u0440\u0438\u0441\u0442\u0438\u043A\u0438"
+    language: ua
+  - key: attributes
+    value: Attributes
+    language: eng
+  - key: name
+    value: "\u041D\u0430\u0437\u0432\u0430"
+    language: ua
+  - key: name
+    value: Name
+    language: eng
+  - key: rarity
+    value: "\u0420\u0456\u0434\u043A\u0456\u0441\u0442\u044C"
+    language: ua
+  - key: rarity
+    value: Rarity
+    language: eng
+  - key: common
+    value: "\u0417\u0432\u0438\u0447\u0430\u0439\u043D\u0435"
+    language: ua
+  - key: common
+    value: Common
+    language: eng
+  - key: uncommon
+    value: "\u0420\u0456\u0434\u043A\u0456\u0441\u043D\u0435"
+    language: ua
+  - key: uncommon
+    value: Uncommon
+    language: eng
+  - key: mythical
+    value: "\u041C\u0456\u0444\u0456\u0447\u043D\u0435"
+    language: ua
+  - key: mythical
+    value: Mythical
+    language: eng
+  - key: legendary
+    value: "\u041B\u0435\u0433\u0435\u043D\u0434\u0430\u0440\u043D\u0435"
+    language: ua
+  - key: legendary
+    value: Legendary
+    language: eng
+  - key: description_lvl_1
+    value: "\u041E\u0434\u043D\u043E\u0433\u043E \u0434\u043D\u044F \u0432\u0438
+      \u0437 \u0432\u0430\u0448\u0438\u043C \u0434\u0456\u0434\u0443\u0441\u0435\u043C
+      \u0432\u0438\u0440\u0456\u0448\u0438\u043B\u0438 \u043F\u043E\u043F\u0440\u0430\u043A\u0442\u0438\u043A\u0443\u0432\u0430\u0442\u0438\u0441\u044C
+      \u0432 \u043C\u0430\u0433\u0456\u0457, \u0430\u043B\u0435 \u0449\u043E\u0441\u044C
+      \u043F\u0456\u0448\u043B\u043E \u043D\u0435 \u0442\u0430\u043A \u0430\u0431\u043E
+      \u0436 \u0432\u0438 \u043D\u0430\u043F\u0443\u0442\u0430\u043B\u0438 \u0437\u0430\u043A\u043B\u0438\u043D\u0430\u043D\u043D\u044F
+      \u0456 \u043E\u0441\u044C \u0432\u0438 \u043E\u043F\u0438\u043D\u0438\u043B\u0438\u0441\u044C
+      \u0432 \u043D\u0435\u0437\u0440\u043E\u0437\u0443\u043C\u0456\u043B\u043E\u043C\u0443
+      \u043C\u0456\u0441\u0446\u0456, \u0434\u0430 \u0456 \u0434\u043E \u0442\u043E\u0433\u043E
+      \u0436 \u043F\u043E\u0437\u0430\u0431\u0443\u0432\u0430\u043B\u0438 \u043C\u0430\u0439\u0436\u0435
+      \u0432\u0441\u0435 \u0447\u043E\u0433\u043E \u0432\u0430\u0441 \u043D\u0430\u0432\u0447\u0438\u0432
+      \u0434\u0456\u0434\u0443\u0441\u044C. \u0414\u043E\u0431\u0440\u0435 \u0449\u043E
+      \u043F\u0440\u0438 \u043D\u0430\u0440\u043E\u0434\u0436\u0435\u043D\u0456 \u0434\u0456\u0434\u0443\u0441\u044C
+      \u043D\u0430\u043A\u043B\u0430\u0432 \u043D\u0430 \u0432\u0430\u0441 \u0437\u0430\u043A\u043B\u0438\u043D\u0430\u043D\u043D\u044F
+      \u043D\u0430 \u043F\u043E\u0434\u0456\u0431\u043D\u0438\u0439 \u0432\u0438\u043F\u0430\u0434\u043E\u043A,
+      \u0432\u043E\u043D\u043E \u0434\u043E\u043F\u043E\u043C\u043E\u0436\u0435 \u0432\u0430\u043C
+      \u043F\u0440\u0438\u0433\u0430\u0434\u0430\u0442\u0438 \u0445\u043E\u0442\u044C
+      \u0449\u043E\u0441\u044C"
+    language: ua
+  - key: description_lvl_1
+    value: One day, you and your grandfather decided to practice magic, but something
+      went wrong or you messed up the spell and you ended up in an unknown place,
+      and you forgot almost everything that you taught your grandfather. It's good
+      that when you were born, grandfather cast a spell on you for such a case, it
+      will help you remember at least something
+    language: eng
+  - key: description_lvl_2
+    value: "\u041D\u0435\u0432\u0456\u0434\u043E\u043C\u0438\u0439 \u0432\u0430\u043C
+      \u043B\u0456\u0441, \u044F\u043A\u0438\u0439 \u043D\u0430 \u043F\u0435\u0440\u0448\u0438\u0439
+      \u043F\u043E\u0433\u043B\u044F\u0434 \u0437\u0434\u0430\u0432\u0441\u044F \u0432\u0430\u043C
+      \u0442\u0438\u0445\u0438\u043C \u0456 \u0440\u043E\u0437\u0441\u043B\u0430\u0431\u043B\u044F\u044E\u0447\u0438\u043C
+      \u043C\u0456\u0441\u0446\u0435\u043C, \u0434\u043E\u043F\u043E\u043A\u0438
+      \u0432\u0438 \u043D\u0435 \u043F\u043E\u043C\u0456\u0442\u0438\u043B\u0438
+      \u0437\u0434\u0430\u043B\u0435\u043A\u0443 \u0447\u0438\u0457\u0441\u044C \u043F\u043E\u0433\u043B\u044F\u0434\u0438,
+      \u043A\u0456\u043B\u044C\u043A\u0456\u0441\u0442\u044C \u0441\u043F\u043E\u0441\u0442\u0435\u0440\u0456\u0433\u0430\u044E\u0447\u0438\u0445
+      \u0441\u0442\u0440\u0456\u043C\u043A\u043E \u0437\u0440\u043E\u0441\u0442\u0430\u0454.
+      \u0417 \u0446\u0438\u043C \u043F\u043E\u0442\u0440\u0456\u0431\u043D\u043E
+      \u0432\u0436\u0435 \u0449\u043E\u0441\u044C \u0440\u043E\u0431\u0438\u0442\u0438
+      !!!"
+    language: ua
+  - key: description_lvl_2
+    value: The unfamiliar forest, which at first seemed like a quiet and relaxing
+      place to you, suddenly turned into a place where you are being watched closely.
+      You noticed someone's gaze in the distance, and the number of observers is
+      growing rapidly. Something clearly needs to be done about this!
+    language: eng
+  - key: description_lvl_3
+    value: "\u041F\u0456\u0441\u043B\u044F \u0432\u0430\u0448\u043E\u0457 \u043E\u0441\u0442\u0430\u043D\u043D\u044C\u043E\u0457
+      \u0431\u0438\u0442\u0432\u0438 \u0432 \u043B\u0456\u0441\u0456 \u0432\u0438
+      \u043E\u043F\u0438\u043D\u0438\u043B\u0438\u0441\u044F \u043D\u0435 \u043D\u0430
+      \u0437\u0435\u043C\u043B\u0456, \u0430 \u043D\u0430 \u043D\u0435\u0431\u0435\u0441\u0430\u0445,
+      \u0431\u0443\u043A\u0432\u0430\u043B\u044C\u043D\u043E. \u0410\u043B\u0435
+      \u043D\u0435 \u0445\u0432\u0438\u043B\u044E\u0439\u0442\u0435\u0441\u044F,
+      \u043D\u0435 \u0432\u0441\u0435 \u0432\u0442\u0440\u0430\u0447\u0435\u043D\u043E!
+      \u0412\u0441\u0435, \u0449\u043E \u0432\u0430\u043C \u043F\u043E\u0442\u0440\u0456\u0431\u043D\u043E
+      \u0437\u0440\u043E\u0431\u0438\u0442\u0438, - \u0446\u0435 \u043F\u0456\u0434\u043A\u043E\u0440\u0438\u0442\u0438
+      \u0441\u043E\u0431\u0456 \u0441\u0438\u043B\u0438 \u043F\u0440\u0438\u0440\u043E\u0434\u0438.
+      \u041B\u0435\u0433\u043A\u043E, \u0447\u0438 \u043D\u0435 \u0442\u0430\u043A?"
+    language: ua
+  - key: description_lvl_3
+    value: After your last battle in the forest, you found yourself not on the ground,
+      but in the heavens, literally. But don't worry, all is not lost! All you need
+      to do is subdue the forces of nature. Easy, right?
+    language: eng
+  - key: description_lvl_4
+    value: "\u042F\u043A \u0442\u0435\u0431\u0435 \u0441\u044E\u0434\u0438 \u0432\u0437\u0430\u0433\u0430\u043B\u0456
+      \u0437\u0430\u043D\u0435\u0441\u043B\u043E? \u041F\u0440\u043E \u0446\u0435
+      \u043C\u0456\u0441\u0446\u0435 \u043C\u0430\u043B\u043E \u0449\u043E \u0432\u0456\u0434\u043E\u043C\u043E,
+      \u0432\u0441\u0456 \u0439\u043E\u0433\u043E \u043E\u043C\u0438\u043D\u0430\u044E\u0442\u044C
+      \u0447\u0435\u0440\u0435\u0437 \u043D\u0435\u0439\u043C\u043E\u0432\u0456\u0440\u043D\u0443
+      \u0441\u043F\u0435\u043A\u0443. \u0411\u0435\u0440\u0435\u0436\u0438\u0441\u044F
+      \u0432\u0441\u044C\u043E\u0433\u043E, \u0449\u043E \u0441\u0445\u043E\u0436\u0435
+      \u043D\u0430 \u043A\u0430\u043C\u0456\u043D\u043D\u044F."
+    language: ua
+  - key: description_lvl_4
+    value: How did you even get here? Little is known about this place, everyone
+      tries to avoid it because of the incredible heat. Beware of anything that looks
+      like stone.
+    language: eng
+  - key: description_lvl_last
+    value: "\u0412 \u0440\u043E\u0437\u0440\u043E\u0431\u0446\u0456..."
+    language: ua
+  - key: description_lvl_last
+    value: In development...
+    language: eng
+  - key: space
+    value: "\u041F\u0440\u043E\u0431\u0456\u043B"
+    language: ua
+  - key: space
+    value: Space
+    language: eng
+  - key: upgrade
+    value: "\u041F\u043E\u043A\u0440\u0430\u0449\u0438\u0442\u0438"
+    language: ua
+  - key: upgrade
+    value: Upgrade
+    language: eng
+  - key: equip
+    value: "\u041E\u0431\u043B\u0430\u0434\u043D\u0430\u0442\u0438"
+    language: ua
+  - key: equip
+    value: Equip
+    language: end
+  - key: bullet_2
+    value: "+1 \u043F\u0430\u0442\u0440\u043E\u043D"
+    language: ua
+  - key: bullet_2
+    value: +1 bullet
+    language: eng
+  - key: bullet_3
+    value: "\u0411\u0456\u043B\u044C\u0448\u0430 \u0448\u0432\u0438\u0434\u043A\u0456\u0441\u0442\u044C
+      \u0430\u0442\u0430\u043A\u0438"
+    language: ua
+  - key: bullet_3
+    value: More attack speed
+    language: eng
+  - key: bullet_5
+    value: "\u041F\u0440\u043E\u043D\u0438\u043A\u0430\u0454 \u043A\u0440\u0456\u0437\u044C
+      \u0432\u043E\u0440\u043E\u0433\u0456\u0432"
+    language: ua
+  - key: bullet_5
+    value: Pierces enemies
+    language: eng
+  - key: lightning_1
+    value: "\u0421\u0442\u0432\u043E\u0440\u044E\u0454 \u0431\u043B\u0438\u0441\u043A\u0430\u0432\u043A\u0443,
+      \u044F\u043A\u0430 \u0432\u0440\u0430\u0436\u0430\u0454 \u0432\u043E\u0440\u043E\u0433\u0456\u0432
+      \u043D\u0430\u0432\u043A\u043E\u043B\u043E \u0432\u0430\u0441"
+    language: ua
+  - key: lightning_1
+    value: Spawn a lightning that hit enemies around you
+    language: eng
+  - key: lightning_2
+    value: "+2 \u0431\u043B\u0438\u0441\u043A\u0430\u0432\u043A\u0438"
+    language: ua
+  - key: lightning_2
+    value: + 2 lightnings
+    language: eng
+  - key: lightning_3
+    value: "x2 \u0448\u043A\u043E\u0434\u0438"
+    language: ua
+  - key: lightning_3
+    value: x2 damage
+    language: eng
+  - key: lightning_4
+    value: "\u0411\u043B\u0438\u0441\u043A\u0430\u0432\u043A\u0430 \u043F\u0440\u0438\u0433\u043E\u043B\u043E\u043C\u0448\u0443\u0454
+      \u0432\u043E\u0440\u043E\u0433\u0456\u0432"
+    language: ua
+  - key: lightning_4
+    value: Lightning stun enemies
+    language: eng
+  - key: lightning_5
+    value: "\u041C\u0435\u043D\u0448\u0438\u0439 \u0447\u0430\u0441 \u043F\u0435\u0440\u0435\u0437\u0430\u0440\u044F\u0434\u043A\u0438"
+    language: ua
+  - key: lightning_5
+    value: Less recharge time
+    language: eng
+  - key: swamp_puddle_1
+    value: "\u0413\u0435\u043D\u0435\u0440\u0443\u0454 \u0431\u043E\u043B\u043E\u0442\u044F\u043D\u0443
+      \u043A\u0430\u043B\u044E\u0436\u0443, \u044F\u043A\u0430 \u0437\u0430\u0432\u0434\u0430\u0454
+      \u0448\u043A\u043E\u0434\u0438 \u0432\u043E\u0440\u043E\u0433\u0430\u043C"
+    language: ua
+  - key: swamp_puddle_1
+    value: Generates a swamp puddle that damages enemies
+    language: eng
+  - key: swamp_puddle_2
+    value: "\u0411\u0456\u043B\u044C\u0448\u0438\u0439 \u0440\u0430\u0434\u0456\u0443\u0441"
+    language: ua
+  - key: swamp_puddle_2
+    value: More radius
+    language: eng
+  - key: swamp_puddle_3
+    value: "x2 \u0448\u043A\u043E\u0434\u0438"
+    language: ua
+  - key: swamp_puddle_3
+    value: x2 damage
+    language: eng
+  - key: swamp_puddle_4
+    value: "+2 \u0432\u0438\u043F\u0443\u0449\u0435\u043D\u0456 \u043A\u0430\u043B\u044E\u0436\u0456"
+    language: ua
+  - key: swamp_puddle_4
+    value: + 2 spawned puddles
+    language: eng
+  - key: swamp_puddle_5
+    value: "\u0428\u0432\u0438\u0434\u0448\u0435 \u0437\u0430\u0432\u0434\u0430\u0454
+      \u0448\u043A\u043E\u0434\u0438"
+    language: ua
+  - key: swamp_puddle_5
+    value: Faster damage
+    language: eng
+  - key: fire_wave_1
+    value: "\u0421\u0442\u0432\u043E\u0440\u044E\u0454 \u0432\u043E\u0433\u043D\u0435\u043D\u043D\u0443
+      \u0445\u0432\u0438\u043B\u044E, \u044F\u043A\u0430 \u0432\u0440\u0430\u0436\u0430\u0454
+      \u0432\u043E\u0440\u043E\u0433\u0456\u0432 \u043D\u0430\u0432\u043A\u043E\u043B\u043E
+      \u0432\u0430\u0441"
+    language: ua
+  - key: fire_wave_1
+    value: Spawn a fire wave that hits enemies around you
+    language: eng
+  - key: fire_wave_2
+    value: "\u0411\u0456\u043B\u044C\u0448\u0435 \u0448\u043A\u043E\u0434\u0438"
+    language: ua
+  - key: fire_wave_2
+    value: More damage
+    language: eng
+  - key: fire_wave_3
+    value: "+1 \u0445\u0432\u0438\u043B\u044F"
+    language: ua
+  - key: fire_wave_3
+    value: +1 wave
+    language: eng
+  - key: fire_wave_4
+    value: "\u041C\u0435\u043D\u0448\u0438\u0439 \u0447\u0430\u0441 \u043F\u0435\u0440\u0435\u0437\u0430\u0440\u044F\u0434\u043A\u0438"
+    language: ua
+  - key: fire_wave_4
+    value: Less recharge
+    language: eng
+  - key: fire_wave_5
+    value: "\u0425\u0432\u0438\u043B\u044F \u0437\u0430\u043B\u0438\u0448\u0430\u0454
+      \u0435\u0444\u0435\u043A\u0442 \u0433\u043E\u0440\u0456\u043D\u043D\u044F"
+    language: ua
+  - key: fire_wave_5
+    value: Wave leaves burning effect
+    language: eng
+  - key: heal_1
+    value: "\u0412\u0438\u043A\u043B\u0438\u043A\u0430\u0454 \u043A\u043E\u043B\u043E
+      \u0437\u0446\u0456\u043B\u0435\u043D\u043D\u044F"
+    language: ua
+  - key: heal_1
+    value: Summon the healing circle
+    language: eng
+  - key: heal_2
+    value: "\u0411\u0456\u043B\u044C\u0448\u0435 \u0437\u0446\u0456\u043B\u0435\u043D\u043D\u044F"
+    language: ua
+  - key: heal_2
+    value: More heal
+    language: eng
+  - key: heal_3
+    value: "\u0417\u0446\u0456\u043B\u0435\u043D\u043D\u044F \u043D\u0430\u0434\u0430\u0454
+      2 \u0441\u0435\u043A\u0443\u043D\u0434\u0438 \u043D\u0435\u0432\u0440\u0430\u0437\u043B\u0438\u0432\u043E\u0441\u0442\u0456"
+    language: ua
+  - key: heal_3
+    value: Heal give 2 seconds invulnerability
+    language: eng
+  - key: heal_4
+    value: "\u041C\u0435\u043D\u0448\u0438\u0439 \u0447\u0430\u0441 \u043F\u0435\u0440\u0435\u0437\u0430\u0440\u044F\u0434\u043A\u0438"
+    language: ua
+  - key: heal_4
+    value: Less reacharge time
+    language: eng
+  - key: heal_5
+    value: "\u0411\u0456\u043B\u044C\u0448\u0435 \u0437\u0446\u0456\u043B\u0435\u043D\u043D\u044F"
+    language: ua
+  - key: heal_5
+    value: More heal
+    language: eng
+  - key: reload_1
+    value: "\u041F\u0435\u0440\u0435\u0437\u0430\u0440\u044F\u0434\u043A\u0430 \u043E\u0434\u043D\u0456\u0454\u0457
+      \u043D\u0430\u0432\u0438\u0447\u043A\u0438"
+    language: ua
+  - key: reload_1
+    value: Reload one skill
+    language: eng
+  - key: reload_2
+    value: "+1 \u043F\u0435\u0440\u0435\u0437\u0430\u0440\u044F\u0434\u043A\u0430
+      \u043D\u0430\u0432\u0438\u0447\u043A\u0438"
+    language: ua
+  - key: reload_2
+    value: +1 reload skill
+    language: eng
+  - key: reload_3
+    value: "\u041C\u0435\u043D\u0448\u0438\u0439 \u0447\u0430\u0441 \u043F\u0435\u0440\u0435\u0437\u0430\u0440\u044F\u0434\u043A\u0438"
+    language: ua
+  - key: reload_3
+    value: Less recharge time
+    language: spa
+  - key: reload_4
+    value: "+1 \u043F\u0435\u0440\u0435\u0437\u0430\u0440\u044F\u0434\u043A\u0430
+      \u043D\u0430\u0432\u0438\u0447\u043A\u0438"
+    language: ua
+  - key: reload_4
+    value: +1 reload skill
+    language: eng
+  - key: reload_5
+    value: "\u0427\u0430\u0441 \u043F\u0435\u0440\u0435\u0437\u0430\u0440\u044F\u0434\u043A\u0438
+      \u0432\u0441\u0456\u0445 \u043D\u0430\u0432\u0438\u0447\u043E\u043A - 50%"
+    language: ua
+  - key: reload_5
+    value: All skills reacharge time - 50%
+    language: eng
+  - key: impuls_1
+    value: "\u0421\u0442\u0432\u043E\u0440\u044E\u0454 \u0456\u043C\u043F\u0443\u043B\u044C\u0441,
+      \u044F\u043A\u0438\u0439 \u0432\u0456\u0434\u0448\u0442\u043E\u0432\u0445\u0443\u0454
+      \u0432\u043E\u0440\u043E\u0433\u0456\u0432 \u0432\u0456\u0434 \u0432\u0430\u0441"
+    language: ua
+  - key: impuls_1
+    value: Create an impulse that pushes enemies away from you
+    language: eng
+  - key: impuls_2
+    value: "\u0411\u0456\u043B\u044C\u0448\u0438\u0439 \u0440\u0430\u0434\u0456\u0443\u0441"
+    language: ua
+  - key: impuls_2
+    value: More radius
+    language: eng
+  - key: impuls_3
+    value: "\u041C\u0435\u043D\u0448\u0438\u0439 \u0447\u0430\u0441 \u043F\u0435\u0440\u0435\u0437\u0430\u0440\u044F\u0434\u043A\u0438"
+    language: ua
+  - key: impuls_3
+    value: Less reacharge time
+    language: eng
+  - key: impuls_4
+    value: "\u0421\u0442\u0432\u043E\u0440\u044E\u0454 \u0431\u0430\u0440'\u0454\u0440"
+    language: ua
+  - key: impuls_4
+    value: Create a barrier
+    language: eng
+  - key: impuls_5
+    value: "\u042F\u043A\u0449\u043E \u0432\u0438 \u0431\u0443\u0434\u0435\u0442\u0435
+      \u0432 \u0437\u043E\u043D\u0456 \u0434\u0456\u0457 \u0431\u0430\u0440'\u0454\u0440\u0443
+      \u043D\u0430\u043F\u0440\u0438\u043A\u0456\u043D\u0446\u0456 \u0434\u0456\u0457
+      \u0437\u0430\u043A\u043B\u0438\u043D\u0430\u043D\u043D\u044F, \u0432\u0438
+      \u0431\u0443\u0434\u0435\u0442\u0435 \u0437\u0446\u0456\u043B\u0435\u043D\u0456"
+    language: ua
+  - key: impuls_5
+    value: If you will be in barrier area at the end of spell you will be healed
+    language: eng
+  - key: shield_1
+    value: "\u0421\u0442\u0432\u043E\u0440\u044E\u0454 \u0449\u0438\u0442, \u044F\u043A\u0438\u0439
+      \u0431\u043B\u043E\u043A\u0443\u0454 \u0448\u043A\u043E\u0434\u0443 \u0432\u0456\u0434
+      \u0432\u043E\u0440\u043E\u0433\u0456\u0432"
+    language: ua
+  - key: shield_1
+    value: Create a shield that blocks damage from enemies
+    language: eng
+  - key: shield_2
+    value: "\u0411\u0456\u043B\u044C\u0448\u0435 HP \u0434\u043B\u044F \u0449\u0438\u0442\u0430"
+    language: ua
+  - key: shield_2
+    value: More HP for shield
+    language: eng
+  - key: shield_3
+    value: "\u0429\u0438\u0442 \u043F\u043E\u0432\u0435\u0440\u0442\u0430\u0454 50%
+      \u0448\u043A\u043E\u0434\u0438 \u0432\u043E\u0440\u043E\u0433\u0430\u043C"
+    language: ua
+  - key: shield_3
+    value: Shield returns 50% damage to enemies
+    language: eng
+  - key: shield_4
+    value: "\u0421\u0442\u0432\u043E\u0440\u044E\u0454 \u0437\u043E\u043D\u0443,
+      \u044F\u043A\u0430 \u0441\u043F\u043E\u0432\u0456\u043B\u044C\u043D\u044E\u0454
+      \u0432\u043E\u0440\u043E\u0433\u0456\u0432"
+    language: ua
+  - key: shield_4
+    value: Create a zone that slows enemies
+    language: eng
+  - key: shield_5
+    value: "\u041A\u043E\u0436\u043D\u0456 20 \u0432\u0442\u0440\u0430\u0447\u0435\u043D\u0438\u0445
+      HP \u043A\u0438\u0434\u0430\u0454 \u043A\u0430\u043C\u0456\u043D\u044C, \u044F\u043A\u0438\u0439
+      \u0437\u0430\u0432\u0434\u0430\u0454 \u0448\u043A\u043E\u0434\u0438 \u0432\u043E\u0440\u043E\u0433\u0430\u043C
+      \u0456 \u043F\u0440\u0438\u0433\u043E\u043B\u043E\u043C\u0448\u0443\u0454 \u0457\u0445"
+    language: ua
+  - key: shield_5
+    value: Every 20 lost HP throw a rock that damages enemies and stuns them
+    language: eng
+  - key: beam_1
+    value: "\u0421\u0442\u0432\u043E\u0440\u044E\u0454 \u043F\u0440\u043E\u043C\u0456\u043D\u044C
+      \u043F\u0430\u0440\u0443, \u044F\u043A\u0438\u0439 \u0432\u0440\u0430\u0436\u0430\u0454
+      \u0432\u043E\u0440\u043E\u0433\u0456\u0432"
+    language: ua
+  - key: beam_1
+    value: Create a ray of steam that hits enemies
+    language: eng
+  - key: beam_2
+    value: "+2 \u043F\u0440\u043E\u043C\u0435\u043D\u0456"
+    language: ua
+  - key: beam_2
+    value: +2 rays
+    language: eng
+  - key: beam_3
+    value: "\u0411\u0456\u043B\u044C\u0448\u0435 \u0448\u043A\u043E\u0434\u0438"
+    language: ua
+  - key: beam_3
+    value: More damage
+    language: eng
+  - key: beam_4
+    value: "\u0411\u0456\u043B\u044C\u0448\u0435 \u0447\u0430\u0441\u0443 \u0456\u0441\u043D\u0443\u0432\u0430\u043D\u043D\u044F"
+    language: ua
+  - key: beam_4
+    value: More life time
+    language: eng
+  - key: beam_5
+    value: "\u041C\u0435\u043D\u0448\u0438\u0439 \u0447\u0430\u0441 \u043F\u0435\u0440\u0435\u0437\u0430\u0440\u044F\u0434\u043A\u0438"
+    language: ua
+  - key: beam_5
+    value: Less recharge time
+    language: eng
+  - key: tower_1
+    value: "\u0421\u0442\u0432\u043E\u0440\u044E\u0454 \u043C\u0435\u0434\u0443\u0437\u0443,
+      \u044F\u043A\u0430 \u0432\u0440\u0430\u0436\u0430\u0454 \u0432\u043E\u0440\u043E\u0433\u0456\u0432
+      \u043F\u043E\u0431\u043B\u0438\u0437\u0443 \u0432\u043E\u0434\u044F\u043D\u0438\u043C\u0438
+      \u0445\u0432\u0438\u043B\u044F\u043C\u0438"
+    language: ua
+  - key: tower_1
+    value: Create a medusa that hits nearby enemies with water wave
+    language: eng
+  - key: tower_2
+    value: "\u0411\u0456\u043B\u044C\u0448\u0435 \u0447\u0430\u0441\u0443 \u0456\u0441\u043D\u0443\u0432\u0430\u043D\u043D\u044F"
+    language: ua
+  - key: tower_2
+    value: More life time
+    language: eng
+  - key: tower_3
+    value: "\u0421\u0442\u0432\u043E\u0440\u044E\u0454 \u0431\u043E\u043C\u0431\u0443
+      \u043F\u0456\u0441\u043B\u044F \u0440\u0443\u0439\u043D\u0443\u0432\u0430\u043D\u043D\u044F"
+    language: ua
+  - key: tower_3
+    value: Create a bomb after crash
+    language: eng
+  - key: tower_4
+    value: "\u0411\u0456\u043B\u044C\u0448\u0435 \u0448\u0432\u0438\u0434\u043A\u043E\u0441\u0442\u0456
+      \u0430\u0442\u0430\u043A\u0438"
+    language: ua
+  - key: tower_4
+    value: More attack speed
+    language: eng
+  - key: tower_5
+    value: "\u041F\u0440\u043E\u0432\u043E\u043A\u0443\u0454 \u0432\u043E\u0440\u043E\u0433\u0456\u0432
+      \u043F\u043E\u0431\u043B\u0438\u0437\u0443"
+    language: ua
+  - key: tower_5
+    value: Provokes nearby enemies
+    language: eng
+  - key: meteor_1
+    value: "\u0421\u0442\u0432\u043E\u0440\u044E\u0454 \u043C\u0435\u0442\u0435\u043E\u0440\u0438\u0442,
+      \u044F\u043A\u0438\u0439 \u0432\u0440\u0430\u0436\u0430\u0454 \u0432\u043E\u0440\u043E\u0433\u0456\u0432
+      \u0432 \u043E\u0431\u043B\u0430\u0441\u0442\u0456"
+    language: ua
+  - key: meteor_1
+    value: Create a meteor that hits enemies in area
+    language: eng
+  - key: meteor_2
+    value: "\u0411\u0456\u043B\u044C\u0448\u0435 \u0448\u043A\u043E\u0434\u0438"
+    language: ua
+  - key: meteor_2
+    value: More damage
+    language: eng
+  - key: meteor_3
+    value: "+2 \u043C\u0435\u0442\u0435\u043E\u0440\u0438\u0442\u0456\u0432"
+    language: ua
+  - key: meteor_3
+    value: +2 meteors
+    language: eng
+  - key: meteor_4
+    value: "\u041E\u0431\u043B\u0430\u0441\u0442\u044C \u043F\u0456\u0441\u043B\u044F
+      \u043C\u0435\u0442\u0435\u043E\u0440\u0438\u0442\u0456\u0432 \u0441\u043F\u043E\u0432\u0456\u043B\u044C\u043D\u044E\u0454
+      \u0448\u0432\u0438\u0434\u043A\u0456\u0441\u0442\u044C \u0440\u0443\u0445\u0443
+      \u0432\u043E\u0440\u043E\u0433\u0456\u0432"
+    language: ua
+  - key: meteor_4
+    value: Area after meteors slows enemies move speed
+    language: eng
+  - key: meteor_5
+    value: "+5 \u043C\u0435\u0442\u0435\u043E\u0440\u0438\u0442\u0456\u0432"
+    language: ua
+  - key: meteor_5
+    value: +5 meteors
+    language: eng
+  - key: illusion_1
+    value: "\u0412\u0438\u043A\u043B\u0438\u043A\u0430\u0454 \u0441\u0432\u0456\u0442\u043B\u044F\u0447\u043A\u0456\u0432
+      \u043D\u0430\u0432\u043A\u043E\u043B\u043E \u0433\u0435\u0440\u043E\u044F,
+      \u044F\u043A\u0456 \u0430\u0442\u0430\u043A\u044E\u0442\u044C \u0437 \u0432\u0430\u043C\u0438"
+    language: ua
+  - key: illusion_1
+    value: Summon a fireflies around hero that attacks with you
+    language: eng
+  - key: illusion_2
+    value: "+1 \u0441\u0432\u0456\u0442\u043B\u044F\u0447\u043E\u043A"
+    language: ua
+  - key: illusion_2
+    value: +1 firefly
+    language: eng
+  - key: illusion_3
+    value: "\u0411\u0456\u043B\u044C\u0448\u0435 \u0447\u0430\u0441\u0443 \u0436\u0438\u0442\u0442\u044F"
+    language: ua
+  - key: illusion_3
+    value: More life time
+    language: eng
+  - key: illusion_4
+    value: "+1 \u0441\u0432\u0456\u0442\u043B\u044F\u0447\u043E\u043A"
+    language: ua
+  - key: illusion_4
+    value: +1 firefly
+    language: eng
+  - key: illusion_5
+    value: "\u0421\u0442\u0432\u043E\u0440\u044E\u0454 \u043B\u0456\u043D\u0456\u044E
+      \u0443\u0434\u0430\u0440\u0443 \u043C\u0456\u0436 \u0441\u0432\u0456\u0442\u043B\u044F\u0447\u043A\u0430\u043C\u0438"
+    language: ua
+  - key: illusion_5
+    value: Create a shock line between firelies
+    language: eng
+  - key: health
+    value: "\u0417\u0434\u043E\u0440\u043E\u0432'\u044F"
+    language: ua
+  - key: health
+    value: Health
+    language: eng
+  - key: damage
+    value: "\u0428\u043A\u043E\u0434\u0430"
+    language: ua
+  - key: damage
+    value: Damage
+    language: eng
+  - key: move_speed
+    value: "\u0428\u0432\u0438\u0434\u043A\u0456\u0441\u0442\u044C \u0440\u0443\u0445\u0443"
+    language: ua
+  - key: move_speed
+    value: Movement speed
+    language: eng
+  - key: attack_speed
+    value: "\u0428\u0432\u0438\u0434\u043A\u0456\u0441\u0442\u044C \u0430\u0442\u0430\u043A\u0438"
+    language: ua
+  - key: attack_speed
+    value: Attack speed
+    language: eng
+  - key: base_spell_1
+    value: "\u0421\u0442\u0440\u0438\u0431\u043E\u043A"
+    language: ua
+  - key: base_spell_1
+    value: Jump
+    language: eng
+  - key: base_spell_2
+    value: "\u041D\u0435\u0434\u043E\u0442\u043E\u0440\u043A\u0430\u043D\u0438\u0439"
+    language: ua
+  - key: base_spell_2
+    value: Untouchable
+    language: eng
+  - key: base_spell_3
+    value: "\u0420\u0438\u043A\u043E\u0448\u0435\u0442"
+    language: ua
+  - key: base_spell_3
+    value: Ricochet
+    language: eng
+  - key: character_description_1
+    value: "\u0417\u0430\u043F\u0430\u043B\u044C\u043D\u0438\u0439 \u044E\u043D\u0438\u0439
+      \u043C\u0430\u0433. \u041E\u0431\u043E\u0436\u043D\u044E\u0454 \u0434\u043E\u0441\u043B\u0456\u0434\u0436\u0443\u0432\u0430\u0442\u0438
+      \u043D\u043E\u0432\u0456 \u043C\u0456\u0441\u0446\u044F, \u043F\u043E\u0433\u0430\u043D\u043E
+      \u0440\u043E\u0437\u0431\u0438\u0440\u0430\u0454\u0442\u044C\u0441\u044F \u0443
+      \u0444\u043E\u0440\u043C\u0443\u043B\u0430\u0445. \u0422\u0430\u043A\u043E\u0436
+      \u0434\u0443\u0436\u0435 \u043B\u044E\u0431\u0438\u0442\u044C \u0441\u0432\u043E\u0457\u0445
+      \u0431\u0430\u0442\u044C\u043A\u0456\u0432."
+    language: ua
+  - key: character_description_1
+    value: Hot-headed young mage. Loves to explore new places, bad with formulas.
+      Also loves his mom very much.
+    language: eng
+  - key: character_description_2
+    value: "\u041F\u043E\u0441\u043F\u0456\u0448\u043B\u0438\u0432\u0438\u0439 \u0445\u043B\u043E\u043F\u0435\u0446\u044C,
+      \u044F\u043A\u0438\u0439 \u043D\u0435 \u043B\u044E\u0431\u0438\u0442\u044C
+      \u0431\u0430\u0433\u0430\u0442\u043E \u0433\u043E\u0432\u043E\u0440\u0438\u0442\u0438.
+      \u0417\u0430\u0432\u0436\u0434\u0438 \u0437\u0430\u0439\u043D\u044F\u0442\u0438\u0439,
+      \u0437\u0430\u0445\u043E\u043F\u043B\u044E\u0454\u0442\u044C\u0441\u044F \u0442\u0430\u043A\u0438\u043C\u0438
+      \u0430\u043A\u0442\u0438\u0432\u043D\u043E\u0441\u0442\u044F\u043C\u0438, \u044F\u043A
+      \u043C\u0430\u0433\u043E\u0431\u043E\u043B."
+    language: ua
+  - key: character_description_2
+    value: Hasty guy who doesn't like to talk much. Always busy and enjoys activities
+      like mageball.
+    language: eng
+  - key: character_description_3
+    value: "\u0417 \u0432\u0438\u0433\u043B\u044F\u0434\u0443 \u0441\u0443\u0432\u043E\u0440\u0438\u0439,
+      \u0430\u043B\u0435 \u043D\u0430\u0441\u043F\u0440\u0430\u0432\u0434\u0456 \u0434\u043E\u0431\u0440\u0438\u0439.
+      \u041B\u044E\u0431\u0438\u0442\u044C \u0442\u0432\u0430\u0440\u0438\u043D \u0456
+      \u043E\u0431\u043E\u0436\u043D\u044E\u0454 \u0433\u043E\u0442\u0443\u0432\u0430\u0442\u0438
+      \u0441\u043E\u043B\u043E\u0434\u043A\u0456 \u043F\u0438\u0440\u043E\u0433\u0438
+      \u043D\u0430 \u0434\u043E\u0437\u0432\u0456\u043B\u043B\u0456."
+    language: ua
+  - key: character_description_3
+    value: Bruised on the outside, soft on the inside. Loves animals and enjoys baking
+      sweet pies in their free time.
+    language: eng
+  - key: trail_1
+    value: "\u0421\u0442\u0432\u043E\u0440\u044E\u0432\u0430\u0442\u0438 \u0441\u043B\u0456\u0434,
+      \u044F\u043A\u0438\u0439 \u0437\u0430\u0432\u0434\u0430\u0454 \u0448\u043A\u043E\u0434\u0438
+      \u0432\u043E\u0440\u043E\u0433\u0430\u043C"
+    language: ua
+  - key: trail_1
+    value: Create a trail that damages enemies
+    language: eng
+  - key: trail_2
+    value: "+2 \u0441\u0435\u043A\u0443\u043D\u0434\u0438 \u0434\u043E \u0447\u0430\u0441\u0443
+      \u0436\u0438\u0442\u0442\u044F \u0441\u043B\u0456\u0434\u0443"
+    language: ua
+  - key: trail_2
+    value: +2 seconds to trail life time
+    language: eng
+  - key: trail_3
+    value: "\u0411\u0456\u043B\u044C\u0448\u0435 \u0448\u043A\u043E\u0434\u0438"
+    language: ua
+  - key: trail_3
+    value: More damage
+    language: eng
+  - key: trail_4
+    value: "\u0421\u043B\u0456\u0434 \u0448\u0438\u0440\u0448\u0438\u0439"
+    language: ua
+  - key: trail_4
+    value: The trail is wider
+    language: eng
+  - key: trail_5
+    value: "\u041A\u043E\u0436\u043D\u0430 \u0441\u043C\u0435\u0440\u0442\u044C \u0432\u0456\u0434
+      \u0441\u043B\u0456\u0434\u0443 \u0432\u0456\u0434\u043D\u043E\u0432\u043B\u044E\u0454
+      10% \u043C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u043E\u0433\u043E
+      \u0437\u0430\u043F\u0430\u0441\u0443 \u041E\u0417 \u0432\u043E\u0440\u043E\u0433\u0430
+      \u0443 \u0432\u0438\u0433\u043B\u044F\u0434\u0456 \u041E\u0417"
+    language: ua
+  - key: trail_5
+    value: Each death from trail restores 10% of enemy maximum HP as HP
+    language: eng
+  - key: vortex_1
+    value: "\u0421\u0442\u0432\u043E\u0440\u0438\u0442\u0438 \u0432\u0438\u0440,
+      \u044F\u043A\u0438\u0439 \u043F\u0440\u0438\u0442\u044F\u0433\u0443\u0454 \u0432\u043E\u0440\u043E\u0433\u0456\u0432
+      \u0434\u043E \u0446\u0435\u043D\u0442\u0440\u0443"
+    language: ua
+  - key: vortex_1
+    value: Create a vortex that pulls enemies to the center
+    language: eng
+  - key: vortex_2
+    value: "\u0414\u043E\u0432\u0448\u0438\u0439 \u0447\u0430\u0441 \u0436\u0438\u0442\u0442\u044F"
+    language: ua
+  - key: vortex_2
+    value: More life time
+    language: eng
+  - key: vortex_3
+    value: "\u0411\u0456\u043B\u044C\u0448\u0438\u0439 \u0440\u0430\u0434\u0456\u0443\u0441"
+    language: ua
+  - key: vortex_3
+    value: More radius
+    language: eng
+  - key: vortex_4
+    value: "\u041C\u0435\u043D\u0448\u0438\u0439 \u0447\u0430\u0441 \u043F\u0435\u0440\u0435\u0437\u0430\u0440\u044F\u0434\u043A\u0438"
+    language: ua
+  - key: vortex_4
+    value: Less recharge
+    language: eng
+  - key: vortex_5
+    value: "\u0421\u0442\u0432\u043E\u0440\u044E\u0454 \u0449\u0435 \u043E\u0434\u0438\u043A
+      \u0432\u0438\u0445\u043E\u0440 \u0443 \u0432\u0438\u043F\u0430\u0434\u043A\u043E\u0432\u043E\u043C\u0443
+      \u043C\u0456\u0441\u0446\u0456"
+    language: ua
+  - key: vortex_5
+    value: Spawn another vortex in random place
+    language: eng
+  - key: Icewall_1
+    value: "\u0421\u0442\u0432\u043E\u0440\u044E\u0454 \u043B\u044C\u043E\u0434\u044F\u043D\u0443
+      \u0441\u0442\u0456\u043D\u0443 \u0449\u043E \u0441\u043F\u043E\u0432\u0456\u043B\u044C\u043D\u044E\u0454
+      \u0432\u043E\u0440\u043E\u0433\u0456\u0432"
+    language: ua
+  - key: Icewall_1
+    value: Create a ice wall that slow down enemies
+    language: eng
+  - key: Icewall_2
+    value: "\u0411\u0456\u043B\u044C\u0448\u0435\u0439 \u0447\u0430\u0441 \u0436\u0438\u0442\u0442\u044F"
+    language: ua
+  - key: Icewall_2
+    value: More life time
+    language: eng
+  - key: Icewall_3
+    value: "\u0411\u0456\u043B\u044C\u0448\u0430 \u0441\u0442\u0456\u043D\u0430"
+    language: ua
+  - key: Icewall_3
+    value: Bigger ice wall
+    language: eng
+  - key: Icewall_4
+    value: "\u041C\u0435\u043D\u0448\u0430 \u043F\u0435\u0440\u0435\u0437\u0430\u0440\u044F\u0434\u043A\u0430"
+    language: ua
+  - key: Icewall_4
+    value: Less recharge
+    language: eng
+  - key: Icewall_5
+    value: "\u0421\u0442\u0456\u043D\u0430 \u043D\u0430\u043D\u043E\u0441\u0438\u0442\u044C
+      \u043F\u0435\u0440\u0456\u043E\u0434\u0438\u0447\u043D\u0443 \u0448\u043A\u043E\u0434\u0443"
+    language: ua
+  - key: Icewall_5
+    value: Wall dealing damage
+    language: eng
+  - key: axe_1
+    value: "\u0421\u0442\u0432\u043E\u0440\u044E\u0454 \u043A\u0440\u0443\u0436\u043B\u044F\u044E\u0447\u0443
+      \u0441\u043E\u043A\u0438\u0440\u0443 \u044F\u043A\u0430 \u043D\u0430\u043D\u043E\u0441\u0438\u0442\u044C
+      \u0448\u043A\u043E\u0434\u0443 \u043A\u043E\u0436\u043D\u043E\u043C\u0443 \u0432\u043E\u0440\u043E\u0433\u0443
+      \u043D\u0430 \u0441\u0432\u043E\u0454\u043C\u0443 \u0448\u043B\u044F\u0445\u0443"
+    language: ua
+  - key: axe_1
+    value: Create a spining axe that hit every enemy on his way
+    language: eng
+  - key: axe_2
+    value: "\u0411\u0456\u043B\u044C\u0448\u0435 \u0448\u043A\u043E\u0434\u0438"
+    language: ua
+  - key: axe_2
+    value: More damage
+    language: eng
+  - key: axe_3
+    value: "\u0411\u0456\u043B\u044C\u0448\u0438\u0439 \u0440\u0430\u0434\u0456\u0443\u0441"
+    language: ua
+  - key: axe_3
+    value: More radius
+    language: eng
+  - key: axe_4
+    value: "\u041C\u0435\u043D\u0448\u0430 \u043F\u0435\u0440\u0435\u0437\u0430\u0440\u044F\u0434\u043A\u0430"
+    language: ua
+  - key: axe_4
+    value: Less recharge
+    language: eng
+  - key: axe_5
+    value: "\u041F\u0456\u0441\u043B\u044F \u043F\u043E\u0432\u0435\u0440\u043D\u0435\u043D\u043D\u044F
+      \u0441\u043E\u043A\u0438\u0440\u0438 \u0441\u0442\u0432\u043E\u0440\u044E\u0454
+      \u0434\u0432\u0456 \u0441\u043E\u043A\u0438\u0440\u0438 \u044F\u043A\u0456
+      \u043A\u0440\u0443\u0436\u043B\u044F\u044E\u0442\u044C \u043D\u0430\u0432\u043A\u043E\u043B\u043E"
+    language: ua
+  - key: axe_5
+    value: After axe back to start position create another two axes that circling
+      around
+    language: eng
+  - key: level_name_1
+    value: "\u0422\u0440\u0435\u043D\u0443\u0432\u0430\u043B\u044C\u043D\u0430 \u043F\u043E\u043B\u044F\u043D\u0430"
+    language: ua
+  - key: level_name_1
+    value: Traning field
+    language: eng
+  - key: level_name_2
+    value: "\u0417\u0430\u0431\u0443\u0442\u0438\u0439 \u043B\u0456\u0441"
+    language: ua
+  - key: level_name_2
+    value: Forbiden forest
+    language: eng
+  - key: level_name_3
+    value: "\u041F\u0435\u0440\u0435\u0432\u0435\u0440\u043D\u0443\u0442\u0438\u0439
+      \u0440\u0430\u0439"
+    language: ua
+  - key: level_name_3
+    value: Backwards haven
+    language: eng
+  - key: level_name_4
+    value: "\u041F\u043E\u0440\u043E\u0436\u043D\u0456 \u0437\u0435\u043C\u043B\u0456"
+    language: ua
+  - key: level_name_4
+    value: Wasteland
+    language: eng
+  - key: potion
+    value: "\u0417\u0456\u043B\u043B\u044F"
+    language: ua
+  - key: potion
+    value: Potions
+    language: eng
+  - key: special_ability
+    value: "\u0417\u0434\u0456\u0431\u043D\u0456\u0441\u0442\u044C"
+    language: ua
+  - key: special_ability
+    value: Special abillity
+    language: eng
+  - key: descriprion_info_energy_charge
+    value: "\u0417\u0430\u0440\u044F\u0434\u0436\u0430\u0454 \u0432\u0430\u0448\u043E\u0433\u043E
+      \u043F\u0435\u0440\u0441\u043E\u043D\u0430\u0436\u0430 \u0435\u043D\u0435\u0440\u0433\u0456\u0454\u044E
+      \u0442\u0430 \u043F\u043E\u0432\u0438\u0448\u0430\u0454 \u0439\u043E\u0433\u043E
+      \u0448\u0432\u0438\u0434\u043A\u0456\u0441\u0442\u044C \u043D\u0430 3"
+    language: ua
+  - key: descriprion_info_energy_charge
+    value: Fill your character with energi and increase his speed by 3
+    language: eng
+  - key: descriprion_info_eternium_crystals
+    value: "\u0414\u0440\u0435\u0432\u043D\u0456\u0439 \u043A\u0440\u0438\u0441\u0442\u0430\u043B
+      \u044F\u043A\u0438\u0439 \u043F\u043E\u0437\u0438\u0442\u0438\u0432\u043D\u043E
+      \u0432\u043F\u043B\u0438\u0432\u0430\u0454 \u043D\u0430 \u0432\u0430\u0448\u043E\u0433\u043E
+      \u043F\u0435\u0440\u0441\u043E\u043D\u0430\u0436\u0430 \u0456 \u043F\u0456\u0434\u043D\u0456\u043C\u0430\u0454
+      \u0439\u043E\u0433\u043E \u0448\u043A\u043E\u0434\u0443 \u043D\u0430 1"
+    language: ua
+  - key: descriprion_info_eternium_crystals
+    value: An ancient crystal that positively affects your character and increases
+      his damage by 1
+    language: eng
+  - key: descriprion_info_gear
+    value: "\u0417\u0430\u0433\u0430\u0434\u043A\u043E\u0432\u0438\u0439 \u043C\u0435\u0445\u0430\u043D\u0456\u0437\u043C
+      \u044F\u043A\u0438\u0439 \u0437\u043C\u0443\u0448\u0443\u0454 \u0430\u0442\u0430\u043A\u0443
+      \u043F\u0440\u0438\u0448\u0432\u0438\u0434\u0448\u0443\u0432\u0430\u0442\u0438\u0441\u044C
+      \u043D\u0430 0,1"
+    language: ua
+  - key: descriprion_info_gear
+    value: A mysterious mechanism that makes the attack speed up by 0.1
+    language: eng
+  - key: descriprion_info_dragon's_eye
+    value: "\u041E\u043A\u043E \u0441\u0442\u0430\u0440\u043E\u0433\u043E \u0434\u0440\u0430\u043A\u043E\u043D\u0430
+      \u044F\u043A\u0435 \u0434\u043E\u0437\u0432\u043E\u043B\u044F\u0454 \u0432\u0430\u0448\u043E\u043C\u0443
+      \u043F\u0435\u0440\u0441\u043E\u043D\u0430\u0436\u0443 \u0431\u0430\u0447\u0438\u0442\u0438
+      \u043D\u0430 20 \u043C\u0435\u0442\u0440\u0456\u0432 \u0434\u0430\u043B\u044C\u0448\u0435"
+    language: ua
+  - key: descriprion_info_dragon's_eye
+    value: An old dragon's eye that allows your character to see 20 meters away
+    language: eng
+  - key: descriprion_info_beatty`s_claw
+    value: "\u041A\u043B\u0438\u043A\u0438 \u0437\u043B\u0456\u0441\u043D\u043E\u0457
+      \u043B\u0456\u0442\u0443\u0447\u043E\u0457 \u043C\u0438\u0448\u0456 \u044F\u043A\u0438\u0439
+      \u043D\u0430\u0434\u0430\u0454 \u043C\u043E\u0436\u043B\u0438\u0432\u0456\u0441\u0442\u044C
+      \u043F\u043E\u0432\u0435\u0440\u0442\u0430\u0442\u0438 10% \u0432\u0456\u0434
+      \u0437\u0430\u0432\u0434\u0430\u043D\u043E\u0457 \u0448\u043A\u043E\u0434\u0438
+      \u0443 \u0432\u0438\u0433\u043B\u044F\u0434\u0456 \u0437\u0434\u043E\u0440\u043E\u0432'\u044F"
+    language: ua
+  - key: descriprion_info_beatty`s_claw
+    value: Claws of the evil bat, which gives the opportunity to return 10% of the
+      damage in the form of health
+    language: eng
+  - key: descriprion_info_treesnipe`s_eye
+    value: "\u041F\u043B\u0456\u0434 \u0434\u0435\u0440\u0435\u0432'\u044F\u043D\u043E\u0433\u043E
+      \u0441\u043D\u0430\u0439\u043F\u0435\u0440\u0430 \u044F\u043A\u0438\u0439 \u0437\u0431\u0456\u043B\u044C\u0448\u0443\u0454
+      \u0448\u0432\u0438\u0434\u043A\u0456\u0441\u0442\u044C \u0432\u043E\u0433\u043D\u044F\u043D\u0438\u0445
+      \u043A\u0443\u043B\u044C \u043D\u0430 30"
+    language: ua
+  - key: descriprion_info_treesnipe`s_eye
+    value: ' A wooden sniper fruit that increases the speed of fireballs by 30'
+    language: eng
+  - key: descriprion_info_mushi_extract
+    value: "\u0412\u0438\u0436\u0438\u043C\u043A\u0430 \u0437 \u043D\u0435\u0432\u0438\u0434\u0438\u043C\u0438\u0445
+      \u0433\u0440\u0438\u0431\u0456\u0432 \u0432\u0438\u043F\u0438\u0432\u0448\u0438
+      \u044F\u043A\u0443 \u043C\u043E\u0436\u043D\u0430 \u0437\u0431\u0456\u043B\u044C\u0448\u0438\u0442\u0438
+      \u0448\u043A\u043E\u0434\u0443 \u0432\u043E\u0434\u044F\u043D\u0438\u043C\u0438
+      \u0437\u0430\u043A\u043B\u0438\u043D\u0430\u043D\u043D\u044F\u043C\u0438 \u043D\u0430
+      0.2, \u0448\u043A\u043E\u0434\u0443 \u043F\u043E\u0432\u0456\u0442\u0440\u044F\u043D\u0438\u043C\u0438
+      \u0437\u0430\u043A\u043B\u0438\u043D\u0430\u043D\u043D\u044F\u043C\u0438 \u043D\u0430
+      0.2, \u0448\u043A\u043E\u0434\u0443 \u0442\u0440\u0430\u0432'\u044F\u043D\u0438\u043C\u0438
+      \u0437\u0430\u043A\u043B\u0438\u043D\u0430\u043D\u043D\u044F\u043C\u0438 \u043D\u0430
+      0.2 \u0442\u0430 \u0448\u043A\u043E\u0434\u0443 \u0437\u0430\u043A\u043B\u0438\u043D\u0430\u043D\u043D\u044F\u043C\u0438
+      \u0437\u0435\u043C\u043B\u0456 \u043D\u0430 0.2"
+    language: ua
+  - key: descriprion_info_mushi_extract
+    value: Invisible mushroom pomace when drunk increases water spell damage by 0.2,
+      air spell damage by 0.2, grass spell damage by 0.2 and ground spell damage
+      by 0.2
+    language: eng
+  - key: descriprion_info_kiwi`s_root
+    value: "\u041A\u043E\u0440\u0456\u043D\u044C \u0437\u0432\u0456\u0440\u0430 \u044F\u043A\u0438\u0439
+      \u043D\u0430\u0434\u0430\u0454 \u0432\u043E\u0433\u043D\u044F\u043D\u0438\u043C
+      \u043A\u0443\u043B\u044F\u043C \u043C\u043E\u0436\u043B\u0438\u0432\u0456\u0441\u0442\u044C
+      \u0441\u043F\u043E\u0432\u0456\u043B\u044C\u043D\u044E\u0432\u0430\u0442\u0438
+      \u0432\u043E\u0440\u043E\u0433\u0456\u0432 \u043D\u0430 20%"
+    language: ua
+  - key: descriprion_info_kiwi`s_root
+    value: Beast Root that grants fireballs the ability to slow enemies by 20%
+    language: eng
+  - key: descriprion_info_beany`s_mucus
+    value: "\u0411\u0440\u0438\u0434\u043A\u0438\u0439 \u0441\u043B\u0438\u0437 \u044F\u043A\u0438\u0439
+      \u043F\u0456\u0434\u0456\u0439\u043C\u0430\u0454 \u0448\u043A\u043E\u0434\u0443
+      \u0432\u0456\u0434 \u0432\u043E\u0433\u043D\u044E \u043D\u0430 40% \u0430\u043B\u0435
+      \u0437\u043C\u0435\u043D\u0448\u0443\u0454 \u0448\u043A\u043E\u0434\u0443 \u0432\u0456\u0434
+      \u043C\u043E\u0440\u043E\u0437\u0443 \u043D\u0430 40%"
+    language: ua
+  - key: descriprion_info_beany`s_mucus
+    value: ' Nasty slime that increases fire damage by 40% but reduces frost damage
+      by 40%'
+    language: eng
+  - key: descriprion_info_bobses_sphere
+    value: "\u0414\u043E\u0434\u0430\u0454 \u0441\u0444\u0435\u0440\u0443 \u044F\u043A\u0430
+      \u0431\u0443\u0434\u0435 \u043A\u0440\u0443\u0436\u043B\u044F\u0442\u0438 \u043D\u0430\u0432\u043A\u043E\u043B\u043E
+      \u0432\u0430\u0448\u043E\u0433\u043E \u0433\u0435\u0440\u043E\u044F \u0456
+      \u043F\u0440\u0438 \u043A\u043E\u043D\u0442\u0430\u043A\u0442\u0456 \u0437
+      \u0432\u043E\u0440\u043E\u0433\u043E\u043C \u0432\u0437\u0440\u0438\u0432\u0430\u0442\u0438\u0441\u044C
+      \u0442\u0430 \u043D\u0430\u043D\u043E\u0441\u0438\u0442\u0438 \u0439\u043E\u043C\u0443
+      15 \u0448\u043A\u043E\u0434\u0438, \u043C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u043E
+      \u043C\u043E\u0436\u0435 \u0431\u0443\u0442\u0438 2 \u0441\u0444\u0435\u0440\u0438
+      \u043E\u0434\u043D\u043E\u0447\u0430\u0441\u043D\u043E"
+    language: ua
+  - key: descriprion_info_bobses_sphere
+    value: ' Adds a sphere that will circle around your hero and upon contact with
+      the enemy will explode and deal 15 damage to him, the maximum can be 2 spheres
+      at the same time'
+    language: eng
+  - key: descriprion_info_rocky`s_shiled
+    value: "\u041C\u0456\u0446\u043D\u0438\u0439 \u0449\u0438\u0442 \u044F\u043A\u0438\u0439
+      \u043F\u0456\u0434\u0456\u0439\u043C\u0430\u0454 \u0431\u0440\u043E\u043D\u044E
+      \u0432\u0430\u0448\u043E\u0433\u043E \u043F\u0435\u0440\u0441\u043E\u043D\u0430\u0436\u0430
+      \u043D\u0430 20"
+    language: ua
+  - key: descriprion_info_rocky`s_shiled
+    value: A strong shield that increases your character's armor by 20
+    language: eng
+  - key: exp_aura
+    value: "\u0420\u0430\u0434\u0456\u0443\u0441 \u0434\u043E\u0441\u0432\u0456\u0434\u0443"
+    language: ua
+  - key: exp_aura
+    value: Expiriance Aura
+    language: eng
+  - key: fire_damage
+    value: "\u0428\u043A\u043E\u0434\u0430 \u0432\u043E\u0433\u043D\u0435\u043C"
+    language: ua
+  - key: fire_damage
+    value: Fire skill`s damage
+    language: eng
+  - key: armor
+    value: "\u0411\u0440\u043E\u043D\u044F"
+    language: ua
+  - key: armor
+    value: Armor
+    language: eng
+  - key: zone_time
+    value: "\u0427\u0430\u0441 \u0437\u0430\u0433\u0440\u0443\u0437\u043A\u0438 \u0437\u043E\u043D"
+    language: ua
+  - key: zone_time
+    value: Zones load time
+    language: eng
+  - key: water_damage
+    value: "\u0428\u043A\u043E\u0434\u0430 \u0432\u043E\u0434\u043E\u044E"
+    language: ua
+  - key: water_damage
+    value: Water damage
+    language: eng
+  - key: poition_effect
+    value: "\u0415\u0444\u0435\u043A\u0442\u0438\u0432\u043D\u0456\u0441\u0442\u044C
+      \u0437\u0456\u043B\u043B\u044C"
+    language: ua
+  - key: poition_effect
+    value: Poition Effect
+    language: eng
+  - key: skill_cd
+    value: "\u043F\u0435\u0440\u0435\u0437\u0430\u0440\u044F\u0434\u043A\u0430 \u0437\u0434\u0456\u0431\u043D\u043E\u0441\u0442\u0435\u0439"
+    language: ua
+  - key: skill_cd
+    value: Skill CD
+    language: eng
+  - key: explosions_damage
+    value: "\u0428\u043A\u043E\u0434\u0430 \u0432\u0456\u0434 \u0432\u0438\u0431\u0443\u0445\u0443"
+    language: ua
+  - key: explosions_damage
+    value: Explosions Damage
+    language: eng
+  - key: regeneration
+    value: "\u0420\u0435\u0433\u0435\u043D\u0435\u0440\u0430\u0446\u0456\u044F"
+    language: ua
+  - key: regeneration
+    value: Regeneration
+    language: eng
+  - key: expiriance_gain
+    value: "\u041E\u0442\u0440\u0438\u043C\u0430\u043D\u0438\u0439 \u0434\u043E\u0441\u0432\u0456\u0434"
+    language: ua
+  - key: expiriance_gain
+    value: Expiriance gain
+    language: eng
+  - key: potions_shield
+    value: "\u0429\u0438\u0442 \u0432\u0456\u0434 \u0437\u0456\u043B\u043B\u044C"
+    language: ua
+  - key: potions_shield
+    value: Potions Shield
+    language: eng
+  - key: equipment_buff
+    value: "\u041F\u043E\u0441\u0438\u043B\u0435\u043D\u043D\u044F \u0441\u043F\u043E\u0440\u044F\u0434\u0436\u0435\u043D\u043D\u044F"
+    language: ua
+  - key: equipment_buff
+    value: Equipment buff
+    language: eng
+  - key: reload
+    value: "\u041F\u0435\u0440\u0435\u0437\u0430\u0440\u044F\u0434\u043A\u0430"
+    language: ua
+  - key: reload
+    value: Reload
+    language: eng
+  - key: freeze
+    value: "\u0417\u0430\u043C\u043E\u0440\u043E\u0437\u043A\u0430"
+    language: ua
+  - key: freeze
+    value: Freeze
+    language: eng
+  - key: description_heal
+    value: "\u0417\u0446\u0456\u043B\u044E\u0454 \u043D\u0435\u0432\u0435\u043B\u0438\u043A\u0443
+      \u043A\u0456\u043B\u044C\u043A\u0456\u0441\u0442\u044C \u0437\u0434\u043E\u0440\u043E\u0432\u2019\u044F
+      \u0437 \u043D\u0435\u0432\u0435\u043B\u0438\u043A\u043E\u044E \u043F\u0435\u0440\u0435\u0437\u0430\u0440\u044F\u0434\u043A\u043E\u044E
+      \u043F\u0456\u0441\u043B\u044F \u0432\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u0430\u043D\u043D\u044F"
+    language: ua
+  - key: description_heal
+    value: Heal a low amount of health with some call down after using
+    language: eng
+  - key: description_bomb
+    value: "\u0421\u0442\u0432\u043E\u0440\u044E\u0454 \u0431\u043E\u043C\u0431\u0443,
+      \u044F\u043A\u0430 \u0432\u0438\u0431\u0443\u0445\u043D\u0435 \u0447\u0435\u0440\u0435\u0437
+      \u043A\u043E\u0440\u043E\u0442\u043A\u0438\u0439 \u043F\u0440\u043E\u043C\u0456\u0436\u043E\u043A
+      \u0447\u0430\u0441\u0443, \u044F\u043A\u0430 \u0442\u0430\u043A\u043E\u0436
+      \u043C\u043E\u0436\u0435 \u0432\u0440\u0430\u0437\u0438\u0442\u0438 \u0433\u0435\u0440\u043E\u044F"
+    language: ua
+  - key: description_bomb
+    value: Create bomb that explode after low amount of time that can hit hero too
+    language: eng
+  - key: description_totem
+    value: "\u041F\u0456\u0441\u043B\u044F \u0442\u043E\u0433\u043E, \u044F\u043A
+      \u0433\u0435\u0440\u043E\u0439 \u043E\u0442\u0440\u0438\u043C\u0430\u0454 \u0441\u043C\u0435\u0440\u0442\u0435\u043B\u044C\u043D\u0443
+      \u0448\u043A\u043E\u0434\u0443, \u0432\u0440\u044F\u0442\u0443\u0454 \u0439\u043E\u0433\u043E
+      \u0432\u0456\u0434 \u0441\u043C\u0435\u0440\u0442\u0456 \u0442\u0430 \u0432\u0456\u0434\u043D\u043E\u0432\u0456\u0442\u044C
+      10% \u043C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u043E\u0433\u043E
+      \u0437\u0434\u043E\u0440\u043E\u0432'\u044F"
+    language: ua
+  - key: description_totem
+    value: After hero take fatal damage save him from death and restore 10% of maximum
+      health
+    language: eng
+  - key: description_freeze
+    value: "\u0417\u0443\u043F\u0438\u043D\u043A\u0430 \u0447\u0430\u0441\u0443 \u043D\u0430
+      \u043F\u0430\u0440\u0443 \u0441\u0435\u043A\u0443\u043D\u0434"
+    language: ua
+  - key: description_freeze
+    value: Stop time for couple seconds
+    language: eng
+  - key: statistic
+    value: "\u0421\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043A\u0430"
+    language: ua
+  - key: statistic
+    value: Statistic
+    language: eng
+  - key: buy
+    value: "\u041A\u0443\u043F\u0438\u0442\u0438"
+    language: ua
+  - key: buy
+    value: Buy
+    language: eng
+  - key: phrase_1_1
+    value: "\u0414\u0435 \u044F \u043E\u043F\u0438\u043D\u0438\u0432\u0441\u044F?...
+      \u041A\u0443\u0434\u0438 \u043F\u043E\u0434\u0456\u043B\u0430\u0441\u044C \u0432\u0441\u044F
+      \u043C\u043E\u044F \u043C\u0430\u0433\u0456\u044F, \u044F\u043A\u0443 \u044F
+      \u0442\u0430\u043A \u0434\u043E\u0432\u0433\u043E \u043D\u0430\u043A\u043E\u043F\u0438\u0447\u0443\u0432\u0430\u0432?"
+    language: ua
+  - key: phrase_1_1
+    value: ' Where did I end up?... Where did all my magic that I had been hoarding
+      for so long go?'
+    language: eng
+  - key: phrase_1_2
+    value: "\u0410\u0430\u0445... \u041F\u0440\u0438\u0433\u0430\u0434\u0443\u044E...
+      \u0417\u0434\u0430\u0454\u0442\u044C\u0441\u044F, \u044F \u0432\u0438\u0432\u0447\u0430\u0432
+      \u043D\u043E\u0432\u0435 \u0437\u0430\u043A\u043B\u0438\u043D\u0430\u043D\u043D\u044F
+      \u0432\u043E\u0433\u043D\u044F\u043D\u0438\u0445 \u043A\u0443\u043B\u044C. "
+    language: ua
+  - key: phrase_1_2
+    value: ' Aah... I remember... I think I was learning a new fireball spell.'
+    language: eng
+  - key: phrase_1_3
+    value: "...\u0410 \u043F\u0456\u0441\u043B\u044F \u0446\u044C\u043E\u0433\u043E...
+      \u043D\u0435 \u043C\u043E\u0436\u0443 \u0437\u0433\u0430\u0434\u0430\u0442\u0438. "
+    language: ua
+  - key: phrase_1_3
+    value: ' ...And after that... I can''t remember.'
+    language: eng
+  - key: phrase_1_4
+    value: "\u041E\u043A\u0435\u0439, \u0440\u043E\u0437\u0431\u0435\u0440\u0443\u0441\u044F
+      \u0437 \u0446\u0438\u043C \u043F\u0456\u0437\u043D\u0456\u0448\u0435, \u0441\u043F\u043E\u0447\u0430\u0442\u043A\u0443
+      \u0442\u0440\u0435\u0431\u0430 \u0437\u0440\u043E\u0437\u0443\u043C\u0456\u0442\u0438
+      \u0434\u0435 \u044F."
+    language: ua
+  - key: phrase_1_4
+    value: ' Okay, I''ll deal with that later, first I need to understand where I
+      am.'
+    language: eng
+  - key: phrase_1_5
+    value: "\u0422\u0430\u043A... \u0427\u0443\u044E \u0448\u0435\u043B\u0435\u0441\u0442
+      \u043B\u0438\u0441\u0442\u044F... \u0456 ... \u043D\u0430\u0432\u043A\u043E\u043B\u043E
+      \u0441\u0443\u0446\u0456\u043B\u044C\u043D\u0430 \u0442\u0435\u043C\u0440\u044F\u0432\u0430."
+    language: ua
+  - key: phrase_1_5
+    value: ' Yes... I hear the rustling of leaves... and... all around is total darkness.'
+    language: eng
+  - key: phrase_1_6
+    value: "\u041E\u0434\u043D\u0430\u043A, \u043C\u0430\u044E \u043E\u0431\u0456\u0439\u0442\u0438
+      \u0446\u044E \u0442\u0435\u0440\u0438\u0442\u043E\u0440\u0456\u044E, \u0449\u043E
+      \u0431 \u0437\u043E\u0440\u0456\u0454\u043D\u0442\u0443\u0432\u0430\u0442\u0438\u0441\u044F,
+      \u0456 \u0434\u043E \u0442\u043E\u0433\u043E \u0436, \u0437\u0440\u043E\u0431\u0438\u0442\u0438
+      \u0449\u043E\u0441\u044C \u0437 \u0446\u0456\u0454\u044E \u043F\u0456\u0442\u044C\u043C\u043E\u044E. "
+    language: ua
+  - key: phrase_1_6
+    value: ' However, I have to go around this territory in order to find my way,
+      and besides, to do something with this darkness.'
+    language: eng
+  - key: phrase_2_1
+    value: "\u041E\u0442\u0436\u0435, \u0442\u0440\u043E\u0445\u0438 \u0440\u043E\u0437\u0456\u043C\u2019\u044F\u0432\u0441\u044F.
+      \u0414\u043E\u0431\u0440\u0435 \u0442\u0435, \u0449\u043E \u044F \u043F\u043E\u043A\u0438
+      \u043D\u0435 \u0437\u0430\u0431\u0443\u0432 \u044F\u043A \u0447\u0430\u043A\u043B\u0443\u0432\u0430\u0442\u0438
+      \u043C\u0430\u0433\u0456\u044E \u0441\u0432\u0456\u0442\u043B\u0430, \u043C\u0435\u043D\u0456
+      \u0446\u044F \u0437\u0434\u0456\u0431\u043D\u0456\u0441\u0442\u044C \u0442\u0443\u0442
+      \u0437\u043D\u0430\u0434\u043E\u0431\u0438\u0442\u044C\u0441\u044F."
+    language: ua
+  - key: phrase_2_1
+    value: ' So, I warmed up a bit. Good thing I haven''t forgotten how to cast light
+      magic yet, I''ll need that ability here.'
+    language: eng
+  - key: phrase_2_2
+    value: "\u0410\u043B\u0435 \u0436 \u044F \u0432\u0442\u0440\u0430\u0442\u0438\u0432
+      \u0437\u043D\u0430\u043D\u043D\u044F \u043F\u0440\u043E \u0431\u0456\u043B\u044C\u0448\u0456\u0441\u0442\u044C
+      \u0456\u043D\u0448\u043E\u0457 \u043C\u0430\u0433\u0456\u0457, \u043F\u043E\u0442\u0440\u0456\u0431\u043D\u043E
+      \u0457\u0445 \u0434\u0435\u0441\u044C \u0432\u0456\u0434\u043D\u0430\u0439\u0442\u0438,
+      \u0449\u043E\u0431 \u044F \u043C\u0456\u0433 \u0441\u0435\u0431\u0435 \u0437\u0430\u0445\u0438\u0441\u0442\u0438\u0442\u0438
+      \u0432 \u0440\u0430\u0437\u0456 \u0447\u043E\u0433\u043E."
+    language: ua
+  - key: phrase_2_2
+    value: ' But I''ve lost my knowledge of most other magic, I need to find them
+      somewhere so I can protect myself in case of something.'
+    language: eng
+  - key: phrase_2_3
+    value: "\u0422\u043E\u0447\u043D\u043E! \u041D\u0435\u0432\u0435\u043B\u0438\u043A\u0430
+      \u043A\u0456\u043B\u044C\u043A\u0456\u0441\u0442\u044C \u043C\u0430\u0433\u0456\u0447\u043D\u043E\u0457
+      \u0435\u043D\u0435\u0440\u0433\u0456\u0457, \u044F\u043A\u0443 \u0431 \u044F
+      \u043C\u0456\u0433 \u043A\u043E\u043D\u0432\u0435\u0440\u0442\u0443\u0432\u0430\u0442\u0438
+      \u0432 \u0434\u043E\u0441\u0432\u0456\u0434 \u0434\u043B\u044F \u0432\u0438\u0432\u0447\u0435\u043D\u043D\u044F
+      \u0437\u0430\u0431\u0443\u0442\u0438\u0445 \u043D\u0430\u0432\u0438\u0447\u043E\u043A,
+      \u0432\u0438\u0434\u0456\u043B\u044F\u0454\u0442\u044C\u0441\u044F \u043F\u0440\u0438
+      \u0437\u043D\u0438\u0449\u0435\u043D\u043D\u0456 \u043C\u0430\u0433\u0456\u0447\u043D\u0438\u0445
+      \u0441\u0442\u0432\u043E\u0440\u0456\u043D\u044C."
+    language: ua
+  - key: phrase_2_3
+    value: Oh yeah! The small amount of magical energy that I could convert into
+      experience to learn forgotten skills is released when magical creatures are
+      destroyed.
+    language: eng
+  - key: phrase_2_4
+    value: "\u0410\u043B\u0435 \u0447\u0438 \u0454 \u0432 \u0446\u044C\u043E\u043C\u0443
+      \u043B\u0456\u0441\u0456 \u0449\u043E\u0441\u044C \u043D\u0430 \u043A\u0448\u0442\u0430\u043B\u0442? "
+    language: ua
+  - key: phrase_2_4
+    value: But is there anything like it in this forest?
+    language: eng
+  - key: phrase_3_1
+    value: "\u041E, \u0446\u0435\u0439 \u044F\u043A \u0440\u0430\u0437 \u043F\u0456\u0434\u0456\u0439\u0434\u0435. "
+    language: ua
+  - key: phrase_3_1
+    value: ' Oh, this one will do just fine.'
+    language: eng
+  - key: phrase_3_2
+    value: "\u0421\u043F\u043E\u0434\u0456\u0432\u0430\u044E\u0441\u044C, \u0432\u0456\u043D
+      \u0442\u0443\u0442 \u043B\u0438\u0448\u0435 \u043E\u0434\u0438\u043D - \u043F\u043E
+      \u043E\u0434\u0438\u043D\u0446\u0456 \u0432\u043E\u043D\u0438 \u043C\u0430\u0439\u0436\u0435
+      \u043D\u0435 \u043F\u0440\u0435\u0434\u0441\u0442\u0430\u0432\u043B\u044F\u044E\u0442\u044C
+      \u0437\u0430\u0433\u0440\u043E\u0437\u0438, \u0430\u043B\u0435 \u043E\u0441\u044C,
+      \u043A\u043E\u043B\u0438 \u0457\u0445 \u0431\u0430\u0433\u0430\u0442\u043E...
+      \u043D\u0435 \u0445\u043E\u0442\u0456\u0432 \u0431\u0438 \u044F \u043E\u043F\u0438\u043D\u0438\u0442\u0438\u0441\u044F
+      \u0432 \u0442\u0430\u043A\u0456\u0439 \u0441\u0438\u0442\u0443\u0430\u0446\u0456\u0457. "
+    language: ua
+  - key: phrase_3_2
+    value: ' I hope he''s the only one here - individually they''re hardly a threat,
+      but when there''s a lot of them... I''d hate to be in that situation.'
+    language: eng
+  - key: phrase_3_3
+    value: "\u0413\u043E\u043B\u043E\u0432\u043D\u0438\u043C \u0454 \u0437\u0440\u043E\u0431\u0438\u0442\u0438
+      \u0446\u0435 \u0448\u0432\u0438\u0434\u043A\u043E \u0456 \u0431\u0435\u0437
+      \u0432\u0430\u0433\u0430\u043D\u044C. "
+    language: ua
+  - key: phrase_3_3
+    value: ' The main thing is to do it quickly and without hesitation.'
+    language: eng
+  - key: phrase_4_1
+    value: "\u041F\u043E\u043F\u0440\u0430\u0446\u044E\u0432\u0430\u0432 \u044F\u043A
+      \u0441\u043B\u0456\u0434. "
+    language: ua
+  - key: phrase_4_1
+    value: Worked properly.
+    language: eng
+  - key: phrase_4_2
+    value: "\u0422\u0435\u043F\u0435\u0440 \u0443 \u043C\u0435\u043D\u0435 \u043C\u0430\u0454
+      \u0432\u0438\u0441\u0442\u0430\u0447\u0438\u0442\u0438 \u043D\u0430 \u043F\u0440\u043E\u043A\u0430\u0447\u043A\u0443
+      \u044F\u043A\u043E\u0457\u0441\u044C \u043D\u0430\u0432\u0438\u0447\u043A\u0438. "
+    language: ua
+  - key: phrase_4_2
+    value: Now I should have enough to level up some skill.
+    language: eng
+  - key: phrase_4_3
+    value: "\u041E\u0431\u0435\u0440\u0443 \u0434\u043B\u044F \u043F\u043E\u0447\u0430\u0442\u043A\u0443
+      \u0441\u0442\u0440\u0438\u0431\u043E\u043A, \u0449\u043E\u0431 \u0431\u0443\u043B\u043E
+      \u043F\u0440\u043E\u0441\u0442\u0456\u0448\u0435 \u0432\u0438\u0436\u0438\u0432\u0430\u0442\u0438
+      \u0432 \u0446\u044C\u043E\u043C\u0443 \u043C\u0456\u0441\u0446\u0456. "
+    language: ua
+  - key: phrase_4_3
+    value: ' I will choose to start the jump so that it is easier to survive in this
+      place.'
+    language: eng
+  - key: phrase_4_4
+    value: "\u0422\u0430\u043A... \u041E\u0441\u044C \u0442\u0430\u0430\u043A...
+      \u0410 \u043F\u043E\u0442\u0456\u043C \u0449\u043E? ... \u0410\u0433\u0430\u0430...
+      \u0432\u0441\u0435, \u0437\u0440\u043E\u0437\u0443\u043C\u0456\u0432. \u0417\u0430\u043B\u0438\u0448\u0438\u043B\u043E\u0441\u044F
+      \u0441\u043F\u0440\u043E\u0431\u0443\u0432\u0430\u0442\u0438 \u043D\u0430 \u0434\u0456\u043B\u0456. "
+    language: ua
+  - key: phrase_4_4
+    value: ' Yes... That''s right... And then what? ... Aha... that''s it, I got
+      it. It remains to try in practice.'
+    language: eng
+  - key: phrase_5_1
+    value: "\u041E\u0442 \u0442\u0430\u043A...\u0414\u0443\u043C\u0430\u044E, \u0449\u043E
+      \u0446\u0435 \u0431\u0443\u0434\u0435 \u043A\u043E\u0440\u0438\u0441\u043D\u043E. "
+    language: ua
+  - key: phrase_5_1
+    value: ' So...I think it will be useful.'
+    language: eng
+  - key: phrase_5_2
+    value: "\u041E\u0413\u041E...\u0429\u043E \u0446\u0435 \u0437\u0430 \u0433\u0443\u0440\u043A\u0456\u0442. "
+    language: ua
+  - key: phrase_5_2
+    value: ' OH...What''s that noise.'
+    language: eng
+  - key: phrase_6_1
+    value: "\u041D\u0456\u0447\u043E\u0433\u043E \u0441\u043E\u0431\u0456, \u044F\u043A\u0438\u0439
+      \u0437\u0434\u043E\u0440\u043E\u0432\u0430\u043D\u044C! "
+    language: ua
+  - key: phrase_6_1
+    value: Wow, what a great guy!
+    language: eng
+  - key: phrase_6_2
+    value: "\u0417\u0434\u0430\u0454\u0442\u044C\u0441\u044F \u043C\u0435\u043D\u0456,
+      \u0449\u043E \u0446\u0435 \u0431\u0443\u0434\u0435 \u043D\u0435 \u043B\u0435\u0433\u043A\u043E. "
+    language: ua
+  - key: phrase_6_2
+    value: ' It seems to me that it will not be easy.'
+    language: eng
+  - key: phrase_7_1
+    value: "\u0424\u0443\u0445, \u043B\u0435\u0434\u044C \u043D\u0435 \u043F\u043E\u0432\u0430\u043B\u0438\u0432
+      \u043C\u0435\u043D\u0435. \u041D\u0443 \u0456 \u0432\u0435\u043B\u0435\u0442\u0435\u043D\u044C
+      \u0436\u0435! "
+    language: ua
+  - key: phrase_7_1
+    value: ' Phew, almost knocked me over. What a giant!'
+    language: eng
+  - key: phrase_7_2
+    value: "\u0410\u043B\u0435 \u0437 \u043D\u044C\u043E\u0433\u043E \u0432\u0438\u043F\u0430\u0432
+      \u043F\u0440\u0435\u0434\u043C\u0435\u0442, \u044F\u043A\u0438\u0439 \u043C\u043E\u0436\u0435
+      \u0437\u043D\u0430\u0434\u043E\u0431\u0438\u0442\u0438\u0441\u044F \u043C\u0435\u043D\u0456
+      \u043F\u0456\u0437\u043D\u0456\u0448\u0435. "
+    language: ua
+  - key: phrase_7_2
+    value: ' But an item fell out of it that I might need later.'
+    language: eng
+  - key: phrase_7_3
+    value: "\u041F\u043E\u0442\u0440\u0456\u0431\u043D\u043E \u0439\u043E\u0433\u043E
+      \u0437\u0430\u0431\u0440\u0430\u0442\u0438, \u0434\u043E\u043A\u0438 \u043D\u0435
+      \u0432\u043A\u0440\u0430\u043B\u0438. "
+    language: ua
+  - key: phrase_7_3
+    value: It is necessary to take it away before it is stolen.
+    language: eng
+  - key: phrase_8_1
+    value: "\u041E, \u044F\u043A\u0440\u0430\u0437 \u0442\u0430\u043A\u0438 \u0446\u0435
+      \u043C\u0435\u043D\u0456 \u044F\u0432\u043D\u043E \u0431\u0443\u0434\u0435
+      \u043A\u043E\u0440\u0438\u0441\u043D\u0438\u043C. "
+    language: ua
+  - key: phrase_8_1
+    value: ' Oh, it will definitely be useful to me.'
+    language: eng
+  - key: phrase_8_2
+    value: "\u0422\u0440\u0435\u0431\u0430 \u0437\u0432\u0456\u0434\u0441\u0438 \u0437\u0430\u0431\u0438\u0440\u0430\u0442\u0438\u0441\u044C,
+      \u043F\u043E\u043A\u0438 \u0449\u0435 \u0445\u0442\u043E\u0441\u044C \u043D\u0435
+      \u043F\u0440\u0438\u043F\u0435\u0440\u0441\u044F! "
+    language: ua
+  - key: phrase_8_2
+    value: I need to get out of here before someone else gets stuck!
+    language: eng
   dataSett: []
   loc: eng
   volumeMusic: 0
@@ -393,55 +1764,6 @@ MonoBehaviour:
       \u043F\u0456\u0434\u0456\u0439\u043C\u0430\u0454 \u0431\u0440\u043E\u043D\u044E
       \u0432\u0430\u0448\u043E\u0433\u043E \u043F\u0435\u0440\u0441\u043E\u043D\u0430\u0436\u0430
       \u043D\u0430 20"
-  upgrades:
-  - ID: 1
-    ImageSprite: {fileID: 21300000, guid: ae7f3237fbd41d04f95cc2313e98c395, type: 3}
-    IDRare: 1
-  - ID: 2
-    ImageSprite: {fileID: 21300000, guid: 73b54bff82779f6418c230808158756d, type: 3}
-    IDRare: 1
-  - ID: 3
-    ImageSprite: {fileID: 21300000, guid: a54f172c6dc5a8a438d9e7dc10fca92e, type: 3}
-    IDRare: 1
-  - ID: 4
-    ImageSprite: {fileID: 21300000, guid: 91b8d62948c7e8947aaba46390a2c8a1, type: 3}
-    IDRare: 1
-  - ID: 1
-    ImageSprite: {fileID: 21300000, guid: 3d8f059b7b17c7045bce65146d7f3cab, type: 3}
-    IDRare: 2
-  - ID: 2
-    ImageSprite: {fileID: 21300000, guid: 50f4e4ad4fdb6134cb08de6567ee347e, type: 3}
-    IDRare: 2
-  - ID: 3
-    ImageSprite: {fileID: 21300000, guid: aec824ae13125b34b9669fd4e05ad04b, type: 3}
-    IDRare: 2
-  - ID: 4
-    ImageSprite: {fileID: 21300000, guid: 93df575aa9f6a524aa55a374411cdd25, type: 3}
-    IDRare: 2
-  - ID: 1
-    ImageSprite: {fileID: 21300000, guid: a1ec008b10212aa4bb88132a5c0d83bf, type: 3}
-    IDRare: 3
-  - ID: 2
-    ImageSprite: {fileID: 21300000, guid: c1abcf205c7196140afaceec044f0ca8, type: 3}
-    IDRare: 3
-  - ID: 3
-    ImageSprite: {fileID: 21300000, guid: 6d2aad1aa8e8297429cab9bd609950b2, type: 3}
-    IDRare: 3
-  - ID: 4
-    ImageSprite: {fileID: 21300000, guid: 306809571ba421a4a835d70bdf204cb6, type: 3}
-    IDRare: 3
-  - ID: 1
-    ImageSprite: {fileID: 21300000, guid: 7cb48bbbefb626c4c8ae208b0fad33e1, type: 3}
-    IDRare: 4
-  - ID: 2
-    ImageSprite: {fileID: 21300000, guid: 8389f80ad961db9469312b57424dc683, type: 3}
-    IDRare: 4
-  - ID: 3
-    ImageSprite: {fileID: 21300000, guid: e3b2dab50c0ec194e90b105b6e64aec3, type: 3}
-    IDRare: 4
-  - ID: 4
-    ImageSprite: {fileID: 21300000, guid: a91acd8006e29cf4883c8041e5a91b4f, type: 3}
-    IDRare: 4
   itemsRead: []
   score: 0
   enemyCount: 0
@@ -523,6 +1845,7 @@ MonoBehaviour:
   InfoFiller: {fileID: 0}
   InfoImg: {fileID: 0}
   InfoName: {fileID: 0}
+  ElementsImg: []
   InfoPanel: {fileID: 0}
   InfoImgPanel: {fileID: 0}
   InfoNamePanel: {fileID: 0}
@@ -542,6 +1865,7 @@ MonoBehaviour:
     spell: Jump
     spellCD: 3
     interactable: 0
+    skillImg: {fileID: 0}
     price: 10000
     description: Hot headed young mage. Love to explore new places, bad with formulas.
       Also love his mom
@@ -557,6 +1881,7 @@ MonoBehaviour:
     spell: Untouchable
     spellCD: 15
     interactable: 1
+    skillImg: {fileID: 0}
     price: 15000
     description: hasty guy that not love to speak too much, always busy, like activities
       like mageball
@@ -572,6 +1897,7 @@ MonoBehaviour:
     spell: Ricoshet
     spellCD: 25
     interactable: 1
+    skillImg: {fileID: 0}
     price: 20000
     description: Brutaly outside vulnerable inside. Love animals, love to making
       sweet pies in free time
@@ -581,6 +1907,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  quest: {fileID: 0}
+  resolutionTxt: {fileID: 0}
 --- !u!81 &4771157334789863649
 AudioListener:
   m_ObjectHideFlags: 0
@@ -589,6 +1917,145 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6416895844494761269}
   m_Enabled: 0
+--- !u!114 &5118097946407041814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6416895844494761269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8718e17dbcda5e0419cd10675f9a9ddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  quest:
+  - isActive: 0
+    isTodaysQuest: 0
+    isCompleteInOneRound: 0
+    nameQuest: "\u0414\u0438\u043A\u0430 \u043E\u0445\u043E\u0442\u0430"
+    description: "\u0412\u0431\u0438\u0439 1000 \u0432\u043E\u0440\u043E\u0433\u0456\u0432"
+    id: 0
+    goal: 1000
+    progress: 0
+    reward: 200
+  - isActive: 0
+    isTodaysQuest: 0
+    isCompleteInOneRound: 0
+    nameQuest: "\u0412\u0435\u043B\u0438\u043A\u0438\u0439 \u0445\u0456\u043B\u043B\u0435\u0440"
+    description: "\u0412\u0438\u043B\u0456\u043A\u0443\u0439 \u0441\u0435\u0431\u0435
+      \u0431\u0456\u043B\u044C\u0448 \u043D\u0456\u0436 \u043D\u0430 500 \u0437\u0434\u043E\u0440\u043E\u0432'\u044F"
+    id: 1
+    goal: 500
+    progress: 0
+    reward: 1000
+  - isActive: 0
+    isTodaysQuest: 0
+    isCompleteInOneRound: 0
+    nameQuest: "\u0425\u043E\u0432\u0430\u0439\u0441\u044F \u0456 \u0448\u0443\u043A\u0430\u0439"
+    description: "\u0412\u0431\u0438\u0439 20 \u041C\u0456\u0448\u0440\u0443\u043C\u0456\u0432"
+    id: 2
+    goal: 20
+    progress: 0
+    reward: 250
+  - isActive: 0
+    isTodaysQuest: 0
+    isCompleteInOneRound: 0
+    nameQuest: "\u041F\u043E\u0432\u0435\u043B\u0435\u0442\u0435\u043B\u044C \u0432\u043E\u0433\u043D\u044E"
+    description: "\u0417\u0430\u0432\u0434\u0430\u0439 200 \u0448\u043A\u043E\u0434\u0438
+      \u0432\u043E\u0433\u043D\u044F\u043D\u0438\u043C\u0438 \u0437\u0430\u043A\u043B\u0438\u043D\u0430\u043D\u043D\u044F\u043C\u0438"
+    id: 3
+    goal: 200
+    progress: 0
+    reward: 450
+  - isActive: 0
+    isTodaysQuest: 0
+    isCompleteInOneRound: 0
+    nameQuest: "\u0413\u0440\u0443\u0448\u0430 \u0434\u043B\u044F \u0431\u0438\u0442\u0442\u044F"
+    description: "\u041E\u0442\u0440\u0438\u043C\u0430\u0442\u0438 1000 \u0448\u043A\u043E\u0434\u0438
+      \u0437\u0430 \u0440\u0430\u0443\u043D\u0434 \u0456 \u043D\u0435 \u043F\u043E\u043C\u0435\u0440\u0442\u0438"
+    id: 4
+    goal: 1000
+    progress: 0
+    reward: 600
+  - isActive: 0
+    isTodaysQuest: 0
+    isCompleteInOneRound: 0
+    nameQuest: "\u0414\u0435\u043D\u044C \u0437\u0430\u043A\u043E\u0445\u0430\u043D\u0438\u0445"
+    description: "\u0417\u043D\u0430\u0439\u0442\u0438 10 \u0441\u0435\u0440\u0434\u0435\u0447\u043E\u043A
+      \u0437\u0430 \u0440\u0456\u0432\u0435\u043D\u044C"
+    id: 5
+    goal: 10
+    progress: 0
+    reward: 150
+  - isActive: 0
+    isTodaysQuest: 0
+    isCompleteInOneRound: 0
+    nameQuest: "\u0421\u043F\u0456\u0434\u0440\u0430\u043D\u0435\u0440"
+    description: "\u0417\u0434\u043E\u043B\u0430\u0442\u0438 \u0431\u043E\u0441\u0441\u0430
+      \u0448\u0432\u0438\u0434\u0448\u0435 \u043D\u0456\u0436 \u0437\u0430 2 \u0445\u0432\u0438\u043B\u0438\u043D\u0438"
+    id: 6
+    goal: 120
+    progress: 0
+    reward: 300
+  - isActive: 0
+    isTodaysQuest: 0
+    isCompleteInOneRound: 0
+    nameQuest: "\u041F\u043E\u0432\u0435\u043B\u0435\u0442\u0435\u043B\u044C \u0432\u043E\u0433\u043D\u044E"
+    description: "\u0417\u0430\u0432\u0434\u0430\u0439 \u0448\u043A\u043E\u0434\u0438 "
+    id: 6
+    goal: 100
+    progress: 0
+    reward: 0
+  - isActive: 0
+    isTodaysQuest: 0
+    isCompleteInOneRound: 0
+    nameQuest: "\u041F\u043E\u0432\u0435\u043B\u0435\u0442\u0435\u043B\u044C \u0432\u043E\u0433\u043D\u044E"
+    description: "\u0417\u0430\u0432\u0434\u0430\u0439 \u0448\u043A\u043E\u0434\u0438 "
+    id: 7
+    goal: 300
+    progress: 0
+    reward: 0
+  - isActive: 0
+    isTodaysQuest: 0
+    isCompleteInOneRound: 0
+    nameQuest: "\u041F\u043E\u0432\u0435\u043B\u0435\u0442\u0435\u043B\u044C \u0432\u043E\u0433\u043D\u044E"
+    description: "\u0417\u0430\u0432\u0434\u0430\u0439 \u0448\u043A\u043E\u0434\u0438 "
+    id: 8
+    goal: 25
+    progress: 0
+    reward: 0
+  TimeToNextRandom: {fileID: 0}
+  questText:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  questRewardText:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  questProgressText:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  questProgressFill:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  questImage:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  claimBtn:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  money: {fileID: 0}
+  popUp: {fileID: 0}
+  popUpImg: {fileID: 0}
+  popUpTxt: {fileID: 0}
+  score: {fileID: 8651399062274846821}
+  anim: {fileID: 0}
 --- !u!114 &8651399062274846821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -608,3 +2075,4 @@ MonoBehaviour:
   percent: 0
   scene: 0
   isWinPanel: 0
+  timeToSpawnBoss: 0

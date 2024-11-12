@@ -120,6 +120,7 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
 
                     //Перший в порядку
                     fliedSlots.objToCraft = GetComponent<SetParametersToitem>();
+                    fliedSlots.price = 100;
                     fliedSlots.CheckCraft();
 
                     ItemData item = equipPanel.GetComponent<ItemData>();
@@ -130,6 +131,7 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
                     item.description.GetComponent<TagText>().tagText = "descriprion_info_" + fliedSlots.objToCraft.Tag;//fliedSlots.objToCraft.Description;
                     item.itemTag = fliedSlots.objToCraft.Tag;
                     item.raretag = fliedSlots.objToCraft.RareTag;
+                    item.price.text = fliedSlots.objToCraft.Price.ToString();
                     //Другий в порядку
                     SetCardInfo();
 

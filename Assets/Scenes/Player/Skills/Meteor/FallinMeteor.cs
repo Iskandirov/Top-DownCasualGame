@@ -1,3 +1,4 @@
+using FSMC.Runtime;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,12 +6,10 @@ using UnityEngine;
 
 public class FallinMeteor : SkillBaseMono
 {
-    [SerializeField] List<EnemyState> enemiesInDanger;
-    public EnemyController enemy;
+    [SerializeField] List<FSMC_Executer> enemiesInDanger;
     public float damageTick;
     private void Start()
     {
-        enemy = EnemyController.instance;
         player = PlayerManager.instance;
         if (basa.stats[2].isTrigger)
         {
@@ -48,7 +47,7 @@ public class FallinMeteor : SkillBaseMono
                 }
                 float damage = (basa.damage * debuff.elements.CurrentStatusValue(Elements.status.Water))
                     / debuff.elements.CurrentStatusValue(Elements.status.Fire);
-                enemy.TakeDamage(creature, damage);
+                creature.TakeDamage(damage);
                 GameManager.Instance.FindStatName("meteorDamage", damage);
                 if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 3 && s.isActive == true) != null)
                 {
@@ -62,14 +61,14 @@ public class FallinMeteor : SkillBaseMono
     {
         if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
-            enemiesInDanger.Add(collision.GetComponent<EnemyState>());
+            enemiesInDanger.Add(collision.GetComponent<FSMC_Executer>());
         }
     } 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
-            enemiesInDanger.Remove(collision.GetComponent<EnemyState>());
+            enemiesInDanger.Remove(collision.GetComponent<FSMC_Executer>());
         }
     }
 }

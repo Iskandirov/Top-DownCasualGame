@@ -16,7 +16,7 @@ public class Root_Bullet : MonoBehaviour
         delayMax = delay;
         Invoke("DestroObj", lifeTime);
         // ќтримуЇмо напр€мок до гравц€
-        Vector2 directionToPlayer = player.objTransform.position - transform.position;
+        Vector2 directionToPlayer = player.ShootPoint.transform.position - transform.position;
         GetComponent<Rigidbody2D>().velocity = directionToPlayer.normalized * launchForce;
     }
     private void FixedUpdate()

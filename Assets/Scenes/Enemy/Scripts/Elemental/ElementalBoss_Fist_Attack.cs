@@ -26,7 +26,7 @@ public class ElementalBoss_Fist_Attack : MonoBehaviour
 
     Animator objAnim;
     Shield objShield;
-    EnemyState childrenHealth;
+    //EnemyState childrenHealth;
     Collider2D objCollider;
 
     // Start is called before the first frame update
@@ -41,7 +41,7 @@ public class ElementalBoss_Fist_Attack : MonoBehaviour
 
         objAnim = GetComponent<Animator>();
         objCollider = GetComponent<Collider2D>();
-        childrenHealth = GetComponent<EnemyState>();
+        //childrenHealth = GetComponent<EnemyState>();
     }
 
     // Update is called once per frame
@@ -108,7 +108,7 @@ public class ElementalBoss_Fist_Attack : MonoBehaviour
                 StartCoroutine(ReducePushForce(pushableObjectRigidbody));
                 if (collidedObject.basa.stats[2].isTrigger)
                 {
-                    EnemyController.instance.TakeDamage(childrenHealth, childrenHealth.health - damage / 2);
+                    //EnemyState.instance.Damage(childrenHealth.CurrentHealth - damage / 2);
                     FindObjectOfType<StatsCollector>().FindStatName("ShieldAbsorbedDamage", damage / 2);
                 }
                 

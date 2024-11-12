@@ -1,3 +1,4 @@
+using FSMC.Runtime;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +9,8 @@ public class Lightning : SkillBaseMono
     public List<Collider2D> enemies;
     public List<Collider2D> enemiesToShoot;
     public Collider2D enemyToShoot;
-    EnemyState enemy;
     public float stunTime;
     public string target;
-
 
     // Start is called before the first frame update
     void Start()
@@ -54,16 +53,17 @@ public class Lightning : SkillBaseMono
             if (enemiesToShoot != null && enemiesToShoot.Count > 0)
             {
                 enemyToShoot = enemiesToShoot[Random.Range(0, enemiesToShoot.Count - 1)];
-                enemy = enemyToShoot.GetComponent<EnemyState>();
+                FSMC_Executer enemy = enemyToShoot.GetComponent<FSMC_Executer>();
                 ElementActiveDebuff debuff = enemy.GetComponent<ElementActiveDebuff>();
                 debuff.StartCoroutine(debuff.EffectTime(Elements.status.Electricity, 5));
                 if (enemy != null && basa.stats[3].isTrigger)
                 {
-                    enemy.Stun(stunTime);
+                    FSMC_Executer.instance.SetFloat("Stun Time", stunTime);
+                    FSMC_Executer.instance.SetCurrentState("Stun");
                 }
 
                 transform.position = enemyToShoot.transform.position;
-                EnemyController.instance.TakeDamage(enemy, basa.damage * player.Electricity / debuff.elements.CurrentStatusValue(Elements.status.Electricity));
+                enemy.TakeDamage(basa.damage * player.Electricity / debuff.elements.CurrentStatusValue(Elements.status.Electricity));
                 GameManager.Instance.FindStatName("lightDamage", basa.damage * player.Electricity
                     / debuff.elements.CurrentStatusValue(Elements.status.Electricity));
                 CineMachineCameraShake.instance.Shake(10, .1f);

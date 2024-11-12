@@ -8,7 +8,7 @@ public class ObjectHealth : MonoBehaviour
     [SerializeField] float explosionDamage = 5;
     [SerializeField] List<GameObject> SpawnableObjects;
     [SerializeField] Animator explodeAnim;
-    [SerializeField] List<EnemyState> enemiesInExplosionArea;
+    //[SerializeField] List<EnemyState> enemiesInExplosionArea;
     [SerializeField] PlayerManager playerInExplosionArea;
     public void TakeDamage()
     {
@@ -30,10 +30,10 @@ public class ObjectHealth : MonoBehaviour
     void CreateLoot()
     {
         GameObject a = Instantiate(SpawnableObjects[Random.Range(0, SpawnableObjects.Count)], transform.position, Quaternion.identity);
-        if (a.GetComponent<EnemyState>() != null)
-        {
-            FindObjectOfType<EnemyController>().children.Add(a.GetComponent<EnemyState>());
-        }
+        //if (a.GetComponent<EnemyState>() != null)
+        //{
+        //    FindObjectOfType<EnemyController>().children.Add(a.GetComponent<EnemyState>());
+        //}
     }
     void ExplodeAnimActivate()
     {
@@ -41,19 +41,19 @@ public class ObjectHealth : MonoBehaviour
     }
     public void Explode()
     {
-        if (enemiesInExplosionArea != null)
-        {
-            EnemyController controller = EnemyController.instance;
-            foreach (var enemy in enemiesInExplosionArea)
-            {
-                controller.TakeDamage(enemy, explosionDamage);
-            }
-        }
+        //if (enemiesInExplosionArea != null)
+        //{
+        //    EnemyState controller = EnemyState.instance;
+        //    foreach (var enemy in enemiesInExplosionArea)
+        //    {
+        //        controller.Damage(explosionDamage);
+        //    }
+        //}
         if (playerInExplosionArea != null)
         {
             playerInExplosionArea.TakeDamage(explosionDamage);
         }
-        enemiesInExplosionArea.Clear();
+        //enemiesInExplosionArea.Clear();
         playerInExplosionArea = null;
         explodeAnim.SetBool("isGoingExplode", false);
         gameObject.SetActive(false);
@@ -63,7 +63,7 @@ public class ObjectHealth : MonoBehaviour
     {
         if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
-            enemiesInExplosionArea.Add(collision.GetComponent<EnemyState>());
+            //enemiesInExplosionArea.Add(collision.GetComponent<EnemyState>());
         } 
         if (collision.CompareTag("Player") && !collision.isTrigger)
         {
@@ -75,7 +75,7 @@ public class ObjectHealth : MonoBehaviour
     {
         if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
-            enemiesInExplosionArea.Remove(collision.GetComponent<EnemyState>());
+            //enemiesInExplosionArea.Remove(collision.GetComponent<EnemyState>());
         }
         if (collision.CompareTag("Player") && !collision.isTrigger)
         {

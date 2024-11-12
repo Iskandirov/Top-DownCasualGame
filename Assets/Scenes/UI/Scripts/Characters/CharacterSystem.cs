@@ -43,5 +43,6 @@ public class CharacterSystem : MonoBehaviour
         PlayerPrefs.SetInt("Character", character.id);
         character.check.SetActive(true);
         button.interactable = false;
+        GameManager.Instance.LoadInventory(GameManager.Instance.itemsRead);
     }
 }
