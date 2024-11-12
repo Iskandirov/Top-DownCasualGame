@@ -34,7 +34,7 @@ public class DestroyBarrier : MonoBehaviour
                         DailyQuests.instance.UpdateValue(1, heal * Grass, false);
                     }
                         player.playerHealthPoint += heal * Grass;
-                    player.fullFillImage.fillAmount += player.playerHealthPoint / player.playerHealthPointMax;
+                    GameManager.Instance.fullFillImage.fillAmount += player.playerHealthPoint / player.playerHealthPointMax;
                 }
                 else
                 {
@@ -43,7 +43,7 @@ public class DestroyBarrier : MonoBehaviour
                         DailyQuests.instance.UpdateValue(1, heal * Grass, false);
                     }
                         player.playerHealthPoint = player.playerHealthPointMax;
-                    player.fullFillImage.fillAmount -= player.playerHealthPoint / player.playerHealthPointMax;
+                    GameManager.Instance.fullFillImage.fillAmount -= player.playerHealthPoint / player.playerHealthPointMax;
                 }
             }
         }

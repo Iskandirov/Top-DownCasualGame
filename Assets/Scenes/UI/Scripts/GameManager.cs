@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -63,7 +64,7 @@ public class GameManager : MonoBehaviour
     public List<Sprite> ElementsImg;
 
     SaveEnemyInfo ShowedEnemy;
-
+   
     public GameObject InfoPanel;
     public Image InfoImgPanel;
     public TextMeshProUGUI InfoNamePanel;
@@ -82,23 +83,44 @@ public class GameManager : MonoBehaviour
     [SerializeField] DailyQuests quest;
     [SerializeField] TextMeshProUGUI resolutionTxt;
     GameObject a;
+    [Header("Player start settings")]
+    public Image spriteCD;
+    public Image baseSkillImg;
+    public TextMeshProUGUI text;
+    public PlayerManager player;
+    public Image fullFillImage;
+    public Image autoimage;
+    public VisualEffect AutoActiveCurve;
+    public EnemySpawner enemies;
+    public Image expiriencepoint;
+    //public Timer time;
+    [SerializeField] public List<UsePotion> potionsObj;
+    [SerializeField] List<GameObject> heroes;
+    public Transform heroParent;
+    public CinemachineVirtualCamera virtCam;
+
     void Awake()
     {
         Instance = this;
-       
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
         //PlayerPrefs.DeleteAll();
-        hashing = DataHashing.inst;
-        settings = Settings.instance;
         if (!PlayerPrefs.HasKey("Character"))
         {
             PlayerPrefs.SetInt("Character", 1);
         }
         DeleteFile();
+        hashing = DataHashing.inst;
+        settings = Settings.instance;
+        GameObject a = Instantiate(heroes[2], heroParent.position, Quaternion.identity, heroParent);
+
+        virtCam.Follow = a.transform;
+
         LoadCharacktersOnStart();
+        player = PlayerManager.instance;
+    }
+    // Start is called before the first frame update
+    void Start()
+    {
+        baseSkillImg.sprite = ExtractSpriteListFromTexture("skills").First(s => s.name == charactersRead.Find(c => c.isEquiped).spell);
 
         LoadScore();
         StartLoad();
@@ -170,6 +192,19 @@ public class GameManager : MonoBehaviour
             ShowLevel();
             Timer();
         }
+        if (IsGamePage)
+        {
+            text.text = player.baseSkillCD.ToString("0.");
+            spriteCD.fillAmount = player.baseSkillCD / player.baseSkillCDMax;
+            if (player.baseSkillCD <= 0)
+            {
+                text.gameObject.SetActive(false);
+            }
+            else
+            {
+                text.gameObject.SetActive(true);
+            }
+        }
     }
     private void Update()
     {
@@ -221,10 +256,10 @@ public class GameManager : MonoBehaviour
     public void ShowLevel()
     {
         PlayerManager player = PlayerManager.instance;
-        if (player.expiriencepoint.fillAmount >= 1)
+        if (expiriencepoint.fillAmount >= 1)
         {
             a = Instantiate(player.levelUpgradeEffect, player.objTransform.position, Quaternion.identity, player.objTransform);
-            player.expiriencepoint.fillAmount = 0;
+            expiriencepoint.fillAmount = 0;
             player.level += 1;
             player.expNeedToNewLevel += player.expNeedToNewLevel * 0.4f;
             Invoke("DestroyVFX",1.5f);
@@ -906,6 +941,8 @@ public class GameManager : MonoBehaviour
                     }
                 }
             }
+            
+
         }
     }
     //Potion

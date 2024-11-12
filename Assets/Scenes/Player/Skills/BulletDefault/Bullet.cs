@@ -79,12 +79,12 @@ public class Bullet : SkillBaseMono
                         DailyQuests.instance.UpdateValue(1, basa.damage * lifeStealPercent, false);
                     }
                     player.playerHealthPoint += basa.damage * lifeStealPercent;
-                    player.fullFillImage.fillAmount += (basa.damage * lifeStealPercent) / player.playerHealthPointMax;
+                    GameManager.Instance.fullFillImage.fillAmount += (basa.damage * lifeStealPercent) / player.playerHealthPointMax;
                 }
                 else
                 {
                     player.playerHealthPoint = player.playerHealthPointMax;
-                    player.fullFillImage.fillAmount = 1;
+                    GameManager.Instance.fullFillImage.fillAmount = 1;
                 }
             }
             if (isBulletSlow)

@@ -38,7 +38,7 @@ public class StateDeath : FSMC_Behaviour
         DailyQuests.instance.UpdateValue(0, 1, false);
         EXP a = UnityEngine.Object.Instantiate(enemy.expiriancePoint.GetComponent<EXP>(), pos, Quaternion.identity);
         a.expBuff = enemy.expGiven * enemy.dangerLevel;
-        PlayerManager.instance.expiriencepoint.fillAmount += enemy.expGiven * enemy.dangerLevel / PlayerManager.instance.expNeedToNewLevel;
+        GameManager.Instance.expiriencepoint.fillAmount += enemy.expGiven * enemy.dangerLevel / PlayerManager.instance.expNeedToNewLevel;
         GameManager.Instance.score++;
     }
     ///Spawn

@@ -72,9 +72,7 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector]
     public float baseSkillCD;
     public float baseSkillCDMax;
-    public Image spriteCD;
-    public Image baseSkillImg;
-    public TextMeshProUGUI text;
+    
     private bool isReloading;
     [HideInInspector]
     public float axisX;
@@ -96,7 +94,6 @@ public class PlayerManager : MonoBehaviour
     public float playerHealthPointMax;
     public float playerHealthRegeneration;
     public float armor;
-    public Image fullFillImage;
     public bool isInvincible = false;
 
     [Header("Shoot settings")]
@@ -122,19 +119,14 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector]
     public bool isBulletSlow;
     public bool isAuto;
-    public Image autoimage;
     public Sprite[] autoState;
-    public VisualEffect AutoActiveCurve;
     public float offset;
-    public EnemySpawner enemies;
 
     [Header("Expiriance settings")]
-    public Image expiriencepoint;
     public float level;
     public float expNeedToNewLevel;
     public GameObject levelUpgradeEffect;
     //public GameObject levelUp;
-    public Timer time;
     [HideInInspector]
     public int isEnemyInZone;
     public int multiply;
@@ -159,7 +151,6 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] Shield PotionShield;
     [Header("Potions settings")]
     [SerializeField] List<Potions> potions;
-    [SerializeField] List<UsePotion> potionsObj;
     [SerializeField] BobmExplode bomb;
     [SerializeField] Sprite bombImg;
     [SerializeField] bool canBeSaved = false;
@@ -199,14 +190,14 @@ public class PlayerManager : MonoBehaviour
             if (PlayerPrefs.GetString(potion.key + "Bool") == "True")
             {
                 potion.isActive = bool.Parse(PlayerPrefs.GetString(potion.key + "Bool"));
-                if (potionsObj.Count > 0)
+                if (gameManager.potionsObj.Count > 0)
                 {
-                    Image img = potionsObj[count].GetComponent<Image>();
+                    Image img = gameManager.potionsObj[count].GetComponent<Image>();
                     img.sprite = GameManager.ExtractSpriteListFromTexture("Quest").First(instance => instance.name == potion.key);
                     img.SetNativeSize();
                     img.color = new Color(255, 255, 255, 255);
-                    potionsObj[count].type = potion.parameters;
-                    potionsObj[count].callDownMax = potion.callDown;
+                    gameManager.potionsObj[count].type = potion.parameters;
+                    gameManager.potionsObj[count].callDownMax = potion.callDown;
                     count++;
                 }
                
@@ -233,7 +224,7 @@ public class PlayerManager : MonoBehaviour
         if (playerHealthRegeneration > 0)
         {
             playerHealthPoint += playerHealthRegeneration / playerHealthPointMax;
-            fullFillImage.fillAmount += playerHealthRegeneration / playerHealthPointMax;
+            gameManager.fullFillImage.fillAmount += playerHealthRegeneration / playerHealthPointMax;
         }
     }
     //Тестовий делегат
@@ -241,10 +232,10 @@ public class PlayerManager : MonoBehaviour
     public event AutoAttackSwitchHandler OnAttackTypeSwitch;
     private void OnSwitchClickHandler()
     {
-        autoimage.sprite = isAuto ? autoState[0] : autoState[1];
-        autoimage.SetNativeSize();
+        gameManager.autoimage.sprite = isAuto ? autoState[0] : autoState[1];
+        gameManager.autoimage.SetNativeSize();
         isAuto = !isAuto;
-        AutoActiveCurve.gameObject.SetActive(isAuto);
+        gameManager.AutoActiveCurve.gameObject.SetActive(isAuto);
        
     }
 
@@ -255,16 +246,16 @@ public class PlayerManager : MonoBehaviour
         {
             OnAttackTypeSwitch?.Invoke();
         }
-        if (isAuto && AutoActiveCurve != null)
+        if (isAuto && gameManager.AutoActiveCurve != null)
         {
             // Отримати поточне значення офсету
-            offset = AutoActiveCurve.GetFloat("offset");
+            offset = gameManager.AutoActiveCurve.GetFloat("offset");
 
             // Додати до офсету значення Time.deltaTime, щоб змінювати його на 1 за секунду
             offset += Time.deltaTime;
 
             // Встановити нове значення офсету
-            AutoActiveCurve.SetFloat("offset", offset);
+            gameManager.AutoActiveCurve.SetFloat("offset", offset);
         }
         BaseSkillSelector();
     }
@@ -277,7 +268,7 @@ public class PlayerManager : MonoBehaviour
             if (canBeSaved)
             {
                 playerHealthPoint = playerHealthPointMax * ((0.2f + GivePerkStatValue(Stats.Effectivness)) / 100);
-                fullFillImage.fillAmount = playerHealthPoint / playerHealthPointMax;
+                gameManager.fullFillImage.fillAmount = playerHealthPoint / playerHealthPointMax;
                 GameManager.Instance.FindStatName("healthHealed", playerHealthPointMax * 0.2f);
                 canBeSaved = false;
             }
@@ -304,7 +295,7 @@ public class PlayerManager : MonoBehaviour
                 //Damage deal
                 playerHealthPoint -= damage;
                 gameManager.FindStatName("DamageTaken", damage);
-                fullFillImage.fillAmount -= damage / playerHealthPointMax;
+                gameManager.fullFillImage.fillAmount -= damage / playerHealthPointMax;
                 if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 4 && s.isActive == true) != null)
                 {
                     DailyQuests.instance.UpdateValue(4, damage, false);
@@ -352,19 +343,7 @@ public class PlayerManager : MonoBehaviour
                 isReloading = false;
             }
         }
-        if (gameManager.IsGamePage)
-        {
-            text.text = baseSkillCD.ToString("0.");
-            spriteCD.fillAmount = baseSkillCD / baseSkillCDMax;
-            if (baseSkillCD <= 0)
-            {
-                text.gameObject.SetActive(false);
-            }
-            else
-            {
-                text.gameObject.SetActive(true);
-            }
-        }
+        
        
     }
     public Vector2 PlayerMove()
@@ -516,7 +495,7 @@ public class PlayerManager : MonoBehaviour
         Vector2 nearest = new Vector3(999, 999, 999);
         float nearestDistSqr = Mathf.Infinity;
        
-        foreach (var enemy in enemies.children)
+        foreach (var enemy in gameManager.enemies.children)
         {
             if (enemy.gameObject.activeSelf) //умова щоб не автоатакувати в невидимих грибів)
             {
@@ -533,9 +512,9 @@ public class PlayerManager : MonoBehaviour
         Vector2 direction = nearest - myPos;
         direction.Normalize();
         float distance = Vector3.Distance(nearest, myPos);
-        if (enemies.children.First(e => e.objTransform).gameObject.activeSelf)
+        if (gameManager.enemies.children.First(e => e.objTransform).gameObject.activeSelf)
         {
-            if (enemies.children.First(e => e.transform.position.x == nearest.x).GetComponentInChildren<SpriteRenderer>().color.a != 0 && distance < 50)
+            if (gameManager.enemies.children.First(e => e.transform.position.x == nearest.x).GetComponentInChildren<SpriteRenderer>().color.a != 0 && distance < 50)
             {
                 // Запускаємо об'єкт в заданому напрямку
                 Rigidbody2D rb = newObject.GetComponent<Rigidbody2D>();
@@ -600,7 +579,6 @@ public class PlayerManager : MonoBehaviour
         /*Швидкість захвату зони*/
         playerHealthRegeneration += GivePerkStatValue(Stats.Regeneration);
         multiply += (int)GivePerkStatValue(Stats.ExpirianceGain);
-        baseSkillImg.sprite = GameManager.ExtractSpriteListFromTexture("skills").First(s => s.name == gameManager.charactersRead.Find(c => c.isEquiped).spell);
 
         //gameObject = characters[character.id + 1];
     }
@@ -624,7 +602,7 @@ public class PlayerManager : MonoBehaviour
             if (playerHealthPoint + value <= playerHealthPointMax)
             {
                 playerHealthPoint += value;
-                fullFillImage.fillAmount += (value) / playerHealthPointMax;
+                gameManager.fullFillImage.fillAmount += (value) / playerHealthPointMax;
                 DailyQuests.instance.UpdateValue(1, value, false);
                 GameManager.Instance.FindStatName("healthHealed", value);
             }
@@ -634,7 +612,7 @@ public class PlayerManager : MonoBehaviour
                 DailyQuests.instance.UpdateValue(1, playerHealthPointMax - playerHealthPoint, false);
 
                 playerHealthPoint = playerHealthPointMax;
-                fullFillImage.fillAmount = 1f;
+                gameManager.fullFillImage.fillAmount = 1f;
             }
         }
     }

@@ -98,7 +98,7 @@ public class VeinPool : MonoBehaviour
                                 DailyQuests.instance.UpdateValue(1, heal, false);
                             }
                             player.playerHealthPoint += heal;
-                            player.fullFillImage.fillAmount = player.playerHealthPoint / player.playerHealthPointMax;
+                            GameManager.Instance.fullFillImage.fillAmount = player.playerHealthPoint / player.playerHealthPointMax;
                         }
                     }
                     hitDelay = 0.5f;
