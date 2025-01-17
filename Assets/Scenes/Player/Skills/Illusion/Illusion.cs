@@ -15,12 +15,12 @@ public class Illusion : SkillBaseMono
     public float attackSpeedMax;
    
     Transform objTransform;
-    List<GameObject> illusions = new List<GameObject>();
-    bool isClone = false;
-    Vector3[] initialOffsets = new Vector3[3];
-    private Vector3[] innerInitialOffsets = new Vector3[3];
+    public List<GameObject> illusions = new List<GameObject>();
+    public bool isClone = false;
+    public Vector3[] initialOffsets = new Vector3[3];
+    public Vector3[] innerInitialOffsets = new Vector3[3];
     //Vector3[] innerDir = new Vector3[3];
-    List<GameObject> innerIllusions = new List<GameObject>();
+    public List<GameObject> innerIllusions = new List<GameObject>();
     // Start is called before the first frame update
     void Start()
     {
@@ -29,11 +29,9 @@ public class Illusion : SkillBaseMono
         illusions.Add(this.gameObject);
         if (basa.stats[1].isTrigger && !isClone)
         {
-            basa.countObjects += basa.stats[1].value;
             Illusion a = Instantiate(this);
             a.isClone = true;
             illusions.Add(a.gameObject);
-            basa.stats[1].isTrigger = false;
             
         }
         if (basa.stats[2].isTrigger)
@@ -43,11 +41,9 @@ public class Illusion : SkillBaseMono
         }
         if (basa.stats[3].isTrigger && !isClone)
         {
-            basa.countObjects += basa.stats[3].value;
             Illusion a = Instantiate(this);
             a.isClone = true;
             illusions.Add(a.gameObject);
-            basa.stats[3].isTrigger = false;
         }
         attackSpeed = player.attackSpeed / player.Wind;
         attackSpeedMax = attackSpeed;
@@ -62,11 +58,11 @@ public class Illusion : SkillBaseMono
         for (int i = 0; i < illusions.Count; i++)
         {
             float angle = i * 2 * Mathf.PI / illusions.Count;
-            initialOffsets[i] = new Vector2(Mathf.Cos(angle) * (15 + 0), Mathf.Sin(angle) * (15 + 5f)); //¬ираховую об'Їкти по колу навколо гравц€ + похибка через зм≥щенн€ гравц€
-
+            initialOffsets[i] = new Vector2(Mathf.Cos(angle) * 15, Mathf.Sin(angle) * 15) + new Vector2(0, 10f); //¬ираховую об'Їкти по колу навколо гравц€ + похибка через зм≥щенн€ гравц€
             illusions[i].transform.position = player.objTransform.position + initialOffsets[i];
+            illusions[i].GetComponent<Illusion>().initialOffsets = initialOffsets;
             //innerDir[i] = illusions[i].transform.position - player.objTransform.position;
-            illusions[i].transform.parent = player.transform;
+            //illusions[i].transform.parent = player.transform;
 
         }
 
@@ -80,17 +76,24 @@ public class Illusion : SkillBaseMono
                 Vector3 midpoint = (illusions[i].transform.position + illusions[nextIndex].transform.position) / 2f;
                 innerInitialOffsets[i] = midpoint - player.objTransform.position;
                 Zzap innerIllusion = Instantiate(zzap);
+                innerIllusion.lifeTime = basa.lifeTime;
+                innerIllusion.basa = basa;
                 innerIllusion.transform.position = midpoint;
                 Vector2 targetDirection = illusions[i].transform.position - innerIllusion.transform.position;
                 float angleZ = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
                 innerIllusion.transform.rotation = Quaternion.Euler(0f, 0f, angleZ);
                 innerIllusions.Add(innerIllusion.gameObject);
+                //innerIllusion.transform.parent = player.transform;
             }
         }
     }  
     void FixedUpdate()
     {
         // ќновленн€ позиц≥й внутр≥шн≥х об'Їкт≥в
+        for (int i = 0; i < illusions.Count; i++)
+        {
+            illusions[i].transform.position = player.objTransform.position + initialOffsets[i];
+        }
         for (int i = 0; i < innerIllusions.Count; i++)
         {
             innerIllusions[i].transform.position = player.objTransform.position + innerInitialOffsets[i];

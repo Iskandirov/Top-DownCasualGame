@@ -1,17 +1,24 @@
 using FSMC.Runtime;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Zzap : MonoBehaviour
 {
-    public float damage;
     public float lifeTime;
     public float damageTick;
     public float damageTickMax;
     public float electicElement;
+    public EnemySpawner enemies;
+    public SkillBase basa;
+    public List<Collider2D> enemiesColliders = new List<Collider2D>();
     // Start is called before the first frame update
     void Start()
     {
+        electicElement = PlayerManager.instance.Electricity;
+        enemies = FindAnyObjectByType<EnemySpawner>();
+        StartCoroutine(DealDamage());
         StartCoroutine(TimerSpell());
         //transform.position = new Vector2(transform.position.x + x, transform.position.y + y);// +45
     }
@@ -20,27 +27,39 @@ public class Zzap : MonoBehaviour
         yield return new WaitForSeconds(lifeTime);
         Destroy(gameObject);
     }
-    // Update is called once per frame
-    void FixedUpdate()
+   
+    IEnumerator DealDamage()
     {
-        damageTick -= Time.fixedDeltaTime;
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (damageTick <= 0)
+        while (true)
         {
-            if (collision.CompareTag("Enemy"))
+            yield return new WaitForSeconds(damageTick);
+            if (enemiesColliders.Count > 0)
             {
-                ElementActiveDebuff debuff = collision.GetComponentInParent<ElementActiveDebuff>();
-                if (debuff != null)
+                for (int i = 0; i < enemiesColliders.Count; i++)
                 {
+                    ElementActiveDebuff debuff = enemiesColliders[i].GetComponentInParent<ElementActiveDebuff>();
                     debuff.StartCoroutine(debuff.EffectTime(Elements.status.Electricity, 5));
+                    enemiesColliders[i].GetComponent<FSMC_Executer>().TakeDamage(basa.damage * electicElement);
+                    GameManager.Instance.FindStatName("zzapDamage", basa.damage * electicElement);
                 }
-                collision.GetComponent<FSMC_Executer>().TakeDamage(damage * electicElement);
-                GameManager.Instance.FindStatName("zzapDamage", damage * electicElement);
             }
-            damageTick = damageTickMax;
         }
-       
+    }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy") && !collision.isTrigger)
+        {
+            if (!enemiesColliders.Contains(collision))
+            {
+                enemiesColliders.Add(collision);
+            }
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy") && !collision.isTrigger)
+        {
+            enemiesColliders.Remove(collision);
+        }
     }
 }

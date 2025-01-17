@@ -12,16 +12,15 @@ public class CreatePuddle : SkillBaseMono
         {
             basa.countObjects += basa.stats[3].value;
             basa.stats[3].isTrigger = false;
-            StartCoroutine(WaitToAnotherObject(2, basa.spawnDelay));
+            StartCoroutine(WaitToAnotherObject((int)basa.countObjects - 1, basa.spawnDelay));
         }
     }
     private IEnumerator WaitToAnotherObject(int count, float delay)
     {
-        for (int i = 0; i < count - 1; i++)
+        for (int i = 0; i < count; i++)
         {
             yield return new WaitForSeconds(delay);
-            GameObject a = Instantiate(gameObject, new Vector3(player.objTransform.position.x + Random.Range(-20, 20), player.objTransform.position.y + Random.Range(-20, 20), 1.9f), Quaternion.identity);
-            a.transform.localScale = new Vector3(1f, 1f, 1f);
+            Instantiate(gameObject, new Vector3(player.objTransform.position.x + Random.Range(-20, 20), player.objTransform.position.y + Random.Range(-20, 20), 1.9f), Quaternion.identity);
         }
     }
     public void CreateActualPuddle()

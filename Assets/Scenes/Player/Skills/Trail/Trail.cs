@@ -16,8 +16,6 @@ public class Trail : SkillBaseMono
     public EdgeCollider2D edgeCollider;
     public static List<EdgeCollider2D> unusedColliders = new List<EdgeCollider2D>();
     public float size;
-    public float hitDelay = 0.5f;
-    EnemySpawner enemies;
     EdgeCollider2D validCollider;
     private void Start()
     {
@@ -26,7 +24,6 @@ public class Trail : SkillBaseMono
         edgeCollider = GetValidCollider();
         player = PlayerManager.instance;
         StartCoroutine(PeriodicSpawn());
-        enemies = FindAnyObjectByType<EnemySpawner>();
     }
     private void FixedUpdate()
     {
@@ -49,34 +46,8 @@ public class Trail : SkillBaseMono
             basa.stats[3].isTrigger = false;
         }
         vfx.SetVector3("PlayerPosition", player.objTransform.position + new Vector3(0,5f,0));
-        hitDelay -= Time.fixedDeltaTime;
     }
     
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Enemy") && hitDelay <= 0)
-        {
-            ElementActiveDebuff debuff = collision.GetComponentInParent<ElementActiveDebuff>();
-            debuff.StartCoroutine(debuff.EffectTime(Elements.status.Grass, 5));
-
-            collision.GetComponent<FSMC_Executer>().TakeDamage(basa.damage);
-            if (basa.stats[4].isTrigger)
-            {
-                if (collision.GetComponent<FSMC_Executer>().health <= 0)
-                {
-                    float heal = enemies.children.Find(s => s.name == collision.GetComponent<FSMC_Executer>().name).healthMax * 0.1f;
-                    if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 1 && s.isActive == true) != null)
-                    {
-                        DailyQuests.instance.UpdateValue(1, heal, false);
-                    }
-                    player.HealHealth(heal);
-                }
-            }
-            hitDelay = 0.5f;
-            return;
-        }
-
-    }
     IEnumerator PeriodicSpawn()
     {
         while (true)

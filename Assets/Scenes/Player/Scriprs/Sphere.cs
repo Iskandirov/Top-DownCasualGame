@@ -10,12 +10,10 @@ public class Sphere : MonoBehaviour
     public float damage;
     Transform objTransform;
     PlayerManager player;
-    FSMC_Executer enemy;
     private void Start()
     {
         objTransform = transform;
         player = PlayerManager.instance;
-        enemy = FSMC_Executer.instance;
     }
     private void FixedUpdate()
     {
@@ -29,7 +27,7 @@ public class Sphere : MonoBehaviour
     {
         if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
-            enemy.TakeDamage( damage);
+            collision.GetComponent<FSMC_Executer>().TakeDamage(damage);
             FindObjectOfType<SphereAround>().countSphere--;
             Destroy(gameObject);
 
