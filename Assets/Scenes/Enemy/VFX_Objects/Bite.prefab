@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4032504002826365027}
   - component: {fileID: 5853950797811348064}
   - component: {fileID: 7124829517899098294}
+  - component: {fileID: 8015287013344702660}
   m_Layer: 8
   m_Name: Bite
   m_TagString: Bullet
@@ -193,3 +194,18 @@ CircleCollider2D:
   m_Offset: {x: -0.029432934, y: 0.09639041}
   serializedVersion: 2
   m_Radius: 1.0638229
+--- !u!114 &8015287013344702660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5402112688019051196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10631a80552b65144aa19a1f109700e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 1
+  isGoingAttack: 0
+  Bullet: {fileID: 5402112688019051196}

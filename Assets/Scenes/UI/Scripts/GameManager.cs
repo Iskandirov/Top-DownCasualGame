@@ -110,17 +110,19 @@ public class GameManager : MonoBehaviour
         DeleteFile();
         hashing = DataHashing.inst;
         settings = Settings.instance;
-        GameObject a = Instantiate(heroes[2], heroParent.position, Quaternion.identity, heroParent);
-
-        virtCam.Follow = a.transform;
-
         LoadCharacktersOnStart();
-        player = PlayerManager.instance;
+
+        if (!isShopingScene)
+        {
+            GameObject a = Instantiate(heroes[0], heroParent.position, Quaternion.identity, heroParent);
+            virtCam.Follow = a.transform;
+            player = PlayerManager.instance;
+            baseSkillImg.sprite = ExtractSpriteListFromTexture("skills").First(s => s.name == charactersRead.Find(c => c.isEquiped).spell);
+        }
     }
     // Start is called before the first frame update
     void Start()
     {
-        baseSkillImg.sprite = ExtractSpriteListFromTexture("skills").First(s => s.name == charactersRead.Find(c => c.isEquiped).spell);
 
         LoadScore();
         StartLoad();

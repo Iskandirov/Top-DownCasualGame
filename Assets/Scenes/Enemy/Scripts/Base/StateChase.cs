@@ -34,7 +34,6 @@ public class StateChase : FSMC_Behaviour
 
     public override void OnStateUpdate(FSMC_Controller stateMachine, FSMC_Executer executer)
     {
-        Debug.Log("Chase Start");
         path.maxSpeed = executer.speed;
         float distance = Vector3.Distance(target.position, executer.transform.position);
         stateMachine.SetFloat("PlayerDistance", distance);
@@ -46,11 +45,9 @@ public class StateChase : FSMC_Behaviour
             dir = desiredDirection.x < -0.1f ? 180 : 0;
         }
         executer.transform.rotation = Quaternion.Euler(0, Mathf.LerpAngle(executer.transform.rotation.eulerAngles.y, dir, 5), 0);
-        Debug.Log("Chase End");
     }
 
     public override void OnStateExit(FSMC_Controller stateMachine, FSMC_Executer executer)
     {
-
     }
 }

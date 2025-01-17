@@ -11,11 +11,20 @@ public class FallinMeteor : SkillBaseMono
     private void Start()
     {
         player = PlayerManager.instance;
+        if (basa.stats[1].isTrigger)
+        {
+            basa.damage += basa.stats[1].value;
+            basa.stats[1].isTrigger = false;
+        }
         if (basa.stats[2].isTrigger)
         {
             basa.countObjects += basa.stats[2].value;
             basa.stats[2].isTrigger = false;
             StartCoroutine(WaitToAnotherObject(2, basa.spawnDelay));
+        }
+        if (basa.stats[3].isTrigger)
+        {
+            basa.stats[3].isTrigger = false;
         }
         if (basa.stats[4].isTrigger)
         {
@@ -49,6 +58,11 @@ public class FallinMeteor : SkillBaseMono
                     / debuff.elements.CurrentStatusValue(Elements.status.Fire);
                 creature.TakeDamage(damage);
                 GameManager.Instance.FindStatName("meteorDamage", damage);
+                if (basa.stats[3].isTrigger)
+                {
+                    creature.SetFloat("SlowPercent", basa.stats[3].value);
+                    creature.SetFloat("SlowTime", 2f);
+                }
                 if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 3 && s.isActive == true) != null)
                 {
                     DailyQuests.instance.UpdateValue(3, damage, false);

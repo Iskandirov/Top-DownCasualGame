@@ -497,7 +497,7 @@ public class PlayerManager : MonoBehaviour
        
         foreach (var enemy in gameManager.enemies.children)
         {
-            if (enemy.gameObject.activeSelf) //умова щоб не автоатакувати в невидимих грибів)
+            if ( enemy != null && enemy.gameObject.activeSelf) //умова щоб не автоатакувати в невидимих грибів)
             {
                 Vector3 enemyPos = enemy.objTransform.position;
                 float distSqr = (enemyPos - position).sqrMagnitude;
@@ -662,7 +662,7 @@ public class PlayerManager : MonoBehaviour
         foreach (var enemy in enemies.children)
         {
             enemy.SetFloat("Stun Time", 5f * (GivePerkStatValue(Stats.Effectivness) + 1));
-            enemy.SetCurrentState("Stun");
+            enemy.StateMachine.SetCurrentState("Stun", enemy);
         }
        
     } 

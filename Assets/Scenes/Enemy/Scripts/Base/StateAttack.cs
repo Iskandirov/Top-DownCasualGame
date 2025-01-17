@@ -32,5 +32,5 @@ public class StateAttack : FSMC_Behaviour
         executer.anim.SetBool("Attack", false);
         path.maxSpeed = executer.speedMax;
     }
-   
+
 }

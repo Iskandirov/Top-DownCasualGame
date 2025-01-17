@@ -2,6 +2,7 @@ using FSMC.Runtime;
 using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Tower : SkillBaseMono
@@ -68,7 +69,7 @@ public class Tower : SkillBaseMono
     {
         if (basa.stats[4].isTrigger)
         {
-            colliders = Physics2D.OverlapCircleAll(objTransform.position, 16f);
+            colliders = Physics2D.OverlapCircleAll(objTransform.position, 50f);
             foreach (Collider2D collider in colliders)
             {
                 if (collider.isTrigger != true && collider.CompareTag("Enemy")
@@ -79,5 +80,10 @@ public class Tower : SkillBaseMono
                 }
             }
         }
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position,50f);
     }
 }

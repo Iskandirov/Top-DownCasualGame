@@ -9,109 +9,94 @@ public class Illusion : SkillBaseMono
 {
     public Zzap zzap;
     public Bullet bullet;
-    public float x = -10;
-    public float y = -7;
-    public float xZzap;
-    public float yZzap;
     public float angle;
 
     public float attackSpeed;
     public float attackSpeedMax;
-
-    public bool isClone;
+   
     Transform objTransform;
-
+    List<GameObject> illusions = new List<GameObject>();
+    bool isClone = false;
+    Vector3[] initialOffsets = new Vector3[3];
+    private Vector3[] innerInitialOffsets = new Vector3[3];
+    //Vector3[] innerDir = new Vector3[3];
+    List<GameObject> innerIllusions = new List<GameObject>();
     // Start is called before the first frame update
     void Start()
     {
         player = PlayerManager.instance;
         objTransform = transform;
-        if (basa.stats[1].isTrigger)
+        illusions.Add(this.gameObject);
+        if (basa.stats[1].isTrigger && !isClone)
         {
             basa.countObjects += basa.stats[1].value;
+            Illusion a = Instantiate(this);
+            a.isClone = true;
+            illusions.Add(a.gameObject);
             basa.stats[1].isTrigger = false;
-            if (isClone == false && FindObjectsOfType<Illusion>().Length < basa.countObjects)
-            {
-                CreateClone();
-            }
+            
         }
         if (basa.stats[2].isTrigger)
         {
             basa.lifeTime += basa.stats[2].value;
             basa.stats[2].isTrigger = false;
         }
-        if (basa.stats[3].isTrigger)
+        if (basa.stats[3].isTrigger && !isClone)
         {
             basa.countObjects += basa.stats[3].value;
+            Illusion a = Instantiate(this);
+            a.isClone = true;
+            illusions.Add(a.gameObject);
             basa.stats[3].isTrigger = false;
-            if (isClone == false && FindObjectsOfType<Illusion>().Length < basa.countObjects)
-            {
-                CreateClone();
-            }
         }
-        if (basa.stats[4].isTrigger)
-        {
-            basa.stats[4].isTrigger = true;
-        }
-       
         attackSpeed = player.attackSpeed / player.Wind;
         attackSpeedMax = attackSpeed;
+        CoroutineToDestroy(gameObject, basa.lifeTime);
+        if (!isClone)
+        {
+            IllusionPosition();
+        }
+    }
+    void IllusionPosition()
+    {
+        for (int i = 0; i < illusions.Count; i++)
+        {
+            float angle = i * 2 * Mathf.PI / illusions.Count;
+            initialOffsets[i] = new Vector2(Mathf.Cos(angle) * (15 + 0), Mathf.Sin(angle) * (15 + 5f)); //Вираховую об'єкти по колу навколо гравця + похибка через зміщення гравця
+
+            illusions[i].transform.position = player.objTransform.position + initialOffsets[i];
+            //innerDir[i] = illusions[i].transform.position - player.objTransform.position;
+            illusions[i].transform.parent = player.transform;
+
+        }
+
         if (basa.stats[4].isTrigger)
         {
-            Zzap a = Instantiate(zzap, objTransform.position, Quaternion.Euler(0, 0, angle), objTransform);
-            a.x = xZzap;
-            a.y = yZzap;
-            a.electicElement = player.Electricity;
-            a.lifeTime = basa.lifeTime;
-            GameObject b = a.GetComponent<VFXPropertyBinder>().m_Bindings[0].gameObject;
-            Debug.Log(b.name);
-        }
-        CoroutineToDestroy(gameObject, basa.lifeTime);
-        IsThereAnotherBeam();
+            for (int i = 0; i < illusions.Count; i++)
+            {
+                int nextIndex = (i + 1) % illusions.Count; // Індекс наступного об'єкта (для зациклення)
 
-    }
-    public void IsThereAnotherBeam()
-    {
-        int x = -10;
-        int y = -7;
-        int xZzap = -5;
-        int yZzap = 5;
-        bool isReverce = true;
-        List<Illusion> illusions = FindObjectsOfType<Illusion>().ToList();
-        if (illusions.Count > 1)
-        {
-            foreach (Illusion illusion in illusions)
-            {
-                illusion.angle = angle;
-                illusion.x = x;
-                illusion.y = y;
-                illusion.xZzap = xZzap;
-                illusion.yZzap = yZzap;
-                x += 10;
-                y += isReverce ? 17 : -17;
-                xZzap += 10;
-                yZzap += isReverce ? 17 : -17;
-                isReverce = !isReverce;
-            }
-            if (illusions.Count > 3)
-            {
-                Destroy(illusions[illusions.Count - 1].gameObject);
+                // Обчислення середньої точки між двома зовнішніми об'єктами
+                Vector3 midpoint = (illusions[i].transform.position + illusions[nextIndex].transform.position) / 2f;
+                innerInitialOffsets[i] = midpoint - player.objTransform.position;
+                Zzap innerIllusion = Instantiate(zzap);
+                innerIllusion.transform.position = midpoint;
+                Vector2 targetDirection = illusions[i].transform.position - innerIllusion.transform.position;
+                float angleZ = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
+                innerIllusion.transform.rotation = Quaternion.Euler(0f, 0f, angleZ);
+                innerIllusions.Add(innerIllusion.gameObject);
             }
         }
-    }
-    private void CreateClone()
-    {
-        Illusion a = Instantiate(this, objTransform.position, Quaternion.identity);
-        a.isClone = true;
-        a.basa.lifeTime = basa.lifeTime;
-        a.basa.stats[4].isTrigger = basa.stats[4].isTrigger;
-    }
-
-    // Update is called once per frame
+    }  
     void FixedUpdate()
     {
+        // Оновлення позицій внутрішніх об'єктів
+        for (int i = 0; i < innerIllusions.Count; i++)
+        {
+            innerIllusions[i].transform.position = player.objTransform.position + innerInitialOffsets[i];
+        }
+
         attackSpeed -= Time.fixedDeltaTime;
-        objTransform.position = new Vector2(player.ShootPoint.transform.position.x + x, player.ShootPoint.transform.position.y + y);
         if (attackSpeed <= 0 && Input.GetMouseButton(0) && !player.isAuto)
         {
             Bullet a = Instantiate(bullet, objTransform.position, Quaternion.identity);

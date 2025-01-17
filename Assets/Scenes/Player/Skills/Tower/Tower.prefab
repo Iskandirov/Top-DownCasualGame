@@ -558,18 +558,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   basa:
-    stats: []
+    stats:
+    - isTrigger: 1
+      value: 0
+    - isTrigger: 0
+      value: 10
+    - isTrigger: 0
+      value: 0
+    - isTrigger: 0
+      value: 2
+    - isTrigger: 0
+      value: 0
     skill: {fileID: 0}
-    objToSpawn: {fileID: 0}
-    stepMax: 0
-    lifeTime: 0
-    damage: 0
-    damageTickMax: 0
-    countObjects: 0
+    objToSpawn: {fileID: 3831675836443140198}
+    stepMax: 20
+    lifeTime: 15
+    damage: 4
+    damageTickMax: 6
+    countObjects: 1
     radius: 0
     isPassive: 0
     spawnDelay: 0
-  skillId: 0
+  skillId: 4
   currentLevel: 0
   player: {fileID: 0}
   damageObj: {fileID: 6722287990898937310, guid: 0d178b44c5f5dce4d9a1d065c298e86e, type: 3}

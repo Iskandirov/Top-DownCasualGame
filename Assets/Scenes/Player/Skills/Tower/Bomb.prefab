@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 231990368340673534}
   - component: {fileID: 5979445728754829002}
   - component: {fileID: 3544821091217979760}
+  - component: {fileID: 8089863666927481006}
   m_Layer: 7
   m_Name: Bomb
   m_TagString: Bullet
@@ -178,3 +179,25 @@ MonoBehaviour:
   lifeTime: 2
   damage: 40
   fire: 0
+  explode: {fileID: 2196818794704894509, guid: ba44f65e4177ae347bf140aee149f993, type: 3}
+--- !u!95 &8089863666927481006
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8381528588111883540}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0607811f5b4414b47b96babcbc3bc67f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

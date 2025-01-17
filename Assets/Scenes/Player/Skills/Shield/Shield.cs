@@ -33,11 +33,14 @@ public class Shield : SkillBaseMono
     public GameObject rockObj;
     public float dirtElement;
     Transform objTransform;
-
+    public float attackReloadTime;
+    public float currentReloadTime;
     public bool isPotions;
+    public bool isHitInTheEnd;
     // Start is called before the first frame update
     void Start()
     {
+        currentReloadTime = attackReloadTime;
         player = PlayerManager.instance;
         otherScript = FindObjectsOfType<Shield>().ToList();
         otherScript.Remove(this);
@@ -52,9 +55,15 @@ public class Shield : SkillBaseMono
             objTransform = transform;
             if (basa.stats[1].isTrigger)
             {
-                basa.damage += basa.stats[1].value;
+                basa.lifeTime += basa.stats[1].value;
                 basa.stats[1].isTrigger = false;
             }
+            if (basa.stats[2].isTrigger)
+            {
+                basa.stepMax -= basa.stats[2].value;
+                basa.stats[2].isTrigger = false;
+            }
+           
             healthShield = basa.damage;
             dirtElement = player.Dirt;
             if (basa.stats[3].isTrigger)
@@ -62,6 +71,15 @@ public class Shield : SkillBaseMono
                 SlowArea a = Instantiate(slowObj, objTransform.position, Quaternion.identity, objTransform);
                 a.dirtElement = dirtElement;
             }
+            if (basa.stats[4].isTrigger)
+            {
+                basa.lifeTime += basa.stats[4].value;
+                basa.stats[4].isTrigger = false;
+            }
+            healthShield = basa.damage;
+            dirtElement = player.Dirt;
+           
+           
             player.isInvincible = true;
             CoroutineToDestroy(gameObject, basa.lifeTime + 2f);
         }
@@ -86,39 +104,37 @@ public class Shield : SkillBaseMono
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Death"))
+        if (enemiesInZone != null)
+            FindClosestEnemy(enemiesInZone);
+
+        if (enemy != null)
+            distanceToEnemy = Vector2.Distance(enemy.transform.position, player.objTransform.position);
+
+        if (distanceToEnemy < enemyApproachDistance && enemy != null && Vector2.Distance(enemy.transform.position, player.objTransform.position) < 40f && !CheckIfHasEnemy())
         {
-            if (enemiesInZone != null)
-                FindClosestEnemy(enemiesInZone);
-
-            if (enemy != null)
-                distanceToEnemy = Vector2.Distance(enemy.transform.position, player.transform.position);
-
-            if (distanceToEnemy < enemyApproachDistance && enemy != null && Vector2.Distance(enemy.transform.position, player.transform.position) < 40f && !CheckIfHasEnemy())
-            {
-                MoveBetweenPlayerAndEnemy();
-            }
-            else
-            {
-                anim.SetBool("On", false);
-                directionToPlayer = (player.transform.position - transform.position).normalized;
-                distanceToPlayer = Vector2.Distance(player.transform.position, transform.position);
-
-                if (distanceToPlayer > maxDistance)
-                {
-                    rb.AddForce(directionToPlayer * attractionForce);
-                }
-                else if (distanceToPlayer < minDistance)
-                {
-                    rb.AddForce(-directionToPlayer * repulsionForce);
-                }
-
-                Vector2 orbitDirection = Vector2.Perpendicular(directionToPlayer);
-                rb.AddForce(orbitDirection * orbitForce);
-            }
+            MoveBetweenPlayerAndEnemy();
         }
+        else
+        {
+            anim.SetBool("On", false);
+            directionToPlayer = (player.objTransform.position - transform.position).normalized;
+            distanceToPlayer = Vector2.Distance(player.objTransform.position, transform.position);
 
+            if (distanceToPlayer > maxDistance)
+            {
+                rb.AddForce(directionToPlayer * attractionForce);
+            }
+            else if (distanceToPlayer < minDistance)
+            {
+                rb.AddForce(-directionToPlayer * repulsionForce);
+            }
+
+            Vector2 orbitDirection = Vector2.Perpendicular(directionToPlayer);
+            rb.AddForce(orbitDirection * orbitForce);
+        }
+        currentReloadTime -= Time.fixedDeltaTime;
     }
+    
     private bool CheckIfHasEnemy()
     {
         foreach (var obj in otherScript)
@@ -153,7 +169,7 @@ public class Shield : SkillBaseMono
     void MoveBetweenPlayerAndEnemy()
     {
         anim.SetBool("On", true);
-        Vector2 middlePoint = (player.transform.position + enemy.transform.position) / 2;
+        Vector2 middlePoint = (player.objTransform.position + enemy.transform.position) / 2;
 
         float levitationOffsetX = Random.Range(-levitationRange, levitationRange);
         float levitationOffsetY = Random.Range(-levitationRange, levitationRange);
@@ -163,14 +179,21 @@ public class Shield : SkillBaseMono
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-
         if (other.CompareTag("Enemy") && !enemiesInZone.Contains(other.gameObject))
         {
             enemiesInZone.Add(other.gameObject);
+            if (basa.stats[2].isTrigger)
+            {
+                Destroy(other.gameObject);
+            }
         }
         if (other.CompareTag("Bullet"))
         {
             clash.SetActive(true);
+            if (basa.stats[2].isTrigger)
+            {
+                Destroy(other.gameObject);
+            }
             Invoke("Disactivate", .5f);
         }
     }

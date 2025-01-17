@@ -201,7 +201,7 @@ RectTransform:
   m_GameObject: {fileID: 8313530370077628586}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 1.9098477}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8590795580539933762}
@@ -325,13 +325,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerAnim: {fileID: 2933150211668163815}
   rb: {fileID: 8313530370077628590}
+  characterPrefabs: []
   speed: 25
   speedMax: 20
   baseSkillCD: 0
   baseSkillCDMax: 15
-  spriteCD: {fileID: 0}
-  baseSkillImg: {fileID: 0}
-  text: {fileID: 0}
   axisX: 0
   axisY: 0
   dashMultiplier: 100
@@ -345,7 +343,6 @@ MonoBehaviour:
   playerHealthPointMax: 0
   playerHealthRegeneration: 0
   armor: 10
-  fullFillImage: {fileID: 0}
   isInvincible: 0
   bullet: {fileID: 7746328968856795561, guid: cbc957d76f09b5e44a052aed2a3abb1a, type: 3}
   ShootPoint: {fileID: 9086333637465294124}
@@ -362,18 +359,13 @@ MonoBehaviour:
   isLifeSteal: 0
   isBulletSlow: 0
   isAuto: 1
-  autoimage: {fileID: 0}
   autoState:
-  - {fileID: 21300000, guid: a150e625ef983b343855914ed2029218, type: 3}
-  - {fileID: 21300000, guid: 9417f65126a2b2e42b95eee6cceb1c8f, type: 3}
-  AutoActiveCurve: {fileID: 0}
+  - {fileID: 1566161657, guid: 25fea30808f969145a50ce1af9ac573d, type: 3}
+  - {fileID: -2045010217, guid: 25fea30808f969145a50ce1af9ac573d, type: 3}
   offset: 0
-  enemies: {fileID: 0}
-  expiriencepoint: {fileID: 0}
   level: 1
   expNeedToNewLevel: 30
   levelUpgradeEffect: {fileID: 1173937985863283591, guid: f439b6aa60af364459f86e6e43081cec, type: 3}
-  time: {fileID: 0}
   isEnemyInZone: 0
   multiply: 1
   Fire: 1.1
@@ -384,20 +376,6 @@ MonoBehaviour:
   Grass: 1.1
   Steam: 1.1
   Cold: 1.1
-  abilities:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  abilitiesObj:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  abilityId: 0
-  countActiveAbilities: 0
   characters:
   - id: 1
     health: 100
@@ -494,9 +472,6 @@ MonoBehaviour:
     value: 0
     callDown: 0
     parameters: 4
-  potionsObj:
-  - {fileID: 0}
-  - {fileID: 0}
   bomb: {fileID: 3544821091217979760, guid: f39d8d106439fe542a7b30c64142ffb9, type: 3}
   bombImg: {fileID: 21300000, guid: e836eb96448593547870a3b7d224874d, type: 3}
   canBeSaved: 0

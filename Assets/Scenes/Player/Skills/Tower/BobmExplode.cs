@@ -7,10 +7,11 @@ public class BobmExplode : MonoBehaviour
     public float lifeTime;
     public float damage;
     public float fire;
+    public GameObject explode;
     // Start is called before the first frame update
     void Start()
     {
-        transform.position = PlayerManager.instance.objTransform.position;
+        //transform.position = PlayerManager.instance.objTransform.position;
         StartCoroutine(TimerSpell());
     }
 
@@ -32,6 +33,7 @@ public class BobmExplode : MonoBehaviour
                 collider.gameObject.GetComponent<ObjectHealth>().TakeDamage();
             }
         }
+        Instantiate(explode, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 }

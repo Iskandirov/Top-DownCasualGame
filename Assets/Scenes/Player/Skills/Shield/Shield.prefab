@@ -691,6 +691,7 @@ GameObject:
   - component: {fileID: 2563749406020021630}
   - component: {fileID: 3558763396514284535}
   - component: {fileID: 3207524947271960158}
+  - component: {fileID: 4681386177238732514}
   m_Layer: 7
   m_Name: Shield
   m_TagString: Bullet
@@ -765,14 +766,7 @@ MonoBehaviour:
   skillId: 2
   currentLevel: 0
   player: {fileID: 0}
-  healthShield: 30
-  healthShieldMissed: 0
-  slowObj: {fileID: -653662045394503945, guid: f8fdadc8cffe5994489e37bb25ca8c67, type: 3}
-  rockDamage: 0
-  rockObj: {fileID: 1161253984060344018, guid: 67f0ab1ed2037474a83b645d27e01be3, type: 3}
-  dirtElement: 0
   rb: {fileID: 3207524947271960158}
-  isPotions: 0
   minDistance: 1
   maxDistance: 10
   attractionForce: 75
@@ -787,6 +781,16 @@ MonoBehaviour:
   enemy: {fileID: 0}
   anim: {fileID: 3558763396514284535}
   clash: {fileID: 3233663967523554354}
+  healthShield: 30
+  healthShieldMissed: 0
+  slowObj: {fileID: -653662045394503945, guid: f8fdadc8cffe5994489e37bb25ca8c67, type: 3}
+  rockDamage: 0
+  rockObj: {fileID: 1161253984060344018, guid: 67f0ab1ed2037474a83b645d27e01be3, type: 3}
+  dirtElement: 0
+  attackReloadTime: 5
+  currentReloadTime: 0
+  isPotions: 0
+  isHitInTheEnd: 0
 --- !u!70 &2563749406020021630
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -870,6 +874,51 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!61 &4681386177238732514
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3009308587391718981}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.12341833, y: 9.7876}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 7.170867, y: 30.942383}
+  m_EdgeRadius: 0
 --- !u!1 &3233663967523554354
 GameObject:
   m_ObjectHideFlags: 0

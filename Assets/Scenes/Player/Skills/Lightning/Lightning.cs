@@ -58,8 +58,7 @@ public class Lightning : SkillBaseMono
                 debuff.StartCoroutine(debuff.EffectTime(Elements.status.Electricity, 5));
                 if (enemy != null && basa.stats[3].isTrigger)
                 {
-                    FSMC_Executer.instance.SetFloat("Stun Time", stunTime);
-                    FSMC_Executer.instance.SetCurrentState("Stun");
+                    enemy.SetFloat("Stun Time", stunTime);
                 }
 
                 transform.position = enemyToShoot.transform.position;

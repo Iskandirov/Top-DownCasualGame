@@ -20,12 +20,11 @@ public class StateSlowed : FSMC_Behaviour
 
     public override void OnStateUpdate(FSMC_Controller stateMachine, FSMC_Executer executer)
     {
-        Debug.Log("Slow");
     }
 
     public override void OnStateExit(FSMC_Controller stateMachine, FSMC_Executer executer)
     {
-    
+        executer.anim.SetTrigger("Chase");
     }
     IEnumerator SlowTime(FSMC_Controller stateMachine, FSMC_Executer executer)
     {

@@ -1,6 +1,7 @@
 using FSMC.Runtime;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class IceWall : SkillBaseMono
 {
@@ -33,11 +34,11 @@ public class IceWall : SkillBaseMono
         //basa = SetToSkillID(gameObject);
         damageTick = basa.damageTickMax;
         Vector3 mousePosition = Input.mousePosition;
-        mousePosition.z = 1.9f; // Задаємо Z-координату для об'єкта
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-        objTransform.position = worldPosition;
+        objTransform.position = worldPosition + new Vector3(0,0,50);
         objTransform.localScale = new Vector2(basa.radius * PlayerManager.instance.Steam, basa.radius * PlayerManager.instance.Steam);
         cold = PlayerManager.instance.Cold;
+        GetComponentInChildren<VisualEffect>().Play();
         StartCoroutine(Destroy());
     }
     IEnumerator Destroy()

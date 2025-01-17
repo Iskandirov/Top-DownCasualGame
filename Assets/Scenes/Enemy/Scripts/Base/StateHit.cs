@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using FSMC.Runtime;
 using System;
+using static UnityEngine.EventSystems.EventTrigger;
 
 [Serializable]
 public class StateHit : FSMC_Behaviour
@@ -23,6 +24,14 @@ public class StateHit : FSMC_Behaviour
         {
             stateMachine.SetCurrentState("Death", executer);
         }
+        else if (executer.GetFloat("Stun Time") > 0.2f)
+        {
+            stateMachine.SetCurrentState("Stun", executer);
+        }
+        else if (executer.GetFloat("SlowTime") > 0.2f)
+        {
+            stateMachine.SetCurrentState("Slowed", executer);
+        }
         else
         {
             stateMachine.SetCurrentState("Chase", executer);
@@ -35,7 +44,6 @@ public class StateHit : FSMC_Behaviour
 
     public override void OnStateExit(FSMC_Controller stateMachine, FSMC_Executer executer)
     {
-        
+
     }
-    
 }

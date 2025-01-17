@@ -16,7 +16,7 @@ public class SlowArea : MonoBehaviour
             GameManager.Instance.FindStatName("slowedTime", Time.fixedDeltaTime);
             collision.GetComponent<FSMC_Executer>().SetFloat("SlowPercent", 0.5f / dirtElement);
             collision.GetComponent<FSMC_Executer>().SetFloat("SlowTime", .5f);
-            collision.GetComponent<FSMC_Executer>().SetCurrentState("Slow");
+            collision.GetComponent<FSMC_Executer>().StateMachine.SetCurrentState("Slow", collision.GetComponent<FSMC_Executer>());
             ElementActiveDebuff debuff = collision.GetComponentInParent<ElementActiveDebuff>();
             if (debuff != null)
             {

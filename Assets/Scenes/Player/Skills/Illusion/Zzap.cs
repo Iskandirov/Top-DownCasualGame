@@ -5,8 +5,6 @@ using UnityEngine;
 public class Zzap : MonoBehaviour
 {
     public float damage;
-    public float x;
-    public float y;
     public float lifeTime;
     public float damageTick;
     public float damageTickMax;
@@ -15,7 +13,7 @@ public class Zzap : MonoBehaviour
     void Start()
     {
         StartCoroutine(TimerSpell());
-        transform.position = new Vector2(transform.position.x + x, transform.position.y + y);// +45
+        //transform.position = new Vector2(transform.position.x + x, transform.position.y + y);// +45
     }
     private IEnumerator TimerSpell()
     {

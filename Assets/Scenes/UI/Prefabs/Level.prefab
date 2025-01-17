@@ -1675,16 +1675,16 @@ MonoBehaviour:
       - isTrigger: 0
         value: 0
       - isTrigger: 0
-        value: 20
+        value: 5
+      - isTrigger: 0
+        value: 5
       - isTrigger: 0
         value: 0
       - isTrigger: 0
-        value: 0
-      - isTrigger: 0
-        value: 0
+        value: 5
       skill: {fileID: 0}
       objToSpawn: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
-      stepMax: 20
+      stepMax: 30
       lifeTime: 12
       damage: 60
       damageTickMax: 0
@@ -1703,10 +1703,10 @@ MonoBehaviour:
     tagRare: 
     Description:
     - Create shield that block damage from enemies
-    - More hp for shield
-    - Shield return 50% damage to enemies
+    - More life time for shield
+    - Less recharge time
     - Give a zone that slow enemies
-    - Every 20 lost hp throw rock that damage enemies and stun them
+    - More life time for shield
     type: base
   - Name: Beam
     ID: 9
@@ -1726,7 +1726,7 @@ MonoBehaviour:
       skill: {fileID: 0}
       objToSpawn: {fileID: 3824504510679716380, guid: bc6dbbe2be906014a9dd32b2bb9fcedc, type: 3}
       stepMax: 15
-      lifeTime: 6
+      lifeTime: 4
       damage: 0.5
       damageTickMax: 0.2
       countObjects: 1

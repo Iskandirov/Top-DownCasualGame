@@ -145,15 +145,8 @@ public class Bullet : SkillBaseMono
     }
     public void Ricoshet(Collider2D collision)
     {
-        // Пошук найближчого об'єкта з тегом Enemy
-        Collider2D nearestEnemy = Physics2D.OverlapCircle(transform.position, 100f, 10);
 
-        // Якщо найближчий об'єкт існує
-        if (nearestEnemy != null)
-        {
-            Vector3 contactPoint = collision.ClosestPoint(nearestEnemy.transform.position);
-
-            Bullet projectile = Instantiate(this, contactPoint, transform.rotation);
+            Bullet projectile = Instantiate(this, transform.position, transform.rotation);
             projectile.StartCoroutine(LayerChange(projectile));
             projectile.isRickoshet = true;
 
@@ -164,7 +157,6 @@ public class Bullet : SkillBaseMono
 
             // Надання снаряду швидкості в напрямку до найближчого об'єкта
             projectile.GetComponent<Rigidbody2D>().AddForce((randomDirection * 15) * GetComponent<Rigidbody2D>().velocity.magnitude * 3);
-        }
     }
     private void OnLevelWasLoaded(int level)
     {
