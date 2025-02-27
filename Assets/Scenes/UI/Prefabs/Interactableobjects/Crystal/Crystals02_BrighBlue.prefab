@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4429757356363727802}
   - component: {fileID: 1159415026939479451}
   - component: {fileID: 7453095263715522497}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Crystal01.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,6 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
+  - {fileID: 2100000, guid: fbc0ac6658247044a9f94352ab71d110, type: 2}
   - {fileID: 2100000, guid: 6783daeea53cc234faea9620758d0bfc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -94,7 +95,7 @@ GameObject:
   - component: {fileID: 4006418711384124284}
   - component: {fileID: 1083408128913240625}
   - component: {fileID: 1857028603167082069}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Crystal01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -144,6 +145,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
+  - {fileID: 2100000, guid: fbc0ac6658247044a9f94352ab71d110, type: 2}
   - {fileID: 2100000, guid: 6783daeea53cc234faea9620758d0bfc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -177,7 +179,7 @@ GameObject:
   - component: {fileID: 1185134385833378641}
   - component: {fileID: 8751368890310427170}
   - component: {fileID: 8351617085531495752}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Crystal01.007
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -227,6 +229,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
+  - {fileID: 2100000, guid: fbc0ac6658247044a9f94352ab71d110, type: 2}
   - {fileID: 2100000, guid: 6783daeea53cc234faea9620758d0bfc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -260,7 +263,7 @@ GameObject:
   - component: {fileID: 7397580850894991069}
   - component: {fileID: 6124217767770454988}
   - component: {fileID: 1330652563983555809}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: vfxgraph_BlackSmoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -276,7 +279,7 @@ Transform:
   m_GameObject: {fileID: 3986718084432410424}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.662, z: 0}
+  m_LocalPosition: {x: -0, y: 1.29, z: -1.22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -318,7 +321,7 @@ VisualEffect:
         m_Overridden: 1
     m_Vector4f:
       m_Array:
-      - m_Value: {x: 0, y: 0.29680848, z: 1, w: 1}
+      - m_Value: {x: 0.29981446, y: 0.47968048, z: 0.92116904, w: 1}
         m_Name: SmokeColor
         m_Overridden: 1
     m_Uint:
@@ -386,7 +389,7 @@ GameObject:
   - component: {fileID: 1444469823177786704}
   - component: {fileID: 708052014951215718}
   - component: {fileID: 8340952694032300190}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Crystal01.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -436,6 +439,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
+  - {fileID: 2100000, guid: fbc0ac6658247044a9f94352ab71d110, type: 2}
   - {fileID: 2100000, guid: 6783daeea53cc234faea9620758d0bfc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -469,7 +473,7 @@ GameObject:
   - component: {fileID: 5883023406712460463}
   - component: {fileID: 3543673116096547783}
   - component: {fileID: 6453592892074762908}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Crystal01.008
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -519,6 +523,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
+  - {fileID: 2100000, guid: fbc0ac6658247044a9f94352ab71d110, type: 2}
   - {fileID: 2100000, guid: 6783daeea53cc234faea9620758d0bfc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -552,7 +557,7 @@ GameObject:
   - component: {fileID: 3946230303243734499}
   - component: {fileID: 5716166006128033374}
   - component: {fileID: 6384789692013022208}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: vfxgraph_Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -661,9 +666,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4648002621882306183}
-  m_Layer: 0
+  - component: {fileID: 1026084542245077523}
+  - component: {fileID: 1231815622055351397}
+  - component: {fileID: 4659321809518602083}
+  - component: {fileID: 2870502559670415906}
+  m_Layer: 6
   m_Name: Crystals02_BrighBlue
-  m_TagString: Untagged
+  m_TagString: Barrel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -678,8 +687,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4006418711384124284}
   - {fileID: 4429757356363727802}
@@ -695,6 +704,130 @@ Transform:
   - {fileID: 3946230303243734499}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1026084542245077523
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5461412169563329597}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.042704582, y: 1.7854614}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.98, y: 3.41}
+    newSize: {x: 2.98, y: 3.41}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.7936954, y: 4.024597}
+  m_EdgeRadius: 0
+--- !u!58 &1231815622055351397
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5461412169563329597}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 1152
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 1.1}
+  serializedVersion: 2
+  m_Radius: 30
+--- !u!114 &4659321809518602083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5461412169563329597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2beef076d84868418da967ee109805c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 1
+  healthMax: 1
+  explosionDamage: 5
+  SpawnableObjects:
+  - {fileID: 528103267282400849, guid: 011bcb717f1c7644cbb13f13f798cecd, type: 3}
+  - {fileID: 4915736915067170013, guid: 3d751f437f9d0bd4f95fca499dff5adb, type: 3}
+  - {fileID: 528103267282400849, guid: 444df0e93181e0748b1a32608773195b, type: 3}
+  explodeAnim: {fileID: 2870502559670415906}
+  enemiesInExplosionArea: []
+  playerInExplosionArea: {fileID: 0}
+  explodeVFX: {fileID: 2196818794704894509, guid: ac09fc604aff8d5439fa3f356f70d8ea, type: 3}
+--- !u!95 &2870502559670415906
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5461412169563329597}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a4ae277562a31bc4dbfe97e1bec412a1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6430966258574327497
 GameObject:
   m_ObjectHideFlags: 0
@@ -706,7 +839,7 @@ GameObject:
   - component: {fileID: 131983119371532517}
   - component: {fileID: 4083609323799356066}
   - component: {fileID: 9128926684563975819}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Crystal01.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -756,6 +889,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
+  - {fileID: 2100000, guid: fbc0ac6658247044a9f94352ab71d110, type: 2}
   - {fileID: 2100000, guid: 6783daeea53cc234faea9620758d0bfc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -789,7 +923,7 @@ GameObject:
   - component: {fileID: 6847405511060790731}
   - component: {fileID: 6018824790778259019}
   - component: {fileID: 7379045367042489607}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Crystal01.006
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -839,6 +973,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
+  - {fileID: 2100000, guid: fbc0ac6658247044a9f94352ab71d110, type: 2}
   - {fileID: 2100000, guid: 6783daeea53cc234faea9620758d0bfc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -872,7 +1007,7 @@ GameObject:
   - component: {fileID: 1450419256660526516}
   - component: {fileID: 5138620393022302758}
   - component: {fileID: 1605911510070011316}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Crystal01.004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -922,6 +1057,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
+  - {fileID: 2100000, guid: fbc0ac6658247044a9f94352ab71d110, type: 2}
   - {fileID: 2100000, guid: 6783daeea53cc234faea9620758d0bfc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -955,7 +1091,7 @@ GameObject:
   - component: {fileID: 6875824558224244446}
   - component: {fileID: 1045198407101599190}
   - component: {fileID: 6828112252546411746}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: vfxgraph_Electricity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1087,7 +1223,7 @@ GameObject:
   - component: {fileID: 2800283383709844018}
   - component: {fileID: 652184303653101474}
   - component: {fileID: 323410357740399460}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Crystal01.005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1137,6 +1273,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
+  - {fileID: 2100000, guid: fbc0ac6658247044a9f94352ab71d110, type: 2}
   - {fileID: 2100000, guid: 6783daeea53cc234faea9620758d0bfc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5886753005387180392}
   - component: {fileID: 7076573852859088331}
+  - component: {fileID: 1901932024504323401}
   m_Layer: 6
   m_Name: BreakableObj
   m_TagString: Barrel
@@ -84,6 +85,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1901932024504323401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2598579449446599137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed361a61c3c422246acd05497145f796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isStatic: 1
+  offset: 2
+  renderers:
+  - renderer: {fileID: 7076573852859088331}
+    priority: 0
 --- !u!1 &4452447477833177793
 GameObject:
   m_ObjectHideFlags: 0
@@ -141,6 +159,7 @@ MonoBehaviour:
   explodeAnim: {fileID: 0}
   enemiesInExplosionArea: []
   playerInExplosionArea: {fileID: 0}
+  explodeVFX: {fileID: 0}
 --- !u!61 &4452447477833177805
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -177,6 +177,8 @@ public class PlayerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = GameManager.Instance;
+
         foreach (var perk in statsToBuff)
         {
             if (PlayerPrefs.HasKey(perk.key))
@@ -203,7 +205,6 @@ public class PlayerManager : MonoBehaviour
                
             }
         }
-        gameManager = GameManager.Instance;
         attackSpeedMax = attackSpeed;
         playerHealthPointMax = playerHealthPoint;
         SetCharacterOnStart();
@@ -242,7 +243,7 @@ public class PlayerManager : MonoBehaviour
     //Кінець тестовому делегату
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) && !LootManager.inst.isTutor)
         {
             OnAttackTypeSwitch?.Invoke();
         }

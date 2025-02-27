@@ -70,8 +70,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -669076885
-  m_SortingLayer: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 3
   m_Sprite: {fileID: -1537068261, guid: 6a45d1b8c29bf84458cb8def38f54a23, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -154,8 +154,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -669076885
-  m_SortingLayer: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 3
   m_Sprite: {fileID: -736065399, guid: 6a45d1b8c29bf84458cb8def38f54a23, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -238,8 +238,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -669076885
-  m_SortingLayer: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 3
   m_Sprite: {fileID: 634149763, guid: 6a45d1b8c29bf84458cb8def38f54a23, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -323,8 +323,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -669076885
-  m_SortingLayer: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 1221313990, guid: bb14bf06fd01fb54ca6119d155aa6a75, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -356,6 +356,7 @@ GameObject:
   - component: {fileID: 7568516957470569664}
   - component: {fileID: 8848279636520331944}
   - component: {fileID: 7410819626258233302}
+  - component: {fileID: 1862681535627083165}
   m_Layer: 10
   m_Name: GlowBow
   m_TagString: Enemy
@@ -649,6 +650,36 @@ MonoBehaviour:
   expGiven: 40
   dangerLevel: 3
   enemyType: 2
+  bossHealthObj: {fileID: 0}
+  healthObjImg: {fileID: 0}
+  avatar: {fileID: 0}
+  isBoss: 0
+  isInZone: 0
+--- !u!114 &1862681535627083165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4915736915067170013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed361a61c3c422246acd05497145f796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isStatic: 0
+  offset: -1.12
+  renderers:
+  - renderer: {fileID: 5397493030017790455}
+    priority: 0
+  - renderer: {fileID: 4407913463386086510}
+    priority: 2
+  - renderer: {fileID: 6286615933707508025}
+    priority: 1
+  - renderer: {fileID: 2380773362075554659}
+    priority: 1
+  - renderer: {fileID: 8821041926432290471}
+    priority: 1
 --- !u!1 &6470723529243201593
 GameObject:
   m_ObjectHideFlags: 0
@@ -733,7 +764,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 1
   m_Color: {r: 1, g: 0.78961587, b: 0, a: 1}
-  m_Intensity: 3
+  m_Intensity: 1.5
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 67bb4bdb000000006bb21ed8dbdc180403081c6621fa54d5ab921fc37f8d61be
@@ -836,8 +867,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -669076885
-  m_SortingLayer: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 3
   m_Sprite: {fileID: 1574204019, guid: 6a45d1b8c29bf84458cb8def38f54a23, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

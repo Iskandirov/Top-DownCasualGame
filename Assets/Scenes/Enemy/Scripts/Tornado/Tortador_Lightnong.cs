@@ -2,18 +2,12 @@ using UnityEngine;
 
 public class Tortador_Lightnong : MonoBehaviour
 {
-    PlayerManager player;
-    float damage;
-    // Start is called before the first frame update
-    void Awake()
-    {
-        player = PlayerManager.instance;
-    }
+    float damage = 10;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag(player.tag) && !collision.isTrigger)
+        if (collision.CompareTag("Player") && !collision.isTrigger)
         {
-            player.TakeDamage(damage);
+            collision.GetComponent<PlayerManager>().TakeDamage(damage);
         }
     }
 }

@@ -20,7 +20,7 @@ public class EXP : MonoBehaviour
         if (itWasInPlayerZone)
         {
             speed += acceleration * Time.fixedDeltaTime;
-            objTransform.position = Vector2.MoveTowards(objTransform.position, player.transform.position + new Vector3(0,10,0), speed * Time.fixedDeltaTime);
+            objTransform.position = Vector2.MoveTowards(objTransform.position, player.transform.position + new Vector3(0,8,0), speed * Time.fixedDeltaTime);
         }
     }
     private void OnTriggerEnter2D(Collider2D other)

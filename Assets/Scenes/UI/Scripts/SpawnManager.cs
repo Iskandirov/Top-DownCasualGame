@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [DefaultExecutionOrder(11)]
@@ -15,10 +16,11 @@ public class SpawnManager : MonoBehaviour
     public List<GameObject> barrelExplosionPool;
     public float barrelSpawnInterval = 20f;
     public GameObject[] barrelPrefab;
-    
-    [field: SerializeField] public static Collider2D spawnMapBoundStatic { get; private set; }
-    [field: SerializeField] public  Collider2D spawnMapBound { get; private set; }
 
+    [field: SerializeField] public static Collider2D spawnMapBoundStatic { get; private set; }
+    [field: SerializeField] public Collider2D spawnMapBound { get; private set; }
+    public float radius;
+    Vector3 randomPosition;
     private void Awake()
     {
         spawnMapBoundStatic = spawnMapBound;
@@ -27,16 +29,16 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        barrelLootPool = InitializeObjectPool(barrelPrefab[0], barrelPoolSize,transform);
+        barrelLootPool = InitializeObjectPool(barrelPrefab[0], barrelPoolSize, transform);
         barrelExplosionPool = InitializeObjectPool(barrelPrefab[1], explosionBarrelPoolSize, transform);
 
         StartCoroutine(SpawnRoutine(barrelLootPool, barrelPrefab[0], barrelSpawnInterval));
         StartCoroutine(SpawnRoutine(barrelExplosionPool, barrelPrefab[1], barrelSpawnInterval));
 
     }
-    List<GameObject> InitializeObjectPool(GameObject objectPrefab,int pool,Transform parent)
+    List<GameObject> InitializeObjectPool(GameObject objectPrefab, int pool, Transform parent)
     {
-        List<GameObject>  objectPool = new List<GameObject>();
+        List<GameObject> objectPool = new List<GameObject>();
         for (int i = 0; i < pool; i++)
         {
             GameObject obj = Instantiate(objectPrefab, parent);
@@ -45,7 +47,7 @@ public class SpawnManager : MonoBehaviour
         }
         return objectPool;
     }
-    GameObject GetFromPool(List<GameObject> objectPool,GameObject objectPrefab)
+    GameObject GetFromPool(List<GameObject> objectPool, GameObject objectPrefab)
     {
         foreach (GameObject obj in objectPool)
         {
@@ -59,8 +61,8 @@ public class SpawnManager : MonoBehaviour
         objectPool.Add(gameObject);
         return gameObject;
     }
-    
-    private IEnumerator SpawnRoutine(List<GameObject> objList,GameObject obj, float interval)
+
+    private IEnumerator SpawnRoutine(List<GameObject> objList, GameObject obj, float interval)
     {
         while (true)
         {
@@ -86,20 +88,57 @@ public class SpawnManager : MonoBehaviour
             AstarPath.active.UpdateGraphs(bounds);
         }
     }
-    public static Vector3 GetRandomPositionInsideCollider()
+    public Vector3 GetRandomPositionInsideCollider()
     {
         // Отримати мінімальні та максимальні координати spawnArea
         Vector2 min = spawnMapBoundStatic.bounds.min;
         Vector2 max = spawnMapBoundStatic.bounds.max;
 
         // Створити об'єкт в випадковій точці всередині spawnArea
-        Vector3 randomPosition = new Vector3(
-            UnityEngine.Random.Range(min.x, max.x),
-            UnityEngine.Random.Range(min.y, max.y),
-            0
-        );
+        System.Random a = new System.Random();
+        do
+        {
+            randomPosition = new Vector3(
+             a.Next((int)min.x, (int)max.x),
+            a.Next((int)min.y, (int)max.y),
+            0);
+        }
+        while (GetSpawnPositionsInAIPath(radius, randomPosition) == null);
 
         return randomPosition;
     }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(randomPosition, radius);
+    }
+    public static Vector3 GetSpawnPositionsInAIPath(float radius, Vector3 center) // Додано параметр center
+    {
+        Vector3 availablePositions = new Vector3();
 
+        if (AstarPath.active == null || AstarPath.active.data == null || AstarPath.active.data.gridGraph == null || AstarPath.active.data.gridGraph.nodes == null)
+        {
+            Debug.LogError("A* Pathfinding graph is not initialized or has no nodes!");
+            return availablePositions;
+        }
+
+        var graph = AstarPath.active.data.gridGraph;
+        var nodes = graph.nodes;
+
+        foreach (var node in nodes)
+        {
+            if (node.Walkable)
+            {
+                // Обчислюємо відстань між центром вузла та центром області пошуку
+                float distance = Vector2.Distance((Vector3)node.position, center);
+
+                if (distance <= radius)
+                {
+                    availablePositions = new Vector3(node.XCoordinateInGrid, node.ZCoordinateInGrid);
+                }
+            }
+        }
+
+        return availablePositions;
+    }
 }

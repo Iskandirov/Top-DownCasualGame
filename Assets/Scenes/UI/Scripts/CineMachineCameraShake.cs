@@ -9,6 +9,7 @@ public class CineMachineCameraShake : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        Shake(0,0);
     }
     public void Shake(float intensity, float timer)
     {

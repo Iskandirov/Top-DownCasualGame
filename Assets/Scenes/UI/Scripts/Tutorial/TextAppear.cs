@@ -64,7 +64,10 @@ public class TextAppear : MonoBehaviour
                     }
                 }
             }
-            textMesh.text += introDialog[tutor.phase].Text[textCount][timer % introDialog[tutor.phase].Text[textCount].Length];
+            textMesh.text += introDialog[tutor.phase].
+                Text[textCount][timer % introDialog[tutor.phase].
+                Text[textCount].
+                Length];
             // Інкрементуємо таймер
             timer++;
             if (textMesh.text.Length == introDialog[tutor.phase].Text[textCount].Length)
@@ -150,6 +153,7 @@ public class TextAppear : MonoBehaviour
                 }
                 else if (tutor.phase == 7)
                 {
+                    tutor.text.isShooting = true;
                     FinalPanel.SetActive(true);
                 }
             }

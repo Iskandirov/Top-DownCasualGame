@@ -36,13 +36,13 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
     void Start()
     {
         hashing = FindObjectOfType<DataHashing>();
-       
+
         fliedSlots = FindObjectOfType<FieldSlots>();
         GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("Finish");
 
         itemData = FindObjectOfType<LoadItemData>();
         gameManager = GameManager.Instance;
-        
+
         foreach (GameObject obj in objectsWithTag)
         {
             targetObjects.Add(obj);
@@ -73,7 +73,7 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
             }
         }
         PointActivate();
-       
+
         startParent.count.text = GetComponent<SetParametersToitem>().Count;
         startParent.level.text = GetComponent<SetParametersToitem>().level != "4" ? gameObject.GetComponent<SetParametersToitem>().level : "Max";
         gameManager.UpdateText(list);
@@ -133,7 +133,7 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
                     item.raretag = fliedSlots.objToCraft.RareTag;
                     item.price.text = fliedSlots.objToCraft.Price.ToString();
                     //Другий в порядку
-                    SetCardInfo();
+                    //SetCardInfo();
 
                     if (targetEquipObjects.CompareTag("GameController"))
                     {
@@ -146,6 +146,8 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
                         transform.localScale = transform.localScale * 1.5f;
                         toEquipSlot = false;
                     }
+                    item.eguipPanel.EnableInput();
+
                 }
                 else
                 {
@@ -160,7 +162,7 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
         }
         gameManager.UpdateText(GameManager.Instance.texts);
     }
-    public void SetCardInfo()
+    /*public void SetCardInfo()
     {
         ItemData itemData = equipPanel.GetComponent<ItemData>();
         SetItem(itemData);
@@ -183,7 +185,7 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
                         SavedEquipData data = JsonUtility.FromJson<SavedEquipData>(decrypt);
                         if (data.Tag == itemData.itemName.GetComponent<TagText>().tagText)
                         {
-                            itemData.state.text = "Зняти";
+                            itemData.state.GetComponent<TagText>().tagText = "equiped";
                             isEquipedNow = true;
                             foundMatch = true;
                             break;
@@ -192,13 +194,13 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
 
                     if (!foundMatch)
                     {
-                        itemData.state.text = "Обладнати";
+                        itemData.state.GetComponent<TagText>().tagText = "equip";
                         isEquipedNow = false;
                     }
                 }
             }
         }
-    }
+    }*/
     public void SetItem(ItemData obj)
     {
         SetParametersToitem param = GetComponent<SetParametersToitem>();

@@ -134,12 +134,12 @@ public class Settings : MonoBehaviour
     }
     public void SetVolumeSFX()
     {
+        Debug.Log(1);
        
         List<string> valueSFX = new List<string>()
             {
             "sfx",
             volumeSFX.value.ToString(),
-            // Додаткові значення списку
             };
         gameManager.ChangeSetting(valueSFX);
         AudioManager.instance.ChangeVolume(AudioManager.instance.volumeSFX, AudioManager.instance.sfxObj);

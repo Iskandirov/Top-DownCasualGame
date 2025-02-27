@@ -113,17 +113,15 @@ public class CheckLevel : MonoBehaviour
     {
         hashing = FindObjectOfType<DataHashing>();
         string path = Path.Combine(Application.persistentDataPath, "Levels.txt");
-
         if (File.Exists(path))
         {
             string[] lines = File.ReadAllLines(path);
-
             List<SavedLocationsData> updatedLines = new List<SavedLocationsData>();
             foreach (string line in lines)
             {
                 string decrypt = hashing.Decrypt(line);
                 SavedLocationsData data = JsonUtility.FromJson<SavedLocationsData>(decrypt);
-                if (data.IDLevel == level && data.percent < percentNew)
+                if (data.IDLevel == level && data.percent <= percentNew)
                 {
                     data.percent = percentNew;
                     if (percentNew >= 100)
@@ -141,6 +139,7 @@ public class CheckLevel : MonoBehaviour
                     }
                 }
                 updatedLines.Add(data);
+
             }
             using (StreamWriter writer = new StreamWriter(path, false))
             {

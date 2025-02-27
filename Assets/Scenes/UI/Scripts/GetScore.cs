@@ -22,12 +22,16 @@ public class GetScore : MonoBehaviour
         instance = this;
         hash = DataHashing.inst;
         Timer objTimer = FindObjectOfType<Timer>();
+        if (GameManager.Instance.IsGamePage && !PlayerManager.instance.isTutor)
+        {
+            timeToSpawnBoss = EnemySpawner.instance.timeToSpawnBoss;
+        }
         if (scoreEnd != null)
         {
             if (objTimer)
             {
                 timeEnd.text = objTimer.time.ToString("00.00");
-                if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 6 && s.isActive == true) != null)
+                if (!PlayerManager.instance.isTutor && DailyQuests.instance.quest.FirstOrDefault(s => s.id == 6 && s.isActive == true) != null)
                 {
                     DailyQuests.instance.UpdateValue(6, objTimer.time - timeToSpawnBoss, true);
                 }
@@ -62,6 +66,7 @@ public class GetScore : MonoBehaviour
             if (FindObjectOfType<Tutor>() != null)
             {
                 percent = 100;
+                percentEnd.text = percent.ToString("0.") + "%";
                 score = 1500;
                 scoreEnd.text = score.ToString("0.");
                 score += LoadScore();

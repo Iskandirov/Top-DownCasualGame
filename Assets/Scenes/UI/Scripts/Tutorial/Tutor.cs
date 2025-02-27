@@ -35,11 +35,12 @@ public class Tutor : MonoBehaviour
     void Start()
     {
         player = PlayerManager.instance;
+        playerLight = player.transform.GetChild(1).GetComponent<Light2D>();
         BlockMoveAndShoot();
     }
     public IEnumerator TurnOn()
     {
-        while (playerLight.intensity <= 1f && playerLight.falloffIntensity >= 0.5f)
+        while (playerLight.intensity <= 5f && playerLight.falloffIntensity >= 0.5f)
         {
             // «б≥льште €скрав≥сть св≥тла на 1/10
             playerLight.intensity += 0.0004f;
@@ -55,7 +56,7 @@ public class Tutor : MonoBehaviour
     void Update()
     {
         player.attackSpeed -= Time.deltaTime;
-        if (player.attackSpeed < 0 && text.isShooting && Input.GetMouseButton(0))
+        if (player.attackSpeed < 0 && text.isShooting/* && Input.GetMouseButton(0)*/)
         {
             shootobject.SetActive(true);
             //Instantiate(player.bullet);
@@ -102,7 +103,7 @@ public class Tutor : MonoBehaviour
                 BlockMoveAndShoot();
                 parentPhase2.SetBool("IsFadeOut", true);
             }
-            if (Input.GetKeyDown(KeyCode.LeftShift))
+            if (Input.GetKeyDown(KeyCode.LeftShift) && player.enabled)
             {
                 ShiftLight.color = FinalColor;
                 parentPhase3.SetBool("IsFadeOut", true);

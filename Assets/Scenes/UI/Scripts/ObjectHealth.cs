@@ -1,3 +1,4 @@
+using FSMC.Runtime;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,8 +9,9 @@ public class ObjectHealth : MonoBehaviour
     [SerializeField] float explosionDamage = 5;
     [SerializeField] List<GameObject> SpawnableObjects;
     [SerializeField] Animator explodeAnim;
-    //[SerializeField] List<EnemyState> enemiesInExplosionArea;
+    [SerializeField] List<FSMC_Executer> enemiesInExplosionArea;
     [SerializeField] PlayerManager playerInExplosionArea;
+    [SerializeField] GameObject explodeVFX;
     public void TakeDamage()
     {
         health -= 1;
@@ -30,10 +32,10 @@ public class ObjectHealth : MonoBehaviour
     void CreateLoot()
     {
         GameObject a = Instantiate(SpawnableObjects[Random.Range(0, SpawnableObjects.Count)], transform.position, Quaternion.identity);
-        //if (a.GetComponent<EnemyState>() != null)
-        //{
-        //    FindObjectOfType<EnemyController>().children.Add(a.GetComponent<EnemyState>());
-        //}
+        if (a.GetComponent<FSMC_Executer>() != null)
+        {
+            FindObjectOfType<EnemySpawner>().children.Add(a.GetComponent<FSMC_Executer>());
+        }
     }
     void ExplodeAnimActivate()
     {
@@ -41,19 +43,19 @@ public class ObjectHealth : MonoBehaviour
     }
     public void Explode()
     {
-        //if (enemiesInExplosionArea != null)
-        //{
-        //    EnemyState controller = EnemyState.instance;
-        //    foreach (var enemy in enemiesInExplosionArea)
-        //    {
-        //        controller.Damage(explosionDamage);
-        //    }
-        //}
+        Instantiate(explodeVFX, transform.position, Quaternion.identity);
+        if (enemiesInExplosionArea != null)
+        {
+            foreach (var enemy in enemiesInExplosionArea)
+            {
+                enemy.TakeDamage(explosionDamage);
+            }
+        }
         if (playerInExplosionArea != null)
         {
             playerInExplosionArea.TakeDamage(explosionDamage);
         }
-        //enemiesInExplosionArea.Clear();
+        enemiesInExplosionArea.Clear();
         playerInExplosionArea = null;
         explodeAnim.SetBool("isGoingExplode", false);
         gameObject.SetActive(false);
@@ -63,7 +65,7 @@ public class ObjectHealth : MonoBehaviour
     {
         if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
-            //enemiesInExplosionArea.Add(collision.GetComponent<EnemyState>());
+            enemiesInExplosionArea.Add(collision.GetComponent<FSMC_Executer>());
         } 
         if (collision.CompareTag("Player") && !collision.isTrigger)
         {
@@ -75,7 +77,7 @@ public class ObjectHealth : MonoBehaviour
     {
         if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
-            //enemiesInExplosionArea.Remove(collision.GetComponent<EnemyState>());
+            enemiesInExplosionArea.Remove(collision.GetComponent<FSMC_Executer>());
         }
         if (collision.CompareTag("Player") && !collision.isTrigger)
         {

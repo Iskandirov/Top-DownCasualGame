@@ -438,7 +438,13 @@ MonoBehaviour:
     language: ua
   - key: equip
     value: Equip
-    language: end
+    language: eng
+  - key: equiped
+    value: "\u0417\u043D\u044F\u0442\u0438"
+    language: ua
+  - key: equiped
+    value: Unequip
+    language: eng
   - key: bullet_2
     value: "+1 \u043F\u0430\u0442\u0440\u043E\u043D"
     language: ua
@@ -1584,6 +1590,75 @@ MonoBehaviour:
   - key: phrase_8_2
     value: I need to get out of here before someone else gets stuck!
     language: eng
+  - key: dailyq_0
+    value: "\u0412\u0431\u0438\u0439 1000 \u0432\u043E\u0440\u043E\u0433\u0456\u0432"
+    language: ua
+  - key: dailyq_0
+    value: Defeat 1000 enemies
+    language: eng
+  - key: dailyq_1
+    value: "\u0412\u0438\u043B\u0456\u043A\u0443\u0439 \u0441\u0435\u0431\u0435 \u0431\u0456\u043B\u044C\u0448
+      \u043D\u0456\u0436 \u043D\u0430 500 \u0437\u0434\u043E\u0440\u043E\u0432'\u044F"
+    language: ua
+  - key: dailyq_1
+    value: Restore over 500 health to yourself
+    language: eng
+  - key: dailyq_2
+    value: "\u0412\u0431\u0438\u0439 20 \u041C\u0456\u0448\u0440\u0443\u043C\u0456\u0432"
+    language: ua
+  - key: dailyq_2
+    value: Defeat 20 Mushrooms
+    language: eng
+  - key: dailyq_3
+    value: "\u0417\u0430\u0432\u0434\u0430\u0439 200 \u0448\u043A\u043E\u0434\u0438
+      \u0432\u043E\u0433\u043D\u044F\u043D\u0438\u043C\u0438 \u0437\u0430\u043A\u043B\u0438\u043D\u0430\u043D\u043D\u044F\u043C\u0438"
+    language: ua
+  - key: dailyq_3
+    value: Deal 200 fire spell damage
+    language: eng
+  - key: dailyq_4
+    value: "\u041E\u0442\u0440\u0438\u043C\u0430\u0442\u0438 1000 \u0448\u043A\u043E\u0434\u0438
+      \u0437\u0430 \u0440\u0430\u0443\u043D\u0434 \u0456 \u043D\u0435 \u043F\u043E\u043C\u0435\u0440\u0442\u0438"
+    language: ua
+  - key: dailyq_4
+    value: Take 1000 damage in a round and survive
+    language: eng
+  - key: dailyq_5
+    value: "\u0417\u043D\u0430\u0439\u0442\u0438 10 \u0441\u0435\u0440\u0434\u0435\u0447\u043E\u043A
+      \u0437\u0430 \u0440\u0456\u0432\u0435\u043D\u044C"
+    language: ua
+  - key: dailyq_5
+    value: Collect 10 hearts in a level
+    language: eng
+  - key: dailyq_6
+    value: "\u0417\u0434\u043E\u043B\u0430\u0442\u0438 \u0431\u043E\u0441\u0441\u0430
+      \u0448\u0432\u0438\u0434\u0448\u0435 \u043D\u0456\u0436 \u0437\u0430 2 \u0445\u0432\u0438\u043B\u0438\u043D\u0438"
+    language: ua
+  - key: dailyq_6
+    value: Defeat the boss in under 2 minutes
+    language: eng
+  - key: dailyq_7
+    value: "\u0412\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u0430\u0442\u0438 \u0441\u043F\u0435\u0446.
+      \u0432\u043C\u0456\u043D\u043D\u044F 25 \u0440\u0430\u0437\u0456\u0432"
+    language: ua
+  - key: dailyq_7
+    value: Use a special ability 25 times
+    language: eng
+  - key: dailyq_8
+    value: "\u041D\u0435 \u043E\u0442\u0440\u0438\u043C\u0443\u0432\u0430\u0442\u0438
+      \u0448\u043A\u043E\u0434\u0443 \u0432\u043F\u0440\u043E\u0434\u043E\u0432\u0436
+      45 \u0441\u0435\u043A\u0443\u043D\u0434"
+    language: ua
+  - key: dailyq_8
+    value: Take no damage for 45 seconds
+    language: eng
+  - key: dailyq_9
+    value: "\u041F\u0440\u043E\u043A\u0430\u0447\u0430\u0442\u0438 \u0434\u043E \u043C\u0430\u043A\u0441\u0438\u043C\u0443\u043C\u0430
+      \u0434\u0432\u0456 \u0437\u0434\u0456\u0431\u043D\u043E\u0441\u0442\u0456"
+    language: ua
+  - key: dailyq_9
+    value: Fully upgrade 2 skills
+    language: eng
   dataSett: []
   loc: eng
   volumeMusic: 0
@@ -1599,7 +1674,7 @@ MonoBehaviour:
     IDRare: 1
     Stat: 3
     Level: 1
-    Count: 0
+    Price: 0
     Tag: energy_charge
     RareTag: common
     Description: "\u0417\u0430\u0440\u044F\u0434\u0436\u0430\u0454 \u0432\u0430\u0448\u043E\u0433\u043E
@@ -1613,7 +1688,7 @@ MonoBehaviour:
     IDRare: 2
     Stat: 0,1
     Level: 1
-    Count: 0
+    Price: 0
     Tag: gear
     RareTag: uncommon
     Description: "\u0417\u0430\u0433\u0430\u0434\u043A\u043E\u0432\u0438\u0439 \u043C\u0435\u0445\u0430\u043D\u0456\u0437\u043C
@@ -1627,7 +1702,7 @@ MonoBehaviour:
     IDRare: 3
     Stat: 1
     Level: 1
-    Count: 0
+    Price: 0
     Tag: eternium_crystals
     RareTag: mythical
     Description: "\u0414\u0440\u0435\u0432\u043D\u0456\u0439 \u043A\u0440\u0438\u0441\u0442\u0430\u043B
@@ -1642,7 +1717,7 @@ MonoBehaviour:
     IDRare: 4
     Stat: 10
     Level: 1
-    Count: 0
+    Price: 0
     Tag: dragon's_eye
     RareTag: legendary
     Description: "\u041E\u043A\u043E \u0441\u0442\u0430\u0440\u043E\u0433\u043E \u0434\u0440\u0430\u043A\u043E\u043D\u0430
@@ -1656,7 +1731,7 @@ MonoBehaviour:
     IDRare: 1
     Stat: 0,1
     Level: 1
-    Count: 0
+    Price: 0
     Tag: beatty`s_claw
     RareTag: common
     Description: "\u041A\u043B\u0438\u043A\u0438 \u0437\u043B\u0456\u0441\u043D\u043E\u0457
@@ -1673,7 +1748,7 @@ MonoBehaviour:
     IDRare: 1
     Stat: 30
     Level: 1
-    Count: 0
+    Price: 0
     Tag: treesnipe`s_eye
     RareTag: common
     Description: "\u041F\u043B\u0456\u0434 \u0434\u0435\u0440\u0435\u0432'\u044F\u043D\u043E\u0433\u043E
@@ -1687,7 +1762,7 @@ MonoBehaviour:
     IDRare: 2
     Stat: 0,2
     Level: 1
-    Count: 0
+    Price: 0
     Tag: mushi_extract
     RareTag: uncommon
     Description: "\u0412\u0438\u0436\u0438\u043C\u043A\u0430 \u0437 \u043D\u0435\u0432\u0438\u0434\u0438\u043C\u0438\u0445
@@ -1708,7 +1783,7 @@ MonoBehaviour:
     IDRare: 2
     Stat: 0,8
     Level: 1
-    Count: 0
+    Price: 0
     Tag: kiwi`s_root
     RareTag: uncommon
     Description: "\u041A\u043E\u0440\u0456\u043D\u044C \u0437\u0432\u0456\u0440\u0430
@@ -1723,7 +1798,7 @@ MonoBehaviour:
     IDRare: 3
     Stat: 0,4
     Level: 1
-    Count: 0
+    Price: 0
     Tag: beany`s_mucus
     RareTag: mythical
     Description: "\u0411\u0440\u0438\u0434\u043A\u0438\u0439 \u0441\u043B\u0438\u0437
@@ -1738,7 +1813,7 @@ MonoBehaviour:
     IDRare: 4
     Stat: 1
     Level: 1
-    Count: 0
+    Price: 0
     Tag: bobses_sphere
     RareTag: legendary
     Description: "\u0414\u043E\u0434\u0430\u0454 \u0441\u0444\u0435\u0440\u0443 \u044F\u043A\u0430
@@ -1757,7 +1832,7 @@ MonoBehaviour:
     IDRare: 4
     Stat: 20
     Level: 1
-    Count: 0
+    Price: 0
     Tag: rocky`s_shiled
     RareTag: legendary
     Description: "\u041C\u0456\u0446\u043D\u0438\u0439 \u0449\u0438\u0442 \u044F\u043A\u0438\u0439
@@ -1909,6 +1984,19 @@ MonoBehaviour:
   - {fileID: 0}
   quest: {fileID: 0}
   resolutionTxt: {fileID: 0}
+  spriteCD: {fileID: 0}
+  baseSkillImg: {fileID: 0}
+  text: {fileID: 0}
+  player: {fileID: 0}
+  fullFillImage: {fileID: 0}
+  autoimage: {fileID: 0}
+  AutoActiveCurve: {fileID: 0}
+  enemies: {fileID: 0}
+  expiriencepoint: {fileID: 0}
+  potionsObj: []
+  heroes: []
+  heroParent: {fileID: 0}
+  virtCam: {fileID: 0}
 --- !u!81 &4771157334789863649
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1934,97 +2022,92 @@ MonoBehaviour:
     isTodaysQuest: 0
     isCompleteInOneRound: 0
     nameQuest: "\u0414\u0438\u043A\u0430 \u043E\u0445\u043E\u0442\u0430"
-    description: "\u0412\u0431\u0438\u0439 1000 \u0432\u043E\u0440\u043E\u0433\u0456\u0432"
+    description: dailyq_0
     id: 0
     goal: 1000
     progress: 0
-    reward: 200
+    reward: 2000
   - isActive: 0
     isTodaysQuest: 0
     isCompleteInOneRound: 0
     nameQuest: "\u0412\u0435\u043B\u0438\u043A\u0438\u0439 \u0445\u0456\u043B\u043B\u0435\u0440"
-    description: "\u0412\u0438\u043B\u0456\u043A\u0443\u0439 \u0441\u0435\u0431\u0435
-      \u0431\u0456\u043B\u044C\u0448 \u043D\u0456\u0436 \u043D\u0430 500 \u0437\u0434\u043E\u0440\u043E\u0432'\u044F"
+    description: dailyq_1
     id: 1
     goal: 500
     progress: 0
-    reward: 1000
+    reward: 5000
   - isActive: 0
     isTodaysQuest: 0
     isCompleteInOneRound: 0
     nameQuest: "\u0425\u043E\u0432\u0430\u0439\u0441\u044F \u0456 \u0448\u0443\u043A\u0430\u0439"
-    description: "\u0412\u0431\u0438\u0439 20 \u041C\u0456\u0448\u0440\u0443\u043C\u0456\u0432"
+    description: dailyq_2
     id: 2
     goal: 20
     progress: 0
-    reward: 250
+    reward: 2500
   - isActive: 0
     isTodaysQuest: 0
     isCompleteInOneRound: 0
     nameQuest: "\u041F\u043E\u0432\u0435\u043B\u0435\u0442\u0435\u043B\u044C \u0432\u043E\u0433\u043D\u044E"
-    description: "\u0417\u0430\u0432\u0434\u0430\u0439 200 \u0448\u043A\u043E\u0434\u0438
-      \u0432\u043E\u0433\u043D\u044F\u043D\u0438\u043C\u0438 \u0437\u0430\u043A\u043B\u0438\u043D\u0430\u043D\u043D\u044F\u043C\u0438"
+    description: dailyq_3
     id: 3
-    goal: 200
+    goal: 2000
     progress: 0
-    reward: 450
+    reward: 4500
   - isActive: 0
     isTodaysQuest: 0
-    isCompleteInOneRound: 0
+    isCompleteInOneRound: 1
     nameQuest: "\u0413\u0440\u0443\u0448\u0430 \u0434\u043B\u044F \u0431\u0438\u0442\u0442\u044F"
-    description: "\u041E\u0442\u0440\u0438\u043C\u0430\u0442\u0438 1000 \u0448\u043A\u043E\u0434\u0438
-      \u0437\u0430 \u0440\u0430\u0443\u043D\u0434 \u0456 \u043D\u0435 \u043F\u043E\u043C\u0435\u0440\u0442\u0438"
+    description: dailyq_4
     id: 4
     goal: 1000
     progress: 0
-    reward: 600
+    reward: 6000
   - isActive: 0
     isTodaysQuest: 0
-    isCompleteInOneRound: 0
+    isCompleteInOneRound: 1
     nameQuest: "\u0414\u0435\u043D\u044C \u0437\u0430\u043A\u043E\u0445\u0430\u043D\u0438\u0445"
-    description: "\u0417\u043D\u0430\u0439\u0442\u0438 10 \u0441\u0435\u0440\u0434\u0435\u0447\u043E\u043A
-      \u0437\u0430 \u0440\u0456\u0432\u0435\u043D\u044C"
+    description: dailyq_5
     id: 5
     goal: 10
     progress: 0
-    reward: 150
+    reward: 3500
   - isActive: 0
     isTodaysQuest: 0
-    isCompleteInOneRound: 0
+    isCompleteInOneRound: 1
     nameQuest: "\u0421\u043F\u0456\u0434\u0440\u0430\u043D\u0435\u0440"
-    description: "\u0417\u0434\u043E\u043B\u0430\u0442\u0438 \u0431\u043E\u0441\u0441\u0430
-      \u0448\u0432\u0438\u0434\u0448\u0435 \u043D\u0456\u0436 \u0437\u0430 2 \u0445\u0432\u0438\u043B\u0438\u043D\u0438"
+    description: dailyq_6
     id: 6
-    goal: 120
+    goal: 1
     progress: 0
-    reward: 300
+    reward: 3000
   - isActive: 0
     isTodaysQuest: 0
     isCompleteInOneRound: 0
-    nameQuest: "\u041F\u043E\u0432\u0435\u043B\u0435\u0442\u0435\u043B\u044C \u0432\u043E\u0433\u043D\u044E"
-    description: "\u0417\u0430\u0432\u0434\u0430\u0439 \u0448\u043A\u043E\u0434\u0438 "
+    nameQuest: "\u041F\u0440\u043E \u043A\u0430\u0441\u0442\u0435\u0440"
+    description: dailyq_7
     id: 6
-    goal: 100
-    progress: 0
-    reward: 0
-  - isActive: 0
-    isTodaysQuest: 0
-    isCompleteInOneRound: 0
-    nameQuest: "\u041F\u043E\u0432\u0435\u043B\u0435\u0442\u0435\u043B\u044C \u0432\u043E\u0433\u043D\u044E"
-    description: "\u0417\u0430\u0432\u0434\u0430\u0439 \u0448\u043A\u043E\u0434\u0438 "
-    id: 7
-    goal: 300
-    progress: 0
-    reward: 0
-  - isActive: 0
-    isTodaysQuest: 0
-    isCompleteInOneRound: 0
-    nameQuest: "\u041F\u043E\u0432\u0435\u043B\u0435\u0442\u0435\u043B\u044C \u0432\u043E\u0433\u043D\u044E"
-    description: "\u0417\u0430\u0432\u0434\u0430\u0439 \u0448\u043A\u043E\u0434\u0438 "
-    id: 8
     goal: 25
     progress: 0
-    reward: 0
+    reward: 3500
+  - isActive: 0
+    isTodaysQuest: 0
+    isCompleteInOneRound: 0
+    nameQuest: "\u041D\u0435\u0434\u043E\u0442\u043E\u0440\u043A\u0430\u043D\u0438\u0439"
+    description: dailyq_8
+    id: 7
+    goal: 45
+    progress: 0
+    reward: 5500
+  - isActive: 0
+    isTodaysQuest: 0
+    isCompleteInOneRound: 0
+    nameQuest: "\u0420\u043E\u0437\u0443\u043C\u043D\u0438\u043A"
+    description: dailyq_9
+    id: 8
+    goal: 2
+    progress: 0
+    reward: 2500
   TimeToNextRandom: {fileID: 0}
   questText:
   - {fileID: 0}
@@ -2046,10 +2129,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  claimBtn:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  questImageDone: []
   money: {fileID: 0}
   popUp: {fileID: 0}
   popUpImg: {fileID: 0}

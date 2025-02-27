@@ -41,7 +41,6 @@ public class BossAttack : MonoBehaviour
     public void EndRecover()
     {
         anim.SetBool("AttackEnd", false);
-       // GetComponent<EnemyState>().SetNotStunned();
         anim.SetBool("IsMoveToPlayer", true);
     }
     private void AttackTypes()

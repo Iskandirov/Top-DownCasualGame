@@ -72,26 +72,67 @@ public class EnemySpawner : MonoBehaviour
             Destroy(child.gameObject);
         }
     }
-    static public bool GetSpawnPositionNotInAIPath(float radius, Vector2 pos)
-    {
-        // Ñòâîðèòè ñïèñîê äîñòóïíèõ ïîçèö³é
-        List<Vector3> availablePositions = new List<Vector3>();
+    //public static List<Vector3> GetSpawnPositionsNotInAIPath(float radius) // Видалено непотрібний параметр pos
+    //{
+    //    List<Vector3> availablePositions = new List<Vector3>();
 
-        // Îòðèìàòè âóçëè ñ³òêè
-        var nodes = AstarPath.active.data.gridGraph.nodes;
+    //    if (AstarPath.active == null || AstarPath.active.data == null || AstarPath.active.data.gridGraph == null)
+    //    {
+    //        Debug.LogError("A* Pathfinding graph is not initialized!");
+    //        return availablePositions; // Повертаємо пустий список у разі помилки
+    //    }
 
-        // Ïåðåáðàòè âñ³ âóçëè â ðàä³óñ³
-        foreach (var node in nodes.Where(n => Mathf.Abs(n.position.x) > radius || Mathf.Abs(n.position.y) > radius))
-        {
-            if (node.Walkable)
-            {
-                availablePositions.Add(new Vector3(node.XCoordinateInGrid, node.ZCoordinateInGrid));
-                Debug.Log(new Vector3(node.XCoordinateInGrid, node.ZCoordinateInGrid));
-            }
-        }
+    //    var nodes = AstarPath.active.data.gridGraph.nodes;
 
-        return availablePositions.Contains(pos);
-    }
+    //    if (nodes == null)
+    //    {
+    //        Debug.LogError("No nodes found in the A* graph!");
+    //        return availablePositions;
+    //    }
+
+    //    foreach (var node in nodes.Where(n => Mathf.Abs(n.position.x) > radius || Mathf.Abs(n.position.y) > radius))
+    //    {
+    //        if (node.Walkable)
+    //        {
+    //            availablePositions.Add(new Vector3(node.XCoordinateInGrid, node.ZCoordinateInGrid));
+    //            //Debug.Log(new Vector3(node.XCoordinateInGrid, node.ZCoordinateInGrid)); // Закоментовано для оптимізації
+    //        }
+    //    }
+
+    //    return availablePositions; // Повертаємо список доступних позицій
+    //}
+
+    //public static Vector3 GetRandomSpawnPositionNotInAIPath(float radius)
+    //{
+    //    List<Vector3> availablePositions = GetSpawnPositionsNotInAIPath(radius);
+    //    if (availablePositions.Count > 0)
+    //    {
+    //        int randomIndex = UnityEngine.Random.Range(0, availablePositions.Count);
+    //        return availablePositions[randomIndex];
+    //    }
+    //    else
+    //    {
+    //        Debug.LogWarning("No available spawn positions found!");
+    //        return Vector3.zero; // Або інше значення за замовчуванням
+    //    }
+    //}
+    //static public bool GetSpawnPositionNotInAIPath(float radius, Vector2 pos)
+    //{
+    //    List<Vector3> availablePositions = new List<Vector3>();
+
+    //    var nodes = AstarPath.active.data.gridGraph.nodes;
+
+    //    foreach (var node in nodes.Where(n => Mathf.Abs(n.position.x) > radius || Mathf.Abs(n.position.y) > radius))
+    //    {
+    //        if (node.Walkable)
+    //        {
+    //            availablePositions.Add(new Vector3(node.XCoordinateInGrid, node.ZCoordinateInGrid));
+    //            Debug.Log(new Vector3(node.XCoordinateInGrid, node.ZCoordinateInGrid));
+    //        }
+    //    }
+
+    //    return availablePositions.Contains(pos);
+    //}
     List<GameObject> InitializeObjectPool(List<FSMC_Executer> enemy, GameObject objectPrefab, int pool, Transform parent)
     {
 
@@ -198,6 +239,7 @@ public class EnemySpawner : MonoBehaviour
     public Vector3 SpawnEnemyOutsideCamera()
     {
         Vector3 spawnPosition;
+        Vector3 randomDirection;
         do
         {
             // Визначаємо межі камери в світових координатах
@@ -207,12 +249,13 @@ public class EnemySpawner : MonoBehaviour
 
             // Генеруємо випадкову точку на одиничному колі
             System.Random a = new System.Random();
+                
             float randomAngle = a.Next(0, 360);
-            Vector3 randomDirection = new Vector3(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle), 0);
+            randomDirection = new Vector3(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle), 0);
 
             // Обчислюємо точку спавну на заданій відстані від камери
             spawnPosition = cameraPos + randomDirection * spawnRadius;
-        } while (IsInsideWallBounds(spawnPosition));
+        } while (IsInsideWallBounds(spawnPosition) && SpawnManager.GetSpawnPositionsInAIPath(spawnRadius, spawnPosition) != null);
         return spawnPosition;
     }
 
@@ -232,7 +275,7 @@ public class EnemySpawner : MonoBehaviour
                 enemy.transform.position = SpawnEnemyOutsideCamera();
                 break;
             case true:
-                enemy.transform.position = SpawnManager.GetRandomPositionInsideCollider();
+                enemy.transform.position = SpawnManager.inst.GetRandomPositionInsideCollider();
                 break;
         }
         enemycount++;

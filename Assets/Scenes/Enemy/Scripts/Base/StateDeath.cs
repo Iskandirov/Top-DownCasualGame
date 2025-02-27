@@ -29,17 +29,30 @@ public class StateDeath : FSMC_Behaviour
 
     public override void OnStateExit(FSMC_Controller stateMachine, FSMC_Executer executer)
     {
-        ExpGive(executer, executer.objTransform.position);
-        executer.health = executer.healthMax;
-        Respawn(executer);
+        if (executer.isBoss)
+        {
+            executer.GetComponent<LootManager>().DropLoot(false, executer.transform);
+            UnityEngine.Object.Destroy(executer.gameObject);
+        }
+        else
+        {
+            ExpGive(executer, executer.objTransform.position);
+            executer.health = executer.healthMax;
+            Respawn(executer);
+        }
     }
     void ExpGive(FSMC_Executer enemy, Vector3 pos)
     {
         DailyQuests.instance.UpdateValue(0, 1, false);
+        if (enemy.name == "Infiltrator")
+        {
+            DailyQuests.instance.UpdateValue(2, 1, false);
+        }
         EXP a = UnityEngine.Object.Instantiate(enemy.expiriancePoint.GetComponent<EXP>(), pos, Quaternion.identity);
         a.expBuff = enemy.expGiven * enemy.dangerLevel;
         GameManager.Instance.expiriencepoint.fillAmount += enemy.expGiven * enemy.dangerLevel / PlayerManager.instance.expNeedToNewLevel;
         GameManager.Instance.score++;
+
     }
     ///Spawn
     public void Respawn(FSMC_Executer executer)

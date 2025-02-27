@@ -29,13 +29,13 @@ public class DailyQuests : MonoBehaviour
     public List<Quest> quest;
     static string path = "DailyQuests.txt";
     public TextMeshProUGUI TimeToNextRandom;
-    const string API_URL = "http://worldtimeapi.org/api/ip";
+    const string API_URL = "https://www.timeapi.io/api/Time/current/zone?timeZone=Europe/Kiev";
     public List<TextMeshProUGUI> questText;
     public List<TextMeshProUGUI> questRewardText;
     public List<TextMeshProUGUI> questProgressText;
     public List<Image> questProgressFill;
     public List<Image> questImage;
-    public List<Button> claimBtn;
+    public List<Image> questImageDone;
     public TextMeshProUGUI money;
     public GameObject popUp;
     public SpriteRenderer popUpImg;
@@ -83,9 +83,10 @@ public class DailyQuests : MonoBehaviour
             {
                 popUp.SetActive(isQuestDone);
                 que.isActive = false;
-
+                
                 popUpImg.sprite = questImage.First(s => s.sprite.name == que.nameQuest).sprite;
                 popUpTxt.text = que.description;
+                ClaimReward(que.id);
             }
             
             quest[que.id] = que;
@@ -138,7 +139,7 @@ public class DailyQuests : MonoBehaviour
         {
             if (q.isTodaysQuest)
             {
-                questText[counter].text = q.description;
+                questText[counter].GetComponent<TagText>().tagText = q.description;
                 questRewardText[counter].text = q.reward.ToString();
 
                 Sprite[] sprites = GameManager.ExtractSpriteListFromTexture("Quest");
@@ -147,27 +148,24 @@ public class DailyQuests : MonoBehaviour
                 questImage[counter].SetNativeSize();
                 questProgressText[counter].text = q.progress.ToString() + " / " + q.goal.ToString();
                 questProgressFill[counter].fillAmount = q.progress / q.goal;
-                bool isQuestDone = questProgressFill[counter].fillAmount == 1 && q.isActive ? true : false;
-               
-                //popUpAnim.SetBool("PopUp", isQuestDone);
-                if (claimBtn.Count > 0)
-                {
-                    claimBtn[counter].interactable = isQuestDone;
-                }
+                bool isQuestDone = questProgressFill[counter].fillAmount == 1 && !q.isActive ? true : false;
+                questImageDone[counter].gameObject.SetActive(isQuestDone);
                 counter++;
             }
         }
     }
     public void ClaimReward(int id)
     {
-        if (int.TryParse(questRewardText[id].text, out int reward) && int.TryParse(money.text, out int moneyRes))
+        Debug.Log(questRewardText[id].text);
+        if (int.TryParse(questRewardText[id].text, out int reward))
         {
-            moneyRes += reward;
-            money.text = moneyRes.ToString();
+            GetScore score = FindAnyObjectByType<GetScore>();
+            int moneyRes = reward + score.LoadScore();
+            //money.text = moneyRes.ToString();
             score.SaveScore(moneyRes);
             score.LoadScore();
             quest[id].isActive = false;
-            claimBtn[id].interactable = false;
+            //claimBtn[id].interactable = false;
             SaveQuest(Path.Combine(Application.persistentDataPath, path));
         }
     }
@@ -184,7 +182,6 @@ public class DailyQuests : MonoBehaviour
     {
         UnityWebRequest webrequest = UnityWebRequest.Get(API_URL);
         yield return webrequest.SendWebRequest();
-
         if (webrequest.result == UnityWebRequest.Result.ProtocolError)
         {
             Debug.Log("Error: " + webrequest.error);
@@ -201,7 +198,6 @@ public class DailyQuests : MonoBehaviour
         //"datetime": "2024-10-08T00:23:02.023202+03:00",
         string date = Regex.Match(dateTime, @"\d{4}-\d{2}-\d{2}").Value;
         string time = Regex.Match(dateTime, @"\d{2}:\d{2}:\d{2}").Value;
-
         return DateTime.Parse($"{date} {time}");
     }
     private string GetTimeToNextRandom()

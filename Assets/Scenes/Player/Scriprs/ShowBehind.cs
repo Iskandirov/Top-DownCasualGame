@@ -14,7 +14,7 @@ public class ShowBehind : MonoBehaviour
     {
         if (imagesToHover.Count > 0)
         {
-            HideAndShow(collision, 1, isSomeoneHere + 1, 0.5f);
+            HideAndShow(collision, 1, isSomeoneHere + 1, 0.7f);
         }
         else
         {
@@ -27,7 +27,7 @@ public class ShowBehind : MonoBehaviour
     {
         if (imagesToHover.Count > 0)
         {
-            HideAndShow(collision, 1, isSomeoneHere, 0.5f);
+            HideAndShow(collision, 1, isSomeoneHere, 0.7f);
         }
         else
         {

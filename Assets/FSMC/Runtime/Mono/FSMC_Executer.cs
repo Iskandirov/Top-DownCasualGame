@@ -32,17 +32,45 @@ namespace FSMC.Runtime
         [Header("Boss")]
         public GameObject bossHealthObj;
         public Image healthObjImg;
+        public Image avatar;
         public bool isBoss;
+        public bool isInZone;
         public FSMC_Controller StateMachine { get { return _runtimeController; } set { if (value != null && value != _runtimeController) { _runtimeController = value; _runtimeController.StartStateMachine(this); } } }
 
         public void DealDamage()
         {
-            Instantiate(bullet, transform.position, Quaternion.identity);
+            if (isInZone)
+            {
+                Instantiate(bullet, transform.position, Quaternion.identity);
+            }
+        }
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.CompareTag("Player") && !collision.isTrigger)
+            {
+                isInZone = true;
+                if (GetComponent<CircleCollider2D>().isTrigger)
+                {
+                    anim.SetBool("Invisible", false);
+                }
+            }
+        }
+      
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            if (collision.CompareTag("Player") && !collision.isTrigger)
+            {
+                isInZone = false;
+                if (GetComponent<CircleCollider2D>().isTrigger)
+                {
+                    anim.SetBool("Invisible", true);
+                }
+            }
         }
         public void MuteSpeed()
         {
             speed = 0;
-        } 
+        }
         public void UnMuteSpeed()
         {
             speed = speedMax;
@@ -50,7 +78,7 @@ namespace FSMC.Runtime
         public float GetDamage()
         {
             return damage;
-        } 
+        }
         void SetDamage(float Damage)
         {
             damage = Damage;
@@ -86,7 +114,7 @@ namespace FSMC.Runtime
         }
         public void ReturnToChase()
         {
-            anim.SetBool("Death",false);
+            anim.SetBool("Death", false);
         }
 
         public void SetFloat(string name, float value)

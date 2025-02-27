@@ -1,3 +1,4 @@
+using FSMC.Runtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -124,6 +125,7 @@ public class ElementalBoss_Fist_Attack : MonoBehaviour
             }
         }
         CineMachineCameraShake.instance.Shake(10, .1f);
+        GetComponent<FSMC_Executer>().SetCurrentState("Chase");
     }
     private IEnumerator ReducePushForce(Rigidbody2D pushableObjectRigidbody)
     {

@@ -23,12 +23,22 @@ public class EquipItem : MonoBehaviour
 
         updatedList = new List<SavedEquipData>();
     }
+    public void EnableInput()
+    {
+        MoveItem item = transform.parent.GetChild(0).GetComponentInChildren<MoveItem>();
+        if (item != null)
+        {
+            string buttonText = item.isEquipedNow ? "equiped" : "equip";
+            Debug.Log(buttonText);
+            UpdateEquipPanel(item, buttonText, item.isEquipedNow);
+        }
+    }
 
     public void onEquip()
     {
         MoveItem item = transform.parent.GetChild(0).GetComponentInChildren<MoveItem>();
         string path = Path.Combine(Application.persistentDataPath, "EquipedItems.txt");
-        WriteReadFile.Read(path, updatedList);
+        //WriteReadFile.Read(path, updatedList);
         if (File.Exists(path))
         {
             string[] jsonLines = File.ReadAllLines(path);
@@ -36,16 +46,9 @@ public class EquipItem : MonoBehaviour
             if (item.isEquipedNow == false && jsonLines.Length < 3)
             {
                 equipedItenms = item.SetItem();
+                UpdateEquipPanel(item, "equiped", true);
                 SaveEquip(equipedItenms);
-                MoveItem[] equips = FindObjectsOfType<MoveItem>();
-                foreach (var obj in equips)
-                {
-                    if (obj.GetComponent<SetParametersToitem>().ItemName == item.GetComponent<SetParametersToitem>().ItemName)
-                    {
-                        obj.equipPanel.GetComponent<ItemData>().state.text = "Зняти";
-                        obj.isEquipedNow = true;
-                    }
-                }
+
             }
             else if (item.isEquipedNow == true)
             {
@@ -58,20 +61,25 @@ public class EquipItem : MonoBehaviour
                     {
                         updatedList.Add(data);
                     }
-                    MoveItem[] equips = FindObjectsOfType<MoveItem>();
-                    foreach (var obj in equips)
-                    {
-                        if (obj.GetComponent<SetParametersToitem>().ItemName == item.GetComponent<SetParametersToitem>().ItemName)
-                        {
-                            obj.equipPanel.GetComponent<ItemData>().state.text = "Обладнати";
-                            obj.isEquipedNow = false;
-                        }
-                    }
-
                 }
+                UpdateEquipPanel(item, "equip", false);
                 SaveUpdateEquip(path, updatedList);
+
             }
         }
+    }
+    private void UpdateEquipPanel(MoveItem item, string buttonText, bool isEquiped)
+    {
+        MoveItem[] equips = FindObjectsOfType<MoveItem>();
+        foreach (var obj in equips)
+        {
+            if (obj.GetComponent<SetParametersToitem>().ItemName == item.GetComponent<SetParametersToitem>().ItemName)
+            {
+                obj.equipPanel.GetComponent<ItemData>().state.GetComponent<TagText>().tagText = buttonText;
+                obj.isEquipedNow = isEquiped;
+            }
+        }
+        GameManager.Instance.UpdateText(GameManager.Instance.texts);
     }
     public void SaveUpdateEquip(string path, List<SavedEquipData> list)
     {

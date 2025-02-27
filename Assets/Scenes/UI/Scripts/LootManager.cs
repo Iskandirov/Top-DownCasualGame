@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class LootManager : MonoBehaviour
 {
@@ -20,22 +21,28 @@ public class LootManager : MonoBehaviour
     public List<SavedObjectData> MiphicalItems;
     public List<SavedObjectData> LegendaryItems;
     public bool isTutor;
+    System.Random random = new System.Random();
     public string[] rarityType = { "Звичайне", "Рідкісне", "Міфічне", "Легендарне" };
     private void Awake()
     {
         inst = this;
+        if (itemPanel == null)
+        {
+            itemPanel = GameObject.Find("/LevelUpgrade").GetComponent<LootManager>().itemPanel;
+        }
     }
     public void DropLoot(bool isTutor,Transform pos)
     {
         ItemRarity();
-        float randomValue = Random.value;
+        
+        float randomValue = (float)random.NextDouble();
         List<SavedObjectData> rarityItems = GetRarityItems(randomValue);
         if (rarityItems != null)
             SetStats(rarityItems, isTutor, pos);
     }
     void SetStats(List<SavedObjectData> Rarity, bool isTutor, Transform objTransform)
     {
-        int rand = Random.Range(0, Rarity.Count);
+        int rand = random.Next(0, Rarity.Count);
         ItemParameters newItem = Instantiate(itemRareObj[rand], objTransform.position, objTransform.rotation);
         newItem.itemName = Rarity[rand].Name;
         //newItem.itemImage = Rarity[rand].ImageSprite;

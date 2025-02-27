@@ -365,6 +365,7 @@ public class GameManager : MonoBehaviour
                     loc = lang.value;
                 }
             }
+           
             foreach (var item in localizedText)
             {
                 foreach (var oneofmany in text)
@@ -565,7 +566,7 @@ public class GameManager : MonoBehaviour
 
             writer.Close();
         }
-
+        LoadLocalizedText();
 
     }
     public void SaveWithDefaultParams()
@@ -574,7 +575,8 @@ public class GameManager : MonoBehaviour
         string path = Path.Combine(Application.persistentDataPath, "Settings.txt");
         // Додавання елементів до списку
         list.Add(new SettingsData { key = "language", value = "eng" });
-        list.Add(new SettingsData { key = "volume", value = "0,5" });
+        list.Add(new SettingsData { key = "volume", value = "0,25" });
+        list.Add(new SettingsData { key = "sfx", value = "0,25" });
         list.Add(new SettingsData { key = "v-sync", value = "0" });
         // Відкриття файлу для запису
         using (StreamWriter writer = new StreamWriter(path, false))
@@ -643,7 +645,6 @@ public class GameManager : MonoBehaviour
             SavedObjectData data = new SavedObjectData();
             foreach (SavedObjectData item in items)
             {
-                Debug.Log(item.Price);
                 data.Name = item.Name;
                 data.IDRare = item.IDRare;
                 data.RareName = item.RareName;

@@ -139,7 +139,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 2
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 67bb4bdb000000006bb21ed8dbdc180403081c6621fa54d5ab921fc37f8d61bedb843d9b
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
   m_AlphaBlendOnOverlap: 0
-  m_OverlapOperation: 0
+  m_OverlapOperation: 1
   m_NormalMapDistance: 3
   m_NormalMapQuality: 2
   m_UseNormalMap: 0
@@ -274,7 +274,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 6bb21ed8db843d9b
@@ -409,7 +409,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 67bb4bdb000000006bb21ed8dbdc180403081c6621fa54d5ab921fc37f8d61bedb843d9b
@@ -544,7 +544,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 67bb4bdb000000006bb21ed8dbdc180403081c6621fa54d5ab921fc37f8d61bedb843d9b
@@ -679,7 +679,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 67bb4bdb000000006bb21ed8dbdc180403081c6621fa54d5ab921fc37f8d61bedb843d9b
@@ -814,7 +814,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 67bb4bdb000000006bb21ed8dbdc180403081c6621fa54d5ab921fc37f8d61bedb843d9b
@@ -869,6 +869,7 @@ GameObject:
   - component: {fileID: -6660110898093213199}
   - component: {fileID: 8297755234387073348}
   - component: {fileID: -350899405088912883}
+  - component: {fileID: 914816562239075139}
   m_Layer: 10
   m_Name: Rocat
   m_TagString: Enemy
@@ -1039,8 +1040,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -5.95, y: -6.62}
-  m_Size: {x: 7.525237, y: 5.320001}
+  m_Offset: {x: -5.5647283, y: -6.6628118}
+  m_Size: {x: 16.963888, y: 13.796105}
   m_Direction: 1
 --- !u!70 &8508211880926389174
 CapsuleCollider2D:
@@ -1074,8 +1075,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 5.64, y: -6.5300007}
-  m_Size: {x: 7.360837, y: 5.320001}
+  m_Offset: {x: 4.3129363, y: -6.7440267}
+  m_Size: {x: 16.45018, y: 13.967325}
   m_Direction: 1
 --- !u!58 &1006861745610266145
 CircleCollider2D:
@@ -1342,6 +1343,38 @@ MonoBehaviour:
   expGiven: 100
   dangerLevel: 5
   enemyType: 0
+  bossHealthObj: {fileID: 3985779531179115711, guid: a583d3b029d6a7c4ea66e18c2bbba0c9, type: 3}
+  healthObjImg: {fileID: 0}
+  isBoss: 1
+  isInZone: 0
+--- !u!114 &914816562239075139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7414485064753262499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8952f2933e78ae44fa6ba177e6f4ac32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemPanel: {fileID: 0}
+  itemRareObj: []
+  itemsLoaded: []
+  spawnRare: 0.6
+  spawnMiphical: 0.3
+  spawnLegendary: 0.05
+  CommonItems: []
+  RareItems: []
+  MiphicalItems: []
+  LegendaryItems: []
+  isTutor: 0
+  rarityType:
+  - "\u0417\u0432\u0438\u0447\u0430\u0439\u043D\u0435"
+  - "\u0420\u0456\u0434\u043A\u0456\u0441\u043D\u0435"
+  - "\u041C\u0456\u0444\u0456\u0447\u043D\u0435"
+  - "\u041B\u0435\u0433\u0435\u043D\u0434\u0430\u0440\u043D\u0435"
 --- !u!1 &8481209448847719364
 GameObject:
   m_ObjectHideFlags: 0
@@ -1444,7 +1477,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 67bb4bdb000000006bb21ed8dbdc180403081c6621fa54d5ab921fc37f8d61bedb843d9b
@@ -1503,7 +1536,7 @@ Transform:
   m_GameObject: {fileID: 8982050001653864226}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.09, y: -3.88, z: -0.17055565}
+  m_LocalPosition: {x: 0.17, y: -5.64, z: -0.17055565}
   m_LocalScale: {x: 16, y: -3.7209299, z: -3.7209299}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -1526,7 +1559,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 1
   m_Color: {r: 0.6981132, g: 0.59625775, b: 0.016464932, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.2
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 67bb4bdb00000000dbdc180403081c6621fa54d5ab921fc37f8d61bedb843d9b
@@ -1668,7 +1701,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 67bb4bdb00000000dbdc180403081c6621fa54d5ab921fc37f8d61bedb843d9b6bb21ed8
@@ -1793,15 +1826,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4362303426099742062, guid: f6628e1b224b08a408b87970599a6ba4, type: 3}
       propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.x
-      value: 1024
+      value: 23.96863
       objectReference: {fileID: 0}
     - target: {fileID: 4362303426099742062, guid: f6628e1b224b08a408b87970599a6ba4, type: 3}
       propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.y
-      value: 4.8302
+      value: 0.11305984
       objectReference: {fileID: 0}
     - target: {fileID: 4362303426099742062, guid: f6628e1b224b08a408b87970599a6ba4, type: 3}
       propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.z
-      value: 4.8302
+      value: 0.11305984
       objectReference: {fileID: 0}
     - target: {fileID: 4362303426099742062, guid: f6628e1b224b08a408b87970599a6ba4, type: 3}
       propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Overridden
@@ -1948,15 +1981,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4362303426099742062, guid: f6628e1b224b08a408b87970599a6ba4, type: 3}
       propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.x
-      value: 12.844471
+      value: 0.005154328
       objectReference: {fileID: 0}
     - target: {fileID: 4362303426099742062, guid: f6628e1b224b08a408b87970599a6ba4, type: 3}
       propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.y
-      value: 0.9088069
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4362303426099742062, guid: f6628e1b224b08a408b87970599a6ba4, type: 3}
       propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.z
-      value: 0.9088069
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4362303426099742062, guid: f6628e1b224b08a408b87970599a6ba4, type: 3}
       propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Overridden
@@ -2062,8 +2095,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ComponentVersion: 1
   m_LightType: 1
-  m_BlendStyleIndex: 0
-  m_FalloffIntensity: 1
+  m_BlendStyleIndex: 1
+  m_FalloffIntensity: 0.972
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_Intensity: 1
   m_LightVolumeIntensity: 1
@@ -2283,15 +2316,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4362303426099742062, guid: f6628e1b224b08a408b87970599a6ba4, type: 3}
       propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.x
-      value: 1024
+      value: 23.96863
       objectReference: {fileID: 0}
     - target: {fileID: 4362303426099742062, guid: f6628e1b224b08a408b87970599a6ba4, type: 3}
       propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.y
-      value: 4.8302
+      value: 0.11305984
       objectReference: {fileID: 0}
     - target: {fileID: 4362303426099742062, guid: f6628e1b224b08a408b87970599a6ba4, type: 3}
       propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.z
-      value: 4.8302
+      value: 0.11305984
       objectReference: {fileID: 0}
     - target: {fileID: 4362303426099742062, guid: f6628e1b224b08a408b87970599a6ba4, type: 3}
       propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Overridden

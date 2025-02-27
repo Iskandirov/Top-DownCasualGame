@@ -39,7 +39,7 @@ public class LevelInfoLoad : MonoBehaviour
                     levelName.GetComponent<TagText>().tagText = "level_name_" + levelID;
                     countOfCount.text = data.countOfCount + "/" + data.countOfCountMax;
                     //levelDescription.text = data.description;
-                    specialAttack.GetComponent<TagText>().tagText = "base_spell_" + levelID;
+                    //specialAttack.GetComponent<TagText>().tagText = "base_spell_" + levelID;
                     levelDescription.GetComponent<TagText>().tagText = "description_lvl_" + levelID;
                     levelImage.sprite = GameManager.ExtractSpriteListFromTexture("items").First(s => s.name == "слиз");
                     break;
@@ -58,7 +58,8 @@ public class LevelInfoLoad : MonoBehaviour
         damageValue.text = character.damage;
         speedValue.text = character.move;
         attackSpeedValue.text = character.attackSpeed;
-        specialAttack.text = character.spell;
+        specialAttack.GetComponent<TagText>().tagText = "base_spell_" + character.ID;
+        //specialAttack.text = character.spell;
         playerImage.sprite = GameManager.ExtractSpriteListFromTexture("heroes").First(s => s.name == character.Name);
     }
 }

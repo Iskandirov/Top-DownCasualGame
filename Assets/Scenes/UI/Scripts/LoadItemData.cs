@@ -74,7 +74,6 @@ public class LoadItemData : MonoBehaviour
                 objParam.IDRare = itemParams.IDRare;
                 objParam.Description = itemParams.Description;
                 newObject.GetComponent<MoveItem>().PointActivate();
-                Debug.Log(objParam.Price);
                 objectsListCopy.Add(newObject);
                 lang.FindMyComponentInChildren(newObject, itemParams.Tag);
                 index++; // переходимо до наступного батька у списку батьків

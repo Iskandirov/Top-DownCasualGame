@@ -2,6 +2,8 @@ using FSMC.Runtime;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.VFX;
+using UnityEngine.VFX.Utility;
 
 public class Beam : SkillBaseMono
 {
@@ -10,6 +12,7 @@ public class Beam : SkillBaseMono
     public bool isTwo;
     public SpriteRenderer img;
     Transform objTransform;
+    public Transform bindTransform;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,7 +43,7 @@ public class Beam : SkillBaseMono
         tick = basa.damageTickMax;
         basa.damage = basa.damage * player.Steam;
         objTransform.localScale = new Vector3(objTransform.localScale.x + basa.radius, objTransform.localScale.y + basa.radius);
-
+        bindTransform.localScale = objTransform.localScale;
         CoroutineToDestroy(gameObject, basa.lifeTime);
         IsThereAnotherBeam();
     }
@@ -67,16 +70,16 @@ public class Beam : SkillBaseMono
 
         // Рухаємо об'єкт до кінцевої позиції
         objTransform.position = new Vector3(player.ShootPoint.transform.position.x, player.ShootPoint.transform.position.y, 5f);
-
+        bindTransform.position = objTransform.position;
         // Повертаємо коло в напрямку курсора
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         objTransform.rotation = Quaternion.AngleAxis(angle + addToAndle, Vector3.forward);
-
+        bindTransform.rotation = objTransform.rotation;
         tick -= Time.deltaTime;
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy"))
+        if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
             Damage(collision);
         }
@@ -87,7 +90,7 @@ public class Beam : SkillBaseMono
     }
     public void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy"))
+        if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
             if (tick <= 0)
             {

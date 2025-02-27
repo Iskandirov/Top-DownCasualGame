@@ -71,8 +71,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -669076885
-  m_SortingLayer: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 458269211, guid: 0f9ea02582351044e8f7293b98704fbc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -125,7 +125,7 @@ MonoBehaviour:
   - {x: -1.8588681, y: -0.36434388, z: 0.00000011920929}
   m_ShapePathHash: 849117982
   m_Mesh: {fileID: 0}
-  m_InstanceId: 268442
+  m_InstanceId: 288434
   m_LocalBounds:
     m_Center: {x: -0.038241386, y: 0.24780422, z: 0}
     m_Extent: {x: 2.5148787, y: 1.2412812, z: 0}
@@ -155,9 +155,9 @@ Transform:
   m_GameObject: {fileID: 1068149794494416580}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.41, y: 0.17, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: -0.08, y: -0.06, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 3131333948750598606}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -168,21 +168,21 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1068149794494416580}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_ComponentVersion: 1
-  m_LightType: 3
+  m_LightType: 2
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 3
+  m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 67bb4bdb000000006bb21ed8dbdc180403081c6621fa54d5ab921fc37f8d61bedb843d9b
-  m_LightCookieSprite: {fileID: 0}
+  m_LightCookieSprite: {fileID: -570715923, guid: 0f9ea02582351044e8f7293b98704fbc, type: 3}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
   m_AlphaBlendOnOverlap: 0
@@ -195,8 +195,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0, y: -0.00000011920929, z: 0}
-    m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 1.235, y: 1.225, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -268,8 +268,8 @@ Transform:
   m_GameObject: {fileID: 2604850725811934299}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.03999978, y: -4.62, z: -0.04170782}
-  m_LocalScale: {x: 5, y: 1.238, z: 5}
+  m_LocalPosition: {x: -0.6, y: -3.74, z: -0.04170782}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 3131333948750598606}
@@ -281,21 +281,21 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2604850725811934299}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_ComponentVersion: 1
-  m_LightType: 1
+  m_LightType: 2
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 67bb4bdb00000000dbdc180403081c6621fa54d5ab921fc37f8d61bedb843d9b
-  m_LightCookieSprite: {fileID: 0}
+  m_LightCookieSprite: {fileID: -570715923, guid: 0f9ea02582351044e8f7293b98704fbc, type: 3}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
   m_AlphaBlendOnOverlap: 0
@@ -308,8 +308,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.022650003, y: 0.038900018, z: 0}
-    m_Extent: {x: 2.46705, y: 3.4302, z: 0}
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 1.235, y: 1.225, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -401,8 +401,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -669076885
-  m_SortingLayer: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -570715923, guid: 0f9ea02582351044e8f7293b98704fbc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -433,6 +433,7 @@ GameObject:
   - component: {fileID: 2685349443915097406}
   - component: {fileID: 1741285905867289810}
   - component: {fileID: 5491574181880301193}
+  - component: {fileID: 2552618067511392825}
   m_Layer: 10
   m_Name: Dewdrop
   m_TagString: Enemy
@@ -716,6 +717,30 @@ MonoBehaviour:
   expGiven: 30
   dangerLevel: 2
   enemyType: 1
+  bossHealthObj: {fileID: 0}
+  healthObjImg: {fileID: 0}
+  avatar: {fileID: 0}
+  isBoss: 0
+  isInZone: 0
+--- !u!114 &2552618067511392825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4915736915067170013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed361a61c3c422246acd05497145f796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isStatic: 0
+  offset: -1.31
+  renderers:
+  - renderer: {fileID: 5397493030017790455}
+    priority: 0
+  - renderer: {fileID: 5520671934196478805}
+    priority: 1
 --- !u!1001 &4731804245489449450
 PrefabInstance:
   m_ObjectHideFlags: 0
