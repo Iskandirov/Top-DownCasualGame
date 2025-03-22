@@ -42,7 +42,7 @@ public class PotionSystem : MonoBehaviour
         Potion tab = GetComponent<TabGroup>().tabButtons.Find(t => t == GetComponent<TabGroup>().selectedTab).GetComponent<Potion>();
         perkImage.sprite = tab.perkImage.sprite;
         perkImage.SetNativeSize();
-        potionName.text = tab.GetComponent<TabButtons>().tooltipText;
+        potionName.text = tab.GetComponent<Potion>().potion.type.ToString();
         statName.GetComponent<TagText>().tagText = tab.potion.statName;
         statValue.text = tab.potion.statValue;
         reloadValue.text = tab.potion.reloadTime.ToString();

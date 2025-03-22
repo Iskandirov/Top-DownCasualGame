@@ -40,6 +40,12 @@ public class CDSkills : MonoBehaviour
         skillMono.Set(skill,number);
         cDText = text.GetComponent<TextMeshProUGUI>();
         StartCoroutine(SetBumberToSkill());
+        if (abilityId == 0)
+        {
+            skill.stepMax = FindObjectOfType<PlayerManager>().attackSpeed;
+            skillCD = skill.stepMax;
+            skill.damage = FindObjectOfType<PlayerManager>().damageToGive;
+        }
     }
     void FixedUpdate()
     {
@@ -53,7 +59,7 @@ public class CDSkills : MonoBehaviour
         {
             text.SetActive(true);
         }
-        cDText.text = skillCD.ToString("0");
+        cDText.text = skillCD.ToString("0.0");
     }
     private IEnumerator SetBumberToSkill()
     {

@@ -60,7 +60,7 @@ public class FireWave : SkillBaseMono
             GameManager.Instance.FindStatName("fireWaveDamage", damage);
             if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 3 && s.isActive == true) != null)
             {
-                DailyQuests.instance.UpdateValue(3, damage, false);
+                DailyQuests.instance.UpdateValue(3, damage, false, true);
             }
 
             if (burnDamage != 0 && collision != null)

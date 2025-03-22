@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 [Serializable]
@@ -92,12 +93,13 @@ public class Tutor : MonoBehaviour
                 BlockMoveAndShoot();
             }
         }
-        if (phase == 1)
+        else if (phase == 1)
         {
             player.enabled = false;
         }
-        if (phase == 3)
+        else if (phase == 3)
         {
+            player.baseSkillCD = 0;
             if (parentPhase2 != null)
             {
                 BlockMoveAndShoot();
@@ -111,6 +113,10 @@ public class Tutor : MonoBehaviour
                 PhasePlus();
                 Invoke("BlockMoveAndShoot", .3f);
             }
+        }
+        if (phase < 3)
+        {
+            player.baseSkillCD = 3;
         }
     }
     public void BlockMoveAndShoot()

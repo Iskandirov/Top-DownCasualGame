@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -98,9 +99,22 @@ public class GameManager : MonoBehaviour
     [SerializeField] List<GameObject> heroes;
     public Transform heroParent;
     public CinemachineVirtualCamera virtCam;
-
+    public PlayerData playerData;
+    //public void UpdateValue()
+    //{
+    //    playerData.Update();
+    //    Debug.Log(playerData.GetValue());   
+    //}
     void Awake()
     {
+        //CanvasScaler[] canvases = FindObjectsOfType<CanvasScaler>();
+        //Resolution res = LoadResolution();
+        //Vector2 scale = new Vector2(res.width, res.height);
+        //foreach (var canvas in canvases)
+        //{
+        //    canvas.referenceResolution = scale;
+        //}
+        playerData = new PlayerData();
         Instance = this;
         //PlayerPrefs.DeleteAll();
         if (!PlayerPrefs.HasKey("Character"))
@@ -327,6 +341,31 @@ public class GameManager : MonoBehaviour
         }
     }
     //Language
+    float GetStatFromItemToLocalizedText(string name,int level)
+    {
+        string path = Path.Combine(Application.persistentDataPath, "savedData.txt");
+        if (File.Exists(path))
+        {
+            string[] lines = File.ReadAllLines(path);
+
+            // Перебір кожного запису і заміна шляху до зображення на зображення зі списку sprites
+            foreach (string jsonLine in lines)
+            {
+                // Розшифрувати JSON рядок
+                string decryptedJson = hashing.Decrypt(jsonLine);
+
+                SavedObjectData data = JsonUtility.FromJson<SavedObjectData>(decryptedJson);
+                float value;
+                if (data.Tag == name && data.Level == level && float.TryParse(data.Stat, out value))
+                {
+                    return value;
+                }
+
+            }
+        }
+        //Просто прикол
+        return 011100011001000100110;
+    }
     public TagText FindMyComponentInChildren(GameObject parentObject, string tag)
     {
         TagText component = parentObject.GetComponent<TagText>();
@@ -374,6 +413,35 @@ public class GameManager : MonoBehaviour
                     {
                         oneofmany.GetComponent<TextMeshProUGUI>().text = item.value;
                     }
+                }
+            }
+        }
+        else
+        {
+            Debug.LogError("Cannot find file!");
+        }
+    }
+    public void UpdateText(GameObject text, string name, int level)
+    {
+        string filePath = Path.Combine(Application.persistentDataPath, "Localization.txt");
+
+        if (File.Exists(filePath))
+        {
+            foreach (var lang in dataSett)
+            {
+                if (lang.key == "language")
+                {
+                    loc = lang.value;
+                }
+            }
+
+            foreach (var item in localizedText)
+            {
+                if (text.GetComponent<AdaptiveValueText>() != null && text.GetComponent<TagText>().tagText == item.key && loc == item.language)
+                {
+                    playerData.SetValue(GetStatFromItemToLocalizedText(name, level));
+                    text.GetComponent<AdaptiveValueText>().textValue = item.value;
+                    text.GetComponent<AdaptiveValueText>().UpdateValues();
                 }
             }
         }
@@ -470,7 +538,6 @@ public class GameManager : MonoBehaviour
             {
                 // Розшифрувати JSON рядок
                 string decrypt = hashing.Decrypt(item);
-                
                 SettingsData data = JsonUtility.FromJson<SettingsData>(decrypt);
                 SettingsData settings = new SettingsData();
                 settings.key = data.key;

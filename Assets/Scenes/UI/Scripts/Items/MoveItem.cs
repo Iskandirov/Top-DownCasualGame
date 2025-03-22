@@ -33,9 +33,12 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
     public GameManager gameManager;
     List<GameObject> list = new List<GameObject>();
     public DataHashing hashing;
+    SetParametersToitem statsObj;
     void Start()
     {
         hashing = FindObjectOfType<DataHashing>();
+
+        statsObj = GetComponent<SetParametersToitem>();
 
         fliedSlots = FindObjectOfType<FieldSlots>();
         GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("Finish");
@@ -50,8 +53,8 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
         startPosition = transform.parent.position;
 
         startScale = transform.localScale;
-        targetScaleBig = startScale * 1.1f;
-        targetScaleSmall = startScale / 1.1f;
+        targetScaleBig = startScale * 5f;
+        targetScaleSmall = startScale / 5f;
         toSlot = true;
         toEquipSlot = true;
         string path = Path.Combine(Application.persistentDataPath, "EquipedItems.txt");
@@ -65,7 +68,7 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
                 {
                     string decrypt = hashing.Decrypt(jsonLine);
                     SavedEquipData data = JsonUtility.FromJson<SavedEquipData>(decrypt);
-                    if (data.Tag == GetComponent<SetParametersToitem>().Tag)
+                    if (data.Tag == statsObj.Tag && data.Level.ToString() == statsObj.level)
                     {
                         isEquipedNow = true;
                     }
@@ -74,8 +77,8 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
         }
         PointActivate();
 
-        startParent.count.text = GetComponent<SetParametersToitem>().Count;
-        startParent.level.text = GetComponent<SetParametersToitem>().level != "4" ? gameObject.GetComponent<SetParametersToitem>().level : "Max";
+        startParent.count.text = statsObj.Count;
+        startParent.level.text = statsObj.level != "4" ? statsObj.level : "Max";
         gameManager.UpdateText(list);
     }
 
@@ -104,6 +107,25 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
             startParent.checker.SetActive(false);
         }
     }
+    bool CheckSameItemWithDifLevel(MoveItem item)
+    {
+        string path = Path.Combine(Application.persistentDataPath, "EquipedItems.txt");
+        //WriteReadFile.Read(path, updatedList);
+        if (File.Exists(path))
+        {
+            string[] jsonLines = File.ReadAllLines(path);
+            foreach (var jsonLine in jsonLines)
+            {
+                string decrypt = hashing.Decrypt(jsonLine);
+                SavedEquipData data = JsonUtility.FromJson<SavedEquipData>(decrypt);
+                if (data.Name == item.GetComponent<SetParametersToitem>().ItemName && data.Level.ToString() != item.GetComponent<SetParametersToitem>().level)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Right || eventData.button == PointerEventData.InputButton.Left)
@@ -130,8 +152,17 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
                     item.rare.GetComponent<TagText>().tagText = fliedSlots.objToCraft.RareTag;
                     item.description.GetComponent<TagText>().tagText = "descriprion_info_" + fliedSlots.objToCraft.Tag;//fliedSlots.objToCraft.Description;
                     item.itemTag = fliedSlots.objToCraft.Tag;
+                    item.countToUpgrade.text = fliedSlots.objToCraft.Count + "/3";
                     item.raretag = fliedSlots.objToCraft.RareTag;
-                    item.price.text = fliedSlots.objToCraft.Price.ToString();
+                    int price = int.Parse(fliedSlots.objToCraft.Price);
+                    int level = int.Parse(fliedSlots.objToCraft.level);
+                    item.price.text = (price * level).ToString();
+
+                    int number;
+                    if (int.TryParse(item.level.text, out number))
+                    {
+                        gameManager.UpdateText(item.description.gameObject, fliedSlots.objToCraft.Tag, number);
+                    }
                     //Другий в порядку
                     //SetCardInfo();
 
@@ -143,11 +174,11 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
                     {
                         transform.SetParent(targetEquipObjects.transform);
                         transform.position = targetEquipObjects.transform.position;
-                        transform.localScale = transform.localScale * 1.5f;
+                        transform.localScale = targetScaleBig;
                         toEquipSlot = false;
                     }
                     item.eguipPanel.EnableInput();
-
+                    item.eguipPanel.GetComponent<Button>().interactable = CheckSameItemWithDifLevel(this) ? false : true;
                 }
                 else
                 {
@@ -162,45 +193,45 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
         }
         gameManager.UpdateText(GameManager.Instance.texts);
     }
-    /*public void SetCardInfo()
-    {
-        ItemData itemData = equipPanel.GetComponent<ItemData>();
-        SetItem(itemData);
+    //public void SetCardInfo()
+    //{
+    //    ItemData itemData = equipPanel.GetComponent<ItemData>();
+    //    SetItem(itemData);
 
 
-        string path = Path.Combine(Application.persistentDataPath, "EquipedItems.txt");
-        using (var fileStream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Read))
-        using (var streamReader = new StreamReader(fileStream))
-        {
-            lock (fileStream)
-            {
-                if (File.Exists(path))
-                {
-                    string[] jsonLines = File.ReadAllLines(path);
-                    bool foundMatch = false;
+    //    string path = Path.Combine(Application.persistentDataPath, "EquipedItems.txt");
+    //    using (var fileStream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Read))
+    //    using (var streamReader = new StreamReader(fileStream))
+    //    {
+    //        lock (fileStream)
+    //        {
+    //            if (File.Exists(path))
+    //            {
+    //                string[] jsonLines = File.ReadAllLines(path);
+    //                bool foundMatch = false;
 
-                    foreach (string jsonLine in jsonLines)
-                    {
-                        string decrypt = hashing.Decrypt(jsonLine);
-                        SavedEquipData data = JsonUtility.FromJson<SavedEquipData>(decrypt);
-                        if (data.Tag == itemData.itemName.GetComponent<TagText>().tagText)
-                        {
-                            itemData.state.GetComponent<TagText>().tagText = "equiped";
-                            isEquipedNow = true;
-                            foundMatch = true;
-                            break;
-                        }
-                    }
+    //                foreach (string jsonLine in jsonLines)
+    //                {
+    //                    string decrypt = hashing.Decrypt(jsonLine);
+    //                    SavedEquipData data = JsonUtility.FromJson<SavedEquipData>(decrypt);
+    //                    if (data.Tag == itemData.itemName.GetComponent<TagText>().tagText)
+    //                    {
+    //                        itemData.state.GetComponent<TagText>().tagText = "equiped";
+    //                        isEquipedNow = true;
+    //                        foundMatch = true;
+    //                        break;
+    //                    }
+    //                }
 
-                    if (!foundMatch)
-                    {
-                        itemData.state.GetComponent<TagText>().tagText = "equip";
-                        isEquipedNow = false;
-                    }
-                }
-            }
-        }
-    }*/
+    //                if (!foundMatch)
+    //                {
+    //                    itemData.state.GetComponent<TagText>().tagText = "equip";
+    //                    isEquipedNow = false;
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
     public void SetItem(ItemData obj)
     {
         SetParametersToitem param = GetComponent<SetParametersToitem>();

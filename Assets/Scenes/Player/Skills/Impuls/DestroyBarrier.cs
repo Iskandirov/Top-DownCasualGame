@@ -31,7 +31,7 @@ public class DestroyBarrier : MonoBehaviour
                 {
                     if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 1 && s.isActive == true) != null)
                     {
-                        DailyQuests.instance.UpdateValue(1, heal * Grass, false);
+                        DailyQuests.instance.UpdateValue(1, heal * Grass, false, true);
                     }
                         player.playerHealthPoint += heal * Grass;
                     GameManager.Instance.fullFillImage.fillAmount += player.playerHealthPoint / player.playerHealthPointMax;
@@ -40,7 +40,7 @@ public class DestroyBarrier : MonoBehaviour
                 {
                     if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 1 && s.isActive == true) != null)
                     {
-                        DailyQuests.instance.UpdateValue(1, heal * Grass, false);
+                        DailyQuests.instance.UpdateValue(1, heal * Grass, false, true);
                     }
                         player.playerHealthPoint = player.playerHealthPointMax;
                     GameManager.Instance.fullFillImage.fillAmount -= player.playerHealthPoint / player.playerHealthPointMax;

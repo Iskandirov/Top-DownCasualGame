@@ -69,6 +69,7 @@ public class TabGroup : MonoBehaviour
             PotionSystem potionSytstem = GetComponent<PotionSystem>();
             CharacterSystem characterSytstem = GetComponent<CharacterSystem>();
             objToShow.SetActive(true);
+            objToShow.transform.position = button.transform.position;
             if (perkSytstem != null)
             {
                 perkSytstem.SetDescription();

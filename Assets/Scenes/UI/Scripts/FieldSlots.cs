@@ -30,7 +30,9 @@ public class FieldSlots : MonoBehaviour
 
         int level = int.Parse(objToCraft.GetComponent<SetParametersToitem>().level);
 
-        price = priceStart * level;
+        int moneyCost = int.Parse(objToCraft.GetComponent<SetParametersToitem>().Price);
+
+        price = moneyCost * level;
         priceTxt.text = price.ToString();
 
         int coinT = int.Parse(coinsTxt.text);
@@ -71,8 +73,8 @@ public class FieldSlots : MonoBehaviour
                         newItem.RareSprite = Resources.Load<Sprite>(CheckLevelUpgrade(data));
                         newItem.IDRare = data.IDRare;
                         newItem.Level = data.Level + 1;
-                        newItem.Tag = data.Tag + "_" + data.Level;
-                        newItem.RareTag = data.RareTag + "_" + data.Level;
+                        newItem.Tag = data.Tag;
+                        newItem.RareTag = data.RareTag;
                         newItem.Price = data.Price;
                         newItem.Description = data.Description;
                         float statCount = float.Parse(data.Stat);
@@ -120,8 +122,11 @@ public class FieldSlots : MonoBehaviour
                 EquipedStillHere();
                 data.CleanList();
                 data.LoadItems();
+                Debug.Log(objScore.score);
                 objScore.score -= price;
+                Debug.Log(objScore.score);
                 objScore.SaveScore((int)objScore.score);
+                Debug.Log(objScore.score);
                 coinsTxt.text = objScore.score.ToString();
                 GameManager.Instance.ClosePanel(GameManager.Instance.menuPanel);
             }
@@ -150,7 +155,6 @@ public class FieldSlots : MonoBehaviour
                         SavedEquipData data = JsonUtility.FromJson<SavedEquipData>(decrypt);
                         if (data.Name == dataObj.Name && data.Level == dataObj.Level && count.FirstOrDefault(s => s.Name == data.Name) == null)
                         {
-                            Debug.Log(data.Name);
                             count.Add(data);
                         }
                     }

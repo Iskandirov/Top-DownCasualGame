@@ -13,13 +13,12 @@ public class LoadEquipedItems : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PlayerManager player = PlayerManager.instance;
+        PlayerManager player = FindObjectOfType<PlayerManager>();
         int i = 0;
         string path = Path.Combine(Application.persistentDataPath, "EquipedItems.txt");
         if (File.Exists(path))
         {
             string[] jsonLines = File.ReadAllLines(path);
-
             foreach (string jsonLine in jsonLines)
             {
                 string decrypt = hash.Decrypt(jsonLine);
@@ -39,50 +38,52 @@ public class LoadEquipedItems : MonoBehaviour
                     float newWidth = 30f;
                     float newHeight = currentSize.y * (newWidth / currentSize.x);
 
+
+                    float fullStat = float.Parse(data.Stat) + (float.Parse(data.Stat) * player.GivePerkStatValue(Stats.EquipmentBuff) / 100);
                     // встановлюємо новий розмір Image
                     objImage.rectTransform.sizeDelta = new Vector2(newWidth, newHeight);
                     i++;
                     switch (data.Name)
                     {
                         case "енергетичний заряд":
-                            player.speed += float.Parse(data.Stat) * (player.GivePerkStatValue(Stats.EquipmentBuff) / 100);
+                            player.speed += fullStat;
                             break;
                         case "шестерня":
-                            player.attackSpeed -= float.Parse(data.Stat) * (player.GivePerkStatValue(Stats.EquipmentBuff) / 100);
+                            player.attackSpeed -= fullStat;
                             break;
                         case "етернійські-кристали":
-                            player.damageToGive += float.Parse(data.Stat) * (player.GivePerkStatValue(Stats.EquipmentBuff) / 100);
+                            player.damageToGive += fullStat;
                             break;
                         case "око дракона":
-                            cam.m_Lens.OrthographicSize += float.Parse(data.Stat) * (player.GivePerkStatValue(Stats.EquipmentBuff) / 100);
+                            cam.m_Lens.OrthographicSize += fullStat;
                             break;
                         case "клик літучої миші":
                             player.isLifeSteal = true;
-                            player.lifeStealPercent = float.Parse(data.Stat) * (player.GivePerkStatValue(Stats.EquipmentBuff) / 100);
+                            player.lifeStealPercent = fullStat;
                             break;
                         case "око дерев'яного снайпера":
-                            player.launchForce += float.Parse(data.Stat) * (player.GivePerkStatValue(Stats.EquipmentBuff) / 100);
+                            player.launchForce += fullStat;
                             break; 
                         case "вижимка з грибів":
-                            player.Wind += float.Parse(data.Stat) * (player.GivePerkStatValue(Stats.EquipmentBuff) / 100);
-                            player.Water += float.Parse(data.Stat) * (player.GivePerkStatValue(Stats.EquipmentBuff) / 100);
-                            player.Grass += float.Parse(data.Stat) * (player.GivePerkStatValue(Stats.EquipmentBuff) / 100);
-                            player.Dirt += float.Parse(data.Stat) * (player.GivePerkStatValue(Stats.EquipmentBuff) / 100);
+                            player.Wind += fullStat;
+                            player.Water += fullStat;
+                            player.Grass += fullStat;
+                            player.Dirt += fullStat;
                             break;
                         case "корінь ківі":
                             player.isBulletSlow = true;
-                            player.slowPercent += float.Parse(data.Stat) * (player.GivePerkStatValue(Stats.EquipmentBuff) / 100);
+                            player.slowPercent += fullStat;
                             break;
                         case "слиз":
-                            player.Fire += float.Parse(data.Stat) * (player.GivePerkStatValue(Stats.EquipmentBuff) / 100);
-                            player.Cold -= float.Parse(data.Stat) * (player.GivePerkStatValue(Stats.EquipmentBuff) / 100);
+                            player.Fire += fullStat;
+                            player.Cold -= fullStat;
                             break;
                         case "сфера бобса":
                             FindObjectOfType<SphereAround>().isStart = true;
-                            FindObjectOfType<SphereAround>().sphere.damage *= (player.GivePerkStatValue(Stats.EquipmentBuff) / 100);
+                            FindObjectOfType<SphereAround>().sphere.damage += (float.Parse(data.Stat) * player.GivePerkStatValue(Stats.EquipmentBuff) / 100);
                             break;
                         case "щит роккі":
-                            player.armor += float.Parse(data.Stat) * (player.GivePerkStatValue(Stats.EquipmentBuff) / 100);
+                            player.armor += fullStat;
                             break;
                     }
                 }

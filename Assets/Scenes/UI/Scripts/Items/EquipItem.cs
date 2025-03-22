@@ -7,6 +7,7 @@ public class EquipItem : MonoBehaviour
 {
     SavedEquipData equipedItenms;
     public List<SavedEquipData> updatedList;
+    [SerializeField] GameObject checker;
     DataHashing hashing;
     // Start is called before the first frame update
     void Start()
@@ -29,11 +30,11 @@ public class EquipItem : MonoBehaviour
         if (item != null)
         {
             string buttonText = item.isEquipedNow ? "equiped" : "equip";
-            Debug.Log(buttonText);
+            checker.SetActive(item.isEquipedNow);
             UpdateEquipPanel(item, buttonText, item.isEquipedNow);
         }
     }
-
+    
     public void onEquip()
     {
         MoveItem item = transform.parent.GetChild(0).GetComponentInChildren<MoveItem>();
@@ -42,10 +43,19 @@ public class EquipItem : MonoBehaviour
         if (File.Exists(path))
         {
             string[] jsonLines = File.ReadAllLines(path);
-
-            if (item.isEquipedNow == false && jsonLines.Length < 3)
+            foreach (var jsonLine in jsonLines)
+            {
+                string decrypt = hashing.Decrypt(jsonLine);
+                SavedEquipData data = JsonUtility.FromJson<SavedEquipData>(decrypt);
+                if (data.Name == item.GetComponent<SetParametersToitem>().ItemName && data.Level.ToString() != item.GetComponent<SetParametersToitem>().level)
+                {
+                    updatedList.Add(data);
+                }
+            }
+            if (item.isEquipedNow == false && jsonLines.Length < 3 && updatedList.Count == 0)
             {
                 equipedItenms = item.SetItem();
+                checker.SetActive(true);
                 UpdateEquipPanel(item, "equiped", true);
                 SaveEquip(equipedItenms);
 
@@ -63,6 +73,7 @@ public class EquipItem : MonoBehaviour
                     }
                 }
                 UpdateEquipPanel(item, "equip", false);
+                checker.SetActive(false);
                 SaveUpdateEquip(path, updatedList);
 
             }
@@ -73,7 +84,8 @@ public class EquipItem : MonoBehaviour
         MoveItem[] equips = FindObjectsOfType<MoveItem>();
         foreach (var obj in equips)
         {
-            if (obj.GetComponent<SetParametersToitem>().ItemName == item.GetComponent<SetParametersToitem>().ItemName)
+            if (obj.GetComponent<SetParametersToitem>().ItemName == item.GetComponent<SetParametersToitem>().ItemName 
+                && obj.GetComponent<SetParametersToitem>().level == item.GetComponent<SetParametersToitem>().level)
             {
                 obj.equipPanel.GetComponent<ItemData>().state.GetComponent<TagText>().tagText = buttonText;
                 obj.isEquipedNow = isEquiped;

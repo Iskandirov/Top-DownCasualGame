@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 
 public class Settings : MonoBehaviour
 {
@@ -22,12 +23,23 @@ public class Settings : MonoBehaviour
     List<Resolution> filtredResolutions;
     int currentResolutionIndex = 0;
     public Dictionary<int, int> resolutionVariations = new Dictionary<int, int>()
-{
-    { 1280, 720 },
-    { 1920, 1080 },
-    { 2560, 1440 },
-    { 3840, 2160 }
-};
+    {
+        //{ 1024, 768 },   // Стандартне розширення для старих моніторів
+        { 1280, 720 },   // HD (720p)
+        { 1360, 768 },   // Поширене розширення для ноутбуків
+        { 1366, 768 },   // Популярне розширення для ноутбуків
+        { 1440, 900 },   // Поширене розширення для ноутбуків
+        { 1600, 900 },   // HD+
+        { 1680, 1050 },  // Поширене розширення для моніторів
+        { 1920, 1080 },  // Full HD (1080p) - найпопулярніше розширення
+        { 2048, 1152 },  // QWXGA
+        { 2560, 1440 },  // Quad HD (1440p)
+        { 3440, 1440 },  // UltraWide Quad HD
+        //{ 3840, 2160 },  // Ultra HD (4K)
+        //{ 5120, 2880 },  // 5K
+        //{ 7680, 4320 },  // 8K
+        //{ 10240, 4320 } // UltraWide 8K
+    };
     private void Awake()
     {
         instance ??= this;
@@ -61,16 +73,12 @@ public class Settings : MonoBehaviour
             newRes.height = screenSize.Value;
             newRes.refreshRateRatio = Screen.currentResolution.refreshRateRatio;
             filtredResolutions.Add(newRes);
-
-            // Set current resolution if it matches
-            if (screenSize.Key == Screen.width && screenSize.Value == Screen.height)
-            {
-                currentResolutionIndex = filtredResolutions.Count - 1;
-            }
+            
         }
         List<string> options = new List<string>();
         for (int i = 0; i < filtredResolutions.Count; i++)
         {
+
             string resolutionOption = filtredResolutions[i].width + "x" + filtredResolutions[i].height;
             options.Add(resolutionOption);
             if (filtredResolutions[i].width == Screen.width && filtredResolutions[i].height == Screen.height)
@@ -131,11 +139,11 @@ public class Settings : MonoBehaviour
         AudioManager.instance.ChangeVolume(AudioManager.instance.volumeMusic, AudioManager.instance.musicObj);
         muteVolume.gameObject.SetActive(volumeMusic.value == 0 ? true : false);
         volumeValueTxt.text = (AudioManager.instance.volumeMusic * 100).ToString("0.") + "%";
+        Debug.Log("Slider value changed: " + value);
     }
     public void SetVolumeSFX()
     {
-        Debug.Log(1);
-       
+
         List<string> valueSFX = new List<string>()
             {
             "sfx",
@@ -145,6 +153,8 @@ public class Settings : MonoBehaviour
         AudioManager.instance.ChangeVolume(AudioManager.instance.volumeSFX, AudioManager.instance.sfxObj);
         muteSFX.gameObject.SetActive(volumeSFX.value == 0 ? true : false);
         sfxValueTxt.text = ((AudioManager.instance.volumeSFX * 100).ToString("0.") + "%");
+        Debug.Log("Slider value changed: " + valueSFX);
+
     }
     public void SetVSync()
     {
@@ -172,10 +182,12 @@ public class Settings : MonoBehaviour
     }
     public void SetLanguage()
     {
+        
+        string languageRes = drop.options[drop.value].text == "Ukrainian" ? "ua" : "eng";
         List<string> value = new List<string>()
             {
             "language",
-            drop.options[drop.value].text,
+            languageRes,
             // Додаткові значення списку
             };
         gameManager.ChangeSetting(value);

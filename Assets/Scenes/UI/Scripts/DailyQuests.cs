@@ -23,7 +23,23 @@ public class Quest
     public float progress;
     public float reward;
 }
-
+[Serializable]
+public class ApiResponse
+{
+    public int year;
+    public int month;
+    public int day;
+    public int hour;
+    public int minute;
+    public int seconds;
+    public int milliSeconds;
+    public string dateTime;
+    public string date;
+    public string time;
+    public string timeZone;
+    public string dayOfWeek;
+    public bool dstActive;
+}
 public class DailyQuests : MonoBehaviour
 {
     public List<Quest> quest;
@@ -40,7 +56,7 @@ public class DailyQuests : MonoBehaviour
     public GameObject popUp;
     public SpriteRenderer popUpImg;
     public TextMeshProUGUI popUpTxt;
-    DateTime currentDataTime = DateTime.Now;
+    public DateTime currentDataTime = DateTime.Now;
     public GetScore score;
     public static DailyQuests instance;
     public Animator anim;
@@ -63,7 +79,7 @@ public class DailyQuests : MonoBehaviour
         instance = this;
        
     }
-    public void UpdateValue(int id,float value,bool isOverwrite)
+    public void UpdateValue(int id,float value,bool isOverwrite,bool mustBeMoreThanGoal)
     {
         Quest que;
         que = quest.FirstOrDefault(s => s.id.Equals(id));
@@ -77,8 +93,16 @@ public class DailyQuests : MonoBehaviour
             {
                 que.progress = value;
             }
-            
-            bool isQuestDone = que.progress / que.goal >= 1 && que.isActive ? true : false;
+            bool isQuestDone;
+            if (mustBeMoreThanGoal)
+            {
+                isQuestDone = que.progress / que.goal >= 1 && que.isActive ? true : false;
+
+            }
+            else
+            {
+                isQuestDone = que.progress / que.goal >= 1 && que.isActive ? false : true;
+            }
             if (popUp != null && !popUp.activeSelf && isQuestDone)
             {
                 popUp.SetActive(isQuestDone);
@@ -86,11 +110,14 @@ public class DailyQuests : MonoBehaviour
                 
                 popUpImg.sprite = questImage.First(s => s.sprite.name == que.nameQuest).sprite;
                 popUpTxt.text = que.description;
-                ClaimReward(que.id);
+                ClaimReward((int)que.reward);
+                //quest[id].isActive = false;
+
             }
-            
+
             quest[que.id] = que;
             SaveQuest(Path.Combine(Application.persistentDataPath, path));
+            SetQuestData();
         }
     }
     private void Start()
@@ -148,26 +175,22 @@ public class DailyQuests : MonoBehaviour
                 questImage[counter].SetNativeSize();
                 questProgressText[counter].text = q.progress.ToString() + " / " + q.goal.ToString();
                 questProgressFill[counter].fillAmount = q.progress / q.goal;
-                bool isQuestDone = questProgressFill[counter].fillAmount == 1 && !q.isActive ? true : false;
+                bool isQuestDone = q.isTodaysQuest && !q.isActive ? true : false;
                 questImageDone[counter].gameObject.SetActive(isQuestDone);
                 counter++;
             }
         }
     }
-    public void ClaimReward(int id)
+    public void ClaimReward(int reward)
     {
-        Debug.Log(questRewardText[id].text);
-        if (int.TryParse(questRewardText[id].text, out int reward))
-        {
-            GetScore score = FindAnyObjectByType<GetScore>();
-            int moneyRes = reward + score.LoadScore();
-            //money.text = moneyRes.ToString();
-            score.SaveScore(moneyRes);
-            score.LoadScore();
-            quest[id].isActive = false;
-            //claimBtn[id].interactable = false;
-            SaveQuest(Path.Combine(Application.persistentDataPath, path));
-        }
+        Debug.Log(reward);
+        GetScore score = FindAnyObjectByType<GetScore>();
+        int moneyRes = reward + score.LoadScore();
+        //money.text = moneyRes.ToString();
+        score.SaveScore(moneyRes);
+        score.LoadScore();
+        //claimBtn[id].interactable = false;
+        SaveQuest(Path.Combine(Application.persistentDataPath, path));
     }
     public DateTime GetStartDateTime()
     {
@@ -182,14 +205,27 @@ public class DailyQuests : MonoBehaviour
     {
         UnityWebRequest webrequest = UnityWebRequest.Get(API_URL);
         yield return webrequest.SendWebRequest();
-        if (webrequest.result == UnityWebRequest.Result.ProtocolError)
+        try
         {
-            Debug.Log("Error: " + webrequest.error);
+            if (webrequest.result == UnityWebRequest.Result.Success)
+            {
+                if (webrequest.downloadHandler != null)
+                {
+                    string jsonResponse = webrequest.downloadHandler.text;
+                    if (!string.IsNullOrEmpty(jsonResponse))
+                    {
+                        ApiResponse apiResponse = JsonUtility.FromJson<ApiResponse>(jsonResponse);
+                        if (apiResponse != null)
+                        {
+                            currentDataTime = new DateTime(apiResponse.year, apiResponse.month, apiResponse.day, apiResponse.hour, apiResponse.minute, apiResponse.seconds, apiResponse.milliSeconds);
+                        }
+                    }
+                }
+            }
         }
-        else
+        catch (Exception ex)
         {
-            string timeDate = webrequest.downloadHandler.text;
-            currentDataTime = ParseDateTime(timeDate);
+            Debug.LogError("Exception caught: " + ex.Message);
         }
     }
     DateTime ParseDateTime(string dateTime)

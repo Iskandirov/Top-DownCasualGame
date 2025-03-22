@@ -58,7 +58,7 @@ public enum PotionsType
 }
 public class PlayerManager : MonoBehaviour
 {
-    GameManager gameManager;
+    public GameManager gameManager;
     public Animator playerAnim;
     public Rigidbody2D rb;
     [HideInInspector]
@@ -299,7 +299,7 @@ public class PlayerManager : MonoBehaviour
                 gameManager.fullFillImage.fillAmount -= damage / playerHealthPointMax;
                 if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 4 && s.isActive == true) != null)
                 {
-                    DailyQuests.instance.UpdateValue(4, damage, false);
+                    DailyQuests.instance.UpdateValue(4, damage, false, true);
                 }
             }
         }
@@ -490,7 +490,6 @@ public class PlayerManager : MonoBehaviour
     }
     public void AutoShoot(Vector3 position, Bullet newObject)
     {
-
         newObject.transform.position = position;
 
         Vector2 nearest = new Vector3(999, 999, 999);
@@ -569,7 +568,6 @@ public class PlayerManager : MonoBehaviour
         speed = character.moveSpeed + GivePerkStatValue(Stats.MoveSpeed);
         heroID = character.id;
         baseSkillCDMax = character.spellCD + GivePerkStatValue(Stats.ReloadSkills);
-
         attackSpeedMax = character.attackSpeed + GivePerkStatValue(Stats.AttackSpeed);
         attackSpeed = character.attackSpeed + GivePerkStatValue(Stats.AttackSpeed);
         damageToGive = character.damage + GivePerkStatValue(Stats.Damage);
@@ -604,13 +602,13 @@ public class PlayerManager : MonoBehaviour
             {
                 playerHealthPoint += value;
                 gameManager.fullFillImage.fillAmount += (value) / playerHealthPointMax;
-                DailyQuests.instance.UpdateValue(1, value, false);
+                DailyQuests.instance.UpdateValue(1, value, false, true);
                 GameManager.Instance.FindStatName("healthHealed", value);
             }
             else
             {
                 GameManager.Instance.FindStatName("healthHealed", playerHealthPointMax - playerHealthPoint);
-                DailyQuests.instance.UpdateValue(1, playerHealthPointMax - playerHealthPoint, false);
+                DailyQuests.instance.UpdateValue(1, playerHealthPointMax - playerHealthPoint, false, true);
 
                 playerHealthPoint = playerHealthPointMax;
                 gameManager.fullFillImage.fillAmount = 1f;

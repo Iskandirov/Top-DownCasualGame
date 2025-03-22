@@ -27,8 +27,8 @@ public class HealthPickUp : MonoBehaviour
                 GameManager.Instance.fullFillImage.fillAmount = player.playerHealthPoint / player.playerHealthPointMax;
                 Destroy(gameObject);
             }
-            DailyQuests.instance.UpdateValue(1, (player.playerHealthPointMax / 100) * 10, false);
-            DailyQuests.instance.UpdateValue(5, 1, false);
+            DailyQuests.instance.UpdateValue(1, (player.playerHealthPointMax / 100) * 10, false, true);
+            DailyQuests.instance.UpdateValue(5, 1, false, true);
         }
     }
 }

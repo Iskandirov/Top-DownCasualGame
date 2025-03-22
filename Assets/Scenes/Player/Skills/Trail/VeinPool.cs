@@ -95,7 +95,7 @@ public class VeinPool : MonoBehaviour
                             float heal = enemies.children.Find(s => s.name == colliders[j].collider.GetComponent<FSMC_Executer>().name).healthMax * 0.1f;
                             if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 1 && s.isActive == true) != null)
                             {
-                                DailyQuests.instance.UpdateValue(1, heal, false);
+                                DailyQuests.instance.UpdateValue(1, heal, false, true);
                             }
                             player.playerHealthPoint += heal;
                             GameManager.Instance.fullFillImage.fillAmount = player.playerHealthPoint / player.playerHealthPointMax;

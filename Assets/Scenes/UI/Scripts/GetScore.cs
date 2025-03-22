@@ -31,14 +31,16 @@ public class GetScore : MonoBehaviour
             if (objTimer)
             {
                 timeEnd.text = objTimer.time.ToString("00.00");
-                if (!PlayerManager.instance.isTutor && DailyQuests.instance.quest.FirstOrDefault(s => s.id == 6 && s.isActive == true) != null)
+                if (!PlayerManager.instance.isTutor && DailyQuests.instance.quest.FirstOrDefault(s => s.id == 6 && s.isActive == true) != null && GameManager.Instance.winPanel.activeSelf)
                 {
-                    DailyQuests.instance.UpdateValue(6, objTimer.time - timeToSpawnBoss, true);
+                    DailyQuests.instance.UpdateValue(6, objTimer.time - timeToSpawnBoss, true,false);
                 }
                 if (float.TryParse(timeEnd.text, out float result))
                 {
+                    Debug.Log(GameManager.Instance.score + " Score ");
+                    Debug.Log(Mathf.Pow(1 + (0.05f * result), 1.1f) + " Time ");
                     // Вдале перетворення
-                    score = (GameManager.Instance.score + 1) * Mathf.Pow(1 + (0.05f * result), 1.1f) + 1;
+                    score = (GameManager.Instance.score + 1) * Mathf.Pow(1 + (0.2f * result), 1.1f) + 1;
                     percent = Mathf.RoundToInt((result / timeToSpawnBoss) * 100);
                     if (percent >= 100 && isWinPanel)
                     {

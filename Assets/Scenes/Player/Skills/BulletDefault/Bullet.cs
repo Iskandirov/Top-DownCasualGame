@@ -49,7 +49,7 @@ public class Bullet : SkillBaseMono
         isBulletSlow = player.isBulletSlow;
         lifeStealPercent = player.lifeStealPercent;
         slowPercent = player.slowPercent;
-        if (!player.isTutor && player.isAuto && !isRickoshet)
+        if (!player.isTutor && player.isAuto && !isRickoshet && player.gameManager.enemies.children.Count > 0)
         {
             player.AutoShoot(obj.transform.position, this);
         }
@@ -76,7 +76,7 @@ public class Bullet : SkillBaseMono
                 {
                     if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 1 && s.isActive == true) != null)
                     {
-                        DailyQuests.instance.UpdateValue(1, basa.damage * lifeStealPercent, false);
+                        DailyQuests.instance.UpdateValue(1, basa.damage * lifeStealPercent, false, true);
                     }
                     player.playerHealthPoint += basa.damage * lifeStealPercent;
                     GameManager.Instance.fullFillImage.fillAmount += (basa.damage * lifeStealPercent) / player.playerHealthPointMax;
@@ -97,7 +97,7 @@ public class Bullet : SkillBaseMono
             GameManager.Instance.FindStatName("bulletDamage", basa.damage);
             if (DailyQuests.instance != null)
             {
-                DailyQuests.instance.UpdateValue(3, basa.damage, false);
+                DailyQuests.instance.UpdateValue(3, basa.damage, false, true);
 
             }
             enemyMove.GetComponent<Rigidbody2D>().AddForce(-(transform.position - collision.transform.position) * forceAmount, ForceMode2D.Impulse);

@@ -34,7 +34,7 @@ public class TriggerTrail : MonoBehaviour
                             float heal = enemies.children.Find(s => s.name == enemiesColliders[i].GetComponent<FSMC_Executer>().name).healthMax * 0.1f;
                             if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 1 && s.isActive == true) != null)
                             {
-                                DailyQuests.instance.UpdateValue(1, heal, false);
+                                DailyQuests.instance.UpdateValue(1, heal, false, true);
                             }
                             PlayerManager.instance.HealHealth(heal);
                         }

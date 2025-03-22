@@ -32,6 +32,7 @@ public class StateDeath : FSMC_Behaviour
         if (executer.isBoss)
         {
             executer.GetComponent<LootManager>().DropLoot(false, executer.transform);
+            EnemySpawner.instance.children.Clear();
             UnityEngine.Object.Destroy(executer.gameObject);
         }
         else
@@ -43,10 +44,10 @@ public class StateDeath : FSMC_Behaviour
     }
     void ExpGive(FSMC_Executer enemy, Vector3 pos)
     {
-        DailyQuests.instance.UpdateValue(0, 1, false);
+        DailyQuests.instance.UpdateValue(0, 1, false,true);
         if (enemy.name == "Infiltrator")
         {
-            DailyQuests.instance.UpdateValue(2, 1, false);
+            DailyQuests.instance.UpdateValue(2, 1, false, true);
         }
         EXP a = UnityEngine.Object.Instantiate(enemy.expiriancePoint.GetComponent<EXP>(), pos, Quaternion.identity);
         a.expBuff = enemy.expGiven * enemy.dangerLevel;
