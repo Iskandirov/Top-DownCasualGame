@@ -41,7 +41,8 @@ public class LevelInfoLoad : MonoBehaviour
                     //levelDescription.text = data.description;
                     //specialAttack.GetComponent<TagText>().tagText = "base_spell_" + levelID;
                     levelDescription.GetComponent<TagText>().tagText = "description_lvl_" + levelID;
-                    levelImage.sprite = GameManager.ExtractSpriteListFromTexture("Map").First(s => s.name == levelID.ToString());
+                    levelImage.sprite = GameManager.ExtractSpriteListFromTexture("Map").First(s => s.name == (levelID - 1).ToString());
+
                     break;
                 }
             }
@@ -61,5 +62,6 @@ public class LevelInfoLoad : MonoBehaviour
         specialAttack.GetComponent<TagText>().tagText = "base_spell_" + character.ID;
         //specialAttack.text = character.spell;
         playerImage.sprite = GameManager.ExtractSpriteListFromTexture("heroes").First(s => s.name == character.Name);
+        playerImage.SetNativeSize();
     }
 }

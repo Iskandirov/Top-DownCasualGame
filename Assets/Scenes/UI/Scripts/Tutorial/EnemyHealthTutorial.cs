@@ -17,8 +17,7 @@ public class EnemyHealthTutorial : MonoBehaviour
         text = FindObjectOfType<TextAppear>();
         if (isBoss)
         {
-            //mob.CurrentHealth = mob.MaxHealth;
-            GetComponent<BossAttack>().damage = 0;
+            //GetComponent<BossAttack>().damage = 0;
         }
         mobScript = GetComponent<FSMC_Executer>();
     }

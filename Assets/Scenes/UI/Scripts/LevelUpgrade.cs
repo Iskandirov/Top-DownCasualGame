@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DG.Tweening;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using TMPro;
@@ -82,6 +83,7 @@ public class LevelUpgrade : MonoBehaviour
     }
     void OnEnable()
     {
+        
         string path = Path.Combine(Application.persistentDataPath, "SkillData.txt");
         File.Delete(path);
         SaveSkill();
@@ -89,7 +91,10 @@ public class LevelUpgrade : MonoBehaviour
 
         RandomAbil();
     }
-
+    private void OnDisable()
+    {
+        //transform.DOScale(new Vector3(1.21f,1.21f,1.21f),1f);
+    }
     //Random two abilitis
     public void RandomAbil()
     {

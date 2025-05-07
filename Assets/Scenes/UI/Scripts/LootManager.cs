@@ -22,6 +22,7 @@ public class LootManager : MonoBehaviour
     public List<SavedObjectData> LegendaryItems;
     public bool isTutor;
     System.Random random = new System.Random();
+    public int activeItemsCount = 0;
     public string[] rarityType = { "Звичайне", "Рідкісне", "Міфічне", "Легендарне" };
     private void Awake()
     {
@@ -31,21 +32,44 @@ public class LootManager : MonoBehaviour
             itemPanel = GameObject.Find("/LevelUpgrade").GetComponent<LootManager>().itemPanel;
         }
     }
-    public void DropLoot(bool isTutor,Transform pos)
+    public void DropLoot(bool isTutor, Transform pos)
     {
+        Debug.Log("DropLoot");
         ItemRarity();
-        
-        float randomValue = (float)random.NextDouble();
-        List<SavedObjectData> rarityItems = GetRarityItems(randomValue);
-        if (rarityItems != null)
-            SetStats(rarityItems, isTutor, pos);
+        int itemCount = random.Next(3, 11); // Количество предметов от 3 до 10
+        float angleStep = 360f / itemCount; // Угол между предметами
+
+        for (int i = 0; i < itemCount; i++)
+        {
+            float angle = i * angleStep;
+            Vector3 spawnPosition = pos.position + new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad), 0) * 20f; // Радиус круга 2 единицы
+            float randomValue = (float)random.NextDouble();
+            List<SavedObjectData> rarityItems = GetRarityItems(randomValue);
+            if (rarityItems != null)
+            {
+                SetStats(rarityItems, isTutor, spawnPosition);
+                activeItemsCount++;
+            }
+        }
     }
-    void SetStats(List<SavedObjectData> Rarity, bool isTutor, Transform objTransform)
+    public void ItemCollected()
+    {
+        activeItemsCount--; // Уменьшаем счетчик активных предметов
+        //if (activeItemsCount <= 0)
+        //{
+
+        //    // Все предметы собраны, показываем панель завершения игры
+        //    Timer dropLooted = FindObjectOfType<Timer>();
+        //    dropLooted.isDropLooted = true;
+        //}
+    }
+
+    void SetStats(List<SavedObjectData> Rarity, bool isTutor, Vector3 spawnPosition)
     {
         int rand = random.Next(0, Rarity.Count);
-        ItemParameters newItem = Instantiate(itemRareObj[rand], objTransform.position, objTransform.rotation);
+
+        ItemParameters newItem = Instantiate(itemRareObj[rand], spawnPosition, Quaternion.identity);
         newItem.itemName = Rarity[rand].Name;
-        //newItem.itemImage = Rarity[rand].ImageSprite;
         newItem.itemRareName = Rarity[rand].RareName;
         newItem.itemRare = Rarity[rand].RareSprite;
         newItem.idRare = Rarity[rand].IDRare;

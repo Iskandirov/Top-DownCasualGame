@@ -4,6 +4,7 @@ public class SniperTreeBullet : MonoBehaviour
 {
     public float damage;
     public float launchForce = 10f;  // Сила запуску об'єкта
+    public float destroyDelay;
     private void Start()
     {
         Vector2 direction = PlayerManager.instance.ShootPoint.transform.position - transform.position;
@@ -13,7 +14,7 @@ public class SniperTreeBullet : MonoBehaviour
         rb.AddForce(direction.normalized * launchForce, ForceMode2D.Impulse);
         float angleShot = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angleShot + 90, Vector3.forward);
-        Invoke("Destroyobj", 5);
+        Invoke("Destroyobj", destroyDelay);
     }
     void Destroyobj()
     {

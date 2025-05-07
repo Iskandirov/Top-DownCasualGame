@@ -12,6 +12,7 @@ public class TowerWave : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        AudioManager.instance.PlaySFX("WaterWave");
         objTransform = transform;
         StartCoroutine(TimerSpell());
     }

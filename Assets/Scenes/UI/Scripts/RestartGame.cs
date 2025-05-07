@@ -11,7 +11,7 @@ public class RestartGame : MonoBehaviour
     {
         player = PlayerManager.instance;
         gameManager = GameManager.Instance;
-        Time.timeScale = 0f;
+        gameManager.TimeScale(0);
     }
     public void Update()
     {

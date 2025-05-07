@@ -42,7 +42,7 @@ public class RootSlower : MonoBehaviour
             {
                 player.TakeDamage(damage);
                 damageDelay = damageDelayMax;
-                player.StartCoroutine(player.SlowPlayer(damageDelay * 0.9f, 0.9f));
+                player.StartSlowPlayer(damageDelay * 0.9f, 0.9f);
             }
         }
     }

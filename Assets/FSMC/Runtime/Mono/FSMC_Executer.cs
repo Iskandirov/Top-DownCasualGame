@@ -49,19 +49,19 @@ namespace FSMC.Runtime
             if (collision.CompareTag("Player") && !collision.isTrigger)
             {
                 isInZone = true;
-                if (GetComponent<CircleCollider2D>().isTrigger)
+                if (GetComponent<CircleCollider2D>().isTrigger && !isBoss)
                 {
                     anim.SetBool("Invisible", false);
                 }
             }
         }
-      
+
         private void OnTriggerExit2D(Collider2D collision)
         {
             if (collision.CompareTag("Player") && !collision.isTrigger)
             {
                 isInZone = false;
-                if (GetComponent<CircleCollider2D>().isTrigger)
+                if (GetComponent<CircleCollider2D>().isTrigger && !isBoss)
                 {
                     anim.SetBool("Invisible", true);
                 }
@@ -85,6 +85,7 @@ namespace FSMC.Runtime
         }
         public void TakeDamage(float damage)
         {
+           
             SetDamage(damage);
             if (health > 0)
             {
@@ -92,6 +93,7 @@ namespace FSMC.Runtime
             }
             health -= damage;
         }
+      
         private void Awake()
         {
             instance = this;
@@ -101,16 +103,39 @@ namespace FSMC.Runtime
             _runtimeController = Instantiate(_controller);
             StateMachine.SetInt("EnemyType", enemyType);
         }
-
+        private static float dps;
+        private static float totalDamage = 0f;
+        private static float timer = 0f;
+        public static float updateInterval = 1f;
 
         void Start()
         {
             _runtimeController.StartStateMachine(this);
         }
-
         void Update()
         {
+            timer += Time.deltaTime;
+            if (timer >= updateInterval)
+            {
+
+                dps = totalDamage / timer;
+                totalDamage = 0f;
+                timer = 0f;
+            }
+
             _runtimeController.UpdateStateMachine(this);
+        }
+        public float GetDPSData()
+        {
+            return dps;
+        }
+        public void SetDamageData(float setDps)
+        {
+            totalDamage = setDps;
+        }
+        public float GetDamageData()
+        {
+            return totalDamage;
         }
         public void ReturnToChase()
         {

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -41,6 +42,7 @@ public class SnapScroll : MonoBehaviour
 
     public GameManager gameManager;
     public GameObject loader;
+    bool isAllComplete = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -52,15 +54,17 @@ public class SnapScroll : MonoBehaviour
         instObjectsPosition = new Vector2[descriptionImage.Length];
         instObjectsScale = new Vector2[descriptionImage.Length];
         descriptionObjImage = new Image[descriptionImage.Length];
+        int objejectCount = 0;
+        int objejectCountMax = 0;
         for (int i = 0; i < descriptionImage.Length; i++)
         {
             instObjects[i] = Instantiate(panObj, transform, false);
             instObjects[i].levelInfoPanel = loader;
             instObjectsLock[i] = Instantiate(instObjectsLockObj, transform.position, Quaternion.identity, transform);
 
-            int objejectCount = instObjects[i].LoadObjectLevelCount(i + sceneValue[0]);
-            int objejectCountMax = instObjects[i].LoadObjectLevelCountOfCountMax(i + sceneValue[0]);
-           
+            objejectCount = instObjects[i].LoadObjectLevelCount(i + sceneValue[0]);
+            objejectCountMax = instObjects[i].LoadObjectLevelCountOfCountMax(i + sceneValue[0]);
+
             if (instObjects[i].LoadObjectLevelCount(i + sceneValue[0] - 1) == instObjects[i].LoadObjectLevelCountOfCountMax(i + sceneValue[0] - 1) && objejectCount != objejectCountMax)
             {
                 Destroy(instObjectsLock[i]);
@@ -80,19 +84,18 @@ public class SnapScroll : MonoBehaviour
                 instObjectsLock[i].transform.localPosition = new Vector2(instObjectsLock[i - 1].transform.localPosition.x + panObj.GetComponent<RectTransform>().sizeDelta.x + spacing,
                instObjectsLock[i].transform.localPosition.y);
             }
-           
+
             instObjectsPosition[i] = -instObjects[i].objTransform.localPosition;
             
         }
-        int count = 0;
-        foreach (var scene in instObjects)
+        for (int i = 1; i < descriptionImage.Length -1; i++)
         {
-            if ((sceneValue[sceneValue.Length - 1] == scene.dataLevel.IDLevel && scene.dataLevel.countOfCount == scene.dataLevel.countOfCountMax))
+            if (instObjects[i].LoadObjectLevelCount(i + sceneValue[0]) == instObjects[i].LoadObjectLevelCountOfCountMax(i + sceneValue[0]) && instObjectsLock[i] != null)
             {
-                Destroy(instObjectsLock[count]);
-                count++;
+                Destroy(instObjectsLock[i]);
             }
         }
+
         gameManager.UpdateText(list);
     }
     // Update is called once per frame
@@ -140,6 +143,13 @@ public class SnapScroll : MonoBehaviour
         if (scroll)
         {
             scrollRect.inertia = true;
+        }
+    }
+    void OnEnable()
+    {
+        foreach (var card in instObjects)
+        {
+            card.transform.DOShakeScale(.1f, 0.2f, 10, 90, false, ShakeRandomnessMode.Full);
         }
     }
 }

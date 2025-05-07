@@ -15,6 +15,7 @@ public class ObjectHealth : MonoBehaviour
     public void TakeDamage()
     {
         health -= 1;
+        explodeAnim.SetTrigger("Hit");
         if (health <= 0)
         {
             if (healthMax == 1)
@@ -23,8 +24,9 @@ public class ObjectHealth : MonoBehaviour
             }
             else
             {
-                CreateLoot();
-                gameObject.SetActive(false);
+                Debug.Log("Explode!");
+                //CreateLoot();
+                explodeAnim.SetBool("OpenChest", true);
                 health = healthMax;
             }
         }
@@ -36,6 +38,8 @@ public class ObjectHealth : MonoBehaviour
         {
             FindObjectOfType<EnemySpawner>().children.Add(a.GetComponent<FSMC_Executer>());
         }
+        gameObject.SetActive(false);
+        explodeAnim.SetBool("OpenChest", false);
     }
     void ExplodeAnimActivate()
     {

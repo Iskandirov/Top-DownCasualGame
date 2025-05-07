@@ -95,6 +95,7 @@ public class PlayerManager : MonoBehaviour
     public float playerHealthRegeneration;
     public float armor;
     public bool isInvincible = false;
+    public TextMeshProUGUI regenerationText;
 
     [Header("Shoot settings")]
     public Bullet bullet;
@@ -141,7 +142,10 @@ public class PlayerManager : MonoBehaviour
     public float Steam;
     public float Cold;
 
-    [Header("Abilities")]
+    [Header("Abilities Buff")]
+    public GameObject buffObj;
+    public GameObject debuffObj;
+    public LoadEquipedItems itemsFromBoss;
     [Header("CharacterSet settings")]
     public List<CharacterStats> characters;
     [HideInInspector]
@@ -149,17 +153,33 @@ public class PlayerManager : MonoBehaviour
     [Header("Perks settings")]
     [SerializeField] List<PerksBuffs> statsToBuff;
     [SerializeField] Shield PotionShield;
+    public int activePerkCount;
     [Header("Potions settings")]
     [SerializeField] List<Potions> potions;
     [SerializeField] BobmExplode bomb;
     [SerializeField] Sprite bombImg;
     [SerializeField] bool canBeSaved = false;
     [SerializeField] GameObject potionUseVFX;
+    public int countActivePotions = 0;
     private float targetRotation = 0f;
+    [SerializeField] GameObject baseSkillVFX;
+    [Header("Particle settings")]
+    ParticleSystem particleVibe;
+    Vector2 particleVelocityDirection;
+    Vector2 targetVelocity; // рух гравц€
+
+    float smoothTime = 0.5f; // час затримки зм≥ни напр€мку
+    float velocitySmoothing; // службова зм≥нна дл€ згладжуванн€
+
     private void Awake()
     {
         instance ??= this;
         objTransform = transform;
+        if (GameObject.Find("WorldUI/Vibe") != null)
+        {
+            particleVibe = GameObject.Find("WorldUI/Vibe").GetComponent<ParticleSystem>();
+
+        }
     }
     private void OnDestroy()
     {
@@ -178,7 +198,7 @@ public class PlayerManager : MonoBehaviour
     void Start()
     {
         gameManager = GameManager.Instance;
-
+        regenerationText = GameObject.FindGameObjectWithTag("Health").GetComponent<TextMeshProUGUI>();
         foreach (var perk in statsToBuff)
         {
             if (PlayerPrefs.HasKey(perk.key))
@@ -186,7 +206,7 @@ public class PlayerManager : MonoBehaviour
                 perk.value = PlayerPrefs.GetFloat(perk.key);
             }
         }
-        int count = 0;
+        
         foreach (var potion in potions)
         {
             if (PlayerPrefs.GetString(potion.key + "Bool") == "True")
@@ -194,13 +214,13 @@ public class PlayerManager : MonoBehaviour
                 potion.isActive = bool.Parse(PlayerPrefs.GetString(potion.key + "Bool"));
                 if (gameManager.potionsObj.Count > 0)
                 {
-                    Image img = gameManager.potionsObj[count].GetComponent<Image>();
+                    Image img = gameManager.potionsObj[countActivePotions].GetComponent<Image>();
                     img.sprite = GameManager.ExtractSpriteListFromTexture("Quest").First(instance => instance.name == potion.key);
                     img.SetNativeSize();
                     img.color = new Color(255, 255, 255, 255);
-                    gameManager.potionsObj[count].type = potion.parameters;
-                    gameManager.potionsObj[count].callDownMax = potion.callDown;
-                    count++;
+                    gameManager.potionsObj[countActivePotions].type = potion.parameters;
+                    gameManager.potionsObj[countActivePotions].callDownMax = potion.callDown;
+                    countActivePotions++;
                 }
                
             }
@@ -210,17 +230,43 @@ public class PlayerManager : MonoBehaviour
         SetCharacterOnStart();
         OnAttackTypeSwitch += OnSwitchClickHandler;
     }
+    void MoveParticles(Vector2 direction)
+    {
+        ParticleSystem.Particle[] particlesArray = new ParticleSystem.Particle[particleVibe.main.maxParticles];
+        int count = particleVibe.GetParticles(particlesArray);
 
+        Vector3 moveDirection = new Vector3(direction.x, direction.y, 0).normalized;
+        float baseParticleSpeed = particleVibe.main.startSpeedMultiplier;
+        for (int i = 0; i < count; i++)
+        {
+            float speedMultiplier = 1f / particlesArray[i].GetCurrentSize(particleVibe);
+            particlesArray[i].position += moveDirection * baseParticleSpeed * speedMultiplier * Time.deltaTime;
+        }
+
+        particleVibe.SetParticles(particlesArray, count);
+    }
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (particleVibe != null)
+        {
+            targetVelocity = -rb.velocity;
+            // плавно зм≥нюЇмо напр€мок частинок
+            particleVelocityDirection = Vector2.Lerp(
+                particleVelocityDirection,
+                targetVelocity,
+                Time.deltaTime / smoothTime
+            );
+            // рухаЇмо частинки у напр€мку particleVelocityDirection
+            MoveParticles(particleVelocityDirection);
+        }
         //ArrowToCursor();
         CDBaseSkill();
         if (!isDashSkillActive)
         {
             rb.position = PlayerMove();
         }
-
+        regenerationText.text = playerHealthRegeneration.ToString("F1");
         //ShootBullet(gameObject);
         if (playerHealthRegeneration > 0)
         {
@@ -278,7 +324,7 @@ public class PlayerManager : MonoBehaviour
                 //DailyQuests.instance.UpdateValue(4, 0);
                 AudioManager.instance.MusicStop();
                 AudioManager.instance.PlaySFX("PlayerDeath");
-                gameManager.OpenPanel(gameManager.losePanel, true);
+                gameManager.OpenPanel(gameManager.losePanel, true,true);
                 gameManager.TimeScale(0);
             }
         }
@@ -317,6 +363,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftShift) && !isReloading)
         {
+            baseSkillVFX.SetActive(true);
             isReloading = true;
             //Player special spell
             switch (heroID)
@@ -357,7 +404,7 @@ public class PlayerManager : MonoBehaviour
             playerAnim.SetBool("IsMove", true);
             if (axisX != horizontalInput)
             {
-                StartCoroutine(SlowPlayer(0.2f, 0.9f));
+                //StartCoroutine(SlowPlayer(0.2f, 0.9f));
                 axisX = horizontalInput;
             }
              targetRotation = horizontalInput > 0 ? 180f : 0f;
@@ -370,7 +417,7 @@ public class PlayerManager : MonoBehaviour
             playerAnim.SetBool("IsMove", true);
             if (axisY != verticalInput)
             {
-                StartCoroutine(SlowPlayer(0.2f, 0.9f));
+                //StartCoroutine(SlowPlayer(0.2f, 0.9f));
                 axisY = verticalInput;
             }
         }
@@ -382,6 +429,10 @@ public class PlayerManager : MonoBehaviour
         rb.velocity = new Vector2(horizontalInput * speed, verticalInput * speed);
         return new Vector2(rb.position.x, rb.position.y);
     }
+    public void StartSlowPlayer(float time, float percent)
+    {
+        StartCoroutine(SlowPlayer(time, percent));
+    }
     public IEnumerator SlowPlayer(float time, float percent)
     {
         slowArray.Add(percent);
@@ -390,7 +441,7 @@ public class PlayerManager : MonoBehaviour
         slowArray.Remove(slowArray.Where(slow => slow == percent).First());
         CalculateSlow(speedMax);
     }
-    public void CalculateSlow(float currentSpeed)
+    void CalculateSlow(float currentSpeed)
     {
         foreach (var slowElement in slowArray)
         {
@@ -431,6 +482,8 @@ public class PlayerManager : MonoBehaviour
             isInvincible = true;
             Vector2 dashDirection = GetMousDirection(objTransform.position);
             rb.velocity = dashDirection.normalized * dashMultiplier;
+            float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
+            baseSkillVFX.transform.rotation = Quaternion.Euler(0f, 0f, angle);
             Invoke(nameof(StopDashing), .2f);
         }
     }
@@ -440,16 +493,23 @@ public class PlayerManager : MonoBehaviour
         isDashSkillActive = false;
         isInvincible = false;
         rb.velocity = Vector2.zero;
+        Invoke(nameof(StopWithdDelay), 0.8f);
+    }
+    void StopWithdDelay()
+    {
+        baseSkillVFX.SetActive(false);
     }
     private void StopUntouchible()
     {
         isBaseSkillActive = false;
         isInvincible = false;
+        baseSkillVFX.SetActive(false);
     }
     private void StopRicoshet()
     {
         isBaseSkillActive = false;
         isRicoshet = false;
+        baseSkillVFX.SetActive(false);
     }
     //===============STOP SPECIAL SPELL END========
     public Vector2 GetMousDirection(Vector3 position)
@@ -585,6 +645,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (statsToBuff.Find(b => b.parameters.Equals(stat)).value != 0)
         {
+            activePerkCount++;
             return statsToBuff.Find(b => b.parameters.Equals(stat)).value;
         }
         else
@@ -645,15 +706,14 @@ public class PlayerManager : MonoBehaviour
                 StartCoroutine(VFXPotionDestroy(potionUseVFX, Color.yellow));
                 break; 
             case PotionsType.None:
+                Debug.Log("Something went wrong");
                 break;
         }
     }
     void ThowBomb()
     {
-        BobmExplode a = Instantiate(bomb);
+        BobmExplode a = Instantiate(bomb, objTransform.position, Quaternion.identity);
         a.damage *= ((GivePerkStatValue(Stats.Effectivness) + 1) + GivePerkStatValue(Stats.ExplosionDamage));
-        a.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = bombImg;
-        a.transform.GetChild(0).GetComponent<SpriteRenderer>().transform.localScale = new Vector3(1,1,1);
     }
     void TimeFreeze()
     {
@@ -673,11 +733,16 @@ public class PlayerManager : MonoBehaviour
     [Obsolete]
     IEnumerator VFXPotionDestroy(GameObject potionVFX, Color color)
     {
+        var renderer = potionVFX.GetComponent<ParticleSystemRenderer>();
+        Material mat = renderer.sharedMaterial;
+
         GameObject a = Instantiate(potionVFX, objTransform.position, Quaternion.identity);
        
         foreach (var particle in a.GetComponentsInChildren<ParticleSystem>())
         {
             particle.startColor = color;
+            mat.SetColor("_EmissionColor", color * 2f);
+            mat.SetColor("_BaseColor", color * 2f);
         }
         yield return new WaitForSeconds(2f);
         Destroy(a);

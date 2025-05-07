@@ -88,57 +88,58 @@ public class SpawnManager : MonoBehaviour
             AstarPath.active.UpdateGraphs(bounds);
         }
     }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(randomPosition, radius);
+    }
     public Vector3 GetRandomPositionInsideCollider()
     {
         // Отримати мінімальні та максимальні координати spawnArea
         Vector2 min = spawnMapBoundStatic.bounds.min;
         Vector2 max = spawnMapBoundStatic.bounds.max;
 
-        // Створити об'єкт в випадковій точці всередині spawnArea
-        System.Random a = new System.Random();
-        do
+        int attempts = 0;
+        int maxAttempts = 100; // щоб уникнути нескінченного циклу
+
+        while (attempts < maxAttempts)
         {
-            randomPosition = new Vector3(
-             a.Next((int)min.x, (int)max.x),
-            a.Next((int)min.y, (int)max.y),
-            0);
+            Vector3 randomPosition = new Vector3(
+                UnityEngine.Random.Range(min.x, max.x),
+                UnityEngine.Random.Range(min.y, max.y),
+                0);
+
+            if (IsPositionWalkable(randomPosition))
+            {
+                return randomPosition;
+            }
+
+            attempts++;
         }
-        while (GetSpawnPositionsInAIPath(radius, randomPosition) == null);
 
-        return randomPosition;
+        Debug.LogWarning("Could not find walkable position after " + maxAttempts + " attempts.");
+        return Vector3.zero; // fallback
     }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(randomPosition, radius);
-    }
-    public static Vector3 GetSpawnPositionsInAIPath(float radius, Vector3 center) // Додано параметр center
-    {
-        Vector3 availablePositions = new Vector3();
 
-        if (AstarPath.active == null || AstarPath.active.data == null || AstarPath.active.data.gridGraph == null || AstarPath.active.data.gridGraph.nodes == null)
+    private bool IsPositionWalkable(Vector3 position)
+    {
+        if (AstarPath.active == null || AstarPath.active.data == null)
         {
-            Debug.LogError("A* Pathfinding graph is not initialized or has no nodes!");
-            return availablePositions;
+            Debug.LogError("A* Pathfinding is not initialized!");
+            return false;
         }
 
         var graph = AstarPath.active.data.gridGraph;
-        var nodes = graph.nodes;
 
-        foreach (var node in nodes)
+        // Перевести світові координати в координати графа
+        var node = graph.GetNearest(position).node;
+
+        if (node == null)
         {
-            if (node.Walkable)
-            {
-                // Обчислюємо відстань між центром вузла та центром області пошуку
-                float distance = Vector2.Distance((Vector3)node.position, center);
-
-                if (distance <= radius)
-                {
-                    availablePositions = new Vector3(node.XCoordinateInGrid, node.ZCoordinateInGrid);
-                }
-            }
+            Debug.LogWarning("No node found near position!");
+            return false;
         }
 
-        return availablePositions;
+        return node.Walkable;
     }
 }

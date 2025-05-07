@@ -20,7 +20,7 @@ public class FillLevelInfo : MonoBehaviour
     void Start()
     {
         GetComponent<Button>().onClick.AddListener(SelectLevelID);
-        GetComponent<Button>().onClick.AddListener(() => FindAnyObjectByType<GameManager>().OpenPanel(levelInfoPanel));
+        GetComponent<Button>().onClick.AddListener(() => FindAnyObjectByType<GameManager>().OpenPanel(levelInfoPanel,false,false));
 
         level = FindObjectOfType<CheckLevel>();
         MenuController menu = GetComponent<MenuController>();

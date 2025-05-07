@@ -42,7 +42,7 @@ public class Beam : SkillBaseMono
         }
         tick = basa.damageTickMax;
         basa.damage = basa.damage * player.Steam;
-        objTransform.localScale = new Vector3(objTransform.localScale.x + basa.radius, objTransform.localScale.y + basa.radius);
+        objTransform.localScale = new Vector3(objTransform.localScale.x + basa.radius, objTransform.localScale.y + basa.radius, objTransform.localScale.z + basa.radius);
         bindTransform.localScale = objTransform.localScale;
         CoroutineToDestroy(gameObject, basa.lifeTime);
         IsThereAnotherBeam();

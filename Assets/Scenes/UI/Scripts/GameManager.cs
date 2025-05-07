@@ -1,4 +1,6 @@
 using Cinemachine;
+using DG.Tweening;
+using DG.Tweening.Core.Easing;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,7 +10,9 @@ using System.Reflection;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.SocialPlatforms;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 using UnityEngine.VFX;
 
@@ -27,6 +31,9 @@ public class GameManager : MonoBehaviour
     public GameObject QuestPanel;
     [HideInInspector]
     public bool isPanelOpen;
+    [SerializeField] int vibration = 1;
+    [SerializeField] float strength = 0.1f;
+    [SerializeField] float randomness = 0.1f;
 
     [Header("Language setting")]
     public List<Statistic> statRead;
@@ -94,12 +101,22 @@ public class GameManager : MonoBehaviour
     public VisualEffect AutoActiveCurve;
     public EnemySpawner enemies;
     public Image expiriencepoint;
+    public int characterID;
     //public Timer time;
     [SerializeField] public List<UsePotion> potionsObj;
     [SerializeField] List<GameObject> heroes;
     public Transform heroParent;
     public CinemachineVirtualCamera virtCam;
     public PlayerData playerData;
+    public Ease customEaseShow;
+    public Ease customEaseHide;
+    [Header("Cursor start settings")]
+    [SerializeField] List<Texture2D> cursors;
+
+    public float offset;
+    public float offsetX;
+    public float offsetButtleX;
+    public float offsetButtleY;
     //public void UpdateValue()
     //{
     //    playerData.Update();
@@ -128,12 +145,21 @@ public class GameManager : MonoBehaviour
 
         if (!isShopingScene)
         {
-            GameObject a = Instantiate(heroes[0], heroParent.position, Quaternion.identity, heroParent);
+            Cursor.SetCursor(cursors[0], new Vector2(offsetButtleX, cursors[1].height + offsetButtleY), CursorMode.Auto);
+
+            GameObject a = Instantiate(heroes[characterID - 1], heroParent.position, Quaternion.identity, heroParent);
             virtCam.Follow = a.transform;
             player = PlayerManager.instance;
             baseSkillImg.sprite = ExtractSpriteListFromTexture("skills").First(s => s.name == charactersRead.Find(c => c.isEquiped).spell);
         }
+        else
+        {
+            Cursor.SetCursor(cursors[1], new Vector2(offsetX, cursors[1].height + offset), CursorMode.Auto);
+        }
     }
+    
+
+   
     // Start is called before the first frame update
     void Start()
     {
@@ -199,14 +225,15 @@ public class GameManager : MonoBehaviour
     {
         Resolution resolution = LoadResolution();
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreenMode);
-        Time.timeScale = 1f;
+        TimeScale(1);
     }
     private void FixedUpdate()
     {
+
         if (!IsSettingsPage && IsGamePage && !PlayerManager.instance.isTutor)
         {
             ShowLevel();
-            Timer();
+            //Timer();
         }
         if (IsGamePage)
         {
@@ -236,7 +263,7 @@ public class GameManager : MonoBehaviour
             {
                 if (!isPanelOpen)
                 {
-                    OpenPanel(menuPanel,true);
+                    OpenPanel(menuPanel,true,true);
                     TimeScale(0);
                 }
                 else if(menuPanel.activeSelf)
@@ -266,7 +293,8 @@ public class GameManager : MonoBehaviour
     void DestroyVFX()
     {
         Destroy(a);
-        OpenPanel(levelPanel, false);
+        OpenPanel(levelPanel, false, true);
+
         TimeScale(0);
     }
     public void ShowLevel()
@@ -274,6 +302,7 @@ public class GameManager : MonoBehaviour
         PlayerManager player = PlayerManager.instance;
         if (expiriencepoint.fillAmount >= 1)
         {
+            AudioManager.instance.PlaySFX("LevelUp");
             a = Instantiate(player.levelUpgradeEffect, player.objTransform.position, Quaternion.identity, player.objTransform);
             expiriencepoint.fillAmount = 0;
             player.level += 1;
@@ -285,32 +314,65 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = timeScale;
     }
-    public void OpenPanel(GameObject panel,bool questOpen)
+    Tween DoShakeScaleTween(Transform obj)
+    {
+       return obj.DOScale(new Vector3(obj.localScale.x, obj.localScale.y, obj.localScale.z), .2f)
+        .ChangeStartValue(obj.localScale * 0.5f).SetUpdate(true).SetEase(customEaseShow);
+    }
+    public void OpenPanel(GameObject panel, bool questOpen, bool needToStopTheme)
     {
         panel.SetActive(true);
+        var seq = DOTween.Sequence().SetUpdate(true)
+        .Append(DoShakeScaleTween(panel.transform)
+        );
+        int i = UnityEngine.Random.Range(1, 4);
+        if (needToStopTheme)
+        {
+            AudioManager.instance.MusicStop();
+        }
+        AudioManager.instance.PlaySFX("OpenPanel_" + i);
         isPanelOpen = true;
         if (questOpen)
         {
+            Transform qPan = QuestPanel.transform;
             QuestPanel.SetActive(true);
+            seq.Join(DoShakeScaleTween(qPan));
             quest.SetQuestData();
         }
+        seq.OnComplete(() => seq.Kill());
 
     }
     public void OpenPanel(GameObject panel)
     {
+        int i = UnityEngine.Random.Range(1, 4);
+        AudioManager.instance.PlaySFX("OpenPanel_" + i);
+        Debug.Log(i);
         panel.SetActive(true);
+        //transform.DoSha
+        DoShakeScaleTween(panel.transform);
         isPanelOpen = true;
 
     }
     public void ClosePanel(GameObject panel)
     {
-        panel.SetActive(false);
-        isPanelOpen = false;
-        if (QuestPanel != null)
+        AudioManager.instance.PlayMusic(AudioManager.instance.nameClip);
+        int i = UnityEngine.Random.Range(1, 4);
+        AudioManager.instance.PlaySFX("OpenPanel_" + i);
+        Transform obj = panel.transform;
+        Vector3 startScale = obj.localScale;
+        obj.DOScale(new Vector3(obj.localScale.x, obj.localScale.y, obj.localScale.z), .2f)
+         .ChangeEndValue(obj.localScale * 0.5f).SetUpdate(true).SetEase(customEaseHide).OnComplete(() =>
         {
-            QuestPanel.SetActive(false);
-        }
-        Time.timeScale = 1f;
+            panel.SetActive(false);
+            obj.transform.localScale = startScale;
+            isPanelOpen = false;
+            if (QuestPanel != null)
+            {
+                QuestPanel.SetActive(false);
+            }
+            TimeScale(1);
+        });
+        
     }
     //Load
     public void LoadScore()
@@ -740,18 +802,18 @@ public class GameManager : MonoBehaviour
         }
     }
     //KillCount
-    public void Timer()
-    {
-        deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
+    //public void Timer()
+    //{
+    //    deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
 
-        // Перевірка, чи настав час оновлення виводу FPS
-        if (Time.time - lastUpdateTime > updateInterval)
-        {
-            float fps = 1.0f / Time.deltaTime;
-            fpsText.text = "FPS: " + fps.ToString("0.");
-            lastUpdateTime = Time.time;
-        }
-    }
+    //    // Перевірка, чи настав час оновлення виводу FPS
+    //    if (Time.time - lastUpdateTime > updateInterval)
+    //    {
+    //        float fps = 1.0f / Time.deltaTime;
+    //        fpsText.text = "FPS: " + fps.ToString("0.");
+    //        lastUpdateTime = Time.time;
+    //    }
+    //}
     public int LoadObjectLevelCount(int objectID)
     {
         string path = Path.Combine(Application.persistentDataPath, "Levels.txt");
@@ -897,7 +959,7 @@ public class GameManager : MonoBehaviour
     {
         if (!isPanelOpen)
         {
-            OpenPanel(InfoPanel,false);
+            OpenPanel(InfoPanel,false, false);
             TimeScale(0);
             InfoImgPanel.sprite = InfoImg.sprite;
             InfoNamePanel.text = ShowedEnemy.Name.ToString();
@@ -937,7 +999,10 @@ public class GameManager : MonoBehaviour
                 string decryptedJson = hashing.Decrypt(jsonLine);
 
                 SavedCharacterData data = JsonUtility.FromJson<SavedCharacterData>(decryptedJson);
-
+                if (data.isEquiped)
+                {
+                    characterID = data.ID;
+                }
                 itemsRead.Add(data);
             }
         }

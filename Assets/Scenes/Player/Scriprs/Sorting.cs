@@ -26,7 +26,7 @@ public class Sorting : MonoBehaviour
         index = 0;
         foreach (var rendererPriority in renderers)
         {
-            rendererPriority.renderer.sortingOrder = (int)(sortingOrderBase + index - rendererPriority.renderer.transform.position.y + offset);
+            rendererPriority.renderer.sortingOrder = (int)(sortingOrderBase + index - rendererPriority.renderer.transform.position.y + offset); 
             index++;
         }
 

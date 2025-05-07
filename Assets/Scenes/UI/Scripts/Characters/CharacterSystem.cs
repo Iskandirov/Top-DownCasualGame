@@ -18,8 +18,8 @@ public class CharacterSystem : MonoBehaviour
     public void SetDescription()
     {
         CharacterInfo tab = GetComponent<TabGroup>().tabButtons.Find(t => t == GetComponent<TabGroup>().selectedTab).GetComponent<CharacterInfo>();
-        characterImage.sprite = tab.characterImage;
-        characterImage.SetNativeSize();
+        //characterImage.sprite = tab.characterImage;
+        //characterImage.SetNativeSize();
         Name.text = tab.Name;
         spell.GetComponent<TagText>().tagText = "base_spell_" + tab.id;
         description.GetComponent<TagText>().tagText = "character_description_" + tab.id;

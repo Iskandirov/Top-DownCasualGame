@@ -103,6 +103,7 @@ public class Tutor : MonoBehaviour
             if (parentPhase2 != null)
             {
                 BlockMoveAndShoot();
+                parentPhase2.GetComponentInChildren<Light2D>().color = FinalColor;
                 parentPhase2.SetBool("IsFadeOut", true);
             }
             if (Input.GetKeyDown(KeyCode.LeftShift) && player.enabled)

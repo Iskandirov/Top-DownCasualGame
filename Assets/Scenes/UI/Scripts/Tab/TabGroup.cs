@@ -37,6 +37,8 @@ public class TabGroup : MonoBehaviour
     }
     public void OnTabSelected(TabButtons button)
     {
+        int y = UnityEngine.Random.Range(1, 4);
+        AudioManager.instance.PlaySFX("OpenPanel_" + y);
         if (selectedTab != null)
         {
             selectedTab.Deselect();

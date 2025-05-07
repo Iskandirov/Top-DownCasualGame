@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6.2, y: -82.4, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalScale: {x: 8, y: 8, z: 8}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 650553137292273544}
@@ -68,9 +68,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.6190015, y: -1.7218494}
+  m_Offset: {x: -0.07999998, y: -1.1058924}
   serializedVersion: 2
-  m_Radius: 0.28557396
+  m_Radius: 0.23968148
 --- !u!114 &3162221353454294215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,8 +119,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.054228593, y: 0.34315613}
-  m_Size: {x: 3.8460455, y: 3.0801764}
+  m_Offset: {x: -0.023433281, y: 0.42179495}
+  m_Size: {x: 2.03533, y: 1.8536036}
   m_Direction: 1
 --- !u!114 &8637693615398548245
 MonoBehaviour:
@@ -143,7 +143,7 @@ MonoBehaviour:
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 67bb4bdb000000006bb21ed8dbdc180403081c6621fa54d5ab921fc37f8d61be
-  m_LightCookieSprite: {fileID: 1221313990, guid: bb14bf06fd01fb54ca6119d155aa6a75, type: 3}
+  m_LightCookieSprite: {fileID: -222511445, guid: af07af43d337ccc40815734ba7315f33, type: 3}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 1
   m_AlphaBlendOnOverlap: 0
@@ -157,7 +157,7 @@ MonoBehaviour:
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
     m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 1.9, y: 1.98, z: 0}
+    m_Extent: {x: 1.105, y: 1.425, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -189,7 +189,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &650553137292273544
 RectTransform:
@@ -276,7 +276,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1221313990, guid: bb14bf06fd01fb54ca6119d155aa6a75, type: 3}
+  m_Sprite: {fileID: -222511445, guid: af07af43d337ccc40815734ba7315f33, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

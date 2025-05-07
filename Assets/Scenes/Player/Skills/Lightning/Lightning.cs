@@ -56,11 +56,15 @@ public class Lightning : SkillBaseMono
                 FSMC_Executer enemy = enemyToShoot.GetComponent<FSMC_Executer>();
                 ElementActiveDebuff debuff = enemy.GetComponent<ElementActiveDebuff>();
                 debuff.StartCoroutine(debuff.EffectTime(Elements.status.Electricity, 5));
-                if (enemy != null && basa.stats[3].isTrigger)
+                if (enemy != null && basa.stats[3].isTrigger && enemy.isBoss)
+                {
+                    enemy.SetFloat("Stun Time", stunTime / 2);
+                }
+                else if (enemy != null && basa.stats[3].isTrigger)
                 {
                     enemy.SetFloat("Stun Time", stunTime);
                 }
-
+               
                 transform.position = enemyToShoot.transform.position;
                 enemy.TakeDamage(basa.damage * player.Electricity / debuff.elements.CurrentStatusValue(Elements.status.Electricity));
                 GameManager.Instance.FindStatName("lightDamage", basa.damage * player.Electricity

@@ -28,7 +28,7 @@ public class ItemParameters : MonoBehaviour
     public Image itemImage;
     public TextMeshProUGUI itemNameTxt;
     public TextMeshProUGUI itemDescription;
-
+    private bool isCollected = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,8 +38,12 @@ public class ItemParameters : MonoBehaviour
    
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && !collision.isTrigger)
+        if (isCollected) return;
+        Tutor tut = FindObjectOfType<Tutor>();
+        if (collision.CompareTag("Player") && !collision.isTrigger && tut == null || tut?.phase == 6)
         {
+            isCollected = true;
+
             SaveItem();
            
             itemPanel.gameObject.SetActive(true);
@@ -49,24 +53,30 @@ public class ItemParameters : MonoBehaviour
             itemNameTxt.text = itemName;
             itemDescription.text = Description;
             Destroy(gameObject);
+            // Óגוהמלכÿול LootManager מ סבמנו ןנוהלועא
+            LootManager.inst.ItemCollected();
+            return;
         }
     }
     public void EndGame()
     {
-        if (!isTutor)
+        if (LootManager.inst.activeItemsCount <= 0)
         {
-            dropLooted.isDropLooted = true;
-        }
-        else
-        {
-            Tutor tut = FindObjectOfType<Tutor>();
-            tut.PhasePlus();
-            tut.BlockMoveAndShoot();
-        }
-        if (AudioManager.instance != null)
-        {
-            AudioManager.instance.MusicStop();
-            AudioManager.instance.PlaySFX("Win");
+            if (!isTutor)
+            {
+                dropLooted.isDropLooted = true;
+            }
+            else
+            {
+                Tutor tut = FindObjectOfType<Tutor>();
+                tut.PhasePlus();
+                tut.BlockMoveAndShoot();
+            }
+            if (AudioManager.instance != null)
+            {
+                AudioManager.instance.MusicStop();
+                AudioManager.instance.PlaySFX("Win");
+            }
         }
     }
     void SaveItem()

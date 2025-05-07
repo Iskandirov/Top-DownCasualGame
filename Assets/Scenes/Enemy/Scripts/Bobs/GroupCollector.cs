@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class GroupCollector : MonoBehaviour
 {
-    public List<BossBullet> group;
+    public List<GameObject> group;
 }

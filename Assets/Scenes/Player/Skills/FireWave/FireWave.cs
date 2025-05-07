@@ -30,6 +30,7 @@ public class FireWave : SkillBaseMono
             burnDamage = basa.stats[4].value;
         }
         basa.damage = basa.damage * player.Fire;
+        objTransform.position = player.ShootPoint.transform.position;
     }
     public void IsNeedToDestroy()
     {
@@ -40,7 +41,7 @@ public class FireWave : SkillBaseMono
     }
     void FixedUpdate()
     {
-        objTransform.position = player.ShootPoint.transform.position;
+        //objTransform.position = player.ShootPoint.transform.position;
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {

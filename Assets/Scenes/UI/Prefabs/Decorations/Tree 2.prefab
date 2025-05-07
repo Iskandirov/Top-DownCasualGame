@@ -17,7 +17,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &629791994876533593
 RectTransform:
@@ -87,7 +87,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1257739935, guid: bb14bf06fd01fb54ca6119d155aa6a75, type: 3}
+  m_Sprite: {fileID: -472375204, guid: af07af43d337ccc40815734ba7315f33, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -145,7 +145,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6.2, y: -82.4, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalScale: {x: 8, y: 8, z: 8}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 629791994876533593}
@@ -183,7 +183,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.7232319, y: 0.34576035}
+  m_Offset: {x: 0.085121155, y: 0.26011133}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -194,7 +194,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.3880796, y: 3.5868912}
+  m_Size: {x: 1.3497577, y: 2.000598}
   m_EdgeRadius: 1.4
 --- !u!58 &3162221353454294232
 CircleCollider2D:
@@ -228,9 +228,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.17, y: -2.2}
+  m_Offset: {x: 0.23, y: -1.07}
   serializedVersion: 2
-  m_Radius: 0.292495
+  m_Radius: 0.2
 --- !u!114 &3162221353454294215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,7 +268,7 @@ MonoBehaviour:
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 67bb4bdb000000006bb21ed8dbdc180403081c6621fa54d5ab921fc37f8d61be
-  m_LightCookieSprite: {fileID: 1257739935, guid: bb14bf06fd01fb54ca6119d155aa6a75, type: 3}
+  m_LightCookieSprite: {fileID: -472375204, guid: af07af43d337ccc40815734ba7315f33, type: 3}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 1
   m_AlphaBlendOnOverlap: 0
@@ -282,7 +282,7 @@ MonoBehaviour:
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
     m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 2.32, y: 2.515, z: 0}
+    m_Extent: {x: 0.775, y: 1.285, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0

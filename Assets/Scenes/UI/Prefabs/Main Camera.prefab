@@ -203,6 +203,9 @@ MonoBehaviour:
   enemyInfoPanel: {fileID: 0}
   QuestPanel: {fileID: 0}
   isPanelOpen: 0
+  vibration: 1
+  strength: 0.1
+  randomness: 0.1
   statRead: []
   texts:
   - {fileID: 0}
@@ -1659,6 +1662,49 @@ MonoBehaviour:
   - key: dailyq_9
     value: Fully upgrade 2 skills
     language: eng
+  - key: beatty`s_claw
+    value: "\u041A\u043B\u0438\u043A \u043B\u0456\u0442\u0443\u0447\u043E\u0457 \u043C\u0438\u0448\u0456"
+    language: ua
+  - key: beatty`s_claw
+    value: Beatty`s claw
+    language: eng
+  - key: treesnipe`s_eye
+    value: "\u041E\u043A\u043E \u0434\u0435\u0440\u0435\u0432'\u044F\u043D\u043E\u0433\u043E
+      \u0441\u043D\u0430\u0439\u043F\u0435\u0440\u0430"
+    language: ua
+  - key: treesnipe`s_eye
+    value: Treesnipe`s eye
+    language: eng
+  - key: mushi_extract
+    value: "\u0412\u0438\u0436\u0438\u043C\u043A\u0430 \u0437 \u0433\u0440\u0438\u0431\u0456\u0432"
+    language: ua
+  - key: mushi_extract
+    value: Mushi extract
+    language: eng
+  - key: kiwi`s_root
+    value: "\u041A\u043E\u0440\u0456\u043D\u044C \u043A\u0456\u0432\u0456"
+    language: ua
+  - key: kiwi`s_root
+    value: Root of Kiwi
+    language: eng
+  - key: beany`s_mucus
+    value: "\u0421\u043B\u0438\u0437"
+    language: ua
+  - key: beany`s_mucus
+    value: Mucus
+    language: eng
+  - key: bobses_sphere
+    value: "\u0421\u0444\u0435\u0440\u0430 \u0431\u043E\u0431\u0441\u0430"
+    language: ua
+  - key: bobses_sphere
+    value: Bobses sphere
+    language: eng
+  - key: rocky`s_shiled
+    value: "\u0429\u0438\u0442 \u0440\u043E\u043A\u043A\u0456"
+    language: ua
+  - key: rocky`s_shiled
+    value: Rocky`s shiled
+    language: eng
   dataSett: []
   loc: eng
   volumeMusic: 0
@@ -1928,7 +1974,7 @@ MonoBehaviour:
   InfoStatDamagePanel: {fileID: 0}
   InfoStatMoveSpeedPanel: {fileID: 0}
   characters:
-  - Name: Wizz
+  - Name: Stark
     ID: 1
     isBuy: 1
     isEquiped: 1
@@ -1957,7 +2003,7 @@ MonoBehaviour:
     spellCD: 15
     interactable: 1
     skillImg: {fileID: 0}
-    price: 15000
+    price: 45000
     description: hasty guy that not love to speak too much, always busy, like activities
       like mageball
   - Name: Nova
@@ -1973,7 +2019,7 @@ MonoBehaviour:
     spellCD: 25
     interactable: 1
     skillImg: {fileID: 0}
-    price: 20000
+    price: 150000
     description: Brutaly outside vulnerable inside. Love animals, love to making
       sweet pies in free time
   charactersRead: []
@@ -1993,10 +2039,20 @@ MonoBehaviour:
   AutoActiveCurve: {fileID: 0}
   enemies: {fileID: 0}
   expiriencepoint: {fileID: 0}
+  characterID: 0
   potionsObj: []
   heroes: []
   heroParent: {fileID: 0}
   virtCam: {fileID: 0}
+  customEaseShow: 0
+  customEaseHide: 0
+  cursors:
+  - {fileID: 2800000, guid: 095adb9ccb73bc642a3c6f34a63a1322, type: 3}
+  - {fileID: 2800000, guid: 4b4b9d91bd4f6f74f8efa83c856ea68c, type: 3}
+  offset: -195
+  offsetX: 54
+  offsetButtleX: 105
+  offsetButtleY: -123
 --- !u!81 &4771157334789863649
 AudioListener:
   m_ObjectHideFlags: 0

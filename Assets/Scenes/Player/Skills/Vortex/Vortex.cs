@@ -11,7 +11,7 @@ public class Vortex : SkillBaseMono
     // Start is called before the first frame update
     void Start()
     {
-
+        movingObjects.Clear();
         Vector3 mousePosition = Input.mousePosition;
         mousePosition.z = 1.9f; // Задаємо Z-координату для об'єкта
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
@@ -78,21 +78,14 @@ public class Vortex : SkillBaseMono
         {
             if (movingObject != null)
             {
-                Vector3 offset = movingObject.position - centerPosition;
+                Vector3 offset = centerPosition - movingObject.position; // !!! змінив напрямок
+                float distance = offset.magnitude;
+                Vector3 direction = offset.normalized;
 
-                float force = Mathf.Abs(offset.magnitude) * bump;
-
-                // Обчислення кута між вектором від предмета до центру і віссю X
-                float angle = Mathf.Atan2(offset.y, offset.x) * Mathf.Rad2Deg;
-
-                // Обчислення горизонтальної складової сили притягання
-                float horizontalForce = force * Mathf.Cos(angle * Mathf.Deg2Rad);
-
-                // Обчислення вертикальної складової сили притягання
-                float verticalForce = force * Mathf.Sin(angle * Mathf.Deg2Rad);
+                float force = distance * bump; // сила пропорційна відстані
 
                 // Оновлення положення предмета
-                movingObject.position -= new Vector3(horizontalForce * Time.fixedDeltaTime, verticalForce * Time.fixedDeltaTime, 0);
+                movingObject.position += direction * force * Time.fixedDeltaTime;
             }
         }
     }

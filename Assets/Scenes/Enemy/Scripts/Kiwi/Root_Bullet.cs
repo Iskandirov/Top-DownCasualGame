@@ -37,7 +37,7 @@ public class Root_Bullet : MonoBehaviour
         if (collision.collider.CompareTag("Player") && !collision.collider.isTrigger && !player.isInvincible)
         {
             player.TakeDamage(damage);
-            player.StartCoroutine(player.SlowPlayer(4f, 0.2f));
+            player.StartSlowPlayer(4f, 0.2f);
             Destroy(gameObject);
         }
         else if (collision.collider.CompareTag("Shield"))

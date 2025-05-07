@@ -2,6 +2,7 @@ using Cinemachine;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,11 +11,12 @@ public class LoadEquipedItems : MonoBehaviour
     public List<GameObject> slots;
     public CinemachineVirtualCamera cam;
     public DataHashing hash;
+    public int countItems = 0;
     // Start is called before the first frame update
     void Start()
     {
         PlayerManager player = FindObjectOfType<PlayerManager>();
-        int i = 0;
+        player.itemsFromBoss = this;
         string path = Path.Combine(Application.persistentDataPath, "EquipedItems.txt");
         if (File.Exists(path))
         {
@@ -25,7 +27,7 @@ public class LoadEquipedItems : MonoBehaviour
                 if (decrypt != "")
                 {
                     SavedObjectData data = JsonUtility.FromJson<SavedObjectData>(decrypt);
-                    Image objImage = slots[i].transform.GetChild(0).GetComponentInChildren<Image>();
+                    Image objImage = slots[countItems].transform.GetChild(0).GetComponentInChildren<Image>();
                     objImage.sprite = GameManager.ExtractSpriteListFromTexture("items").First(o => o.name == data.Name);
                     objImage.SetNativeSize();
                     objImage.rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
@@ -42,7 +44,7 @@ public class LoadEquipedItems : MonoBehaviour
                     float fullStat = float.Parse(data.Stat) + (float.Parse(data.Stat) * player.GivePerkStatValue(Stats.EquipmentBuff) / 100);
                     // встановлюємо новий розмір Image
                     objImage.rectTransform.sizeDelta = new Vector2(newWidth, newHeight);
-                    i++;
+                    countItems++;
                     switch (data.Name)
                     {
                         case "енергетичний заряд":

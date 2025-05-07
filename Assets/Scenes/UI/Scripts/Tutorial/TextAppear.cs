@@ -43,52 +43,49 @@ public class TextAppear : MonoBehaviour
             }
         }
         // «апускаЇмо таймер
-        InvokeRepeating("AddLetter", delay, delay);
+        StartCoroutine(DisplayText());
     }
-    void AddLetter()
+    IEnumerator DisplayText()
     {
-        // якщо по€ву тексту не зупинено
-        if (!isPaused)
+        while (true)
         {
-            // якщо поточна л≥тера - це крапка
-            if (introDialog[tutor.phase].Text[textCount][timer % introDialog[tutor.phase].Text[textCount].Length] == '.')
+            if (!isPaused)
             {
-                // якщо попередн€ л≥тера - це крапка
-                if (timer > 0 && introDialog[tutor.phase].Text[textCount][timer - 1 % introDialog[tutor.phase].Text[textCount].Length] == '.')
+                string currentText = introDialog[tutor.phase].Text[textCount];
+                textMesh.text = "";
+
+                for (int i = 0; i < currentText.Length; i++)
                 {
-                    // якщо наступна л≥тера - це крапка
-                    if (timer > 1 && introDialog[tutor.phase].Text[textCount][timer - 2 % introDialog[tutor.phase].Text[textCount].Length] == '.')
+                    textMesh.text += currentText[i];
+
+                    if (currentText[i] == '.' && i > 1 && currentText[i - 1] == '.' && currentText[i - 2] == '.')
                     {
-                        // «атримуЇмо по€ву тексту на 1 секунду
-                        StartCoroutine(PauseResume());
+                        yield return new WaitForSeconds(delayDots);
+                    }
+                    else
+                    {
+                        yield return new WaitForSeconds(delay);
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0))
+                    {
+                        textMesh.text = currentText;
+                        break;
                     }
                 }
+
+                isPaused = true;
             }
-            textMesh.text += introDialog[tutor.phase].
-                Text[textCount][timer % introDialog[tutor.phase].
-                Text[textCount].
-                Length];
-            // ≤нкрементуЇмо таймер
-            timer++;
-            if (textMesh.text.Length == introDialog[tutor.phase].Text[textCount].Length)
+
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0) && isPaused)
             {
-                if (textCount < introDialog[tutor.phase].Text.Length - 1)
-                {
-                    isPaused = true;
-                    timer = 0;
-                }
+                Resume();
             }
+
+            yield return null;
         }
     }
-    public IEnumerator PauseResume()
-    {
-        isPaused = true;
-        isPausedByDots = true;
-        yield return new WaitForSeconds(delayDots);
-        isPaused = false;
-        isPausedByDots = false;
-    }
-   
+
     // ћетод дл€ в≥дновленн€ по€ви тексту
     public void Resume()
     {
@@ -109,52 +106,45 @@ public class TextAppear : MonoBehaviour
                 anim.SetBool("FadeOut", true);
                 textMesh.text = " ";
                 textCount = 0;
-                if (tutor.phase == 0)
+                switch (tutor.phase)
                 {
-                    tutor.parentPhase1.gameObject.SetActive(true);
-                }
-                else if (tutor.phase == 1)
-                {
-                    mob.SetActive(true);
-                    mob.AddComponent<EnemyHealthTutorial>();
-                    CutsceneManager.Instance.StartCutscene("EnemyShow");
-                }
-                else if (tutor.phase == 2)
-                {
-                    mob.GetComponent<EnemyHealthTutorial>().isCutScene = false;
-
-                    tutor.MoveOn();
-                    tutor.parentPhase2.gameObject.SetActive(true);
-                } 
-                else if (tutor.phase == 3)
-                {
-                    tutor.parentPhase3.gameObject.SetActive(true);
-                    tutor.skillObject.SetActive(true);
-                    tutor.MoveOn();
-                }
-                else if (tutor.phase == 4)
-                {
-                    CutsceneManager.Instance.StartCutscene("BossShow");
-                    boss.SetActive(true);
-                } 
-                else if (tutor.phase == 5)
-                {
-                    boss.GetComponent<BossAttack>().enabled = true;
-                    boss.GetComponent<EnemyHealthTutorial>().isCutScene = false;
-                    boss.GetComponent<FSMC_Executer>().UnMuteSpeed();
-                    boss.GetComponent<FSMC_Executer>().SetCurrentState("Chase");
-                    boss.GetComponent<AIDestinationSetter>().target = player.transform;
-                    tutor.MoveOn();
-
-                }
-                else if (tutor.phase == 6)
-                {
-                    tutor.MoveOn();
-                }
-                else if (tutor.phase == 7)
-                {
-                    tutor.text.isShooting = true;
-                    FinalPanel.SetActive(true);
+                    case 0:
+                        tutor.parentPhase1.gameObject.SetActive(true);
+                        break;
+                    case 1:
+                        mob.SetActive(true);
+                        mob.AddComponent<EnemyHealthTutorial>();
+                        CutsceneManager.Instance.StartCutscene("EnemyShow");
+                        break;
+                    case 2:
+                        mob.GetComponent<EnemyHealthTutorial>().isCutScene = false;
+                        tutor.MoveOn();
+                        tutor.parentPhase2.gameObject.SetActive(true);
+                        break;
+                    case 3:
+                        tutor.parentPhase3.gameObject.SetActive(true);
+                        tutor.skillObject.SetActive(true);
+                        tutor.MoveOn();
+                        break;
+                    case 4:
+                        CutsceneManager.Instance.StartCutscene("BossShow");
+                        boss.SetActive(true);
+                        break;
+                    case 5:
+                        boss.GetComponent<BossAttack>().enabled = true;
+                        boss.GetComponent<EnemyHealthTutorial>().isCutScene = false;
+                        boss.GetComponent<FSMC_Executer>().UnMuteSpeed();
+                        boss.GetComponent<FSMC_Executer>().SetCurrentState("Chase");
+                        boss.GetComponent<AIDestinationSetter>().target = player.transform;
+                        tutor.MoveOn();
+                        break;
+                    case 6:
+                        tutor.MoveOn();
+                        break;
+                    case 7:
+                        tutor.text.isShooting = true;
+                        FinalPanel.SetActive(true);
+                        break;
                 }
             }
         }

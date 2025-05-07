@@ -6591,7 +6591,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7448078597982695750}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 201fed9df2fe89344a687ae589922c2f, type: 3}
   m_Name: 
@@ -6606,7 +6606,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7448078597982695750}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 682a293f69a48fa4cb2594d2a145d9a8, type: 3}
   m_Name: 
@@ -6629,6 +6629,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49338c412aac2924492a000b407a7349, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tornadic: {fileID: 6222923354122472732, guid: 936564682730d504f9d52c25f29e49e5, type: 3}
+  target: {fileID: 3961621838044931878, guid: d2d39cc3187bedb498c3459198ec52e0, type: 3}
+  spawnRadius: 75
+  lightningObj: {fileID: 2410168946817693065, guid: 3ebe514e1bca61246a898ccfba874c80, type: 3}
   dir: {x: 0, y: 0, z: 0}
   objArea: {fileID: 2408743938253397958}
   interval: 5
@@ -6637,6 +6641,12 @@ MonoBehaviour:
   rush: 0
   playerToched: 0
   anim: {fileID: 4963793136973719250}
+  rushAttackInterval: 1
+  lightningsAttackInterval: 3
+  tornadicsAttackInterval: 10
+  tornadicCount: 10
+  lightningsCount: 15
+  lightningDamage: 20
 --- !u!114 &6999862369903277959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6651,13 +6661,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   elements:
     statusCurrentData:
+    - 0.5
+    - 2
+    - 0.5
+    - 0.5
+    - 2
     - 1.1
-    - 1.1
-    - 1.1
-    - 1.1
-    - 1.1
-    - 1.1
-    - 1.1
+    - 2
     - 1.1
     isActiveCurrentData: 0000000000000000
   elementDebuffParent: {fileID: 4918461076317722957}
@@ -6750,13 +6760,13 @@ MonoBehaviour:
   anim: {fileID: 0}
   mapBounds: {fileID: 0}
   speed: 0
-  speedMax: 25
+  speedMax: 0
   attackSpeed: 0
   attackSpeedMax: 0
   objTransform: {fileID: 0}
   bullet: {fileID: 0}
   health: 0
-  healthMax: 350
+  healthMax: 1300
   isSpawnOutsideCamera: 0
   expiriancePoint: {fileID: 528103267282400849, guid: 011bcb717f1c7644cbb13f13f798cecd, type: 3}
   expGiven: 100
@@ -6764,6 +6774,7 @@ MonoBehaviour:
   enemyType: 0
   bossHealthObj: {fileID: 3985779531179115711, guid: a583d3b029d6a7c4ea66e18c2bbba0c9, type: 3}
   healthObjImg: {fileID: 0}
+  avatar: {fileID: 0}
   isBoss: 1
   isInZone: 0
 --- !u!114 &1991953997234607059
@@ -6779,7 +6790,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemPanel: {fileID: 0}
-  itemRareObj: []
+  itemRareObj:
+  - {fileID: -2083333304718330293, guid: d92d591fd78b30d408529d8aff70b6d8, type: 3}
+  - {fileID: -1337558208081744389, guid: b493d6266fa886343b3a0b49bd761182, type: 3}
+  - {fileID: -5798745646314775986, guid: 63cbf68c0da2e1540b4140ae96af4d7f, type: 3}
+  - {fileID: -441594856334738526, guid: f0894671d753406479c305d67af032ff, type: 3}
   itemsLoaded: []
   spawnRare: 0.6
   spawnMiphical: 0.3
@@ -6789,6 +6804,7 @@ MonoBehaviour:
   MiphicalItems: []
   LegendaryItems: []
   isTutor: 0
+  activeItemsCount: 0
   rarityType:
   - "\u0417\u0432\u0438\u0447\u0430\u0439\u043D\u0435"
   - "\u0420\u0456\u0434\u043A\u0456\u0441\u043D\u0435"

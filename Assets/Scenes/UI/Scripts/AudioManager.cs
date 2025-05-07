@@ -49,19 +49,28 @@ public class AudioManager : MonoBehaviour
     }
     public void MusicStop()
     {
-        musicObj.Stop();
+        musicObj.Pause();
+        
     }
     public void PlayMusic(string name)
     {
         MusicStop();
         Sounds s = Array.Find(sounds, sound => sound.name == name);
-        if (s == null)
+
+        if (s.clip.name != nameClip)
         {
-            Debug.LogWarning("Sound: " + name + " does not exist");
-            return;
+            if (s == null)
+            {
+                Debug.LogWarning("Sound: " + name + " does not exist");
+                return;
+            }
+            musicObj.clip = s.clip;
+            musicObj.Play();
         }
-        musicObj.clip = s.clip;
-        musicObj.Play();
+        else
+        {
+            musicObj.UnPause();
+        }
     }
     public void PlaySFX(string name)
     {

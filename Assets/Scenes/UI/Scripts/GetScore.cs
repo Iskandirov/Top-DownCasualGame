@@ -31,7 +31,7 @@ public class GetScore : MonoBehaviour
             if (objTimer)
             {
                 timeEnd.text = objTimer.time.ToString("00.00");
-                if (!PlayerManager.instance.isTutor && DailyQuests.instance.quest.FirstOrDefault(s => s.id == 6 && s.isActive == true) != null && GameManager.Instance.winPanel.activeSelf)
+                if (!PlayerManager.instance.isTutor && DailyQuests.instance.quest.FirstOrDefault(s => s.id == 6).isActive && GameManager.Instance.winPanel.activeSelf)
                 {
                     DailyQuests.instance.UpdateValue(6, objTimer.time - timeToSpawnBoss, true,false);
                 }
@@ -40,7 +40,8 @@ public class GetScore : MonoBehaviour
                     Debug.Log(GameManager.Instance.score + " Score ");
                     Debug.Log(Mathf.Pow(1 + (0.05f * result), 1.1f) + " Time ");
                     // Вдале перетворення
-                    score = (GameManager.Instance.score + 1) * Mathf.Pow(1 + (0.2f * result), 1.1f) + 1;
+                    float scroreBoost = isWinPanel == true ? 1.5f : 1;
+                    score = ((GameManager.Instance.score + 1) * Mathf.Pow(1 + (0.2f * timeToSpawnBoss), 1.1f) + 1) * (scroreBoost + SceneManager.GetActiveScene().buildIndex - 1);
                     percent = Mathf.RoundToInt((result / timeToSpawnBoss) * 100);
                     if (percent >= 100 && isWinPanel)
                     {
@@ -64,6 +65,7 @@ public class GetScore : MonoBehaviour
             {
                 score += LoadScore();
                 scoreEnd.text = score.ToString("0.");
+
             }
             if (FindObjectOfType<Tutor>() != null)
             {
@@ -110,23 +112,23 @@ public class GetScore : MonoBehaviour
     }
     public void SaveScore(int money)
     {
-            string path = Path.Combine(Application.persistentDataPath, "Economy.txt");
+        string path = Path.Combine(Application.persistentDataPath, "Economy.txt");
 
-            if (File.Exists(path))
+        if (File.Exists(path))
+        {
+            using (StreamWriter writer = new StreamWriter(path, false))
             {
-                using (StreamWriter writer = new StreamWriter(path, false))
-                {
-                    SavedEconomyData data = new SavedEconomyData();
-                    data.money = money;
-                    string jsonData = JsonUtility.ToJson(data);
+                SavedEconomyData data = new SavedEconomyData();
+                data.money = money;
+                string jsonData = JsonUtility.ToJson(data);
 
-                    // Шифруємо дані перед записом у файл
-                    string encryptedJson = hash.Encrypt(jsonData);
-                    // Заміняємо WriteLine на Write
-                    writer.Write(encryptedJson);
-                    writer.Close();
-                }
+                // Шифруємо дані перед записом у файл
+                string encryptedJson = hash.Encrypt(jsonData);
+                // Заміняємо WriteLine на Write
+                writer.Write(encryptedJson);
+                writer.Close();
             }
+        }
     }
     public void SaveScore()
     {

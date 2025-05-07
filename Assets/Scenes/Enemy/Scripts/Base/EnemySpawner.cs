@@ -239,26 +239,49 @@ public class EnemySpawner : MonoBehaviour
     public Vector3 SpawnEnemyOutsideCamera()
     {
         Vector3 spawnPosition;
-        Vector3 randomDirection;
+        int attempts = 0;
+        int maxAttempts = 100;
+        System.Random random = new System.Random();
         do
         {
-            // Визначаємо межі камери в світових координатах
             Vector3 cameraPos = mainCamera.transform.position;
-            //float halfHeight = mainCamera.orthographicSize;
-            //float halfWidth = halfHeight * mainCamera.aspect;
 
-            // Генеруємо випадкову точку на одиничному колі
-            System.Random a = new System.Random();
-                
-            float randomAngle = a.Next(0, 360);
-            randomDirection = new Vector3(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle), 0);
+            float randomAngle = (float)(random.NextDouble() * 360.0); // Використовуємо UnityEngine.Random
+            float radians = randomAngle * Mathf.Deg2Rad; // Переводимо в радіани
 
-            // Обчислюємо точку спавну на заданій відстані від камери
+            Vector3 randomDirection = new Vector3(Mathf.Cos(radians), Mathf.Sin(radians), 0);
+
             spawnPosition = cameraPos + randomDirection * spawnRadius;
-        } while (IsInsideWallBounds(spawnPosition) && SpawnManager.GetSpawnPositionsInAIPath(spawnRadius, spawnPosition) != null);
+
+            attempts++;
+            if (attempts > maxAttempts)
+            {
+                Debug.LogWarning("Failed to find valid spawn position after " + maxAttempts + " attempts!");
+                break;
+            }
+
+        } while (!IsPositionWalkable(spawnPosition)); // Перевіряємо чи spawnPosition на Walkable зоні
+
         return spawnPosition;
     }
+    private bool IsPositionWalkable(Vector3 position)
+    {
+        if (AstarPath.active == null || AstarPath.active.data == null)
+        {
+            Debug.LogError("A* Pathfinding is not initialized!");
+            return false;
+        }
 
+        var graph = AstarPath.active.data.gridGraph;
+
+        var nodeInfo = AstarPath.active.GetNearest(position);
+        if (nodeInfo.node == null)
+        {
+            return false;
+        }
+
+        return nodeInfo.node.Walkable;
+    }
     private void SpawnEnemies(List<GameObject> pool, bool spawnChoise)
     {
         GameObject enemy = GetFromPool(pool);

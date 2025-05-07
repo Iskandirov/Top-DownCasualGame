@@ -135,7 +135,7 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
             {
                 if (toEquipSlot)
                 {
-                    GameManager.Instance.OpenPanel(GameManager.Instance.menuPanel,false);
+                    GameManager.Instance.OpenPanel(GameManager.Instance.menuPanel,false,false);
                     bool hasGameController = false;
                     targetEquipObjects = GameObject.FindGameObjectWithTag("Respawn");
                     equipPanel = GameObject.FindGameObjectWithTag("Wall");
