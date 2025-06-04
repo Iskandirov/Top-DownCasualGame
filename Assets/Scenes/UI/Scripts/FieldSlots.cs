@@ -26,112 +26,82 @@ public class FieldSlots : MonoBehaviour
     }
     public void CheckCraft()
     {
-        int count = int.Parse(objToCraft.GetComponent<SetParametersToitem>().Count);
+        int count = int.Parse(objToCraft.Count);
+        int level = int.Parse(objToCraft.level);
+        int price = int.Parse(objToCraft.Price) * level;
+        int coins = int.Parse(coinsTxt.text);
 
-        int level = int.Parse(objToCraft.GetComponent<SetParametersToitem>().level);
-
-        int moneyCost = int.Parse(objToCraft.GetComponent<SetParametersToitem>().Price);
-
-        price = moneyCost * level;
         priceTxt.text = price.ToString();
-
-        int coinT = int.Parse(coinsTxt.text);
-
-        if (count >= 3 && price <= coinT)
-        {
-            childrenBtn.interactable = true;
-        }
-        else 
-        {
-            childrenBtn.interactable = false;
-        }
+        childrenBtn.interactable = count >= 3 && coins >= price;
     }
     public void Craft()
     {
-        if (!objToCraft.level.Equals("4"))
+        if (int.Parse(objToCraft.level) >= 4) return;
+
+        string path = Path.Combine(Application.persistentDataPath, "savedData.txt");
+        if (!File.Exists(path)) return;
+
+        string targetKey = $"{objToCraft.ItemName} {objToCraft.level}";
+        List<SavedObjectData> originalData = File.ReadAllLines(path)
+            .Select(line => JsonUtility.FromJson<SavedObjectData>(hashing.Decrypt(line)))
+            .ToList();
+
+        List<SavedObjectData> upgradedList = new();
+        int consumedCount = 0;
+        bool upgraded = false;
+
+        foreach (var data in originalData)
         {
-            string remove = objToCraft.ItemName + " " + objToCraft.level;
-            string removeCopy = remove;
-            string path = Path.Combine(Application.persistentDataPath, "savedData.txt");
-            //WriteReadFile.Write(path, "SavedObjectData", data.Name,);
-            if (File.Exists(path))
+            string currentKey = $"{data.Name} {data.Level}";
+
+            if (!upgraded && currentKey == targetKey && consumedCount < 3)
             {
-                string[] lines = File.ReadAllLines(path);
-                List<SavedObjectData> updatedLines = new List<SavedObjectData>();
-                // Створюємо новий об'єкт SavedObjectData
-                foreach (string line in lines)
+                consumedCount++;
+                if (consumedCount == 3)
                 {
-                    string decrypt = hashing.Decrypt(line);
-                    SavedObjectData data = JsonUtility.FromJson<SavedObjectData>(decrypt);
-
-                    if (data.Name + " " + data.Level == removeCopy && objToCraft.level[objToCraft.level.Length - 1].ToString() == data.Level.ToString())
+                    // Створюємо новий предмет з +1 рівнем
+                    SavedObjectData upgradedItem = new()
                     {
-                        SavedObjectData newItem = new SavedObjectData();
-                        newItem.Name = data.Name;
-                        newItem.ImageSprite = data.ImageSprite;
-                        newItem.RareName = data.RareName;
-                        newItem.RareSprite = Resources.Load<Sprite>(CheckLevelUpgrade(data));
-                        newItem.IDRare = data.IDRare;
-                        newItem.Level = data.Level + 1;
-                        newItem.Tag = data.Tag;
-                        newItem.RareTag = data.RareTag;
-                        newItem.Price = data.Price;
-                        newItem.Description = data.Description;
-                        float statCount = float.Parse(data.Stat);
-                        statCount *= 2;
-                        newItem.Stat = statCount.ToString();
-
-                        updatedLines.Add(newItem);
-                        break;
-                    }
+                        Name = data.Name,
+                        ImageSprite = data.ImageSprite,
+                        RareName = data.RareName,
+                        IDRare = data.IDRare,
+                        Tag = data.Tag,
+                        RareTag = data.RareTag,
+                        Level = data.Level + 1,
+                        Description = data.Description,
+                        Price = data.Price,
+                        Stat = (float.Parse(data.Stat) * 2).ToString(),
+                        RareSprite = Resources.Load<Sprite>(CheckLevelUpgrade(data))
+                    };
+                    upgradedList.Add(upgradedItem);
+                    upgraded = true;
                 }
-                //Видалення обєктів з яких крафтять
-                int index = 0;
-                foreach (string line in lines)
-                {
-                    string decrypt = hashing.Decrypt(line);
-                    SavedObjectData data = JsonUtility.FromJson<SavedObjectData>(decrypt);
-                    if (index < 3)
-                    {
-                        if (data.Name + " " + data.Level != remove)
-                        {
-                            updatedLines.Add(data);
-                        }
-                        else
-                        {
-                            index++;
-                        }
-                    }
-                    else
-                    {
-                        updatedLines.Add(data);
-                    }
-                }
-                using (StreamWriter writer = new StreamWriter(path, false))
-                {
-                    foreach (SavedObjectData line in updatedLines)
-                    {
-                        string jsonData = JsonUtility.ToJson(line);
-                        string decryptedJson = hashing.Encrypt(jsonData);
-                        writer.WriteLine(decryptedJson);
-                    }
-                    writer.Close();
-
-                }
-
-                EquipedStillHere();
-                data.CleanList();
-                data.LoadItems();
-                Debug.Log(objScore.score);
-                objScore.score -= price;
-                Debug.Log(objScore.score);
-                objScore.SaveScore((int)objScore.score);
-                Debug.Log(objScore.score);
-                coinsTxt.text = objScore.score.ToString();
-                GameManager.Instance.ClosePanel(GameManager.Instance.menuPanel);
+                continue; // Пропускаємо використані
             }
+
+            upgradedList.Add(data);
         }
+
+        if (!upgraded) return;
+
+        // Перезапис файлу
+        File.WriteAllLines(path, upgradedList.Select(item =>
+        {
+            string json = JsonUtility.ToJson(item);
+            return hashing.Encrypt(json);
+        }));
+
+        EquipedStillHere(); // синхронізація екіпірованих
+        data.UpdateItemsUI(upgradedList);
+
+        // Знімаємо монети
+        objScore.score -= price;
+        objScore.SaveScore((int)objScore.score);
+        coinsTxt.text = objScore.score.ToString();
+        GameManager.Instance.ClosePanel(GameManager.Instance.menuPanel);
     }
+   
     //public
     public void EquipedStillHere()
     {

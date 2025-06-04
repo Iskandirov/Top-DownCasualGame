@@ -11,11 +11,12 @@ public class SphereAround : MonoBehaviour
     float angle;
     public bool isStart;
     // Start is called before the first frame update
-    void Start()
+    void Update()
     {
         if (isStart)
         {
             StartCoroutine(CreateSphere());
+            isStart = !isStart;
         }
     }
     IEnumerator CreateSphere()

@@ -52,7 +52,7 @@ public class FallinMeteor : SkillBaseMono
                 ElementActiveDebuff debuff = creature.GetComponent<ElementActiveDebuff>();
                 if (debuff != null)
                 {
-                    debuff.StartCoroutine(debuff.EffectTime(Elements.status.Fire, 5));
+                    debuff.ApplyEffect(Elements.status.Fire, 5);
                 }
                 float damage = (basa.damage * debuff.elements.CurrentStatusValue(Elements.status.Water))
                     / debuff.elements.CurrentStatusValue(Elements.status.Fire);

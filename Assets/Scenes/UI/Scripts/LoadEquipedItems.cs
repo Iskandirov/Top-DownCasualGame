@@ -81,6 +81,7 @@ public class LoadEquipedItems : MonoBehaviour
                             player.Cold -= fullStat;
                             break;
                         case "ספונא במבסא":
+                            Debug.Log("sdf");
                             FindObjectOfType<SphereAround>().isStart = true;
                             FindObjectOfType<SphereAround>().sphere.damage += (float.Parse(data.Stat) * player.GivePerkStatValue(Stats.EquipmentBuff) / 100);
                             break;

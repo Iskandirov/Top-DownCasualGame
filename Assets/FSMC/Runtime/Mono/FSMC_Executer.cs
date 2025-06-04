@@ -83,13 +83,21 @@ namespace FSMC.Runtime
         {
             damage = Damage;
         }
+        public bool IsDead
+        {
+            get
+            {
+                var state = StateMachine != null ? StateMachine.GetCurrentState() : null;
+                return state != null && state.Name == "Death";
+            }
+        }
         public void TakeDamage(float damage)
         {
            
             SetDamage(damage);
-            if (health > 0)
+            if (health > 0 && !IsDead)
             {
-                StateMachine.SetCurrentState("Hit", this);
+                StateMachine.SetTrigger("Hit");
             }
             health -= damage;
         }
@@ -139,7 +147,7 @@ namespace FSMC.Runtime
         }
         public void ReturnToChase()
         {
-            anim.SetBool("Death", false);
+            StateMachine.SetCurrentState("Chase", this);
         }
 
         public void SetFloat(string name, float value)

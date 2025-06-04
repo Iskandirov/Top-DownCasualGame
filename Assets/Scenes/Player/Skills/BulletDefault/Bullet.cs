@@ -66,7 +66,7 @@ public class Bullet : SkillBaseMono
         if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
             ElementActiveDebuff debuff = collision.GetComponent<ElementActiveDebuff>();
-            debuff.StartCoroutine(debuff.EffectTime(Elements.status.Fire, 5));
+            debuff.ApplyEffect(Elements.status.Fire, 5);
             FSMC_Executer enemyMove = collision.GetComponent<FSMC_Executer>();
             
             enemyMove.TakeDamage(basa.damage);

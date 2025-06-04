@@ -4165,7 +4165,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 2809712379660976269, guid: e191b229f4d9e904a84653c799176365, type: 3}
   firePoint: {fileID: 1532942533452135491}
   player: {fileID: 0}
-  projectileSpeed: 15
+  projectileSpeed: 30
   circularAttackInterval: 4
   waveAttackInterval: 7
   chaosAttackInterval: 3
@@ -4176,6 +4176,7 @@ MonoBehaviour:
   chaosProjectiles: 10
   waveSpreadAngle: 45
   phaseTwoHealthThreshold: 50
+  isTransitioning: 0
   anim: {fileID: 8652287431786167269}
   attackGroup:
   - {fileID: 907128177515484004}
@@ -4206,6 +4207,15 @@ MonoBehaviour:
     isActiveCurrentData: 0000000000000000
   elementDebuffParent: {fileID: 4918461076317722957}
   elementDebuffObject: {fileID: 1262367869966813369, guid: 18f8e8e849830084eace680fad057225, type: 3}
+  statusSprite:
+  - {fileID: 21300000, guid: f9cd9c466388d694b81c2b42c31f5a0b, type: 3}
+  - {fileID: 21300000, guid: 2bc20075ed610dd4e9db3474920c177a, type: 3}
+  - {fileID: 21300000, guid: bf690c43a1d9eee4482cb36d399f0576, type: 3}
+  - {fileID: 21300000, guid: f23b20b174502c647b80fcb9ec54f9a3, type: 3}
+  - {fileID: 21300000, guid: d7ee4cfba0bc5e5478a46540f010800a, type: 3}
+  - {fileID: 21300000, guid: 2d5010af587dba644903f49f3d25be95, type: 3}
+  - {fileID: 21300000, guid: d75170722d79ae74fabafaa703271612, type: 3}
+  - {fileID: 21300000, guid: 68dc7750b1bc23645b841a0761be9c3f, type: 3}
 --- !u!114 &5208560844869466460
 MonoBehaviour:
   m_ObjectHideFlags: 0

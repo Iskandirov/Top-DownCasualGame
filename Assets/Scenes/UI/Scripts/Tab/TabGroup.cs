@@ -116,6 +116,8 @@ public class TabGroup : MonoBehaviour
                 numericValue += c;
             }
         }
-            PlayerPrefs.SetFloat(perk.statName, float.Parse(numericValue));
+        Debug.Log(numericValue);
+
+        PlayerPrefs.SetFloat(perk.statName, float.Parse(numericValue));
     }
 }

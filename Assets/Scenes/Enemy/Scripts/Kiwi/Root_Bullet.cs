@@ -34,7 +34,7 @@ public class Root_Bullet : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.CompareTag("Player") && !collision.collider.isTrigger && !player.isInvincible)
+        if (collision.collider.CompareTag("Player") /*&& !collision.collider.isTrigger*/ && !player.isInvincible)
         {
             player.TakeDamage(damage);
             player.StartSlowPlayer(4f, 0.2f);

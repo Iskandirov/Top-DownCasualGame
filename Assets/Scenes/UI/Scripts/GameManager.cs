@@ -346,7 +346,6 @@ public class GameManager : MonoBehaviour
     {
         int i = UnityEngine.Random.Range(1, 4);
         AudioManager.instance.PlaySFX("OpenPanel_" + i);
-        Debug.Log(i);
         panel.SetActive(true);
         //transform.DoSha
         DoShakeScaleTween(panel.transform);
@@ -978,6 +977,7 @@ public class GameManager : MonoBehaviour
     //Buy Character
     public void LoadCharacktersOnStart()
     {
+        
         string path = Path.Combine(Application.persistentDataPath, "CharacketInfo.txt");
         if (!File.Exists(path))
         {

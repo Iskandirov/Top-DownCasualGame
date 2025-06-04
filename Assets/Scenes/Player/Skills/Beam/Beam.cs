@@ -107,7 +107,7 @@ public class Beam : SkillBaseMono
     {
         FSMC_Executer objHealt = collision.GetComponent<FSMC_Executer>();
         ElementActiveDebuff debuff = collision.GetComponent<ElementActiveDebuff>();
-        debuff.StartCoroutine(debuff.EffectTime(Elements.status.Steam, 5));
+        debuff.ApplyEffect(Elements.status.Steam, 5);
         
         objHealt.TakeDamage((basa.damage * debuff.elements.CurrentStatusValue(Elements.status.Steam)) / debuff.elements.CurrentStatusValue(Elements.status.Cold));
 

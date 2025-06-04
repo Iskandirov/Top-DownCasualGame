@@ -38,15 +38,15 @@ public class ProgressBar : MonoBehaviour
         {
             player.attackSpeed = player.attackSpeedMax * 0.8f;
         }
-        else if (buffTypes[1])
+        if (buffTypes[1])
         {
             player.damageToGive = player.damageToGive * 2f;
         }
-        else if (buffTypes[2])
+        if (buffTypes[2])
         {
             player.playerHealthRegeneration = (player.playerHealthRegeneration + 1f) * 2f;
         }
-        else if (buffTypes[3])
+        if (buffTypes[3])
         {
             player.Fire = player.Fire * 2f;
             player.Electricity = player.Electricity * 2f;
@@ -57,7 +57,7 @@ public class ProgressBar : MonoBehaviour
             player.Steam = player.Steam * 2f;
             player.Cold = player.Cold * 2f;
         }
-        else if (buffTypes[4])
+        if (buffTypes[4])
         {
             player.multiply = 2;
         }

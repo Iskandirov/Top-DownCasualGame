@@ -6457,7 +6457,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 10
-  bulletRotationMultiplier: 10
+  bulletRotationMultiplier: 5
   movingObjects: []
   stump: {fileID: 2715697232852659956, guid: 557e8d5e72828ed429ddbb5636f1cfab, type: 3}
   stumpSounds:
@@ -6646,7 +6646,7 @@ MonoBehaviour:
   tornadicsAttackInterval: 10
   tornadicCount: 10
   lightningsCount: 15
-  lightningDamage: 20
+  lightningDamage: 40
 --- !u!114 &6999862369903277959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6672,6 +6672,15 @@ MonoBehaviour:
     isActiveCurrentData: 0000000000000000
   elementDebuffParent: {fileID: 4918461076317722957}
   elementDebuffObject: {fileID: 1262367869966813369, guid: 18f8e8e849830084eace680fad057225, type: 3}
+  statusSprite:
+  - {fileID: 21300000, guid: f9cd9c466388d694b81c2b42c31f5a0b, type: 3}
+  - {fileID: 21300000, guid: 2bc20075ed610dd4e9db3474920c177a, type: 3}
+  - {fileID: 21300000, guid: bf690c43a1d9eee4482cb36d399f0576, type: 3}
+  - {fileID: 21300000, guid: f23b20b174502c647b80fcb9ec54f9a3, type: 3}
+  - {fileID: 21300000, guid: d7ee4cfba0bc5e5478a46540f010800a, type: 3}
+  - {fileID: 21300000, guid: 2d5010af587dba644903f49f3d25be95, type: 3}
+  - {fileID: 21300000, guid: d75170722d79ae74fabafaa703271612, type: 3}
+  - {fileID: 21300000, guid: 68dc7750b1bc23645b841a0761be9c3f, type: 3}
 --- !u!95 &4963793136973719250
 Animator:
   serializedVersion: 5
@@ -6766,7 +6775,7 @@ MonoBehaviour:
   objTransform: {fileID: 0}
   bullet: {fileID: 0}
   health: 0
-  healthMax: 1300
+  healthMax: 300
   isSpawnOutsideCamera: 0
   expiriancePoint: {fileID: 528103267282400849, guid: 011bcb717f1c7644cbb13f13f798cecd, type: 3}
   expGiven: 100

@@ -1,3 +1,4 @@
+using FSMC.Runtime;
 using Spine.Unity;
 using System;
 using System.Collections;
@@ -130,7 +131,7 @@ public class PlayerManager : MonoBehaviour
     //public GameObject levelUp;
     [HideInInspector]
     public int isEnemyInZone;
-    public int multiply;
+    public float multiply;
 
     [Header("Elemental settings")]
     public float Fire;
@@ -268,10 +269,10 @@ public class PlayerManager : MonoBehaviour
         }
         regenerationText.text = playerHealthRegeneration.ToString("F1");
         //ShootBullet(gameObject);
-        if (playerHealthRegeneration > 0)
+        if (playerHealthRegeneration > 0 && playerHealthPoint < playerHealthPointMax)
         {
             playerHealthPoint += playerHealthRegeneration / playerHealthPointMax;
-            gameManager.fullFillImage.fillAmount += playerHealthRegeneration / playerHealthPointMax;
+            gameManager.fullFillImage.fillAmount = playerHealthPoint / playerHealthPointMax;
         }
     }
     //Тестовий делегат
@@ -314,7 +315,14 @@ public class PlayerManager : MonoBehaviour
         {
             if (canBeSaved)
             {
-                playerHealthPoint = playerHealthPointMax * ((0.2f + GivePerkStatValue(Stats.Effectivness)) / 100);
+                float effectivnessPerk = GivePerkStatValue(Stats.Effectivness);
+                float healPercent = 0.2f;
+                if (effectivnessPerk > 1)
+                {
+                    healPercent += 0.2f * 0.4f; // 20% + 40% від 20% = 28%
+                }
+                playerHealthPoint = playerHealthPointMax * healPercent;
+
                 gameManager.fullFillImage.fillAmount = playerHealthPoint / playerHealthPointMax;
                 GameManager.Instance.FindStatName("healthHealed", playerHealthPointMax * 0.2f);
                 canBeSaved = false;
@@ -453,6 +461,7 @@ public class PlayerManager : MonoBehaviour
     //=================RICOSHET===================
     void Ricoshet()
     {
+        Debug.Log("Ricoshet");
         if (!isBaseSkillActive)
         {
             isBaseSkillActive = true;
@@ -464,6 +473,7 @@ public class PlayerManager : MonoBehaviour
     //=================UNTOUCHIBLE=================
     void Untouchible()
     {
+        Debug.Log("Untouchible");
         if (!isBaseSkillActive)
         {
             isBaseSkillActive = true;
@@ -475,6 +485,7 @@ public class PlayerManager : MonoBehaviour
     //====================DASH=====================
     void Dash()
     {
+        Debug.Log("Dash");
         //Dash
         if (!isDashSkillActive)
         {
@@ -622,22 +633,22 @@ public class PlayerManager : MonoBehaviour
     {
         CharacterStats character = characters.Find(i => i.id == PlayerPrefs.GetInt("Character") && gameManager.charactersRead.Find(c => c.isEquiped).isEquiped);
         playerHealthPointMax = character.health + GivePerkStatValue(Stats.Health);
-        playerHealthPoint = character.health + GivePerkStatValue(Stats.Health);
+        playerHealthPoint = playerHealthPointMax;
 
         speedMax = character.moveSpeed + GivePerkStatValue(Stats.MoveSpeed);
-        speed = character.moveSpeed + GivePerkStatValue(Stats.MoveSpeed);
-        heroID = character.id;
-        baseSkillCDMax = character.spellCD + GivePerkStatValue(Stats.ReloadSkills);
-        attackSpeedMax = character.attackSpeed + GivePerkStatValue(Stats.AttackSpeed);
-        attackSpeed = character.attackSpeed + GivePerkStatValue(Stats.AttackSpeed);
+        speed = speedMax;
+        heroID = PlayerPrefs.GetInt("Character");
+        baseSkillCDMax = character.spellCD - GivePerkStatValue(Stats.ReloadSkills) / 100;
+        attackSpeedMax = character.attackSpeed - GivePerkStatValue(Stats.AttackSpeed) / 100;
+        attackSpeed = attackSpeedMax;
         damageToGive = character.damage + GivePerkStatValue(Stats.Damage);
-        GetComponent<CircleCollider2D>().radius += GivePerkStatValue(Stats.ExpirianceRadius);
+        GetComponent<CircleCollider2D>().radius += GivePerkStatValue(Stats.ExpirianceRadius) / 100;
         Fire += GivePerkStatValue(Stats.FireDamage) / 100;
         Water += GivePerkStatValue(Stats.WaterDamage) / 100;
         armor += GivePerkStatValue(Stats.Armor);
         /*Швидкість захвату зони*/
         playerHealthRegeneration += GivePerkStatValue(Stats.Regeneration);
-        multiply += (int)GivePerkStatValue(Stats.ExpirianceGain);
+        multiply += GivePerkStatValue(Stats.ExpirianceGain) / 100;
 
         //gameObject = characters[character.id + 1];
     }
@@ -718,9 +729,9 @@ public class PlayerManager : MonoBehaviour
     void TimeFreeze()
     {
         EnemySpawner enemies = FindAnyObjectByType<EnemySpawner>();
-        foreach (var enemy in enemies.children)
+        foreach (var enemy in enemies.children.FindAll(c => c.gameObject.activeSelf))
         {
-            enemy.SetFloat("Stun Time", 5f * (GivePerkStatValue(Stats.Effectivness) + 1));
+            enemy.SetFloat("Stun Time", 2f * (GivePerkStatValue(Stats.Effectivness) / 100 + 1));
             enemy.StateMachine.SetCurrentState("Stun", enemy);
         }
        

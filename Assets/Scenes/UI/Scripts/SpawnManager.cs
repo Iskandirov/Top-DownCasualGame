@@ -36,6 +36,14 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(SpawnRoutine(barrelExplosionPool, barrelPrefab[1], barrelSpawnInterval));
 
     }
+    public void DestroyBarrels()
+    {
+        for (int i = 0; i < barrelPoolSize-1 ;i++)
+        {
+            Destroy(barrelLootPool[i]);
+        }
+        barrelLootPool.Clear();
+    }
     List<GameObject> InitializeObjectPool(GameObject objectPrefab, int pool, Transform parent)
     {
         List<GameObject> objectPool = new List<GameObject>();
@@ -64,7 +72,7 @@ public class SpawnManager : MonoBehaviour
 
     private IEnumerator SpawnRoutine(List<GameObject> objList, GameObject obj, float interval)
     {
-        while (true)
+        while (!EnemySpawner.instance.isBossSpawned)
         {
             yield return new WaitForSeconds(interval);
             GameObject barrel = GetFromPool(objList, obj);

@@ -20,7 +20,6 @@ public class StateChase : FSMC_Behaviour
     LevelUpgrade abilInfo;
     public override void StateInit(FSMC_Controller stateMachine, FSMC_Executer executer)
     {
-       
         path = executer.GetComponent<AIPath>();
         path.maxSpeed = executer.speed;
         destenition = executer.GetComponent<AIDestinationSetter>();
@@ -48,12 +47,15 @@ public class StateChase : FSMC_Behaviour
     }
     public override void OnStateEnter(FSMC_Controller stateMachine, FSMC_Executer executer)
     {
+       
+        executer.anim.SetBool("Death", false);
         destenition.target = target;
 
     }
 
     public override void OnStateUpdate(FSMC_Controller stateMachine, FSMC_Executer executer)
     {
+        executer.anim.SetBool("Death", false);
         path.maxSpeed = executer.speed;
         float distance = Vector3.Distance(target.position, executer.transform.position);
         stateMachine.SetFloat("PlayerDistance", distance);

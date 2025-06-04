@@ -36,7 +36,7 @@ public class RootSlower : MonoBehaviour
                 damageDelay = damageDelayMax;
             }
         }
-        else if (collision.CompareTag("Player") && !collision.isTrigger && !player.isInvincible)
+        else if (collision.CompareTag("Player") /*&& !collision.isTrigger */&& !player.isInvincible)
         {
             if (damageDelay <= 0)
             {

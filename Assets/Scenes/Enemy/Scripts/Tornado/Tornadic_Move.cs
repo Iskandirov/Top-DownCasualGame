@@ -51,7 +51,7 @@ public class Tornadic_Move : MonoBehaviour
     }
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.CompareTag("Player") && !collision.collider.isTrigger && !PlayerManager.instance.isInvincible)
+        if (collision.collider.CompareTag("Player") /*&& !collision.collider.isTrigger*/ && !PlayerManager.instance.isInvincible)
         {
             collision.collider.GetComponent<PlayerManager>().TakeDamage(damage);
             Destroy(gameObject);

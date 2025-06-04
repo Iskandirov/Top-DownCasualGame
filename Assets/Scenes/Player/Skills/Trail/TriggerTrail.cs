@@ -25,7 +25,7 @@ public class TriggerTrail : MonoBehaviour
                 for (int i = 0; i < enemiesColliders.Count; i++)
                 {
                     ElementActiveDebuff debuff = enemiesColliders[i].GetComponentInParent<ElementActiveDebuff>();
-                    debuff.StartCoroutine(debuff.EffectTime(Elements.status.Grass, 5));
+                    debuff.ApplyEffect(Elements.status.Grass, 5);
                     enemiesColliders[i].GetComponent<FSMC_Executer>().TakeDamage(basa.damage);
                     if (basa.stats[4].isTrigger)
                     {

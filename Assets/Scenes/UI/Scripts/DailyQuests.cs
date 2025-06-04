@@ -8,6 +8,7 @@ using UnityEngine.Networking;
 using TMPro;
 using UnityEngine.UI;
 using System.Linq;
+using System.Text;
 
 [Serializable]
 public class Quest 
@@ -79,46 +80,78 @@ public class DailyQuests : MonoBehaviour
         instance = this;
        
     }
-    public void UpdateValue(int id,float value,bool isOverwrite,bool mustBeMoreThanGoal)
+    public void UpdateValue(int id, float value, bool isOverwrite, bool mustBeMoreThanGoal)
     {
-        Quest que;
-        que = quest.FirstOrDefault(s => s.id.Equals(id));
-        if (que != null && que.progress < que.goal)
+        Quest que = quest.FirstOrDefault(s => s.id.Equals(id));
+        if (que == null || que.progress >= que.goal) return;
+
+        float oldProgress = que.progress;
+        que.progress = isOverwrite ? value : Math.Min(que.progress + value, que.goal);
+
+        bool isQuestDone = que.progress >= que.goal && que.isActive;
+        if (!mustBeMoreThanGoal)
+            isQuestDone = !isQuestDone;
+
+        bool shouldUpdate = (isQuestDone && popUp != null && !popUp.activeSelf) || que.progress != oldProgress;
+        if (!shouldUpdate) return;
+
+        if (isQuestDone)
         {
-            if (!isOverwrite)
-            {
-                que.progress = que.progress + value >= que.goal ? que.goal : que.progress + value;
-            }
-            else
-            {
-                que.progress = value;
-            }
-            bool isQuestDone;
-            if (mustBeMoreThanGoal)
-            {
-                isQuestDone = que.progress / que.goal >= 1 && que.isActive ? true : false;
+            popUp.SetActive(true);
+            que.isActive = false;
 
-            }
-            else
-            {
-                isQuestDone = que.progress / que.goal >= 1 && que.isActive ? false : true;
-            }
-            if (popUp != null && !popUp.activeSelf && isQuestDone)
-            {
-                popUp.SetActive(isQuestDone);
-                que.isActive = false;
-                
                 popUpImg.sprite = questImage.First(s => s.sprite.name == que.nameQuest).sprite;
-                popUpTxt.text = que.description;
-                ClaimReward((int)que.reward);
-                //quest[id].isActive = false;
-
-            }
-
-            quest[que.id] = que;
-            SaveQuest(Path.Combine(Application.persistentDataPath, path));
-            SetQuestData();
+            popUpTxt.text = que.description;
+            ClaimReward((int)que.reward);
         }
+
+        quest[que.id] = que;
+        //SaveQuest(Path.Combine(Application.persistentDataPath, path));
+        UpdateQuestUI(que);
+    }
+    void OnApplicationQuit()
+    {
+        SaveQuest(Path.Combine(Application.persistentDataPath, path));
+    }
+
+    void OnApplicationPause(bool pauseStatus)
+    {
+        if (pauseStatus) SaveQuest(Path.Combine(Application.persistentDataPath, path));
+    }
+    void OnDestroy()
+    {
+        SaveQuest(Path.Combine(Application.persistentDataPath, path));
+    }
+    // ќновленн€ т≥льки одного квесту в UI
+    private void UpdateQuestUI(Quest que)
+    {
+        // «находимо ≥ндекс серед т≥льки "сьогодн≥шн≥х" квест≥в
+        int counter = -1;
+        int temp = 0;
+        foreach (var q in quest)
+        {
+            if (q.isTodaysQuest)
+            {
+                if (q.id == que.id)
+                {
+                    counter = temp;
+                    break;
+                }
+                temp++;
+            }
+        }
+        if (counter < 0 || counter >= questText.Count) return;
+
+        questText[counter].GetComponent<TagText>().tagText = que.description;
+        questRewardText[counter].text = que.reward.ToString();
+
+        Sprite[] sprites = GameManager.ExtractSpriteListFromTexture("Quest");
+        questImage[counter].sprite = Array.Find(sprites, sprite => sprite.name == que.nameQuest);
+        questImage[counter].SetNativeSize();
+        questProgressText[counter].text = que.progress.ToString() + " / " + que.goal.ToString();
+        questProgressFill[counter].fillAmount = que.progress / que.goal;
+        bool isQuestDone = que.isTodaysQuest && !que.isActive;
+        questImageDone[counter].gameObject.SetActive(isQuestDone);
     }
     private void Start()
     {
@@ -271,29 +304,36 @@ public class DailyQuests : MonoBehaviour
     }
     public void SaveQuest(in string path)
     {
-        using (StreamWriter writer = new StreamWriter(path, false))
+        StringBuilder sb = new StringBuilder(quest.Count * 256); // приблизно
+
+        foreach (var stat in quest)
         {
-            foreach (var stat in quest)
-            {
-                string jsonData = JsonUtility.ToJson(stat);
-                string decryptedJson = DataHashing.inst.Encrypt(jsonData);
-                writer.WriteLine(decryptedJson);
-            }
-            writer.Close();
+            string jsonData = JsonUtility.ToJson(stat);
+            string encrypted = DataHashing.inst.Encrypt(jsonData);
+            sb.AppendLine(encrypted);
         }
-        LoadScore(path);
+
+        File.WriteAllText(path, sb.ToString()); // 1 операц≥€ запису, не пот≥к
+        //LoadScore(path); // якщо треба Ч залишаЇмо
     }
     public void LoadScore(in string path)
     {
         quest.Clear();
-        string[] lines = File.ReadAllLines(path);
 
-        foreach (string jsonLine in lines)
+        using (StreamReader reader = new StreamReader(path))
         {
-            string decrypt = DataHashing.inst.Decrypt(jsonLine);
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                string decrypted = DataHashing.inst.Decrypt(line);
 
-            Quest data = JsonUtility.FromJson<Quest>(decrypt);
-            quest.Add(data);
+                // ѕерев≥рка на випадок помилкового р€дка
+                if (!string.IsNullOrWhiteSpace(decrypted))
+                {
+                    Quest data = JsonUtility.FromJson<Quest>(decrypted);
+                    quest.Add(data);
+                }
+            }
         }
     }
 }

@@ -71,6 +71,8 @@ public class EnemySpawner : MonoBehaviour
             Transform child = parent.transform.GetChild(i);
             Destroy(child.gameObject);
         }
+        SpawnManager.inst.DestroyBarrels();
+
     }
     //public static List<Vector3> GetSpawnPositionsNotInAIPath(float radius) // Видалено непотрібний параметр pos
     //{
@@ -301,7 +303,9 @@ public class EnemySpawner : MonoBehaviour
                 enemy.transform.position = SpawnManager.inst.GetRandomPositionInsideCollider();
                 break;
         }
-        enemycount++;
+        //Debug.Log(enemy.GetComponent<FSMC_Executer>() != null);
+        
+            enemycount++;
     }
     public void IDChecker(string enemyName)
     {

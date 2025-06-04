@@ -40,11 +40,13 @@ public class StateHit : FSMC_Behaviour
         RegisterDamage(executer.GetDamage(), executer);
         if (executer.isBoss)
             executer.healthObjImg.fillAmount = 1 - (executer.healthMax - executer.health) / executer.healthMax;
-
         executer.anim.SetTrigger("Hit");
+        AudioManager.instance.PlaySFX("Hit");
         if (executer.health <= 0)
         {
-            stateMachine.SetCurrentState("Death", executer);
+            executer.anim.SetBool("Death", true);
+            stateMachine.SetTrigger("Death");
+            //stateMachine.SetTrigger("Death");
         }
         else if (executer.GetFloat("Stun Time") > 0.2f)
         {

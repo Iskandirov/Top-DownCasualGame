@@ -105,46 +105,108 @@ public class Elements
 //При комбінаціїї відповідних дебафів утворюються інші дебафи, або відбувається унікальна дія
 public class ElementActiveDebuff : MonoBehaviour
 {
+    [Header("References")]
     public Elements elements;
-
     public Transform elementDebuffParent;
     public SpriteRenderer elementDebuffObject;
 
-    public IEnumerator EffectTime(Elements.status name, int lifeTime)
+    private FSMC_Executer executer;
+    private SpriteRenderer bodyRenderer;
+    public List<Sprite> statusSprite;
+
+    // Активні ефекти: статус -> таймер
+    private readonly Dictionary<Elements.status, float> activeEffects = new();
+
+    // Візуальні спрайти: статус -> іконка
+    //private readonly Dictionary<Elements.status, SpriteRenderer> debuffSprites = new();
+
+    private static readonly List<Elements.status> toRemove = new(); // кешований список для зменшення алокацій
+
+    private void Awake()
     {
-        SpriteRenderer a = null;
-        int elementId = (int)name;
-        if (elements.isActiveCurrentData[(int)name] != true && GetComponentInChildren<SpriteRenderer>().color.a != 0)
-        {
-            elements.Debuff(GetComponent<FSMC_Executer>(), name);
-            a = Instantiate(elementDebuffObject, elementDebuffParent.position, Quaternion.identity, elementDebuffParent);
-            a.sprite = GameManager.Instance.ElementsImg[elementId];
-            UnikeEffects(a);
-        }
-        yield return new WaitForSeconds(lifeTime);
-        if (a != null)
-        {
-            elements.DeactivateDebuff(GetComponent<FSMC_Executer>(), name);
-            Destroy(a.gameObject);
-        }
+        executer = GetComponent<FSMC_Executer>();
+        bodyRenderer = GetComponentInChildren<SpriteRenderer>();
     }
-    private void UnikeEffects(SpriteRenderer sprite)
+
+    private void Update()
     {
-        var uniqueChildren = new List<SpriteRenderer>();
-        foreach (var child in elementDebuffParent.transform.GetComponentsInChildren<SpriteRenderer>())
+        if (activeEffects.Count == 0)
+            return;
+
+        float delta = Time.deltaTime;
+        toRemove.Clear();
+
+        foreach (var status in new List<Elements.status>(activeEffects.Keys))
         {
-            if (child.sprite != sprite.sprite)
-            {
-                uniqueChildren.Add(child);
-            }
+            activeEffects[status] -= delta;
+
+            if (activeEffects[status] <= 0f)
+                toRemove.Add(status);
         }
 
-        // Видалення повторюваних дочірніх об'єктів
-        for (int i = 0; i < elementDebuffParent.transform.childCount - 1; i++)
+        foreach (var status in toRemove)
         {
-            if (!uniqueChildren.Contains(elementDebuffParent.transform.GetChild(i).GetComponent<SpriteRenderer>()))
+            DeactivateEffect(status);
+        }
+    }
+
+    public void ApplyEffect(Elements.status status, float duration)
+    {
+        int id = (int)status;
+
+        if (activeEffects.TryGetValue(status, out float remainingTime))
+        {
+            // Якщо ефект уже активний — оновлюємо таймер, якщо новий довший
+            if (duration > remainingTime)
+                activeEffects[status] = duration;
+
+            return;
+        }
+
+        // Перевірка перед застосуванням: ефект ще не активний + об'єкт видимий
+        if (!elements.isActiveCurrentData[id] && bodyRenderer.color.a > 0f)
+        {
+            elements.Debuff(executer, status);
+            activeEffects[status] = duration;
+            ActivateVisualEffect(status, id);
+        }
+    }
+
+    private void ActivateVisualEffect(Elements.status status, int elementId)
+    {
+        // Переконаймося, що список достатньої довжини  
+        while (statusSprite.Count <= elementId)
+            statusSprite.Add(null);
+
+        if (statusSprite[elementId] == null)
+        {
+            var sr = Instantiate(elementDebuffObject, elementDebuffParent);
+            sr.transform.localPosition = Vector3.zero; // можна кастомізувати  
+            sr.sprite = GameManager.Instance.ElementsImg[elementId];
+            statusSprite[elementId] = sr.sprite;
+        }
+
+        // Исправлено: Sprite не имеет свойства enabled, поэтому нужно работать с объектом SpriteRenderer  
+        var spriteRenderer = elementDebuffObject.GetComponentInChildren<SpriteRenderer>();
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.enabled = true;
+        }
+    }
+
+    private void DeactivateEffect(Elements.status status)
+    {
+        int id = (int)status;
+
+        elements.DeactivateDebuff(executer, status);
+        activeEffects.Remove(status);
+
+        if (id < statusSprite.Count && statusSprite[id] != null)
+        {
+            var spriteRenderer = elementDebuffObject.GetComponentInChildren<SpriteRenderer>();
+            if (spriteRenderer != null)
             {
-                Destroy(elementDebuffParent.transform.GetChild(i).gameObject);
+                spriteRenderer.enabled = true;
             }
         }
     }

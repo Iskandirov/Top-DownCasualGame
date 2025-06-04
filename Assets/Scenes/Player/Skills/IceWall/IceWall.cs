@@ -99,7 +99,7 @@ public class IceWall : SkillBaseMono
         {
             FSMC_Executer enemy = collision.GetComponent<FSMC_Executer>();
             ElementActiveDebuff debuff = collision.GetComponent<ElementActiveDebuff>();
-            debuff.StartCoroutine(debuff.EffectTime(Elements.status.Cold, 5));
+            debuff.ApplyEffect(Elements.status.Cold, 5);
 
             enemy.SetFloat("SlowTime",1f);
             enemy.SetFloat("SlowPercent",.3f);

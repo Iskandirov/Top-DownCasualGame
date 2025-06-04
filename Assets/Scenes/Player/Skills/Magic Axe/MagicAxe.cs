@@ -97,7 +97,7 @@ public class MagicAxe : SkillBaseMono
         if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
             ElementActiveDebuff debuff = collision.GetComponent<ElementActiveDebuff>();
-            debuff.StartCoroutine(debuff.EffectTime(Elements.status.Cold, 5));
+            debuff.ApplyEffect(Elements.status.Cold, 5);
 
             collision.GetComponent<FSMC_Executer>().TakeDamage(basa.damage);
         }

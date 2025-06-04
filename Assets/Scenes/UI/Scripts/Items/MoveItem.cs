@@ -193,45 +193,6 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
         }
         gameManager.UpdateText(GameManager.Instance.texts);
     }
-    //public void SetCardInfo()
-    //{
-    //    ItemData itemData = equipPanel.GetComponent<ItemData>();
-    //    SetItem(itemData);
-
-
-    //    string path = Path.Combine(Application.persistentDataPath, "EquipedItems.txt");
-    //    using (var fileStream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Read))
-    //    using (var streamReader = new StreamReader(fileStream))
-    //    {
-    //        lock (fileStream)
-    //        {
-    //            if (File.Exists(path))
-    //            {
-    //                string[] jsonLines = File.ReadAllLines(path);
-    //                bool foundMatch = false;
-
-    //                foreach (string jsonLine in jsonLines)
-    //                {
-    //                    string decrypt = hashing.Decrypt(jsonLine);
-    //                    SavedEquipData data = JsonUtility.FromJson<SavedEquipData>(decrypt);
-    //                    if (data.Tag == itemData.itemName.GetComponent<TagText>().tagText)
-    //                    {
-    //                        itemData.state.GetComponent<TagText>().tagText = "equiped";
-    //                        isEquipedNow = true;
-    //                        foundMatch = true;
-    //                        break;
-    //                    }
-    //                }
-
-    //                if (!foundMatch)
-    //                {
-    //                    itemData.state.GetComponent<TagText>().tagText = "equip";
-    //                    isEquipedNow = false;
-    //                }
-    //            }
-    //        }
-    //    }
-    //}
     public void SetItem(ItemData obj)
     {
         SetParametersToitem param = GetComponent<SetParametersToitem>();

@@ -22,7 +22,7 @@ public class SniperTreeBullet : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && !collision.isTrigger && !PlayerManager.instance.isInvincible)
+        if (collision.CompareTag("Player") /*&& !collision.isTrigger */&& !PlayerManager.instance.isInvincible)
         {
             collision.GetComponent<PlayerManager>().TakeDamage(damage);
             Destroy(gameObject);

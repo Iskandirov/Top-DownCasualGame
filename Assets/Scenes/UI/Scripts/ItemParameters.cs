@@ -50,6 +50,8 @@ public class ItemParameters : MonoBehaviour
             LootManager.SetPanelsInfoToLoot(this, itemPanel);
             itemImage.sprite = GameManager.ExtractSpriteListFromTexture("items").First(instance => instance.name == itemName);
             itemImage.SetNativeSize();
+            var rectTransform = itemImage.GetComponent<RectTransform>();
+            rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x * 5, rectTransform.sizeDelta.y * 5);
             itemNameTxt.text = itemName;
             itemDescription.text = Description;
             Destroy(gameObject);

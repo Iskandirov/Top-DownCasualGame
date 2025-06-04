@@ -5,6 +5,7 @@ using FSMC.Runtime;
 using System;
 using System.Linq;
 using Pathfinding;
+using System.CodeDom.Compiler;
 
 [Serializable]
 public class StateDeath : FSMC_Behaviour
@@ -17,14 +18,11 @@ public class StateDeath : FSMC_Behaviour
     }
     public override void OnStateEnter(FSMC_Controller stateMachine, FSMC_Executer executer)
     {
-
         path.maxSpeed = 0;
-        executer.anim.SetTrigger("Death");
     }
 
     public override void OnStateUpdate(FSMC_Controller stateMachine, FSMC_Executer executer)
     {
-       
     }
 
     public override void OnStateExit(FSMC_Controller stateMachine, FSMC_Executer executer)
@@ -40,6 +38,7 @@ public class StateDeath : FSMC_Behaviour
             ExpGive(executer, executer.objTransform.position);
             executer.health = executer.healthMax;
             Respawn(executer);
+            //executer.StateMachine.SetCurrentState("Chase", executer);
         }
     }
     void ExpGive(FSMC_Executer enemy, Vector3 pos)
@@ -73,6 +72,7 @@ public class StateDeath : FSMC_Behaviour
 
             UnityEngine.Object.Destroy(child.gameObject);
         }
+        executer.anim.SetBool("Death", false);
     }
     static public bool GetSpawnPositionNotInAIPath(float radius, Vector2 pos)
     {

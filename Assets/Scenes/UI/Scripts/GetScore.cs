@@ -9,6 +9,9 @@ public class GetScore : MonoBehaviour
     public TextMeshProUGUI timeEnd;
     public TextMeshProUGUI percentEnd;
     public TextMeshProUGUI scoreEnd;
+    public TextMeshProUGUI killCountScore;
+    public TextMeshProUGUI winCountScore;
+    public TextMeshProUGUI bossCountScore;
     public float score;
     public int percent;
     public bool scene;
@@ -37,18 +40,22 @@ public class GetScore : MonoBehaviour
                 }
                 if (float.TryParse(timeEnd.text, out float result))
                 {
-                    Debug.Log(GameManager.Instance.score + " Score ");
-                    Debug.Log(Mathf.Pow(1 + (0.05f * result), 1.1f) + " Time ");
                     // Вдале перетворення
                     float scroreBoost = isWinPanel == true ? 1.5f : 1;
-                    score = ((GameManager.Instance.score + 1) * Mathf.Pow(1 + (0.2f * timeToSpawnBoss), 1.1f) + 1) * (scroreBoost + SceneManager.GetActiveScene().buildIndex - 1);
                     percent = Mathf.RoundToInt((result / timeToSpawnBoss) * 100);
                     if (percent >= 100 && isWinPanel)
                     {
+                        score = 5000 * (SceneManager.GetActiveScene().buildIndex - 1)  + 100 + GameManager.Instance.score;//Mathf.Pow(1 + (0.2f * timeToSpawnBoss), 1.1f) + 1) * (scroreBoost + SceneManager.GetActiveScene().buildIndex - 1);
+                        killCountScore.text = GameManager.Instance.score.ToString();
+                        winCountScore.text = (5000 * (SceneManager.GetActiveScene().buildIndex - 1)).ToString();
+                        bossCountScore.text = "100";
                         percent = 100;
                     }
-                    else if (percent >= 100 && !isWinPanel)
+                    else if (!isWinPanel)
                     {
+                        score = 100 + GameManager.Instance.score;
+                        killCountScore.text = GameManager.Instance.score.ToString();
+                        winCountScore.text = "100";
                         percent = 99;
                     }
                     percentEnd.text = percent.ToString("0.") + "%";

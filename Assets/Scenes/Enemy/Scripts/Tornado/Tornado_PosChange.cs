@@ -6,7 +6,7 @@ using UnityEngine;
 public class Tornado_PosChange : MonoBehaviour
 {
     public float rotationSpeed = 1.0f; // Базова швидкість обертання
-    public float bulletRotationMultiplier = 2.0f; // Множник швидкості обертання для куль
+    public float bulletRotationMultiplier = 1.1f; // Множник швидкості обертання для куль
 
     public List<Transform> movingObjects = new List<Transform>(); // Список рухомих об'єктів
     private bool isInZone = false;

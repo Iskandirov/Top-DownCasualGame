@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class Vortex : SkillBaseMono
     public float bump;
     public bool isClone;
     Vector3 centerPosition;
+    Collider2D circleCollider2D;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +22,7 @@ public class Vortex : SkillBaseMono
             transform.position = worldPosition;
             if (basa.stats[4].isTrigger)
             {
-                Vortex b = Instantiate(this, new Vector3(transform.position.x + Random.Range(-30, 30), transform.position.y + Random.Range(-30, 30), 1.9f), Quaternion.identity);
+                Vortex b = Instantiate(this, new Vector3(transform.position.x + UnityEngine.Random.Range(-30, 30), transform.position.y + UnityEngine.Random.Range(-30, 30), 1.9f), Quaternion.identity);
                 b.basa.lifeTime = basa.lifeTime;
                 b.isClone = true;
             }
@@ -47,6 +49,8 @@ public class Vortex : SkillBaseMono
 
 
         StartCoroutine(Destroy());
+        circleCollider2D = GetComponent<CircleCollider2D>();
+        Debug.Log(centerPosition);
     }
     IEnumerator Destroy()
     {
@@ -73,19 +77,29 @@ public class Vortex : SkillBaseMono
     // Update is called once per frame
     void FixedUpdate()
     {
-
-        foreach (Transform movingObject in movingObjects)
+        for (int i = movingObjects.Count - 1; i >= 0; i--)
         {
-            if (movingObject != null)
+            Transform movingObject = movingObjects[i];
+            Collider2D objectCollider = movingObject.GetComponent<Collider2D>();
+
+            if (movingObject == null || objectCollider == null)
             {
-                Vector3 offset = centerPosition - movingObject.position; // !!! змінив напрямок
+                movingObjects.RemoveAt(i);
+                continue;
+            }
+
+            if (Physics2D.OverlapCollider(circleCollider2D, new ContactFilter2D(), new Collider2D[1]) > 0)
+            {
+                Vector3 offset = centerPosition - movingObject.position; 
                 float distance = offset.magnitude;
                 Vector3 direction = offset.normalized;
+                float force = distance * bump; 
 
-                float force = distance * bump; // сила пропорційна відстані
-
-                // Оновлення положення предмета
                 movingObject.position += direction * force * Time.fixedDeltaTime;
+            }
+            else
+            {
+                movingObjects.RemoveAt(i);
             }
         }
     }
@@ -96,7 +110,7 @@ public class Vortex : SkillBaseMono
             if (collision.CompareTag("Enemy") && !movingObjects.Contains(collision.transform))
             {
                 movingObjects.Add(collision.transform);
-                collision.GetComponent<ElementActiveDebuff>().EffectTime(Elements.status.Wind, 5);
+                collision.GetComponent<ElementActiveDebuff>().ApplyEffect(Elements.status.Wind, 5);
             }
             else if (collision.CompareTag("Player"))
             {
@@ -104,26 +118,6 @@ public class Vortex : SkillBaseMono
                 if (move != null && !movingObjects.Contains(move.objTransform))
                 {
                     movingObjects.Add(move.objTransform);
-                }
-            }
-        }
-    }
-    public void OnTriggerExit2D(Collider2D collision)
-    {
-        if (!collision.isTrigger)
-        {
-            if (collision.CompareTag("Enemy") && !movingObjects.Contains(collision.transform))
-            {
-                int index = movingObjects.IndexOf(collision.transform);
-                movingObjects.RemoveAt(index);
-            }
-            else if (collision.CompareTag("Player"))
-            {
-                PlayerManager move = collision.GetComponent<PlayerManager>();
-                if (move != null && !movingObjects.Contains(move.objTransform))
-                {
-                    int index = movingObjects.IndexOf(collision.transform);
-                    movingObjects.RemoveAt(index);
                 }
             }
         }

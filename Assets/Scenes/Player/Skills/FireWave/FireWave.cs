@@ -52,7 +52,7 @@ public class FireWave : SkillBaseMono
 
             if (debuff != null)
             {
-                debuff.StartCoroutine(debuff.EffectTime(Elements.status.Fire, 5));
+                debuff.ApplyEffect(Elements.status.Fire, 5);
             }
             float damage = (basa.damage * debuff.elements.CurrentStatusValue(Elements.status.Water))
                 / debuff.elements.CurrentStatusValue(Elements.status.Fire);
@@ -66,29 +66,42 @@ public class FireWave : SkillBaseMono
 
             if (burnDamage != 0 && collision != null)
             {
-                StartCoroutine(Burn(health, 3,2, 0.2f));
+                burningEnemies.Add(health);
+
+                if (!isBurning && !health.IsDead)
+                {
+                    StartCoroutine(BurnAll(burnDamage, 3, 0.2f));
+                }
             }
         }
     }
-    IEnumerator Burn(FSMC_Executer enemy,float damage,float time,float delay)
+    private List<FSMC_Executer> burningEnemies = new List<FSMC_Executer>();
+    private bool isBurning = false;
+
+    IEnumerator BurnAll(float damage, float time, float delay)
     {
-        while (true)
+        isBurning = true;
+
+        while (burningEnemies.Count > 0 && time > 0)
         {
             yield return new WaitForSeconds(delay);
-            if (time > 0)
+
+            for (int i = burningEnemies.Count - 1; i >= 0; i--)
             {
-                time -= Time.fixedDeltaTime;
-                delay -= Time.fixedDeltaTime;
-                if (delay <= 0)
+                FSMC_Executer enemy = burningEnemies[i];
+
+                if (enemy == null || enemy.IsDead)
                 {
-                    enemy.TakeDamage(damage);
+                    burningEnemies.RemoveAt(i);
+                    continue;
                 }
+
+                enemy.TakeDamage(damage);
             }
-            else
-            {
-                //End Fire Anim
-                //ChangeToNotKick();
-            }
+
+            time -= delay;
         }
+
+        isBurning = false;
     }
 }

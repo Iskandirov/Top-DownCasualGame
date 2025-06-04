@@ -21,22 +21,27 @@ public class StunState : FSMC_Behaviour
         obj.SetActive(true);
         executer.anim.SetBool("Chase", false);
         path.maxSpeed = 0;
-        executer.GetComponent<BossAttack>().isTransitioning = true;
+        if (executer.isBoss)
+        {
+            executer.GetComponent<BossAttack>().isTransitioning = true;
+        }
         executer.anim.SetTrigger("Stun");
         executer.StartCoroutine(StunTime(stateMachine, executer));
     }
 
     public override void OnStateUpdate(FSMC_Controller stateMachine, FSMC_Executer executer)
     {
-        Debug.Log(stateMachine.GetFloat("Stun Time") + " Mid Stun");
+        //Debug.Log(stateMachine.GetFloat("Stun Time") + " Mid Stun");
     }
 
     public override void OnStateExit(FSMC_Controller stateMachine, FSMC_Executer executer)
     {
-        Debug.Log("Exit Stun");
         obj.SetActive(false);
         executer.anim.SetBool("Chase", true);
-        executer.GetComponent<BossAttack>().isTransitioning = false;
+        if (executer.isBoss)
+        {
+            executer.GetComponent<BossAttack>().isTransitioning = false;
+        }
     }
     IEnumerator StunTime(FSMC_Controller stateMachine, FSMC_Executer executer)
     {

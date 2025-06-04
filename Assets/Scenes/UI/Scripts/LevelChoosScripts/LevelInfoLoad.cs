@@ -49,7 +49,7 @@ public class LevelInfoLoad : MonoBehaviour
             LoadCharacterInfo();
         }
         playButton.sceneCount = levelID;
-        GameManager.Instance.UpdateText(GameManager.Instance.texts);
+       
     }
     public void LoadCharacterInfo()
     {
@@ -63,5 +63,6 @@ public class LevelInfoLoad : MonoBehaviour
         //specialAttack.text = character.spell;
         playerImage.sprite = GameManager.ExtractSpriteListFromTexture("heroes").First(s => s.name == character.Name);
         playerImage.SetNativeSize();
+        GameManager.Instance.UpdateText(GameManager.Instance.texts);
     }
 }

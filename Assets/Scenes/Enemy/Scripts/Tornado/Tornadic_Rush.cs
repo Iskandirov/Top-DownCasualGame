@@ -78,7 +78,7 @@ public class Tornadic_Rush : MonoBehaviour
             objTransform.Translate(direction * speedRush * Time.deltaTime);
             if (playerToched)
             {
-                PlayerManager.instance.TakeDamage(5f);
+                PlayerManager.instance.TakeDamage(15f);
             }
         }
     }
@@ -146,14 +146,14 @@ public class Tornadic_Rush : MonoBehaviour
         }
 
         // Чекаємо одну секунду перед спавном блискавок
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(5f);
 
         // Спавнимо блискавки
         GameObject[] spawnedObjects = GameObject.FindGameObjectsWithTag("Lightning");
         foreach (var obj in spawnedObjects)
         {
-            bool playerInZone = Physics2D.OverlapCircle(obj.transform.position, 1, LayerMask.GetMask("Player"));
-            Collider2D ShieldIsActive = Physics2D.OverlapCircle(obj.transform.position, 1, LayerMask.GetMask("PlayerIgnore"));
+            bool playerInZone = Physics2D.OverlapCircle(obj.transform.position, 3, LayerMask.GetMask("Player"));
+            Collider2D ShieldIsActive = Physics2D.OverlapCircle(obj.transform.position, 3, LayerMask.GetMask("PlayerIgnore"));
             if (playerInZone)
             {
                 if (ShieldIsActive != null)
@@ -174,6 +174,19 @@ public class Tornadic_Rush : MonoBehaviour
             Instantiate(lightningObj, spawnPosition, Quaternion.identity);
             Destroy(obj);
         }
+    }
+    private void OnDrawGizmos()
+    {
+        // Знаходимо всі об'єкти, які мають тег "Lightning"
+        GameObject[] spawnedObjects = GameObject.FindGameObjectsWithTag("Lightning");
+        Gizmos.color = Color.green; // напівпрозорий жовтий
+
+        foreach (var obj in spawnedObjects)
+        {
+            if (obj == null) continue;
+            Gizmos.DrawWireSphere(obj.transform.position, 3f);
+        }
+
     }
     //Lightnings End
 }

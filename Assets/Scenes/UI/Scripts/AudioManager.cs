@@ -80,6 +80,7 @@ public class AudioManager : MonoBehaviour
             Debug.LogWarning("Sound: " + name + " does not exist");
             return;
         }
-        sfxObj.PlayOneShot(s.clip);
+        float finalVolume = sfxObj.volume * s.volume;
+        sfxObj.PlayOneShot(s.clip,finalVolume);
     }
 }

@@ -53,7 +53,7 @@ public class SandStorm : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && !other.isTrigger)
+        if (other.CompareTag("Player") /*&& !other.isTrigger*/)
         {
             inZone = true;
             ApplyEffects();
@@ -62,7 +62,7 @@ public class SandStorm : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && !other.isTrigger)
+        if (other.CompareTag("Player")  /*&& !other.isTrigger*/)
         {
             inZone = false;
             isSlowed = false;

@@ -190,7 +190,7 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.46264648, y: 5.4751997}
@@ -208,10 +208,10 @@ CircleCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 32
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4063
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -300,6 +300,7 @@ MonoBehaviour:
   Cold: 1.1
   buffObj: {fileID: 8192456647856462604, guid: 02b693ce467fb704a9470b6735d44768, type: 3}
   debuffObj: {fileID: 8192456647856462604, guid: 78440980b83bf82439cd80733dd6f7b2, type: 3}
+  itemsFromBoss: {fileID: 0}
   characters:
   - id: 1
     health: 100
@@ -321,55 +322,56 @@ MonoBehaviour:
     spellCD: 10
   objTransform: {fileID: 0}
   statsToBuff:
-  - key: Speed
+  - key: move_speed
     value: 0
     parameters: 1
-  - key: Damage
+  - key: damage
     value: 0
     parameters: 2
-  - key: Health
+  - key: health
     value: 0
     parameters: 4
-  - key: Expiriance Aura
+  - key: exp_aura
     value: 0
     parameters: 5
-  - key: Fire skill`s damage
+  - key: fire_damage
     value: 0
     parameters: 6
-  - key: Armor
+  - key: armor
     value: 0
     parameters: 7
-  - key: Zones load time
+  - key: zone_time
     value: 0
     parameters: 8
-  - key: Water damage
+  - key: water_damage
     value: 0
     parameters: 9
-  - key: Poition Effect
+  - key: poition_effect
     value: 1
     parameters: 10
-  - key: Skill CD
+  - key: skill_cd
     value: 0
     parameters: 11
-  - key: Explosions Damage
+  - key: explosions_damage
     value: 0
     parameters: 12
-  - key: Regeneration
+  - key: regeneration
     value: 0
     parameters: 13
-  - key: Expiriance gain
+  - key: expiriance_gain
     value: 0
     parameters: 14
-  - key: Attack speed
+  - key: attack_speed
     value: 0
     parameters: 3
-  - key: Potions Shield
+  - key: potions_shield
     value: 0
     parameters: 15
-  - key: Equipment buff
+  - key: equipment_buff
     value: 0
     parameters: 16
   PotionShield: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+  activePerkCount: 0
   potions:
   - key: Poition Effect
     isActive: 0
@@ -400,6 +402,7 @@ MonoBehaviour:
   bombImg: {fileID: 21300000, guid: e836eb96448593547870a3b7d224874d, type: 3}
   canBeSaved: 0
   potionUseVFX: {fileID: 8136293977044088614, guid: a159bb61be3c65f4f8cd687434197c3e, type: 3}
+  countActivePotions: 0
   baseSkillVFX: {fileID: 9066053547541169698}
 --- !u!95 &2933150211668163815
 Animator:
@@ -456,7 +459,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sphere: {fileID: 6918838169257280683, guid: 041f08954d4fc1d4aa8be00b9beef5da, type: 3}
   countSphere: 0
-  countSphereMax: 2
+  countSphereMax: 4
   isStart: 0
 --- !u!182 &1593127917879164741
 WindZone:
