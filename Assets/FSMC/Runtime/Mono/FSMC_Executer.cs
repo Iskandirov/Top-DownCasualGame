@@ -91,15 +91,16 @@ namespace FSMC.Runtime
                 return state != null && state.Name == "Death";
             }
         }
-        public void TakeDamage(float damage)
+        public void TakeDamage(float damage, float damageMultiplier)
         {
-           
-            SetDamage(damage);
+            float finalDamage = damage * damageMultiplier;
+            Debug.Log(finalDamage);
+            SetDamage(finalDamage);
             if (health > 0 && !IsDead)
             {
                 StateMachine.SetTrigger("Hit");
             }
-            health -= damage;
+            health -= finalDamage;
         }
       
         private void Awake()

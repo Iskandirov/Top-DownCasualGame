@@ -33,6 +33,8 @@ public class SkillBaseMono : MonoBehaviour
     public SkillBase basa;
     public int skillId;
     public int currentLevel;
+    [HideInInspector]
+    public float damageMultiplier = 1f;
     public PlayerManager player;
     public void DestroyObject(GameObject obj)
     {
@@ -64,39 +66,41 @@ public class SkillBaseMono : MonoBehaviour
         basa = setter;
         skillId = id;
     }
-    public void CreateSpellByType(string type,SkillBaseMono obj, SkillBaseMono objInfo,int currentLevel)
+    public void CreateSpellByType(string type,SkillBaseMono obj, SkillBaseMono objInfo,int currentLevel, float dmgMultiplier)
     {
         switch (type)
         {
             case "base":
-                CreateBaseSpell(obj, objInfo, currentLevel);
+                CreateBaseSpell(obj, objInfo, currentLevel, dmgMultiplier);
                 break;
             case "aoe":
-                CreateAOESpell(obj, objInfo, currentLevel);
+                CreateAOESpell(obj, objInfo, currentLevel, dmgMultiplier);
                 break;
             default:
-                CreateBaseSpell(obj, objInfo, currentLevel);
+                CreateBaseSpell(obj, objInfo, currentLevel, dmgMultiplier);
                 break;
         }
         
     }
-    public void CreateBaseSpell(SkillBaseMono mono, SkillBaseMono objInfo, int currentLevel)
+    public void CreateBaseSpell(SkillBaseMono mono, SkillBaseMono objInfo, int currentLevel, float dmgMultiplier)
     {
         player = PlayerManager.instance;
         SkillBaseMono a = Instantiate(mono, new Vector3(player.objTransform.position.x, player.objTransform.position.y, 0f), Quaternion.identity);
         a.basa = objInfo.basa;
         a.currentLevel = currentLevel;
+        a.damageMultiplier = dmgMultiplier;
         if (basa.isPassive)
         {
             a.transform.parent = player.transform;
         }
     }
-    public void CreateAOESpell(SkillBaseMono mono, SkillBaseMono objInfo, int currentLevel) 
+    public void CreateAOESpell(SkillBaseMono mono, SkillBaseMono objInfo, int currentLevel, float dmgMultiplier) 
     {
         player = PlayerManager.instance;
         SkillBaseMono a = Instantiate(mono, new Vector3(player.objTransform.position.x + UnityEngine.Random.Range(-20, 20), player.objTransform.position.y + UnityEngine.Random.Range(-20, 20), 0f), Quaternion.identity);
         a.basa = objInfo.basa;
         a.currentLevel = currentLevel;
+        a.damageMultiplier = dmgMultiplier;
         if (basa.isPassive)
         {
             a.transform.parent = player.transform;

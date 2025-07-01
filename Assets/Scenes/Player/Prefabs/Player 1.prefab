@@ -101,10 +101,10 @@ GameObject:
   - component: {fileID: 6357246527000481935}
   - component: {fileID: 1593127917879164741}
   - component: {fileID: 5799365297675001301}
-  - component: {fileID: 983609484922862332}
   - component: {fileID: 8149486496025639625}
   - component: {fileID: 2704358882883058350}
   - component: {fileID: 2818735787618962320}
+  - component: {fileID: 1730390086683620762}
   m_Layer: 3
   m_Name: Player 1
   m_TagString: Player
@@ -257,7 +257,7 @@ MonoBehaviour:
   isBaseSkillActive: 0
   isDashSkillActive: 0
   isTutor: 0
-  heroID: 1
+  heroID: 9999
   slowArray: []
   anim: {fileID: 8149486496025639625}
   playerHealthPoint: 150
@@ -517,14 +517,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &983609484922862332
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8313530370077628586}
-  m_Mesh: {fileID: 0}
 --- !u!114 &8149486496025639625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -620,6 +612,14 @@ CircleCollider2D:
   m_Offset: {x: 0.059565227, y: 4.9458823}
   serializedVersion: 2
   m_Radius: 1.0246633
+--- !u!33 &1730390086683620762
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8313530370077628586}
+  m_Mesh: {fileID: 0}
 --- !u!1 &9086333637465294124
 GameObject:
   m_ObjectHideFlags: 0

@@ -109,7 +109,7 @@ public class Beam : SkillBaseMono
         ElementActiveDebuff debuff = collision.GetComponent<ElementActiveDebuff>();
         debuff.ApplyEffect(Elements.status.Steam, 5);
         
-        objHealt.TakeDamage((basa.damage * debuff.elements.CurrentStatusValue(Elements.status.Steam)) / debuff.elements.CurrentStatusValue(Elements.status.Cold));
+        objHealt.TakeDamage((basa.damage * debuff.elements.CurrentStatusValue(Elements.status.Steam)) / debuff.elements.CurrentStatusValue(Elements.status.Cold), damageMultiplier);
 
         GameManager.Instance.FindStatName("beamDamage", (basa.damage * debuff.elements.CurrentStatusValue(Elements.status.Steam))
         / debuff.elements.CurrentStatusValue(Elements.status.Cold));

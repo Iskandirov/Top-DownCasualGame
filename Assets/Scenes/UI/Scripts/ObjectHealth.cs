@@ -52,7 +52,7 @@ public class ObjectHealth : MonoBehaviour
         {
             foreach (var enemy in enemiesInExplosionArea)
             {
-                enemy.TakeDamage(explosionDamage);
+                enemy.TakeDamage(explosionDamage,1);
             }
         }
         if (playerInExplosionArea != null)

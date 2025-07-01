@@ -1,3 +1,4 @@
+using Pathfinding;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -50,12 +51,24 @@ public class Vortex : SkillBaseMono
 
         StartCoroutine(Destroy());
         circleCollider2D = GetComponent<CircleCollider2D>();
-        Debug.Log(centerPosition);
+        //Debug.Log(centerPosition);
     }
     IEnumerator Destroy()
     {
         yield return new WaitForSeconds(basa.lifeTime);
-        //DamageDeal();
+
+        // Повертаємо керування AIPath для всіх ворогів, які ще залишились у списку
+        foreach (var movingObject in movingObjects)
+        {
+            if (movingObject == null) continue;
+            var aiPath = movingObject.GetComponent<Pathfinding.AIPath>();
+            if (aiPath != null)
+            {
+                aiPath.enabled = true;
+                aiPath.canMove = true;
+            }
+        }
+
         Destroy(gameObject);
     }
     //void DamageDeal()
@@ -77,32 +90,67 @@ public class Vortex : SkillBaseMono
     // Update is called once per frame
     void FixedUpdate()
     {
+        // Оновлюємо центр вихору кожен кадр
+        centerPosition = transform.position;
+
         for (int i = movingObjects.Count - 1; i >= 0; i--)
         {
             Transform movingObject = movingObjects[i];
-            Collider2D objectCollider = movingObject.GetComponent<Collider2D>();
-
-            if (movingObject == null || objectCollider == null)
+            if (movingObject == null)
             {
                 movingObjects.RemoveAt(i);
                 continue;
             }
 
-            if (Physics2D.OverlapCollider(circleCollider2D, new ContactFilter2D(), new Collider2D[1]) > 0)
+            // Перевірка чи ворог ще в зоні вихору
+            if (Physics2D.OverlapPoint(movingObject.position, LayerMask.GetMask("Enemy", "Player")))
             {
-                Vector3 offset = centerPosition - movingObject.position; 
+                Vector3 offset = centerPosition - movingObject.position;
                 float distance = offset.magnitude;
-                Vector3 direction = offset.normalized;
-                float force = distance * bump; 
+                if (distance < 0.01f) continue; // вже в центрі
 
-                movingObject.position += direction * force * Time.fixedDeltaTime;
+                Vector3 direction = offset.normalized;
+                float force = distance * bump;
+                // Пріоритет: Rigidbody2D -> AIPath -> Transform
+                Rigidbody2D rb = movingObject.GetComponent<Rigidbody2D>();
+                //Debug.Log($"Vortex force: {force}, direction: {direction}, bump: {bump}, distance: {distance}, mass: {rb.mass}");
+
+                var aiPath = movingObject.GetComponent<AIPath>();
+
+                if (rb != null)
+                {
+                    
+                    if (aiPath != null)
+                    {
+                        aiPath.canMove = false;
+                        aiPath.enabled = false; // Повністю вимикаємо AIPath
+                    }
+                    rb.velocity = Vector2.zero;
+                    rb.angularVelocity = 0f;
+                    rb.AddForce(direction * force, ForceMode2D.Impulse);
+                }
+                else if (aiPath != null)
+                {
+                    // Вимикаємо рух AIPath і рухаємо вручну
+                    aiPath.canMove = false;
+                    movingObject.position += direction * force * Time.fixedDeltaTime;
+                }
+                else
+                {
+                    // Якщо нічого немає — рухаємо трансформ
+                    movingObject.position += direction * force * Time.fixedDeltaTime;
+                }
             }
             else
             {
+                // Ворог вийшов із зони — повертаємо керування AIPath
+                var aiPath = movingObject.GetComponent<Pathfinding.AIPath>();
+                if (aiPath != null) aiPath.canMove = true;
                 movingObjects.RemoveAt(i);
             }
         }
     }
+   
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if (!collision.isTrigger)

@@ -45,9 +45,10 @@ public class GetScore : MonoBehaviour
                     percent = Mathf.RoundToInt((result / timeToSpawnBoss) * 100);
                     if (percent >= 100 && isWinPanel)
                     {
-                        score = 5000 * (SceneManager.GetActiveScene().buildIndex - 1)  + 100 + GameManager.Instance.score;//Mathf.Pow(1 + (0.2f * timeToSpawnBoss), 1.1f) + 1) * (scroreBoost + SceneManager.GetActiveScene().buildIndex - 1);
+                        int sceneIndex = SceneManager.GetActiveScene().buildIndex;
+                        score = 5000f * Mathf.Pow(5f, sceneIndex - 1) + 100 + GameManager.Instance.score;//Mathf.Pow(1 + (0.2f * timeToSpawnBoss), 1.1f) + 1) * (scroreBoost + SceneManager.GetActiveScene().buildIndex - 1);
                         killCountScore.text = GameManager.Instance.score.ToString();
-                        winCountScore.text = (5000 * (SceneManager.GetActiveScene().buildIndex - 1)).ToString();
+                        winCountScore.text = (5000f * Mathf.Pow(5f, sceneIndex - 1)).ToString();
                         bossCountScore.text = "100";
                         percent = 100;
                     }

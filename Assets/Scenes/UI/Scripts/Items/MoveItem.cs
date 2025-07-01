@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class MoveItem : MonoBehaviour ,IPointerClickHandler
 {
@@ -126,6 +128,34 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
         }
         return false;
     }
+    int PriceCalculate(int price)
+    {
+        // Визначаємо коефіцієнт рідкості
+        int rarityMultiplier = 1;
+        switch (fliedSlots.objToCraft.RareTag)
+        {
+            case "Common":
+                rarityMultiplier = 1;
+                break;
+            case "Rare":
+                rarityMultiplier = 2;
+                break;
+            case "Mythic":
+                rarityMultiplier = 4;
+                break;
+            case "Legendary":
+                rarityMultiplier = 8;
+                break;
+        }
+
+        // Визначаємо коефіцієнт рівня (1, 2, 4, 8, 16)
+        int level = int.Parse(fliedSlots.objToCraft.level);
+        int levelMultiplier = (int)Mathf.Pow(2, level - 1);
+
+        // Базова ціна (price) множиться на коефіцієнти
+        return price * rarityMultiplier * levelMultiplier;
+
+    }
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Right || eventData.button == PointerEventData.InputButton.Left)
@@ -156,7 +186,7 @@ public class MoveItem : MonoBehaviour ,IPointerClickHandler
                     item.raretag = fliedSlots.objToCraft.RareTag;
                     int price = int.Parse(fliedSlots.objToCraft.Price);
                     int level = int.Parse(fliedSlots.objToCraft.level);
-                    item.price.text = (price * level).ToString();
+                    item.price.text = PriceCalculate(price).ToString()/* (price * level)*/;
 
                     int number;
                     if (int.TryParse(item.level.text, out number))

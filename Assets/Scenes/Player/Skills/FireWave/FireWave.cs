@@ -29,7 +29,7 @@ public class FireWave : SkillBaseMono
         {
             burnDamage = basa.stats[4].value;
         }
-        basa.damage = basa.damage * player.Fire;
+        //basa.damage = basa.damage * player.Fire;
         objTransform.position = player.ShootPoint.transform.position;
     }
     public void IsNeedToDestroy()
@@ -56,8 +56,7 @@ public class FireWave : SkillBaseMono
             }
             float damage = (basa.damage * debuff.elements.CurrentStatusValue(Elements.status.Water))
                 / debuff.elements.CurrentStatusValue(Elements.status.Fire);
-
-            health.TakeDamage(damage);
+            health.TakeDamage(damage, damageMultiplier);
             GameManager.Instance.FindStatName("fireWaveDamage", damage);
             if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 3 && s.isActive == true) != null)
             {
@@ -96,7 +95,7 @@ public class FireWave : SkillBaseMono
                     continue;
                 }
 
-                enemy.TakeDamage(damage);
+                enemy.TakeDamage(damage, damageMultiplier);
             }
 
             time -= delay;

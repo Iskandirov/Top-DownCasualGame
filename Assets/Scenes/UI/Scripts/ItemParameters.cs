@@ -5,6 +5,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class ItemParameters : MonoBehaviour
 {
@@ -45,23 +46,26 @@ public class ItemParameters : MonoBehaviour
             isCollected = true;
 
             SaveItem();
-           
-            itemPanel.gameObject.SetActive(true);
-            LootManager.SetPanelsInfoToLoot(this, itemPanel);
+            ItemParameters item = Instantiate(itemPanel, itemPanel.transform.position, Quaternion.identity, itemPanel.transform.parent);
+            //GameManager.Instance.OpenPanel(item.gameObject);
+            item.gameObject.SetActive(true);
+            LootManager.SetPanelsInfoToLoot(this, item);
             itemImage.sprite = GameManager.ExtractSpriteListFromTexture("items").First(instance => instance.name == itemName);
             itemImage.SetNativeSize();
             var rectTransform = itemImage.GetComponent<RectTransform>();
-            rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x * 5, rectTransform.sizeDelta.y * 5);
+            //rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x * 5, rectTransform.sizeDelta.y * 5);
             itemNameTxt.text = itemName;
             itemDescription.text = Description;
             Destroy(gameObject);
             // Óגוהמלכÿול LootManager מ סבמנו ןנוהלועא
-            LootManager.inst.ItemCollected();
+            
             return;
         }
     }
     public void EndGame()
     {
+        GameManager.Instance.ClosePanel(gameObject);
+        LootManager.inst.ItemCollected();
         if (LootManager.inst.activeItemsCount <= 0)
         {
             if (!isTutor)

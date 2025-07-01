@@ -40,7 +40,7 @@ public class CharacterSystem : MonoBehaviour
         Debug.Log(character);
         money.text = GetScore.SaveMoney_Static(int.Parse(money.text) - int.Parse(price.text));
         GameManager.Instance.SaveCharacterUpgrade(character.id);
-        PlayerPrefs.SetInt("Character", character.id);
+        //PlayerPrefs.SetInt("Character", character.id);
         character.check.SetActive(true);
         button.interactable = false;
         GameManager.Instance.LoadInventory(GameManager.Instance.itemsRead);

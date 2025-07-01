@@ -38,7 +38,7 @@ public class SpawnManager : MonoBehaviour
     }
     public void DestroyBarrels()
     {
-        for (int i = 0; i < barrelPoolSize-1 ;i++)
+        for (int i = 0; i < barrelLootPool.Count; i++)
         {
             Destroy(barrelLootPool[i]);
         }

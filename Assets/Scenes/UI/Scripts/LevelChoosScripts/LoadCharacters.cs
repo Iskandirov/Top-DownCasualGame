@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class LoadCharacters : MonoBehaviour
@@ -31,28 +32,43 @@ public class LoadCharacters : MonoBehaviour
         {
             File.Create(path);
         }
-
         int offset = 220;
         RectTransform parentRect = GetComponent<RectTransform>();
-        if (transform.childCount <= 1)
+        Debug.Log(transform.childCount);
+        // «бираЇмо вс≥ вже створен≥ ID персонаж≥в серед доч≥рн≥х об'Їкт≥в
+        HashSet<int> existingIds = new HashSet<int>();
+        foreach (Transform child in transform)
         {
-            foreach (var character in itemsRead)
+            var charSelect = child.GetComponent<CharacterSelect>();
+            if (charSelect != null)
+                existingIds.Add(charSelect.charID);
+        }
+
+        foreach (var character in itemsRead)
+        {
+            if (character.status != "buy" && !existingIds.Contains(character.ID))
             {
-                if (character.status != "buy")
-                {
-                    CharacterSelect example = Instantiate(characterPrefab, transform.parent);
-                    example.transform.SetParent(transform, false);
-                    example.transform.position = Vector3.zero;
-                    example.transform.localPosition = new Vector3(-parentRect.offsetMin.x + offset, parentRect.offsetMin.y - 250, 0);
-                    example.characterName.text = character.Name;
-                    example.characterImage.sprite = GameManager.ExtractSpriteListFromTexture("heroes").First(c => c.name == character.Name);
-                    example.charID = character.ID;
-                    example.characterImage.SetNativeSize();
-                    example.active.SetActive(character.isEquiped);
-                    offset += 220;
-                }
+                CharacterSelect example = Instantiate(characterPrefab, transform.parent);
+                example.transform.SetParent(transform, false);
+                example.transform.position = Vector3.zero;
+                example.transform.localPosition = new Vector3(-parentRect.offsetMin.x + offset, parentRect.offsetMin.y - 250, 0);
+                example.characterName.text = character.Name;
+                example.characterImage.sprite = GameManager.ExtractSpriteListFromTexture("heroes").First(c => c.name == character.Name);
+                example.charID = character.ID;
+                example.characterImage.SetNativeSize();
+                example.active.SetActive(character.isEquiped);
+                offset += 220;
             }
         }
     }
-   
+    //private void OnDisable()
+    //{
+    //    foreach (Transform child in transform)
+    //    {
+    //        if (child.GetComponent<CharacterSelect>() != null)
+    //        {
+    //            Destroy(child.gameObject);
+    //        }
+    //    }
+    //}
 }

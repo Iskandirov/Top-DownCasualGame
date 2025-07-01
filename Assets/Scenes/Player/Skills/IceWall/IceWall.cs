@@ -106,7 +106,7 @@ public class IceWall : SkillBaseMono
             enemy.SetCurrentState("Slow");
             if (damageTick <= 0)
             {
-                enemy.TakeDamage(basa.damage * cold  / collision.GetComponent<ElementActiveDebuff>().elements.CurrentStatusValue(Elements.status.Fire));
+                enemy.TakeDamage(basa.damage * cold  / collision.GetComponent<ElementActiveDebuff>().elements.CurrentStatusValue(Elements.status.Fire), damageMultiplier);
                 damageTick = basa.damageTickMax;
             }
         }

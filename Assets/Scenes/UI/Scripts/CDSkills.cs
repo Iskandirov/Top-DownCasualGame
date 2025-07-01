@@ -67,15 +67,19 @@ public class CDSkills : MonoBehaviour
     }
     private IEnumerator WaitToAnotherObject(int count,float delay)
     {
+        float followUpMultiplier = 1f;
+
         for (int i = 0; i < count - 1; i++)
         {
             yield return new WaitForSeconds(delay);
-            skillMono.CreateSpellByType(type, skill.objToSpawn, skillMono, currentStatLevel);
+            followUpMultiplier = 1f;
+            followUpMultiplier = followUpMultiplier / (i + 1.3f);
+            skillMono.CreateSpellByType(type, skill.objToSpawn, skillMono, currentStatLevel, followUpMultiplier);
         }
     }
     void Spawn(int counter)
     {
-        skillMono.CreateSpellByType(type, skill.objToSpawn, skillMono, currentStatLevel);
+        skillMono.CreateSpellByType(type, skill.objToSpawn, skillMono, currentStatLevel, skillMono.damageMultiplier);
 
         StartCoroutine(WaitToAnotherObject(counter, skill.spawnDelay));
     }
@@ -86,13 +90,13 @@ public class CDSkills : MonoBehaviour
             if (PlayerManager.instance.isAuto && abilityId == 0)
             {
                 Spawn((int)skill.countObjects);
-                skillCD = skill.stepMax;
+                skillCD = Mathf.Max(skill.stepMax, 0.2f);
             }
             else if(Input.GetKey(keyCode))
             {
                 //CineMachineCameraShake.instance.Shake(10, .1f);
                 Spawn((int)skill.countObjects);
-                skillCD = skill.stepMax;
+                skillCD = Mathf.Max(skill.stepMax, 0.2f);
             }
         }
         else if (skill.isPassive && skill.countObjects > 0)

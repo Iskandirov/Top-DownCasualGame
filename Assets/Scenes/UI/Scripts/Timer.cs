@@ -23,11 +23,11 @@ public class Timer : MonoBehaviour
             yield return null;
         }
         GameManager.Instance.OpenPanel(GameManager.Instance.winPanel, true, true);
-        GameManager.Instance.TimeScale(0);
     }
     // Update is called once per frame
     void FixedUpdate()
     {
+
         time += Time.fixedDeltaTime;
         text.text = time.ToString("00.00");
     }

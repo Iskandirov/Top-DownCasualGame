@@ -56,7 +56,7 @@ public class FallinMeteor : SkillBaseMono
                 }
                 float damage = (basa.damage * debuff.elements.CurrentStatusValue(Elements.status.Water))
                     / debuff.elements.CurrentStatusValue(Elements.status.Fire);
-                creature.TakeDamage(damage);
+                creature.TakeDamage(damage, damageMultiplier);
                 GameManager.Instance.FindStatName("meteorDamage", damage);
                 if (basa.stats[3].isTrigger)
                 {

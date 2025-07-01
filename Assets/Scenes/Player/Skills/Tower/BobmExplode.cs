@@ -25,7 +25,7 @@ public class BobmExplode : MonoBehaviour
         {
             if (collider.CompareTag("Enemy"))
             {
-                collider.GetComponent<FSMC_Executer>().TakeDamage(damage * fire);
+                collider.GetComponent<FSMC_Executer>().TakeDamage(damage * fire,1);
                 GameManager.Instance.FindStatName("bombDamage", damage * fire);
             }
             else if (collider.CompareTag("Barrel") && collider != null)

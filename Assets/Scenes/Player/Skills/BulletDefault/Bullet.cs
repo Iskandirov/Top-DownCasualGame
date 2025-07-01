@@ -68,8 +68,7 @@ public class Bullet : SkillBaseMono
             ElementActiveDebuff debuff = collision.GetComponent<ElementActiveDebuff>();
             debuff.ApplyEffect(Elements.status.Fire, 5);
             FSMC_Executer enemyMove = collision.GetComponent<FSMC_Executer>();
-            
-            enemyMove.TakeDamage(basa.damage);
+            enemyMove.TakeDamage(basa.damage, damageMultiplier);
             if (isLifeSteal && player.playerHealthPoint < player.playerHealthPointMax)
             {
                 if (player.playerHealthPoint + basa.damage * lifeStealPercent < player.playerHealthPointMax)

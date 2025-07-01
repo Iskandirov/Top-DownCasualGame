@@ -229,7 +229,6 @@ public class GameManager : MonoBehaviour
     }
     private void FixedUpdate()
     {
-
         if (!IsSettingsPage && IsGamePage && !PlayerManager.instance.isTutor)
         {
             ShowLevel();
@@ -340,14 +339,14 @@ public class GameManager : MonoBehaviour
             quest.SetQuestData();
         }
         seq.OnComplete(() => seq.Kill());
-
+        TimeScale(0);
     }
     public void OpenPanel(GameObject panel)
     {
         int i = UnityEngine.Random.Range(1, 4);
         AudioManager.instance.PlaySFX("OpenPanel_" + i);
         panel.SetActive(true);
-        //transform.DoSha
+        TimeScale(0);
         DoShakeScaleTween(panel.transform);
         isPanelOpen = true;
 
@@ -893,6 +892,7 @@ public class GameManager : MonoBehaviour
                     item.Showed = true;
                     InfoFiller.SetActive(true);
                     InfoImg.sprite = ExtractSpriteListFromTexture("enemy").First(e => e.name == item.Name + "_" + item.ID);
+                    InfoImgPanel.SetNativeSize();
                     InfoName.text = item.Name;
                     ShowedEnemy.Name = item.Name;
                     ShowedEnemy.MoveSpeed = item.MoveSpeed;
@@ -900,6 +900,7 @@ public class GameManager : MonoBehaviour
                     ShowedEnemy.Damage = item.Damage;
 
                     InfoImgPanel.sprite = ExtractSpriteListFromTexture("enemy").First(e => e.name == item.Name + "_" + item.ID);
+                    InfoImgPanel.SetNativeSize();
                     InfoNamePanel.text = ShowedEnemy.Name.ToString();
                     InfoStatDamagePanel.text = ShowedEnemy.Damage.ToString();
                     InfoStatHealtPanel.text = ShowedEnemy.Health.ToString();

@@ -99,7 +99,7 @@ public class MagicAxe : SkillBaseMono
             ElementActiveDebuff debuff = collision.GetComponent<ElementActiveDebuff>();
             debuff.ApplyEffect(Elements.status.Cold, 5);
 
-            collision.GetComponent<FSMC_Executer>().TakeDamage(basa.damage);
+            collision.GetComponent<FSMC_Executer>().TakeDamage(basa.damage, damageMultiplier);
         }
     }
 }

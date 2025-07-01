@@ -66,7 +66,7 @@ public class Lightning : SkillBaseMono
                 }
                
                 transform.position = enemyToShoot.transform.position;
-                enemy.TakeDamage(basa.damage * player.Electricity / debuff.elements.CurrentStatusValue(Elements.status.Electricity));
+                enemy.TakeDamage(basa.damage * player.Electricity / debuff.elements.CurrentStatusValue(Elements.status.Electricity), damageMultiplier);
                 GameManager.Instance.FindStatName("lightDamage", basa.damage * player.Electricity
                     / debuff.elements.CurrentStatusValue(Elements.status.Electricity));
                 CineMachineCameraShake.instance.Shake(10, .1f);

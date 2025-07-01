@@ -34,7 +34,6 @@ public class LootManager : MonoBehaviour
     }
     public void DropLoot(bool isTutor, Transform pos)
     {
-        Debug.Log("DropLoot");
         ItemRarity();
         int itemCount = random.Next(3, 11); // Количество предметов от 3 до 10
         float angleStep = 360f / itemCount; // Угол между предметами

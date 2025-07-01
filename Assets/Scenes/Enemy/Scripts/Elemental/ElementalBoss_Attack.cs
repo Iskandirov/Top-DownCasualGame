@@ -1,4 +1,5 @@
 using FSMC.Runtime;
+using Spine.Unity;
 using System.CodeDom.Compiler;
 using System.Collections;
 using System.Collections.Generic;
@@ -27,6 +28,7 @@ public enum AttackType
 public class ElementalBoss_Attack : MonoBehaviour
 {
     [Header("Basic Settings")]
+    
     public List<Collider2D> fistHitZone;
     public List<Collider2D> bodyParts;
 
@@ -48,7 +50,19 @@ public class ElementalBoss_Attack : MonoBehaviour
     public List<Rigidbody2D> enemy = new List<Rigidbody2D>();
 
     public List<BossAttacks> bossAttacks = new List<BossAttacks>();
+    private List<Coroutine> attackCoroutines = new List<Coroutine>();
+    private int currentPhase = 1;
+
+    // Визначаємо, які атаки активні на кожній фазі (індекси з bossAttacks)
+    private readonly int[][] phaseAttackIndices = new int[][]
+    {
+        new int[] { 0, 1 },           // Фаза 1: перші дві атаки
+        new int[] { 0, 1, 2, 3 },     // Фаза 2: додається 2 атаки 
+        new int[] { 0, 1, 2, 3, 4 }   // Фаза 3: додається ще одна атака
+    };
     private bool isAttacking = false;
+    public SkeletonAnimation anim;
+    public FSMC_Executer boss;
 
     [Header("Meteor Settings")]
     public GameObject meteorMarkerPrefab;
@@ -90,10 +104,37 @@ public class ElementalBoss_Attack : MonoBehaviour
         objTransform = transform;
         objShield = FindObjectOfType<Shield>();
         objCollider = GetComponent<Collider2D>();
+        boss = GetComponent<FSMC_Executer>();
 
-        foreach (var attack in bossAttacks)
+        StartPhase(currentPhase);
+
+        //foreach (var attack in bossAttacks)
+        //{
+        //    StartCoroutine(AttackRoutine(attack));
+        //}
+    }
+    void StartPhase(int phase)
+    {
+        // Зупиняємо всі попередні корутини атак
+        foreach (var coroutine in attackCoroutines)
+            if (coroutine != null) StopCoroutine(coroutine);
+        attackCoroutines.Clear();
+
+        // Запускаємо корутини лише для атак цієї фази
+        foreach (int idx in phaseAttackIndices[phase - 1])
         {
-            StartCoroutine(AttackRoutine(attack));
+            if (idx >= 0 && idx < bossAttacks.Count)
+                attackCoroutines.Add(StartCoroutine(AttackRoutine(bossAttacks[idx])));
+        }
+    }
+
+    // Викликайте цей метод при переході на нову фазу (наприклад, при зменшенні HP)
+    public void NextPhase()
+    {
+        if (currentPhase < phaseAttackIndices.Length)
+        {
+            currentPhase++;
+            StartPhase(currentPhase);
         }
     }
     IEnumerator AttackRoutine(BossAttacks attack)
@@ -108,34 +149,33 @@ public class ElementalBoss_Attack : MonoBehaviour
                 foreach (var vfx in attack.vfxObjects)
                     vfx?.SetActive(true);
 
-                //isAttacking = true;
-                objAnim.SetTrigger(attack.triggerName);
+                //isAttacking = true; //SPINE анімація вже тригериться в ExecuteAttack, тому тут не потрібно
+                //anim.AnimationName = attack.clipName;
+                ExecuteAttack(attack.type);
+                //objAnim.SetTrigger(attack.triggerName);
                 // Подальші дії тригеряться через Animation Event
             }
         }
     }
-    public void ExecuteAttack(string typeName)
+    public void ExecuteAttack(AttackType type)
     {
-        //if (isAttacking) return;
-        if (!System.Enum.TryParse(typeName, out AttackType type)) return;
-
         var attack = GetAttackByType(type);
+        if (attack == null) return;
 
         switch (type)
         {
             case AttackType.Fist:
                 if (playerInZone && objCollider.IsTouching(playerCollider))
                 {
-                    ApplyForceTo(playerRB, GetAttackByType(type).damage);
+                    ApplyForceTo(playerRB, attack.damage);
                 }
-
-                ToggleVFX(GetAttackByType(type), false);
+                ToggleVFX(attack, false);
                 CineMachineCameraShake.instance.Shake(10, .1f);
                 break;
             case AttackType.Jump:
                 if (playerInZone)
                 {
-                    ApplyForceTo(playerRB, GetAttackByType(type).damage);
+                    ApplyForceTo(playerRB, attack.damage);
                 }
                 if (enemyInZone)
                 {
@@ -144,8 +184,7 @@ public class ElementalBoss_Attack : MonoBehaviour
                         StartCoroutine(ReducePushForce(enemyRB, initialForce));
                     }
                 }
-
-                ToggleVFX(GetAttackByType(type), false);
+                ToggleVFX(attack, false);
                 CineMachineCameraShake.instance.Shake(30, .1f);
                 break;
             case AttackType.Meteor:
@@ -158,21 +197,21 @@ public class ElementalBoss_Attack : MonoBehaviour
                 StartCoroutine(StonePrisonRoutine());
                 break;
         }
-        StartCoroutine(ResetAttackFlagAfterDelay(GetAnimationClipLength(attack.clipName)));
-        //isAttacking = false;
-        objAnim.SetTrigger(typeName);
+        StartCoroutine(ResetAttackFlagAfterDelay(GetSpineAnimationLength(attack.clipName)));
+        // Якщо потрібно, можна викликати подію для Spine (наприклад, через delegate або event)
+        // або просто синхронізувати з анімацією через Spine AnimationState, якщо потрібно.
         GetComponent<FSMC_Executer>().SetTrigger("Attack");
     }
-    float GetAnimationClipLength(string clipName)
+    float GetSpineAnimationLength(string animationName)
     {
-        var clips = objAnim.runtimeAnimatorController.animationClips;
-        foreach (var clip in clips)
-        {
-            if (clip.name == clipName)
-                return clip.length;
-        }
+        if (anim == null || anim.skeleton == null || anim.skeleton.Data == null)
+            return 1f; // fallback
 
-        Debug.LogWarning($"Анімація '{clipName}' не знайдена!");
+        Spine.Animation animation = anim.skeleton.Data.FindAnimation(animationName);
+        if (animation != null)
+            return animation.Duration;
+
+        Debug.LogWarning($"Spine анімація '{animationName}' не знайдена!");
         return 1f; // fallback
     }
     IEnumerator ResetAttackFlagAfterDelay(float delay)
@@ -336,6 +375,11 @@ public class ElementalBoss_Attack : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if (boss.health < boss.healthMax * 0.66f && currentPhase == 1)
+            NextPhase();
+        if (boss.health < boss.healthMax * 0.33f && currentPhase == 2)
+            NextPhase();
+
         if (sand == null) return;
 
         if (sand.inZone != previousZoneState)
@@ -388,20 +432,20 @@ public class ElementalBoss_Attack : MonoBehaviour
         
 
         yield return new WaitForSeconds(delayBeforeSpawn);
+        Instantiate(stonePrisonPrefabHorizontal, finalPosition, Quaternion.identity);
+        //// Спавнимо бар'єри по колу навколо гравця
+        //for (int i = 0; i < numberOfBarriers; i++)
+        //{
+        //    float angle = i * Mathf.PI * 2 / numberOfBarriers;
+        //    Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+        //    Vector2 spawnPos = finalPosition + direction.normalized * stoneSpawnRadius;
 
-        // Спавнимо бар'єри по колу навколо гравця
-        for (int i = 0; i < numberOfBarriers; i++)
-        {
-            float angle = i * Mathf.PI * 2 / numberOfBarriers;
-            Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
-            Vector2 spawnPos = finalPosition + direction.normalized * stoneSpawnRadius;
+        //    // Визначаємо, чи напрямок ближчий до вертикалі
+        //    bool isVertical = Mathf.Abs(direction.y) > Mathf.Abs(direction.x);
+        //    GameObject rotation = isVertical ? stonePrisonPrefabHorizontal : stonePrisonPrefabVertical;
 
-            // Визначаємо, чи напрямок ближчий до вертикалі
-            bool isVertical = Mathf.Abs(direction.y) > Mathf.Abs(direction.x);
-            GameObject rotation = isVertical ? stonePrisonPrefabHorizontal : stonePrisonPrefabVertical;
-
-            Instantiate(rotation, spawnPos, Quaternion.identity);
-        }
+        //    Instantiate(rotation, spawnPos, Quaternion.identity);
+        //}
     }
     // Детект зони
     private void OnTriggerEnter2D(Collider2D other) => UpdateZoneState(other, true);

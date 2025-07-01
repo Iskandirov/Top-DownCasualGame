@@ -71,30 +71,30 @@ public class Elements
         switch (name)
         {
             case status.Fire:
-                statusCurrentData[(int)status.Water] *= 2;
+                statusCurrentData[(int)status.Water] = 1.1f;
                 //enemy.Damage(enemy.damage * 2);
                 break;
             case status.Electricity:
-                statusCurrentData[(int)status.Cold] *= 2;
+                statusCurrentData[(int)status.Cold] = 1.1f;
                 break;
             case status.Water:
-                statusCurrentData[(int)status.Fire] *= 2;
+                statusCurrentData[(int)status.Fire] = 1.1f;
                 break;
             case status.Dirt:
-                statusCurrentData[(int)status.Steam] *= 2;
+                statusCurrentData[(int)status.Steam] = 1.1f;
                 break;
             case status.Wind:
-                statusCurrentData[(int)status.Electricity] *= 2;
+                statusCurrentData[(int)status.Electricity] = 1.1f;
                 break;
             case status.Grass:
-                statusCurrentData[(int)status.Wind] *= 2;
+                statusCurrentData[(int)status.Wind] = 1.1f;
                 break;
             case status.Steam:
-                statusCurrentData[(int)status.Fire] *= 2;
-                statusCurrentData[(int)status.Water] *= 2;
+                statusCurrentData[(int)status.Fire] = 1.1f;
+                statusCurrentData[(int)status.Water] = 1.1f;
                 break;
             case status.Cold:
-                statusCurrentData[(int)status.Dirt] *= 2;
+                statusCurrentData[(int)status.Dirt] = 1.1f;
                 break;
         }
         isActiveCurrentData[(int)name] = false;

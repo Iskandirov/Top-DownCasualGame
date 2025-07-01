@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5755535770780742522}
   - component: {fileID: 6753666520328974234}
   - component: {fileID: 4786289771965563236}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: vfxgraph_LootDrop01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -228,7 +228,7 @@ GameObject:
   - component: {fileID: -5266921398537978}
   - component: {fileID: 1765359962858377840}
   - component: {fileID: 4076918158572001156}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: LootDrop01_lvl1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -282,15 +282,19 @@ MonoBehaviour:
   itemRare: {fileID: 21300000, guid: a1ec008b10212aa4bb88132a5c0d83bf, type: 3}
   idRare: 3
   itemRareName: "\u041C\u0456\u0444\u0456\u0447\u043D\u0435"
-  itemImage: {fileID: 21300000, guid: 74cae841a0080064ab2cdda92fccd742, type: 3}
   Stat: 10
   Level: 1
-  Count: 0
+  Price: 0
   Tag: 
   RareTag: 
   Description: 
   hash: {fileID: 0}
+  itemPanel: {fileID: 0}
+  panelObjs: []
   isTutor: 0
+  itemImage: {fileID: 0}
+  itemNameTxt: {fileID: 0}
+  itemDescription: {fileID: 0}
 --- !u!61 &4076918158572001156
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -347,7 +351,7 @@ GameObject:
   - component: {fileID: 5367016198495138004}
   - component: {fileID: 5367016198495138007}
   - component: {fileID: 5367016198495138006}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: LootObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}

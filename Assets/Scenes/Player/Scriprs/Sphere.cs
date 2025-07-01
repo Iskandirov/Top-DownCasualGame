@@ -27,7 +27,7 @@ public class Sphere : MonoBehaviour
     {
         if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
-            collision.GetComponent<FSMC_Executer>().TakeDamage(damage);
+            collision.GetComponent<FSMC_Executer>().TakeDamage(damage, 1f);
             FindObjectOfType<SphereAround>().countSphere--;
             Destroy(gameObject);
 
