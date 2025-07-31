@@ -52,10 +52,10 @@ public class FireWave : SkillBaseMono
 
             if (debuff != null)
             {
-                debuff.ApplyEffect(Elements.status.Fire, 5);
+                debuff.ApplyEffect(status.Fire, 5);
             }
-            float damage = (basa.damage * debuff.elements.CurrentStatusValue(Elements.status.Water))
-                / debuff.elements.CurrentStatusValue(Elements.status.Fire);
+            float damage = (basa.damage * debuff.CurrentStatusValue(status.Water))
+                / debuff.CurrentStatusValue(status.Fire);
             health.TakeDamage(damage, damageMultiplier);
             GameManager.Instance.FindStatName("fireWaveDamage", damage);
             if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 3 && s.isActive == true) != null)

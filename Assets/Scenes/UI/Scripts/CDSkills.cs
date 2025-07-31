@@ -17,6 +17,8 @@ public class CDSkills : MonoBehaviour
 
     public int currentStatLevel;
 
+    [SerializeField]
+    public List<status> status;
 
     public string type;
     public SkillBase skill;
@@ -37,7 +39,7 @@ public class CDSkills : MonoBehaviour
     void Start()
     {
         skill.skill = this;
-        skillMono.Set(skill,number);
+        skillMono.Set(skill,number, status);
         cDText = text.GetComponent<TextMeshProUGUI>();
         StartCoroutine(SetBumberToSkill());
         if (abilityId == 0)

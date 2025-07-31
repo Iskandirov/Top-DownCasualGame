@@ -58,12 +58,12 @@ public class StateDeath : FSMC_Behaviour
     public void Respawn(FSMC_Executer executer)
     {
         executer.transform.position = GetRandomSpawnPosition(executer.transform.position, true, 100);
-        Elements element = executer.GetComponent<ElementActiveDebuff>().elements;
+        ElementActiveDebuff element = executer.GetComponent<ElementActiveDebuff>();
         for (int i = 0; i < element.isActiveCurrentData.Count; i++)
         {
             if (element.isActiveCurrentData[i])
             {
-                element.DeactivateDebuff(executer, (Elements.status)i);
+                element.DeactivateDebuff(executer, (status)i);
             }
         }
         for (int i = 0; i < executer.GetComponent<ElementActiveDebuff>().elementDebuffParent.transform.childCount; i++)

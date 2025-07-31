@@ -5,21 +5,47 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class Elements
+public enum status
 {
-    [SerializeField]
-    public enum status
+    Fire,
+    Electricity,
+    Water,
+    Dirt,
+    Wind,
+    Grass,
+    Steam,
+    Cold
+};
+
+//При активації об'єкта в місці зачіпання здібності активується метод з часом життя дебафа, також створюється візуальне відображення дебафа і відбувається начислення самого дебафа
+//Дебафи одного типу не можуть існувати, лише унікальні
+//При комбінаціїї відповідних дебафів утворюються інші дебафи, або відбувається унікальна дія
+public class ElementActiveDebuff : MonoBehaviour
+{
+    [Header("References")]
+    public Transform elementDebuffParent;
+    public SpriteRenderer elementDebuffObject;
+
+    private FSMC_Executer executer;
+    private SpriteRenderer bodyRenderer;
+    public List<Sprite> statusSprite;
+
+    // Активні ефекти: статус -> таймер
+    private readonly Dictionary<status, float> activeEffects = new();
+
+    // Візуальні спрайти: статус -> іконка
+    //private readonly Dictionary<Elements.status, SpriteRenderer> debuffSprites = new();
+
+    private static readonly List<status> toRemove = new(); // кешований список для зменшення алокацій
+
+    private void Awake()
     {
-        Fire,
-        Electricity,
-        Water,
-        Dirt,
-        Wind,
-        Grass,
-        Steam,
-        Cold
-    };
-    [SerializeField]
+        executer = GetComponent<FSMC_Executer>();
+        bodyRenderer = GetComponentInChildren<SpriteRenderer>();
+
+        
+    }
+  [SerializeField]
     public List<float> statusCurrentData;
     public List<bool> isActiveCurrentData;
    
@@ -99,35 +125,6 @@ public class Elements
         }
         isActiveCurrentData[(int)name] = false;
     }
-}
-//При активації об'єкта в місці зачіпання здібності активується метод з часом життя дебафа, також створюється візуальне відображення дебафа і відбувається начислення самого дебафа
-//Дебафи одного типу не можуть існувати, лише унікальні
-//При комбінаціїї відповідних дебафів утворюються інші дебафи, або відбувається унікальна дія
-public class ElementActiveDebuff : MonoBehaviour
-{
-    [Header("References")]
-    public Elements elements;
-    public Transform elementDebuffParent;
-    public SpriteRenderer elementDebuffObject;
-
-    private FSMC_Executer executer;
-    private SpriteRenderer bodyRenderer;
-    public List<Sprite> statusSprite;
-
-    // Активні ефекти: статус -> таймер
-    private readonly Dictionary<Elements.status, float> activeEffects = new();
-
-    // Візуальні спрайти: статус -> іконка
-    //private readonly Dictionary<Elements.status, SpriteRenderer> debuffSprites = new();
-
-    private static readonly List<Elements.status> toRemove = new(); // кешований список для зменшення алокацій
-
-    private void Awake()
-    {
-        executer = GetComponent<FSMC_Executer>();
-        bodyRenderer = GetComponentInChildren<SpriteRenderer>();
-    }
-
     private void Update()
     {
         if (activeEffects.Count == 0)
@@ -136,7 +133,7 @@ public class ElementActiveDebuff : MonoBehaviour
         float delta = Time.deltaTime;
         toRemove.Clear();
 
-        foreach (var status in new List<Elements.status>(activeEffects.Keys))
+        foreach (var status in new List<status>(activeEffects.Keys))
         {
             activeEffects[status] -= delta;
 
@@ -150,7 +147,7 @@ public class ElementActiveDebuff : MonoBehaviour
         }
     }
 
-    public void ApplyEffect(Elements.status status, float duration)
+    public void ApplyEffect(status status, float duration)
     {
         int id = (int)status;
 
@@ -162,17 +159,17 @@ public class ElementActiveDebuff : MonoBehaviour
 
             return;
         }
-
+        //-баг-тут
         // Перевірка перед застосуванням: ефект ще не активний + об'єкт видимий
-        if (!elements.isActiveCurrentData[id] && bodyRenderer.color.a > 0f)
+        if (!isActiveCurrentData[id] && bodyRenderer.color.a > 0f)
         {
-            elements.Debuff(executer, status);
+            Debuff(executer, status);
             activeEffects[status] = duration;
             ActivateVisualEffect(status, id);
         }
     }
 
-    private void ActivateVisualEffect(Elements.status status, int elementId)
+    private void ActivateVisualEffect(status status, int elementId)
     {
         // Переконаймося, що список достатньої довжини  
         while (statusSprite.Count <= elementId)
@@ -194,11 +191,11 @@ public class ElementActiveDebuff : MonoBehaviour
         }
     }
 
-    private void DeactivateEffect(Elements.status status)
+    private void DeactivateEffect(status status)
     {
         int id = (int)status;
 
-        elements.DeactivateDebuff(executer, status);
+        DeactivateDebuff(executer, status);
         activeEffects.Remove(status);
 
         if (id < statusSprite.Count && statusSprite[id] != null)

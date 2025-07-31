@@ -94,12 +94,12 @@ namespace FSMC.Runtime
         public void TakeDamage(float damage, float damageMultiplier)
         {
             float finalDamage = damage * damageMultiplier;
-            Debug.Log(finalDamage);
             SetDamage(finalDamage);
             if (health > 0 && !IsDead)
             {
                 StateMachine.SetTrigger("Hit");
             }
+
             health -= finalDamage;
         }
       

@@ -38,7 +38,7 @@ public class Zzap : MonoBehaviour
                 for (int i = 0; i < enemiesColliders.Count; i++)
                 {
                     ElementActiveDebuff debuff = enemiesColliders[i].GetComponentInParent<ElementActiveDebuff>();
-                    debuff.ApplyEffect(Elements.status.Electricity, 5);
+                    debuff.ApplyEffect(status.Electricity, 5);
                     enemiesColliders[i].GetComponent<FSMC_Executer>().TakeDamage(basa.damage * electicElement, 1);
                     GameManager.Instance.FindStatName("zzapDamage", basa.damage * electicElement);
                 }

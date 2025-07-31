@@ -158,7 +158,7 @@ public class Vortex : SkillBaseMono
             if (collision.CompareTag("Enemy") && !movingObjects.Contains(collision.transform))
             {
                 movingObjects.Add(collision.transform);
-                collision.GetComponent<ElementActiveDebuff>().ApplyEffect(Elements.status.Wind, 5);
+                collision.GetComponent<ElementActiveDebuff>().ApplyEffect(status.Wind, 5);
             }
             else if (collision.CompareTag("Player"))
             {

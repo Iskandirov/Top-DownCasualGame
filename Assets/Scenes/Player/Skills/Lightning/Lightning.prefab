@@ -224,9 +224,11 @@ GameObject:
   - component: {fileID: 3126748059763064313}
   - component: {fileID: 4186774269672023927}
   - component: {fileID: -3811095123962115645}
-  m_Layer: 0
+  - component: {fileID: 8183347457917041823}
+  - component: {fileID: 8114619592478187262}
+  m_Layer: 7
   m_Name: Lightning
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -277,28 +279,92 @@ MonoBehaviour:
     - isTrigger: 1
       value: 5
     - isTrigger: 0
-      value: 2
+      value: 1
     - isTrigger: 0
       value: 2
     - isTrigger: 0
-      value: 2
+      value: 1.5
     - isTrigger: 0
       value: 2
     skill: {fileID: 0}
     objToSpawn: {fileID: -3811095123962115645}
     stepMax: 5
     lifeTime: 3
-    damage: 0
+    damage: 4
     damageTickMax: 0
     countObjects: 3
     radius: 60
     isPassive: 0
     spawnDelay: 0.2
-  skillId: 3
+    Elements: 010000000100000001000000
+  skillId: 4
   currentLevel: 0
+  damageMultiplier: 1
   player: {fileID: 0}
   enemies: []
   enemiesToShoot: []
   enemyToShoot: {fileID: 0}
   stunTime: 0
   target: Enemy
+--- !u!50 &8183347457917041823
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6315093522775782037}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
+--- !u!58 &8114619592478187262
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6315093522775782037}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5

@@ -10,6 +10,7 @@ public class TriggerTrail : MonoBehaviour
     public EnemySpawner enemies;
     public SkillBase basa;
     public List<Collider2D> enemiesColliders = new List<Collider2D>();
+    public List<status> Elements;
     private void Start()
     {
         enemies = FindAnyObjectByType<EnemySpawner>();
@@ -25,7 +26,7 @@ public class TriggerTrail : MonoBehaviour
                 for (int i = 0; i < enemiesColliders.Count; i++)
                 {
                     ElementActiveDebuff debuff = enemiesColliders[i].GetComponentInParent<ElementActiveDebuff>();
-                    debuff.ApplyEffect(Elements.status.Grass, 5);
+                    debuff.ApplyEffect(status.Grass, 5);
                     enemiesColliders[i].GetComponent<FSMC_Executer>().TakeDamage(basa.damage, 1);
                     if (basa.stats[4].isTrigger)
                     {

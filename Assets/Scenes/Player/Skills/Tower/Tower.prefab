@@ -516,9 +516,10 @@ GameObject:
   - component: {fileID: 3831675836443140198}
   - component: {fileID: 8486357839637895476}
   - component: {fileID: 720818545183567758}
+  - component: {fileID: 1706374835355283004}
   m_Layer: 6
   m_Name: Tower
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -579,8 +580,10 @@ MonoBehaviour:
     radius: 0
     isPassive: 0
     spawnDelay: 0
+    Elements: 030000000200000002000000
   skillId: 1
   currentLevel: 0
+  damageMultiplier: 1
   player: {fileID: 0}
   damageObj: {fileID: 6722287990898937310, guid: 0d178b44c5f5dce4d9a1d065c298e86e, type: 3}
   bomb: {fileID: 3544821091217979760, guid: f39d8d106439fe542a7b30c64142ffb9, type: 3}
@@ -642,6 +645,33 @@ CapsuleCollider2D:
   m_Offset: {x: 0.060457945, y: 0.43832397}
   m_Size: {x: 6.243509, y: 8.527023}
   m_Direction: 0
+--- !u!50 &1706374835355283004
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8021274202907395722}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &8259872974968540267
 GameObject:
   m_ObjectHideFlags: 0

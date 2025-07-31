@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: -3960482971851969571}
   - component: {fileID: 5254171180269000285}
   - component: {fileID: -6430882196094532934}
+  - component: {fileID: -2442127824430438570}
   m_Layer: 7
   m_Name: MeteorRain
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -63,17 +64,18 @@ MonoBehaviour:
     objToSpawn: {fileID: -3960482971851969571}
     stepMax: 10
     lifeTime: 5
-    damage: 4
+    damage: 1
     damageTickMax: 0.5
     countObjects: 1
     radius: 4
     isPassive: 0
     spawnDelay: 0.4
-  skillId: 1
+    Elements: 000000000000000003000000
+  skillId: 4
   currentLevel: 0
+  damageMultiplier: 1
   player: {fileID: 0}
   enemiesInDanger: []
-  enemy: {fileID: 0}
   damageTick: 0
 --- !u!58 &5254171180269000285
 CircleCollider2D:
@@ -123,6 +125,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeTime: 5
+--- !u!50 &-2442127824430438570
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 203435582484630192}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &7348620245189735272
 GameObject:
   m_ObjectHideFlags: 0

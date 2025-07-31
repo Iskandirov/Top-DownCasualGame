@@ -2,7 +2,7 @@ using FSMC.Runtime;
 using System.Collections;
 using UnityEngine;
 
-public class TowerWave : MonoBehaviour
+public class TowerWave : SkillBaseMono
 {
     public float lifeTime;
     public float damage;
@@ -34,10 +34,10 @@ public class TowerWave : MonoBehaviour
         {
             FSMC_Executer objHealt = collision.GetComponent<FSMC_Executer>();
             ElementActiveDebuff debuff = collision.GetComponentInParent<ElementActiveDebuff>();
-                debuff.ApplyEffect(Elements.status.Water, 5);
-            objHealt.TakeDamage(damage * waterElement * debuff.elements.CurrentStatusValue(Elements.status.Water) / debuff.elements.CurrentStatusValue(Elements.status.Dirt), 1);
-            GameManager.Instance.FindStatName("towerWaveDamage", (damage * waterElement * debuff.elements.CurrentStatusValue(Elements.status.Water)) 
-                / debuff.elements.CurrentStatusValue(Elements.status.Dirt));
+                debuff.ApplyEffect(status.Water, 5);
+            objHealt.TakeDamage(damage * waterElement * debuff.CurrentStatusValue(status.Water) / debuff.CurrentStatusValue(status.Dirt), 1);
+            GameManager.Instance.FindStatName("towerWaveDamage", (damage * waterElement * debuff.CurrentStatusValue(status.Water)) 
+                / debuff.CurrentStatusValue(status.Dirt));
         }
     }
 }

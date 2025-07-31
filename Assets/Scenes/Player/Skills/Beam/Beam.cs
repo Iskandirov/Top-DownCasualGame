@@ -107,12 +107,12 @@ public class Beam : SkillBaseMono
     {
         FSMC_Executer objHealt = collision.GetComponent<FSMC_Executer>();
         ElementActiveDebuff debuff = collision.GetComponent<ElementActiveDebuff>();
-        debuff.ApplyEffect(Elements.status.Steam, 5);
+        debuff.ApplyEffect(status.Steam, 5);
         
-        objHealt.TakeDamage((basa.damage * debuff.elements.CurrentStatusValue(Elements.status.Steam)) / debuff.elements.CurrentStatusValue(Elements.status.Cold), damageMultiplier);
+        objHealt.TakeDamage((basa.damage * debuff.CurrentStatusValue(status.Steam)) / debuff.CurrentStatusValue(status.Cold), damageMultiplier);
 
-        GameManager.Instance.FindStatName("beamDamage", (basa.damage * debuff.elements.CurrentStatusValue(Elements.status.Steam))
-        / debuff.elements.CurrentStatusValue(Elements.status.Cold));
+        GameManager.Instance.FindStatName("beamDamage", (basa.damage * debuff.CurrentStatusValue(status.Steam))
+        / debuff.CurrentStatusValue(status.Cold));
     }
     private void CreateBeam(float angle, float x, float y)
     {

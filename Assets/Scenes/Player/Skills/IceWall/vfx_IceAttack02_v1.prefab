@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 6738466982615973349}
   - component: {fileID: 4800134792041535553}
   - component: {fileID: 9087528788484653529}
+  - component: {fileID: 4750238718922939363}
   m_Layer: 7
   m_Name: vfx_IceAttack02_v1
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -115,14 +116,43 @@ MonoBehaviour:
     radius: 1
     isPassive: 0
     spawnDelay: 0
+    Elements: 070000000700000007000000
   skillId: 1
   currentLevel: 0
+  damageMultiplier: 1
   player: {fileID: 0}
   cold: 0
   damageTick: 0
   vfxWallObjs:
   - {fileID: 8078103534977471463}
   - {fileID: 5349724431205396324}
+--- !u!50 &4750238718922939363
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4258462956159098543}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &4477941199075120646
 GameObject:
   m_ObjectHideFlags: 0

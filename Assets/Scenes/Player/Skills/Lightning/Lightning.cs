@@ -43,33 +43,58 @@ public class Lightning : SkillBaseMono
         enemies = Physics2D.OverlapCircleAll(transform.position, basa.radius).ToList();
         if (enemies != null && enemies.Count > 0)
         {
+            List<Collider2D> sigilTargets = new List<Collider2D>();
+
             foreach (var enemy in enemies)
             {
-                if (enemy.isTrigger != true && enemy.CompareTag(target))
+                if (enemy == null) continue;
+                if (enemy.CompareTag("Sigil"))
+                {
+                    sigilTargets.Add(enemy);
+                }
+                else if (!enemy.isTrigger && enemy.CompareTag(target))
                 {
                     enemiesToShoot.Add(enemy);
                 }
             }
-            if (enemiesToShoot != null && enemiesToShoot.Count > 0)
+
+            // Об'єднуємо списки для вибору цілі
+            List<Collider2D> allTargets = new List<Collider2D>();
+            allTargets.AddRange(enemiesToShoot);
+            allTargets.AddRange(sigilTargets);
+            if (allTargets.Count > 0)
             {
-                enemyToShoot = enemiesToShoot[Random.Range(0, enemiesToShoot.Count - 1)];
-                FSMC_Executer enemy = enemyToShoot.GetComponent<FSMC_Executer>();
-                ElementActiveDebuff debuff = enemy.GetComponent<ElementActiveDebuff>();
-                debuff.ApplyEffect(Elements.status.Electricity, 5);
-                if (enemy != null && basa.stats[3].isTrigger && enemy.isBoss)
+                enemyToShoot = allTargets[Random.Range(0, allTargets.Count)];
+                if (enemyToShoot.CompareTag("Sigil"))
                 {
-                    enemy.SetFloat("Stun Time", stunTime / 2);
+                    // Окрема логіка для Sigil
+                    // Наприклад, просто перемістити блискавку до Sigil і знищити її
+                    transform.position = enemyToShoot.transform.position;
+                    // Можна додати свою дію для Sigil, наприклад:
+                    // enemyToShoot.GetComponent<SigilComponent>()?.ActivateSigilEffect();
                 }
-                else if (enemy != null && basa.stats[3].isTrigger)
+                else
                 {
-                    enemy.SetFloat("Stun Time", stunTime);
+                    // Звичайна логіка для ворогів
+                    FSMC_Executer enemy = enemyToShoot.GetComponent<FSMC_Executer>();
+                    ElementActiveDebuff debuff = enemy.GetComponent<ElementActiveDebuff>();
+                    debuff.ApplyEffect(status.Electricity, 5);
+                    if (enemy != null && basa.stats[3].isTrigger && enemy.isBoss)
+                    {
+                        enemy.SetFloat("Stun Time", stunTime / 2);
+                    }
+                    else if (enemy != null && basa.stats[3].isTrigger)
+                    {
+                        enemy.SetFloat("Stun Time", stunTime);
+                    }
+
+                    transform.position = enemyToShoot.transform.position;
+                    enemy.TakeDamage(basa.damage * player.Electricity / debuff.CurrentStatusValue(status.Electricity), damageMultiplier);
+                    GameManager.Instance.FindStatName("lightDamage", basa.damage * player.Electricity
+                        / debuff.CurrentStatusValue(status.Electricity));
                 }
-               
-                transform.position = enemyToShoot.transform.position;
-                enemy.TakeDamage(basa.damage * player.Electricity / debuff.elements.CurrentStatusValue(Elements.status.Electricity), damageMultiplier);
-                GameManager.Instance.FindStatName("lightDamage", basa.damage * player.Electricity
-                    / debuff.elements.CurrentStatusValue(Elements.status.Electricity));
                 CineMachineCameraShake.instance.Shake(10, .1f);
+
             }
             else
             {

@@ -85,7 +85,7 @@ public class VeinPool : MonoBehaviour
                 if (colliders[j].collider.CompareTag("Enemy") && hitDelay <= 0)
                 {
                     ElementActiveDebuff debuff = colliders[j].collider.GetComponentInParent<ElementActiveDebuff>();
-                    debuff.ApplyEffect(Elements.status.Grass, 5);
+                    debuff.ApplyEffect(status.Grass, 5);
 
                     colliders[j].collider.GetComponent<FSMC_Executer>().TakeDamage(skillData.damage, 1);
                     if (skillData.stats[4].isTrigger)

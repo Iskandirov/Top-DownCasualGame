@@ -89,7 +89,7 @@ public class SavedSkillsData
     public int level;
     public SkillBase skil;
     public bool isPassive;
-    public List<Elements.status> Elements;
+    public List<status> Elements;
     public List<string> tag;
     public string tagRare;
     public List<string> Description;

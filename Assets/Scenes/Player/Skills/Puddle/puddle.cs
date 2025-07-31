@@ -59,12 +59,12 @@ public class puddle : SkillBaseMono
 
                     if (debuff != null)
                     {
-                        debuff.ApplyEffect(Elements.status.Water, 5);
-                        debuff.ApplyEffect(Elements.status.Dirt, 5);
+                        debuff.ApplyEffect(status.Water, 5);
+                        debuff.ApplyEffect(status.Dirt, 5);
                     }
-                    objHealth.TakeDamage(basa.damage / debuff.elements.CurrentStatusValue(Elements.status.Electricity) * player.Water / debuff.elements.CurrentStatusValue(Elements.status.Water) * debuff.elements.CurrentStatusValue(Elements.status.Dirt), damageMultiplier);
-                    GameManager.Instance.FindStatName("puddleDamage", (basa.damage / debuff.elements.CurrentStatusValue(Elements.status.Electricity)) * player.Water 
-                        / debuff.elements.CurrentStatusValue(Elements.status.Water) * debuff.elements.CurrentStatusValue(Elements.status.Dirt));
+                    objHealth.TakeDamage(basa.damage / debuff.CurrentStatusValue(status.Electricity) * player.Water / debuff.CurrentStatusValue(status.Water) * debuff.CurrentStatusValue(status.Dirt), damageMultiplier);
+                    GameManager.Instance.FindStatName("puddleDamage", (basa.damage / debuff.CurrentStatusValue(status.Electricity)) * player.Water 
+                        / debuff.CurrentStatusValue(status.Water) * debuff.CurrentStatusValue(status.Dirt));
                 }
             }
 

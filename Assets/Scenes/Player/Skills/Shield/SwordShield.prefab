@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2708172246191327351}
   - component: {fileID: 1870691683645734152}
+  - component: {fileID: 2106605827810251210}
   m_Layer: 0
   m_Name: SwordShield
   m_TagString: Untagged
@@ -72,8 +73,10 @@ MonoBehaviour:
     radius: 1
     isPassive: 0
     spawnDelay: 0
+    Elements: 030000000300000003000000
   skillId: 2
   currentLevel: 0
+  damageMultiplier: 1
   player: {fileID: 0}
   rb: {fileID: 0}
   minDistance: 2
@@ -96,7 +99,37 @@ MonoBehaviour:
   rockDamage: 0
   rockObj: {fileID: 0}
   dirtElement: 0
+  attackReloadTime: 0
+  currentReloadTime: 0
   isPotions: 0
+  isHitInTheEnd: 0
+--- !u!50 &2106605827810251210
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4898611548380780615}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1001 &138703841922050799
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -108,6 +141,34 @@ PrefabInstance:
     - target: {fileID: 3009308587391718981, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
       propertyPath: m_Name
       value: Shield (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.skill
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.stepMax
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.lifeTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.countObjects
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.stats.Array.data[1].value
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.stats.Array.data[2].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.stats.Array.data[4].value
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7916109652606774832, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -171,6 +232,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shield (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.skill
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.stepMax
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.lifeTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.countObjects
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.stats.Array.data[1].value
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.stats.Array.data[2].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.stats.Array.data[4].value
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7916109652606774832, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.650008
@@ -232,6 +321,34 @@ PrefabInstance:
     - target: {fileID: 3009308587391718981, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
       propertyPath: m_Name
       value: Shield
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.skill
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.stepMax
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.lifeTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.countObjects
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.stats.Array.data[1].value
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.stats.Array.data[2].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.stats.Array.data[4].value
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7916109652606774832, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -295,6 +412,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shield (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.skill
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.stepMax
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.lifeTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.countObjects
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.stats.Array.data[1].value
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.stats.Array.data[2].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.stats.Array.data[4].value
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7916109652606774832, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10.700012
@@ -357,6 +502,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shield (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.skill
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.stepMax
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.lifeTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.countObjects
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.stats.Array.data[1].value
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.stats.Array.data[2].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.stats.Array.data[4].value
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7916109652606774832, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.569992
@@ -418,6 +591,34 @@ PrefabInstance:
     - target: {fileID: 3009308587391718981, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
       propertyPath: m_Name
       value: Shield (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.skill
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.stepMax
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.lifeTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.countObjects
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.stats.Array.data[1].value
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.stats.Array.data[2].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560761530296995910, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
+      propertyPath: basa.stats.Array.data[4].value
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7916109652606774832, guid: ca1e24cf9f3f9c440b379e6c3ffacda9, type: 3}
       propertyPath: m_LocalPosition.x

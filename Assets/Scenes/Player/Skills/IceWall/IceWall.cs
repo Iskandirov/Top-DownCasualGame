@@ -99,14 +99,14 @@ public class IceWall : SkillBaseMono
         {
             FSMC_Executer enemy = collision.GetComponent<FSMC_Executer>();
             ElementActiveDebuff debuff = collision.GetComponent<ElementActiveDebuff>();
-            debuff.ApplyEffect(Elements.status.Cold, 5);
+            debuff.ApplyEffect(status.Cold, 5);
 
             enemy.SetFloat("SlowTime",1f);
             enemy.SetFloat("SlowPercent",.3f);
             enemy.SetCurrentState("Slow");
             if (damageTick <= 0)
             {
-                enemy.TakeDamage(basa.damage * cold  / collision.GetComponent<ElementActiveDebuff>().elements.CurrentStatusValue(Elements.status.Fire), damageMultiplier);
+                enemy.TakeDamage(basa.damage * cold  / collision.GetComponent<ElementActiveDebuff>().CurrentStatusValue(status.Fire), damageMultiplier);
                 damageTick = basa.damageTickMax;
             }
         }

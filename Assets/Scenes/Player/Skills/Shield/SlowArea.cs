@@ -20,7 +20,7 @@ public class SlowArea : MonoBehaviour
             ElementActiveDebuff debuff = collision.GetComponentInParent<ElementActiveDebuff>();
             if (debuff != null)
             {
-                debuff.ApplyEffect(Elements.status.Dirt, 5);
+                debuff.ApplyEffect(status.Dirt, 5);
             }
         }
     }

@@ -57,12 +57,18 @@ public class ElementalBoss_Attack : MonoBehaviour
     private readonly int[][] phaseAttackIndices = new int[][]
     {
         new int[] { 0, 1 },           // Фаза 1: перші дві атаки
-        new int[] { 0, 1, 2, 3 },     // Фаза 2: додається 2 атаки 
+        new int[] { 0, 1, 2 },     // Фаза 2: додається 2 атаки 
         new int[] { 0, 1, 2, 3, 4 }   // Фаза 3: додається ще одна атака
     };
     private bool isAttacking = false;
     public SkeletonAnimation anim;
     public FSMC_Executer boss;
+
+    [Header("Vulnerable State Settings")]
+
+    public bool isVulnerable = false;
+    public float vulnerableDuration = 10f;
+    private bool isInVulnerableState = false;
 
     [Header("Meteor Settings")]
     public GameObject meteorMarkerPrefab;
@@ -106,15 +112,59 @@ public class ElementalBoss_Attack : MonoBehaviour
         objCollider = GetComponent<Collider2D>();
         boss = GetComponent<FSMC_Executer>();
 
-        StartPhase(currentPhase);
-
+        if (attackCoroutines.Count == 0)
+            StartPhase(currentPhase);
         //foreach (var attack in bossAttacks)
         //{
         //    StartCoroutine(AttackRoutine(attack));
         //}
+        EnterVulnerableState();
     }
+
+    //Vulnerable State
+    public void EnterVulnerableState()
+    {
+        isAttacking = false;
+        if (isInVulnerableState) return;
+
+        isVulnerable = true;
+        isInVulnerableState = true;
+
+        // Візуальні ефекти
+        ToggleShieldEffect(false); // Наприклад, вимкнути щит
+        //anim.AnimationName = "Vulnerable"; // Якщо є така анімація
+        boss.StateMachine.SetCurrentState("StunState", boss); // Змінюємо стан FSMC_Executer
+        // Зупинити атаки
+        foreach (var coroutine in attackCoroutines)
+            if (coroutine != null) StopCoroutine(coroutine);
+        attackCoroutines.Clear();
+
+        StartCoroutine(VulnerabilityTimer());
+    }
+    void ToggleShieldEffect(bool state)
+    {
+        if (objShield != null)
+            objShield.gameObject.SetActive(state);
+    }
+    IEnumerator VulnerabilityTimer()
+    {
+        yield return new WaitForSeconds(vulnerableDuration);
+
+        isVulnerable = false;
+        isInVulnerableState = false;
+
+        // Візуальні ефекти
+        ToggleShieldEffect(true);
+        objAnim.SetTrigger("Recover");
+
+        // Повернутись до фазових атак
+        if (attackCoroutines.Count == 0)
+            StartPhase(currentPhase);
+    }
+    //End Vulnarable State
     void StartPhase(int phase)
     {
+        if (isInVulnerableState) return; // Не дозволяємо запуск фазових атак
         // Зупиняємо всі попередні корутини атак
         foreach (var coroutine in attackCoroutines)
             if (coroutine != null) StopCoroutine(coroutine);
@@ -134,7 +184,8 @@ public class ElementalBoss_Attack : MonoBehaviour
         if (currentPhase < phaseAttackIndices.Length)
         {
             currentPhase++;
-            StartPhase(currentPhase);
+            if (attackCoroutines.Count == 0)
+                StartPhase(currentPhase);
         }
     }
     IEnumerator AttackRoutine(BossAttacks attack)
@@ -142,6 +193,10 @@ public class ElementalBoss_Attack : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(attack.cooldown);
+
+            // Якщо зараз уразливість — пропускаємо цю атаку
+            if (isVulnerable) continue;
+
             if (!isAttacking)
             {
                 isAttacking = true;
@@ -235,6 +290,8 @@ public class ElementalBoss_Attack : MonoBehaviour
     }
     void ApplyForceTo(Rigidbody2D rb, float damage)
     {
+       
+
         Shield shield = objShield;
         if (shield != null && shield.CompareTag("Shield"))
         {

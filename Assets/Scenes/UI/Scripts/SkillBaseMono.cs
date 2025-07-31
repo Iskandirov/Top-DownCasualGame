@@ -21,15 +21,17 @@ public class SkillBase
     ////Trigger
     public bool isPassive;
     public float spawnDelay;
-    
     public List<Data> GetStats()
     {
         return stats;
     }
 }
-
+[Serializable]
 public class SkillBaseMono : MonoBehaviour
 {
+    [SerializeField]
+    public List<status> Elements;
+
     public SkillBase basa;
     public int skillId;
     public int currentLevel;
@@ -61,8 +63,9 @@ public class SkillBaseMono : MonoBehaviour
         }
         return 0;
     }
-    public void Set(SkillBase setter,int id)
+    public void Set(SkillBase setter,int id, List<status> stat)
     {
+        Elements = new List<status>(stat);
         basa = setter;
         skillId = id;
     }
@@ -89,6 +92,7 @@ public class SkillBaseMono : MonoBehaviour
         a.basa = objInfo.basa;
         a.currentLevel = currentLevel;
         a.damageMultiplier = dmgMultiplier;
+        a.Elements = objInfo.Elements;
         if (basa.isPassive)
         {
             a.transform.parent = player.transform;
@@ -101,6 +105,7 @@ public class SkillBaseMono : MonoBehaviour
         a.basa = objInfo.basa;
         a.currentLevel = currentLevel;
         a.damageMultiplier = dmgMultiplier;
+        a.Elements = objInfo.Elements;
         if (basa.isPassive)
         {
             a.transform.parent = player.transform;

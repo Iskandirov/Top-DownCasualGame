@@ -5,11 +5,12 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Rendering.FilterWindow;
 [System.Serializable]
 public class ElementsSprites
 {
     public string skillName;
-    public List<Elements.status> SkillElements;
+    public List<status> SkillElements;
 }
 [DefaultExecutionOrder(11)]
 public class LevelUpgrade : MonoBehaviour
@@ -26,6 +27,8 @@ public class LevelUpgrade : MonoBehaviour
     public TextMeshProUGUI secondBuffDamage; 
     public List<Image> firstBuffElements;
     public List<Image> secondBuffElements;
+    public List<status> firstBuffElementsStatus;
+    public List<status> secondBuffElementsStatus;
     public List<Color> colorBG;
 
     [Header("Image buttons")]
@@ -121,16 +124,24 @@ public class LevelUpgrade : MonoBehaviour
             var buffCD = i == 0 ? firstBuffReload : secondBuffReload;
             var buffDMG = i == 0 ? firstBuffDamage : secondBuffDamage;
             var buffElementImg = i == 0 ? firstBuffElements : secondBuffElements;
+            var buffElementStat = i == 0 ? firstBuffElementsStatus : secondBuffElementsStatus;
             var buffBtn = i == 0 ? firstBuffBtn : secondBuffBtn;
             var objText = i == 0 ? objTextOne : objTextTwo;
 
             buffText.text = skill.Description[skill.level];
             buffCD.text = skill.skil.stepMax.ToString();
             buffDMG.text = skill.skil.damage.ToString();
+            ElementsSprites element = SkillElements.Find(s => s.skillName == skill.Name);
+
             for (int y = 0; y < buffElementImg.Count; y++)
             {
-                buffElementImg[y].sprite = GameManager.Instance.ElementsImg[(int)SkillElements.Find(s => s.skillName == skill.Name).SkillElements[y]];
+
+                buffElementImg[y].sprite = GameManager.Instance.ElementsImg[(int)element.SkillElements[y]];
+                buffElementStat[y] = element.SkillElements[y];
+                //skillsSave.Find(s => s.Name == skill.Name).Elements[y] = new  element.SkillElements[y];
             }
+            skillsSave.Find(s => s.Name == skill.Name).Elements = new List<status>(element.SkillElements);
+
             buffBtn.sprite = GameManager.ExtractSpriteListFromTexture("skills").First(s => s.name == skill.Name);
             objText.tagText = skill.tag[skill.level];
             list.Add(buffText.gameObject);
@@ -252,6 +263,7 @@ public class LevelUpgrade : MonoBehaviour
         skill.stats[skill.currentStatLevel++].isTrigger = true;
         skill.abilityId = skillPoint;
         skill.type = resultId.type;
+        skill.status = new List<status>(resultId.Elements);
     }
     //Activate skill if it`s not active
     public void SetActiveAbil(PlayerManager player, GameObject abilObj, int skillPoint, bool isFirst)
@@ -259,6 +271,9 @@ public class LevelUpgrade : MonoBehaviour
         if (isFirst)
         {
             resultId = skillsSave[skillPoint];
+
+            ElementsSprites element = SkillElements.Find(s => s.skillName == resultId.Name);
+            skillsSave.Find(s => s.Name == resultId.Name).Elements = new List<status>(element.SkillElements);
         }
         else
         {
