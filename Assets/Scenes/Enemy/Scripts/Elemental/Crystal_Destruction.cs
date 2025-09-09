@@ -8,17 +8,13 @@ public class Crystal_Destruction : MonoBehaviour
     public GameObject coreObj;
     Animator anim;
     public int health = 2;
+    [SerializeField] PuzzleController puzzle;
     // Start is called before the first frame update
     void Start()
     {
         anim = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Bullet"))
@@ -33,6 +29,7 @@ public class Crystal_Destruction : MonoBehaviour
             {
                 Debug.Log("Crystal destroyed!");
                 anim.SetTrigger("Explode");
+                puzzle.SolvePuzzle();
             }
             Destroy(collision.gameObject); // Destroy the bullet after hitting the crystal
         }

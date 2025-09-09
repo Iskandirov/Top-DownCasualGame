@@ -22,6 +22,7 @@ public class Sigil : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        abilParent = GameObject.FindGameObjectWithTag("PlayerAbilities");
         foreach (var abil in abilParent.GetComponentsInChildren<CDSkills>())
         {
             foreach (var s in abil.status) // якщо в абілці може бути кілька статусів
@@ -82,5 +83,6 @@ public class Sigil : MonoBehaviour
             SigilImg.gameObject.SetActive(false);
             GetComponentInChildren<Image>().gameObject.SetActive(false);
         }
+        GetComponentInParent<PuzzleController>().SigilsCounter();
     }
 }

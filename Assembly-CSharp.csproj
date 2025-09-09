@@ -60,8 +60,10 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.18f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scenes\Enemy\Scripts\Elemental\RocketSpawner.cs" />
     <Compile Include="Assets\AdditionalAssets\StylizedAOEVFXwithIndicators\Scripts\EffectManager.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\SpawnZone.cs" />
+    <Compile Include="Assets\Scenes\Enemy\Scripts\Elemental\Attacks\SandStorm1.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\Elemental\ArbalistaBullet.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_Quaternion.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\Bobs\BossAttack.cs" />
@@ -106,7 +108,9 @@
     <Compile Include="Assets\Scenes\Enemy\Scripts\Elemental\WallDrawresult.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_UI_FontData.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\Kiwi\RootSlower.cs" />
+    <Compile Include="Assets\Scenes\Player\Skills\BulletDefault\Bullet.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\Elemental\PlatformPress.cs" />
+    <Compile Include="Assets\Scenes\Enemy\Scripts\Elemental\BlockHealth.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\LoadItemData.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\DPSTracker.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_UI_Dropdown_DropdownEvent.cs" />
@@ -143,9 +147,11 @@
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_UI_SpriteState.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_TMPro_TMP_InputField_OnChangeEvent.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_UI_Navigation.cs" />
+    <Compile Include="Assets\Scenes\Enemy\Scripts\Elemental\Attacks\FistController.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\AdaptiveValueSelector.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_TextCore_Text_SpriteGlyph.cs" />
     <Compile Include="Assets\Scenes\Player\Skills\Impuls\ShockWaveManagerScript.cs" />
+    <Compile Include="Assets\Scenes\Enemy\Scripts\Elemental\Rocket.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_TMPro_TMP_Character.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_UI_Dropdown_OptionDataList.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\DataHashing.cs" />
@@ -176,6 +182,7 @@
     <Compile Include="Assets\Scenes\Enemy\Scripts\Base\StunState.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_UI_AnimationTriggers.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_UI_Scrollbar_ScrollEvent.cs" />
+    <Compile Include="Assets\Scenes\Enemy\Scripts\Elemental\DragAndDropTrap.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\Tornado\Tornadic_Move.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_UI_InputField_SubmitEvent.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\Kiwi\Root_Bullet.cs" />
@@ -186,8 +193,10 @@
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_TMPro_TMP_InputField_TextSelectionEvent.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_Unity_Mathematics_bool2x2.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\Tutorial\EnemyHealthTutorial.cs" />
+    <Compile Include="Assets\Scenes\Enemy\Scripts\Elemental\Attacks\Fist.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\LevelChoosScripts\FillLevelInfo.cs" />
     <Compile Include="Assets\Scenes\Player\Skills\Reload\Reload.cs" />
+    <Compile Include="Assets\Scenes\Enemy\Scripts\Elemental\Attacks\StonePrison.cs" />
     <Compile Include="Assets\Scenes\Player\Skills\Trail\TriggerTrail.cs" />
     <Compile Include="Assets\Scenes\Player\Skills\Trail\Trail.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\SkillBaseMono.cs" />
@@ -203,6 +212,7 @@
     <Compile Include="Assets\Scenes\Enemy\Scripts\Elemental\ElementalBoss_Attack.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\Tab\TabGroup.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_TextCore_Text_TextStyle.cs" />
+    <Compile Include="Assets\Scenes\UI\Scripts\Arrow.cs" />
     <Compile Include="Assets\Scenes\Player\Skills\Trail\GrowMat_Script.cs" />
     <Compile Include="Assets\Scenes\Player\Skills\Shield\Shield.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_ParticleSystem_MinMaxCurve.cs" />
@@ -210,7 +220,6 @@
     <Compile Include="Assets\Scenes\Player\Scriprs\ShowBehind.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_TextCore_Text_UnicodeLineBreakingRules.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\SpikeTumble\MoveToPlayerStartPos.cs" />
-    <Compile Include="Assets\Scenes\Player\Skills\Beam\BulletDefault\Bullet.cs" />
     <Compile Include="Assets\Scenes\Player\Skills\Magic Axe\MagicAxe.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\OjectToUpgrade.cs" />
     <Compile Include="Assets\Scenes\Player\Skills\Beam\Beam.cs" />
@@ -224,6 +233,7 @@
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_UI_Button_ButtonClickedEvent.cs" />
     <Compile Include="Assets\Scenes\Player\Skills\Puddle\puddle.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_TextCore_Text_SpriteCharacter.cs" />
+    <Compile Include="Assets\Scenes\Enemy\Scripts\Elemental\Attacks\TentacleProjectile.cs" />
     <Compile Include="Assets\AdditionalAssets\StylizedAOEVFXwithIndicators\Scripts\PlayVFX.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_TMPro_TMP_GlyphPairAdjustmentRecord.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\Kiwi\Kiwi_Attack.cs" />
@@ -233,6 +243,7 @@
     <Compile Include="Assets\Scenes\Enemy\Scripts\Elemental\Crystal_Destruction.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_TMPro_TMP_SpriteGlyph.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_UI_MaskableGraphic_CullStateChangedEvent.cs" />
+    <Compile Include="Assets\Scenes\Enemy\Scripts\Elemental\Attacks\Jump.cs" />
     <Compile Include="Assets\Scenes\Player\Scriprs\Sphere.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\CDSkills.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\Settings.cs" />
@@ -240,6 +251,7 @@
     <Compile Include="Assets\Scenes\UI\Scripts\Blit.cs" />
     <Compile Include="Assets\Scenes\Player\Skills\Impuls\Impuls.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\Tooltip.cs" />
+    <Compile Include="Assets\Scenes\Enemy\Scripts\Elemental\Attacks\MeteorRain.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\Potions\PotionSystem.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\LevelChoosScripts\SnapScroll.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\LevelChoosScripts\CharacterSelect.cs" />
@@ -268,6 +280,7 @@
     <Compile Include="Assets\Scenes\UI\Scripts\StatsCollector.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_UI_InputField_EndEditEvent.cs" />
     <Compile Include="Assets\Scenes\Player\Skills\Trail\VeinPool.cs" />
+    <Compile Include="Assets\Scenes\Enemy\Scripts\Elemental\PuzzleController.cs" />
     <Compile Include="Assets\Scenes\Player\Skills\Impuls\DestroyBarrier.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\AdaptiveAttributes.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\Tornado\Tortador_Lightnong.cs" />

@@ -35,6 +35,7 @@ namespace FSMC.Runtime
         public Image avatar;
         public bool isBoss;
         public bool isInZone;
+        public bool isVulnerable = true;
         public FSMC_Controller StateMachine { get { return _runtimeController; } set { if (value != null && value != _runtimeController) { _runtimeController = value; _runtimeController.StartStateMachine(this); } } }
 
         public void DealDamage()
@@ -93,14 +94,17 @@ namespace FSMC.Runtime
         }
         public void TakeDamage(float damage, float damageMultiplier)
         {
-            float finalDamage = damage * damageMultiplier;
-            SetDamage(finalDamage);
-            if (health > 0 && !IsDead)
+            if (isVulnerable)
             {
-                StateMachine.SetTrigger("Hit");
-            }
+                float finalDamage = damage * damageMultiplier;
+                SetDamage(finalDamage);
+                if (health > 0 && !IsDead)
+                {
+                    StateMachine.SetTrigger("Hit");
+                }
 
-            health -= finalDamage;
+                health -= finalDamage;
+            }
         }
       
         private void Awake()

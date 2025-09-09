@@ -8,7 +8,6 @@ using UnityEditor;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Rendering;
-using static UnityEngine.ParticleSystem;
 
 public class PlatformPress : MonoBehaviour
 {
@@ -17,6 +16,9 @@ public class PlatformPress : MonoBehaviour
     public Transform player;
     public CinemachineVirtualCamera followCamera;
     public CinemachineVirtualCamera focusCamera;
+    public Vector3 focusCameraCoordinate;
+    public PuzzleController puzzle;
+    public int objectOnPlatform = 0; // Кількість об'єктів на платформі, які можуть бути активовані
 
     [Header("Rotation Mirror Trap")]
     public bool mirrorTrap = false;
@@ -34,27 +36,55 @@ public class PlatformPress : MonoBehaviour
     private float pauseTimer = 0f;
     private const float pauseDuration = 2f; // 2 секунда
     private bool wasPausedOnTarget = false;
-
+    public Vector2 mirrorFocusCoordinate;
 
     [Header("Spike Trap")]
     public bool spikeTrap = false;
+    public bool spikeTrapSolver = false;
     public List<Dissolve> dissolves;
+    public Vector2 spikeFocusCoordinate;
 
     [Header("Wall Rotate Trap")]
     public bool wallTrap = false;
-    public WallSignTrap wallSignTrap; 
-    
+    public WallSignTrap wallSignTrap;
+    public Vector2 rotateFocusCoordinate;
+
     [Header("Wall Draw Trap")]
     public bool drawTrap = false;
     public DrawComparer wallDrawTrap;
     public WallDraw drawwMesh;
     public SpriteRenderer exampleMesh;
     public WallDrawresult result;
+    public Vector2 drawFocusCoordinate;
 
+    [Header("Drag&Drop Trap")]
+    public bool isDragTrap = false;
+    public UnityEngine.UI.Image door;
+    public BoxCollider2D doorBox;
+    public UnityEngine.UI.Image doorGlow;
+    public Vector2 dragFocusCoordinate;
+
+    public float fillSpeed = 0.5f; // Швидкість заповнення
+    public float drainSpeed = 0.5f; // Швидкість спадання
+    public float requiredFill = 1f; // Коли досягає цього значення — спрацьовує дія
+
+    public Transform doorClosedPosition;  // Початкова позиція дверей (вгорі)
+    public Transform doorOpenedPosition;  // Куди мають опуститись двері (вниз)
+    public float doorMoveSpeed = 1f;
+    public float doorReturnSpeed = 3f;
+    public float deplificator = 3f;
+
+    private bool actionTriggered = false;
     // Start is called before the first frame update
     void Start()
     {
+        focusCameraCoordinate = GetComponentInParent<PuzzleController>().transform.position;
+        puzzle = GetComponentInParent<PuzzleController>();
         player = PlayerManager.instance.transform;
+        if(isDragTrap)
+            doorBox = door.GetComponent<BoxCollider2D>();
+        focusCamera = GameObject.FindGameObjectWithTag("AdditionalCamera").GetComponent<CinemachineVirtualCamera>();
+        followCamera = GameObject.FindGameObjectWithTag("Respawn").GetComponent<CinemachineVirtualCamera>();
     }
     public void FalsePressStatus()
     {
@@ -163,15 +193,56 @@ public class PlatformPress : MonoBehaviour
             pauseTimer = 0f;
             wasPausedOnTarget = false;
         }
-    }
 
-    public void SpikeTrapDissovle(int mainCamPriority, int PointCamPriority)
+        // Drag&Drop Trap
+        if (isDragTrap)
+        {
+            if (pressed)
+            {
+                doorGlow.fillAmount += fillSpeed * Time.deltaTime;
+                if (doorGlow.fillAmount >= requiredFill)
+                {
+                    doorGlow.fillAmount = requiredFill;
+                    TriggerAction();
+                }
+            }
+            else if (!pressed && doorGlow.fillAmount > 0f)
+            {
+                actionTriggered = false;
+                doorGlow.fillAmount -= drainSpeed * Time.deltaTime;
+                doorGlow.fillAmount = Mathf.Clamp01(doorGlow.fillAmount);
+            }
+
+
+            if (actionTriggered)
+            {
+                MoveDoor(doorOpenedPosition.position, doorMoveSpeed,false);
+                door.fillAmount -= (doorMoveSpeed / deplificator) * Time.deltaTime;
+
+                if (door.fillAmount <= 0)
+                {
+                    door.fillAmount = 0;
+                    TriggerOpenDoorAction(false);
+                }
+            }
+
+            if (!pressed)
+            {
+                TriggerOpenDoorAction(true);
+                MoveDoor(doorClosedPosition.position, doorReturnSpeed,true);
+                door.fillAmount += (doorReturnSpeed / deplificator) * Time.deltaTime;
+            }
+        }
+    }
+    public void CamerasPriority(int mainCamPriority, int PointCamPriority)
+    {
+        focusCamera.Priority = PointCamPriority;
+        followCamera.Priority = mainCamPriority;
+    }
+    public void SpikeTrapDissovle()
     {
         if (spikeTrap)
         {
-
-            focusCamera.Priority = PointCamPriority;
-            followCamera.Priority = mainCamPriority; // Знову активна
             foreach (Dissolve dis in dissolves)
             {
                 if (dis != null)
@@ -180,11 +251,15 @@ public class PlatformPress : MonoBehaviour
                     dis.AppearOrVanish();
                 }
             }
+            if(spikeTrapSolver)
+            {
+                puzzle.SolvePuzzle();
+            }
         }
     }
     public void CompareDrawing()
     {
-        if (wallDrawTrap)
+        if (drawTrap)
         {
             float similarity = wallDrawTrap.Compare() * 100f;
             //particle.StartDisintegration();
@@ -192,6 +267,7 @@ public class PlatformPress : MonoBehaviour
             if (similarity >= 60)
             {
                 result.SetResult(true);
+                puzzle.SolvePuzzle();
             }
             else
             {
@@ -199,12 +275,51 @@ public class PlatformPress : MonoBehaviour
             }
         }
     }
+    private void TriggerAction()
+    {
+        actionTriggered = true;
+        // Тут встав свою логіку: відкрити двері, телепорт, тощо
+    }
+    private void TriggerOpenDoorAction(bool active)
+    {
+        door.GetComponent<BoxCollider2D>().enabled = active; // Вимикаємо коллайдер, щоб гравець не міг взаємодіяти з дверима
+        doorGlow.gameObject.SetActive(active); // Вимикаємо/вмикаємо візуальний індикатор
+    }
+    private void MoveDoor(Vector3 targetPosition, float speed,bool closeDoor)
+    {
+        Vector3 previousPosition = door.transform.position;
+
+        // Рух дверей
+        door.transform.position = Vector3.MoveTowards(
+            previousPosition,
+            targetPosition,
+            speed * Time.deltaTime
+        );
+        doorGlow.fillOrigin = closeDoor ? (int)UnityEngine.UI.Image.OriginVertical.Top : (int)UnityEngine.UI.Image.OriginVertical.Bottom; // Встановлюємо початок заповнення зверху
+        // Рух колайдера в протилежному напрямку по Y
+        Vector3 movementDelta = door.transform.position - previousPosition;
+
+        Vector2 currentOffset = doorBox.offset;
+        currentOffset.y -= movementDelta.y;
+        doorBox.offset = currentOffset;
+    }
+    public void ResetState()
+    {
+        actionTriggered = false;
+        doorGlow.fillAmount = 0f;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            anim.SetBool("Pressed", true);
-            SpikeTrapDissovle(10,20);
+            objectOnPlatform++;
+            if (objectOnPlatform > 0)
+            {
+                anim.SetBool("Pressed", true);
+            }
+            CamerasPriority(10, 20);
+            SpikeTrapDissovle();
             CompareDrawing();
         }
     }
@@ -212,8 +327,13 @@ public class PlatformPress : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            anim.SetBool("Pressed", false);
-            SpikeTrapDissovle(20, 0);
+            objectOnPlatform--;
+            if (objectOnPlatform <= 0)
+            {
+                anim.SetBool("Pressed", false);
+            }
+            CamerasPriority(20, 0);
+            SpikeTrapDissovle();
         }
     }
 

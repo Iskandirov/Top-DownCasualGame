@@ -15,6 +15,8 @@ public class WallSignTrap : MonoBehaviour
     public List<SpriteRenderer> rends;
     private MaterialPropertyBlock propBlock;
     private MaterialPropertyBlock colorPropBlock;
+    int counter = 0;
+    [SerializeField] PuzzleController puzzle;
     void Awake()
     {
         foreach (var rend in signs)
@@ -49,6 +51,11 @@ public class WallSignTrap : MonoBehaviour
     {
         if (active)
         {
+            counter++;
+            if (counter >= signs.Count)
+            {
+                puzzle.SolvePuzzle();
+            }
             rotatedObj.GetComponent<SpriteRenderer>().GetPropertyBlock(colorPropBlock);
             colorPropBlock.SetColor("_GlowColor", glowColor); // використовуємо відповідний індекс
             rotatedObj.GetComponent<SpriteRenderer>().SetPropertyBlock(colorPropBlock);

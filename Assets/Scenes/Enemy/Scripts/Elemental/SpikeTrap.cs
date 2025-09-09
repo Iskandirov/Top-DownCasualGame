@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -10,6 +11,7 @@ public class SpikeTrap : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        vCam = GameObject.FindGameObjectWithTag("Respawn").GetComponent<CineMachineCameraShake>();
         anim = GetComponent<Animator>();
     }
 

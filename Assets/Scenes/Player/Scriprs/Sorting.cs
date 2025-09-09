@@ -15,18 +15,13 @@ public class Sorting : MonoBehaviour
     int sortingOrderBase = 0;
     [SerializeField] RendererPriority[] renderers;
     int index = 0;
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
     // Update is called once per frame
     void LateUpdate()
     {
         index = 0;
         foreach (var rendererPriority in renderers)
         {
-            rendererPriority.renderer.sortingOrder = (int)(sortingOrderBase + index - rendererPriority.renderer.transform.position.y + offset); 
+            rendererPriority.renderer.sortingOrder = (int)(rendererPriority.priority + sortingOrderBase + index - rendererPriority.renderer.transform.position.y + offset); 
             index++;
         }
 
