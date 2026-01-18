@@ -31,6 +31,7 @@ public class TabGroup : MonoBehaviour
     }
     public void OnTabExit(TabButtons button)
     {
+        
         ResetTabs();
         Tooltip.HideTooltip_Static();
         
@@ -43,13 +44,21 @@ public class TabGroup : MonoBehaviour
         {
             selectedTab.Deselect();
         }
-
+        if (button.name == "ShopBtn")
+        {
+            AudioManager.instance.PlayMusic("Shop Theme");
+        }
+        if (button.name == "BackToMenuBtnShop")
+        {
+            AudioManager.instance.PlayMusic("Theme");
+        }
         selectedTab = button;
 
         selectedTab.Select();
 
         ResetTabs();
         button.bg.sprite = tabActive;
+       
         int index = button.transform.GetSiblingIndex();
         if (objToSwap.Count != 0)
         {

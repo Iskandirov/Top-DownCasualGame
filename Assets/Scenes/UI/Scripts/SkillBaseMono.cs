@@ -14,6 +14,8 @@ public class SkillBase
     public float stepMax;
     public float lifeTime;
     public float damage;
+    public string spawnSFXName;
+    public string despawnSFXName;
     ////AOE
     public float damageTickMax;
     public float countObjects;
@@ -40,11 +42,7 @@ public class SkillBaseMono : MonoBehaviour
     public PlayerManager player;
     public void DestroyObject(GameObject obj)
     {
-        GameObject foundObj = GameObject.Find(obj.name+"(Clone)");
-        if (foundObj != null)
-        {
-            Destroy(foundObj);
-        }
+            Destroy(obj.gameObject);
     }
     public void CoroutineToDestroy(GameObject obj,float lifeTime)
     {
@@ -53,6 +51,7 @@ public class SkillBaseMono : MonoBehaviour
     public IEnumerator SimpleDestroy(GameObject obj, float lifeTime)
     {
         yield return new WaitForSeconds(lifeTime);
+        AudioManager.instance.PlaySFX(basa.despawnSFXName);
         Destroy(obj);
     }
     public float StabilizateCurrentReload(float currentReload,float newStep)
@@ -65,50 +64,36 @@ public class SkillBaseMono : MonoBehaviour
     }
     public void Set(SkillBase setter,int id, List<status> stat)
     {
+        player = PlayerManager.instance;
         Elements = new List<status>(stat);
         basa = setter;
         skillId = id;
     }
-    public void CreateSpellByType(string type,SkillBaseMono obj, SkillBaseMono objInfo,int currentLevel, float dmgMultiplier)
+    public enum SpellType { Base, AOE }
+
+    public SkillBaseMono CreateSpellByType(SpellType type, SkillBaseMono obj, SkillBaseMono objInfo, int currentLevel, float dmgMultiplier)
     {
+        Vector3 spellPos = new Vector3(player.objTransform.position.x, player.objTransform.position.y, 0f);
+        Vector3 aoePos = new Vector3(player.objTransform.position.x + UnityEngine.Random.Range(-20, 20), player.objTransform.position.y + UnityEngine.Random.Range(-20, 20), 0f);
+        SkillBaseMono skillBaseMono = null;
         switch (type)
         {
-            case "base":
-                CreateBaseSpell(obj, objInfo, currentLevel, dmgMultiplier);
-                break;
-            case "aoe":
-                CreateAOESpell(obj, objInfo, currentLevel, dmgMultiplier);
-                break;
-            default:
-                CreateBaseSpell(obj, objInfo, currentLevel, dmgMultiplier);
-                break;
+            case SpellType.Base: skillBaseMono = CreateSpell(obj, objInfo, currentLevel, dmgMultiplier, spellPos); break;
+            case SpellType.AOE: skillBaseMono = CreateSpell(obj, objInfo, currentLevel, dmgMultiplier, aoePos); break;
         }
-        
+        return skillBaseMono;
     }
-    public void CreateBaseSpell(SkillBaseMono mono, SkillBaseMono objInfo, int currentLevel, float dmgMultiplier)
+    private SkillBaseMono CreateSpell(SkillBaseMono prefab, SkillBaseMono objInfo, int currentLevel, float dmgMultiplier, Vector3 position)
     {
-        player = PlayerManager.instance;
-        SkillBaseMono a = Instantiate(mono, new Vector3(player.objTransform.position.x, player.objTransform.position.y, 0f), Quaternion.identity);
-        a.basa = objInfo.basa;
-        a.currentLevel = currentLevel;
-        a.damageMultiplier = dmgMultiplier;
-        a.Elements = objInfo.Elements;
+        var spell = Instantiate(prefab, position, Quaternion.identity);
+        spell.basa = objInfo.basa;
+        spell.currentLevel = currentLevel;
+        spell.damageMultiplier = dmgMultiplier;
+        spell.Elements = objInfo.Elements;
+
         if (basa.isPassive)
-        {
-            a.transform.parent = player.transform;
-        }
-    }
-    public void CreateAOESpell(SkillBaseMono mono, SkillBaseMono objInfo, int currentLevel, float dmgMultiplier) 
-    {
-        player = PlayerManager.instance;
-        SkillBaseMono a = Instantiate(mono, new Vector3(player.objTransform.position.x + UnityEngine.Random.Range(-20, 20), player.objTransform.position.y + UnityEngine.Random.Range(-20, 20), 0f), Quaternion.identity);
-        a.basa = objInfo.basa;
-        a.currentLevel = currentLevel;
-        a.damageMultiplier = dmgMultiplier;
-        a.Elements = objInfo.Elements;
-        if (basa.isPassive)
-        {
-            a.transform.parent = player.transform;
-        }
+            spell.transform.parent = player.transform;
+
+        return spell;
     }
 }

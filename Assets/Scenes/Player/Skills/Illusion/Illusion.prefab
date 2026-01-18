@@ -67,6 +67,8 @@ MonoBehaviour:
     stepMax: 30
     lifeTime: 12
     damage: 1
+    spawnSFXName: Illusion_spawn
+    despawnSFXName: Illusion_despawn
     damageTickMax: 0
     countObjects: 1
     radius: 0
@@ -77,7 +79,7 @@ MonoBehaviour:
   damageMultiplier: 1
   player: {fileID: 0}
   zzap: {fileID: -1925759704687880483, guid: 6c85e0c2eafc1c244ba05be67c2f7432, type: 3}
-  bullet: {fileID: 7746328968856795561, guid: cbc957d76f09b5e44a052aed2a3abb1a, type: 3}
+  bullet: {fileID: 3701608720309709429, guid: cbc957d76f09b5e44a052aed2a3abb1a, type: 3}
   angle: 0
   attackSpeed: 0
   attackSpeedMax: 0
@@ -364,7 +366,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5441812720272926264}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:

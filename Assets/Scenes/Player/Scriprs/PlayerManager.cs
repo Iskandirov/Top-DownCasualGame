@@ -1,3 +1,4 @@
+using Cinemachine;
 using FSMC.Runtime;
 using Spine.Unity;
 using System;
@@ -100,7 +101,9 @@ public class PlayerManager : MonoBehaviour
 
     [Header("Shoot settings")]
     public Bullet bullet;
+    public List<Bullet> bulletsPool;
     public GameObject ShootPoint;
+    public float lookAngle;
     public float damageToGive;
     public float attackSpeed;
     [HideInInspector]
@@ -181,6 +184,10 @@ public class PlayerManager : MonoBehaviour
             particleVibe = GameObject.Find("WorldUI/Vibe").GetComponent<ParticleSystem>();
 
         }
+
+        if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
+        originalPos = transform.localPosition;
+        if (mainCamera == null) mainCamera = Camera.main;
     }
     private void OnDestroy()
     {
@@ -249,6 +256,16 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        //lookAngle = Mathf.Atan2(GetMousDirection(objTransform.position).y, GetMousDirection(objTransform.position).x) * Mathf.Rad2Deg;
+        //if (Input.GetMouseButton(0))
+        //{
+        //    GameObject bulletClone = Instantiate(bullet.gameObject);
+        //    bulletClone.transform.position = ShootPoint.transform.position;
+        //    bulletClone.transform.rotation = Quaternion.Euler(0, 0, lookAngle);
+
+        //    bulletClone.GetComponent<Rigidbody2D>().velocity = ShootPoint.transform.right * bulletClone.GetComponent<Bullet>().launchForce;
+        //    Debug.Log("Shoot");
+        //}
         if (particleVibe != null)
         {
             targetVelocity = -rb.velocity;
@@ -308,8 +325,54 @@ public class PlayerManager : MonoBehaviour
         BaseSkillSelector();
     }
     //Health
+    [Header("Hit settings")]
+    public SpriteRenderer spriteRenderer;
+    public Color hitColor = new Color(1f, 0.4f, 0.4f); // червоний для dmg
+    public float flashDuration = 0.12f;
+    public ParticleSystem hitParticles;
+    public float knockbackAmount = 0.05f;
+    public float knockbackDuration = 0.08f;
+    public Camera mainCamera;
+    public float cameraShakeIntensity = 0.03f;
+    public float cameraShakeDuration = 0.08f;
+
+    Vector3 originalPos;
+
+    public void OnHit(int damage)
+    {
+        //StopAllCoroutines();
+        StartCoroutine(HitRoutine(damage));
+    }
+
+    IEnumerator HitRoutine(int damage)
+    {
+        originalPos = transform.localPosition;
+        // 1) Flash sprite
+        Color original = spriteRenderer.color;
+        spriteRenderer.color = hitColor;
+        if (hitParticles) hitParticles.Play();
+
+        // 2) Small knockback (to the left as example). Adjust direction by attacker position if you have it.
+        Vector3 target = originalPos + Vector3.left * knockbackAmount;
+        float t = 0f;
+        while (t < knockbackDuration)
+        {
+            transform.localPosition = Vector3.Lerp(originalPos, target, t / knockbackDuration);
+            t += Time.deltaTime;
+            yield return null;
+        }
+
+        // 3) restore position and sprite color
+        transform.localPosition = originalPos;
+        spriteRenderer.color = original;
+
+        // 4) tiny camera shake
+        mainCamera.GetComponent<CinemachineBrain>().ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<CineMachineCameraShake>().Shake(10,.2f);
+    }
+
     public void HitEnd()
     {
+        OnHit(0);
         playerAnim.SetTrigger("Hit");
         if (playerHealthPoint <= 0)
         {
@@ -422,7 +485,7 @@ public class PlayerManager : MonoBehaviour
         }
         else if (verticalInput != 0)
         {
-            playerAnim.SetBool("IsMove", true);
+            //playerAnim.SetBool("IsMove", true);
             if (axisY != verticalInput)
             {
                 //StartCoroutine(SlowPlayer(0.2f, 0.9f));
@@ -548,62 +611,7 @@ public class PlayerManager : MonoBehaviour
     //    float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
     //    ShootPoint.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     //}
-    public void ShootBullet(Vector3 position, Bullet newObject)
-    {
-        newObject.transform.position = position;
 
-        Vector2 directionBullet = GetMousDirection(position);
-        // Запускаємо об'єкт в заданому напрямку
-        Rigidbody2D rb = newObject.GetComponent<Rigidbody2D>();
-        rb.AddForce(directionBullet.normalized * launchForce, ForceMode2D.Impulse);
-        float angleShot = Mathf.Atan2(directionBullet.y, directionBullet.x) * Mathf.Rad2Deg;
-        newObject.transform.rotation = Quaternion.AngleAxis(angleShot + 90, Vector3.forward);
-    }
-    public void AutoShoot(Vector3 position, Bullet newObject)
-    {
-        newObject.transform.position = position;
-
-        Vector2 nearest = new Vector3(999, 999, 999);
-        float nearestDistSqr = Mathf.Infinity;
-       
-        foreach (var enemy in gameManager.enemies.children)
-        {
-            if ( enemy != null && enemy.gameObject.activeSelf) //умова щоб не автоатакувати в невидимих грибів)
-            {
-                Vector3 enemyPos = enemy.objTransform.position;
-                float distSqr = (enemyPos - position).sqrMagnitude;
-                if (distSqr < nearestDistSqr)
-                {
-                    nearestDistSqr = distSqr;
-                    nearest = enemyPos;
-                }
-            }
-        }
-        Vector2 myPos = new Vector2(position.x, position.y);
-        Vector2 direction = nearest - myPos;
-        direction.Normalize();
-        float distance = Vector3.Distance(nearest, myPos);
-        if (gameManager.enemies.children.First(e => e.objTransform).gameObject.activeSelf)
-        {
-            if (gameManager.enemies.children.First(e => e.transform.position.x == nearest.x).GetComponentInChildren<SpriteRenderer>().color.a != 0 && distance < 50)
-            {
-                // Запускаємо об'єкт в заданому напрямку
-                Rigidbody2D rb = newObject.GetComponent<Rigidbody2D>();
-                rb.AddForce(direction.normalized * launchForce, ForceMode2D.Impulse);
-                float angleShot = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                newObject.transform.rotation = Quaternion.AngleAxis(angleShot + 90, Vector3.forward);
-            }
-            else
-            {
-                Destroy(newObject.gameObject);
-            }
-        }
-        else
-        {
-            Destroy(newObject.gameObject);
-        }
-    }
-    
     //End Shoot
     //Expiriance
     public void OnTriggerEnter2D(Collider2D collision)

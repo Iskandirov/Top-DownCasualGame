@@ -9,6 +9,7 @@ public class Reload : SkillBaseMono
     // Start is called before the first frame update
     void Start()
     {
+        AudioManager.instance.PlaySFX("Reload");
         if (basa.stats[1].isTrigger)
         {
             basa.countObjects += basa.stats[1].value;

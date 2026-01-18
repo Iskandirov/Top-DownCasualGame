@@ -1,8 +1,9 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static SkillBaseMono;
 [System.Serializable]
 public class Data 
 {
@@ -20,7 +21,7 @@ public class CDSkills : MonoBehaviour
     [SerializeField]
     public List<status> status;
 
-    public string type;
+    public SpellType type;
     public SkillBase skill;
     public SkillBaseMono skillMono;
     public float skillCD;
@@ -32,6 +33,8 @@ public class CDSkills : MonoBehaviour
 
     public float step;
     public bool isPassive;
+
+    private Coroutine activeSpawn;
 
     public KeyCode keyCode;
     TextMeshProUGUI cDText;
@@ -67,23 +70,48 @@ public class CDSkills : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
     }
-    private IEnumerator WaitToAnotherObject(int count,float delay)
+    public IEnumerator SpawnBullets(SkillBaseMono skillMono, SpellType type, int count, float delay, float damageMultiplier, int baseOrder, float spreadAngle = 0f)
     {
-        float followUpMultiplier = 1f;
-
-        for (int i = 0; i < count - 1; i++)
+        for (int i = 0; i < count; i++)
         {
-            yield return new WaitForSeconds(delay);
-            followUpMultiplier = 1f;
-            followUpMultiplier = followUpMultiplier / (i + 1.3f);
-            skillMono.CreateSpellByType(type, skill.objToSpawn, skillMono, currentStatLevel, followUpMultiplier);
+            SkillBaseMono spell = skillMono.CreateSpellByType(type, skillMono, skillMono, skillMono.currentLevel, damageMultiplier);
+
+            if (spell.skillId == 0)
+            {
+                spell.GetComponent<Bullet>().spawnPoint = PlayerManager.instance.ShootPoint.transform;
+
+                // одразу налаштовуємо кулям порядок та offset
+                var renderers = spell.GetComponentsInChildren<SpriteRenderer>();
+                foreach (var r in renderers)
+                    r.sortingOrder = baseOrder + i; // кожна наступна куля зверху
+
+                var rb = spell.GetComponent<Rigidbody2D>();
+                if (rb != null)
+                {
+                    float angle = (count == 1) ? 0f : (i - (count - 1) / 2f) * spreadAngle;
+                    spell.transform.rotation *= Quaternion.Euler(0, 0, angle);
+                    rb.velocity = spell.transform.right * 10f;
+                }
+            }
+            if (i < count - 1) // між кулями робимо паузу
+                yield return new WaitForSeconds(delay);
         }
     }
     void Spawn(int counter)
     {
-        skillMono.CreateSpellByType(type, skill.objToSpawn, skillMono, currentStatLevel, skillMono.damageMultiplier);
+        if (activeSpawn != null) // вже йде серія куль → не запускаємо нову
+            return;
 
-        StartCoroutine(WaitToAnotherObject(counter, skill.spawnDelay));
+        activeSpawn = StartCoroutine(SpawnBulletsRoutine(counter));
+    }
+    private IEnumerator SpawnBulletsRoutine(int counter)
+    {
+        yield return StartCoroutine(
+            SpawnBullets(skillMono, type, counter, skill.spawnDelay, skillMono.damageMultiplier, 10, 12f)
+        );
+        AudioManager.instance.PlaySFX(skill.spawnSFXName);
+
+        activeSpawn = null; // дозволяємо наступний спавн
     }
     private void Update()
     {

@@ -109,6 +109,7 @@ GameObject:
   - component: {fileID: 3162221353454294215}
   - component: {fileID: 523589414484932913}
   - component: {fileID: 6892684073498199981}
+  - component: {fileID: 1626143988161594716}
   m_Layer: 6
   m_Name: Tree 6
   m_TagString: Tree
@@ -219,6 +220,25 @@ CapsuleCollider2D:
   m_Offset: {x: 0.23081684, y: 0.010353088}
   m_Size: {x: 2.2108498, y: 13.813248}
   m_Direction: 0
+--- !u!114 &1626143988161594716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3162221353454294213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed361a61c3c422246acd05497145f796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isStatic: 1
+  offset: 7.03
+  renderers:
+  - renderer: {fileID: 333200939910243698}
+    priority: 0
+  - renderer: {fileID: 2887151415247195466}
+    priority: 0
 --- !u!1 &4885013460450056078
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,7 +250,6 @@ GameObject:
   - component: {fileID: 650553137292273544}
   - component: {fileID: 1904679941723766228}
   - component: {fileID: 2887151415247195466}
-  - component: {fileID: 4764945108604757772}
   m_Layer: 0
   m_Name: Bush
   m_TagString: Untagged
@@ -317,20 +336,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4764945108604757772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4885013460450056078}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed361a61c3c422246acd05497145f796, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isStatic: 1
-  offset: 7.03
-  renderers:
-  - renderer: {fileID: 2887151415247195466}
-    priority: 0

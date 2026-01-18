@@ -111,7 +111,7 @@ public class ElementalBoss_Attack : MonoBehaviour
                 StopCoroutine(attackLoop);
 
             // тут можна запустити анімацію "лежить" або "відновлення"
-            // boss.Animator.SetTrigger("Recover");
+             boss.anim.SetTrigger("Stan");
         }
     }
 
@@ -142,8 +142,8 @@ public class ElementalBoss_Attack : MonoBehaviour
             {
                 if (!currentStage.canAct)
                     break;
-                attack.Execute();
                 yield return new WaitForSeconds(attack.cooldown);
+                attack.Execute();
             }
         }
     }

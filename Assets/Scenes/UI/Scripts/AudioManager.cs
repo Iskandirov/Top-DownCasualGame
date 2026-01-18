@@ -1,5 +1,7 @@
-using UnityEngine;
 using System;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
 [Serializable]
 public class Sounds
 {
@@ -41,7 +43,7 @@ public class AudioManager : MonoBehaviour
     void Start()
     {
 
-        PlayMusic(nameClip);
+        PlayMusic(nameClip /*+ (SceneManager.GetSceneByBuildIndex(SceneManager.GetActiveScene().buildIndex).buildIndex - 1)*/);
     }
     public void ChangeVolume(float volume,AudioSource source)
     {
@@ -80,7 +82,7 @@ public class AudioManager : MonoBehaviour
             Debug.LogWarning("Sound: " + name + " does not exist");
             return;
         }
-        float finalVolume = sfxObj.volume * s.volume;
-        sfxObj.PlayOneShot(s.clip,finalVolume);
+        float finalVolume = volumeSFX * s.volume;
+        sfxObj.PlayOneShot(s.clip, finalVolume);
     }
 }

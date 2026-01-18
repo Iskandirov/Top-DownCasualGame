@@ -1,67 +1,65 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ASyncLoader : MonoBehaviour
 {
+    public static ASyncLoader Instance;
+    private float target;
     [Header("Screens To Swap")]
-    [SerializeField] GameObject loadingScreen;
-    [SerializeField] List<GameObject> objectsToHide;
-    [Header("Slider and loader")]
-    [SerializeField] Slider loadingSlider;
-    [SerializeField] Image loader;
-    public void LoadLevelBtn(int levelToLoad)
+    [SerializeField] private List<GameObject> objectsToHide;
+
+    [Header("UI Elements")]
+    [SerializeField] private GameObject canvas;
+    [SerializeField] private Slider loadingSlider;
+    [SerializeField] private Image loader;
+    [SerializeField] private float rotationSpeed = 180f;
+    [SerializeField] private float progressSmoothSpeed = 1.5f;
+
+    private float displayedProgress = 0f;
+    private void Awake()
     {
-        if(objectsToHide != null)
+        if (Instance == null)
         {
-            foreach (var obj in objectsToHide)
-            {
-                obj.SetActive(false);
-            }
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
-        loadingScreen.SetActive(true);
-
-        StartCoroutine(LoadLevelASync(levelToLoad));
-    }
-    public void LoadLevelBtn(string levelToLoad)
-    {
-        if(objectsToHide != null)
+        else
         {
-            foreach (var obj in objectsToHide)
-            {
-                obj.SetActive(false);
-            }
-        }
-        loadingScreen.SetActive(true);
-
-        StartCoroutine(LoadLevelASync(levelToLoad));
-    }
-    IEnumerator LoadLevelASync(int levelToLoad)
-    {
-        AsyncOperation loadOperation = SceneManager.LoadSceneAsync(levelToLoad);
-        while (!loadOperation.isDone)
-        {
-            float progressValue = Mathf.Clamp01(loadOperation.progress / 0.9f);
-            loadingSlider.value = progressValue;
-
-            loader.transform.Rotate(Vector3.forward * Time.deltaTime * 10);
-
-            yield return null;
+            Destroy(gameObject);
         }
     }
-    IEnumerator LoadLevelASync(string levelToLoad)
+    public async void LoadLevel(string levelToLoad)
     {
-        AsyncOperation loadOperation = SceneManager.LoadSceneAsync(levelToLoad);
-        while (!loadOperation.isDone)
+        target = 0;
+        loadingSlider.value = 0;
+
+        var scene = SceneManager.LoadSceneAsync(levelToLoad);
+        scene.allowSceneActivation = false;
+
+        canvas.SetActive(true);
+        do
         {
-            float progressValue = Mathf.Clamp01(loadOperation.progress / 0.9f);
-            loadingSlider.value = progressValue;
+           
+            await Task.Delay(100);
 
-            loader.transform.Rotate(Vector3.forward * Time.deltaTime * 10);
+            target = scene.progress + .1f;
 
-            yield return new WaitForSeconds(3f);
+        } while (scene.progress < 0.9f);
+        scene.allowSceneActivation = true;
+    }
+    void Update()
+    {
+       // GameManager.Instance.TimeScale(0);
+        loader.transform.Rotate(Vector3.forward * -rotationSpeed * Time.deltaTime);
+        loadingSlider.value = Mathf.MoveTowards(loadingSlider.value, target, progressSmoothSpeed * Time.deltaTime);
+        if (loadingSlider.value >= 1f)
+        {
+            GameManager.Instance.TimeScale(1);
+            canvas.SetActive(false);
         }
     }
 }

@@ -138,6 +138,7 @@
     <Compile Include="Assets\Scenes\UI\Scripts\Characters\CharacterInfo.cs" />
     <Compile Include="Assets\AdditionalAssets\StylizedAOEVFXwithIndicators\Scripts\SelfDestroyEffect.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_ParticleSystem_MinMaxGradient.cs" />
+    <Compile Include="Assets\Scenes\Player\Skills\SkillSystem\SkillManager.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\ObjectToShow.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_UI_InputField_OnChangeEvent.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\DailyQuests.cs" />
@@ -207,6 +208,7 @@
     <Compile Include="Assets\Scenes\Player\Skills\Illusion\Illusion.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\ProgressBar.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\Base\StateSlowed.cs" />
+    <Compile Include="Assets\Scenes\UI\Scripts\ScriptableObjectSkillBase.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_Events_UnityEventBase.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\AdaptiveValueSelectorPropertyDrawer.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\Elemental\ElementalBoss_Attack.cs" />
@@ -242,6 +244,7 @@
     <Compile Include="Assets\Scenes\UI\Scripts\AdaptiveValueText.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\Elemental\Crystal_Destruction.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_TMPro_TMP_SpriteGlyph.cs" />
+    <Compile Include="Assets\Scenes\Player\Skills\SkillSystem\ISkillEffect.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_UI_MaskableGraphic_CullStateChangedEvent.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\Elemental\Attacks\Jump.cs" />
     <Compile Include="Assets\Scenes\Player\Scriprs\Sphere.cs" />
@@ -259,11 +262,13 @@
     <Compile Include="Assets\Scenes\UI\Scripts\ASyncLoader.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_TextCore_GlyphRect.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\CineMachineCameraShake.cs" />
+    <Compile Include="Assets\Scenes\Player\Skills\SkillSystem\BulletSkillAdapter.cs" />
     <Compile Include="Assets\Scenes\Player\Skills\Illusion\Zzap.cs" />
     <Compile Include="Assets\Scenes\Player\Skills\Meteor\FallinMeteor.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\Tutorial\TextAppear.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\MiShroom\MineSpawn.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\SpineAnimationController.cs" />
+    <Compile Include="Assets\Scenes\Player\Skills\SkillSystem\SkillDefinition.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_TMPro_TMP_Dropdown_OptionDataList.cs" />
     <Compile Include="Assets\Scenes\Player\Skills\Heal\HealActive.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\LevelChoosScripts\LoadPotions.cs" />
@@ -272,6 +277,7 @@
     <Compile Include="Assets\Scenes\Player\Skills\IceWall\IceWall.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_UI_ScrollRect_ScrollRectEvent.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\PerkS\PerkSystem.cs" />
+    <Compile Include="Assets\Scenes\Player\Skills\SkillSystem\SkillInstance.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\Elemental\DrawComparer.cs" />
     <Compile Include="Assets\Scenes\Enemy\Scripts\Elemental\MagicCircle.cs" />
     <Compile Include="Assets\Scenes\UI\Scripts\TagText.cs" />
@@ -691,6 +697,26 @@
     </Reference>
     <Reference Include="Pathfinding.Ionic.Zip.Reduced">
       <HintPath>Assets\AdditionalAssets\AstarPathfindingProject\Plugins\DotNetZip\Pathfinding.Ionic.Zip.Reduced.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.18f1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.18f1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Common.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Android.Types">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.18f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Types.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Android.Gradle">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.18f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Gradle.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Android.GradleProject">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.18f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.GradleProject.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="mscorlib">

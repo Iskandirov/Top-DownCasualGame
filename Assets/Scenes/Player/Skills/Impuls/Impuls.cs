@@ -61,6 +61,7 @@ public class Impuls : SkillBaseMono
         if (basa.stats[3].isTrigger)
         {
             GameManager.Instance.FindStatName("barierSpawned", 1);
+            AudioManager.instance.PlaySFX("Barrier_spawn");
             DestroyBarrier a = Instantiate(barrier, objTransform.position, Quaternion.identity);
             a.Grass = grass;
             if (basa.stats[4].isTrigger)

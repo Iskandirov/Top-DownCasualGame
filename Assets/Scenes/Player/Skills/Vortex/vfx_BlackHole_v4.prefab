@@ -82,6 +82,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b96d169867430d84c88272e306f1e865, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Elements: 
   basa:
     stats:
     - isTrigger: 1
@@ -99,12 +100,13 @@ MonoBehaviour:
     stepMax: 15
     lifeTime: 2
     damage: 5
+    spawnSFXName: 
+    despawnSFXName: 
     damageTickMax: 0
     countObjects: 1
     radius: 1
     isPassive: 0
     spawnDelay: 0
-    Elements: 040000000400000006000000
   skillId: 3
   currentLevel: 0
   damageMultiplier: 1

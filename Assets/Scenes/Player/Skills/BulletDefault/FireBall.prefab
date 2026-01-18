@@ -27,8 +27,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3701608720309709429}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: -0.91068363, w: 0.41310447}
-  m_LocalPosition: {x: -4.7, y: -73.099945, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.86424613, w: 0.50306934}
+  m_LocalPosition: {x: -184.81995, y: -270.61414, z: 0.00000013463108}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3d2a3552b2642f488c26cab72f1f7cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Elements: 000000000000000000000000
   basa:
     stats:
     - isTrigger: 1
@@ -61,7 +62,7 @@ MonoBehaviour:
       value: 0
     skill: {fileID: 0}
     objToSpawn: {fileID: 7746328968856795561}
-    stepMax: 0.45
+    stepMax: 0.25
     lifeTime: 0.5
     damage: 1
     damageTickMax: 0
@@ -69,23 +70,18 @@ MonoBehaviour:
     radius: 0
     isPassive: 0
     spawnDelay: 0.3
-    Elements:
-    - statusCurrentData:
-      - 0
-      - 0
-      - 0
-      isActiveCurrentData: 000000
   skillId: 0
   currentLevel: 0
   damageMultiplier: 1
   player: {fileID: 0}
   forceAmount: 50
-  isPiers: 0
+  isPierce: 0
   isRickoshet: 0
   isLifeSteal: 0
   isBulletSlow: 0
   lifeStealPercent: 0
   slowPercent: 0
+  launchForce: 3000
   obj: {fileID: 0}
 --- !u!50 &-590133602782711436
 Rigidbody2D:

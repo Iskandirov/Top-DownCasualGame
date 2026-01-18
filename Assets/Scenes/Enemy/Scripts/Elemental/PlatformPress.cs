@@ -239,7 +239,7 @@ public class PlatformPress : MonoBehaviour
         focusCamera.Priority = PointCamPriority;
         followCamera.Priority = mainCamPriority;
     }
-    public void SpikeTrapDissovle()
+    public void SpikeTrapDissovle(bool spikeDissovle)
     {
         if (spikeTrap)
         {
@@ -247,7 +247,7 @@ public class PlatformPress : MonoBehaviour
             {
                 if (dis != null)
                 {
-                    dis.isDissolving = true;
+                    dis.isDissolving = spikeDissovle;
                     dis.AppearOrVanish();
                 }
             }
@@ -319,7 +319,7 @@ public class PlatformPress : MonoBehaviour
                 anim.SetBool("Pressed", true);
             }
             CamerasPriority(10, 20);
-            SpikeTrapDissovle();
+            SpikeTrapDissovle(false);
             CompareDrawing();
         }
     }
@@ -333,7 +333,7 @@ public class PlatformPress : MonoBehaviour
                 anim.SetBool("Pressed", false);
             }
             CamerasPriority(20, 0);
-            SpikeTrapDissovle();
+            SpikeTrapDissovle(true);
         }
     }
 

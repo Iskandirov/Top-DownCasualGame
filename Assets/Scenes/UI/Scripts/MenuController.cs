@@ -7,7 +7,8 @@ public class MenuController : MonoBehaviour
     [SerializeField] ASyncLoader loader;
     public void OnPlay()
     {
-        loader.LoadLevelBtn(sceneCount);
+        ASyncLoader.Instance.LoadLevel("Level_" + (sceneCount - 1));
+        //loader.LoadLevelBtn(sceneCount);
     }
     public void OnExit()
     {

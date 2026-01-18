@@ -6,59 +6,93 @@ using UnityEngine;
 
 public class TriggerTrail : MonoBehaviour
 {
-    public float hitDelay = 0.5f;
-    public EnemySpawner enemies;
-    public SkillBase basa;
-    public List<Collider2D> enemiesColliders = new List<Collider2D>();
     public List<status> Elements;
-    private void Start()
+    public float damage = 1f;
+    public float damageInterval = 0.3f;
+    public SkillBase basa;
+
+    private Dictionary<GameObject, Coroutine> activeDamages = new Dictionary<GameObject, Coroutine>();
+
+    private IEnumerator DamageOverTime(FSMC_Executer enemy)
     {
-        enemies = FindAnyObjectByType<EnemySpawner>();
-        StartCoroutine(DealDamage());
-    }
-    IEnumerator DealDamage()
-    {
-        while (true)
+        while (enemy != null && enemy.gameObject.activeInHierarchy)
         {
-            yield return new WaitForSeconds(hitDelay);
-            if (enemiesColliders.Count > 0)
+            // Ефект
+            var debuff = enemy.GetComponent<ElementActiveDebuff>();
+            if (debuff != null)
             {
-                for (int i = 0; i < enemiesColliders.Count; i++)
+                debuff.ApplyEffect(status.Grass, 5);
+                Debug.Log($"[Trail] Debuff applied to: {enemy.name}");
+            }
+            else
+            {
+                Debug.LogWarning($"[Trail] No ElementActiveDebuff on: {enemy.name}");
+            }
+
+            // Нанесення шкоди
+            if (enemy != null)
+            {
+                float beforeHealth = enemy.health;
+                enemy.TakeDamage(basa.damage, 1f);
+                float dealt = Mathf.Min(beforeHealth, basa.damage);
+                Debug.Log($"[Trail] Damage dealt to: {enemy.name}, amount: {dealt}");
+
+                // Статистика
+                GameManager.Instance.FindStatName("trailDamage", dealt);
+
+                // Щоденний квест і лікування
+                if (basa.stats.Count > 4 && basa.stats[4].isTrigger)
                 {
-                    ElementActiveDebuff debuff = enemiesColliders[i].GetComponentInParent<ElementActiveDebuff>();
-                    debuff.ApplyEffect(status.Grass, 5);
-                    enemiesColliders[i].GetComponent<FSMC_Executer>().TakeDamage(basa.damage, 1);
-                    if (basa.stats[4].isTrigger)
+                    if (enemy.health <= 0)
                     {
-                        if (enemiesColliders[i].GetComponent<FSMC_Executer>().health <= 0)
+                        float heal = enemy.healthMax * 0.1f;
+                        Debug.Log($"[Trail] Heal for player: {heal}");
+                        if (DailyQuests.instance != null && DailyQuests.instance.quest.FirstOrDefault(s => s.id == 1 && s.isActive == true) != null)
                         {
-                            float heal = enemies.children.Find(s => s.name == enemiesColliders[i].GetComponent<FSMC_Executer>().name).healthMax * 0.1f;
-                            if (DailyQuests.instance.quest.FirstOrDefault(s => s.id == 1 && s.isActive == true) != null)
-                            {
-                                DailyQuests.instance.UpdateValue(1, heal, false, true);
-                            }
-                            PlayerManager.instance.HealHealth(heal);
+                            DailyQuests.instance.UpdateValue(1, heal, false, true);
+                            Debug.Log("[Trail] Daily quest updated for heal");
                         }
+                        PlayerManager.instance.HealHealth(heal);
                     }
                 }
             }
+            yield return new WaitForSeconds(damageInterval);
         }
     }
-    private void OnTriggerStay2D(Collider2D collision)
+
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (collision.CompareTag("Enemy") && !collision.isTrigger)
+        if (other.CompareTag("Enemy") && !activeDamages.ContainsKey(other.gameObject))
         {
-            if (!enemiesColliders.Contains(collision))
+            var enemy = other.GetComponent<FSMC_Executer>();
+            if (enemy != null)
             {
-                enemiesColliders.Add(collision);
+                Debug.Log($"[Trail] Enemy entered: {enemy.name}");
+                Coroutine c = StartCoroutine(DamageOverTime(enemy));
+                activeDamages.Add(other.gameObject, c);
+            }
+            else
+            {
+                Debug.LogWarning($"[Trail] Enemy without FSMC_Executer: {other.name}");
             }
         }
     }
-    private void OnTriggerExit2D(Collider2D collision)
+
+    private void OnTriggerExit2D(Collider2D other)
     {
-        if (collision.CompareTag("Enemy") && !collision.isTrigger)
+        if (other.CompareTag("Enemy") && activeDamages.TryGetValue(other.gameObject, out Coroutine c))
         {
-            enemiesColliders.Remove(collision);
+            Debug.Log($"[Trail] Enemy exited: {other.name}");
+            StopCoroutine(c);
+            activeDamages.Remove(other.gameObject);
         }
+    }
+
+    private void OnDestroy()
+    {
+        // Зупиняємо всі корутини при знищенні сегмента
+        foreach (var c in activeDamages.Values)
+            if (c != null) StopCoroutine(c);
+        activeDamages.Clear();
     }
 }

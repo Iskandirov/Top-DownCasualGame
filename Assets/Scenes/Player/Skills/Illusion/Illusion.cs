@@ -8,7 +8,7 @@ using UnityEngine.VFX.Utility;
 public class Illusion : SkillBaseMono
 {
     public Zzap zzap;
-    public Bullet bullet;
+    public GameObject bullet;
     public float angle;
 
     public float attackSpeed;
@@ -102,14 +102,22 @@ public class Illusion : SkillBaseMono
         attackSpeed -= Time.fixedDeltaTime;
         if (attackSpeed <= 0 && Input.GetMouseButton(0) && !player.isAuto)
         {
-            Bullet a = Instantiate(bullet, objTransform.position, Quaternion.identity);
-            a.obj = gameObject;
+            AudioManager.instance.PlaySFX("Illusion_attack");
+            GameObject a = Instantiate(bullet, transform.position, Quaternion.identity);
+            Bullet bull = a.GetComponent<Bullet>();
+            a.name = "IllusionBullet";
+            bull.spawnPoint = transform;
+            bull.Init(player.isAuto,transform);
             attackSpeed = attackSpeedMax;
         }
         else if(attackSpeed <= 0 && player.isAuto)
         {
-            Bullet a = Instantiate(bullet, objTransform.position, Quaternion.identity);
-            a.obj = gameObject;
+            AudioManager.instance.PlaySFX("Illusion_attack");
+            GameObject a = Instantiate(bullet, transform.position, Quaternion.identity);
+            Bullet bull = a.GetComponent<Bullet>();
+            a.name = "IllusionBullet";
+            bull.spawnPoint = transform;
+            bull.Init(player.isAuto, transform);
             attackSpeed = attackSpeedMax;
         }
     }

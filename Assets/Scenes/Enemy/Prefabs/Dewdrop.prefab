@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7062910791796482576}
   - component: {fileID: 5520671934196478805}
-  - component: {fileID: 1586927008272242822}
   m_Layer: 10
   m_Name: drop
   m_TagString: Enemy
@@ -85,50 +84,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1586927008272242822
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 220348088769426967}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ShadowGroup: 0
-  m_ComponentVersion: 1
-  m_HasRenderer: 1
-  m_UseRendererSilhouette: 1
-  m_CastsShadows: 1
-  m_SelfShadows: 0
-  m_ApplyToSortingLayers: 67bb4bdb000000006bb21ed8dbdc180403081c6621fa54d5
-  m_ShapePath:
-  - {x: -2.5531201, y: -0.45581853, z: 0}
-  - {x: -2.0139081, y: 0.5852641, z: 0.00000023841858}
-  - {x: -1.2467387, y: 0.9279295, z: 0.00000011920929}
-  - {x: -0.770638, y: 0.2987963, z: 0.00000011920929}
-  - {x: -0.728129, y: 1.1319724, z: 0.00000011920929}
-  - {x: -0.40092278, y: 1.4107829, z: 0}
-  - {x: 0.25821018, y: 1.4890853, z: 0.00000023841858}
-  - {x: 0.81919837, y: 1.191485, z: 0.00000011920929}
-  - {x: 0.85320544, y: 0.38381422, z: 0.00000011920929}
-  - {x: 1.2761047, y: 1.0020187, z: 0.00000023841858}
-  - {x: 2.223574, y: 0.32113326, z: 0}
-  - {x: 2.4766371, y: -0.40861875, z: 0}
-  - {x: 1.8479159, y: -0.22831511, z: 0.00000011920929}
-  - {x: 1.2187827, y: -0.86595, z: 0.00000011920929}
-  - {x: 0.38560653, y: -0.9934769, z: 0.00000011920929}
-  - {x: -0.4560715, y: -0.94246614, z: 0.00000011920929}
-  - {x: -1.326937, y: -0.77398527, z: 0.00000023841858}
-  - {x: -1.8588681, y: -0.36434388, z: 0.00000011920929}
-  m_ShapePathHash: 849117982
-  m_Mesh: {fileID: 0}
-  m_InstanceId: 135880
-  m_LocalBounds:
-    m_Center: {x: -0.038241386, y: 0.24780422, z: 0}
-    m_Extent: {x: 2.5148787, y: 1.2412812, z: 0}
 --- !u!1 &1068149794494416580
 GameObject:
   m_ObjectHideFlags: 0
@@ -643,10 +598,10 @@ MonoBehaviour:
   rotationSpeed: 360
   slowdownDistance: 0.6
   pickNextWaypointDist: 2.74
-  endReachedDistance: 0.2
+  endReachedDistance: 50
   alwaysDrawGizmos: 0
   slowWhenNotFacingTarget: 1
-  whenCloseToDestination: 1
+  whenCloseToDestination: 0
   constrainInsideGraph: 0
 --- !u!114 &2685349443915097406
 MonoBehaviour:

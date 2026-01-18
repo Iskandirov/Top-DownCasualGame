@@ -1359,8 +1359,10 @@ MonoBehaviour:
       skill: {fileID: 0}
       objToSpawn: {fileID: 7746328968856795561, guid: cbc957d76f09b5e44a052aed2a3abb1a, type: 3}
       stepMax: 0.5
-      lifeTime: 0.5
+      lifeTime: 1
       damage: 1
+      spawnSFXName: FireBall
+      despawnSFXName: 
       damageTickMax: 0
       countObjects: 1
       radius: 0
@@ -1381,7 +1383,7 @@ MonoBehaviour:
     - More attack speed
     - + 1 bullet
     - Piers enemies
-    type: base
+    type: 0
   - Name: Lightning
     ID: 1
     level: 0
@@ -1402,6 +1404,8 @@ MonoBehaviour:
       stepMax: 5
       lifeTime: 3
       damage: 4
+      spawnSFXName: 
+      despawnSFXName: 
       damageTickMax: 0
       countObjects: 3
       radius: 60
@@ -1422,7 +1426,7 @@ MonoBehaviour:
     - x2 damage
     - Lightning stun enemies
     - Less recharge time
-    type: base
+    type: 0
   - Name: Puddle
     ID: 2
     level: 0
@@ -1443,6 +1447,8 @@ MonoBehaviour:
       stepMax: 7
       lifeTime: 4
       damage: 0.5
+      spawnSFXName: 
+      despawnSFXName: 
       damageTickMax: 0.5
       countObjects: 1
       radius: 1
@@ -1463,7 +1469,7 @@ MonoBehaviour:
     - x2 damage
     - + 2 spawned puddle
     - Faster damage
-    type: aoe
+    type: 0
   - Name: Meteor
     ID: 3
     level: 0
@@ -1484,6 +1490,8 @@ MonoBehaviour:
       stepMax: 10
       lifeTime: 5
       damage: 1
+      spawnSFXName: 
+      despawnSFXName: 
       damageTickMax: 0.5
       countObjects: 1
       radius: 4
@@ -1504,7 +1512,7 @@ MonoBehaviour:
     - +2 meteors
     - Area after meteor sloves enemies move speed
     - +3 meteors
-    type: aoe
+    type: 0
   - Name: FireWave
     ID: 4
     level: 0
@@ -1525,6 +1533,8 @@ MonoBehaviour:
       stepMax: 10
       lifeTime: 1
       damage: 2
+      spawnSFXName: FireWave
+      despawnSFXName: 
       damageTickMax: 0
       countObjects: 1
       radius: 0
@@ -1545,7 +1555,7 @@ MonoBehaviour:
     - +1 wave
     - Less recharge
     - Wave leaves burning effect
-    type: base
+    type: 0
   - Name: Heal
     ID: 5
     level: 0
@@ -1566,6 +1576,8 @@ MonoBehaviour:
       stepMax: 15
       lifeTime: 3
       damage: 10
+      spawnSFXName: Heal_spawn
+      despawnSFXName: 
       damageTickMax: 0
       countObjects: 1
       radius: 0
@@ -1586,7 +1598,7 @@ MonoBehaviour:
     - Heal give 2 seconds invulnerability
     - Less reacharge time
     - More heal
-    type: base
+    type: 0
   - Name: Reload
     ID: 6
     level: 0
@@ -1607,6 +1619,8 @@ MonoBehaviour:
       stepMax: 12
       lifeTime: 1
       damage: 0
+      spawnSFXName: 
+      despawnSFXName: 
       damageTickMax: 0
       countObjects: 1
       radius: 0
@@ -1627,7 +1641,7 @@ MonoBehaviour:
     - Less reacharge time
     - +1 reload skill
     - All skills reacharge time - 50%
-    type: base
+    type: 0
   - Name: Impuls
     ID: 7
     level: 0
@@ -1648,6 +1662,8 @@ MonoBehaviour:
       stepMax: 10
       lifeTime: 3
       damage: 0
+      spawnSFXName: Impuls_spawn
+      despawnSFXName: 
       damageTickMax: 0
       countObjects: 1
       radius: 0.01
@@ -1668,7 +1684,7 @@ MonoBehaviour:
     - Less reacharge time
     - Create a barier
     - If you will in barrier area at the end of spell you will be healed
-    type: aoe
+    type: 0
   - Name: Shield
     ID: 8
     level: 0
@@ -1689,6 +1705,8 @@ MonoBehaviour:
       stepMax: 30
       lifeTime: 8
       damage: 60
+      spawnSFXName: 
+      despawnSFXName: 
       damageTickMax: 0
       countObjects: 6
       radius: 1
@@ -1709,7 +1727,7 @@ MonoBehaviour:
     - Less recharge time
     - Give a zone that slow enemies
     - More life time for shield
-    type: base
+    type: 0
   - Name: Beam
     ID: 9
     level: 0
@@ -1730,6 +1748,8 @@ MonoBehaviour:
       stepMax: 15
       lifeTime: 4
       damage: 0.5
+      spawnSFXName: Steam_spawn
+      despawnSFXName: 
       damageTickMax: 0.2
       countObjects: 1
       radius: 2
@@ -1750,7 +1770,7 @@ MonoBehaviour:
     - More damage
     - More life time
     - Less reacharge time
-    type: base
+    type: 0
   - Name: Tower
     ID: 10
     level: 0
@@ -1771,6 +1791,8 @@ MonoBehaviour:
       stepMax: 20
       lifeTime: 15
       damage: 3
+      spawnSFXName: 
+      despawnSFXName: 
       damageTickMax: 6
       countObjects: 1
       radius: 0
@@ -1791,7 +1813,7 @@ MonoBehaviour:
     - Create a bomb after towers crash
     - More attack speed
     - Provokes nearby enemies
-    type: aoe
+    type: 0
   - Name: Illusion
     ID: 11
     level: 0
@@ -1812,6 +1834,8 @@ MonoBehaviour:
       stepMax: 30
       lifeTime: 12
       damage: 1
+      spawnSFXName: Illusion_spawn
+      despawnSFXName: Illusion_despawn
       damageTickMax: 0
       countObjects: 1
       radius: 0
@@ -1832,7 +1856,7 @@ MonoBehaviour:
     - More life time
     - +1 copie
     - Create a shock line betwen copies
-    type: base
+    type: 0
   - Name: Trail
     ID: 12
     level: 0
@@ -1852,7 +1876,9 @@ MonoBehaviour:
       objToSpawn: {fileID: -6488929622799030495, guid: d5a238b6b5fb1074daf614cddc720bd9, type: 3}
       stepMax: 0
       lifeTime: 5
-      damage: 0.5
+      damage: 0.1
+      spawnSFXName: 
+      despawnSFXName: 
       damageTickMax: 0.2
       countObjects: 1
       radius: 0
@@ -1873,7 +1899,7 @@ MonoBehaviour:
     - More damage
     - The trail is wider
     - Each deth from trail restore 10% of enemy maximum HP as HP
-    type: base
+    type: 0
   - Name: Vortex
     ID: 13
     level: 0
@@ -1894,6 +1920,8 @@ MonoBehaviour:
       stepMax: 15
       lifeTime: 2
       damage: 5
+      spawnSFXName: 
+      despawnSFXName: 
       damageTickMax: 0
       countObjects: 1
       radius: 1
@@ -1914,7 +1942,7 @@ MonoBehaviour:
     - More radius
     - Less recharge
     - Spawn another vortex in random place
-    type: aoe
+    type: 0
   - Name: IceWall
     ID: 14
     level: 0
@@ -1935,6 +1963,8 @@ MonoBehaviour:
       stepMax: 7
       lifeTime: 4
       damage: 0
+      spawnSFXName: Ice_wall_spawn
+      despawnSFXName: 
       damageTickMax: 0.5
       countObjects: 1
       radius: 1
@@ -1955,7 +1985,7 @@ MonoBehaviour:
     - Bigger ice wall
     - Less recharge
     - Wall dealing damage
-    type: aoe
+    type: 0
   - Name: MagicAxe
     ID: 15
     level: 0
@@ -1976,6 +2006,8 @@ MonoBehaviour:
       stepMax: 11
       lifeTime: 3
       damage: 5
+      spawnSFXName: 
+      despawnSFXName: 
       damageTickMax: 0
       countObjects: 1
       radius: 0.5
@@ -1996,7 +2028,7 @@ MonoBehaviour:
     - More radius
     - Less recharge
     - After axe back to start position create another two axes
-    type: aoe
+    type: 0
   gold:
     Name: Gold
     ID: 999
@@ -2008,6 +2040,8 @@ MonoBehaviour:
       stepMax: 0
       lifeTime: 0
       damage: 0
+      spawnSFXName: 
+      despawnSFXName: 
       damageTickMax: 0
       countObjects: 0
       radius: 0
@@ -2020,7 +2054,7 @@ MonoBehaviour:
     tagRare: 
     Description:
     - Give 100 gold
-    type: base
+    type: 0
   skillsUpdatedList: []
   choose: 
   isOpenToUpgrade: 0
@@ -2051,6 +2085,8 @@ MonoBehaviour:
       stepMax: 0
       lifeTime: 0
       damage: 0
+      spawnSFXName: 
+      despawnSFXName: 
       damageTickMax: 0
       countObjects: 0
       radius: 0
@@ -2061,7 +2097,7 @@ MonoBehaviour:
     tag: []
     tagRare: 
     Description: []
-    type: base
+    type: 0
   abil: {fileID: 0}
 --- !u!114 &393745292006979078
 MonoBehaviour:

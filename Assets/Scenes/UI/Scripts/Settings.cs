@@ -139,7 +139,6 @@ public class Settings : MonoBehaviour
         AudioManager.instance.ChangeVolume(AudioManager.instance.volumeMusic, AudioManager.instance.musicObj);
         muteVolume.gameObject.SetActive(volumeMusic.value == 0 ? true : false);
         volumeValueTxt.text = (AudioManager.instance.volumeMusic * 100).ToString("0.") + "%";
-        Debug.Log("Slider value changed: " + value);
     }
     public void SetVolumeSFX()
     {
@@ -153,7 +152,6 @@ public class Settings : MonoBehaviour
         AudioManager.instance.ChangeVolume(AudioManager.instance.volumeSFX, AudioManager.instance.sfxObj);
         muteSFX.gameObject.SetActive(volumeSFX.value == 0 ? true : false);
         sfxValueTxt.text = ((AudioManager.instance.volumeSFX * 100).ToString("0.") + "%");
-        Debug.Log("Slider value changed: " + valueSFX);
 
     }
     public void SetVSync()

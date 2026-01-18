@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [Serializable]
 public class EnemyPool
@@ -54,6 +55,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if (timeToSpawnBoss <= timer.time && !isBossSpawned)
         {
+            AudioManager.instance.PlayMusic("BossFight" + (SceneManager.GetSceneByBuildIndex(SceneManager.GetActiveScene().buildIndex).buildIndex - 1));
             isBossSpawned = true;
             stopSpawn = true;
             children.Clear();

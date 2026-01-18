@@ -16,8 +16,12 @@ public class DestroyBarrier : MonoBehaviour
         player = PlayerManager.instance;
 
         StartCoroutine(TimerSpell());
+        Invoke("CallSFX", lifeTime - 0.45f);
     }
-
+    void CallSFX()
+    {
+        AudioManager.instance.PlaySFX("Barrier_despawn");
+    }
     private IEnumerator TimerSpell()
     {
         yield return new WaitForSeconds(lifeTime);
@@ -25,6 +29,7 @@ public class DestroyBarrier : MonoBehaviour
         if (isFiveLevel)
         {
 
+            AudioManager.instance.PlaySFX("Heal_spawn");
             if (player.playerHealthPoint != player.playerHealthPointMax)
             {
                 if (player.playerHealthPoint + heal * Grass <= player.playerHealthPointMax)
@@ -49,5 +54,12 @@ public class DestroyBarrier : MonoBehaviour
         }
         Destroy(gameObject);
 
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Bullet") || collision.gameObject.CompareTag("Enemy"))
+        {
+            AudioManager.instance.PlaySFX("Barrier_block");
+        }
     }
 }

@@ -85,6 +85,8 @@ public class FireWave : SkillBaseMono
         {
             yield return new WaitForSeconds(delay);
 
+            AudioManager.instance.PlaySFX("Burn");
+
             for (int i = burningEnemies.Count - 1; i >= 0; i--)
             {
                 FSMC_Executer enemy = burningEnemies[i];

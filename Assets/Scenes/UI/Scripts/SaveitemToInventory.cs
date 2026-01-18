@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static SkillBaseMono;
 
 public class SaveitemToInventory : MonoBehaviour
 {
@@ -93,11 +94,11 @@ public class SavedSkillsData
     public List<string> tag;
     public string tagRare;
     public List<string> Description;
-    public string type;
+    public SpellType type;
     public int MaxLevel { get; }
     public SavedSkillsData()
     {
-        type = "base";
+        type = SpellType.Base;
         level = 0;
         MaxLevel = 5;
     }

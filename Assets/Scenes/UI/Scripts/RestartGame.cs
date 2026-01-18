@@ -23,7 +23,8 @@ public class RestartGame : MonoBehaviour
     public void Restart()
     {
         AudioManager.instance.PlayMusic("GameTheme");
-        loader.LoadLevelBtn(SceneManager.GetActiveScene().buildIndex);
+        ASyncLoader.Instance.LoadLevel("Level_" + (SceneManager.GetActiveScene().buildIndex - 1));
+        //loader.LoadLevelBtn(SceneManager.GetActiveScene().buildIndex);
         //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     public void OpenOtherScene(string scenename)
@@ -32,7 +33,8 @@ public class RestartGame : MonoBehaviour
         {
             AudioManager.instance.PlayMusic("Theme");
         }
-        loader.LoadLevelBtn(scenename);
+        ASyncLoader.Instance.LoadLevel(scenename);
+        //loader.LoadLevelBtn(scenename);
         //SceneManager.LoadScene(scenename);
     }
 }

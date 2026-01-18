@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
@@ -279,7 +280,8 @@ public class GameManager : MonoBehaviour
         AudioManager music = AudioManager.instance;
         if (music.nameClip != nameClip && nameClip != null)
         {
-            music.PlayMusic(nameClip);
+
+            music.PlayMusic(nameClip /*+ (SceneManager.GetSceneByBuildIndex(SceneManager.GetActiveScene().buildIndex).buildIndex - 1)*/);
             music.nameClip = nameClip;
 
         }
@@ -327,7 +329,7 @@ public class GameManager : MonoBehaviour
         int i = UnityEngine.Random.Range(1, 4);
         if (needToStopTheme)
         {
-            AudioManager.instance.MusicStop();
+            //AudioManager.instance.MusicStop();
         }
         AudioManager.instance.PlaySFX("OpenPanel_" + i);
         isPanelOpen = true;
@@ -353,7 +355,7 @@ public class GameManager : MonoBehaviour
     }
     public void ClosePanel(GameObject panel)
     {
-        AudioManager.instance.PlayMusic(AudioManager.instance.nameClip);
+        //AudioManager.instance.PlayMusic(AudioManager.instance.nameClip);
         int i = UnityEngine.Random.Range(1, 4);
         AudioManager.instance.PlaySFX("OpenPanel_" + i);
         Transform obj = panel.transform;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MethodDestroy : MonoBehaviour
 {
-    public void DestroyObject()
+    public void DestroyObjectInGame()
     {
         Destroy(gameObject);
     }

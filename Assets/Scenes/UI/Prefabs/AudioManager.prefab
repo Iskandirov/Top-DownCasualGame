@@ -176,18 +176,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sounds:
   - name: Theme
-    clip: {fileID: 8300000, guid: 6f65fe061e7e1584893ac1d32bd9f22d, type: 3}
+    clip: {fileID: 8300000, guid: 3a1005cf9a81194499b5fc60ad5691f9, type: 3}
     volume: 0.353
     pitch: 1
     loop: 1
-  - name: GameTheme
-    clip: {fileID: 8300000, guid: da3ec4657159b9e489cb759111c5fff6, type: 3}
+  - name: GameTheme1
+    clip: {fileID: 8300000, guid: af68809d0891ff648a535ef3e4aab2a9, type: 3}
+    volume: 0.353
+    pitch: 1
+    loop: 1
+  - name: GameTheme2
+    clip: {fileID: 8300000, guid: e0f73ce92473a154bb9e4ef43ee388f7, type: 3}
+    volume: 0.353
+    pitch: 1
+    loop: 1
+  - name: GameTheme3
+    clip: {fileID: 8300000, guid: 1d59d2acdcd11694d971b8f8202929f0, type: 3}
     volume: 0.353
     pitch: 1
     loop: 1
   - name: BossFight1
-    clip: {fileID: 8300000, guid: c3d880f918fafa744aa001a25b51d79a, type: 3}
+    clip: {fileID: 8300000, guid: 09728274421972a4f994d663433d0461, type: 3}
     volume: 0.353
+    pitch: 1
+    loop: 1
+  - name: BossFight2
+    clip: {fileID: 8300000, guid: 70d2042901b8aec438bbba2a38353763, type: 3}
+    volume: 0.353
+    pitch: 1
+    loop: 1
+  - name: BossFight3
+    clip: {fileID: 8300000, guid: 03daeeae3279aee448af99f704e48bee, type: 3}
+    volume: 0.353
+    pitch: 1
+    loop: 1
+  - name: Shop Theme
+    clip: {fileID: 8300000, guid: 677b160edf36a3b438af72d01aabec5a, type: 3}
+    volume: 0.125
     pitch: 1
     loop: 1
   sfx:
@@ -217,13 +242,13 @@ MonoBehaviour:
     pitch: 0
     loop: 1
   - name: FireBall
-    clip: {fileID: 8300000, guid: 2ff6575216ec35548940605208de20f1, type: 3}
-    volume: 0
+    clip: {fileID: 8300000, guid: 0544d1fb56b46ab4fbdf4a491375a86c, type: 3}
+    volume: 0.476
     pitch: 0
     loop: 0
   - name: FireWave
-    clip: {fileID: 8300000, guid: 634632b536a4bf84a83b11bb5d48b43e, type: 3}
-    volume: 0
+    clip: {fileID: 8300000, guid: 67a3a52f736bb2a468ed1ecacfe2fdf0, type: 3}
+    volume: 1
     pitch: 0
     loop: 0
   - name: Heal
@@ -248,11 +273,6 @@ MonoBehaviour:
     loop: 0
   - name: Meteor
     clip: {fileID: 8300000, guid: 5d7367fa3bd33df4081db3122b02a91d, type: 3}
-    volume: 0
-    pitch: 0
-    loop: 1
-  - name: Steam
-    clip: {fileID: 8300000, guid: 5c29a418061240c41ac86b97bfb6b792, type: 3}
     volume: 0
     pitch: 0
     loop: 1
@@ -287,8 +307,78 @@ MonoBehaviour:
     pitch: 0
     loop: 0
   - name: Hit
-    clip: {fileID: 8300000, guid: a8451855802e7d14183d7b831fbb56af, type: 3}
-    volume: 0.353
+    clip: {fileID: 8300000, guid: fdf10420752db4247bdd41a1f2154bc1, type: 3}
+    volume: 0.5
+    pitch: 0
+    loop: 0
+  - name: Reload
+    clip: {fileID: 8300000, guid: 22027aaa6e7097c4aad03ab086810f55, type: 3}
+    volume: 1
+    pitch: 0
+    loop: 0
+  - name: Illusion_spawn
+    clip: {fileID: 8300000, guid: 3dd0a6eae639f424fa3204afa5867ab7, type: 3}
+    volume: 1
+    pitch: 0
+    loop: 0
+  - name: Illusion_attack
+    clip: {fileID: 8300000, guid: 42704d1993135f142914d569687c0337, type: 3}
+    volume: 1
+    pitch: 0
+    loop: 0
+  - name: Illusion_despawn
+    clip: {fileID: 8300000, guid: 3c5ae95eeb792684785f975b349a034c, type: 3}
+    volume: 1
+    pitch: 0
+    loop: 0
+  - name: Steam
+    clip: {fileID: 8300000, guid: 54d4a65b8b7897f4bbe31b9006a6d347, type: 3}
+    volume: 1
+    pitch: 0
+    loop: 1
+  - name: Steam_spawn
+    clip: {fileID: 8300000, guid: 7dc2baf0e462ad54cb76a688af7bb673, type: 3}
+    volume: 1
+    pitch: 0
+    loop: 0
+  - name: Burn
+    clip: {fileID: 8300000, guid: 12112860dcb5c334aaee73af3c6ffc94, type: 3}
+    volume: 1
+    pitch: 0
+    loop: 0
+  - name: Zzap
+    clip: {fileID: 8300000, guid: 06855223a1990ec4bbb458f0985302a9, type: 3}
+    volume: 0.25
+    pitch: 0
+    loop: 0
+  - name: Ice_wall_spawn
+    clip: {fileID: 8300000, guid: 123e649cb809acf4bae61833aaf76cdd, type: 3}
+    volume: 1
+    pitch: 0
+    loop: 0
+  - name: Impuls_spawn
+    clip: {fileID: 8300000, guid: 01f10458fa88eb84688370d86b26cf22, type: 3}
+    volume: 1
+    pitch: 0
+    loop: 0
+  - name: Heal_spawn
+    clip: {fileID: 8300000, guid: d8db4cb4a5684114a8f6e038289bcdb7, type: 3}
+    volume: 1
+    pitch: 0
+    loop: 0
+  - name: Barrier_spawn
+    clip: {fileID: 8300000, guid: 6b3cc466c3461d1439508b7196509362, type: 3}
+    volume: 1
+    pitch: 0
+    loop: 0
+  - name: Barrier_despawn
+    clip: {fileID: 8300000, guid: 5e162f439f9351c4eb4ca2b15f69a3e4, type: 3}
+    volume: 1
+    pitch: 0
+    loop: 0
+  - name: Barrier_block
+    clip: {fileID: 8300000, guid: ad9368a69c6cd0240b0c40ed33369730, type: 3}
+    volume: 0.494
     pitch: 0
     loop: 0
   musicObj: {fileID: 5663801515842352607}

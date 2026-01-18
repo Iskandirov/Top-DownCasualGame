@@ -1,9 +1,6 @@
 using FSMC.Runtime;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.VFX;
-using UnityEngine.VFX.Utility;
 
 public class Beam : SkillBaseMono
 {
@@ -13,112 +10,186 @@ public class Beam : SkillBaseMono
     public SpriteRenderer img;
     Transform objTransform;
     public Transform bindTransform;
-    // Start is called before the first frame update
-    void Start()
+
+    // Кеш оригинального значения урона (чтобы не умножать Steam несколько раз)
+    private float baseDamage;
+
+    // Централизованный реестр активных лучей — избавляет от FindObjectsOfType в Start
+    private static readonly List<Beam> activeBeams = new List<Beam>();
+
+    void Awake()
     {
         player = PlayerManager.instance;
         objTransform = transform;
-        if (basa.stats[1].isTrigger)
+    }
+
+    void OnEnable()
+    {
+        if (!activeBeams.Contains(this))
+            activeBeams.Add(this);
+    }
+
+    void OnDisable()
+    {
+        activeBeams.Remove(this);
+    }
+
+    void Start()
+    {
+        // Сохраняем исходный дамаг, применим модификаторы один раз
+        baseDamage = basa.damage;
+
+        // Применяем триггерные модификаторы (как было), безопасно — без повторного умножения Steam
+        if (basa.stats.Count > 1 && basa.stats[1].isTrigger)
         {
             basa.countObjects += basa.stats[1].value;
             basa.stats[1].isTrigger = false;
             CreateBeam(-90, 0, -5);
             CreateBeam(90, 0, 5);
         }
-        if (basa.stats[2].isTrigger)
+        if (basa.stats.Count > 2 && basa.stats[2].isTrigger)
         {
             basa.damage += basa.stats[2].value;
             basa.stats[2].isTrigger = false;
         }
-        if (basa.stats[3].isTrigger)
+        if (basa.stats.Count > 3 && basa.stats[3].isTrigger)
         {
             basa.lifeTime += basa.stats[3].value;
             basa.stats[3].isTrigger = false;
         }
-        if (basa.stats[4].isTrigger)
+        if (basa.stats.Count > 4 && basa.stats[4].isTrigger)
         {
             basa.skill.skill.stepMax -= basa.stats[4].value;
             basa.stats[4].isTrigger = false;
         }
+
+        // Применяем множитель Steam один раз для этой сущности
+        basa.damage = baseDamage * Mathf.Max(0f, player?.Steam ?? 1f);
+
         tick = basa.damageTickMax;
-        basa.damage = basa.damage * player.Steam;
-        objTransform.localScale = new Vector3(objTransform.localScale.x + basa.radius, objTransform.localScale.y + basa.radius, objTransform.localScale.z + basa.radius);
-        bindTransform.localScale = objTransform.localScale;
+
+        // Масштаб круга
+        objTransform.localScale = new Vector3(
+            objTransform.localScale.x + basa.radius,
+            objTransform.localScale.y + basa.radius,
+            objTransform.localScale.z + basa.radius);
+        if (bindTransform != null)
+            bindTransform.localScale = objTransform.localScale;
+
+        // Безопасное уничтожение (метод в базовом классе)
         CoroutineToDestroy(gameObject, basa.lifeTime);
-        IsThereAnotherBeam();
+
+        // Устанавливаем углы для всех активных лучей (используем реестр)
+        SetupBeamAngles();
     }
-    public void IsThereAnotherBeam()
+
+    void SetupBeamAngles()
     {
-        int angle = -90;
-        List<Beam> beams = FindObjectsOfType<Beam>().ToList();
-        if (beams.Count > 1)
+        if (activeBeams.Count <= 1) return;
+
+        // Распределяем углы по порядку появления, шаг 90 градусов
+        int idx = activeBeams.IndexOf(this);
+        if (idx < 0) idx = 0;
+        float startAngle = -90f;
+        for (int i = 0; i < activeBeams.Count; i++)
         {
-            foreach (Beam beam in beams)
-            {
-                beam.addToAndle = angle;
-                angle += 90;
-            }
+            activeBeams[i].addToAndle = startAngle + i * 90f;
         }
-        
     }
-    // Update is called once per frame
+
     void Update()
     {
-        // Визначаємо відстань від гравця до позиції курсора
-        Vector3 direction = player.GetMousDirection(player.objTransform.position);
-        direction = direction * basa.radius;
+        if (player == null) return;
 
-        // Рухаємо об'єкт до кінцевої позиції
-        objTransform.position = new Vector3(player.ShootPoint.transform.position.x, player.ShootPoint.transform.position.y, 5f);
-        bindTransform.position = objTransform.position;
-        // Повертаємо коло в напрямку курсора
+        // Вектор направления к курсору
+        Vector3 direction = player.GetMousDirection(player.objTransform.position) * basa.radius;
+
+        // Стационарное положение вокруг точки стрельбы
+        var shootPoint = player.ShootPoint != null ? player.ShootPoint.transform.position : player.objTransform.position;
+        objTransform.position = new Vector3(shootPoint.x, shootPoint.y, 5f);
+        if (bindTransform != null)
+        {
+            bindTransform.position = objTransform.position;
+        }
+
+        // Поворот к курсору с офсетом
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         objTransform.rotation = Quaternion.AngleAxis(angle + addToAndle, Vector3.forward);
-        bindTransform.rotation = objTransform.rotation;
+        if (bindTransform != null)
+            bindTransform.rotation = objTransform.rotation;
+
         tick -= Time.deltaTime;
     }
+
+    void HandleBarrel(Collider2D collision)
+    {
+        if (collision.TryGetComponent<ObjectHealth>(out var oh))
+        {
+            oh.TakeDamage();
+        }
+    }
+
     public void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision == null) return;
+
         if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
             Damage(collision);
         }
-        else if (collision.CompareTag("Barrel") && collision != null)
+        else if (collision.CompareTag("Barrel"))
         {
-            collision.GetComponent<ObjectHealth>().TakeDamage();
+            HandleBarrel(collision);
         }
     }
+
     public void OnTriggerStay2D(Collider2D collision)
     {
+        if (collision == null) return;
+
         if (collision.CompareTag("Enemy") && !collision.isTrigger)
         {
-            if (tick <= 0)
+            if (tick <= 0f)
             {
                 tick = basa.damageTickMax;
                 Damage(collision);
             }
         }
-        else if (collision.CompareTag("Barrel") && collision != null)
+        else if (collision.CompareTag("Barrel"))
         {
-            collision.GetComponent<ObjectHealth>().TakeDamage();
+            HandleBarrel(collision);
         }
     }
+
     void Damage(Collider2D collision)
     {
-        FSMC_Executer objHealt = collision.GetComponent<FSMC_Executer>();
-        ElementActiveDebuff debuff = collision.GetComponent<ElementActiveDebuff>();
-        debuff.ApplyEffect(status.Steam, 5);
-        
-        objHealt.TakeDamage((basa.damage * debuff.CurrentStatusValue(status.Steam)) / debuff.CurrentStatusValue(status.Cold), damageMultiplier);
+        if (collision == null) return;
 
-        GameManager.Instance.FindStatName("beamDamage", (basa.damage * debuff.CurrentStatusValue(status.Steam))
-        / debuff.CurrentStatusValue(status.Cold));
+        var objHealth = collision.GetComponent<FSMC_Executer>();
+        var debuff = collision.GetComponent<ElementActiveDebuff>();
+
+        // Безопасное применение дебаффа
+        debuff?.ApplyEffect(status.Steam, 5);
+
+        if (objHealth == null) return;
+
+        float steamMult = debuff != null ? debuff.CurrentStatusValue(status.Steam) : 1f;
+        float coldMult = debuff != null ? debuff.CurrentStatusValue(status.Cold) : 1f;
+        coldMult = Mathf.Max(coldMult, 0.0001f); // защита от деления на ноль
+
+        float finalDamage = (basa.damage * steamMult) / coldMult;
+        objHealth.TakeDamage(finalDamage, damageMultiplier);
+
+        GameManager.Instance.FindStatName("beamDamage", finalDamage);
     }
+
     private void CreateBeam(float angle, float x, float y)
     {
+        // Клонируем компонент Beam (удобно и сохраняет иерархию)
         Beam a = Instantiate(this, new Vector2(objTransform.position.x + x, objTransform.position.y + y), Quaternion.identity);
-        a.basa.damage = basa.damage * player.Steam;
+        // Устанавливаем корректное базовое значение урона (используем baseDamage, чтобы не умножать Steam повторно)
+        a.basa.damage = baseDamage * Mathf.Max(0f, player?.Steam ?? 1f);
         a.addToAndle = angle;
-        a.transform.localScale = new Vector3(objTransform.localScale.x, objTransform.localScale.y);
+        a.transform.localScale = new Vector3(objTransform.localScale.x, objTransform.localScale.y, objTransform.localScale.z);
     }
 }
